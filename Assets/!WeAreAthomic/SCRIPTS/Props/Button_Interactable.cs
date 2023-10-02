@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,6 +10,9 @@ public class Button_Interactable : MonoBehaviour, IInteractable
     public GameObject circleObj;
     Transform playerTr;
     Transform cameraTr;
+
+    private bool isPlayerNear;
+    private bool isSeeing;
 
     public UnityEvent[] eventsToActivate;
     void Start()
@@ -23,16 +27,25 @@ public class Button_Interactable : MonoBehaviour, IInteractable
         ShowButton();
     }
 
-    public void Interact()
+    public void IsSeeing()
     {
-        for (int i = 0; i < eventsToActivate.Length; i++)
+        if (!isSeeing)
         {
-            eventsToActivate[i].Invoke();
+            isSeeing = true;
+        }
+    }
+
+    public void IsNotSeeing()
+    {
+        if (isSeeing)
+        {
+            isSeeing = false;
         }
     }
 
     public void ShowButton()
     {
+
         if (Vector3.Distance(transform.position, playerTr.position) < 10 && Vector3.Distance(transform.position, playerTr.position) > 5)
         {
             circleObj.SetActive(true);
@@ -42,13 +55,20 @@ public class Button_Interactable : MonoBehaviour, IInteractable
             circleObj.SetActive(false);
         }
 
-        if(Vector3.Distance(transform.position, playerTr.position) < 5)
-        {
-            eButtonObj.SetActive(true);
-        }
-        else
-        {
-            eButtonObj.SetActive(false);
-        }
+        if (!isPlayerNear) return;
+
+
+        eButtonObj.SetActive(isSeeing);
+
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        isPlayerNear = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        isPlayerNear = false;
     }
 }

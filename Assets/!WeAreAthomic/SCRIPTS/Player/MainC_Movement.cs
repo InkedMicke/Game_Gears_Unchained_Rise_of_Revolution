@@ -98,8 +98,6 @@ public class MainCMovement : MonoBehaviour
 
         CrouchWalking();
         //ApplyGravity();
-
-        Debug.Log(IsGrounded());
         
     }
 
