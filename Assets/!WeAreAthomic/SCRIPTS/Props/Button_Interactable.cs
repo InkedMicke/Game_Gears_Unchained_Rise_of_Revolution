@@ -1,23 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class Button_Interactable : MonoBehaviour
 {
     private Interactor _interactor;
-    
+    private PlayerInputActions _playerInputActions;
+
     public GameObject eButtonObj;
     public GameObject circleObj;
     private GameObject _cameraObj;
-    
-    Transform playerTr;
 
-    private bool isPlayerNear;
-    private bool isSeeing;
+    Transform playerTr;
+    
+    private bool _isSeeing;
 
     public UnityEvent[] eventsToActivate;
+
+    private void Awake()
+    {
+        _playerInputActions = new PlayerInputActions();
+        _playerInputActions.Enable();
+        _playerInputActions.Player.Interact.performed += ActivateEvent;
+    }
+
     private void Start()
     {
         playerTr = GameObject.FindGameObjectWithTag("Player").transform;
@@ -33,7 +43,6 @@ public class Button_Interactable : MonoBehaviour
 
     private void ShowButton()
     {
-
         if (Vector3.Distance(transform.position, playerTr.position) < 10 && !_interactor.isSeeing)
         {
             circleObj.SetActive(true);
@@ -58,19 +67,22 @@ public class Button_Interactable : MonoBehaviour
         {
             eButtonObj.SetActive(false);
         }
+    }
 
+    private void ActivateEvent(InputAction.CallbackContext context)
+    {
+        if (_interactor.isSeeing)
+        {
+            foreach (var t in eventsToActivate)
+            {
+                t.Invoke();
+            }
+        }
+    }
 
+    public void CloseDoor(GameObject door)
+    {
         
-
     }
-
-    private void OnTriggerStay(Collider other)
-    {
-        isPlayerNear = true;
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        isPlayerNear = false;
-    }
+    
 }
