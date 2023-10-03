@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]
-public struct DetectionInfo
+public struct DetectionInfoTag
 {
     public bool enabled;
     public List<string> detectionStrings;
@@ -12,10 +12,10 @@ public struct DetectionInfo
     public string additionalInfo;
 }
 
-public class GHurtBox : MonoBehaviour
+public class GHurtBoxTag : MonoBehaviour
 {
     [Header("Collision Detection")]
-    [SerializeField] private List<DetectionInfo> collisionDetection;
+    [SerializeField] private List<DetectionInfoTag> collisionDetection;
     [SerializeField] private bool useTargetScript; // Indica si se utiliza el targetScript
     [SerializeField] private MonoBehaviour targetScript; // Script de destino para enviar información
 

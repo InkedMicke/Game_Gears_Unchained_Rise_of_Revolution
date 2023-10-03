@@ -4,49 +4,37 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Button_Interactable : MonoBehaviour, IInteractable
+public class Button_Interactable : MonoBehaviour
 {
+    private Interactor _interactor;
+    
     public GameObject eButtonObj;
     public GameObject circleObj;
+    private GameObject _cameraObj;
+    
     Transform playerTr;
-    Transform cameraTr;
 
     private bool isPlayerNear;
     private bool isSeeing;
 
     public UnityEvent[] eventsToActivate;
-    void Start()
+    private void Start()
     {
         playerTr = GameObject.FindGameObjectWithTag("Player").transform;
-        cameraTr = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
+        _interactor = _cameraObj.GetComponent<Interactor>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         ShowButton();
     }
 
-    public void IsSeeing()
-    {
-        if (!isSeeing)
-        {
-            isSeeing = true;
-        }
-    }
-
-    public void IsNotSeeing()
-    {
-        if (isSeeing)
-        {
-            isSeeing = false;
-        }
-    }
-
-    public void ShowButton()
+    private void ShowButton()
     {
 
-        if (Vector3.Distance(transform.position, playerTr.position) < 10 && Vector3.Distance(transform.position, playerTr.position) > 5)
+        if (Vector3.Distance(transform.position, playerTr.position) < 10 && !_interactor.isSeeing)
         {
             circleObj.SetActive(true);
         }
@@ -55,10 +43,24 @@ public class Button_Interactable : MonoBehaviour, IInteractable
             circleObj.SetActive(false);
         }
 
-        if (!isPlayerNear) return;
+        if (_interactor.isSeeing)
+        {
+            if (Vector3.Distance(transform.position, playerTr.position) < 3)
+            {
+                eButtonObj.SetActive(true);
+            }
+            else
+            {
+                eButtonObj.SetActive(false);
+            }
+        }
+        else
+        {
+            eButtonObj.SetActive(false);
+        }
 
 
-        eButtonObj.SetActive(isSeeing);
+        
 
     }
 

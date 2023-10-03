@@ -1,116 +1,121 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CCTVController : MonoBehaviour
 {
-    LightKiller lKiller;
+    private LightKiller _lKiller;
 
-    public List<Quaternion> rotationList = new List<Quaternion>();
+    [SerializeField] private GameObject lKillerObj;
+    
+    private Transform _lightKillerTr;
+    private Transform _playerTr;
 
-    bool isCameraOff;
-    [System.NonSerialized] public bool rayGotObstruction;
-
-    private int currentRotation;
-
-    public GameObject lightKiller;
-
-    Transform lightKillerTr;
-    Transform playerTr;
-
+    private Quaternion _targetRotation;
+    
     public LayerMask groundLayer;
     public LayerMask obstructionLayer;
 
-    [SerializeField] private float lerpSpeed = 0.005f;
+    [System.NonSerialized] public bool rayGotObstruction;
+    private bool _isCameraOff;
+    
+    private int _currentRotation;
+    
+    [SerializeField] private float lerpSpeed = 0.05f;
     [SerializeField] private float timeToOnCamera = 3f;
     [SerializeField] private float redLightSpeedWhenChasing = 0.01f;
+    
+    public List<Vector3> rotations;
 
     private void Awake()
     {
-        lKiller = lightKiller.GetComponent<LightKiller>();
+        _lKiller = lKillerObj.GetComponent<LightKiller>();
+        _lightKillerTr = lKillerObj.transform;
+        _playerTr = GameObject.FindGameObjectWithTag("Player").transform;
+
     }
 
     private void Start()
     {
-        currentRotation = Random.Range(0, rotationList.Count);
-
-        lightKillerTr = lightKiller.transform;
-
-        playerTr = GameObject.FindGameObjectWithTag("Player").transform;
+        if (rotations.Count > 0)
+        {
+            _currentRotation = Random.Range(0, rotations.Count);
+        }
     }
 
     private void Update()
     {
-        if (transform.rotation == rotationList[currentRotation] && !isCameraOff && !lKiller.isFocusingPlayer)
+        _targetRotation = Quaternion.Euler(rotations[_currentRotation]);
+        
+        if (!(transform.rotation == _targetRotation) && !_isCameraOff && !_lKiller.isFocusingPlayer)
         {
-            currentRotation = Random.Range(0, rotationList.Count);
+            transform.rotation = Quaternion.Lerp(transform.rotation, _targetRotation, lerpSpeed);
+            rayGotObstruction = false;
         }
         else
         {
-            if (!lKiller.isFocusingPlayer)
-            {
-                transform.rotation = Quaternion.Lerp(transform.rotation, rotationList[currentRotation], lerpSpeed);
-                rayGotObstruction = false;
-            }
+            _currentRotation = Random.Range(0, rotations.Count);
         }
-
-        if(isCameraOff)
+        
+        if(_isCameraOff)
         {
             Quaternion offRotation = Quaternion.Euler(80f, 0f, 0f);
             transform.rotation = Quaternion.Lerp(transform.rotation, offRotation, lerpSpeed);
         }
 
-        if(!isCameraOff)
+        if(!_isCameraOff)
         {
             LookToPlayer();
             SetLightPosition();
         }
     }
-
-    public void SetLightPosition()
-    {
-        Ray ray = new Ray(transform.position, transform.forward);
-        if(Physics.Raycast(ray, out RaycastHit hitInfo, 50f, groundLayer))
-        {
-            if (!lKiller.isFocusingPlayer)
-            {
-                lightKillerTr.position = hitInfo.point;
-            }
-            else
-            {
-                lightKillerTr.position = Vector3.Lerp(lightKillerTr.position, hitInfo.point, redLightSpeedWhenChasing);
-            }
-        }
-    }
-
-    public void TurnOffCamera()
-    {
-        isCameraOff = true;
-        lightKiller.SetActive(false);
-        Invoke(nameof(TurnOnCamera), timeToOnCamera);
-    }
-
-    public void TurnOnCamera()
-    {
-        lightKiller.SetActive(true);
-        isCameraOff = false;
-    }
-
     void LookToPlayer()
     {
-        if (lKiller.isFocusingPlayer)
+        if (_lKiller.isFocusingPlayer)
         {
-            transform.LookAt(playerTr.position);
+            transform.LookAt(_playerTr.position);
 
             Ray ray = new Ray(transform.position, transform.forward);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 50f, obstructionLayer))
             {
-                if (lKiller.isFocusingPlayer)
+                if (_lKiller.isFocusingPlayer)
                 {
-                    lKiller.WhiteLight();
+                    _lKiller.WhiteLight();
                     rayGotObstruction = true;
                 }
             }
         }
     }
+    
+    public void SetLightPosition()
+    {
+        var ray = new Ray(transform.position, transform.forward);
+        if(Physics.Raycast(ray, out RaycastHit hitInfo, 50f, groundLayer))
+        {
+            if (!_lKiller.isFocusingPlayer)
+            {
+                _lightKillerTr.position = hitInfo.point;
+            }
+            else
+            {
+                _lightKillerTr.position = Vector3.Lerp(_lightKillerTr.position, hitInfo.point, redLightSpeedWhenChasing);
+            }
+        }
+    }
+    
+    public void TurnOffCamera()
+    {
+        _isCameraOff = true;
+        lKillerObj.SetActive(false);
+        Invoke(nameof(TurnOnCamera), timeToOnCamera);
+    }
+
+    public void TurnOnCamera()
+    {
+        lKillerObj.SetActive(true);
+        _isCameraOff = false;
+    }
+    
 }
