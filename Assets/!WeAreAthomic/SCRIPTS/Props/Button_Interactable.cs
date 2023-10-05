@@ -6,33 +6,28 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class Button_Interactable : MonoBehaviour
+public class Button_Interactable : MonoBehaviour, IInteractable
 {
-    private Interactor _interactor;
-    private PlayerInputActions _playerInputActions;
 
     public GameObject eButtonObj;
     public GameObject circleObj;
     private GameObject _cameraObj;
 
     Transform playerTr;
-    
+
     private bool _isSeeing;
 
     public UnityEvent[] eventsToActivate;
 
     private void Awake()
     {
-        _playerInputActions = new PlayerInputActions();
-        _playerInputActions.Enable();
-        _playerInputActions.Player.Interact.performed += ActivateEvent;
+
     }
 
     private void Start()
     {
         playerTr = GameObject.FindGameObjectWithTag("Player").transform;
         _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
-        _interactor = _cameraObj.GetComponent<Interactor>();
     }
 
     // Update is called once per frame
@@ -43,7 +38,7 @@ public class Button_Interactable : MonoBehaviour
 
     private void ShowButton()
     {
-        if (Vector3.Distance(transform.position, playerTr.position) < 10 && !_interactor.isSeeing)
+        if (Vector3.Distance(transform.position, playerTr.position) < 10)
         {
             circleObj.SetActive(true);
         }
@@ -51,38 +46,13 @@ public class Button_Interactable : MonoBehaviour
         {
             circleObj.SetActive(false);
         }
-
-        if (_interactor.isSeeing)
-        {
-            if (Vector3.Distance(transform.position, playerTr.position) < 3)
-            {
-                eButtonObj.SetActive(true);
-            }
-            else
-            {
-                eButtonObj.SetActive(false);
-            }
-        }
-        else
-        {
-            eButtonObj.SetActive(false);
-        }
     }
 
-    private void ActivateEvent(InputAction.CallbackContext context)
+    public void Interact()
     {
-        if (_interactor.isSeeing)
+        foreach (UnityEvent i in eventsToActivate)
         {
-            foreach (var t in eventsToActivate)
-            {
-                t.Invoke();
-            }
+            i.Invoke();
         }
     }
-
-    public void CloseDoor(GameObject door)
-    {
-        
-    }
-    
 }
