@@ -44,7 +44,7 @@ public class MainCAttack : MonoBehaviour
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Enable();
         _playerInputActions.Player.Attack.performed += Attack;
-        _playerInputActions.Player.Attack.performed += CanNextCombo;
+        _playerInputActions.Player.Attack.performed += NextCombo;
 
         _weaponBC = weaponObj.GetComponent<BoxCollider>();
     }
@@ -65,6 +65,7 @@ public class MainCAttack : MonoBehaviour
     {
         if (CanAttack())
         {
+            Debug.Log("hola");
             CheckNearEnemieToGo();
             attackCount++;
             weaponObj.GetComponent<WrenchHitBox>().ClearList();
@@ -80,16 +81,7 @@ public class MainCAttack : MonoBehaviour
 
             _canNextAttack = false;
             isFinalAttacking = true;
-            _anim.SetInteger(string.Format("attackCount"), attackCount);
         
-        }
-    }
-
-    private void CanNextCombo(InputAction.CallbackContext context)
-    {
-        if (_clickedOnTime)
-        {
-            _canNextAttack = true;
         }
     }
 
@@ -98,12 +90,12 @@ public class MainCAttack : MonoBehaviour
         var colliders = Physics.OverlapSphere(middlePosTr.position, nearEnemieToGoFloat, enemyHurtBox);
 
         _closestObject = null;
-        float closestDistance = Mathf.Infinity;
+        var closestDistance = Mathf.Infinity;
 
-        foreach (Collider collider in colliders)
+        foreach (var collider in colliders)
         {
-            Transform objectTransform = collider.transform;
-            float distance = Vector3.Distance(transform.position, objectTransform.position);
+            var objectTransform = collider.transform;
+            var distance = Vector3.Distance(transform.position, objectTransform.position);
 
             if (distance < closestDistance)
             {
@@ -140,27 +132,25 @@ public class MainCAttack : MonoBehaviour
         Gizmos.DrawWireSphere(middlePosTr.position, nearEnemieToGoFloat);
     }
 
-    public void NextCombo()
+    public void NextCombo(InputAction.CallbackContext context)
     {
         if (_canNextAttack)
         {
             attackCount++;
             _anim.SetInteger(string.Format("attackCount"), attackCount);
+            CheckNearEnemieToGo();
             _canNextAttack = false;
         }
     }
 
     public void EnableNextAttack()
     {
-        _clickedOnTime = true;
+        _canNextAttack = true;
     }
 
     public void DisableNextAttack()
     {
-        if (!_canNextAttack)
-        {
-            _clickedOnTime = false;
-        }
+        _canNextAttack = false;
     }
 
     private void EndAttack()

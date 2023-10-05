@@ -29,6 +29,10 @@ public class WrenchHitBox : MonoBehaviour
                 SpeedDownTime();
                 Invoke(nameof(SpeedUpTime), .005f);
                 colliderList.Add(other);
+                if (_mainCAttack.attackCount == 3)
+                {
+                    
+                }
             }
         }
     }
