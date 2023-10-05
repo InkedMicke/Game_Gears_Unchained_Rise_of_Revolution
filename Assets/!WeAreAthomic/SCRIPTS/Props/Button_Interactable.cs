@@ -33,10 +33,10 @@ public class Button_Interactable : MonoBehaviour, IInteractable
     // Update is called once per frame
     private void Update()
     {
-        ShowButton();
+        ShowCircle();
     }
 
-    private void ShowButton()
+    private void ShowCircle()
     {
         if (Vector3.Distance(transform.position, playerTr.position) < 10)
         {
@@ -55,4 +55,15 @@ public class Button_Interactable : MonoBehaviour, IInteractable
             i.Invoke();
         }
     }
+
+    public void ShowButton()
+    {
+        eButtonObj.SetActive(true);
+    }
+
+    public void HideButton()
+    {
+        eButtonObj.SetActive(false);
+    }
+
 }

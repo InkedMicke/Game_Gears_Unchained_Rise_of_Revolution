@@ -12,6 +12,7 @@ public interface IInteractable
 public class Interactor : MonoBehaviour
 {
     private PlayerInputActions _playerInputActions;
+    private Button_Interactable _button;
 
     public LayerMask interactableLayer;
 
@@ -33,7 +34,19 @@ public class Interactor : MonoBehaviour
 
     void Ray()
     {
-
+        var r = new Ray(transform.position, transform.forward);
+        if(Physics.Raycast(r, out RaycastHit hitInfo, interactRange, interactableLayer))
+        {
+            _button = hitInfo.collider.gameObject.GetComponent<Button_Interactable>();
+            _button.ShowButton();
+        }
+        else
+        {
+            if (_button)
+            {
+                _button.HideButton();
+            }
+        }
     }
 
     private void InteractRay(InputAction.CallbackContext context)
