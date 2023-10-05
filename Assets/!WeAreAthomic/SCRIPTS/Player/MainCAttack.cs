@@ -12,8 +12,14 @@ public class MainCAttack : MonoBehaviour
     private MainCLayers _mainCLayers;
     private Animator _anim;
     private BoxCollider _weaponBC;
+    private CharacterController _cc;
 
     [SerializeField] private GameObject weaponObj;
+
+    [SerializeField] private Transform middlePosTr;
+    private Transform _closestObject;
+
+    public LayerMask enemyHurtBox;
 
     [System.NonSerialized] public bool isAttacking;
     [System.NonSerialized] public bool isFinalAttacking;
@@ -24,6 +30,8 @@ public class MainCAttack : MonoBehaviour
     public int attackCount;
 
     [SerializeField] private float timeNextAttack = 0.5f;
+    [SerializeField] private float nearEnemieToGoFloat = 2.5f;
+    [SerializeField] private float rotationNearEnemie = 8f;
     private float _timeGraceAttackPeriod;
 
     private void Awake()
@@ -31,6 +39,7 @@ public class MainCAttack : MonoBehaviour
         _mainCMovement = GetComponent<MainCMovement>();
         _mainCLayers = GetComponent<MainCLayers>();
         _anim = GetComponent<Animator>();
+        _cc = GetComponent<CharacterController>();
 
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Enable();
@@ -56,6 +65,7 @@ public class MainCAttack : MonoBehaviour
     {
         if (CanAttack())
         {
+            CheckNearEnemieToGo();
             attackCount++;
             weaponObj.GetComponent<WrenchHitBox>().ClearList();
             _canNextAttack = false;
@@ -81,6 +91,53 @@ public class MainCAttack : MonoBehaviour
         {
             _canNextAttack = true;
         }
+    }
+
+    private void CheckNearEnemieToGo()
+    {
+        var colliders = Physics.OverlapSphere(middlePosTr.position, nearEnemieToGoFloat, enemyHurtBox);
+
+        _closestObject = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (Collider collider in colliders)
+        {
+            Transform objectTransform = collider.transform;
+            float distance = Vector3.Distance(transform.position, objectTransform.position);
+
+            if (distance < closestDistance)
+            {
+                _closestObject = objectTransform;
+                closestDistance = distance;
+            }
+        }
+
+        if (_closestObject != null)
+        {
+            StartCoroutine(nameof(MoveToNearEnemie));
+
+        }
+    }
+
+    private IEnumerator MoveToNearEnemie()
+    {
+        while (Vector3.Distance(transform.position, _closestObject.position) > 1.3f)
+        {
+            var desiredPos = new Vector3(_closestObject.position.x, transform.position.y, _closestObject.position.z);
+            var moveDirection = (desiredPos - transform.position).normalized;
+            var moveSpeed = 5f;
+            _cc.Move(moveDirection * moveSpeed * Time.deltaTime);
+
+            transform.LookAt(desiredPos);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, desiredRot, rotationNearEnemie * Time.deltaTime);
+
+            yield return null;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(middlePosTr.position, nearEnemieToGoFloat);
     }
 
     public void NextCombo()

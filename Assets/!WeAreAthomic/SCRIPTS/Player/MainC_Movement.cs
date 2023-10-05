@@ -170,7 +170,6 @@ public class MainCMovement : MonoBehaviour
         _anim.SetFloat(string.Format("moveSpeed"), value: _moveSpeed);
 
         ApplyGravity();
-        Debug.Log("hola");
         
        _cc.Move(_moveDir);
 
