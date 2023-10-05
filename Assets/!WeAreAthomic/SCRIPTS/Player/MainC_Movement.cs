@@ -12,6 +12,7 @@ public class MainCMovement : MonoBehaviour
     private MainCLayers _mainCLayers;
     private MainCAttack _mainCAttack;
     private MainCPistol _mainCPistol;
+    private CharacterController _cc;
 
     private GameObject _cameraObj;
 
@@ -58,7 +59,8 @@ public class MainCMovement : MonoBehaviour
         _mainCLayers = GetComponent<MainCLayers>();
         _mainCAttack = GetComponent<MainCAttack>();
         _mainCPistol = GetComponent<MainCPistol>();
-        
+        _cc = GetComponent<CharacterController>();
+
         _playerInputActions = new PlayerInputActions();
     }
 
@@ -97,7 +99,7 @@ public class MainCMovement : MonoBehaviour
         }
 
         CrouchWalking();
-        //ApplyGravity();
+        ApplyGravity();
         
     }
 
@@ -105,8 +107,8 @@ public class MainCMovement : MonoBehaviour
     {
         if (_isJumping || !IsGrounded())
         {
-            //_velocity.y += gravity * Time.deltaTime;
-            //_cc.Move(_velocity * Time.deltaTime);
+            _velocity.y += gravity * Time.deltaTime;
+            _cc.Move(_velocity * Time.deltaTime);
         }
     }
 
@@ -139,7 +141,7 @@ public class MainCMovement : MonoBehaviour
     private void ApplyGravity()
     {
         if (IsGrounded()) return;
-        //_cc.Move(_velocity * Time.deltaTime);
+        _cc.Move(_velocity * Time.deltaTime);
     }
 
     private void MoveKeyboard()
@@ -163,14 +165,14 @@ public class MainCMovement : MonoBehaviour
         var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityKeyboard,
             turnSmoothTime);
 
-        //_moveDir = orientation.forward * (Time.deltaTime * _moveSpeed * direction.magnitude);
+        _moveDir = orientation.forward * (Time.deltaTime * _moveSpeed * direction.magnitude);
 
         _anim.SetFloat(string.Format("moveSpeed"), value: _moveSpeed);
 
         ApplyGravity();
-
+        Debug.Log("hola");
         
-       // _cc.Move(_moveDir);
+       _cc.Move(_moveDir);
 
         if (_moveVectorKeyboard.magnitude > 0.1f || _mainCPistol.IsAiming)
         {
@@ -254,7 +256,7 @@ public class MainCMovement : MonoBehaviour
         var desiredSpeed = _movement.magnitude * moveSpeed / 2 * 2.0f;
 ;
 
-       // _cc.Move(_movement * Time.deltaTime);
+        _cc.Move(_movement * Time.deltaTime);
 
         // Suaviza la transici�n utilizando Lerp para el float de velocidad en el Animator
         var actualSpeed = _anim.GetFloat(string.Format("moveSpeed"));
