@@ -66,7 +66,6 @@ public class MainCAttack : MonoBehaviour
     {
         if (CanAttack())
         {
-            Debug.Log("hola");
             CanMove = false;
             CheckNearEnemieToGo();
             attackCount++;
@@ -134,7 +133,7 @@ public class MainCAttack : MonoBehaviour
         Gizmos.DrawWireSphere(middlePosTr.position, nearEnemieToGoFloat);
     }
 
-    public void NextCombo(InputAction.CallbackContext context)
+    private void NextCombo(InputAction.CallbackContext context)
     {
         if (_canNextAttack)
         {
@@ -142,6 +141,7 @@ public class MainCAttack : MonoBehaviour
             _anim.SetInteger(string.Format("attackCount"), attackCount);
             CheckNearEnemieToGo();
             _canNextAttack = false;
+            CanMove = false;
         }
     }
 
@@ -163,18 +163,7 @@ public class MainCAttack : MonoBehaviour
         _anim.SetInteger(string.Format("attackCount"), attackCount);
         _mainCLayers.DisableAttackLayer();
         timeGraceAttackPeriod = Time.time + timeNextAttack;
-        
-    }
-
-    private void EndFinalAttack()
-    {
-        _mainCLayers.DisableFinalAttackLayer();
-        isFinalAttacking = false;
-        isAttacking = false;
-        attackCount = 0;
-        _anim.SetInteger(string.Format("attackCount"), attackCount);
-        _mainCLayers.DisableAttackLayer();
-
+        CanMove = true;
     }
 
     private void EnableWeaponCollision()
@@ -186,6 +175,10 @@ public class MainCAttack : MonoBehaviour
     {
         weaponObj.GetComponent<BoxCollider>().enabled = false;
         weaponObj.GetComponent<WrenchHitBox>().ClearList();
+    }
+
+    public void CanSkipAttack()
+    {
         CanMove = true;
     }
 
