@@ -41,14 +41,14 @@ public class MainCMovement : MonoBehaviour
 
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
-    [SerializeField] private float turnSmoothTime = 0.1f;
+    public float turnSmoothTime = 0.1f;
     [SerializeField] private float timeNextCrouch = 0.5f;
     [SerializeField] private float timeNextJump = 0.5f;
     [SerializeField] private float jumpImpulse = 5f;
     [SerializeField] private float gravity = -9.8f;
     private float _moveSpeed;
     private float _horizontal;
-    private float _turnSmoothVelocityKeyboard;
+    [System.NonSerialized] public float _turnSmoothVelocityKeyboard;
     private float _turnSmoothVelocityGamepad;
     private float _timeGraceCrouchPeriod;
     private float _timeGraceJumpPeriod;
