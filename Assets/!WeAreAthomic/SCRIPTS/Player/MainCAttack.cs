@@ -108,6 +108,7 @@ public class MainCAttack : MonoBehaviour
         if (_closestObject != null)
         {
             StartCoroutine(nameof(MoveToNearEnemie));
+            StartCoroutine(nameof(RotateToNearEnemie));
 
         }
     }
@@ -120,11 +121,29 @@ public class MainCAttack : MonoBehaviour
             var moveDirection = (desiredPos - transform.position).normalized;
             var moveSpeed = 5f;
             _cc.Move(moveDirection * moveSpeed * Time.deltaTime);
-
-            transform.LookAt(desiredPos);
             //transform.rotation = Quaternion.Lerp(transform.rotation, desiredRot, rotationNearEnemie * Time.deltaTime);
 
             yield return null;
+        }
+    }
+
+    private IEnumerator RotateToNearEnemie()
+    {
+        var b = true;
+        while (b)
+        {
+            var enemyPos = _closestObject.position;
+            var desiredPos = new Vector3(enemyPos.x, transform.position.y, enemyPos.z);
+            var difference = desiredPos - transform.position;
+            var desiredRot = Quaternion.LookRotation(difference);
+            if (transform.rotation == desiredRot)
+            {
+                b = false;
+                Debug.Log("hola2");
+            }
+            transform.rotation = Quaternion.Lerp(transform.rotation, desiredRot, rotationNearEnemie * Time.deltaTime);
+            yield return null;
+            Debug.Log("hola1");
         }
     }
 
