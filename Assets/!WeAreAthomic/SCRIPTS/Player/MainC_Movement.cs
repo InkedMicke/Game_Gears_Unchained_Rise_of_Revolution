@@ -92,7 +92,7 @@ public class MainCMovement : MonoBehaviour
     private void Update()
     {
         AnimatorController();
-        if (_canMove && !_mainCAttack.isFinalAttacking)
+        if (_canMove && _mainCAttack.CanMove)
         {
             MoveKeyboard();
             MoveGamepad();
@@ -100,7 +100,6 @@ public class MainCMovement : MonoBehaviour
 
         CrouchWalking();
         ApplyGravity();
-        
     }
 
     private void FixedUpdate()
@@ -115,7 +114,7 @@ public class MainCMovement : MonoBehaviour
 
     private void AnimatorController()
     {
-        if (!IsGrounded() && _velocity.y < 0 )
+        if (!IsGrounded() && _velocity.y < 0)
         {
             _isFalling = true;
             _mainCLayers.EnableJumpLayer();
@@ -155,6 +154,8 @@ public class MainCMovement : MonoBehaviour
             if (!_isJumping && !_isFalling && !isCrouch)
             {
                 InvokeDisableAllLayers();
+                _mainCAttack.EndAttack();
+                _mainCAttack.timeGraceAttackPeriod = Time.time + .2f;
             }
         }
 
@@ -170,8 +171,8 @@ public class MainCMovement : MonoBehaviour
         _anim.SetFloat(string.Format("moveSpeed"), value: _moveSpeed);
 
         ApplyGravity();
-        
-       _cc.Move(_moveDir);
+
+        _cc.Move(_moveDir);
 
         if (_moveVectorKeyboard.magnitude > 0.1f || _mainCPistol.IsAiming)
         {
@@ -185,13 +186,13 @@ public class MainCMovement : MonoBehaviour
             {
                 _moveSpeed += Time.deltaTime * 24;
 
-                if((Mathf.Abs(_moveSpeed - walkSpeed)) < 0.3f)
+                if ((Mathf.Abs(_moveSpeed - walkSpeed)) < 0.3f)
                 {
                     _moveSpeed = walkSpeed;
                 }
             }
-            
-            if(_moveSpeed > walkSpeed)
+
+            if (_moveSpeed > walkSpeed)
             {
                 _moveSpeed -= Time.deltaTime * 18;
             }
@@ -223,6 +224,7 @@ public class MainCMovement : MonoBehaviour
             _moveSpeed = runSpeed;
         }
     }
+
     private void MoveGamepad()
     {
         _moveVectorGamepad = _playerInputActions.Player.MovementGamepad.ReadValue<Vector2>();
@@ -234,11 +236,13 @@ public class MainCMovement : MonoBehaviour
             if (!_isJumping && !_isFalling && !isCrouch)
             {
                 InvokeDisableAllLayers();
+                _mainCAttack.EndAttack();
+                _mainCAttack.timeGraceAttackPeriod = Time.time + .2f;
             }
         }
         else
         {
-            if(_isRunningGamepad)
+            if (_isRunningGamepad)
             {
                 _isRunningGamepad = false;
             }
@@ -253,7 +257,7 @@ public class MainCMovement : MonoBehaviour
         var moveSpeed = _isRunningGamepad ? runSpeed : walkSpeed;
 
         var desiredSpeed = _movement.magnitude * moveSpeed / 2 * 2.0f;
-;
+        ;
 
         _cc.Move(_movement * Time.deltaTime);
 
@@ -266,7 +270,6 @@ public class MainCMovement : MonoBehaviour
         var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
         var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityGamepad,
             turnSmoothTime);
-
 
 
         var moveDir = orientation.forward * (Time.deltaTime * _moveSpeed * direction.magnitude);
@@ -282,7 +285,6 @@ public class MainCMovement : MonoBehaviour
         _isRunningKeyboard = true;
 
         _isRunningGamepad = !_isRunningGamepad;
-
     }
 
     private void RunOff(InputAction.CallbackContext context)
@@ -324,9 +326,11 @@ public class MainCMovement : MonoBehaviour
     {
         _mainCLayers.DisableCrouchLayer();
         _mainCLayers.DisableJumpLayer();
+        _mainCLayers.DisableAttackLayer();
+        _mainCLayers.DisablePistolLayer();
     }
-    
-    
+
+
     private void CrouchWalking()
     {
         if (isCrouch && (_moveVectorKeyboard.magnitude > 0.1f || _moveVectorGamepad.magnitude > 0.1f))

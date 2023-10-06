@@ -24,6 +24,7 @@ public class MainCAttack : MonoBehaviour
     [System.NonSerialized] public bool isAttacking;
     [System.NonSerialized] public bool isFinalAttacking;
     [System.NonSerialized] public bool canDealDamage;
+    [System.NonSerialized] public bool CanMove;
     private bool _clickedOnTime;
     private bool _canNextAttack;
 
@@ -32,7 +33,7 @@ public class MainCAttack : MonoBehaviour
     [SerializeField] private float timeNextAttack = 0.5f;
     [SerializeField] private float nearEnemieToGoFloat = 2.5f;
     [SerializeField] private float rotationNearEnemie = 8f;
-    private float _timeGraceAttackPeriod;
+    public float timeGraceAttackPeriod;
 
     private void Awake()
     {
@@ -66,6 +67,7 @@ public class MainCAttack : MonoBehaviour
         if (CanAttack())
         {
             Debug.Log("hola");
+            CanMove = false;
             CheckNearEnemieToGo();
             attackCount++;
             weaponObj.GetComponent<WrenchHitBox>().ClearList();
@@ -77,7 +79,7 @@ public class MainCAttack : MonoBehaviour
             isAttacking = true;
             _mainCLayers.EnableAttackLayer();
             _anim.SetInteger(string.Format("attackCount"), attackCount);
-            _timeGraceAttackPeriod = Time.time + timeNextAttack;
+            timeGraceAttackPeriod = Time.time + timeNextAttack;
 
             _canNextAttack = false;
             isFinalAttacking = true;
@@ -153,14 +155,14 @@ public class MainCAttack : MonoBehaviour
         _canNextAttack = false;
     }
 
-    private void EndAttack()
+    public void EndAttack()
     {
         isFinalAttacking = false;
         isAttacking = false;
         attackCount = 0;
         _anim.SetInteger(string.Format("attackCount"), attackCount);
         _mainCLayers.DisableAttackLayer();
-        _timeGraceAttackPeriod = Time.time + timeNextAttack;
+        timeGraceAttackPeriod = Time.time + timeNextAttack;
         
     }
 
@@ -184,6 +186,7 @@ public class MainCAttack : MonoBehaviour
     {
         weaponObj.GetComponent<BoxCollider>().enabled = false;
         weaponObj.GetComponent<WrenchHitBox>().ClearList();
+        CanMove = true;
     }
 
     private bool CanAttack()
@@ -191,7 +194,7 @@ public class MainCAttack : MonoBehaviour
         if (!_mainCMovement.IsGrounded()) { return false; }
         if (isAttacking) { return false; }
         if (_mainCMovement.isCrouch) { return false; }
-        if (!(Time.time > _timeGraceAttackPeriod)) { return false; }
+        if (!(Time.time > timeGraceAttackPeriod)) { return false; }
 
         return true;
     }
