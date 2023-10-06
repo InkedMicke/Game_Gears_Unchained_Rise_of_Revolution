@@ -50,7 +50,7 @@ public class Button_Interactable : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        foreach (UnityEvent i in eventsToActivate)
+        foreach (var i in eventsToActivate)
         {
             i.Invoke();
         }

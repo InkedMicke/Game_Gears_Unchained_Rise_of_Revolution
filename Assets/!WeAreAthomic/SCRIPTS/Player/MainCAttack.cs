@@ -147,10 +147,7 @@ public class MainCAttack : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(middlePosTr.position, nearEnemieToGoFloat);
-    }
+    private void OnDrawGizmos() => Gizmos.DrawWireSphere(middlePosTr.position, nearEnemieToGoFloat);
 
     private void NextCombo(InputAction.CallbackContext context)
     {
@@ -164,15 +161,9 @@ public class MainCAttack : MonoBehaviour
         }
     }
 
-    public void EnableNextAttack()
-    {
-        _canNextAttack = true;
-    }
+    public void EnableNextAttack() => _canNextAttack = true;
 
-    public void DisableNextAttack()
-    {
-        _canNextAttack = false;
-    }
+    public void DisableNextAttack() => _canNextAttack = false;
 
     public void EndAttack()
     {
@@ -196,10 +187,7 @@ public class MainCAttack : MonoBehaviour
         weaponObj.GetComponent<WrenchHitBox>().ClearList();
     }
 
-    public void CanSkipAttack()
-    {
-        CanMove = true;
-    }
+    public void CanSkipAttack() => CanMove = true;
 
     private bool CanAttack()
     {

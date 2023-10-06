@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "GodMode",
+                    "type": "Button",
+                    "id": "d963594d-3833-4bc5-a1fc-a2fd34a9bd6a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -294,6 +303,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "90f1200e-2e8f-40fd-827a-95c769df2fd7",
+                    "path": "<Keyboard>/f11",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "GodMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7312f757-8adb-475c-931e-e8c25649e08f",
+                    "path": "<Gamepad>/start",
+                    "interactions": "Hold(duration=2,pressPoint=0.5)",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "GodMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
