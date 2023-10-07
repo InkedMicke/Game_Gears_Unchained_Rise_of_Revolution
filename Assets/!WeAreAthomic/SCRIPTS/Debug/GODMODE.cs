@@ -13,6 +13,10 @@ public class GODMODE : MonoBehaviour
     private GameObject _cameraObj;
     
     public bool isGodModeEnabled;
+    private bool _isSpeedingUp;
+    private bool _isSpeedingDown;
+
+    private float _moveSpeed;
 
     private void Awake()
     {
@@ -22,6 +26,10 @@ public class GODMODE : MonoBehaviour
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Enable();
         _playerInputActions.Player.GodMode.performed += EnableGodMode;
+        _playerInputActions.Player.Running.performed += ShiftDown;
+        _playerInputActions.Player.Running.canceled += ShiftUp;
+        _playerInputActions.Player.Slow.performed += CtrlDown;
+        _playerInputActions.Player.Slow.canceled += CtrlUp;
     }
 
     private void Start()
@@ -32,6 +40,7 @@ public class GODMODE : MonoBehaviour
     private void Update()
     {
         GodMode();
+        AdjustSpeed();
     }
 
     private void EnableGodMode(InputAction.CallbackContext context)
@@ -43,9 +52,9 @@ public class GODMODE : MonoBehaviour
     {
         if(isGodModeEnabled)
         {
-            var _moveVectorKeyboard = _playerInputActions.Player.MovementKeyboard.ReadValue<Vector2>();
+            var moveVectorKeyboard = _playerInputActions.Player.MovementKeyboard.ReadValue<Vector2>();
 
-            var direction = new Vector3(_moveVectorKeyboard.x, 0f, _moveVectorKeyboard.y).normalized;
+            var direction = new Vector3(moveVectorKeyboard.x, 0f, moveVectorKeyboard.y).normalized;
             var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
             var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _mainCMove._turnSmoothVelocityKeyboard,
                 _mainCMove.turnSmoothTime);
@@ -53,9 +62,45 @@ public class GODMODE : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
 
-            var _moveDir = _cameraObj.transform.forward * (Time.deltaTime * 5f * direction.magnitude);
+            var moveDir = _cameraObj.transform.forward * (Time.deltaTime * 5f * direction.magnitude * _moveSpeed);
 
-            _cc.Move(_moveDir);
+            _cc.Move(moveDir);
         }
     }
+
+    private void AdjustSpeed()
+    {
+        if (_isSpeedingUp)
+        {
+            _moveSpeed += Time.deltaTime * 4f;
+        }
+
+        if (_isSpeedingDown)
+        {
+            if (_moveSpeed > 0)
+            {
+                _moveSpeed -= Time.deltaTime * 4f;
+            }
+        }
+    }
+
+    private void ShiftUp(InputAction.CallbackContext context)
+    {
+        _isSpeedingUp = false;
+    }
+    private void ShiftDown(InputAction.CallbackContext context)
+    {
+        _isSpeedingUp = true;
+    }
+
+    private void CtrlUp(InputAction.CallbackContext context)
+    {
+        _isSpeedingDown = false;
+    }
+
+    private void CtrlDown(InputAction.CallbackContext context)
+    {
+        _isSpeedingDown = true;
+    }
+    
 }

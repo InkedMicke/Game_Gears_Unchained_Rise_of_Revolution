@@ -13,6 +13,7 @@ public class MainCMovement : MonoBehaviour
     private MainCAttack _mainCAttack;
     private MainCPistol _mainCPistol;
     private CharacterController _cc;
+    private GODMODE _godMode;
 
     private GameObject _cameraObj;
 
@@ -60,6 +61,7 @@ public class MainCMovement : MonoBehaviour
         _mainCAttack = GetComponent<MainCAttack>();
         _mainCPistol = GetComponent<MainCPistol>();
         _cc = GetComponent<CharacterController>();
+        _godMode = GetComponent<GODMODE>();
 
         _playerInputActions = new PlayerInputActions();
     }
@@ -92,7 +94,7 @@ public class MainCMovement : MonoBehaviour
     private void Update()
     {
         AnimatorController();
-        if (_canMove && _mainCAttack.CanMove)
+        if (_canMove && _mainCAttack.CanMove && !_godMode.isGodModeEnabled)
         {
             MoveKeyboard();
             MoveGamepad();
@@ -104,7 +106,7 @@ public class MainCMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_isJumping || !IsGrounded())
+        if ((_isJumping || !IsGrounded()) && !_godMode.isGodModeEnabled)
         {
             _velocity.y += gravity * Time.deltaTime;
             _cc.Move(_velocity * Time.deltaTime);
@@ -114,32 +116,37 @@ public class MainCMovement : MonoBehaviour
 
     private void AnimatorController()
     {
-        if (!IsGrounded() && _velocity.y < 0)
+        if (!_godMode.isGodModeEnabled)
         {
-            _isFalling = true;
-            _mainCLayers.EnableJumpLayer();
-            _isJumping = false;
-            _anim.SetBool(string.Format("isFalling"), _isFalling); // Activa la animaci�n de ca�da
-            _anim.SetBool(string.Format("isJumping"), _isJumping);
-        }
 
-        if (_isFalling && IsGrounded())
-        {
-            _isFalling = false;
-            _isJumping = false;
-            _anim.SetBool(string.Format("isFalling"), _isFalling); // Activa la animaci�n de ca�da
-            _anim.SetBool(string.Format("isJumping"), _isJumping);
-            _anim.SetBool(string.Format("isGrounded"), true);
-            if (isCrouch)
+
+            if (!IsGrounded() && _velocity.y < 0)
             {
-                _mainCLayers.DisableJumpLayer();
+                _isFalling = true;
+                _mainCLayers.EnableJumpLayer();
+                _isJumping = false;
+                _anim.SetBool(string.Format("isFalling"), _isFalling); // Activa la animaci�n de ca�da
+                _anim.SetBool(string.Format("isJumping"), _isJumping);
+            }
+
+            if (_isFalling && IsGrounded())
+            {
+                _isFalling = false;
+                _isJumping = false;
+                _anim.SetBool(string.Format("isFalling"), _isFalling); // Activa la animaci�n de ca�da
+                _anim.SetBool(string.Format("isJumping"), _isJumping);
+                _anim.SetBool(string.Format("isGrounded"), true);
+                if (isCrouch)
+                {
+                    _mainCLayers.DisableJumpLayer();
+                }
             }
         }
     }
 
     private void ApplyGravity()
     {
-        if (IsGrounded()) return;
+        if (IsGrounded() && _godMode.isGodModeEnabled) return;
         _cc.Move(_velocity * Time.deltaTime);
     }
 

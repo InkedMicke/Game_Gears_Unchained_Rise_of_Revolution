@@ -116,6 +116,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slow"",
+                    ""type"": ""Button"",
+                    ""id"": ""0f7e051d-f04c-40ba-b89a-2cebbcd53e54"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -349,6 +358,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""GodMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8acf0510-d59c-41c8-839f-33726c9dcaf0"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Slow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -429,6 +449,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_SwitchWeapon = m_Player.FindAction("SwitchWeapon", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_GodMode = m_Player.FindAction("GodMode", throwIfNotFound: true);
+        m_Player_Slow = m_Player.FindAction("Slow", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
@@ -503,6 +524,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SwitchWeapon;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_GodMode;
+    private readonly InputAction m_Player_Slow;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -517,6 +539,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @SwitchWeapon => m_Wrapper.m_Player_SwitchWeapon;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @GodMode => m_Wrapper.m_Player_GodMode;
+        public InputAction @Slow => m_Wrapper.m_Player_Slow;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -556,6 +579,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @GodMode.started += instance.OnGodMode;
             @GodMode.performed += instance.OnGodMode;
             @GodMode.canceled += instance.OnGodMode;
+            @Slow.started += instance.OnSlow;
+            @Slow.performed += instance.OnSlow;
+            @Slow.canceled += instance.OnSlow;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -590,6 +616,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @GodMode.started -= instance.OnGodMode;
             @GodMode.performed -= instance.OnGodMode;
             @GodMode.canceled -= instance.OnGodMode;
+            @Slow.started -= instance.OnSlow;
+            @Slow.performed -= instance.OnSlow;
+            @Slow.canceled -= instance.OnSlow;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -692,6 +721,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnSwitchWeapon(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnGodMode(InputAction.CallbackContext context);
+        void OnSlow(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {
