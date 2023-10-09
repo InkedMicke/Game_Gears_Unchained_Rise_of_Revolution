@@ -42,8 +42,8 @@ public class DummieHurtBox : MonoBehaviour
         while (enable)
         {
             t -= 4f * Time.unscaledDeltaTime;
-            var moveDirection = (_playerTr.position - transform.position).normalized;
-            moveDirection.y = transform.position.y;
+            var playerDesiredPos = new Vector3(_playerTr.position.x, transform.position.y, _playerTr.position.z);
+            var moveDirection = (playerDesiredPos - transform.position).normalized;
             _cc.Move(-(moveDirection) * Time.deltaTime * pushForce);
 
             if (t <= 0f)

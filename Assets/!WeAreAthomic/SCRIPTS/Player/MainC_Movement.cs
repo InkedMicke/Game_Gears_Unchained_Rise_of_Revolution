@@ -165,7 +165,7 @@ public class MainCMovement : MonoBehaviour
                 _mainCAttack.timeGraceAttackPeriod = Time.time + .2f;
             }
         }
-
+ 
         if (isUsingGamepad) return;
 
         var direction = new Vector3(_moveVectorKeyboard.x, 0f, _moveVectorKeyboard.y).normalized;
