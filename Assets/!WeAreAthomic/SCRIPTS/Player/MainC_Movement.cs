@@ -12,6 +12,7 @@ public class MainCMovement : MonoBehaviour
     private MainCLayers _mainCLayers;
     private MainCAttack _mainCAttack;
     private MainCPistol _mainCPistol;
+    private RailGrindSystem _railGrindSystem;
     private CharacterController _cc;
     private GODMODE _godMode;
 
@@ -62,6 +63,7 @@ public class MainCMovement : MonoBehaviour
         _mainCPistol = GetComponent<MainCPistol>();
         _cc = GetComponent<CharacterController>();
         _godMode = GetComponent<GODMODE>();
+        _railGrindSystem = GetComponent<RailGrindSystem>();
 
         _playerInputActions = new PlayerInputActions();
     }
@@ -94,7 +96,7 @@ public class MainCMovement : MonoBehaviour
     private void Update()
     {
         AnimatorController();
-        if (_canMove && _mainCAttack.CanMove && !_godMode.isGodModeEnabled)
+        if (_canMove && _mainCAttack.CanMove && !_godMode.isGodModeEnabled && !_railGrindSystem.IsOnRail())
         {
             MoveKeyboard();
             MoveGamepad();
@@ -357,7 +359,7 @@ public class MainCMovement : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext context)
     {
-        if (IsGrounded())
+        if (IsGrounded() || _railGrindSystem.IsOnRail())
         {
             if (Time.time > _timeGraceJumpPeriod)
             {
