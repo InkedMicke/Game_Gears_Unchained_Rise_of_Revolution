@@ -35,6 +35,8 @@ public class GODMODE : MonoBehaviour
     private void Start()
     {
         _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
+
+        var gameObj = transform.parent.gameObject;
     }
 
     private void Update()
