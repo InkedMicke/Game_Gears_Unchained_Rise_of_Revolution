@@ -13,6 +13,7 @@ public class MainCLayers : MonoBehaviour
     private float _jumpLayerMultiplier;
     private float _pistolLayerMultiplier;
     private float _sphereAttackLayerMultiplier;
+    private float _slideLayerMultiplier;
 
     [System.NonSerialized] public bool isAttackLayerActive;
     [System.NonSerialized] public bool isFinalAttackLayerActive;
@@ -38,6 +39,7 @@ public class MainCLayers : MonoBehaviour
         _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Jump")), _jumpLayerMultiplier);
         _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Pistol")), _pistolLayerMultiplier);
         _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("SphereAttack")), _sphereAttackLayerMultiplier);
+        _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Slide")), _slideLayerMultiplier);
     }
 
     private void EvaluateLayers()
@@ -156,6 +158,16 @@ public class MainCLayers : MonoBehaviour
     public void DisableSphereAttackLayer()
     {
         StartCoroutine(nameof(DisableSphereAttackCoroutine));
+    }
+
+    public void EnableSlideLayer()
+    {
+        StartCoroutine(nameof(EnableSlideCoroutine));
+    }
+
+    public void DisableSlideLayer()
+    {
+        StartCoroutine(nameof(DisableSlideCoroutine));
     }
 
     private IEnumerator EnableAttackCoroutine()
@@ -367,6 +379,42 @@ public class MainCLayers : MonoBehaviour
             if (_sphereAttackLayerMultiplier <= 0f)
             {
                 _sphereAttackLayerMultiplier = 0f;
+                canDisableLayer = false;
+            }
+
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    private IEnumerator EnableSlideCoroutine()
+    {
+        var canEnableLayer = true;
+
+        while (canEnableLayer)
+        {
+            _slideLayerMultiplier += 24 * Time.unscaledDeltaTime;
+
+            if (_slideLayerMultiplier >= 1f)
+            {
+                _slideLayerMultiplier = 1f;
+                canEnableLayer = false;
+            }
+
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    private IEnumerator DisableSlideCoroutine()
+    {
+        var canDisableLayer = true;
+
+        while (canDisableLayer)
+        {
+            _slideLayerMultiplier -= 24 * Time.unscaledDeltaTime;
+
+            if (_slideLayerMultiplier <= 0f)
+            {
+                _slideLayerMultiplier = 0f;
                 canDisableLayer = false;
             }
 
