@@ -96,7 +96,7 @@ public class MainCMovement : MonoBehaviour
     private void Update()
     {
         AnimatorController();
-        if (_canMove && _mainCAttack.CanMove && !_godMode.isGodModeEnabled && !_railGrindSystem.IsOnRail())
+        if (_canMove && _mainCAttack.CanMove && !_godMode.isGodModeEnabled && !_railGrindSystem.CanJumpOnRail)
         {
             MoveKeyboard();
             MoveGamepad();
@@ -108,7 +108,7 @@ public class MainCMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if ((_isJumping || !IsGrounded()) && !_godMode.isGodModeEnabled)
+        if ((_isJumping || !IsGrounded()) && !_godMode.isGodModeEnabled && !_railGrindSystem.CanJumpOnRail)
         {
             _velocity.y += gravity * Time.deltaTime;
             _cc.Move(_velocity * Time.deltaTime);
@@ -148,7 +148,7 @@ public class MainCMovement : MonoBehaviour
 
     private void ApplyGravity()
     {
-        if (IsGrounded() && _godMode.isGodModeEnabled) return;
+        if (IsGrounded() && _godMode.isGodModeEnabled && _railGrindSystem.CanJumpOnRail) return;
         _cc.Move(_velocity * Time.deltaTime);
     }
 
@@ -359,7 +359,7 @@ public class MainCMovement : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext context)
     {
-        if (IsGrounded() || _railGrindSystem.IsOnRail())
+        if (IsGrounded())
         {
             if (Time.time > _timeGraceJumpPeriod)
             {

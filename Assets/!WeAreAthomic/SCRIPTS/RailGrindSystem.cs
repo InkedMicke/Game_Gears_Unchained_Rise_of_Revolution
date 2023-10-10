@@ -4,29 +4,40 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
+using static Autodesk.Fbx.FbxAxisSystem;
 
 public class RailGrindSystem : MonoBehaviour
 {
-    CharacterController _cc;
-    Animator _anim;
-    PlayerInputActions _playerInputActions;
+    private CharacterController _cc;
+    private Animator _anim;
+    private PlayerInputActions _playerInputActions;
     private MainCLayers _mainCLayers;
+    private MainCMovement _mainCMove;
 
     [SerializeField] private Transform groundCheck;
 
     [SerializeField] private LayerMask railLayer;
 
-    Vector3 _currentDestination;
-    Vector3 _directionMove;
+    private Vector3 _currentDestination;
+    private Vector3 _directionMove;
+    private Vector3 _velocity;
 
     [System.NonSerialized] public bool IsSliding;
-    bool _canSlide;
-    bool _canBoost;
+    [System.NonSerialized] public bool CanJumpOnRail;
+    private bool _canSlide;
+    private bool _canBoost;
+    private bool _isJumping;
+    private bool _isFalling;
 
-    int childActual = 0;
+    private int childActual = 0;
 
-    [SerializeField] private float railSpeed = 10f;
+    [SerializeField] private float railSpeed = .1f;
     [SerializeField] private float railSpeedBoost = 30f;
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float gravityRail = -15f;
+    [SerializeField] private float jumpForceRail = 10f;
+    public float test = 40f;
     private float _playbackMultiplier;
 
     public List<Transform> directionsList = new List<Transform>();
@@ -36,11 +47,14 @@ public class RailGrindSystem : MonoBehaviour
         _cc = GetComponent<CharacterController>();
         _anim = GetComponent<Animator>();
         _mainCLayers = GetComponent<MainCLayers>();
+        _mainCMove = GetComponent<MainCMovement>();
 
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Player.Enable();
         _playerInputActions.Player.Running.started += IncreaseBoost;
         _playerInputActions.Player.Running.canceled += DrecreaseBoost;
+        _playerInputActions.Player.Jump.performed += JumpOnRail;
+
     }
 
     private void Update()
@@ -51,7 +65,7 @@ public class RailGrindSystem : MonoBehaviour
         }
         else
         {
-            if (IsSliding)
+            if (IsSliding && !CanJumpOnRail)
             {
                 _anim.SetLayerWeight(_anim.GetLayerIndex("StartSliding"), 0f);
                 IsSliding = false;
@@ -63,6 +77,16 @@ public class RailGrindSystem : MonoBehaviour
         BoostManager();
         Slide();
         _anim.SetLayerWeight(_anim.GetLayerIndex("EndSliding"), _playbackMultiplier);
+
+        if(_mainCMove.IsGrounded())
+        {
+            if(CanJumpOnRail)
+            {
+                CanJumpOnRail = false;
+            }
+        }
+
+        ApplyGravityRail();
     }
 
     public void StartSliding()
@@ -70,6 +94,7 @@ public class RailGrindSystem : MonoBehaviour
         if (!IsSliding)
         {
             IsSliding = true;
+            CanJumpOnRail = true;
             GetAllTransforms();
             _anim.SetLayerWeight(_anim.GetLayerIndex("StartSliding"), 1);
         }
@@ -85,8 +110,6 @@ public class RailGrindSystem : MonoBehaviour
             var padre2 = padre1.parent;
 
             var railContainer = padre2.GetChild(padre2.childCount - 1);
-
-            Debug.Log(railContainer);
 
             Transform[] allChildren = railContainer.GetComponentsInChildren<Transform>();
 
@@ -112,9 +135,6 @@ public class RailGrindSystem : MonoBehaviour
                 }
             }
 
-            _currentDestination = directionsList[childActual].position;
-
-            Debug.Log(directionsList[childActual]);
             _canSlide = true;
 
             _anim.SetBool(string.Format("isSliding"), true);
@@ -133,8 +153,21 @@ public class RailGrindSystem : MonoBehaviour
     {
         if (directionsList.Count > 0 && _canSlide)
         {
+            _currentDestination = directionsList[childActual].position;
+
             _directionMove = (_currentDestination - transform.position).normalized;
             _cc.Move(_directionMove * railSpeed * Time.deltaTime);
+
+            // Almacenar la rotación deseada en una variable temporal
+            Quaternion targetRotation = directionsList[childActual].rotation;
+
+            // Aplicar una corrección de 90 grados alrededor del eje Y
+            targetRotation *= Quaternion.Euler(0, -90, 0);
+
+            // Interpolar la rotación corregida
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+
 
             if (Vector3.Distance(transform.position, directionsList[childActual].position) < 0.3f)
             {
@@ -154,7 +187,6 @@ public class RailGrindSystem : MonoBehaviour
     {
         _canBoost = false;
         _playbackMultiplier = 0;
-        railSpeed = 10f;
     }
 
     void BoostManager()
@@ -179,6 +211,35 @@ public class RailGrindSystem : MonoBehaviour
             float distanceToB = Vector3.Distance(b.position, transform.position);
             return distanceToA.CompareTo(distanceToB);
         });
+    }
+
+    public void JumpOnRail(InputAction.CallbackContext context)
+    {
+        if (CanJumpOnRail && IsOnRail())
+        {
+            _isJumping = true;
+            _velocity.y = jumpForceRail;
+            Debug.Log("hola");
+        }
+    }
+
+    private void ApplyGravityRail()
+    {
+        if ((_isJumping || !IsOnRail()) && CanJumpOnRail)
+        {
+            //_velocity.x = _currentDestination.x;
+            _velocity.y += gravityRail;
+            //_velocity.z = _currentDestination.z;
+
+            var direction = _velocity * Time.deltaTime;
+            _cc.Move(direction);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Debug.DrawRay(transform.position, transform.up * 5f, Color.blue);
+        Debug.DrawRay(transform.position, -transform.up * 5f, Color.red);
     }
 
     public bool IsOnRail()
