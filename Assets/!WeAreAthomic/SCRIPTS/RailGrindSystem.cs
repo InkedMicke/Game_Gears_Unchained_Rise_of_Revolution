@@ -156,15 +156,15 @@ public class RailGrindSystem : MonoBehaviour
             _currentDestination = directionsList[childActual].position;
 
             _directionMove = (_currentDestination - transform.position).normalized;
-            _cc.Move(_directionMove * railSpeed * Time.deltaTime);
+            _cc.Move(_directionMove * (railSpeed * Time.deltaTime));
 
-            // Almacenar la rotación deseada en una variable temporal
-            Quaternion targetRotation = directionsList[childActual].rotation;
+            // Almacenar la rotaciÃ³n deseada en una variable temporal
+            var targetRotation = directionsList[childActual].rotation;
 
-            // Aplicar una corrección de 90 grados alrededor del eje Y
+            // Aplicar una correcciÃ³n de 90 grados alrededor del eje Y
             targetRotation *= Quaternion.Euler(0, -90, 0);
 
-            // Interpolar la rotación corregida
+            // Interpolar la rotaciÃ³n corregida
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
 
@@ -203,23 +203,22 @@ public class RailGrindSystem : MonoBehaviour
         }
     }
 
-    void SortList()
+    private void SortList()
     {
         directionsList.Sort((a, b) =>
         {
-            float distanceToA = Vector3.Distance(a.position, transform.position);
-            float distanceToB = Vector3.Distance(b.position, transform.position);
+            var distanceToA = Vector3.Distance(a.position, transform.position);
+            var distanceToB = Vector3.Distance(b.position, transform.position);
             return distanceToA.CompareTo(distanceToB);
         });
     }
 
-    public void JumpOnRail(InputAction.CallbackContext context)
+    private void JumpOnRail(InputAction.CallbackContext context)
     {
         if (CanJumpOnRail && IsOnRail())
         {
             _isJumping = true;
-            _velocity.y = jumpForceRail;
-            Debug.Log("hola");
+            _velocity.y = Mathf.Sqrt(jumpForceRail * -2 * gravityRail);
         }
     }
 
@@ -227,19 +226,9 @@ public class RailGrindSystem : MonoBehaviour
     {
         if ((_isJumping || !IsOnRail()) && CanJumpOnRail)
         {
-            //_velocity.x = _currentDestination.x;
             _velocity.y += gravityRail;
-            //_velocity.z = _currentDestination.z;
-
-            var direction = _velocity * Time.deltaTime;
-            _cc.Move(direction);
+            _cc.Move(_velocity);
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Debug.DrawRay(transform.position, transform.up * 5f, Color.blue);
-        Debug.DrawRay(transform.position, -transform.up * 5f, Color.red);
     }
 
     public bool IsOnRail()
