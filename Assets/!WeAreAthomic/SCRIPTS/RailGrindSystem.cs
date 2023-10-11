@@ -92,10 +92,20 @@ public class RailGrindSystem : MonoBehaviour
             if(_isJumping && _velocity.y < 0)
             {
                 _isJumping = false;
+                //_anim.SetBool(string.Format("isFalling"), true);
+                //_anim.SetBool(string.Format("isJumping"), false);
+                _isFalling = true;
+                Debug.Log("hola");
+            }
+
+            if(_isFalling)
+            {
+                _isFalling = false;
+                //_anim.SetBool(string.Format("isGrounded"), true);
+                //_anim.SetBool(string.Format("isFalling"), false);
+                _mainCLayers.DisableJumpLayer();
             }
         }
-
-        Debug.Log(_velocity.y);
 
         ApplyGravityRail();
 
@@ -110,6 +120,10 @@ public class RailGrindSystem : MonoBehaviour
             CanJumpOnRail = true;
             GetAllTransforms();
             _anim.SetLayerWeight(_anim.GetLayerIndex("StartSliding"), 1);
+            _mainCLayers.DisableJumpLayer();
+            _anim.SetBool(string.Format("isGrounded"), true);
+            _anim.SetBool(string.Format("isFalling"), false);
+            _anim.SetBool(string.Format("isJumping"), false);
         }
     }
 
@@ -221,6 +235,9 @@ public class RailGrindSystem : MonoBehaviour
         {
             _velocity = transform.up * jumpForceRail;
             _isJumping = true;
+            _mainCLayers.EnableJumpLayer();
+            _anim.SetBool(string.Format("isJumping"), true);
+            _anim.SetBool(string.Format("isGrounded"), false);
         }
     }
 
@@ -244,6 +261,6 @@ public class RailGrindSystem : MonoBehaviour
 
     public bool IsOnRail()
     {
-        return Physics.CheckSphere(groundCheck.position, .2f, railLayer);
+        return Physics.CheckSphere(groundCheck.position, .3f, railLayer);
     }
 }
