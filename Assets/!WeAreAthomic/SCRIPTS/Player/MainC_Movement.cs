@@ -122,7 +122,7 @@ public class MainCMovement : MonoBehaviour
         {
 
 
-            if (!IsGrounded() && _velocity.y < 0)
+            if (!IsGrounded() && _velocity.y < 0 || !_railGrindSystem.IsOnRail() && _velocity.y < 0)
             {
                 _isFalling = true;
                 _mainCLayers.EnableJumpLayer();
@@ -131,7 +131,7 @@ public class MainCMovement : MonoBehaviour
                 _anim.SetBool(string.Format("isJumping"), _isJumping);
             }
 
-            if (_isFalling && IsGrounded())
+            if (_isFalling && IsGrounded() ||_isFalling && _railGrindSystem.IsOnRail())
             {
                 _isFalling = false;
                 _isJumping = false;
@@ -148,8 +148,10 @@ public class MainCMovement : MonoBehaviour
 
     private void ApplyGravity()
     {
-        if (IsGrounded() && _godMode.isGodModeEnabled && _railGrindSystem.CanJumpOnRail) return;
-        _cc.Move(_velocity * Time.deltaTime);
+        if (!IsGrounded() && !_godMode.isGodModeEnabled)
+        {
+            _cc.Move(_velocity * Time.deltaTime);
+        }
     }
 
     private void MoveKeyboard()
@@ -359,7 +361,7 @@ public class MainCMovement : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext context)
     {
-        if (IsGrounded())
+        if (IsGrounded() || _railGrindSystem.IsOnRail())
         {
             if (Time.time > _timeGraceJumpPeriod)
             {
