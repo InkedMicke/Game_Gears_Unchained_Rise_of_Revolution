@@ -156,7 +156,7 @@ public class RailGrindSystem : MonoBehaviour
 
 /*            _cc.enabled = false;
 
-            transform.position = new Vector3(transform.position.x, transform.position.y, _currentDestination.z);
+            transform.position = new Vector3(transform.position.x, transform.position.y, directionsList[childActual].position.z);
 
             _cc.enabled = true;*/
         }
