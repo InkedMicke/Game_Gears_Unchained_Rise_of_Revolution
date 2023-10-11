@@ -37,8 +37,9 @@ public class RailGrindSystem : MonoBehaviour
     [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private float gravityRail = -15f;
     [SerializeField] private float jumpForceRail = 10f;
-    public float test = 40f;
+    [SerializeField] private float jumpDelay = .5f;
     private float _playbackMultiplier;
+    private float jumpTotalDelay;
 
     public List<Transform> directionsList = new List<Transform>();
 
@@ -86,7 +87,19 @@ public class RailGrindSystem : MonoBehaviour
             }
         }
 
+        if(IsOnRail())
+        {
+            if(_isJumping && _velocity.y < 0)
+            {
+                _isJumping = false;
+            }
+        }
+
+        Debug.Log(_velocity.y);
+
         ApplyGravityRail();
+
+        _cc.Move(_velocity * Time.deltaTime);
     }
 
     public void StartSliding()
@@ -199,7 +212,23 @@ public class RailGrindSystem : MonoBehaviour
         if (railSpeed < railSpeedBoost && _canBoost && IsSliding)
         {
             railSpeed += Time.deltaTime * 4;
-            Debug.Log("hola");
+        }
+    }
+
+    public void JumpOnRail(InputAction.CallbackContext context)
+    {
+        if (IsSliding && !_isJumping && Time.time > jumpTotalDelay)
+        {
+            _velocity = transform.up * jumpForceRail;
+            _isJumping = true;
+        }
+    }
+
+    private void ApplyGravityRail()
+    {
+        if (_isJumping || !IsOnRail() && CanJumpOnRail)
+        {
+            _velocity += transform.up * Time.deltaTime * gravityRail;
         }
     }
 
@@ -211,24 +240,6 @@ public class RailGrindSystem : MonoBehaviour
             var distanceToB = Vector3.Distance(b.position, transform.position);
             return distanceToA.CompareTo(distanceToB);
         });
-    }
-
-    private void JumpOnRail(InputAction.CallbackContext context)
-    {
-        if (CanJumpOnRail && IsOnRail())
-        {
-            _isJumping = true;
-            _velocity.y = Mathf.Sqrt(jumpForceRail * -2 * gravityRail);
-        }
-    }
-
-    private void ApplyGravityRail()
-    {
-        if ((_isJumping || !IsOnRail()) && CanJumpOnRail)
-        {
-            _velocity.y += gravityRail;
-            _cc.Move(_velocity);
-        }
     }
 
     public bool IsOnRail()
