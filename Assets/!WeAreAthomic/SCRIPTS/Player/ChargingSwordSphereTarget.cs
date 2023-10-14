@@ -52,7 +52,6 @@ public class ChargingSwordSphereTarget : MonoBehaviour
     [SerializeField] private float maxCircleSize = 4f;
     [SerializeField] private float maxSphereSize = 500f;
     [SerializeField] private float circleSizeGrowSpeed = 1f;
-    [SerializeField] private float obstacleDetectionDistance = 1.0f;
     private float _layerMultiplier;
     private float _currentAnimLength;
     private float _currentFOV;

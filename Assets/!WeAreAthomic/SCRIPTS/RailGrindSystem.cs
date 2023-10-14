@@ -54,8 +54,6 @@ public class RailGrindSystem : MonoBehaviour
         _playerInputActions.Player.Enable();
         _playerInputActions.Player.Running.started += IncreaseBoost;
         _playerInputActions.Player.Running.canceled += DrecreaseBoost;
-        _playerInputActions.Player.Jump.performed += JumpOnRail;
-
     }
 
     private void Update()
@@ -75,30 +73,29 @@ public class RailGrindSystem : MonoBehaviour
                 childActual = 0;
             }
         }
+
         BoostManager();
         Slide();
-        _anim.SetLayerWeight(_anim.GetLayerIndex("EndSliding"), _playbackMultiplier);
 
-        if(_mainCMove.IsGrounded())
+        if (_mainCMove.IsGrounded())
         {
-            if(CanJumpOnRail)
+            if (CanJumpOnRail)
             {
                 CanJumpOnRail = false;
             }
         }
 
-        if(IsOnRail())
+        if (IsOnRail())
         {
-            if(_isJumping && _velocity.y < 0)
+            if (_isJumping && _velocity.y < 0)
             {
                 _isJumping = false;
                 //_anim.SetBool(string.Format("isFalling"), true);
                 //_anim.SetBool(string.Format("isJumping"), false);
                 _isFalling = true;
-                Debug.Log("hola");
             }
 
-            if(_isFalling)
+            if (_isFalling)
             {
                 _isFalling = false;
                 //_anim.SetBool(string.Format("isGrounded"), true);
@@ -106,8 +103,6 @@ public class RailGrindSystem : MonoBehaviour
                 _mainCLayers.DisableJumpLayer();
             }
         }
-
-        ApplyGravityRail();
 
         _cc.Move(_velocity * Time.deltaTime);
     }
@@ -119,7 +114,6 @@ public class RailGrindSystem : MonoBehaviour
             IsSliding = true;
             CanJumpOnRail = true;
             GetAllTransforms();
-            _anim.SetLayerWeight(_anim.GetLayerIndex("StartSliding"), 1);
             _mainCLayers.DisableJumpLayer();
             _anim.SetBool(string.Format("isGrounded"), true);
             _anim.SetBool(string.Format("isFalling"), false);
@@ -183,23 +177,34 @@ public class RailGrindSystem : MonoBehaviour
             _currentDestination = directionsList[childActual].position;
 
             _directionMove = (_currentDestination - transform.position).normalized;
-            _cc.Move(_directionMove * (railSpeed * Time.deltaTime));
 
-            // Almacenar la rotación deseada en una variable temporal
+            _cc.Move(_directionMove * (railSpeed * Time.deltaTime));
+            
             var targetRotation = directionsList[childActual].rotation;
 
-            // Aplicar una corrección de 90 grados alrededor del eje Y
             targetRotation *= Quaternion.Euler(0, -90, 0);
 
-            // Interpolar la rotación corregida
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-
-
-            if (Vector3.Distance(transform.position, directionsList[childActual].position) < 0.3f)
+            if (IsOnRail())
             {
-                childActual++;
-                _currentDestination = directionsList[childActual].position;
+                if (Vector3.Distance(transform.position, directionsList[childActual].position) < 0.3f)
+                {
+                    childActual++;
+                    _currentDestination = directionsList[childActual].position;
+                }
+            }
+            else
+            {
+                var desiredPos = new Vector3(directionsList[childActual].position.x,
+                    transform.position.y, directionsList[childActual].position.z);
+                if (Vector3.Distance(transform.position, desiredPos) < 0.3f)
+                {
+                    childActual++;
+                    _currentDestination = directionsList[childActual].position;
+                    Debug.Log("hola");
+                }
+                
             }
         }
     }
@@ -207,7 +212,6 @@ public class RailGrindSystem : MonoBehaviour
     void IncreaseBoost(InputAction.CallbackContext context)
     {
         _canBoost = true;
-
     }
 
     void DrecreaseBoost(InputAction.CallbackContext context)
@@ -229,25 +233,13 @@ public class RailGrindSystem : MonoBehaviour
         }
     }
 
-    public void JumpOnRail(InputAction.CallbackContext context)
-    {
-        if (IsSliding && !_isJumping && Time.time > jumpTotalDelay)
-        {
-            _velocity = transform.up * jumpForceRail;
-            _isJumping = true;
-            _mainCLayers.EnableJumpLayer();
-            _anim.SetBool(string.Format("isJumping"), true);
-            _anim.SetBool(string.Format("isGrounded"), false);
-        }
-    }
-
-    private void ApplyGravityRail()
+    /*private void ApplyGravityRail()
     {
         if (_isJumping || !IsOnRail() && CanJumpOnRail)
         {
             _velocity += transform.up * Time.deltaTime * gravityRail;
         }
-    }
+    }*/
 
     private void SortList()
     {

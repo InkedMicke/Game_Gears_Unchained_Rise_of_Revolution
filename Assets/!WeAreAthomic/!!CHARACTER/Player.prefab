@@ -2299,7 +2299,7 @@ MonoBehaviour:
   rotationSpeed: 10
   gravityRail: -40
   jumpForceRail: 22
-  test: 40
+  jumpDelay: 0.5
   directionsList: []
 --- !u!95 &6527828047431564698
 Animator:
@@ -2369,9 +2369,10 @@ MonoBehaviour:
   runSpeed: 4
   turnSmoothTime: 0.05
   timeNextCrouch: 0.5
-  timeNextJump: 0.5
-  jumpImpulse: 1
-  gravity: -9.8
+  timeNextJump: 1
+  jumpImpulse: 3
+  jumpImpulseOnRail: 5
+  gravity: -20
 --- !u!114 &1735365384744813436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2476,7 +2477,6 @@ MonoBehaviour:
   maxCircleSize: 4
   maxSphereSize: 500
   circleSizeGrowSpeed: 1
-  obstacleDetectionDistance: 1
   attackCountCharging: 0
 --- !u!114 &867799138804064246
 MonoBehaviour:

@@ -47,6 +47,7 @@ public class MainCMovement : MonoBehaviour
     [SerializeField] private float timeNextCrouch = 0.5f;
     [SerializeField] private float timeNextJump = 0.5f;
     [SerializeField] private float jumpImpulse = 5f;
+    [SerializeField] private float jumpImpulseOnRail = 5f;
     [SerializeField] private float gravity = -9.8f;
     private float _moveSpeed;
     private float _horizontal;
@@ -106,26 +107,14 @@ public class MainCMovement : MonoBehaviour
         ApplyGravity();
     }
 
-    private void FixedUpdate()
-    {
-        if ((_isJumping || !IsGrounded()) && !_godMode.isGodModeEnabled && !_railGrindSystem.CanJumpOnRail)
-        {
-            _velocity.y += gravity * Time.deltaTime;
-            _cc.Move(_velocity * Time.deltaTime);
-        }
-    }
-
 
     private void AnimatorController()
     {
         if (!_godMode.isGodModeEnabled)
         {
-
-
-            if (!IsGrounded() && _velocity.y < 0 || !_railGrindSystem.IsOnRail() && _velocity.y < 0)
+            if (!IsGrounded() && _velocity.y < 0 && !_railGrindSystem.IsOnRail() || !_railGrindSystem.IsOnRail() && _velocity.y < 0 && !IsGrounded())
             {
                 _isFalling = true;
-                _mainCLayers.EnableJumpLayer();
                 _isJumping = false;
                 _anim.SetBool(string.Format("isFalling"), _isFalling); // Activa la animaci�n de ca�da
                 _anim.SetBool(string.Format("isJumping"), _isJumping);
@@ -142,14 +131,17 @@ public class MainCMovement : MonoBehaviour
                 {
                     _mainCLayers.DisableJumpLayer();
                 }
+                _timeGraceJumpPeriod = Time.time + timeNextJump;
             }
         }
     }
 
     private void ApplyGravity()
     {
-        if (!IsGrounded() && !_godMode.isGodModeEnabled)
+        if (_isJumping || !IsGrounded() && !_godMode.isGodModeEnabled && !_railGrindSystem.IsOnRail())
         {
+            _velocity += transform.up.normalized * (gravity * Time.deltaTime);
+            _velocity.z = 0f;
             _cc.Move(_velocity * Time.deltaTime);
         }
     }
@@ -268,11 +260,10 @@ public class MainCMovement : MonoBehaviour
         var moveSpeed = _isRunningGamepad ? runSpeed : walkSpeed;
 
         var desiredSpeed = _movement.magnitude * moveSpeed / 2 * 2.0f;
-        ;
+        
 
         _cc.Move(_movement * Time.deltaTime);
-
-        // Suaviza la transici�n utilizando Lerp para el float de velocidad en el Animator
+        
         var actualSpeed = _anim.GetFloat(string.Format("moveSpeed"));
         var interpolatedSpeed = Mathf.Lerp(actualSpeed, desiredSpeed, Time.deltaTime * 4.0f);
         _anim.SetFloat(string.Format("moveSpeed"), interpolatedSpeed);
@@ -361,15 +352,27 @@ public class MainCMovement : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext context)
     {
-        if (IsGrounded() || _railGrindSystem.IsOnRail())
+        if (IsGrounded() && !_railGrindSystem.IsOnRail())
         {
             if (Time.time > _timeGraceJumpPeriod)
             {
                 _mainCLayers.EnableJumpLayer();
-                _timeGraceJumpPeriod = Time.time + timeNextJump;
                 _isJumping = true;
                 _velocity.y = Mathf.Sqrt(jumpImpulse * -2 * gravity);
                 _anim.SetBool(string.Format("isJumping"), _isJumping);
+                _anim.SetBool(string.Format("isGrounded"), false);
+            }
+        }
+
+        if (!IsGrounded() && _railGrindSystem.IsOnRail())
+        {
+            if (Time.time > _timeGraceJumpPeriod)
+            {
+                _mainCLayers.EnableJumpLayer();
+                _isJumping = true;
+                _velocity.y = Mathf.Sqrt(jumpImpulseOnRail * -2 * gravity);
+                _anim.SetBool(string.Format("isJumping"), _isJumping);
+                _anim.SetBool(string.Format("isGrounded"), false);
             }
         }
     }
