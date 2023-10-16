@@ -1,58 +1,58 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MainCSwitchWeapon : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Player
 {
-    private PlayerInputActions _playerInputActions;
-    private MainCMovement _mainCMovement;
-    private MainCAttack _mainCAttack;
+    public class MainCSwitchWeapon : MonoBehaviour
+    {
+        private PlayerInputActions _playerInputActions;
+        private MainCMovement _mainCMovement;
+        private MainCAttack _mainCAttack;
 
-    [SerializeField] private GameObject wrenchObj;
-    [SerializeField] private GameObject pistolObj;
+        [SerializeField] private GameObject wrenchObj;
+        [SerializeField] private GameObject pistolObj;
     
-    public bool isUsingSword = true;
-    public bool isUsingPistol;
+        public bool isUsingSword = true;
+        public bool isUsingPistol;
 
-    private void Awake()
-    {
-        _mainCAttack = GetComponent<MainCAttack>();
-        _mainCMovement = GetComponent<MainCMovement>();
-        
-        _playerInputActions = new PlayerInputActions();
-        _playerInputActions.Enable();
-        _playerInputActions.Player.SwitchWeapon.performed += SwitchWeapon;
-    }
-
-
-    private void SwitchWeapon(InputAction.CallbackContext context)
-    {
-        if (CanSwitchWeapon())
+        private void Awake()
         {
-            isUsingSword = !isUsingSword;
-            isUsingPistol = !isUsingPistol;
-            wrenchObj.SetActive(!wrenchObj.activeInHierarchy);
-            pistolObj.SetActive(!pistolObj.activeInHierarchy);
+            _mainCAttack = GetComponent<MainCAttack>();
+            _mainCMovement = GetComponent<MainCMovement>();
+        
+            _playerInputActions = new PlayerInputActions();
+            _playerInputActions.Enable();
+            _playerInputActions.Player.SwitchWeapon.performed += SwitchWeapon;
         }
-    }
 
-    private bool CanSwitchWeapon()
-    {
-        if (_mainCAttack.isAttacking)
-        {
-            return false;}
 
-        if (_mainCMovement._isJumping)
+        private void SwitchWeapon(InputAction.CallbackContext context)
         {
-            return false;}
+            if (CanSwitchWeapon())
+            {
+                isUsingSword = !isUsingSword;
+                isUsingPistol = !isUsingPistol;
+                wrenchObj.SetActive(!wrenchObj.activeInHierarchy);
+                pistolObj.SetActive(!pistolObj.activeInHierarchy);
+            }
+        }
 
-        if (_mainCMovement._isFalling)
+        private bool CanSwitchWeapon()
         {
-            return false;}
+            if (_mainCAttack.isAttacking)
+            {
+                return false;}
+
+            if (_mainCMovement.IsJumping)
+            {
+                return false;}
+
+            if (_mainCMovement.IsFalling)
+            {
+                return false;}
         
-        return true;
-    }
+            return true;
+        }
     
+    }
 }

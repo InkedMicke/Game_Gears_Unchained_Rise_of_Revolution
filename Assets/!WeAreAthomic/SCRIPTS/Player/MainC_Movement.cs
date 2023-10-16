@@ -1,394 +1,392 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MainCMovement : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Player
 {
-    private PlayerInput _playerInput;
-    private PlayerInputActions _playerInputActions;
-    private Animator _anim;
-    private MainCLayers _mainCLayers;
-    private MainCAttack _mainCAttack;
-    private MainCPistol _mainCPistol;
-    private RailGrindSystem _railGrindSystem;
-    private CharacterController _cc;
-    private GODMODE _godMode;
-
-    private GameObject _cameraObj;
-
-    public Transform orientation;
-    public Transform checkGrounded;
-
-    public LayerMask groundLayer;
-
-    private Vector2 _moveVectorKeyboard;
-    private Vector2 _moveVectorGamepad;
-
-    private Vector3 _moveDir;
-    private Vector3 _movement;
-    private Vector3 _velocity;
-
-    [System.NonSerialized] public bool isCrouch;
-    [System.NonSerialized] public bool _isJumping;
-    [System.NonSerialized] public bool _isFalling;
-    private bool _isRunningKeyboard;
-    private bool _isRunningGamepad;
-    private bool _isCrouchWalking;
-    private bool isUsingGamepad;
-    private bool isUsingKeyboard;
-    private bool _canMove;
-    private bool _isGrounded;
-
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float runSpeed;
-    public float turnSmoothTime = 0.1f;
-    [SerializeField] private float timeNextCrouch = 0.5f;
-    [SerializeField] private float timeNextJump = 0.5f;
-    [SerializeField] private float jumpImpulse = 5f;
-    [SerializeField] private float jumpImpulseOnRail = 5f;
-    [SerializeField] private float gravity = -9.8f;
-    private float _moveSpeed;
-    private float _horizontal;
-    [System.NonSerialized] public float _turnSmoothVelocityKeyboard;
-    private float _turnSmoothVelocityGamepad;
-    private float _timeGraceCrouchPeriod;
-    private float _timeGraceJumpPeriod;
-
-    private void Awake()
+    public class MainCMovement : MonoBehaviour
     {
-        _anim = GetComponent<Animator>();
-        _mainCLayers = GetComponent<MainCLayers>();
-        _mainCAttack = GetComponent<MainCAttack>();
-        _mainCPistol = GetComponent<MainCPistol>();
-        _cc = GetComponent<CharacterController>();
-        _godMode = GetComponent<GODMODE>();
-        _railGrindSystem = GetComponent<RailGrindSystem>();
+        private PlayerInput _playerInput;
+        private PlayerInputActions _playerInputActions;
+        private Animator _anim;
+        private MainCLayers _mainCLayers;
+        private MainCAttack _mainCAttack;
+        private MainCPistol _mainCPistol;
+        private RailGrindSystem _railGrindSystem;
+        private CharacterController _cc;
+        private GODMODE _godMode;
 
-        _playerInputActions = new PlayerInputActions();
-    }
+        private GameObject _cameraObj;
 
-    private void Start()
-    {
-        _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
+        public Transform orientation;
+        public Transform checkGrounded;
 
-        _canMove = true;
-    }
+        public LayerMask groundLayer;
 
-    private void OnEnable()
-    {
-        _playerInputActions.Enable();
-        _playerInputActions.Player.Running.performed += RunOn;
-        _playerInputActions.Player.Running.canceled += RunOff;
-        _playerInputActions.Player.Crouch.performed += StartEndCrouch;
-        _playerInputActions.Player.Jump.performed += Jump;
-    }
+        private Vector2 _moveVectorKeyboard;
+        private Vector2 _moveVectorGamepad;
 
-    private void OnDisable()
-    {
-        _playerInputActions.Disable();
-        _playerInputActions.Player.Running.performed -= RunOn;
-        _playerInputActions.Player.Running.canceled -= RunOff;
-        _playerInputActions.Player.Crouch.performed -= StartEndCrouch;
-        _playerInputActions.Player.Jump.performed -= Jump;
-    }
+        private Vector3 _moveDir;
+        private Vector3 _movement;
+        private Vector3 _velocity;
 
-    private void Update()
-    {
-        AnimatorController();
-        if (_canMove && _mainCAttack.CanMove && !_godMode.isGodModeEnabled && !_railGrindSystem.CanJumpOnRail)
+        [System.NonSerialized] public bool IsCrouch;
+        [System.NonSerialized] public bool IsJumping;
+        [System.NonSerialized] public bool IsFalling;
+        private bool _isRunningKeyboard;
+        private bool _isRunningGamepad;
+        private bool _isCrouchWalking;
+        private bool _isUsingGamepad;
+        private bool _isUsingKeyboard;
+        private bool _canMove;
+        private bool _isGrounded;
+
+        [SerializeField] private float walkSpeed;
+        [SerializeField] private float runSpeed;
+        public float turnSmoothTime = 0.1f;
+        [SerializeField] private float timeNextCrouch = 0.5f;
+        [SerializeField] private float timeNextJump = 0.5f;
+        [SerializeField] private float jumpImpulse = 5f;
+        [SerializeField] private float jumpImpulseOnRail = 5f;
+        [SerializeField] private float gravity = -9.8f;
+        private float _moveSpeed;
+        private float _horizontal;
+        [System.NonSerialized] public float _turnSmoothVelocityKeyboard;
+        private float _turnSmoothVelocityGamepad;
+        private float _timeGraceCrouchPeriod;
+        private float _timeGraceJumpPeriod;
+
+        private void Awake()
         {
-            MoveKeyboard();
-            MoveGamepad();
+            _anim = GetComponent<Animator>();
+            _mainCLayers = GetComponent<MainCLayers>();
+            _mainCAttack = GetComponent<MainCAttack>();
+            _mainCPistol = GetComponent<MainCPistol>();
+            _cc = GetComponent<CharacterController>();
+            _godMode = GetComponent<GODMODE>();
+            _railGrindSystem = GetComponent<RailGrindSystem>();
+
+            _playerInputActions = new PlayerInputActions();
         }
 
-        CrouchWalking();
-        ApplyGravity();
-    }
-
-
-    private void AnimatorController()
-    {
-        if (!_godMode.isGodModeEnabled)
+        private void Start()
         {
-            if (!IsGrounded() && _velocity.y < 0 && !_railGrindSystem.IsOnRail() || !_railGrindSystem.IsOnRail() && _velocity.y < 0 && !IsGrounded())
+            _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
+
+            _canMove = true;
+        }
+
+        private void OnEnable()
+        {
+            _playerInputActions.Enable();
+            _playerInputActions.Player.Running.performed += RunOn;
+            _playerInputActions.Player.Running.canceled += RunOff;
+            _playerInputActions.Player.Crouch.performed += StartEndCrouch;
+            _playerInputActions.Player.Jump.performed += Jump;
+        }
+
+        private void OnDisable()
+        {
+            _playerInputActions.Disable();
+            _playerInputActions.Player.Running.performed -= RunOn;
+            _playerInputActions.Player.Running.canceled -= RunOff;
+            _playerInputActions.Player.Crouch.performed -= StartEndCrouch;
+            _playerInputActions.Player.Jump.performed -= Jump;
+        }
+
+        private void Update()
+        {
+            AnimatorController();
+            if (_canMove && !_godMode.isGodModeEnabled && !_railGrindSystem.CanJumpOnRail)
             {
-                _isFalling = true;
-                _isJumping = false;
-                _anim.SetBool(string.Format("isFalling"), _isFalling); // Activa la animaci�n de ca�da
-                _anim.SetBool(string.Format("isJumping"), _isJumping);
+                MoveKeyboard();
+                MoveGamepad();
             }
 
-            if (_isFalling && IsGrounded() ||_isFalling && _railGrindSystem.IsOnRail())
+            CrouchWalking();
+            ApplyGravity();
+        }
+
+
+        private void AnimatorController()
+        {
+            if (!_godMode.isGodModeEnabled)
             {
-                _isFalling = false;
-                _isJumping = false;
-                _anim.SetBool(string.Format("isFalling"), _isFalling); // Activa la animaci�n de ca�da
-                _anim.SetBool(string.Format("isJumping"), _isJumping);
-                _anim.SetBool(string.Format("isGrounded"), true);
-                if (isCrouch)
+                if (!IsGrounded() && _velocity.y < 0 && !_railGrindSystem.IsOnRail() || !_railGrindSystem.IsOnRail() && _velocity.y < 0 && !IsGrounded())
                 {
-                    _mainCLayers.DisableJumpLayer();
+                    IsFalling = true;
+                    IsJumping = false;
+                    _anim.SetBool(string.Format("isFalling"), IsFalling); // Activa la animaci�n de ca�da
+                    _anim.SetBool(string.Format("isJumping"), IsJumping);
                 }
-                _timeGraceJumpPeriod = Time.time + timeNextJump;
+
+                if (IsFalling && IsGrounded() ||IsFalling && _railGrindSystem.IsOnRail())
+                {
+                    IsFalling = false;
+                    IsJumping = false;
+                    _anim.SetBool(string.Format("isFalling"), IsFalling); // Activa la animaci�n de ca�da
+                    _anim.SetBool(string.Format("isJumping"), IsJumping);
+                    _anim.SetBool(string.Format("isGrounded"), true);
+                    if (IsCrouch)
+                    {
+                        _mainCLayers.DisableJumpLayer();
+                    }
+                    _timeGraceJumpPeriod = Time.time + timeNextJump;
+                }
             }
         }
-    }
 
-    private void ApplyGravity()
-    {
-        if (_isJumping || !IsGrounded() && !_godMode.isGodModeEnabled && !_railGrindSystem.IsOnRail())
+        private void ApplyGravity()
         {
-            _velocity += transform.up.normalized * (gravity * Time.deltaTime);
-            _velocity.z = 0f;
-            _cc.Move(_velocity * Time.deltaTime);
-        }
-    }
-
-    private void MoveKeyboard()
-    {
-        _moveVectorKeyboard = _playerInputActions.Player.MovementKeyboard.ReadValue<Vector2>();
-
-        if (_moveVectorKeyboard.magnitude > 0.1f)
-        {
-            isUsingKeyboard = true;
-            isUsingGamepad = false;
-            if (!_isJumping && !_isFalling && !isCrouch)
+            if (IsJumping || !IsGrounded() && !_godMode.isGodModeEnabled && !_railGrindSystem.IsOnRail())
             {
-                InvokeDisableAllLayers();
-                _mainCAttack.EndAttack();
-                _mainCAttack.timeGraceAttackPeriod = Time.time + .2f;
+                _velocity += transform.up.normalized * (gravity * Time.deltaTime);
+                _velocity.z = 0f;
+                _cc.Move(_velocity * Time.deltaTime);
             }
         }
+
+        private void MoveKeyboard()
+        {
+            _moveVectorKeyboard = _playerInputActions.Player.MovementKeyboard.ReadValue<Vector2>();
+
+            if (_moveVectorKeyboard.magnitude > 0.1f)
+            {
+                _isUsingKeyboard = true;
+                _isUsingGamepad = false;
+            }
  
-        if (isUsingGamepad) return;
+            if (_isUsingGamepad) return;
 
-        var direction = new Vector3(_moveVectorKeyboard.x, 0f, _moveVectorKeyboard.y).normalized;
-        var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
-        var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityKeyboard,
-            turnSmoothTime);
+            var direction = new Vector3(_moveVectorKeyboard.x, 0f, _moveVectorKeyboard.y).normalized;
+            var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
+            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityKeyboard,
+                turnSmoothTime);
 
-        _moveDir = orientation.forward * (Time.deltaTime * _moveSpeed * direction.magnitude);
+            _moveDir = orientation.forward * (Time.deltaTime * _moveSpeed * direction.magnitude);
 
-        _anim.SetFloat(string.Format("moveSpeed"), value: _moveSpeed);
+            _anim.SetFloat(string.Format("moveSpeed"), value: _moveSpeed);
 
-        ApplyGravity();
+            ApplyGravity();
 
-        _cc.Move(_moveDir);
+            _cc.Move(_moveDir);
 
-        if (_moveVectorKeyboard.magnitude > 0.1f || _mainCPistol.IsAiming)
-        {
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-        }
-
-        //arreglar cuando mantienes la W se suma y resta a la vez el moveSpeed
-        if (_moveVectorKeyboard.magnitude > 0.1f && !_isRunningKeyboard)
-        {
-            if (_moveSpeed < walkSpeed)
+            if (_moveVectorKeyboard.magnitude > 0.1f && !_mainCPistol.IsAiming)
             {
-                _moveSpeed += Time.deltaTime * 24;
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            }
 
-                if ((Mathf.Abs(_moveSpeed - walkSpeed)) < 0.3f)
+            if (_mainCPistol.IsAiming)
+            {
+                transform.rotation = Quaternion.Euler(0f, _cameraObj.transform.eulerAngles.y, 0f);
+            }
+
+            //arreglar cuando mantienes la W se suma y resta a la vez el moveSpeed
+            if (_moveVectorKeyboard.magnitude > 0.1f && !_isRunningKeyboard)
+            {
+                if (_moveSpeed < walkSpeed)
                 {
-                    _moveSpeed = walkSpeed;
-                }
-            }
+                    _moveSpeed += Time.deltaTime * 24;
 
-            if (_moveSpeed > walkSpeed)
-            {
-                _moveSpeed -= Time.deltaTime * 18;
-            }
-        }
-        else
-        {
-            if (!_isRunningKeyboard || _isRunningKeyboard && _moveVectorKeyboard.magnitude < 0.1f)
-            {
-                if (_moveSpeed > 0)
+                    if ((Mathf.Abs(_moveSpeed - walkSpeed)) < 0.3f)
+                    {
+                        _moveSpeed = walkSpeed;
+                    }
+                }
+
+                if (_moveSpeed > walkSpeed)
                 {
                     _moveSpeed -= Time.deltaTime * 18;
                 }
+            }
+            else
+            {
+                if (!_isRunningKeyboard || _isRunningKeyboard && _moveVectorKeyboard.magnitude < 0.1f)
+                {
+                    if (_moveSpeed > 0)
+                    {
+                        _moveSpeed -= Time.deltaTime * 18;
+                    }
+                    else
+                    {
+                        if (_moveSpeed.Equals(0)) return;
+                        _moveSpeed = 0;
+                    }
+                }
+            }
+
+            if (!(_moveVectorKeyboard.magnitude > 0.1 && _isRunningKeyboard)) return;
+            if (_moveSpeed < runSpeed)
+            {
+                _moveSpeed += Time.deltaTime * 24;
+            }
+            else
+            {
+                if (_moveSpeed.Equals(runSpeed)) return;
+                _moveSpeed = runSpeed;
+            }
+        }
+
+        private void MoveGamepad()
+        {
+            _moveVectorGamepad = _playerInputActions.Player.MovementGamepad.ReadValue<Vector2>();
+
+            if (_moveVectorGamepad.magnitude > 0.1f)
+            {
+                _isUsingGamepad = true;
+                _isUsingKeyboard = false;
+                if (!IsJumping && !IsFalling && !IsCrouch && !_mainCAttack.isAttacking)
+                {
+                    InvokeDisableAllLayers();
+                    _mainCAttack.timeGraceAttackPeriod = Time.time + .2f;
+                }
+            }
+            else
+            {
+                if (_isRunningGamepad)
+                {
+                    _isRunningGamepad = false;
+                }
+            }
+
+
+            if (_isUsingKeyboard) return;
+
+
+            _movement = new Vector3(_moveVectorGamepad.x, 0.0f, _moveVectorGamepad.y);
+
+            var moveSpeed = _isRunningGamepad ? runSpeed : walkSpeed;
+
+            var desiredSpeed = _movement.magnitude * moveSpeed / 2 * 2.0f;
+        
+
+            _cc.Move(_movement * Time.deltaTime);
+        
+            var actualSpeed = _anim.GetFloat(string.Format("moveSpeed"));
+            var interpolatedSpeed = Mathf.Lerp(actualSpeed, desiredSpeed, Time.deltaTime * 4.0f);
+            _anim.SetFloat(string.Format("moveSpeed"), interpolatedSpeed);
+
+            var direction = new Vector3(_moveVectorGamepad.x, 0f, _moveVectorGamepad.y).normalized;
+            var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
+            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityGamepad,
+                turnSmoothTime);
+
+
+            var moveDir = orientation.forward * (Time.deltaTime * _moveSpeed * direction.magnitude);
+
+            if (_moveVectorGamepad.magnitude > 0.1)
+            {
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            }
+        }
+
+        private void RunOn(InputAction.CallbackContext context)
+        {
+            _isRunningKeyboard = true;
+
+            _isRunningGamepad = !_isRunningGamepad;
+        }
+
+        private void RunOff(InputAction.CallbackContext context)
+        {
+            _isRunningKeyboard = false;
+        }
+
+        private void StartEndCrouch(InputAction.CallbackContext context)
+        {
+            IsCrouch = !IsCrouch;
+
+            if (Time.time > _timeGraceCrouchPeriod)
+            {
+                _anim.SetBool(string.Format("isCrouch"), IsCrouch);
+                _timeGraceCrouchPeriod = Time.time + timeNextCrouch;
+
+                if (IsCrouch)
+                {
+                    DisableMovement();
+                    InvokeDisableAllLayers();
+                    _mainCLayers.EnableCrouchLayer();
+                    Invoke(nameof(EnableMovement), 0.5f);
+                }
                 else
                 {
-                    if (_moveSpeed.Equals(0)) return;
-                    _moveSpeed = 0;
+                    DisableMovement();
+                    Invoke(nameof(InvokeDisableCrouchLayer), 0.5f);
+                    Invoke(nameof(EnableMovement), 0.5f);
                 }
             }
         }
 
-        if (!(_moveVectorKeyboard.magnitude > 0.1 && _isRunningKeyboard)) return;
-        if (_moveSpeed < runSpeed)
+        private void InvokeDisableCrouchLayer()
         {
-            _moveSpeed += Time.deltaTime * 24;
+            _mainCLayers.DisableCrouchLayer();
         }
-        else
+
+        public void InvokeDisableAllLayers()
         {
-            if (_moveSpeed.Equals(runSpeed)) return;
-            _moveSpeed = runSpeed;
+            _mainCLayers.DisableCrouchLayer();
+            _mainCLayers.DisableJumpLayer();
+            _mainCLayers.DisableAttackLayer();
+            _mainCLayers.DisablePistolLayer();
         }
-    }
 
-    private void MoveGamepad()
-    {
-        _moveVectorGamepad = _playerInputActions.Player.MovementGamepad.ReadValue<Vector2>();
 
-        if (_moveVectorGamepad.magnitude > 0.1f)
+        private void CrouchWalking()
         {
-            isUsingGamepad = true;
-            isUsingKeyboard = false;
-            if (!_isJumping && !_isFalling && !isCrouch)
+            if (IsCrouch && (_moveVectorKeyboard.magnitude > 0.1f || _moveVectorGamepad.magnitude > 0.1f))
             {
-                InvokeDisableAllLayers();
-                _mainCAttack.EndAttack();
-                _mainCAttack.timeGraceAttackPeriod = Time.time + .2f;
-            }
-        }
-        else
-        {
-            if (_isRunningGamepad)
-            {
-                _isRunningGamepad = false;
-            }
-        }
-
-
-        if (isUsingKeyboard) return;
-
-
-        _movement = new Vector3(_moveVectorGamepad.x, 0.0f, _moveVectorGamepad.y);
-
-        var moveSpeed = _isRunningGamepad ? runSpeed : walkSpeed;
-
-        var desiredSpeed = _movement.magnitude * moveSpeed / 2 * 2.0f;
-        
-
-        _cc.Move(_movement * Time.deltaTime);
-        
-        var actualSpeed = _anim.GetFloat(string.Format("moveSpeed"));
-        var interpolatedSpeed = Mathf.Lerp(actualSpeed, desiredSpeed, Time.deltaTime * 4.0f);
-        _anim.SetFloat(string.Format("moveSpeed"), interpolatedSpeed);
-
-        var direction = new Vector3(_moveVectorGamepad.x, 0f, _moveVectorGamepad.y).normalized;
-        var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
-        var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityGamepad,
-            turnSmoothTime);
-
-
-        var moveDir = orientation.forward * (Time.deltaTime * _moveSpeed * direction.magnitude);
-
-        if (_moveVectorGamepad.magnitude > 0.1)
-        {
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-        }
-    }
-
-    private void RunOn(InputAction.CallbackContext context)
-    {
-        _isRunningKeyboard = true;
-
-        _isRunningGamepad = !_isRunningGamepad;
-    }
-
-    private void RunOff(InputAction.CallbackContext context)
-    {
-        _isRunningKeyboard = false;
-    }
-
-    private void StartEndCrouch(InputAction.CallbackContext context)
-    {
-        isCrouch = !isCrouch;
-
-        if (Time.time > _timeGraceCrouchPeriod)
-        {
-            _anim.SetBool(string.Format("isCrouch"), isCrouch);
-            _timeGraceCrouchPeriod = Time.time + timeNextCrouch;
-
-            if (isCrouch)
-            {
-                DisableMovement();
-                InvokeDisableAllLayers();
-                _mainCLayers.EnableCrouchLayer();
-                Invoke(nameof(EnableMovement), 0.5f);
+                _isCrouchWalking = true;
+                _anim.SetBool(string.Format("isCrouchWalking"), true);
             }
             else
             {
-                DisableMovement();
-                Invoke(nameof(InvokeDisableCrouchLayer), 0.5f);
-                Invoke(nameof(EnableMovement), 0.5f);
+                if (_isCrouchWalking)
+                {
+                    _isCrouchWalking = false;
+                    _anim.SetBool(string.Format("isCrouchWalking"), false);
+                }
             }
         }
-    }
 
-    private void InvokeDisableCrouchLayer()
-    {
-        _mainCLayers.DisableCrouchLayer();
-    }
-
-    public void InvokeDisableAllLayers()
-    {
-        _mainCLayers.DisableCrouchLayer();
-        _mainCLayers.DisableJumpLayer();
-        _mainCLayers.DisableAttackLayer();
-        _mainCLayers.DisablePistolLayer();
-    }
-
-
-    private void CrouchWalking()
-    {
-        if (isCrouch && (_moveVectorKeyboard.magnitude > 0.1f || _moveVectorGamepad.magnitude > 0.1f))
+        private void Jump(InputAction.CallbackContext context)
         {
-            _isCrouchWalking = true;
-            _anim.SetBool(string.Format("isCrouchWalking"), true);
-        }
-        else
-        {
-            if (_isCrouchWalking)
+            if (IsGrounded() && !_railGrindSystem.IsOnRail())
             {
-                _isCrouchWalking = false;
-                _anim.SetBool(string.Format("isCrouchWalking"), false);
+                if (Time.time > _timeGraceJumpPeriod)
+                {
+                    _mainCLayers.EnableJumpLayer();
+                    IsJumping = true;
+                    _velocity.y = Mathf.Sqrt(jumpImpulse * -2 * gravity);
+                    _anim.SetBool(string.Format("isJumping"), IsJumping);
+                    _anim.SetBool(string.Format("isGrounded"), false);
+                }
             }
-        }
-    }
 
-    private void Jump(InputAction.CallbackContext context)
-    {
-        if (IsGrounded() && !_railGrindSystem.IsOnRail())
-        {
-            if (Time.time > _timeGraceJumpPeriod)
+            if (!IsGrounded() && _railGrindSystem.IsOnRail())
             {
-                _mainCLayers.EnableJumpLayer();
-                _isJumping = true;
-                _velocity.y = Mathf.Sqrt(jumpImpulse * -2 * gravity);
-                _anim.SetBool(string.Format("isJumping"), _isJumping);
-                _anim.SetBool(string.Format("isGrounded"), false);
+                if (Time.time > _timeGraceJumpPeriod)
+                {
+                    _mainCLayers.EnableJumpLayer();
+                    IsJumping = true;
+                    _velocity.y = Mathf.Sqrt(jumpImpulseOnRail * -2 * gravity);
+                    _anim.SetBool(string.Format("isJumping"), IsJumping);
+                    _anim.SetBool(string.Format("isGrounded"), false);
+                }
             }
         }
 
-        if (!IsGrounded() && _railGrindSystem.IsOnRail())
+        private void EnableMovement()
         {
-            if (Time.time > _timeGraceJumpPeriod)
-            {
-                _mainCLayers.EnableJumpLayer();
-                _isJumping = true;
-                _velocity.y = Mathf.Sqrt(jumpImpulseOnRail * -2 * gravity);
-                _anim.SetBool(string.Format("isJumping"), _isJumping);
-                _anim.SetBool(string.Format("isGrounded"), false);
-            }
+            _canMove = true;
         }
-    }
 
-    private void EnableMovement()
-    {
-        _canMove = true;
-    }
+        private void DisableMovement()
+        {
+            _canMove = false;
+        }
 
-    private void DisableMovement()
-    {
-        _canMove = false;
-    }
-
-    public bool IsGrounded()
-    {
-        return Physics.CheckSphere(checkGrounded.position, .1f, groundLayer);
+        public bool IsGrounded()
+        {
+            return Physics.CheckSphere(checkGrounded.position, .1f, groundLayer);
+        }
     }
 }

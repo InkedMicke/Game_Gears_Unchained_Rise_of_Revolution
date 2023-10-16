@@ -1,56 +1,55 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
-public class MainCAttack : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Player
 {
-    private MainCMovement _mainCMovement;
-    private PlayerInputActions _playerInputActions;
-    private MainCLayers _mainCLayers;
-    private Animator _anim;
-    private BoxCollider _weaponBC;
-    private CharacterController _cc;
-
-    [SerializeField] private GameObject weaponObj;
-
-    [SerializeField] private Transform middlePosTr;
-    private Transform _closestObject;
-
-    public LayerMask enemyHurtBox;
-
-    [System.NonSerialized] public bool isAttacking;
-    [System.NonSerialized] public bool isFinalAttacking;
-    [System.NonSerialized] public bool canDealDamage;
-    [System.NonSerialized] public bool CanMove;
-    private bool _clickedOnTime;
-    private bool _canNextAttack;
-
-    public int attackCount;
-
-    [SerializeField] private float timeNextAttack = 0.5f;
-    [SerializeField] private float nearEnemieToGoFloat = 2.5f;
-    [SerializeField] private float rotationNearEnemie = 8f;
-    public float timeGraceAttackPeriod;
-
-    private void Awake()
+    public class MainCAttack : MonoBehaviour
     {
-        _mainCMovement = GetComponent<MainCMovement>();
-        _mainCLayers = GetComponent<MainCLayers>();
-        _anim = GetComponent<Animator>();
-        _cc = GetComponent<CharacterController>();
+        private MainCMovement _mainCMovement;
+        private PlayerInputActions _playerInputActions;
+        private MainCLayers _mainCLayers;
+        private Animator _anim;
+        private RailGrindSystem _railGrindSystem;
+        private BoxCollider _weaponBC;
+        private CharacterController _cc;
 
-        _playerInputActions = new PlayerInputActions();
-        _playerInputActions.Enable();
-        _playerInputActions.Player.Attack.performed += Attack;
-        _playerInputActions.Player.Attack.performed += NextCombo;
+        [SerializeField] private GameObject weaponObj;
 
-        _weaponBC = weaponObj.GetComponent<BoxCollider>();
-    }
+        [SerializeField] private Transform middlePosTr;
+        private Transform _closestObject;
 
-    /*private void OnEnable()
+        public LayerMask enemyHurtBox;
+
+        [System.NonSerialized] public bool isAttacking;
+        [System.NonSerialized] public bool canDealDamage;
+        [System.NonSerialized] public bool CanMove;
+        private bool _clickedOnTime;
+        private bool _canNextAttack;
+
+        public int attackCount;
+
+        [SerializeField] private float timeNextAttack = 0.5f;
+        [SerializeField] private float nearEnemieToGoFloat = 2.5f;
+        [SerializeField] private float rotationNearEnemie = 8f;
+        public float timeGraceAttackPeriod;
+
+        private void Awake()
+        {
+            _mainCMovement = GetComponent<MainCMovement>();
+            _mainCLayers = GetComponent<MainCLayers>();
+            _anim = GetComponent<Animator>();
+            _cc = GetComponent<CharacterController>();
+            _railGrindSystem = GetComponent<RailGrindSystem>();
+
+            _playerInputActions = new PlayerInputActions();
+            _playerInputActions.Enable();
+            _playerInputActions.Player.Attack.performed += Attack;
+            _playerInputActions.Player.Attack.performed += NextCombo;
+
+            _weaponBC = weaponObj.GetComponent<BoxCollider>();
+        }
+
+        /*private void OnEnable()
     {
         _playerInputActions.Enable();
         _playerInputActions.Player.Running.performed += Attack;
@@ -62,31 +61,27 @@ public class MainCAttack : MonoBehaviour
         _playerInputActions.Player.Running.performed -= Attack;
     }*/
 
-    private void Attack(InputAction.CallbackContext context)
-    {
-        if (CanAttack())
+        private void Attack(InputAction.CallbackContext context)
         {
-            CanMove = false;
-            CheckNearEnemieToGo();
-            attackCount++;
-            weaponObj.GetComponent<WrenchHitBox>().ClearList();
-            _canNextAttack = false;
-            if (_mainCLayers.isJumpLayerActive)
+            if (_mainCMovement.IsGrounded() && CanAttack() || _railGrindSystem.IsOnRail() && CanAttack())
             {
-                _mainCLayers.DisableJumpLayer();
+                //CheckNearEnemieToGo();
+                attackCount++;
+                weaponObj.GetComponent<WrenchHitBox>().ClearList();
+                _canNextAttack = false;
+                if (_mainCLayers.isJumpLayerActive)
+                {
+                    _mainCLayers.DisableJumpLayer();
+                }
+                isAttacking = true;
+                _mainCLayers.EnableAttackLayer();
+                _anim.SetInteger(string.Format("attackCount"), attackCount);
+
+                _canNextAttack = false;
             }
-            isAttacking = true;
-            _mainCLayers.EnableAttackLayer();
-            _anim.SetInteger(string.Format("attackCount"), attackCount);
-            timeGraceAttackPeriod = Time.time + timeNextAttack;
-
-            _canNextAttack = false;
-            isFinalAttacking = true;
-        
         }
-    }
 
-    private void CheckNearEnemieToGo()
+        /*private void CheckNearEnemieToGo()
     {
         var colliders = Physics.OverlapSphere(middlePosTr.position, nearEnemieToGoFloat, enemyHurtBox);
 
@@ -111,9 +106,9 @@ public class MainCAttack : MonoBehaviour
             StartCoroutine(nameof(RotateToNearEnemie));
 
         }
-    }
+    }*/
 
-    private IEnumerator MoveToNearEnemie()
+        /*private IEnumerator MoveToNearEnemie()
     {
         while (Vector3.Distance(transform.position, _closestObject.position) > 1.3f)
         {
@@ -125,9 +120,9 @@ public class MainCAttack : MonoBehaviour
 
             yield return null;
         }
-    }
+    }*/
 
-    private IEnumerator RotateToNearEnemie()
+        /*private IEnumerator RotateToNearEnemie()
     {
         var b = true;
         while (b)
@@ -145,57 +140,53 @@ public class MainCAttack : MonoBehaviour
             yield return null;
             Debug.Log("hola1");
         }
-    }
+    }*/
 
-    private void OnDrawGizmos() => Gizmos.DrawWireSphere(middlePosTr.position, nearEnemieToGoFloat);
+        private void OnDrawGizmos() => Gizmos.DrawWireSphere(middlePosTr.position, nearEnemieToGoFloat);
 
-    private void NextCombo(InputAction.CallbackContext context)
-    {
-        if (_canNextAttack)
+        private void NextCombo(InputAction.CallbackContext context)
         {
-            attackCount++;
-            _anim.SetInteger(string.Format("attackCount"), attackCount);
-            CheckNearEnemieToGo();
-            _canNextAttack = false;
-            CanMove = false;
+            if (_canNextAttack)
+            {
+                attackCount++;
+                _anim.SetInteger(string.Format("attackCount"), attackCount);
+                //CheckNearEnemieToGo();
+                _canNextAttack = false;
+                CanMove = false;
+            }
         }
-    }
 
-    public void EnableNextAttack() => _canNextAttack = true;
+        public void EnableNextAttack() => _canNextAttack = true;
 
-    public void DisableNextAttack() => _canNextAttack = false;
+        public void DisableNextAttack() => _canNextAttack = false;
 
-    public void EndAttack()
-    {
-        isFinalAttacking = false;
-        isAttacking = false;
-        attackCount = 0;
-        _anim.SetInteger(string.Format("attackCount"), attackCount);
-        _mainCLayers.DisableAttackLayer();
-        timeGraceAttackPeriod = Time.time + timeNextAttack;
-        CanMove = true;
-    }
+        public void EndAttack()
+        {
+            isAttacking = false;
+            attackCount = 0;
+            _anim.SetInteger(string.Format("attackCount"), attackCount);
+            _mainCLayers.DisableAttackLayer();
+            timeGraceAttackPeriod = Time.time + timeNextAttack;
+        }
 
-    private void EnableWeaponCollision()
-    {
-        weaponObj.GetComponent<BoxCollider>().enabled = true;
-    }
+        private void EnableWeaponCollision()
+        {
+            weaponObj.GetComponent<BoxCollider>().enabled = true;
+        }
     
-    private void DisableWeaponCollision()
-    {
-        weaponObj.GetComponent<BoxCollider>().enabled = false;
-        weaponObj.GetComponent<WrenchHitBox>().ClearList();
-    }
+        private void DisableWeaponCollision()
+        {
+            weaponObj.GetComponent<BoxCollider>().enabled = false;
+            weaponObj.GetComponent<WrenchHitBox>().ClearList();
+        }
 
-    public void CanSkipAttack() => CanMove = true;
+        private bool CanAttack()
+        {
+            if (isAttacking) { return false; }
+            if (_mainCMovement.IsCrouch) { return false; }
+            if (!(Time.time > timeGraceAttackPeriod)) { return false; }
 
-    private bool CanAttack()
-    {
-        if (!_mainCMovement.IsGrounded()) { return false; }
-        if (isAttacking) { return false; }
-        if (_mainCMovement.isCrouch) { return false; }
-        if (!(Time.time > timeGraceAttackPeriod)) { return false; }
-
-        return true;
+            return true;
+        }
     }
 }

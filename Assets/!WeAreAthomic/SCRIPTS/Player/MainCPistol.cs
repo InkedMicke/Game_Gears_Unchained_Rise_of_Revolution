@@ -1,109 +1,100 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MainCPistol : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Player
 {
-    private MainCAttack _mainCAttack;
-    private MainCMovement _mainCMovement;
-    private MainCLayers _mainCLayers;
-    private MainCSwitchWeapon _mainCSwitch;
-    private PlayerInputActions _playerInputActions;
+    public class MainCPistol : MonoBehaviour
+    {
+        private MainCAttack _mainCAttack;
+        private MainCMovement _mainCMovement;
+        private MainCLayers _mainCLayers;
+        private MainCSwitchWeapon _mainCSwitch;
+        private PlayerInputActions _playerInputActions;
     
-    [SerializeField] private GameObject cameraObj;
+        [SerializeField] private GameObject cameraObj;
 
-    [SerializeField] private Transform camAimPosTr;
-    [SerializeField] private Transform middlePos;
+        [SerializeField] private Transform camAimPosTr;
+        [SerializeField] private Transform middlePos;
 
-    [SerializeField] private LayerMask enemyHurtBox;
+        [SerializeField] private LayerMask enemyHurtBox;
 
-    private Vector3 _camStartPos;
+        private Vector3 _camStartPos;
 
-    private Quaternion _camStartRot;
+        private Quaternion _camStartRot;
 
-    [System.NonSerialized] public bool IsAiming;
+        [System.NonSerialized] public bool IsAiming;
 
-    [SerializeField] private float sphereDectorSize = 5f;
-    public float _camLerpMultiplier;
+        [SerializeField] private float sphereDectorSize = 5f;
+        public float _camLerpMultiplier;
 
-    private void Awake()
-    {
-        _mainCAttack = GetComponent<MainCAttack>();
-        _mainCMovement = GetComponent<MainCMovement>();
-        _mainCLayers = GetComponent<MainCLayers>();
-        _mainCSwitch = GetComponent<MainCSwitchWeapon>();
+        private void Awake()
+        {
+            _mainCAttack = GetComponent<MainCAttack>();
+            _mainCMovement = GetComponent<MainCMovement>();
+            _mainCLayers = GetComponent<MainCLayers>();
+            _mainCSwitch = GetComponent<MainCSwitchWeapon>();
 
-        _playerInputActions = new PlayerInputActions();
-        _playerInputActions.Enable();
-        _playerInputActions.Player.Ability.performed += EnableAim;
-        _playerInputActions.Player.Ability.canceled += DisableAim;
-    }
+            _playerInputActions = new PlayerInputActions();
+            _playerInputActions.Enable();
+            _playerInputActions.Player.SecondaryAttack.performed += EnableAim;
+            _playerInputActions.Player.SecondaryAttack.canceled += DisableAim;
+        }
     
-    private void Start()
-    {
-        _camStartPos = cameraObj.transform.position;
-        _camStartRot = cameraObj.transform.rotation;
-    }
-
-    private void Update()
-    {
-
-    }
-
-    private void AutoTargetNear()
-    {
-        if(IsAiming)
+        private void Start()
         {
-            var colliders = Physics.OverlapSphere(middlePos.position, sphereDectorSize, enemyHurtBox);
+            _camStartPos = cameraObj.transform.position;
+            _camStartRot = cameraObj.transform.rotation;
+        }
 
-            if(colliders.Length > 1)
+        private void Update()
+        {
+        }
+
+        private void AutoTargetNear()
+        {
+            if(IsAiming)
             {
+                var colliders = Physics.OverlapSphere(middlePos.position, sphereDectorSize, enemyHurtBox);
 
+                if(colliders.Length > 1)
+                {
+
+                }
+                else
+                {
+                    var desiredPos = colliders[0].gameObject.transform.position;
+                    desiredPos = new Vector3(desiredPos.x, transform.position.y, desiredPos.z);
+                    transform.LookAt(desiredPos);
+                }
             }
-            else
+        }
+
+        private void EnableAim(InputAction.CallbackContext context)
+        {
+            if (CanAim())
             {
-                var desiredPos = colliders[0].gameObject.transform.position;
-                desiredPos = new Vector3(desiredPos.x, transform.position.y, desiredPos.z);
-                transform.LookAt(desiredPos);
+                IsAiming = true;
+                _mainCLayers.EnablePistolLayer();
             }
         }
-    }
 
-    private void OnDrawGizmos()
-    {
-        if(IsAiming)
+        private void DisableAim(InputAction.CallbackContext context)
         {
-            Gizmos.DrawSphere(middlePos.position, sphereDectorSize);
-        }
-    }
-
-    private void EnableAim(InputAction.CallbackContext context)
-    {
-        if (CanAim())
-        {
-            IsAiming = true;
-            _mainCLayers.EnablePistolLayer();
-        }
-    }
-
-    private void DisableAim(InputAction.CallbackContext context)
-    {
-        if (IsAiming)
-        {
-            _mainCLayers.DisablePistolLayer();
-            IsAiming = false;
-        }
-    }
-
-    private bool CanAim()
-    {
-        if (!_mainCSwitch.isUsingPistol)
-        {
-            return false;
+            if (IsAiming)
+            {
+                _mainCLayers.DisablePistolLayer();
+                IsAiming = false;
+            }
         }
 
-        return true;
+        private bool CanAim()
+        {
+            if (!_mainCSwitch.isUsingPistol)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

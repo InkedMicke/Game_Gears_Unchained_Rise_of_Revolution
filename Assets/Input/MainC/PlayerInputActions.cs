@@ -82,15 +82,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Ability"",
-                    ""type"": ""Button"",
-                    ""id"": ""19afc4b4-f505-429e-9f74-95b777c5ea9d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""SwitchWeapon"",
                     ""type"": ""Button"",
                     ""id"": ""b03f3a47-0bca-47e2-9c7c-06c1f28e0a18"",
@@ -121,6 +112,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Slow"",
                     ""type"": ""Button"",
                     ""id"": ""0f7e051d-f04c-40ba-b89a-2cebbcd53e54"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SecondaryAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""729a734c-6033-448a-8fa7-5e15e29c56d5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -284,39 +284,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ee188957-b64d-42df-a9ed-bfc615d6c250"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Ability"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9d35969e-1680-452b-8065-85992220b93a"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Mouse"",
-                    ""action"": ""Ability"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9cdf3568-088b-4551-8a96-36c0061f3960"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Ability"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""edebe3c0-bb5a-4b5d-a2aa-ed60bfaf1c7a"",
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
@@ -367,6 +334,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Slow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee7b55e5-4d21-4215-baf3-e0248cf348f3"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""SecondaryAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -445,11 +423,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
-        m_Player_Ability = m_Player.FindAction("Ability", throwIfNotFound: true);
         m_Player_SwitchWeapon = m_Player.FindAction("SwitchWeapon", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_GodMode = m_Player.FindAction("GodMode", throwIfNotFound: true);
         m_Player_Slow = m_Player.FindAction("Slow", throwIfNotFound: true);
+        m_Player_SecondaryAttack = m_Player.FindAction("SecondaryAttack", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
@@ -520,11 +498,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Attack;
-    private readonly InputAction m_Player_Ability;
     private readonly InputAction m_Player_SwitchWeapon;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_GodMode;
     private readonly InputAction m_Player_Slow;
+    private readonly InputAction m_Player_SecondaryAttack;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -535,11 +513,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
-        public InputAction @Ability => m_Wrapper.m_Player_Ability;
         public InputAction @SwitchWeapon => m_Wrapper.m_Player_SwitchWeapon;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @GodMode => m_Wrapper.m_Player_GodMode;
         public InputAction @Slow => m_Wrapper.m_Player_Slow;
+        public InputAction @SecondaryAttack => m_Wrapper.m_Player_SecondaryAttack;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -567,9 +545,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
-            @Ability.started += instance.OnAbility;
-            @Ability.performed += instance.OnAbility;
-            @Ability.canceled += instance.OnAbility;
             @SwitchWeapon.started += instance.OnSwitchWeapon;
             @SwitchWeapon.performed += instance.OnSwitchWeapon;
             @SwitchWeapon.canceled += instance.OnSwitchWeapon;
@@ -582,6 +557,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Slow.started += instance.OnSlow;
             @Slow.performed += instance.OnSlow;
             @Slow.canceled += instance.OnSlow;
+            @SecondaryAttack.started += instance.OnSecondaryAttack;
+            @SecondaryAttack.performed += instance.OnSecondaryAttack;
+            @SecondaryAttack.canceled += instance.OnSecondaryAttack;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -604,9 +582,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
-            @Ability.started -= instance.OnAbility;
-            @Ability.performed -= instance.OnAbility;
-            @Ability.canceled -= instance.OnAbility;
             @SwitchWeapon.started -= instance.OnSwitchWeapon;
             @SwitchWeapon.performed -= instance.OnSwitchWeapon;
             @SwitchWeapon.canceled -= instance.OnSwitchWeapon;
@@ -619,6 +594,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Slow.started -= instance.OnSlow;
             @Slow.performed -= instance.OnSlow;
             @Slow.canceled -= instance.OnSlow;
+            @SecondaryAttack.started -= instance.OnSecondaryAttack;
+            @SecondaryAttack.performed -= instance.OnSecondaryAttack;
+            @SecondaryAttack.canceled -= instance.OnSecondaryAttack;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -717,11 +695,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
-        void OnAbility(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnGodMode(InputAction.CallbackContext context);
         void OnSlow(InputAction.CallbackContext context);
+        void OnSecondaryAttack(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {

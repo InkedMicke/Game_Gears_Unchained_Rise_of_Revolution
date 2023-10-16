@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _WeAreAthomic.SCRIPTS.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

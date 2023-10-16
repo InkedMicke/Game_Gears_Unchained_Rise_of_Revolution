@@ -1,136 +1,139 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using UnityEngine.UI;
+using _WeAreAthomic.SCRIPTS.Enemi;
 using TMPro;
+using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
+using UnityEngine.UI;
 
-public class ChargingSwordSphereTarget : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Player
 {
-    private CharacterController _cc;
-    private Animator _anim;
-    private CapsuleCollider _cC;
-    private MainCAttack _mainCAttack;
-    private MainCLayers _mainCLayers;
-    private PlayerInputActions _playerInputActions;
-
-    [SerializeField] private GameObject sphereDetectorObj;
-    [SerializeField] private GameObject groundTr;
-    [SerializeField] private GameObject mesh;
-    [SerializeField] private GameObject quickCanvas;
-    [SerializeField] private GameObject floatingTextPrefab;
-    [SerializeField] private GameObject orientation;
-    private GameObject _mainCameraObj;
-
-    private Camera _mainCamera;
-
-    [SerializeField] private Image circleImage;
-    [SerializeField] private Image filledCircle;
-
-    [SerializeField] private float minFOV = 40f;
-    [SerializeField] private float cooldown = 5f;
-
-    private GameObject _sphereDetectorInst;
-    public GameObject[] arrowDisplayer;
-    private GameObject _closestGameObject = null;
-    private GameObject _currentGameOBject = null;
-    private GameObject _floatingTextInst;
-
-    private Vector3 _currentPosition;
-
-    [SerializeField] private LayerMask enemyHurtBoxLayer;
-
-    private Color _startColorFilledCircle;
-
-
-    [SerializeField] private float damageMultiplier = 1.05f;
-    [SerializeField] private float circleShrinkSpeed = 2f;
-    [SerializeField] private float minCircleSize = 1f;
-    [SerializeField] private float maxCircleSize = 4f;
-    [SerializeField] private float maxSphereSize = 500f;
-    [SerializeField] private float circleSizeGrowSpeed = 1f;
-    private float _layerMultiplier;
-    private float _currentAnimLength;
-    private float _currentFOV;
-    private float _startFOV;
-    private float _closestDistance = Mathf.Infinity;
-    private float _currentCircleSize;
-    private float _accuracy;
-    private float _damage;
-    private float _originalTimeScale = 1.0f;
-    private float _totalCooldown;
-
-    public int attackCountCharging;
-
-    [System.NonSerialized] public bool isChargingSword;
-    [System.NonSerialized] public bool isSlidingOnEnemies;
-    private bool _isEventActive;
-    private bool _canQuickTimeEvent;
-    private bool _isMousePressed;
-    private bool _isSphereDetectorSpawned;
-    private bool _isSphereDetectorInstNotNull;
-
-    private void Awake()
+    public class ChargingSwordSphereTarget : MonoBehaviour
     {
-        _cc = GetComponent<CharacterController>();
-        _anim = GetComponent<Animator>();
-        _cC = GetComponent<CapsuleCollider>();
-        _mainCAttack = GetComponent<MainCAttack>();
-        _mainCLayers = GetComponent<MainCLayers>();
-        _mainCameraObj = GameObject.FindGameObjectWithTag(string.Format("MainCamera"));
-        _mainCamera = _mainCameraObj.GetComponent<Camera>();
+        private CharacterController _cc;
+        private Animator _anim;
+        private CapsuleCollider _cC;
+        private MainCAttack _mainCAttack;
+        private MainCLayers _mainCLayers;
+        private MainCSwitchWeapon _mainCSwitch;
+        private PlayerInputActions _playerInputActions;
 
-        _playerInputActions = new PlayerInputActions();
-        _playerInputActions.Enable();
-        _playerInputActions.Player.Ability.performed += MouseDown;
-        _playerInputActions.Player.Ability.canceled += MouseUp;
-    }
+        [SerializeField] private GameObject sphereDetectorObj;
+        [SerializeField] private GameObject groundTr;
+        [SerializeField] private GameObject mesh;
+        [SerializeField] private GameObject quickCanvas;
+        [SerializeField] private GameObject floatingTextPrefab;
+        [SerializeField] private GameObject orientation;
+        private GameObject _mainCameraObj;
 
-    private void Start()
-    {
-        _mainCameraObj = GameObject.FindGameObjectWithTag("MainCamera");
-        _currentFOV = _mainCamera.fieldOfView;
-        _startFOV = _currentFOV;
-        _originalTimeScale = Time.timeScale;
-        _startColorFilledCircle = filledCircle.color;
-    }
+        private Camera _mainCamera;
+
+        [SerializeField] private Image circleImage;
+        [SerializeField] private Image filledCircle;
+
+        [SerializeField] private float minFOV = 40f;
+        [SerializeField] private float cooldown = 5f;
+
+        private GameObject _sphereDetectorInst;
+        public GameObject[] arrowDisplayer;
+        private GameObject _closestGameObject = null;
+        private GameObject _currentGameOBject = null;
+        private GameObject _floatingTextInst;
+
+        private Vector3 _currentPosition;
+
+        [SerializeField] private LayerMask enemyHurtBoxLayer;
+
+        private Color _startColorFilledCircle;
 
 
-    private void Update()
-    {
-        //ChargeSword();
-        StartChargingSword();
+        [SerializeField] private float damageMultiplier = 1.05f;
+        [SerializeField] private float circleShrinkSpeed = 2f;
+        [SerializeField] private float minCircleSize = 1f;
+        [SerializeField] private float maxCircleSize = 4f;
+        [SerializeField] private float maxSphereSize = 500f;
+        [SerializeField] private float circleSizeGrowSpeed = 1f;
+        private float _layerMultiplier;
+        private float _currentAnimLength;
+        private float _currentFOV;
+        private float _startFOV;
+        private float _closestDistance = Mathf.Infinity;
+        private float _currentCircleSize;
+        private float _accuracy;
+        private float _damage;
+        private float _originalTimeScale = 1.0f;
+        private float _totalCooldown;
 
-        _mainCamera.fieldOfView = _currentFOV;
-        OnQuickTimeEvent();
-        LookAtFloatingText();
-    }
+        public int attackCountCharging;
 
-    private void MouseDown(InputAction.CallbackContext context)
-    {
-        isChargingSword = true;
-        _isMousePressed = true;
-        SpawnSphereDetector();
-    }
+        [System.NonSerialized] public bool isChargingSword;
+        [System.NonSerialized] public bool isSlidingOnEnemies;
+        private bool _isEventActive;
+        private bool _canQuickTimeEvent;
+        private bool _isMousePressed;
+        private bool _isSphereDetectorSpawned;
+        private bool _isSphereDetectorInstNotNull;
 
-    private void MouseUp(InputAction.CallbackContext context)
-    {
-        _isMousePressed = false;
-        CheckGameObjectsOnList();
-        DestroyArrowsDisplayer();
-        DisableTriggerSphere();
-        DisableTriggerSphere();
-        _totalCooldown = Time.time + 4f;
-    }
-
-    private void StartChargingSword()
-    {
-        if (_isMousePressed && !isSlidingOnEnemies && Time.time > _totalCooldown)
+        private void Awake()
         {
-            /*if (_currentFOV > minFOV)
+            _cc = GetComponent<CharacterController>();
+            _anim = GetComponent<Animator>();
+            _cC = GetComponent<CapsuleCollider>();
+            _mainCAttack = GetComponent<MainCAttack>();
+            _mainCSwitch = GetComponent<MainCSwitchWeapon>();
+            _mainCameraObj = GameObject.FindGameObjectWithTag(string.Format("MainCamera"));
+            _mainCamera = _mainCameraObj.GetComponent<Camera>();
+
+            _playerInputActions = new PlayerInputActions();
+            _playerInputActions.Enable();
+            _playerInputActions.Player.SecondaryAttack.performed += MouseDown;
+            _playerInputActions.Player.SecondaryAttack.canceled += MouseUp;
+        }
+
+        private void Start()
+        {
+            _mainCameraObj = GameObject.FindGameObjectWithTag("MainCamera");
+            _currentFOV = _mainCamera.fieldOfView;
+            _startFOV = _currentFOV;
+            _originalTimeScale = Time.timeScale;
+            _startColorFilledCircle = filledCircle.color;
+        }
+
+
+        private void Update()
+        {
+            //ChargeSword();
+            StartChargingSword();
+
+            _mainCamera.fieldOfView = _currentFOV;
+            OnQuickTimeEvent();
+            LookAtFloatingText();
+        }
+
+        private void MouseDown(InputAction.CallbackContext context)
+        {
+            isChargingSword = true;
+            _isMousePressed = true;
+            SpawnSphereDetector();
+        }
+
+        private void MouseUp(InputAction.CallbackContext context)
+        {
+            _isMousePressed = false;
+            CheckGameObjectsOnList();
+            DestroyArrowsDisplayer();
+            DisableTriggerSphere();
+            DisableTriggerSphere();
+            _totalCooldown = Time.time + 4f;
+        }
+
+        private void StartChargingSword()
+        {
+            if (_isMousePressed && !isSlidingOnEnemies && Time.time > _totalCooldown && !_mainCSwitch.isUsingPistol)
+            {
+                Debug.Log("hola");
+                /*if (_currentFOV > minFOV)
             {
                 _currentFOV -= Time.deltaTime * 16;
             }
@@ -139,376 +142,364 @@ public class ChargingSwordSphereTarget : MonoBehaviour
                 _currentFOV = minFOV;
             }*/
 
-            arrowDisplayer = GameObject.FindGameObjectsWithTag("ArrowDisplayer");
+                arrowDisplayer = GameObject.FindGameObjectsWithTag("ArrowDisplayer");
 
-            foreach (var gameObj in arrowDisplayer)
-            {
-                if (gameObj)
+                foreach (var gameObj in arrowDisplayer)
                 {
-                    var arrowDisTrs = gameObj.transform;
+                    if (gameObj)
+                    {
+                        var arrowDisTrs = gameObj.transform;
 
-                    arrowDisTrs.transform.LookAt(_mainCameraObj.transform.position);
+                        arrowDisTrs.transform.LookAt(_mainCameraObj.transform.position);
 
-                    arrowDisTrs.Rotate(90, 0, 0);
+                        arrowDisTrs.Rotate(90, 0, 0);
+                    }
+                }
+
+                if (_sphereDetectorInst)
+                {
+                    var sphereTr = _sphereDetectorInst.transform;
+
+                    if (sphereTr.localScale.x >= maxSphereSize) return;
+
+                    sphereTr.localScale += new Vector3(circleSizeGrowSpeed, circleSizeGrowSpeed, circleSizeGrowSpeed);
                 }
             }
+        }
 
-            if (_sphereDetectorInst)
+        private void SpawnSphereDetector()
+        {
+            if (!_isSphereDetectorSpawned && isChargingSword)
             {
-                var sphereTr = _sphereDetectorInst.transform;
+                GameManager.Instance.ClearClosestsGameObject();
+                GameManager.Instance.ClearGameObject();
 
-                if (sphereTr.localScale.x >= maxSphereSize) return;
-
-                sphereTr.localScale += new Vector3(circleSizeGrowSpeed, circleSizeGrowSpeed, circleSizeGrowSpeed);
+                _sphereDetectorInst =
+                    Instantiate(sphereDetectorObj, groundTr.transform.position, groundTr.transform.rotation);
+                _isSphereDetectorSpawned = true;
             }
         }
-    }
 
-    private void SpawnSphereDetector()
-    {
-        if (!_isSphereDetectorSpawned && isChargingSword)
+        private void CheckGameObjectsOnList()
         {
-            GameManager.Instance.ClearClosestsGameObject();
-            GameManager.Instance.ClearGameObject();
-
-            _sphereDetectorInst =
-                Instantiate(sphereDetectorObj, groundTr.transform.position, groundTr.transform.rotation);
-            _isSphereDetectorSpawned = true;
-        }
-    }
-
-    private void CheckGameObjectsOnList()
-    {
-        if (isChargingSword)
-        {
-
-            if (GameManager.Instance.gameObjectsList.Count > 0)
+            if (isChargingSword)
             {
-                foreach (var gameObjects in GameManager.Instance.gameObjectsList)
+
+                if (GameManager.Instance.gameObjectsList.Count > 0)
                 {
-                    var actualTrs = gameObjects.transform;
-
-                    var distance = Vector3.Distance(transform.position, actualTrs.transform.position);
-
-                    if (distance < _closestDistance)
+                    foreach (var gameObjects in GameManager.Instance.gameObjectsList)
                     {
-                        _closestDistance = distance;
-                        _closestGameObject = gameObjects;
+                        var actualTrs = gameObjects.transform;
+
+                        var distance = Vector3.Distance(transform.position, actualTrs.transform.position);
+
+                        if (distance < _closestDistance)
+                        {
+                            _closestDistance = distance;
+                            _closestGameObject = gameObjects;
+                        }
+
+                        GameManager.Instance.AddClosestGameObject(gameObjects);
+                        GameManager.Instance.SortClosestsGameObject();
                     }
 
-                    GameManager.Instance.AddClosestGameObject(gameObjects);
-                    GameManager.Instance.SortClosestsGameObject();
+                    StartCoroutine(nameof(SneakThroughEnemies));
                 }
-
-                StartCoroutine(nameof(SneakThroughEnemies));
+                else
+                {
+                    if (_sphereDetectorInst)
+                    {
+                        Destroy(_sphereDetectorInst);
+                        isChargingSword = false;
+                        isSlidingOnEnemies = false;
+                        _mainCLayers.DisableSphereAttackLayer();
+                        _totalCooldown = Time.time + cooldown;
+                    }
+                }
             }
-            else
+        }
+
+        private void DestroyArrowsDisplayer()
+        {
+            arrowDisplayer = GameObject.FindGameObjectsWithTag("ArrowDisplayer");
+
+            foreach (var gameObjectArrow in arrowDisplayer)
+            {
+                if (gameObjectArrow != null)
+                {
+                    Destroy(gameObjectArrow);
+                }
+            }
+        }
+
+        private IEnumerator SneakThroughEnemies()
+        {
+            //mesh.SetActive(false);
+            isSlidingOnEnemies = true;
+            yield return new WaitForSeconds(0.1f);
+            var gameObjectsCopy = new List<GameObject>(GameManager.Instance.closestGameObjectsList);
+
+            if (GameManager.Instance.closestGameObjectsList.Count == 0)
             {
                 if (_sphereDetectorInst)
                 {
+                    Debug.Log("Hola1");
                     Destroy(_sphereDetectorInst);
                     isChargingSword = false;
-                    isSlidingOnEnemies = false;
                     _mainCLayers.DisableSphereAttackLayer();
-                    _totalCooldown = Time.time + cooldown;
                 }
             }
-        }
-    }
 
-    private void DestroyArrowsDisplayer()
-    {
-        arrowDisplayer = GameObject.FindGameObjectsWithTag("ArrowDisplayer");
-
-        foreach (var gameObjectArrow in arrowDisplayer)
-        {
-            if (gameObjectArrow != null)
+            foreach (var gameObj in gameObjectsCopy.Where(gameObj => !_isEventActive))
             {
-                Destroy(gameObjectArrow);
-            }
-        }
-    }
-
-    private IEnumerator SneakThroughEnemies()
-    {
-        //mesh.SetActive(false);
-        isSlidingOnEnemies = true;
-        yield return new WaitForSeconds(0.1f);
-        var gameObjectsCopy = new List<GameObject>(GameManager.Instance.closestGameObjectsList);
-
-        if (GameManager.Instance.closestGameObjectsList.Count == 0)
-        {
-            if (_sphereDetectorInst)
-            {
-                Debug.Log("Hola1");
-                Destroy(_sphereDetectorInst);
-                isChargingSword = false;
-                _mainCLayers.DisableSphereAttackLayer();
-            }
-        }
-
-        foreach (var gameObj in gameObjectsCopy.Where(gameObj => !_isEventActive))
-        {
             
-            mesh.SetActive(false);
-            var closestTr = gameObj.transform;
-            var targetPosition = closestTr.position;
+                mesh.SetActive(false);
+                var closestTr = gameObj.transform;
+                var targetPosition = closestTr.position;
 
-            var moveSpeed = 1f;
-            var acceleration = 70f;
+                var moveSpeed = 1f;
+                var acceleration = 70f;
 
-            var position = transform.position;
-            var desiredTargetPosition = new Vector3(targetPosition.x, position.y, targetPosition.z);
-            var moveDirection = desiredTargetPosition - position;
-            moveDirection.Normalize();
+                var position = transform.position;
+                var desiredTargetPosition = new Vector3(targetPosition.x, position.y, targetPosition.z);
+                var moveDirection = desiredTargetPosition - position;
+                moveDirection.Normalize();
 
-            var currentSpeed = 0f;
+                var currentSpeed = 0f;
 
-            if (Physics.Raycast(closestTr.transform.position, -closestTr.transform.forward, 1.5f, enemyHurtBoxLayer))
-            {
-                if (Physics.Raycast(closestTr.transform.position, closestTr.transform.forward, 1.5f, enemyHurtBoxLayer))
+                if (Physics.Raycast(closestTr.transform.position, -closestTr.transform.forward, 1.5f, enemyHurtBoxLayer))
                 {
-                    if (Physics.Raycast(closestTr.transform.position, closestTr.transform.right, 1.5f,
-                            enemyHurtBoxLayer))
+                    if (Physics.Raycast(closestTr.transform.position, closestTr.transform.forward, 1.5f, enemyHurtBoxLayer))
                     {
-                        if (Physics.Raycast(closestTr.transform.position, -closestTr.transform.right, 1.5f,
+                        if (Physics.Raycast(closestTr.transform.position, closestTr.transform.right, 1.5f,
                                 enemyHurtBoxLayer))
                         {
+                            if (Physics.Raycast(closestTr.transform.position, -closestTr.transform.right, 1.5f,
+                                    enemyHurtBoxLayer))
+                            {
+                            }
+                            else
+                            {
+                                var desiredPos = new Vector3(closestTr.position.x, transform.position.y,
+                                    closestTr.position.z);
+                                transform.position = desiredPos + -closestTr.transform.right;
+                            }
                         }
                         else
                         {
-                            var desiredPos = new Vector3(closestTr.position.x, transform.position.y,
-                                closestTr.position.z);
-                            transform.position = desiredPos + -closestTr.transform.right;
+                            var desiredPos = new Vector3(closestTr.position.x, transform.position.y, closestTr.position.z);
+                            transform.position = desiredPos + closestTr.transform.right;
                         }
                     }
                     else
                     {
                         var desiredPos = new Vector3(closestTr.position.x, transform.position.y, closestTr.position.z);
-                        transform.position = desiredPos + closestTr.transform.right;
+                        transform.position = desiredPos + closestTr.transform.forward;
                     }
                 }
                 else
                 {
                     var desiredPos = new Vector3(closestTr.position.x, transform.position.y, closestTr.position.z);
-                    transform.position = desiredPos + closestTr.transform.forward;
+                    transform.position = desiredPos + -closestTr.transform.forward;
                 }
+
+                var desiredRot = new Vector3(closestTr.position.x, position.y, closestTr.position.z);
+                transform.LookAt(desiredRot);
+
+                GameManager.Instance.RemoveClosestsGameObject(gameObj);
+                mesh.SetActive(true);
+
+                _mainCLayers.EnableSphereAttackLayer();
+
+                _anim.SetTrigger(string.Format("sphereAttack"));
+                filledCircle.color = _startColorFilledCircle;
+                quickCanvas.SetActive(true);
+                _currentGameOBject = gameObj;
+                StartQuickTimeEvent();
+
+
+                yield return new WaitForSeconds(1);
             }
-            else
-            {
-                var desiredPos = new Vector3(closestTr.position.x, transform.position.y, closestTr.position.z);
-                transform.position = desiredPos + -closestTr.transform.forward;
-            }
 
-            var desiredRot = new Vector3(closestTr.position.x, position.y, closestTr.position.z);
-            transform.LookAt(desiredRot);
-
-            GameManager.Instance.RemoveClosestsGameObject(gameObj);
-            mesh.SetActive(true);
-
-            _mainCLayers.EnableSphereAttackLayer();
-
-            _anim.SetTrigger(string.Format("sphereAttack"));
-            filledCircle.color = _startColorFilledCircle;
-            quickCanvas.SetActive(true);
-            _currentGameOBject = gameObj;
-            StartQuickTimeEvent();
-
-
-            yield return new WaitForSeconds(1);
+            //swordTrail.SetActive(false);
+            isSlidingOnEnemies = false;
         }
 
-        //swordTrail.SetActive(false);
-        isSlidingOnEnemies = false;
-    }
-
-    private void OnDrawGizmos()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(string.Format("Test"));
-        
-        foreach(GameObject enemie in enemies)
+        private void StartQuickTimeEvent()
         {
-            Debug.DrawRay(enemie.transform.position, enemie.transform.forward);
-            Debug.DrawRay(enemie.transform.position, -enemie.transform.forward);
-            Debug.DrawRay(enemie.transform.position, enemie.transform.right);
-            Debug.DrawRay(enemie.transform.position, -enemie.transform.right);
+            _isEventActive = true;
+            Time.timeScale = 0.08f;
+            _currentCircleSize = maxCircleSize;
+
+            circleShrinkSpeed = Random.Range(1f, 3f);
+
+            circleImage.gameObject.SetActive(true);
+            circleImage.transform.localScale = Vector3.one * _currentCircleSize;
+            _canQuickTimeEvent = true;
         }
-    }
 
-    private void StartQuickTimeEvent()
-    {
-        _isEventActive = true;
-        Time.timeScale = 0.08f;
-        _currentCircleSize = maxCircleSize;
-
-        circleShrinkSpeed = Random.Range(1f, 3f);
-
-        circleImage.gameObject.SetActive(true);
-        circleImage.transform.localScale = Vector3.one * _currentCircleSize;
-        _canQuickTimeEvent = true;
-    }
-
-    private void OnQuickTimeEvent()
-    {
-        if (_canQuickTimeEvent)
+        private void OnQuickTimeEvent()
         {
-            var shrinkAmount = circleShrinkSpeed * Time.unscaledDeltaTime;
-            _currentCircleSize -= shrinkAmount;
-            _currentCircleSize = Mathf.Clamp(_currentCircleSize, minCircleSize, maxCircleSize);
-
-            var newScale = Vector3.one * _currentCircleSize;
-            circleImage.transform.localScale = newScale;
-
-            if (_currentCircleSize <= minCircleSize)
+            if (_canQuickTimeEvent)
             {
-                EndQuickTimeEvent(false);
-            }
+                var shrinkAmount = circleShrinkSpeed * Time.unscaledDeltaTime;
+                _currentCircleSize -= shrinkAmount;
+                _currentCircleSize = Mathf.Clamp(_currentCircleSize, minCircleSize, maxCircleSize);
 
+                var newScale = Vector3.one * _currentCircleSize;
+                circleImage.transform.localScale = newScale;
 
-            else if (Input.GetKeyDown(KeyCode.Space))
-            {
-                // El jugador presionó la barra espaciadora
-                EndQuickTimeEvent(true);
-            }
-        }
-    }
-
-    private void EndQuickTimeEvent(bool success)
-    {
-        // Finalizar el QTE y calcular el daño basado en la precisión
-        _isEventActive = false;
-        _canQuickTimeEvent = false;
-
-        if (success)
-        {
-            var clampedCircleSize = Mathf.Clamp(_currentCircleSize, minCircleSize, maxCircleSize);
-            _accuracy = 100f * (maxCircleSize - clampedCircleSize) / (maxCircleSize - minCircleSize);
-
-            if (_accuracy >= 90f)
-            {
-                filledCircle.color = Color.green;
-                _damage = 100f; // Daño máximo cuando la precisión está entre 90-100%
-                if (floatingTextPrefab)
+                if (_currentCircleSize <= minCircleSize)
                 {
-                    ShowFloatingTextDamage(_damage);
+                    EndQuickTimeEvent(false);
                 }
 
-                DummieHurtBox dummieHurtBox;
 
-                dummieHurtBox = _currentGameOBject.GetComponentInChildren<DummieHurtBox>();
-                dummieHurtBox.TakeDamage(_damage);
+                else if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    // El jugador presionó la barra espaciadora
+                    EndQuickTimeEvent(true);
+                }
+            }
+        }
+
+        private void EndQuickTimeEvent(bool success)
+        {
+            // Finalizar el QTE y calcular el daño basado en la precisión
+            _isEventActive = false;
+            _canQuickTimeEvent = false;
+
+            if (success)
+            {
+                var clampedCircleSize = Mathf.Clamp(_currentCircleSize, minCircleSize, maxCircleSize);
+                _accuracy = 100f * (maxCircleSize - clampedCircleSize) / (maxCircleSize - minCircleSize);
+
+                if (_accuracy >= 90f)
+                {
+                    filledCircle.color = Color.green;
+                    _damage = 100f; // Daño máximo cuando la precisión está entre 90-100%
+                    if (floatingTextPrefab)
+                    {
+                        ShowFloatingTextDamage(_damage);
+                    }
+
+                    DummieHurtBox dummieHurtBox;
+
+                    dummieHurtBox = _currentGameOBject.GetComponentInChildren<DummieHurtBox>();
+                    dummieHurtBox.TakeDamage(_damage);
+                }
+                else
+                {
+                    filledCircle.color = Color.red;
+                    damageMultiplier =
+                        Mathf.Lerp(1f, 0f,
+                            (90f - _accuracy) / 90f); // Ajustar el multiplicador de daño en función de la precisión
+                    _damage = _accuracy * damageMultiplier;
+                    if (floatingTextPrefab)
+                    {
+                        ShowFloatingTextDamage(_damage);
+                    }
+
+                    DummieHurtBox dummieHurtBox;
+
+                    dummieHurtBox = _currentGameOBject.GetComponentInChildren<DummieHurtBox>();
+                    dummieHurtBox.TakeDamage(_damage);
+                }
             }
             else
             {
                 filledCircle.color = Color.red;
-                damageMultiplier =
-                    Mathf.Lerp(1f, 0f,
-                        (90f - _accuracy) / 90f); // Ajustar el multiplicador de daño en función de la precisión
-                _damage = _accuracy * damageMultiplier;
                 if (floatingTextPrefab)
                 {
-                    ShowFloatingTextDamage(_damage);
+                    ShowFloatingText("Miss!");
                 }
-
-                DummieHurtBox dummieHurtBox;
-
-                dummieHurtBox = _currentGameOBject.GetComponentInChildren<DummieHurtBox>();
-                dummieHurtBox.TakeDamage(_damage);
             }
-        }
-        else
-        {
-            filledCircle.color = Color.red;
-            if (floatingTextPrefab)
-            {
-                ShowFloatingText("Miss!");
-            }
-        }
 
-        Time.timeScale = _originalTimeScale;
+            Time.timeScale = _originalTimeScale;
         
-        if (GameManager.Instance.closestGameObjectsList.Count == 0)
-        {
-            if (_sphereDetectorInst)
+            if (GameManager.Instance.closestGameObjectsList.Count == 0)
             {
-                Debug.Log("Hola1");
-                Destroy(_sphereDetectorInst);
-                isChargingSword = false;
-                _mainCLayers.DisableSphereAttackLayer();
+                if (_sphereDetectorInst)
+                {
+                    Debug.Log("Hola1");
+                    Destroy(_sphereDetectorInst);
+                    isChargingSword = false;
+                    _mainCLayers.DisableSphereAttackLayer();
+                }
             }
+
+            Invoke(nameof(DisableQrteCanvas), 0.1f);
         }
 
-        Invoke(nameof(DisableQrteCanvas), 0.1f);
-    }
-
-    private bool CheckObstacle()
-    {
-        var ray = new Ray(transform.position, orientation.transform.forward);
-
-        var hits = Physics.RaycastAll(ray, 4f);
-
-        if (hits.Length > 1)
+        private bool CheckObstacle()
         {
-            var firstHit = hits[0];
-            var hitObject = firstHit.collider.gameObject;
+            var ray = new Ray(transform.position, orientation.transform.forward);
 
-            if (!(hitObject == _closestGameObject))
+            var hits = Physics.RaycastAll(ray, 4f);
+
+            if (hits.Length > 1)
             {
-                return false;
+                var firstHit = hits[0];
+                var hitObject = firstHit.collider.gameObject;
+
+                if (!(hitObject == _closestGameObject))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
+
             else
             {
                 return true;
             }
         }
 
-        else
+        private void ShowFloatingTextDamage(float damage)
         {
-            return true;
+            _floatingTextInst = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
+            _floatingTextInst.GetComponent<TextMeshPro>().text = damage.ToString(("0") + "!");
+            _floatingTextInst.transform.Rotate(0, 0, 180);
         }
-    }
 
-    private void ShowFloatingTextDamage(float damage)
-    {
-        _floatingTextInst = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
-        _floatingTextInst.GetComponent<TextMeshPro>().text = damage.ToString(("0") + "!");
-        _floatingTextInst.transform.Rotate(0, 0, 180);
-    }
-
-    private void ShowFloatingText(string text)
-    {
-        _floatingTextInst = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
-        _floatingTextInst.GetComponent<TextMeshPro>().text = text;
-        _floatingTextInst.transform.Rotate(0, 0, 180);
-    }
-
-    private void LookAtFloatingText()
-    {
-        if (_floatingTextInst)
+        private void ShowFloatingText(string text)
         {
-            //floatingTextInst.transform.LookAt(cameraObj.position);
-            var rotation = _mainCameraObj.transform.rotation;
-            var targetRotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, 0f);
-            _floatingTextInst.transform.rotation = Quaternion.Slerp(_floatingTextInst.transform.rotation,
-                targetRotation, 200f * Time.deltaTime);
+            _floatingTextInst = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
+            _floatingTextInst.GetComponent<TextMeshPro>().text = text;
+            _floatingTextInst.transform.Rotate(0, 0, 180);
         }
-    }
 
-    private void DisableQrteCanvas()
-    {
-        quickCanvas.SetActive(false);
-    }
-
-
-    private void DisableTriggerSphere()
-    {
-        if (_sphereDetectorInst)
+        private void LookAtFloatingText()
         {
-            var scSphere = _sphereDetectorInst.GetComponent<SphereCollider>();
-
-            if (scSphere.isTrigger == true)
+            if (_floatingTextInst)
             {
-                scSphere.isTrigger = false;
+                //floatingTextInst.transform.LookAt(cameraObj.position);
+                var rotation = _mainCameraObj.transform.rotation;
+                var targetRotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y, 0f);
+                _floatingTextInst.transform.rotation = Quaternion.Slerp(_floatingTextInst.transform.rotation,
+                    targetRotation, 200f * Time.deltaTime);
+            }
+        }
+
+        private void DisableQrteCanvas()
+        {
+            quickCanvas.SetActive(false);
+        }
+
+
+        private void DisableTriggerSphere()
+        {
+            if (_sphereDetectorInst)
+            {
+                var scSphere = _sphereDetectorInst.GetComponent<SphereCollider>();
+
+                if (scSphere.isTrigger == true)
+                {
+                    scSphere.isTrigger = false;
+                }
             }
         }
     }
