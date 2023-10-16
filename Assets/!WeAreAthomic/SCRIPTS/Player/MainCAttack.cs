@@ -180,6 +180,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
             weaponObj.GetComponent<WrenchHitBox>().ClearList();
         }
 
+        public void SetAttackCount(int value)
+        {
+            attackCount = value;
+            _anim.SetInteger(string.Format("attackCount"), value);
+        }
+
         private bool CanAttack()
         {
             if (isAttacking) { return false; }

@@ -2360,6 +2360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18c83c301c467b1419acb681fbc0cb35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraBaseObj: {fileID: 0}
   orientation: {fileID: 2319653302387130582}
   checkGrounded: {fileID: 3521191943066113545}
   groundLayer:
@@ -2367,12 +2368,13 @@ MonoBehaviour:
     m_Bits: 64
   walkSpeed: 2
   runSpeed: 4
-  turnSmoothTime: 0.05
   timeNextCrouch: 0.5
   timeNextJump: 0.5
   jumpImpulse: 3
   jumpImpulseOnRail: 5
   gravity: -20
+  aimSpeed: 8
+  turnSmoothTime: 0.05
 --- !u!114 &1735365384744813436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2408,11 +2410,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraObj: {fileID: 0}
+  cameraBaseObj: {fileID: 0}
   camAimPosTr: {fileID: 8778760772639735531}
   middlePos: {fileID: 2233697884540587679}
+  orientation: {fileID: 2319653302387130582}
   enemyHurtBox:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 512
   sphereDectorSize: 3
   _camLerpMultiplier: 0
 --- !u!114 &7818971001962028078

@@ -15,7 +15,7 @@ public class Button_Interactable : MonoBehaviour, IInteractable
 
     Transform playerTr;
 
-    private bool _isSeeing;
+    private bool _isShowingButton;
 
     public UnityEvent[] eventsToActivate;
 
@@ -38,7 +38,7 @@ public class Button_Interactable : MonoBehaviour, IInteractable
 
     private void ShowCircle()
     {
-        if (Vector3.Distance(transform.position, playerTr.position) < 10)
+        if (Vector3.Distance(transform.position, playerTr.position) < 10 && !_isShowingButton)
         {
             circleObj.SetActive(true);
         }
@@ -58,11 +58,13 @@ public class Button_Interactable : MonoBehaviour, IInteractable
 
     public void ShowButton()
     {
+        _isShowingButton = true;
         eButtonObj.SetActive(true);
     }
 
     public void HideButton()
     {
+        _isShowingButton = false;
         eButtonObj.SetActive(false);
     }
 

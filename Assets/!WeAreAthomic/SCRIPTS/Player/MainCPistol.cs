@@ -10,22 +10,24 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCLayers _mainCLayers;
         private MainCSwitchWeapon _mainCSwitch;
         private PlayerInputActions _playerInputActions;
+        private CameraFollower _camFollower;
     
         [SerializeField] private GameObject cameraObj;
+        [SerializeField] private GameObject cameraBaseObj;
+        private Transform _closestTransform = null;
 
         [SerializeField] private Transform camAimPosTr;
         [SerializeField] private Transform middlePos;
+        [SerializeField] private Transform orientation;
 
         [SerializeField] private LayerMask enemyHurtBox;
 
-        private Vector3 _camStartPos;
-
-        private Quaternion _camStartRot;
-
         [System.NonSerialized] public bool IsAiming;
+        [System.NonSerialized] public bool IsAutoTargeting;
 
         [SerializeField] private float sphereDectorSize = 5f;
         public float _camLerpMultiplier;
+        private float _closestDistance = Mathf.Infinity;
 
         private void Awake()
         {
@@ -42,12 +44,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
     
         private void Start()
         {
-            _camStartPos = cameraObj.transform.position;
-            _camStartRot = cameraObj.transform.rotation;
+            _camFollower = cameraBaseObj.GetComponent<CameraFollower>();
         }
 
         private void Update()
         {
+            AutoTargetNear();
         }
 
         private void AutoTargetNear()
@@ -55,14 +57,40 @@ namespace _WeAreAthomic.SCRIPTS.Player
             if(IsAiming)
             {
                 var colliders = Physics.OverlapSphere(middlePos.position, sphereDectorSize, enemyHurtBox);
+                Debug.Log("hola1");
 
                 if(colliders.Length > 1)
                 {
+                    foreach (Collider col in colliders)
+                    {
+                        var distance = Vector3.Distance(transform.position, col.transform.position);
 
+                        if (distance < _closestDistance)
+                        {
+                            _closestDistance = distance;
+                            _closestTransform = col.gameObject.transform;
+                        }
+                    }
                 }
                 else
                 {
-                    var desiredPos = colliders[0].gameObject.transform.position;
+                    if (colliders.Length > 0)
+                    {
+                        IsAutoTargeting = true;
+                        _closestTransform = colliders[0].gameObject.transform;
+                    }
+                    else
+                    {
+                        if(IsAutoTargeting)
+                        {
+                            IsAutoTargeting = false;
+                        }
+                    }
+                }
+
+                if (colliders.Length > 0)
+                {
+                    var desiredPos = _closestTransform.transform.position;
                     desiredPos = new Vector3(desiredPos.x, transform.position.y, desiredPos.z);
                     transform.LookAt(desiredPos);
                 }

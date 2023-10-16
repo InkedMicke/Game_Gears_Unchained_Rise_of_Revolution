@@ -15,6 +15,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private CharacterController _cc;
         private GODMODE _godMode;
 
+        [SerializeField] private GameObject cameraBaseObj;
         private GameObject _cameraObj;
 
         public Transform orientation;
@@ -39,21 +40,28 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private bool _isUsingKeyboard;
         private bool _canMove;
         private bool _isGrounded;
+        private bool isMoveWhileAimingWPressed;
+        private bool isMoveWhileAimingSPressed;
+        private bool isMoveWhileAimingAPressed;
+        private bool isMoveWhileAimingDPressed;
 
+        [System.NonSerialized] public float _turnSmoothVelocityKeyboard;
         [SerializeField] private float walkSpeed;
         [SerializeField] private float runSpeed;
-        public float turnSmoothTime = 0.1f;
         [SerializeField] private float timeNextCrouch = 0.5f;
         [SerializeField] private float timeNextJump = 0.5f;
         [SerializeField] private float jumpImpulse = 5f;
         [SerializeField] private float jumpImpulseOnRail = 5f;
         [SerializeField] private float gravity = -9.8f;
+        [SerializeField] private float aimSpeed;
+        public float turnSmoothTime = 0.1f;
         private float _moveSpeed;
         private float _horizontal;
-        [System.NonSerialized] public float _turnSmoothVelocityKeyboard;
         private float _turnSmoothVelocityGamepad;
         private float _timeGraceCrouchPeriod;
         private float _timeGraceJumpPeriod;
+        private float _moveAimingX;
+        private float _moveAimingY;
 
         private void Awake()
         {
@@ -133,6 +141,10 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     _timeGraceJumpPeriod = Time.time + timeNextJump;
                 }
             }
+
+            _anim.SetFloat(string.Format("pistolMoveX"), _moveAimingX);
+            _anim.SetFloat(string.Format("pistolMoveY"), _moveAimingY);
+            
         }
 
         private void ApplyGravity()
@@ -168,16 +180,37 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
             ApplyGravity();
 
-            _cc.Move(_moveDir);
+            if (!_mainCPistol.IsAiming)
+            {
+                _cc.Move(_moveDir);
+            }
+            else
+            {
+                if (!_mainCPistol.IsAutoTargeting)
+                {
+                    transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, cameraBaseObj.transform.localEulerAngles.y, transform.localEulerAngles.z);
+                }
+
+                var moveDir = new Vector3();
+                if (_mainCPistol.IsAutoTargeting)
+                {
+                    moveDir = cameraBaseObj.transform.forward * _moveVectorKeyboard.y + cameraBaseObj.transform.right * _moveVectorKeyboard.x;
+                }
+                else
+                {
+                    moveDir = orientation.forward * _moveVectorKeyboard.y + orientation.right * _moveVectorKeyboard.x;
+                }
+                _cc.Move(moveDir * Time.deltaTime * _moveSpeed);
+            }
+
+            MoveWhileAiming();
+
+            _anim.SetFloat(string.Format("pistolMoveX"), _moveAimingX);
+            _anim.SetFloat(string.Format("pistolMoveY"), _moveAimingY);
 
             if (_moveVectorKeyboard.magnitude > 0.1f && !_mainCPistol.IsAiming)
             {
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            }
-
-            if (_mainCPistol.IsAiming)
-            {
-                transform.rotation = Quaternion.Euler(0f, _cameraObj.transform.eulerAngles.y, 0f);
             }
 
             //arreglar cuando mantienes la W se suma y resta a la vez el moveSpeed
@@ -370,6 +403,97 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     _velocity.y = Mathf.Sqrt(jumpImpulseOnRail * -2 * gravity);
                     _anim.SetBool(string.Format("isJumping"), IsJumping);
                     _anim.SetBool(string.Format("isGrounded"), false);
+                }
+            }
+        }
+
+        private void MoveWhileAiming()
+        {
+            if(_moveVectorKeyboard.x > 0.1f)
+            {
+                isMoveWhileAimingAPressed = true;
+                _moveAimingX += aimSpeed * Time.deltaTime;
+                if(_moveAimingX > 1)
+                {
+                    _moveAimingX = 1;
+                }
+            }
+            else
+            {
+                if (isMoveWhileAimingAPressed == true)
+                {
+                    _moveAimingX -= aimSpeed * Time.deltaTime;
+                    if (_moveAimingX <= 0)
+                    {
+                        _moveAimingX = 0;
+                        isMoveWhileAimingAPressed = false;
+                    }
+                }
+            }
+
+            if (_moveVectorKeyboard.x < -0.1f)
+            {
+                isMoveWhileAimingDPressed = true;
+                _moveAimingX -= aimSpeed * Time.deltaTime;
+                if (_moveAimingX < -1)
+                {
+                    _moveAimingX = -1;
+                }
+            }
+            else
+            {
+                if (isMoveWhileAimingDPressed == true)
+                {
+                    _moveAimingX += aimSpeed * Time.deltaTime;
+                    if (_moveAimingX >= 0)
+                    {
+                        _moveAimingX = 0;
+                        isMoveWhileAimingDPressed = false;
+                    }
+                }
+            }
+
+            if (_moveVectorKeyboard.y > 0.1f)
+            {
+                isMoveWhileAimingWPressed = true;
+                _moveAimingY += aimSpeed * Time.deltaTime;
+                if (_moveAimingY > 1)
+                {
+                    _moveAimingY = 1;
+                }
+            }
+            else
+            {
+                if (isMoveWhileAimingWPressed == true)
+                {
+                    _moveAimingY -= aimSpeed * Time.deltaTime;
+                    if (_moveAimingY <= 0)
+                    {
+                        _moveAimingY = 0;
+                        isMoveWhileAimingWPressed = false;
+                    }
+                }
+            }
+
+            if (_moveVectorKeyboard.y < -0.1f)
+            {
+                isMoveWhileAimingSPressed = true;
+                _moveAimingY -= aimSpeed * Time.deltaTime;
+                if (_moveAimingY < -1)
+                {
+                    _moveAimingY = -1;
+                }
+            }
+            else
+            {
+                if (isMoveWhileAimingSPressed == true)
+                {
+                    _moveAimingY += aimSpeed * Time.deltaTime;
+                    if (_moveAimingY >= 0)
+                    {
+                        _moveAimingY = 0;
+                        isMoveWhileAimingSPressed = false;
+                    }
                 }
             }
         }

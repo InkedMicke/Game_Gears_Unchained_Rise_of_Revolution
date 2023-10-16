@@ -185,6 +185,9 @@ namespace _WeAreAthomic.SCRIPTS
 
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
+
+                Debug.Log(rotationSpeed * Time.deltaTime);
+
                 if (IsOnRail())
                 {
                     if (Vector3.Distance(transform.position, directionsList[childActual].position) < 0.3f)

@@ -184,7 +184,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             if (isChargingSword)
             {
-
                 if (GameManager.Instance.gameObjectsList.Count > 0)
                 {
                     foreach (var gameObjects in GameManager.Instance.gameObjectsList)
@@ -212,7 +211,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
                         Destroy(_sphereDetectorInst);
                         isChargingSword = false;
                         isSlidingOnEnemies = false;
-                        _mainCLayers.DisableSphereAttackLayer();
                         _totalCooldown = Time.time + cooldown;
                     }
                 }
@@ -235,6 +233,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private IEnumerator SneakThroughEnemies()
         {
             //mesh.SetActive(false);
+            _cc.enabled = false;
             isSlidingOnEnemies = true;
             yield return new WaitForSeconds(0.1f);
             var gameObjectsCopy = new List<GameObject>(GameManager.Instance.closestGameObjectsList);
@@ -246,13 +245,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     Debug.Log("Hola1");
                     Destroy(_sphereDetectorInst);
                     isChargingSword = false;
-                    _mainCLayers.DisableSphereAttackLayer();
                 }
             }
 
             foreach (var gameObj in gameObjectsCopy.Where(gameObj => !_isEventActive))
             {
-            
+                _mainCAttack.SetAttackCount(0);
                 mesh.SetActive(false);
                 var closestTr = gameObj.transform;
                 var targetPosition = closestTr.position;
@@ -309,9 +307,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 GameManager.Instance.RemoveClosestsGameObject(gameObj);
                 mesh.SetActive(true);
 
-                _mainCLayers.EnableSphereAttackLayer();
-
-                _anim.SetTrigger(string.Format("sphereAttack"));
+                _mainCLayers.EnableAttackLayer();
+                _mainCAttack.SetAttackCount(1);
                 filledCircle.color = _startColorFilledCircle;
                 quickCanvas.SetActive(true);
                 _currentGameOBject = gameObj;
@@ -323,6 +320,9 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
             //swordTrail.SetActive(false);
             isSlidingOnEnemies = false;
+
+            _cc.enabled = true;
+            isChargingSword = false;
         }
 
         private void StartQuickTimeEvent()
@@ -424,7 +424,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     Debug.Log("Hola1");
                     Destroy(_sphereDetectorInst);
                     isChargingSword = false;
-                    _mainCLayers.DisableSphereAttackLayer();
                 }
             }
 
