@@ -1625,128 +1625,6 @@ Transform:
   m_Father: {fileID: 1134289357082079767}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4911403776799980387
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5720450148255719897}
-  - component: {fileID: 8704548299401850492}
-  - component: {fileID: 6856787361087560374}
-  - component: {fileID: 7096584685625607395}
-  - component: {fileID: 2732614827644427969}
-  m_Layer: 7
-  m_Name: OmiWrenchLow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5720450148255719897
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4911403776799980387}
-  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -0.1401, y: 0.1109, z: 0.0343}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5092639875875290706}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
---- !u!33 &8704548299401850492
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4911403776799980387}
-  m_Mesh: {fileID: -7624615498022577912, guid: 14695e25e16c0f144ac27ae0a4d44b7b, type: 3}
---- !u!23 &6856787361087560374
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4911403776799980387}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: e1d782a292c19944aaf43f7abf0b5473, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7096584685625607395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4911403776799980387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ab7673dc4e2cad4692f4a555ef62729, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyHurtBox:
-    serializedVersion: 2
-    m_Bits: 1024
-  colliderList: []
---- !u!65 &2732614827644427969
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4911403776799980387}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.18, y: 0.3665629, z: 0.27}
-  m_Center: {x: -0.000000052154064, y: -0.00000011175871, z: -0.000000059604645}
 --- !u!1 &4926772395500643269
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,7 +2155,7 @@ Transform:
   - {fileID: 8778760772639735531}
   - {fileID: 2233697884540587679}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2965170494674721950
 MonoBehaviour:
@@ -2444,7 +2322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa13c3d556689e043948e901c48cf28d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wrenchObj: {fileID: 4911403776799980387}
+  wrenchObj: {fileID: 0}
   pistolObj: {fileID: 3248591855073337272}
   isUsingSword: 1
   isUsingPistol: 0
@@ -2509,7 +2387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hackSlider: {fileID: 0}
-  wrenchObj: {fileID: 4911403776799980387}
+  wrenchObj: {fileID: 2667928867059508819}
   pistolObj: {fileID: 3248591855073337272}
   robotObj: {fileID: 7742863919281744262, guid: f286237c8e115ea4289ce86409d24065,
     type: 3}
@@ -2582,7 +2460,6 @@ Transform:
   - {fileID: 6438445464155247635}
   - {fileID: 3339428107496303836}
   - {fileID: 7281702317640058356}
-  - {fileID: 5720450148255719897}
   - {fileID: 3336520294803700969}
   - {fileID: 2764789848785011970}
   m_Father: {fileID: 5682774178920442179}
@@ -3359,6 +3236,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P_MAAT_WRENCH
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 65efc76cd1705d848bba0dbaae5fb1d0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
