@@ -2248,6 +2248,7 @@ GameObject:
   - component: {fileID: 2756421851162055468}
   - component: {fileID: 3256239799589845242}
   - component: {fileID: 867799138804064246}
+  - component: {fileID: 8646339526130789239}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2276,7 +2277,7 @@ Transform:
   - {fileID: 8778760772639735531}
   - {fileID: 2233697884540587679}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2965170494674721950
 MonoBehaviour:
@@ -2393,7 +2394,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   attackCount: 0
-  timeNextAttack: 0.5
+  timeNextAttack: 0.1
   nearEnemieToGoFloat: 2
   rotationNearEnemie: 8
   timeGraceAttackPeriod: 0
@@ -2495,6 +2496,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGodModeEnabled: 0
+--- !u!114 &8646339526130789239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6282598161973549806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4cce7ca57d8bf438a2a3123df8c7b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hackSlider: {fileID: 0}
+  wrenchObj: {fileID: 4911403776799980387}
+  pistolObj: {fileID: 3248591855073337272}
+  robotObj: {fileID: 7742863919281744262, guid: f286237c8e115ea4289ce86409d24065,
+    type: 3}
+  hackCanvas: {fileID: 296207097814630388, guid: 9fc2cbb6fed12634ba6d62e6f29f6d57,
+    type: 3}
+  IsHackingAnim: 0
+  IsHacking: 0
 --- !u!1 &6361448800391710148
 GameObject:
   m_ObjectHideFlags: 0

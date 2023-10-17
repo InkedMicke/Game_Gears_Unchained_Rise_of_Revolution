@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class OpenDoorLab : MonoBehaviour
 {
@@ -12,13 +13,23 @@ public class OpenDoorLab : MonoBehaviour
       _anim = GetComponent<Animator>();
    }
 
-   public void OpenDoor()
+   public void OpenDoor(float value)
    {
-      _anim.SetTrigger(string.Format("openDoor"));
-   }
-   public void CloseDoor()
+        Invoke(nameof(InvokeOpenDoor), value);
+    }
+    public void CloseDoor(float value)
    {
-      _anim.SetTrigger(string.Format("closeDoor"));
-   }
+        Invoke(nameof(InvokeCloseDoor), value);
+    }
+
+    private void InvokeOpenDoor()
+    {
+        _anim.SetTrigger(string.Format("openDoor"));
+    }
+
+    private void InvokeCloseDoor()
+    {
+        _anim.SetTrigger(string.Format("closeDoor"));
+    }
    
 }

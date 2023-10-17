@@ -48,7 +48,10 @@ public class CCTVController : MonoBehaviour
 
     private void Update()
     {
-        _targetRotation = Quaternion.Euler(rotations[_currentRotation]);
+        if (rotations.Count > 0)
+        {
+            _targetRotation = Quaternion.Euler(rotations[_currentRotation]);
+        }
         
         if (!(transform.rotation == _targetRotation) && !_isCameraOff && !_lKiller.isFocusingPlayer)
         {

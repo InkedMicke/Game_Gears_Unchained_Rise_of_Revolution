@@ -15,6 +15,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private float _pistolLayerMultiplier;
         private float _sphereAttackLayerMultiplier;
         private float _slideLayerMultiplier;
+        private float _hackLayerMultiplier;
 
         [System.NonSerialized] public bool isAttackLayerActive;
         [System.NonSerialized] public bool isFinalAttackLayerActive;
@@ -41,6 +42,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Pistol")), _pistolLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("SphereAttack")), _sphereAttackLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Slide")), _slideLayerMultiplier);
+            _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Hack")), _hackLayerMultiplier);
         }
 
         private void EvaluateLayers()
@@ -169,6 +171,16 @@ namespace _WeAreAthomic.SCRIPTS.Player
         public void DisableSlideLayer()
         {
             StartCoroutine(nameof(DisableSlideCoroutine));
+        }
+
+        public void EnableHackLayer()
+        {
+            StartCoroutine(nameof(EnableHackCoroutine));
+        }
+
+        public void DisableHackLayer()
+        {
+            StartCoroutine(nameof(DisableHackCoroutine));
         }
 
         private IEnumerator EnableAttackCoroutine()
@@ -416,6 +428,42 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 if (_slideLayerMultiplier <= 0f)
                 {
                     _slideLayerMultiplier = 0f;
+                    canDisableLayer = false;
+                }
+
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
+        private IEnumerator EnableHackCoroutine()
+        {
+            var canEnableLayer = true;
+
+            while (canEnableLayer)
+            {
+                _hackLayerMultiplier += 24 * Time.unscaledDeltaTime;
+
+                if (_hackLayerMultiplier >= 1f)
+                {
+                    _hackLayerMultiplier = 1f;
+                    canEnableLayer = false;
+                }
+
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
+        private IEnumerator DisableHackCoroutine()
+        {
+            var canDisableLayer = true;
+
+            while (canDisableLayer)
+            {
+                _hackLayerMultiplier -= 24 * Time.unscaledDeltaTime;
+
+                if (_hackLayerMultiplier <= 0f)
+                {
+                    _hackLayerMultiplier = 0f;
                     canDisableLayer = false;
                 }
 

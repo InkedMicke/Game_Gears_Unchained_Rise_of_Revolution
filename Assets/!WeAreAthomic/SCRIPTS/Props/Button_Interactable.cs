@@ -15,6 +15,7 @@ public class Button_Interactable : MonoBehaviour, IInteractable
 
     Transform playerTr;
 
+    public bool IsActive;
     private bool _isShowingButton;
 
     public UnityEvent[] eventsToActivate;
@@ -47,6 +48,12 @@ public class Button_Interactable : MonoBehaviour, IInteractable
             circleObj.SetActive(false);
         }
     }
+
+    public void ToggleActive()
+    {
+        IsActive = !IsActive;
+    }
+
 
     public void Interact()
     {
