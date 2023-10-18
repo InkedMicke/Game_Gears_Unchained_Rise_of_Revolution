@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
         CharacterController _cc;
 
         private GameObject _playerObj;
+        [SerializeField] private GameObject playerRightArm;
 
         [SerializeField] private float moveSpeed;
 
@@ -21,24 +23,29 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
             _playerObj = GameObject.FindGameObjectWithTag("Player");
         }
 
-        public void InvokeMoveToPlayer(float value)
+        private void Update()
         {
-            StartCoroutine(MoveToPlayer(value));
+            Debug.Log("Active? "+gameObject.activeInHierarchy);
         }
 
-        private IEnumerator MoveToPlayer(float value)
+        public void InvokeMoveToPlayer()
+        {
+            StartCoroutine(nameof(MoveToPlayer));
+        }
+
+        private IEnumerator MoveToPlayer()
         {
             var canEnableLayer = true;
 
             while (canEnableLayer)
             {
-                var direction = _playerObj.transform.position - transform.position;
-                _cc.Move(direction.normalized * moveSpeed);
+                var direction = playerRightArm.transform.position - transform.position;
+                _cc.Move(direction.normalized * moveSpeed * Time.deltaTime);
 
-                if (Vector3.Distance(_playerObj.transform.position, transform.position) < 0.1f)
+                if (Vector3.Distance(playerRightArm.transform.position, transform.position) < 0.3f)
                 {
                     canEnableLayer = false;
-                    Destroy(this.gameObject);
+                    this.gameObject.SetActive(false);
                 }
 
                 yield return new WaitForSeconds(0.01f);

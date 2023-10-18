@@ -1,40 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class LightKiller : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.LightKiller
 {
-    CCTVController controller;
-
-    public GameObject luzObj;
-    public GameObject CCTV;
-    Light luz;
-
-    [System.NonSerialized] public bool isFocusingPlayer;
-
-    private void Awake()
+    public class LightKiller : MonoBehaviour
     {
-        luz = luzObj.GetComponent<Light>();
-        controller = CCTV.GetComponent<CCTVController>();
-    }
+        CCTVController controller;
 
-    public void WhiteLight()
-    {
-        luz.color = Color.white;
-        isFocusingPlayer = false;
-    }
+        public GameObject luzObj;
+        public GameObject cctv;
+        Light _luz;
 
-    public void RedLight()
-    {
-        if (!controller.rayGotObstruction)
+        [System.NonSerialized] public bool isFocusingPlayer;
+
+        private void Awake()
         {
-            luz.color = Color.red;
-            isFocusingPlayer = true;
+            _luz = luzObj.GetComponent<Light>();
+            controller = cctv.GetComponent<CCTVController>();
         }
-    }
 
-    public void ResetMemory()
-    {
-        WhiteLight();
+        public void WhiteLight()
+        {
+            _luz.color = Color.white;
+            isFocusingPlayer = false;
+        }
+
+        public void RedLight()
+        {
+            if (!controller.rayGotObstruction)
+            {
+                _luz.color = Color.red;
+                isFocusingPlayer = true;
+            }
+        }
     }
 }

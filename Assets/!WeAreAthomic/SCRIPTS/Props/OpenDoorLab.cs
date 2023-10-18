@@ -4,32 +4,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
-public class OpenDoorLab : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Props
 {
-   private Animator _anim;
 
-   private void Awake()
-   {
-      _anim = GetComponent<Animator>();
-   }
-
-   public void OpenDoor(float value)
-   {
-        Invoke(nameof(InvokeOpenDoor), value);
-    }
-    public void CloseDoor(float value)
-   {
-        Invoke(nameof(InvokeCloseDoor), value);
-    }
-
-    private void InvokeOpenDoor()
+    public class OpenDoorLab : MonoBehaviour
     {
-        _anim.SetTrigger(string.Format("openDoor"));
-    }
+        private Animator _anim;
 
-    private void InvokeCloseDoor()
-    {
-        _anim.SetTrigger(string.Format("closeDoor"));
+        private void Awake()
+        {
+            _anim = GetComponent<Animator>();
+        }
+
+        public void OpenDoor(float value)
+        {
+            Invoke(nameof(InvokeOpenDoor), value);
+        }
+        public void CloseDoor(float value)
+        {
+            Invoke(nameof(InvokeCloseDoor), value);
+        }
+
+        private void InvokeOpenDoor()
+        {
+            _anim.SetTrigger(string.Format("openDoor"));
+        }
+
+        private void InvokeCloseDoor()
+        {
+            _anim.SetTrigger(string.Format("closeDoor"));
+        }
+
     }
-   
 }

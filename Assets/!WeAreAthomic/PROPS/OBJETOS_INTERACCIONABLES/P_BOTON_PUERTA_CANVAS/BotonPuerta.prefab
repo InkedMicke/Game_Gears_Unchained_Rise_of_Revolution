@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2178044915549488618}
   - component: {fileID: 493925947878310532}
   - component: {fileID: 7841914987761911187}
+  - component: {fileID: 5773928791938000135}
   m_Layer: 12
   m_Name: BotonPuerta
   m_TagString: Untagged
@@ -69,22 +70,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eButtonObj: {fileID: 6445184345233792802}
   circleObj: {fileID: 5653196157143784566}
-  IsActive: 0
-  eventsToActivate:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7841914987761911187}
-        m_TargetAssemblyTypeName: Button_Interactable, Assembly-CSharp
-        m_MethodName: ToggleActive
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  isActive: 0
+  hasActivatedSomething: 0
+  condicionesParaQueSeActive:
+    m_PersistentCalls:
+      m_Calls: []
+  seActivanCuandoLeDasAlBoton:
+    m_PersistentCalls:
+      m_Calls: []
+  seActivanCuandoTerminaElHack:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5773928791938000135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5574766278489949593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89d18ebe3261c224286c89b1b9ed845a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRequiredAction: 0
+  requiredObject: {fileID: 0}
 --- !u!1 &5653196157143784566
 GameObject:
   m_ObjectHideFlags: 0

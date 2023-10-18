@@ -1,149 +1,158 @@
-using _WeAreAthomic.SCRIPTS.Player;
 using System.Collections;
-using System.Collections.Generic;
+using _WeAreAthomic.SCRIPTS.Player.Robot;
+using _WeAreAthomic.SCRIPTS.Props;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
-public class MainCHackingSystem : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Player
 {
-    private Animator _anim;
-    private MainCLayers _mainCLayers;
-    private CharacterController _cc;
-
-    [SerializeField] private Slider hackSlider;
-
-    [SerializeField] private GameObject wrenchObj;
-    [SerializeField] private GameObject pistolObj;
-    [SerializeField] private GameObject robotObj;
-    [SerializeField] private GameObject hackCanvas;
-
-    private GameObject _currentInteract;
-    private GameObject _currentWeapon;
-
-    public bool IsHackingAnim;
-    public bool IsHacking;
-
-    private float _actualTime;
-    private float timeToHack;
-    private float actualTime;
-
-    private void Awake()
+    public class MainCHackingSystem : MonoBehaviour
     {
-        _anim = GetComponent<Animator>();
-        _mainCLayers = GetComponent<MainCLayers>();
-        _cc = GetComponent<CharacterController>();
-    }
+        private Animator _anim;
+        private MainCLayers _mainCLayers;
+        private CharacterController _cc;
+        private BastetController _bastetController;
 
-    private void Update()
-    {
-        UpdateUI();
-    }
+        [SerializeField] private Slider hackSlider;
 
-    public void StartHacking(float value)
-    {
-        FixPosition();
-        EnableHackAnim();
-        SaveWeapon();
-        DisableWeapon();
-        timeToHack = value;
-    }
+        [SerializeField] private GameObject wrenchObj;
+        [SerializeField] private GameObject pistolObj;
+        [SerializeField] private GameObject hackCanvas;
+        [SerializeField] private GameObject robotObj;
+        private GameObject _currentInteract;
+        private GameObject _currentWeapon;
 
-    public void EndHacking()
-    {
-        hackCanvas.SetActive(false);
-    }   
+        public bool isHackingAnim;
+        public bool isHacking;
+    
+        private float _timeToHack;
+        private float _actualTime;
 
-    private void UpdateUI()
-    {
-        if(IsHacking)
+        private void Awake()
         {
-            hackSlider.value = Time.time;
+            _anim = GetComponent<Animator>();
+            _mainCLayers = GetComponent<MainCLayers>();
+            _cc = GetComponent<CharacterController>();
+            _bastetController = robotObj.GetComponent<BastetController>();
         }
-    }
 
-    public void EnableHackAnim()
-    {
-        IsHackingAnim = true;
-        _anim.SetTrigger(string.Format("hack"));
-        _mainCLayers.EnableHackLayer();
-    }
-
-    public void SpawnRobot()
-    {
-        var robot = Instantiate(robotObj, _currentInteract.transform.GetChild(0).position, Quaternion.identity);
-    }
-
-    public void FixPosition()
-    {
-        _cc.enabled = false;
-
-        var interactables = FindObjectsOfType<Button_Interactable>();
-
-        foreach(Button_Interactable t in interactables)
+        private void Update()
         {
-            if(t.IsActive == true)
+            UpdateUI();
+        }
+
+        public void StartHacking(float value)
+        {
+            FixPosition();
+            EnableHackAnim();
+            SaveWeapon();
+            DisableWeapon();
+            _timeToHack = value;
+        }
+
+        public void EndHacking()
+        {
+            hackCanvas.SetActive(false);
+            var button = _currentInteract.GetComponent<ButtonInteractable>();
+            button.EndHackInvoke();
+            _bastetController.InvokeMoveToPlayer();
+        }   
+
+        private void UpdateUI()
+        {
+            if(isHacking)
             {
-                _currentInteract = t.gameObject;
+                hackSlider.value = Time.time;
             }
         }
 
-        transform.position = new Vector3(_currentInteract.transform.GetChild(0).position.x, transform.position.y, _currentInteract.transform.GetChild(0).position.z + .8f);
-
-        var desiredRot = new Vector3(_currentInteract.transform.GetChild(0).position.x, transform.position.y, _currentInteract.transform.GetChild(0).position.z);
-        transform.LookAt(desiredRot);
-    }
-
-    private IEnumerator Hack(float value)
-    {
-        var canEnableLayer = true;
-
-        actualTime = Time.time + value;
-
-        while (canEnableLayer)
+        public void EnableHackAnim()
         {
-            if (Time.time > actualTime)
+            isHackingAnim = true;
+            _anim.SetTrigger(string.Format("hack"));
+            _mainCLayers.EnableHackLayer();
+        }
+
+        public void SpawnRobot()
+        {
+            robotObj.SetActive(true);
+            robotObj.transform.position = new Vector3(_currentInteract.transform.GetChild(0).position.x,
+                _currentInteract.transform.GetChild(0).position.y, _currentInteract.transform.GetChild(0).position.z);
+        }
+
+        public void FixPosition()
+        {
+            _cc.enabled = false;
+            var interactables = FindObjectsOfType<ButtonInteractable>();
+
+            foreach(var t in interactables)
             {
-                canEnableLayer = false;
-                EndHacking();
+                if(t.isActive == true)
+                {
+                    _currentInteract = t.gameObject;
+                }
+            }
+            
+            var r = new Ray(_currentInteract.transform.position, _currentInteract.transform.forward);
+            var rayPos = r.GetPoint(1f);
+            var desiredPos = new Vector3(rayPos.x, transform.position.y, rayPos.z);
+            transform.position = desiredPos;
+            
+            var desiredRot = new Vector3(_currentInteract.transform.GetChild(0).position.x, transform.position.y, _currentInteract.transform.GetChild(0).position.z);
+            transform.LookAt(desiredRot);
+        }
+
+        private IEnumerator Hack(float value)
+        {
+            var canEnableLayer = true;
+
+            _actualTime = Time.time + value;
+
+            while (canEnableLayer)
+            {
+                if (Time.time > _actualTime)
+                {
+                    canEnableLayer = false;
+                    EndHacking();
+                }
+
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
+        private void SaveWeapon()
+        {
+            if (pistolObj.activeSelf)
+            {
+                _currentWeapon = pistolObj;
             }
 
-            yield return new WaitForSeconds(0.01f);
+            if (wrenchObj.activeSelf)
+            {
+                _currentWeapon = wrenchObj;
+            }
         }
-    }
 
-    private void SaveWeapon()
-    {
-        if (pistolObj.activeSelf)
+        private void DisableWeapon()
         {
-            _currentWeapon = pistolObj;
+            _currentWeapon.SetActive(false);
         }
-
-        if (wrenchObj.activeSelf)
+        private void EnableWeapon()
         {
-            _currentWeapon = wrenchObj;
+            _currentWeapon.SetActive(true);
         }
-    }
 
-    private void DisableWeapon()
-    {
-        _currentWeapon.SetActive(false);
-    }
-    private void EnableWeapon()
-    {
-        _currentWeapon.SetActive(true);
-    }
-
-    public void EndAnimHack()
-    {
-        _mainCLayers.DisableHackLayer();
-        EnableWeapon();
-        _cc.enabled = true;
-        IsHackingAnim = false;
-        StartCoroutine(Hack(timeToHack));
-        hackCanvas.SetActive(true);
-        IsHacking = true;
-        hackSlider.minValue = Time.time;
-        hackSlider.maxValue = Time.time + timeToHack;
+        public void EndAnimHack()
+        {
+            _mainCLayers.DisableHackLayer();
+            EnableWeapon();
+            isHackingAnim = false;
+            StartCoroutine(Hack(_timeToHack));
+            hackCanvas.SetActive(true);
+            isHacking = true;
+            hackSlider.minValue = Time.time;
+            hackSlider.maxValue = Time.time + _timeToHack;
+            _cc.enabled = true;
+        }
     }
 }
