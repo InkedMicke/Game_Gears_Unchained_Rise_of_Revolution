@@ -12,6 +12,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCAttack _mainCAttack;
         private MainCPistol _mainCPistol;
         private RailGrindSystem _railGrindSystem;
+        private MainCHackingSystem _mainCHacking;
         private CharacterController _cc;
         private GODMODE _godMode;
 
@@ -72,6 +73,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _cc = GetComponent<CharacterController>();
             _godMode = GetComponent<GODMODE>();
             _railGrindSystem = GetComponent<RailGrindSystem>();
+            _mainCHacking = GetComponent<MainCHackingSystem>();
 
             _playerInputActions = new PlayerInputActions();
         }
@@ -104,7 +106,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private void Update()
         {
             AnimatorController();
-            if (_canMove && !_godMode.isGodModeEnabled && !_railGrindSystem.CanJumpOnRail)
+            if (_canMove && !_godMode.isGodModeEnabled && !_railGrindSystem.CanJumpOnRail && !_mainCHacking.isHackingAnim)
             {
                 MoveKeyboard();
                 MoveGamepad();
