@@ -5,6 +5,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
 {
     public class ButtonInteractable : MonoBehaviour, IInteractable
     {
+        RequiredActionForButton _requiredAction;
 
         public GameObject eButtonObj;
         public GameObject circleObj;
@@ -13,16 +14,15 @@ namespace _WeAreAthomic.SCRIPTS.Props
         private Transform _playerTr;
 
         public bool isActive;
-        public bool activatedSomething;
+        public bool hasActivatedSomething;
         private bool _isShowingButton;
 
-        public UnityEvent[] condicionesParaQueSeActive;
-        public UnityEvent[] seActivanCuandoLeDasAlBoton;
-        public UnityEvent[] seActivanCuandoTerminaElHack;
+        public UnityEvent seActivanCuandoLeDasAlBoton;
+        public UnityEvent seActivanCuandoTerminaElHack;
 
         private void Awake()
         {
-
+            _requiredAction = GetComponent<RequiredActionForButton>();
         }
 
         private void Start()
@@ -57,18 +57,24 @@ namespace _WeAreAthomic.SCRIPTS.Props
 
         public void Interact()
         {
-            foreach (var i in seActivanCuandoLeDasAlBoton)
+            if (_requiredAction.isRequiredAction)
             {
-                i.Invoke();
+                ButtonInteractable button = _requiredAction.requiredObject.GetComponent<ButtonInteractable>();
+                if (button.hasActivatedSomething)
+                {
+                    seActivanCuandoLeDasAlBoton.Invoke();
+                }
+            }
+
+            if(_requiredAction.isRequiredAction == false)
+            {
+                seActivanCuandoLeDasAlBoton.Invoke();
             }
         }
 
         public void EndHackInvoke()
         {
-            foreach (var i in seActivanCuandoTerminaElHack)
-            {
-                i.Invoke();
-            }
+            seActivanCuandoTerminaElHack.Invoke();
         }
 
         public void ShowButton()
@@ -85,7 +91,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
 
         public void ToggleActivateSomething()
         {
-            activatedSomething = !activatedSomething;
+            hasActivatedSomething = !hasActivatedSomething;
         }
 
     }

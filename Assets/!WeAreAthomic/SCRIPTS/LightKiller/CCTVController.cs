@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace _WeAreAthomic.SCRIPTS.LightKiller
@@ -27,6 +28,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
         [SerializeField] private float redLightSpeedWhenChasing = 0.01f;
     
         public List<Vector3> rotations;
+        public UnityEvent[] seActivanCuandoSeEnciendeLaCamara;
 
         private void Awake()
         {
@@ -119,6 +121,12 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
             lKillerObj.SetActive(true);
             _lKiller.WhiteLight();
             _isCameraOff = false;
+
+            foreach(var t in seActivanCuandoSeEnciendeLaCamara)
+            {
+                t.Invoke();
+            }
+
         }
     
     }
