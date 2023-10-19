@@ -25,6 +25,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         [System.NonSerialized] public bool CanMove;
         private bool _clickedOnTime;
         private bool _canNextAttack;
+        private bool _isSheathed;
 
         public int attackCount;
 
@@ -65,6 +66,11 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             if (_mainCMovement.IsGrounded() && CanAttack() || _railGrindSystem.IsOnRail() && CanAttack())
             {
+                if (!_isSheathed)
+                {
+                    _isSheathed = true;
+                    _anim.SetBool(string.Format("isSheathed"), true);
+                }
                 //CheckNearEnemieToGo();
                 attackCount++;
                 weaponObj.GetComponent<WrenchHitBox>().ClearList();
@@ -178,6 +184,16 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             weaponObj.GetComponent<BoxCollider>().enabled = false;
             weaponObj.GetComponent<WrenchHitBox>().ClearList();
+        }
+
+        public void ShowWeapon()
+        {
+            weaponObj.SetActive(true);
+        }
+
+        public void HideWeapon()
+        {
+            weaponObj.SetActive(false);
         }
 
         public void SetAttackCount(int value)

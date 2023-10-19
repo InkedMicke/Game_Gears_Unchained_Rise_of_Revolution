@@ -2116,7 +2116,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3386967432714853988}
-  - component: {fileID: 2965170494674721950}
   - component: {fileID: 6527828047431564698}
   - component: {fileID: 6925211114386993009}
   - component: {fileID: 5945227284023950054}
@@ -2127,6 +2126,7 @@ GameObject:
   - component: {fileID: 3256239799589845242}
   - component: {fileID: 867799138804064246}
   - component: {fileID: 8646339526130789239}
+  - component: {fileID: 2965170494674721950}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2155,31 +2155,8 @@ Transform:
   - {fileID: 8778760772639735531}
   - {fileID: 2233697884540587679}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2965170494674721950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6282598161973549806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84f630ff8c369d549810b760352326a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundCheck: {fileID: 3521191943066113545}
-  railLayer:
-    serializedVersion: 2
-    m_Bits: 8192
-  railSpeed: 7
-  railSpeedBoost: 30
-  rotationSpeed: 10
-  gravityRail: -40
-  jumpForceRail: 22
-  jumpDelay: 0.5
-  directionsList: []
 --- !u!95 &6527828047431564698
 Animator:
   serializedVersion: 5
@@ -2266,7 +2243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d629afbac5f73a4d85c268cbcef1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponObj: {fileID: 8902576622735255493}
+  weaponObj: {fileID: 2667928867059508819}
   middlePosTr: {fileID: 2233697884540587679}
   enemyHurtBox:
     serializedVersion: 2
@@ -2322,7 +2299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa13c3d556689e043948e901c48cf28d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wrenchObj: {fileID: 0}
+  wrenchObj: {fileID: 2667928867059508819}
   pistolObj: {fileID: 3248591855073337272}
   isUsingSword: 1
   isUsingPistol: 0
@@ -2394,6 +2371,29 @@ MonoBehaviour:
   robotObj: {fileID: 0}
   isHackingAnim: 0
   isHacking: 0
+--- !u!114 &2965170494674721950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6282598161973549806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f630ff8c369d549810b760352326a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundCheck: {fileID: 3521191943066113545}
+  railLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  railSpeed: 7
+  railSpeedBoost: 30
+  rotationSpeed: 10
+  gravityRail: -40
+  jumpForceRail: 22
+  jumpDelay: 0.5
+  directionsList: []
 --- !u!1 &6361448800391710148
 GameObject:
   m_ObjectHideFlags: 0
@@ -2574,7 +2574,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7240105914493739602
 Transform:
   m_ObjectHideFlags: 0
@@ -3241,6 +3241,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 65efc76cd1705d848bba0dbaae5fb1d0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3279,8 +3284,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 0.18, y: 0.6076224, z: 0.109914936}
-  m_Center: {x: -0.000000013243705, y: 0.1205296, z: -0.011590821}
+  m_Size: {x: 0.38, y: 1.26, z: 0.26}
+  m_Center: {x: -0.000000013243705, y: 0, z: -0.011590821}
 --- !u!114 &2767729416601902800
 MonoBehaviour:
   m_ObjectHideFlags: 0
