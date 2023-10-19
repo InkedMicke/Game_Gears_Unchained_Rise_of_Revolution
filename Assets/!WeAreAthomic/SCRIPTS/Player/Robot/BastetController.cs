@@ -23,11 +23,6 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
             _playerObj = GameObject.FindGameObjectWithTag("Player");
         }
 
-        private void Update()
-        {
-            Debug.Log("Active? "+gameObject.activeInHierarchy);
-        }
-
         public void InvokeMoveToPlayer()
         {
             StartCoroutine(nameof(MoveToPlayer));

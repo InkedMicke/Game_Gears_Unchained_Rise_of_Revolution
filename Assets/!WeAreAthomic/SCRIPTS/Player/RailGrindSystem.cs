@@ -128,8 +128,9 @@ namespace _WeAreAthomic.SCRIPTS
             {
                 var padre1 = hit.collider.gameObject.transform.parent;
                 var padre2 = padre1.parent;
+                var padre3 = padre2.parent;
 
-                var railContainer = padre2.GetChild(padre2.childCount - 1);
+                var railContainer = padre3.GetChild(padre3.childCount - 1);
 
                 Transform[] allChildren = railContainer.GetComponentsInChildren<Transform>();
 
@@ -142,7 +143,7 @@ namespace _WeAreAthomic.SCRIPTS
                 }
 
 
-                SortList();
+                //SortList();
 
                 foreach (Transform t in directionsList.ToList())
                 {
@@ -184,9 +185,6 @@ namespace _WeAreAthomic.SCRIPTS
                 targetRotation *= Quaternion.Euler(0, -90, 0);
 
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-
-                Debug.Log(rotationSpeed * Time.deltaTime);
 
                 if (IsOnRail())
                 {
