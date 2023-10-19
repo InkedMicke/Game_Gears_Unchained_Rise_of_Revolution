@@ -32,7 +32,9 @@ namespace _WeAreAthomic.SCRIPTS.Player
         [SerializeField] private float timeNextAttack = 0.5f;
         [SerializeField] private float nearEnemieToGoFloat = 2.5f;
         [SerializeField] private float rotationNearEnemie = 8f;
+        [SerializeField] private float hideWeaponTimer = 8f;
         public float timeGraceAttackPeriod;
+        private float currentTimeSheath;
 
         private void Awake()
         {
@@ -50,29 +52,26 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _weaponBC = weaponObj.GetComponent<BoxCollider>();
         }
 
-        /*private void OnEnable()
-    {
-        _playerInputActions.Enable();
-        _playerInputActions.Player.Running.performed += Attack;
-    }
-
-    private void OnDisable()
-    {
-        _playerInputActions.Disable();
-        _playerInputActions.Player.Running.performed -= Attack;
-    }*/
+        private void Update()
+        {
+            Sheath();
+        }
 
         private void Attack(InputAction.CallbackContext context)
         {
             if (_mainCMovement.IsGrounded() && CanAttack() || _railGrindSystem.IsOnRail() && CanAttack())
             {
+                _mainCLayers.EnableAttackLayer();
                 if (!_isSheathed)
                 {
+                    attackCount++;
+                    _anim.SetInteger(string.Format("attackCount"), attackCount);
                     _isSheathed = true;
-                    _anim.SetBool(string.Format("isSheathed"), true);
                 }
-                //CheckNearEnemieToGo();
-                attackCount++;
+                else
+                {
+                    SetAttackCount(2);
+                }
                 weaponObj.GetComponent<WrenchHitBox>().ClearList();
                 _canNextAttack = false;
                 if (_mainCLayers.isJumpLayerActive)
@@ -80,73 +79,23 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     _mainCLayers.DisableJumpLayer();
                 }
                 isAttacking = true;
-                _mainCLayers.EnableAttackLayer();
-                _anim.SetInteger(string.Format("attackCount"), attackCount);
 
                 _canNextAttack = false;
             }
         }
 
-        /*private void CheckNearEnemieToGo()
-    {
-        var colliders = Physics.OverlapSphere(middlePosTr.position, nearEnemieToGoFloat, enemyHurtBox);
-
-        _closestObject = null;
-        var closestDistance = Mathf.Infinity;
-
-        foreach (var collider in colliders)
+        private void Sheath()
         {
-            var objectTransform = collider.transform;
-            var distance = Vector3.Distance(transform.position, objectTransform.position);
-
-            if (distance < closestDistance)
+            if(!isAttacking && _isSheathed)
             {
-                _closestObject = objectTransform;
-                closestDistance = distance;
+                if((currentTimeSheath + hideWeaponTimer) < Time.time)
+                {
+                    _mainCLayers.EnableAttackLayer();
+                    SetAttackCount(4);
+                    _isSheathed = false;
+                }
             }
         }
-
-        if (_closestObject != null)
-        {
-            StartCoroutine(nameof(MoveToNearEnemie));
-            StartCoroutine(nameof(RotateToNearEnemie));
-
-        }
-    }*/
-
-        /*private IEnumerator MoveToNearEnemie()
-    {
-        while (Vector3.Distance(transform.position, _closestObject.position) > 1.3f)
-        {
-            var desiredPos = new Vector3(_closestObject.position.x, transform.position.y, _closestObject.position.z);
-            var moveDirection = (desiredPos - transform.position).normalized;
-            var moveSpeed = 5f;
-            _cc.Move(moveDirection * moveSpeed * Time.deltaTime);
-            //transform.rotation = Quaternion.Lerp(transform.rotation, desiredRot, rotationNearEnemie * Time.deltaTime);
-
-            yield return null;
-        }
-    }*/
-
-        /*private IEnumerator RotateToNearEnemie()
-    {
-        var b = true;
-        while (b)
-        {
-            var enemyPos = _closestObject.position;
-            var desiredPos = new Vector3(enemyPos.x, transform.position.y, enemyPos.z);
-            var difference = desiredPos - transform.position;
-            var desiredRot = Quaternion.LookRotation(difference);
-            if (transform.rotation == desiredRot)
-            {
-                b = false;
-                Debug.Log("hola2");
-            }
-            transform.rotation = Quaternion.Lerp(transform.rotation, desiredRot, rotationNearEnemie * Time.deltaTime);
-            yield return null;
-            Debug.Log("hola1");
-        }
-    }*/
 
         private void OnDrawGizmos() => Gizmos.DrawWireSphere(middlePosTr.position, nearEnemieToGoFloat);
 
@@ -173,6 +122,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _anim.SetInteger(string.Format("attackCount"), attackCount);
             _mainCLayers.DisableAttackLayer();
             timeGraceAttackPeriod = Time.time + timeNextAttack;
+            currentTimeSheath = Time.time;
         }
 
         private void EnableWeaponCollision()
