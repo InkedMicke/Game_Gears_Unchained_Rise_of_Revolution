@@ -7,8 +7,8 @@ namespace _WeAreAthomic.SCRIPTS.Props
     {
         RequiredActionForButton _requiredAction;
 
-        public GameObject eButtonObj;
-        public GameObject circleObj;
+        [SerializeField] private GameObject _eButtonObj;
+        [SerializeField] private GameObject _circleObj;
         private GameObject _cameraObj;
 
         private Transform _playerTr;
@@ -20,19 +20,19 @@ namespace _WeAreAthomic.SCRIPTS.Props
         public UnityEvent seActivanCuandoLeDasAlBoton;
         public UnityEvent seActivanCuandoTerminaElHack;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _requiredAction = GetComponent<RequiredActionForButton>();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             _playerTr = GameObject.FindGameObjectWithTag("Player").transform;
             _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
         }
 
         // Update is called once per frame
-        private void Update()
+        protected virtual void Update()
         {
             ShowCircle();
         }
@@ -41,11 +41,11 @@ namespace _WeAreAthomic.SCRIPTS.Props
         {
             if (Vector3.Distance(transform.position, _playerTr.position) < 10 && !_isShowingButton)
             {
-                circleObj.SetActive(true);
+                _circleObj.SetActive(true);
             }
             else
             {
-                circleObj.SetActive(false);
+                _circleObj.SetActive(false);
             }
         }
 
@@ -53,7 +53,6 @@ namespace _WeAreAthomic.SCRIPTS.Props
         {
             isActive = !isActive;
         }
-
 
         public void Interact()
         {
@@ -80,13 +79,13 @@ namespace _WeAreAthomic.SCRIPTS.Props
         public void ShowButton()
         {
             _isShowingButton = true;
-            eButtonObj.SetActive(true);
+            _eButtonObj.SetActive(true);
         }
 
         public void HideButton()
         {
             _isShowingButton = false;
-            eButtonObj.SetActive(false);
+            _eButtonObj.SetActive(false);
         }
 
         public void ToggleActivateSomething()

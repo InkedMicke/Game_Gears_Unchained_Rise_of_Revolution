@@ -81,6 +81,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _anim = GetComponent<Animator>();
             _cC = GetComponent<CapsuleCollider>();
             _mainCAttack = GetComponent<MainCAttack>();
+            _mainCLayers = GetComponent<MainCLayers>(); 
             _mainCSwitch = GetComponent<MainCSwitchWeapon>();
             _mainCameraObj = GameObject.FindGameObjectWithTag(string.Format("MainCamera"));
             _mainCamera = _mainCameraObj.GetComponent<Camera>();

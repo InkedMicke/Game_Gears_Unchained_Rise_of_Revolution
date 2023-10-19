@@ -13,6 +13,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCPistol _mainCPistol;
         private RailGrindSystem _railGrindSystem;
         private MainCHackingSystem _mainCHacking;
+        private ChargingSwordSphereTarget _chargingSword; 
         private CharacterController _cc;
         private GODMODE _godMode;
 
@@ -74,6 +75,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _godMode = GetComponent<GODMODE>();
             _railGrindSystem = GetComponent<RailGrindSystem>();
             _mainCHacking = GetComponent<MainCHackingSystem>();
+            _chargingSword = GetComponent<ChargingSwordSphereTarget>();
 
             _playerInputActions = new PlayerInputActions();
         }
@@ -386,7 +388,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             if (IsGrounded() && !_railGrindSystem.IsOnRail())
             {
-                if (Time.time > _timeGraceJumpPeriod)
+                if (Time.time > _timeGraceJumpPeriod && !_chargingSword.isSlidingOnEnemies && !_chargingSword.isChargingSword)
                 {
                     _mainCLayers.EnableJumpLayer();
                     IsJumping = true;

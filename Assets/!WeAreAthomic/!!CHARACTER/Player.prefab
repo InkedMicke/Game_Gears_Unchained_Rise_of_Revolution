@@ -2118,6 +2118,7 @@ GameObject:
   - component: {fileID: 3386967432714853988}
   - component: {fileID: 6527828047431564698}
   - component: {fileID: 6925211114386993009}
+  - component: {fileID: 865394991129287064}
   - component: {fileID: 5945227284023950054}
   - component: {fileID: 1735365384744813436}
   - component: {fileID: 7190383500598293999}
@@ -2204,6 +2205,28 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.87, z: 0}
+--- !u!114 &865394991129287064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6282598161973549806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb1f17b521e0bf4f919f4c6c8cca755, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCount: attackCount
+  moveSpeed: moveSpeed
+  isCrouch: isCrouch
+  isCrouchWalking: isCrouchWalking
+  isFalling: isFalling
+  isJumping: isJumping
+  isSliding: isSliding
+  pistolMoveX: pistolMoveX
+  pistolMoveY: pistolMoveY
+  hack: hack
 --- !u!114 &5945227284023950054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2252,6 +2275,7 @@ MonoBehaviour:
   timeNextAttack: 0.05
   nearEnemieToGoFloat: 2
   rotationNearEnemie: 8
+  hideWeaponTimer: 8
   timeGraceAttackPeriod: 0
 --- !u!114 &7190383500598293999
 MonoBehaviour:
@@ -2330,7 +2354,7 @@ MonoBehaviour:
   arrowDisplayer: []
   enemyHurtBoxLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 512
   damageMultiplier: 1.05
   circleShrinkSpeed: 2
   minCircleSize: 1
@@ -3244,7 +3268,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 65efc76cd1705d848bba0dbaae5fb1d0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3300,7 +3324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHurtBox:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 512
   colliderList: []
 --- !u!4 &3336520294803700969 stripped
 Transform:

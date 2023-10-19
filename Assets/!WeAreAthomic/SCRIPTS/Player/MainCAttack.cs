@@ -52,10 +52,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _weaponBC = weaponObj.GetComponent<BoxCollider>();
         }
 
-        private void Update()
-        {
-            Sheath();
-        }
+        private void Update() => Sheath();
 
         private void Attack(InputAction.CallbackContext context)
         {
@@ -64,14 +61,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 _mainCLayers.EnableAttackLayer();
                 if (!_isSheathed)
                 {
-                    attackCount++;
-                    _anim.SetInteger(string.Format("attackCount"), attackCount);
+                    ShowWeapon();
                     _isSheathed = true;
                 }
-                else
-                {
-                    SetAttackCount(2);
-                }
+
+                attackCount++;
+                _anim.SetInteger(string.Format("attackCount"), attackCount);
                 weaponObj.GetComponent<WrenchHitBox>().ClearList();
                 _canNextAttack = false;
                 if (_mainCLayers.isJumpLayerActive)
@@ -90,8 +85,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             {
                 if((currentTimeSheath + hideWeaponTimer) < Time.time)
                 {
-                    _mainCLayers.EnableAttackLayer();
-                    SetAttackCount(4);
+                    HideWeapon();
                     _isSheathed = false;
                 }
             }
@@ -136,15 +130,9 @@ namespace _WeAreAthomic.SCRIPTS.Player
             weaponObj.GetComponent<WrenchHitBox>().ClearList();
         }
 
-        public void ShowWeapon()
-        {
-            weaponObj.SetActive(true);
-        }
+        public void ShowWeapon() => weaponObj.SetActive(true);
 
-        public void HideWeapon()
-        {
-            weaponObj.SetActive(false);
-        }
+        public void HideWeapon() => weaponObj.SetActive(false);
 
         public void SetAttackCount(int value)
         {
