@@ -12,6 +12,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCLayers _mainCLayers;
         private CharacterController _cc;
         private BastetController _bastetController;
+        private MainCSwitchWeapon _mainSwitchWeapon;
 
         [SerializeField] private Slider hackSlider;
 
@@ -34,6 +35,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _mainCLayers = GetComponent<MainCLayers>();
             _cc = GetComponent<CharacterController>();
             _bastetController = robotObj.GetComponent<BastetController>();
+            _mainSwitchWeapon = GetComponent<MainCSwitchWeapon>();
         }
 
         private void Update()
@@ -45,7 +47,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             FixPosition();
             EnableHackAnim();
-            SaveWeapon();
             DisableWeapon();
             _timeToHack = value;
         }
@@ -122,32 +123,46 @@ namespace _WeAreAthomic.SCRIPTS.Player
             }
         }
 
-        private void SaveWeapon()
-        {
-            if (pistolObj.activeSelf)
-            {
-                _currentWeapon = pistolObj;
-            }
-
-            if (wrenchObj.activeSelf)
-            {
-                _currentWeapon = wrenchObj;
-            }
-        }
-
         private void DisableWeapon()
         {
-            _currentWeapon.SetActive(false);
+            if (_mainSwitchWeapon.isUsingWrench)
+            {
+                if (wrenchObj.activeInHierarchy)
+                {
+                    wrenchObj.SetActive(false);
+                }
+            }
+
+            if (_mainSwitchWeapon.isUsingPistol)
+            {
+                if (pistolObj.activeInHierarchy)
+                {
+                    pistolObj.SetActive(false);
+                }
+            }
         }
         private void EnableWeapon()
         {
-            _currentWeapon.SetActive(true);
+            if (_mainSwitchWeapon.isUsingWrench)
+            {
+                if (!wrenchObj.activeInHierarchy)
+                {
+                    wrenchObj.SetActive(true);
+                }
+            }
+
+            if (_mainSwitchWeapon.isUsingPistol)
+            {
+                if (!pistolObj.activeInHierarchy)
+                {
+                    pistolObj.SetActive(true);
+                }
+            }
         }
 
         public void EndAnimHack()
         {
             _mainCLayers.DisableHackLayer();
-            EnableWeapon();
             isHackingAnim = false;
             StartCoroutine(Hack(_timeToHack));
             hackCanvas.SetActive(true);

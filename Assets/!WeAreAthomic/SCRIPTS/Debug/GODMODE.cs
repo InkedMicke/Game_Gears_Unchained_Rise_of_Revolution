@@ -12,7 +12,10 @@ public class GODMODE : MonoBehaviour
     private MainCMovement _mainCMove;
 
     private GameObject _cameraObj;
-    
+
+    [SerializeField] private LayerMask defaultLayer;
+    [SerializeField] private LayerMask ignoreLayer;
+
     public bool isGodModeEnabled;
     private bool _isSpeedingUp;
     private bool _isSpeedingDown;
@@ -44,11 +47,14 @@ public class GODMODE : MonoBehaviour
     {
         GodMode();
         AdjustSpeed();
+
+        this.gameObject.layer = isGodModeEnabled ? defaultLayer : ignoreLayer;
     }
 
     private void EnableGodMode(InputAction.CallbackContext context)
     {
         isGodModeEnabled = !isGodModeEnabled;
+        
     }
 
     private void GodMode()

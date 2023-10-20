@@ -2223,6 +2223,7 @@ MonoBehaviour:
   isCrouchWalking: isCrouchWalking
   isFalling: isFalling
   isJumping: isJumping
+  isGrounded: isGrounded
   isSliding: isSliding
   pistolMoveX: pistolMoveX
   pistolMoveY: pistolMoveY
@@ -2325,7 +2326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wrenchObj: {fileID: 2667928867059508819}
   pistolObj: {fileID: 3248591855073337272}
-  isUsingSword: 1
+  isUsingWrench: 1
   isUsingPistol: 0
 --- !u!114 &3256239799589845242
 MonoBehaviour:
@@ -2374,6 +2375,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de6f951c982800a448f8d78ac363238f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 16384
   isGodModeEnabled: 0
 --- !u!114 &8646339526130789239
 MonoBehaviour:
@@ -3268,7 +3275,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 65efc76cd1705d848bba0dbaae5fb1d0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

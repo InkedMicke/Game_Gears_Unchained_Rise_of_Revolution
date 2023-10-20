@@ -12,7 +12,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         [SerializeField] private GameObject wrenchObj;
         [SerializeField] private GameObject pistolObj;
     
-        public bool isUsingSword = true;
+        public bool isUsingWrench = true;
         public bool isUsingPistol;
 
         private void Awake()
@@ -30,7 +30,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             if (CanSwitchWeapon())
             {
-                isUsingSword = !isUsingSword;
+                isUsingWrench = !isUsingWrench;
                 isUsingPistol = !isUsingPistol;
                 wrenchObj.SetActive(!wrenchObj.activeInHierarchy);
                 pistolObj.SetActive(!pistolObj.activeInHierarchy);
