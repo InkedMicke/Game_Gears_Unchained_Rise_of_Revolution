@@ -13,6 +13,7 @@ namespace _WeAreAthomic.SCRIPTS
         private PlayerInputActions _playerInputActions;
         private MainCLayers _mainCLayers;
         private MainCMovement _mainCMove;
+        private MainCAnimatorController _mainCAnimator;
 
         [SerializeField] private Transform groundCheck;
 
@@ -29,7 +30,7 @@ namespace _WeAreAthomic.SCRIPTS
         private bool _isJumping;
         private bool _isFalling;
 
-        private int childActual = 0;
+        private int _childActual = 0;
 
         [SerializeField] private float railSpeed = .1f;
         [SerializeField] private float railSpeedBoost = 30f;
@@ -48,6 +49,7 @@ namespace _WeAreAthomic.SCRIPTS
             _anim = GetComponent<Animator>();
             _mainCLayers = GetComponent<MainCLayers>();
             _mainCMove = GetComponent<MainCMovement>();
+            _mainCAnimator = GetComponent<MainCAnimatorController>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Player.Enable();
@@ -65,11 +67,10 @@ namespace _WeAreAthomic.SCRIPTS
             {
                 if (IsSliding && !CanJumpOnRail)
                 {
-                    _anim.SetLayerWeight(_anim.GetLayerIndex("StartSliding"), 0f);
                     IsSliding = false;
                     _canSlide = false;
                     directionsList.Clear();
-                    childActual = 0;
+                    _childActual = 0;
                 }
             }
 
@@ -114,13 +115,13 @@ namespace _WeAreAthomic.SCRIPTS
                 CanJumpOnRail = true;
                 GetAllTransforms();
                 _mainCLayers.DisableJumpLayer();
-                _anim.SetBool(string.Format("isGrounded"), true);
-                _anim.SetBool(string.Format("isFalling"), false);
-                _anim.SetBool(string.Format("isJumping"), false);
+                _mainCAnimator.SetGrounded(true);
+                _mainCAnimator.SetFalling(false);
+                _mainCAnimator.SetJumping(false);
             }
         }
 
-        void GetAllTransforms()
+        private void GetAllTransforms()
         {
             var ray = new Ray(groundCheck.position, -Vector3.up);
 
@@ -145,7 +146,7 @@ namespace _WeAreAthomic.SCRIPTS
 
                 //SortList();
 
-                foreach (Transform t in directionsList.ToList())
+                foreach (var t in directionsList.ToList())
                 {
                     var playerToObjDirection = t.position - transform.position;
                     var dotProduct = Vector3.Dot(playerToObjDirection.normalized, transform.forward.normalized);
@@ -157,8 +158,8 @@ namespace _WeAreAthomic.SCRIPTS
                 }
 
                 _canSlide = true;
-
-                _anim.SetBool(string.Format("isSliding"), true);
+                
+                _mainCAnimator.SetSliding(true);
                 _mainCLayers.EnableSlideLayer();
 
 
@@ -170,17 +171,17 @@ namespace _WeAreAthomic.SCRIPTS
             }
         }
 
-        void Slide()
+        private void Slide()
         {
             if (directionsList.Count > 0 && _canSlide)
             {
-                _currentDestination = directionsList[childActual].position;
+                _currentDestination = directionsList[_childActual].position;
 
                 _directionMove = (_currentDestination - transform.position).normalized;
 
                 _cc.Move(_directionMove * (railSpeed * Time.deltaTime));
             
-                var targetRotation = directionsList[childActual].rotation;
+                var targetRotation = directionsList[_childActual].rotation;
 
                 targetRotation *= Quaternion.Euler(0, -90, 0);
 
@@ -188,20 +189,20 @@ namespace _WeAreAthomic.SCRIPTS
 
                 if (IsOnRail())
                 {
-                    if (Vector3.Distance(transform.position, directionsList[childActual].position) < 0.3f)
+                    if (Vector3.Distance(transform.position, directionsList[_childActual].position) < 0.3f)
                     {
-                        childActual++;
-                        _currentDestination = directionsList[childActual].position;
+                        _childActual++;
+                        _currentDestination = directionsList[_childActual].position;
                     }
                 }
                 else
                 {
-                    var desiredPos = new Vector3(directionsList[childActual].position.x,
-                        transform.position.y, directionsList[childActual].position.z);
+                    var desiredPos = new Vector3(directionsList[_childActual].position.x,
+                        transform.position.y, directionsList[_childActual].position.z);
                     if (Vector3.Distance(transform.position, desiredPos) < 0.3f)
                     {
-                        childActual++;
-                        _currentDestination = directionsList[childActual].position;
+                        _childActual++;
+                        _currentDestination = directionsList[_childActual].position;
                     }
                 
                 }

@@ -18,6 +18,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCLayers _mainCLayers;
         private MainCSwitchWeapon _mainCSwitch;
         private PlayerInputActions _playerInputActions;
+        private MainCAnimatorController _mainCAnimator;
 
         [SerializeField] private GameObject sphereDetectorObj;
         [SerializeField] private GameObject groundTr;
@@ -67,8 +68,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         public int attackCountCharging;
 
-        [System.NonSerialized] public bool isChargingSword;
-        [System.NonSerialized] public bool isSlidingOnEnemies;
+        [System.NonSerialized] public bool IsChargingSword;
+        [System.NonSerialized] public bool IsSlidingOnEnemies;
         private bool _isEventActive;
         private bool _canQuickTimeEvent;
         private bool _isMousePressed;
@@ -85,6 +86,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _mainCSwitch = GetComponent<MainCSwitchWeapon>();
             _mainCameraObj = GameObject.FindGameObjectWithTag(string.Format("MainCamera"));
             _mainCamera = _mainCameraObj.GetComponent<Camera>();
+            _mainCAnimator = GetComponent<MainCAnimatorController>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -114,7 +116,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void MouseDown(InputAction.CallbackContext context)
         {
-            isChargingSword = true;
+            IsChargingSword = true;
             _isMousePressed = true;
             SpawnSphereDetector();
         }
@@ -131,18 +133,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void StartChargingSword()
         {
-            if (_isMousePressed && !isSlidingOnEnemies && Time.time > _totalCooldown && !_mainCSwitch.isUsingPistol)
+            if (_isMousePressed && !IsSlidingOnEnemies && Time.time > _totalCooldown && !_mainCSwitch.isUsingPistol)
             {
-                Debug.Log("hola");
-                /*if (_currentFOV > minFOV)
-            {
-                _currentFOV -= Time.deltaTime * 16;
-            }
-            else
-            {
-                _currentFOV = minFOV;
-            }*/
-
                 arrowDisplayer = GameObject.FindGameObjectsWithTag("ArrowDisplayer");
 
                 foreach (var gameObj in arrowDisplayer)
@@ -170,7 +162,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void SpawnSphereDetector()
         {
-            if (!_isSphereDetectorSpawned && isChargingSword)
+            if (!_isSphereDetectorSpawned && IsChargingSword)
             {
                 GameManager.Instance.ClearClosestsGameObject();
                 GameManager.Instance.ClearGameObject();
@@ -183,7 +175,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void CheckGameObjectsOnList()
         {
-            if (isChargingSword)
+            if (IsChargingSword)
             {
                 if (GameManager.Instance.gameObjectsList.Count > 0)
                 {
@@ -210,8 +202,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     if (_sphereDetectorInst)
                     {
                         Destroy(_sphereDetectorInst);
-                        isChargingSword = false;
-                        isSlidingOnEnemies = false;
+                        IsChargingSword = false;
+                        IsSlidingOnEnemies = false;
                         _totalCooldown = Time.time + cooldown;
                     }
                 }
@@ -235,7 +227,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             //mesh.SetActive(false);
             _cc.enabled = false;
-            isSlidingOnEnemies = true;
+            IsSlidingOnEnemies = true;
             yield return new WaitForSeconds(0.1f);
             var gameObjectsCopy = new List<GameObject>(GameManager.Instance.closestGameObjectsList);
 
@@ -243,9 +235,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
             {
                 if (_sphereDetectorInst)
                 {
-                    Debug.Log("Hola1");
                     Destroy(_sphereDetectorInst);
-                    isChargingSword = false;
+                    IsChargingSword = false;
                 }
             }
 
@@ -256,15 +247,10 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 var closestTr = gameObj.transform;
                 var targetPosition = closestTr.position;
 
-                var moveSpeed = 1f;
-                var acceleration = 70f;
-
                 var position = transform.position;
                 var desiredTargetPosition = new Vector3(targetPosition.x, position.y, targetPosition.z);
                 var moveDirection = desiredTargetPosition - position;
                 moveDirection.Normalize();
-
-                var currentSpeed = 0f;
 
                 if (Physics.Raycast(closestTr.transform.position, -closestTr.transform.forward, 1.5f, enemyHurtBoxLayer))
                 {
@@ -320,10 +306,10 @@ namespace _WeAreAthomic.SCRIPTS.Player
             }
 
             //swordTrail.SetActive(false);
-            isSlidingOnEnemies = false;
+            IsSlidingOnEnemies = false;
 
             _cc.enabled = true;
-            isChargingSword = false;
+            IsChargingSword = false;
         }
 
         private void StartQuickTimeEvent()
@@ -422,9 +408,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
             {
                 if (_sphereDetectorInst)
                 {
-                    Debug.Log("Hola1");
                     Destroy(_sphereDetectorInst);
-                    isChargingSword = false;
+                    IsChargingSword = false;
                 }
             }
 

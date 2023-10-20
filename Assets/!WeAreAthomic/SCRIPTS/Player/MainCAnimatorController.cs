@@ -33,9 +33,9 @@ namespace _WeAreAthomic.SCRIPTS.Player
             return _anim.GetFloat(moveSpeed);
         }
 
-        public void SetAttackCountAnim(bool condition)
+        public void SetAttackCountAnim(int value)
         {
-            _anim.SetBool(attackCount, condition);
+            _anim.SetInteger(attackCount, value);
         }
 
         public void SetCrouch(bool condition)

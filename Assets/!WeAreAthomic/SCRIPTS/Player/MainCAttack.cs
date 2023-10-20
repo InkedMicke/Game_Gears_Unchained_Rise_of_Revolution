@@ -10,6 +10,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCLayers _mainCLayers;
         private Animator _anim;
         private RailGrindSystem _railGrindSystem;
+        private MainCAnimatorController _mainCAnimator;
         private BoxCollider _weaponBC;
         private CharacterController _cc;
 
@@ -20,8 +21,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         public LayerMask enemyHurtBox;
 
-        [System.NonSerialized] public bool isAttacking;
-        [System.NonSerialized] public bool canDealDamage;
+        [System.NonSerialized] public bool IsAttacking;
+        [System.NonSerialized] public bool CanDealDamage;
         [System.NonSerialized] public bool CanMove;
         private bool _clickedOnTime;
         private bool _canNextAttack;
@@ -34,7 +35,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         [SerializeField] private float rotationNearEnemie = 8f;
         [SerializeField] private float hideWeaponTimer = 8f;
         public float timeGraceAttackPeriod;
-        private float currentTimeSheath;
+        private float _currentTimeSheath;
 
         private void Awake()
         {
@@ -43,6 +44,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _anim = GetComponent<Animator>();
             _cc = GetComponent<CharacterController>();
             _railGrindSystem = GetComponent<RailGrindSystem>();
+            _mainCAnimator = GetComponent<MainCAnimatorController>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -66,14 +68,14 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 }
 
                 attackCount++;
-                _anim.SetInteger(string.Format("attackCount"), attackCount);
+                _mainCAnimator.SetAttackCountAnim(attackCount);
                 weaponObj.GetComponent<WrenchHitBox>().ClearList();
                 _canNextAttack = false;
                 if (_mainCLayers.isJumpLayerActive)
                 {
                     _mainCLayers.DisableJumpLayer();
                 }
-                isAttacking = true;
+                IsAttacking = true;
 
                 _canNextAttack = false;
             }
@@ -81,9 +83,9 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void Sheath()
         {
-            if(!isAttacking && _isSheathed)
+            if(!IsAttacking && _isSheathed)
             {
-                if((currentTimeSheath + hideWeaponTimer) < Time.time)
+                if(_currentTimeSheath + hideWeaponTimer < Time.time)
                 {
                     HideWeapon();
                     _isSheathed = false;
@@ -100,7 +102,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 if (attackCount == 1)
                 {
                     attackCount++;
-                    _anim.SetInteger(string.Format("attackCount"), attackCount);
+                    _mainCAnimator.SetAttackCountAnim(attackCount);
                     _canNextAttack = false;
                 }
                 else
@@ -117,12 +119,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         public void EndAttack()
         {
-            isAttacking = false;
+            IsAttacking = false;
             attackCount = 0;
-            _anim.SetInteger(string.Format("attackCount"), attackCount);
+            _mainCAnimator.SetAttackCountAnim(attackCount);
             _mainCLayers.DisableAttackLayer();
             timeGraceAttackPeriod = Time.time + timeNextAttack;
-            currentTimeSheath = Time.time;
+            _currentTimeSheath = Time.time;
         }
 
         private void EnableWeaponCollision()
@@ -143,12 +145,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
         public void SetAttackCount(int value)
         {
             attackCount = value;
-            _anim.SetInteger(string.Format("attackCount"), value);
+            _mainCAnimator.SetAttackCountAnim(value);
         }
 
         private bool CanAttack()
         {
-            if (isAttacking) { return false; }
+            if (IsAttacking) { return false; }
             if (_mainCMovement.IsCrouch) { return false; }
             if (!(Time.time > timeGraceAttackPeriod)) { return false; }
 

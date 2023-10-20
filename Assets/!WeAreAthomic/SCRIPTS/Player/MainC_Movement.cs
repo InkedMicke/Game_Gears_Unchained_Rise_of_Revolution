@@ -271,7 +271,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             {
                 _isUsingGamepad = true;
                 _isUsingKeyboard = false;
-                if (!IsJumping && !IsFalling && !IsCrouch && !_mainCAttack.isAttacking)
+                if (!IsJumping && !IsFalling && !IsCrouch && !_mainCAttack.IsAttacking)
                 {
                     InvokeDisableAllLayers();
                     _mainCAttack.timeGraceAttackPeriod = Time.time + .2f;
@@ -389,7 +389,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             if (IsGrounded() && !_railGrindSystem.IsOnRail())
             {
-                if (Time.time > _timeGraceJumpPeriod && !_chargingSword.isSlidingOnEnemies && !_chargingSword.isChargingSword)
+                if (Time.time > _timeGraceJumpPeriod && !_chargingSword.IsSlidingOnEnemies && !_chargingSword.IsChargingSword)
                 {
                     _mainCLayers.EnableJumpLayer();
                     IsJumping = true;

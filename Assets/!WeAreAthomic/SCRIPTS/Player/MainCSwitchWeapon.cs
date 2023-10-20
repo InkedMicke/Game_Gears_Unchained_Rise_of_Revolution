@@ -39,7 +39,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private bool CanSwitchWeapon()
         {
-            if (_mainCAttack.isAttacking)
+            if (_mainCAttack.IsAttacking)
             {
                 return false;}
 
