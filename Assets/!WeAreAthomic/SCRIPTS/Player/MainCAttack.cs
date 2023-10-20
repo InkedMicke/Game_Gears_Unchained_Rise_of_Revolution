@@ -97,11 +97,17 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             if (_canNextAttack)
             {
-                attackCount++;
-                _anim.SetInteger(string.Format("attackCount"), attackCount);
-                //CheckNearEnemieToGo();
-                _canNextAttack = false;
-                CanMove = false;
+                if (attackCount == 1)
+                {
+                    attackCount++;
+                    _anim.SetInteger(string.Format("attackCount"), attackCount);
+                    _canNextAttack = false;
+                }
+                else
+                {
+                    SetAttackCount(1);
+                    _canNextAttack = false;
+                }
             }
         }
 

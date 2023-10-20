@@ -13,7 +13,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCPistol _mainCPistol;
         private RailGrindSystem _railGrindSystem;
         private MainCHackingSystem _mainCHacking;
-        private ChargingSwordSphereTarget _chargingSword; 
+        private ChargingSwordSphereTarget _chargingSword;
+        private MainCAnimatorController _mainCAnimator;
         private CharacterController _cc;
         private GODMODE _godMode;
 
@@ -76,6 +77,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _railGrindSystem = GetComponent<RailGrindSystem>();
             _mainCHacking = GetComponent<MainCHackingSystem>();
             _chargingSword = GetComponent<ChargingSwordSphereTarget>();
+            _mainCAnimator = GetComponent<MainCAnimatorController>();
 
             _playerInputActions = new PlayerInputActions();
         }
@@ -127,17 +129,17 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 {
                     IsFalling = true;
                     IsJumping = false;
-                    _anim.SetBool(string.Format("isFalling"), IsFalling); // Activa la animaci�n de ca�da
-                    _anim.SetBool(string.Format("isJumping"), IsJumping);
+                    _mainCAnimator.SetFalling(IsFalling);
+                    _mainCAnimator.SetJumping(IsJumping);
                 }
 
                 if (IsFalling && IsGrounded() ||IsFalling && _railGrindSystem.IsOnRail())
                 {
                     IsFalling = false;
                     IsJumping = false;
-                    _anim.SetBool(string.Format("isFalling"), IsFalling); // Activa la animaci�n de ca�da
-                    _anim.SetBool(string.Format("isJumping"), IsJumping);
-                    _anim.SetBool(string.Format("isGrounded"), true);
+                    _mainCAnimator.SetFalling(IsFalling);
+                    _mainCAnimator.SetJumping(IsJumping);
+                    _mainCAnimator.SetGrounded(true);
                     if (IsCrouch)
                     {
                         _mainCLayers.DisableJumpLayer();
@@ -145,10 +147,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     _timeGraceJumpPeriod = Time.time + timeNextJump;
                 }
             }
-
-            _anim.SetFloat(string.Format("pistolMoveX"), _moveAimingX);
-            _anim.SetFloat(string.Format("pistolMoveY"), _moveAimingY);
-            
+            _mainCAnimator.SetPistolMoveX(_moveAimingX);
+            _mainCAnimator.SetPistolMoveY(_moveAimingY);
         }
 
         private void ApplyGravity()
@@ -179,8 +179,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 turnSmoothTime);
 
             _moveDir = orientation.forward * (Time.deltaTime * _moveSpeed * direction.magnitude);
-
-            _anim.SetFloat(string.Format("moveSpeed"), value: _moveSpeed);
+            
+            _mainCAnimator.SetMoveSpeed(_moveSpeed);
 
             ApplyGravity();
 
@@ -204,13 +204,13 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 {
                     moveDir = orientation.forward * _moveVectorKeyboard.y + orientation.right * _moveVectorKeyboard.x;
                 }
-                _cc.Move(moveDir * Time.deltaTime * _moveSpeed);
+                _cc.Move(moveDir * (Time.deltaTime * _moveSpeed));
             }
 
             MoveWhileAiming();
-
-            _anim.SetFloat(string.Format("pistolMoveX"), _moveAimingX);
-            _anim.SetFloat(string.Format("pistolMoveY"), _moveAimingY);
+            
+            _mainCAnimator.SetPistolMoveX(_moveAimingX);
+            _mainCAnimator.SetPistolMoveY(_moveAimingY);
 
             if (_moveVectorKeyboard.magnitude > 0.1f && !_mainCPistol.IsAiming)
             {
@@ -297,10 +297,10 @@ namespace _WeAreAthomic.SCRIPTS.Player
         
 
             _cc.Move(_movement * Time.deltaTime);
-        
-            var actualSpeed = _anim.GetFloat(string.Format("moveSpeed"));
+
+            var actualSpeed = _mainCAnimator.GetMoveSpeed();
             var interpolatedSpeed = Mathf.Lerp(actualSpeed, desiredSpeed, Time.deltaTime * 4.0f);
-            _anim.SetFloat(string.Format("moveSpeed"), interpolatedSpeed);
+            _mainCAnimator.SetMoveSpeed(interpolatedSpeed);
 
             var direction = new Vector3(_moveVectorGamepad.x, 0f, _moveVectorGamepad.y).normalized;
             var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
@@ -334,7 +334,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
             if (Time.time > _timeGraceCrouchPeriod)
             {
-                _anim.SetBool(string.Format("isCrouch"), IsCrouch);
+                _mainCAnimator.SetCrouch(IsCrouch);
                 _timeGraceCrouchPeriod = Time.time + timeNextCrouch;
 
                 if (IsCrouch)
@@ -372,14 +372,15 @@ namespace _WeAreAthomic.SCRIPTS.Player
             if (IsCrouch && (_moveVectorKeyboard.magnitude > 0.1f || _moveVectorGamepad.magnitude > 0.1f))
             {
                 _isCrouchWalking = true;
-                _anim.SetBool(string.Format("isCrouchWalking"), true);
+                _mainCAnimator.SetCrouchWalking(_isCrouchWalking);
+                
             }
             else
             {
                 if (_isCrouchWalking)
                 {
                     _isCrouchWalking = false;
-                    _anim.SetBool(string.Format("isCrouchWalking"), false);
+                    _mainCAnimator.SetCrouchWalking(_isCrouchWalking);
                 }
             }
         }
@@ -393,8 +394,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     _mainCLayers.EnableJumpLayer();
                     IsJumping = true;
                     _velocity.y = Mathf.Sqrt(jumpImpulse * -2 * gravity);
-                    _anim.SetBool(string.Format("isJumping"), IsJumping);
-                    _anim.SetBool(string.Format("isGrounded"), false);
+                    _mainCAnimator.SetJumping(IsJumping);
+                    _mainCAnimator.SetGrounded(false);
                 }
             }
 
@@ -405,8 +406,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     _mainCLayers.EnableJumpLayer();
                     IsJumping = true;
                     _velocity.y = Mathf.Sqrt(jumpImpulseOnRail * -2 * gravity);
-                    _anim.SetBool(string.Format("isJumping"), IsJumping);
-                    _anim.SetBool(string.Format("isGrounded"), false);
+                    _mainCAnimator.SetJumping(IsJumping);
+                    _mainCAnimator.SetGrounded(false);
                 }
             }
         }
