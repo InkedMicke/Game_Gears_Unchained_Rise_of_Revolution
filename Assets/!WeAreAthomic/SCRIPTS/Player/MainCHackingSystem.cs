@@ -78,6 +78,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
             robotObj.SetActive(true);
             robotObj.transform.position = new Vector3(_currentInteract.transform.GetChild(0).position.x,
                 _currentInteract.transform.GetChild(0).position.y, _currentInteract.transform.GetChild(0).position.z);
+            var desiredRot = new Vector3(_currentInteract.transform.GetChild(0).position.x, robotObj.transform.position.y, _currentInteract.transform.GetChild(0).position.z);
+            robotObj.transform.LookAt(desiredRot);
         }
 
         public void FixPosition()
