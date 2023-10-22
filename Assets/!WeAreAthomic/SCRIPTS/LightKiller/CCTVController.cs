@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using _WeAreAthomic.SCRIPTS.Player;
+using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 
 namespace _WeAreAthomic.SCRIPTS.LightKiller
@@ -8,18 +10,19 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
     public class CCTVController : MonoBehaviour
     {
         private LightKiller _lKiller;
+        private MainCMovement _mainCMovement;
 
         [SerializeField] private GameObject lKillerObj;
+        private GameObject _playerObj;
     
         private Transform _lightKillerTr;
-        private Transform _playerTr;
 
         private Quaternion _targetRotation;
     
         public LayerMask groundLayer;
         public LayerMask obstructionLayer;
 
-        [System.NonSerialized] public bool rayGotObstruction;
+        [System.NonSerialized] public bool RayGotObstruction;
         private bool _isCameraOff;
     
         private int _currentRotation;
@@ -32,9 +35,10 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
 
         private void Awake()
         {
-            _lKiller = lKillerObj.GetComponent<global::_WeAreAthomic.SCRIPTS.LightKiller.LightKiller>();
+            _lKiller = lKillerObj.GetComponent<LightKiller>();
             _lightKillerTr = lKillerObj.transform;
-            _playerTr = GameObject.FindGameObjectWithTag("Player").transform;
+            _playerObj = GameObject.FindGameObjectWithTag("Player");
+            _mainCMovement = _playerObj.GetComponent<MainCMovement>();
 
         }
 
@@ -53,52 +57,61 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
                 _targetRotation = Quaternion.Euler(rotations[_currentRotation]);
             }
         
-            if (!(transform.rotation == _targetRotation) && !_isCameraOff && !_lKiller.isFocusingPlayer)
+            if (!(transform.rotation == _targetRotation) && !_isCameraOff && !_lKiller.IsFocusingPlayer)
             {
                 transform.rotation = Quaternion.Lerp(transform.rotation, _targetRotation, lerpSpeed);
-                rayGotObstruction = false;
+                RayGotObstruction = false;
             }
             else
             {
                 _currentRotation = Random.Range(0, rotations.Count);
             }
         
-            if(_isCameraOff)
+            switch (_isCameraOff)
             {
-                Quaternion offRotation = Quaternion.Euler(80f, 0f, 0f);
-                transform.rotation = Quaternion.Lerp(transform.rotation, offRotation, lerpSpeed);
-            }
-
-            if(!_isCameraOff)
-            {
-                LookToPlayer();
-                SetLightPosition();
+                case true:
+                {
+                    var offRotation = Quaternion.Euler(80f, 0f, 0f);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, offRotation, lerpSpeed);
+                    break;
+                }
+                case false:
+                    LookToPlayer();
+                    SetLightPosition();
+                    break;
             }
         }
-        void LookToPlayer()
+        private void LookToPlayer()
         {
-            if (_lKiller.isFocusingPlayer)
+            if (_lKiller.IsFocusingPlayer)
             {
-                transform.LookAt(_playerTr.position);
-
-                Ray ray = new Ray(transform.position, transform.forward);
-                if (Physics.Raycast(ray, out RaycastHit hitInfo, 50f, obstructionLayer))
+                if (_mainCMovement.IsGrounded())
                 {
-                    if (_lKiller.isFocusingPlayer)
+                    transform.LookAt(_playerObj.transform.position);
+                }
+                else
+                {
+                    transform.LookAt(_mainCMovement.PositionOnFloorNotGrounded());
+                }
+
+                var ray = new Ray(transform.position, transform.forward);
+                if (Physics.Raycast(ray, out var hitInfo, 50f, obstructionLayer))
+                {
+                    if (_lKiller.IsFocusingPlayer)
                     {
                         _lKiller.WhiteLight();
-                        rayGotObstruction = true;
+                        RayGotObstruction = true;
                     }
                 }
             }
         }
     
-        public void SetLightPosition()
+        private void SetLightPosition()
         {
             var ray = new Ray(transform.position, transform.forward);
-            if(Physics.Raycast(ray, out RaycastHit hitInfo, 50f, groundLayer))
+            if(Physics.Raycast(ray, out var hitInfo, 50f, groundLayer))
             {
-                if (!_lKiller.isFocusingPlayer)
+                if (!_lKiller.IsFocusingPlayer)
                 {
                     _lightKillerTr.position = hitInfo.point;
                 }

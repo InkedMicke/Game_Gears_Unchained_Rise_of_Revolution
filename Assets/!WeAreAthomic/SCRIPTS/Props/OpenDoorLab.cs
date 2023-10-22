@@ -10,6 +10,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
     public class OpenDoorLab : MonoBehaviour
     {
         private Animator _anim;
+        [SerializeField] private AudioSource openDoorSound;
 
         private void Awake()
         {
@@ -19,6 +20,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
         public void OpenDoor(float value)
         {
             Invoke(nameof(InvokeOpenDoor), value);
+            PlaySound();
         }
         public void CloseDoor(float value)
         {
@@ -33,6 +35,11 @@ namespace _WeAreAthomic.SCRIPTS.Props
         private void InvokeCloseDoor()
         {
             _anim.SetTrigger(string.Format("closeDoor"));
+        }
+
+        private void PlaySound()
+        {
+            openDoorSound.Play();
         }
 
     }

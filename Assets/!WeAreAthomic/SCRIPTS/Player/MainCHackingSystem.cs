@@ -13,6 +13,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private CharacterController _cc;
         private BastetController _bastetController;
         private MainCSwitchWeapon _mainSwitchWeapon;
+        private MainCSounds _mainCSounds;
 
         [SerializeField] private Slider hackSlider;
 
@@ -36,6 +37,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _cc = GetComponent<CharacterController>();
             _bastetController = robotObj.GetComponent<BastetController>();
             _mainSwitchWeapon = GetComponent<MainCSwitchWeapon>();
+            _mainCSounds = GetComponent<MainCSounds>();
         }
 
         private void Update()
@@ -57,6 +59,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             var button = _currentInteract.GetComponent<ButtonInteractable>();
             button.EndHackInvoke();
             _bastetController.InvokeMoveToPlayer();
+            _mainCSounds.StopHackInProcessSound();
         }   
 
         private void UpdateUI()
@@ -77,10 +80,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
         public void SpawnRobot()
         {
             robotObj.SetActive(true);
-            robotObj.transform.position = new Vector3(_currentInteract.transform.GetChild(0).position.x,
-                _currentInteract.transform.GetChild(0).position.y, _currentInteract.transform.GetChild(0).position.z);
-            var desiredRot = new Vector3(_currentInteract.transform.GetChild(0).position.x, robotObj.transform.position.y, _currentInteract.transform.GetChild(0).position.z);
-            robotObj.transform.LookAt(desiredRot);
+            var position = _currentInteract.transform.position;
+            Debug.Log(position);
+            robotObj.transform.position = position + _currentInteract.transform.forward * 0.8f;
+            Debug.DrawRay(position, _currentInteract.transform.forward * 0.8f, Color.magenta, 10f);
+            var desiredPos = new Vector3(position.x, robotObj.transform.position.y, position.z);
+            robotObj.transform.LookAt(desiredPos);
         }
 
         public void FixPosition()
@@ -170,6 +175,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             hackSlider.minValue = Time.time;
             hackSlider.maxValue = Time.time + _timeToHack;
             _cc.enabled = true;
+            _mainCSounds.PlayHackInProcessSound();
         }
     }
 }

@@ -29,7 +29,7 @@ public class WrenchHitBox : MonoBehaviour
             {
                 other.GetComponent<DummieHurtBox>().TakeDamage(20);
                 SpeedDownTime();
-                Invoke(nameof(SpeedUpTime), .005f);
+                Invoke(nameof(SpeedUpTime), .008f);
                 colliderList.Add(other);
                 if (_mainCAttack.attackCount == 3)
                 {

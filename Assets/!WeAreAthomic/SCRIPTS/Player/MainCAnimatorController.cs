@@ -50,7 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         public void SetFalling(bool condition)
         {
-            _anim.SetBool(isCrouchWalking, condition);
+            _anim.SetBool(isFalling, condition);
         }
 
         public void SetJumping(bool condition)

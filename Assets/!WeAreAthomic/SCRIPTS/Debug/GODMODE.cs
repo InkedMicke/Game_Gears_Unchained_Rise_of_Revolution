@@ -47,14 +47,14 @@ public class GODMODE : MonoBehaviour
     {
         GodMode();
         AdjustSpeed();
-
-        this.gameObject.layer = isGodModeEnabled ? defaultLayer : ignoreLayer;
+        var layerValue = isGodModeEnabled ? 14 : 0;
+        var validLayer = Mathf.Clamp(layerValue, 0, 31);
+        this.gameObject.layer = validLayer;
     }
 
     private void EnableGodMode(InputAction.CallbackContext context)
     {
         isGodModeEnabled = !isGodModeEnabled;
-        
     }
 
     private void GodMode()
@@ -95,21 +95,33 @@ public class GODMODE : MonoBehaviour
 
     private void ShiftUp(InputAction.CallbackContext context)
     {
-        _isSpeedingUp = false;
+        if (isGodModeEnabled)
+        {
+            _isSpeedingUp = false;
+        }
     }
     private void ShiftDown(InputAction.CallbackContext context)
     {
-        _isSpeedingUp = true;
+        if (isGodModeEnabled)
+        {
+            _isSpeedingUp = true;
+        }
     }
 
     private void CtrlUp(InputAction.CallbackContext context)
     {
-        _isSpeedingDown = false;
+        if (isGodModeEnabled)
+        {
+            _isSpeedingDown = false;
+        }
     }
 
     private void CtrlDown(InputAction.CallbackContext context)
     {
-        _isSpeedingDown = true;
+        if (isGodModeEnabled)
+        {
+            _isSpeedingDown = true;
+        }
     }
     
 }

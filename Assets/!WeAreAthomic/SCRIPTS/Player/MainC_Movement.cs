@@ -385,6 +385,19 @@ namespace _WeAreAthomic.SCRIPTS.Player
             }
         }
 
+        public Vector3 PositionOnFloorNotGrounded()
+        {
+            var ray = new Ray(transform.position, -transform.up);
+            if(Physics.Raycast(ray, out var hitInfo, Mathf.Infinity))
+            {
+                return hitInfo.point;
+            }
+            else
+            {
+                return ray.GetPoint(2f);
+            }
+        }
+
         private void Jump(InputAction.CallbackContext context)
         {
             if (IsGrounded() && !_railGrindSystem.IsOnRail())

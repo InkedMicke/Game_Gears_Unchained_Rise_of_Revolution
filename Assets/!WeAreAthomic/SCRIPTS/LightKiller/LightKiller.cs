@@ -4,32 +4,42 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
 {
     public class LightKiller : MonoBehaviour
     {
-        CCTVController controller;
+        private CCTVController _controller;
 
         public GameObject luzObj;
         public GameObject cctv;
-        Light _luz;
+        private Light _luz;
 
-        [System.NonSerialized] public bool isFocusingPlayer;
+        [SerializeField] private AudioSource redLightSound; 
+        
+        [System.NonSerialized] public bool IsFocusingPlayer;
 
         private void Awake()
         {
             _luz = luzObj.GetComponent<Light>();
-            controller = cctv.GetComponent<CCTVController>();
+            _controller = cctv.GetComponent<CCTVController>();
         }
 
         public void WhiteLight()
         {
             _luz.color = Color.white;
-            isFocusingPlayer = false;
+            IsFocusingPlayer = false;
+            if (redLightSound.isPlaying)
+            {
+                redLightSound.Stop();
+            }
         }
 
         public void RedLight()
         {
-            if (!controller.rayGotObstruction)
+            if (!_controller.RayGotObstruction)
             {
                 _luz.color = Color.red;
-                isFocusingPlayer = true;
+                IsFocusingPlayer = true;
+                if (!redLightSound.isPlaying)
+                {
+                    redLightSound.Play();
+                }
             }
         }
     }

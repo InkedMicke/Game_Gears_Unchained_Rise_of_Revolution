@@ -9,7 +9,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
         private DummieController _dummieController;
         private Animator _anim;
         private CharacterController _cc;
+        private DummieSounds _dummieSounds;
 
+        [SerializeField] private GameObject soundComponentObj;
+        
         private Transform _playerTr;
 
         [SerializeField] private ParticleSystem sparksHit;
@@ -22,6 +25,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
             _anim = GetComponentInParent<Animator>();
             _cc = GetComponentInParent<CharacterController>();
             _dummieController = GetComponentInParent<DummieController>();
+            _dummieSounds = soundComponentObj.GetComponent<DummieSounds>();
         }
 
         private void Start()
@@ -37,6 +41,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
             if (!_dummieController.isDeath)
             {
                 StartCoroutine(nameof(PushBack));
+                _dummieSounds.PlayHurtSound();
             }
         }
 

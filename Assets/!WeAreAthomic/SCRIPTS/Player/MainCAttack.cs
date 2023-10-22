@@ -11,6 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private Animator _anim;
         private RailGrindSystem _railGrindSystem;
         private MainCAnimatorController _mainCAnimator;
+        private MainCSounds _mainCSounds;
         private BoxCollider _weaponBC;
         private CharacterController _cc;
 
@@ -45,6 +46,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _cc = GetComponent<CharacterController>();
             _railGrindSystem = GetComponent<RailGrindSystem>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
+            _mainCSounds = GetComponent<MainCSounds>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -66,7 +68,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     ShowWeapon();
                     _isSheathed = true;
                 }
-
+                _mainCSounds.StopAttackSound();
+                _mainCSounds.PlayAttackSound();
                 attackCount++;
                 _mainCAnimator.SetAttackCountAnim(attackCount);
                 weaponObj.GetComponent<WrenchHitBox>().ClearList();
@@ -101,12 +104,16 @@ namespace _WeAreAthomic.SCRIPTS.Player
             {
                 if (attackCount == 1)
                 {
+                    _mainCSounds.StopAttackSound();
+                    _mainCSounds.PlayAttackSound();
                     attackCount++;
                     _mainCAnimator.SetAttackCountAnim(attackCount);
                     _canNextAttack = false;
                 }
                 else
                 {
+                    _mainCSounds.StopAttackSound();
+                    _mainCSounds.PlayAttackSound();
                     SetAttackCount(1);
                     _canNextAttack = false;
                 }
