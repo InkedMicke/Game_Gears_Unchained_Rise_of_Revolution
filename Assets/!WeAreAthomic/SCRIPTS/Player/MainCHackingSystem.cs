@@ -82,10 +82,11 @@ namespace _WeAreAthomic.SCRIPTS.Player
             robotObj.SetActive(true);
             var position = _currentInteract.transform.position;
             Debug.Log(position);
-            robotObj.transform.position = position + _currentInteract.transform.forward * 0.8f;
+            robotObj.transform.position = position + _currentInteract.transform.forward * 0.4f;
             Debug.DrawRay(position, _currentInteract.transform.forward * 0.8f, Color.magenta, 10f);
             var desiredPos = new Vector3(position.x, robotObj.transform.position.y, position.z);
             robotObj.transform.LookAt(desiredPos);
+            _bastetController.InvokeRotation();
         }
 
         public void FixPosition()

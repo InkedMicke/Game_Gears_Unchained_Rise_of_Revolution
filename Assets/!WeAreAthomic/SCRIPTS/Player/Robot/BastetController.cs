@@ -17,6 +17,9 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
         [SerializeField] private float moveSpeed;
         [SerializeField] private float rotateSpeed = 0.1f;
 
+        private bool positive;
+        private bool negative;
+
         private void Awake()
         {
             _cc = GetComponent<CharacterController>();
@@ -25,7 +28,6 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
         private void Start()
         {
             _playerObj = GameObject.FindGameObjectWithTag("Player");
-            StartCoroutine(nameof(NegativeRotationX));
         }
 
         public void InvokeMoveToPlayer()
@@ -33,9 +35,10 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
             StartCoroutine(nameof(MoveToPlayer));
         }
 
-        private void Update()
+        public void InvokeRotation()
         {
-            Debug.Log(transform.localEulerAngles.x);
+            StartCoroutine(nameof(PositiveRotationX));
+
         }
 
         private IEnumerator MoveToPlayer()
@@ -57,7 +60,7 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
             }
         }
 
-        public IEnumerator NegativeRotationX()
+        private IEnumerator NegativeRotationX()
         {
             var enable = true;
 
@@ -65,17 +68,17 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
             {
                 var eulerAngles = transform.eulerAngles;
                 transform.rotation = Quaternion.Euler(eulerAngles.x -= rotateSpeed, eulerAngles.y, eulerAngles.z);
-
-                if (eulerAngles.x <= 320)
+                negative = true;
+                if (transform.localRotation.x >= 0.2f)
                 {
-                    enable = false;
-                    StartCoroutine(nameof(PositiveRotationX));
+                    enable = false; ;
+                    StartCoroutine(nameof(WaitRotation));
                 }
-                
+
                 yield return new WaitForSeconds(0.01f);
             }
         }
-        
+
         private IEnumerator PositiveRotationX()
         {
             var enable = true;
@@ -84,13 +87,43 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
             {
                 var eulerAngles = transform.eulerAngles;
                 transform.rotation = Quaternion.Euler(eulerAngles.x += rotateSpeed, eulerAngles.y, eulerAngles.z);
-
-                if (eulerAngles.x >= 359)
+                positive = true;
+                if (transform.localRotation.x >= 0.2f)
                 {
                     enable = false;
-                    StartCoroutine(nameof(NegativeRotationX));
+                    StartCoroutine(nameof(WaitRotation));
                 }
-                
+
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
+        private IEnumerator WaitRotation()
+        {
+            var enable = true;
+            var time = 0.1f;
+
+            while (enable)
+            {
+                time -= Time.deltaTime;
+
+                if (time <= 0f)
+                {
+                    if (positive)
+                    {
+                        enable = false;
+                        positive = false;
+                        StartCoroutine(nameof(NegativeRotationX));
+                    }
+
+                    else if (negative)
+                    {
+                        enable = false;
+                        negative = false;
+                        StartCoroutine(nameof(PositiveRotationX));
+                    }
+                }
+
                 yield return new WaitForSeconds(0.01f);
             }
         }
