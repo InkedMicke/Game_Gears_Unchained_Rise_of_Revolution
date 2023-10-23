@@ -13,6 +13,7 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
 
         private GameObject _playerObj;
         [SerializeField] private GameObject playerRightArm;
+        [SerializeField] private GameObject scannerObj;
 
         [SerializeField] private float moveSpeed;
         [SerializeField] private float rotateSpeed = 0.1f;
@@ -37,18 +38,19 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
 
         public void InvokeRotation()
         {
+            scannerObj.SetActive(true);
             StartCoroutine(nameof(PositiveRotationX));
-
         }
 
         private IEnumerator MoveToPlayer()
         {
             var canEnableLayer = true;
-
+            scannerObj.SetActive(false);
             while (canEnableLayer)
             {
                 var direction = playerRightArm.transform.position - transform.position;
                 _cc.Move(direction.normalized * moveSpeed * Time.deltaTime);
+                transform.LookAt(playerRightArm.transform);
 
                 if (Vector3.Distance(playerRightArm.transform.position, transform.position) < 0.3f)
                 {
@@ -127,31 +129,5 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
                 yield return new WaitForSeconds(0.01f);
             }
         }
-
-        private IEnumerator WaitRotation()
-        {
-            var enable = true;
-            var time = 0.1f;
-
-            while (enable)
-            {
-                time -= Time.deltaTime;
-
-                if (time <= 0f)
-                {
-                    if (positive)
-                    {
-                        enable = false;
-                        positive = false;
-                        StartCoroutine(nameof(NegativeRotationX));
-                    }
-
-                    else if (negative)
-                    {
-                        enable = false;
-                        negative = false;
-                        StartCoroutine(nameof(PositiveRotationX));
-                    }
-                }
-            }
+    }
 }

@@ -81,8 +81,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             robotObj.SetActive(true);
             var position = _currentInteract.transform.position;
-            Debug.Log(position);
-            robotObj.transform.position = position + _currentInteract.transform.forward * 0.4f;
+            var desiredPosRobot = new Vector3(position.x, position.y - .05f, position.z); 
+            robotObj.transform.position = desiredPosRobot + _currentInteract.transform.forward * 0.3f;
             Debug.DrawRay(position, _currentInteract.transform.forward * 0.8f, Color.magenta, 10f);
             var desiredPos = new Vector3(position.x, robotObj.transform.position.y, position.z);
             robotObj.transform.LookAt(desiredPos);
