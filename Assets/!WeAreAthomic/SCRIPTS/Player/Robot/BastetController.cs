@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace _WeAreAthomic.SCRIPTS.Player.Robot
@@ -12,6 +13,7 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
         [SerializeField] private GameObject playerRightArm;
 
         [SerializeField] private float moveSpeed;
+        [SerializeField] private float rotateSpeed = 0.1f;
 
         private void Awake()
         {
@@ -21,11 +23,17 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
         private void Start()
         {
             _playerObj = GameObject.FindGameObjectWithTag("Player");
+            StartCoroutine(nameof(NegativeRotationX));
         }
 
         public void InvokeMoveToPlayer()
         {
             StartCoroutine(nameof(MoveToPlayer));
+        }
+
+        private void Update()
+        {
+            Debug.Log(transform.localEulerAngles.x);
         }
 
         private IEnumerator MoveToPlayer()
@@ -45,6 +53,49 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
 
                 yield return new WaitForSeconds(0.01f);
             }
+        }
+
+        public IEnumerator NegativeRotationX()
+        {
+            var enable = true;
+
+            while (enable)
+            {
+                var eulerAngles = transform.eulerAngles;
+                transform.rotation = Quaternion.Euler(eulerAngles.x -= rotateSpeed, eulerAngles.y, eulerAngles.z);
+
+                if (eulerAngles.x <= 320)
+                {
+                    enable = false;
+                    StartCoroutine(nameof(PositiveRotationX));
+                }
+                
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+        
+        private IEnumerator PositiveRotationX()
+        {
+            var enable = true;
+
+            while (enable)
+            {
+                var eulerAngles = transform.eulerAngles;
+                transform.rotation = Quaternion.Euler(eulerAngles.x += rotateSpeed, eulerAngles.y, eulerAngles.z);
+
+                if (eulerAngles.x >= 359)
+                {
+                    enable = false;
+                    StartCoroutine(nameof(NegativeRotationX));
+                }
+                
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
+        private IEnumerator Wait()
+        {
+            yield return null;
         }
     }
 }
