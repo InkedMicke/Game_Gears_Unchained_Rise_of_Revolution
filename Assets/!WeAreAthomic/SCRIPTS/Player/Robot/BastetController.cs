@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace _WeAreAthomic.SCRIPTS.Player.Robot
 {
@@ -93,9 +95,30 @@ namespace _WeAreAthomic.SCRIPTS.Player.Robot
             }
         }
 
-        private IEnumerator Wait()
+        private IEnumerator WaitRotation()
         {
-            yield return null;
-        }
-    }
+            var enable = true;
+            var time = 0.1f;
+
+            while (enable)
+            {
+                time -= Time.deltaTime;
+
+                if (time <= 0f)
+                {
+                    if (positive)
+                    {
+                        enable = false;
+                        positive = false;
+                        StartCoroutine(nameof(NegativeRotationX));
+                    }
+
+                    else if (negative)
+                    {
+                        enable = false;
+                        negative = false;
+                        StartCoroutine(nameof(PositiveRotationX));
+                    }
+                }
+            }
 }

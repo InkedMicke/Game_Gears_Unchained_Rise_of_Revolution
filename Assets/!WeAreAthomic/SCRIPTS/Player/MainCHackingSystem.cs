@@ -80,14 +80,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
         public void SpawnRobot()
         {
             robotObj.SetActive(true);
-            robotObj.transform.position = transform.position + transform.up * 2;
-            robotObj.transform.LookAt(transform.position);
-            /*var position = _currentInteract.transform.position;
+            var position = _currentInteract.transform.position;
             Debug.Log(position);
             robotObj.transform.position = position + _currentInteract.transform.forward * 0.8f;
             Debug.DrawRay(position, _currentInteract.transform.forward * 0.8f, Color.magenta, 10f);
             var desiredPos = new Vector3(position.x, robotObj.transform.position.y, position.z);
-            robotObj.transform.LookAt(desiredPos);*/
+            robotObj.transform.LookAt(desiredPos);
         }
 
         public void FixPosition()
