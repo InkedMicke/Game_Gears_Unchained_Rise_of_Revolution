@@ -129,6 +129,17 @@ namespace _WeAreAthomic.SCRIPTS.Player
             }
         }
 
+        public void StopHack()
+        {
+            StopCoroutine(nameof(Hack));
+            isHacking = false;
+            isHackingAnim = false;
+            hackCanvas.SetActive(false);
+            _mainCSounds.StopHackInProcessSound();
+            _cc.enabled = true;
+            _bastetController.InvokeMoveToPlayer();
+        }
+
         private void DisableWeapon()
         {
             if (_mainSwitchWeapon.isUsingWrench)

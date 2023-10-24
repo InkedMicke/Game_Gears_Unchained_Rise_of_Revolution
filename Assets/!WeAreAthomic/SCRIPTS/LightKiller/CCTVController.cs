@@ -23,7 +23,6 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
         public LayerMask groundLayer;
         public LayerMask obstructionLayer;
 
-        [System.NonSerialized] public bool RayGotObstruction;
         private bool _isCameraOff;
 
         private int currentRotation;
@@ -108,13 +107,18 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
                     transform.LookAt(_mainCMovement.PositionOnFloorNotGrounded());
                 }
 
-                var ray = new Ray(transform.position, transform.forward);
-                if (Physics.Raycast(ray, out var hitInfo, 50f, obstructionLayer))
+                var playerPos = _playerObj.transform.position;
+                var desiredPos = new Vector3(playerPos.x, playerPos.y + 1f, playerPos.z);
+                var direction = desiredPos - transform.position;
+
+                var raycastLength = direction.magnitude;
+
+                var ray = new Ray(transform.position, direction.normalized);
+                if (Physics.Raycast(ray, raycastLength, obstructionLayer))
                 {
                     if (_lKiller.IsFocusingPlayer)
                     {
                         _lKiller.WhiteLight();
-                        RayGotObstruction = true;
                     }
                 }
             }

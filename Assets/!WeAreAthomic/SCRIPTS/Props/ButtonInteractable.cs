@@ -15,6 +15,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
 
         public bool isActive;
         public bool hasActivatedSomething;
+        public bool canHack = true;
         private bool _isShowingButton;
 
         public UnityEvent seActivanCuandoLeDasAlBoton;
@@ -56,16 +57,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
 
         public void Interact()
         {
-            if (_requiredAction.isRequiredAction)
-            {
-                ButtonInteractable button = _requiredAction.requiredObject.GetComponent<ButtonInteractable>();
-                if (button.hasActivatedSomething)
-                {
-                    seActivanCuandoLeDasAlBoton.Invoke();
-                }
-            }
-
-            if(_requiredAction.isRequiredAction == false)
+            if (canHack)
             {
                 seActivanCuandoLeDasAlBoton.Invoke();
             }
@@ -73,7 +65,10 @@ namespace _WeAreAthomic.SCRIPTS.Props
 
         public void EndHackInvoke()
         {
-            seActivanCuandoTerminaElHack.Invoke();
+            if (canHack)
+            {
+                seActivanCuandoTerminaElHack.Invoke();
+            }
         }
 
         public void ShowButton()
@@ -91,6 +86,16 @@ namespace _WeAreAthomic.SCRIPTS.Props
         public void ToggleActivateSomething()
         {
             hasActivatedSomething = !hasActivatedSomething;
+        }
+
+        public void EnableCanHack()
+        {
+            canHack = true;
+        }
+
+        public void DisableCanHack()
+        {
+            canHack = false;
         }
 
     }

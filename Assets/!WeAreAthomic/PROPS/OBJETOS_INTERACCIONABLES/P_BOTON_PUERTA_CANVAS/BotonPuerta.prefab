@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2178044915549488618}
   - component: {fileID: 493925947878310532}
   - component: {fileID: 7841914987761911187}
-  - component: {fileID: 5773928791938000135}
   m_Layer: 12
   m_Name: BotonPuerta
   m_TagString: Untagged
@@ -33,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 2653989552205015942}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &493925947878310532
 SphereCollider:
@@ -72,26 +71,13 @@ MonoBehaviour:
   _circleObj: {fileID: 5653196157143784566}
   isActive: 0
   hasActivatedSomething: 0
+  canHack: 1
   seActivanCuandoLeDasAlBoton:
     m_PersistentCalls:
       m_Calls: []
   seActivanCuandoTerminaElHack:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5773928791938000135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5574766278489949593}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89d18ebe3261c224286c89b1b9ed845a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRequiredAction: 0
-  requiredObject: {fileID: 0}
 --- !u!1 &5653196157143784566
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,8 +10,8 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
         public GameObject cctv;
         private Light _luz;
 
-        [SerializeField] private AudioSource redLightSound; 
-        
+        [SerializeField] private AudioSource redLightSound;
+
         [System.NonSerialized] public bool IsFocusingPlayer;
 
         private void Awake()
@@ -32,15 +32,13 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
 
         public void RedLight()
         {
-            if (!_controller.RayGotObstruction)
+            _luz.color = Color.red;
+            IsFocusingPlayer = true;
+            if (!redLightSound.isPlaying)
             {
-                _luz.color = Color.red;
-                IsFocusingPlayer = true;
-                if (!redLightSound.isPlaying)
-                {
-                    redLightSound.Play();
-                }
+                redLightSound.Play();
             }
+
         }
     }
 }

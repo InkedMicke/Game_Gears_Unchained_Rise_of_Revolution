@@ -148,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 96110001}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.19, y: -3.27, z: 0.36}
+  m_LocalPosition: {x: -0.19, y: -3.27, z: 1.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -448,37 +448,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c480f92101831b4ca3ef71a35919d6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &948022118
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 948022119}
-  m_Layer: 0
-  m_Name: Tr1 (4)
-  m_TagString: CameraTransform
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &948022119
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 948022118}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.09, y: -3.27, z: 1.36}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 377762396}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &975257220
 GameObject:
   m_ObjectHideFlags: 0
@@ -1160,7 +1129,7 @@ PrefabInstance:
     - target: {fileID: 7941343181932101547, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.65
+      value: 8.86
       objectReference: {fileID: 0}
     - target: {fileID: 8551431388746418621, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
@@ -1185,10 +1154,20 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1057811165682243484, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1496571762}
+    - target: {fileID: 1057811165682243484, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: StopHack
+      objectReference: {fileID: 0}
     - target: {fileID: 1322467867477339566, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.18
+      value: 2.38
       objectReference: {fileID: 0}
     - target: {fileID: 1322467867477339566, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
@@ -1198,7 +1177,12 @@ PrefabInstance:
     - target: {fileID: 1322467867477339566, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.23
+      value: 2.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588472668497688510, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: canHack
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1588472668497688510, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
@@ -1313,7 +1297,7 @@ PrefabInstance:
     - target: {fileID: 1588472668497688510, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
       propertyPath: seActivanCuandoLeDasAlBoton.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1588472668497688510, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
@@ -1333,6 +1317,41 @@ PrefabInstance:
     - target: {fileID: 1588472668497688510, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2085794449567541549, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: seActivanCuandoSeEnciendeLaCamara.Array.data[0].m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2085794449567541549, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: seActivanCuandoSeEnciendeLaCamara.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2085794449567541549, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: seActivanCuandoSeEnciendeLaCamara.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 811250833}
+    - target: {fileID: 2085794449567541549, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: seActivanCuandoSeEnciendeLaCamara.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2085794449567541549, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: seActivanCuandoSeEnciendeLaCamara.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: DisableCanHack
+      objectReference: {fileID: 0}
+    - target: {fileID: 2085794449567541549, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: seActivanCuandoSeEnciendeLaCamara.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: _WeAreAthomic.SCRIPTS.Props.ButtonInteractable, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2085794449567541549, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: seActivanCuandoSeEnciendeLaCamara.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2406055703123648794, guid: befc01eb549d2374181796db4f6b39cf,
@@ -1360,6 +1379,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.72
       objectReference: {fileID: 0}
+    - target: {fileID: 3552391038337652102, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1496571762}
     - target: {fileID: 4269492279315602273, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
       propertyPath: m_RootOrder
@@ -1868,7 +1892,7 @@ PrefabInstance:
     - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
@@ -1902,6 +1926,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
       propertyPath: seActivanCuandoLeDasAlBoton.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1378015482}
@@ -1930,6 +1959,11 @@ PrefabInstance:
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 1378015482}
+    - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 811250833}
     - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
       propertyPath: condicionesParaQueSeActive.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -1992,6 +2026,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: TurnOffCamera
       objectReference: {fileID: 0}
@@ -2009,6 +2048,11 @@ PrefabInstance:
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
       value: ToggleActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: EnableCanHack
       objectReference: {fileID: 0}
     - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
@@ -2088,6 +2132,11 @@ PrefabInstance:
     - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: _WeAreAthomic.SCRIPTS.Props.ButtonInteractable, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
       value: _WeAreAthomic.SCRIPTS.Props.ButtonInteractable, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
@@ -2202,6 +2251,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8175882772847726751, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
       propertyPath: seActivanCuandoLeDasAlBoton.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
@@ -2247,10 +2301,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 96110002}
-    - targetCorrespondingSourceObject: {fileID: 7020547197527682895, guid: befc01eb549d2374181796db4f6b39cf,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 948022119}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: befc01eb549d2374181796db4f6b39cf, type: 3}
 --- !u!4 &3207809442400025480 stripped

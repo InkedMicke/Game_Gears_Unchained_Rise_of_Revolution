@@ -25,7 +25,7 @@ public class HealthBreather : MonoBehaviour
 
     public void EndHeal()
     {
-        CancelInvoke(nameof(HealCoroutine));
+        StopCoroutine(nameof(HealCoroutine));
     }
 
     private IEnumerator HealCoroutine()

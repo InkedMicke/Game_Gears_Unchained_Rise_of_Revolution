@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace _WeAreAthomic.SCRIPTS.Player
 {
@@ -96,6 +97,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _playerInputActions.Player.Running.canceled += RunOff;
             _playerInputActions.Player.Crouch.performed += StartEndCrouch;
             _playerInputActions.Player.Jump.performed += Jump;
+            _playerInputActions.Player.Test.performed += ReloadScene;
         }
 
         private void OnDisable()
@@ -118,6 +120,11 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
             CrouchWalking();
             ApplyGravity();
+        }
+
+        private void ReloadScene(InputAction.CallbackContext context)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
 
