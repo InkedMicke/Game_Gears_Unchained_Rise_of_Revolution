@@ -6,7 +6,10 @@ public class GameManager : MonoBehaviour
 {
     public List<GameObject> gameObjectsList;
     public List<GameObject> closestGameObjectsList;
+
     public List<Transform> railList;
+
+    public float currentHealth = 100f;
 
     public static GameManager Instance { get; private set; }
 
@@ -14,7 +17,7 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {

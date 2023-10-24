@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8945087017680515055}
   - component: {fileID: 8080749313461404527}
   - component: {fileID: 5711135010223839244}
-  - component: {fileID: 6030987872903947051}
   m_Layer: 0
   m_Name: Bastet_Prefab
   m_TagString: Untagged
@@ -34,7 +33,7 @@ Transform:
   - {fileID: 4730658663486940919}
   - {fileID: 4596872235904242389}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8080749313461404527
 MonoBehaviour:
@@ -49,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRightArm: {fileID: 0}
+  scannerObj: {fileID: 3783180220838561903}
   moveSpeed: 25
   rotateSpeed: 1
 --- !u!143 &5711135010223839244
@@ -77,27 +77,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &6030987872903947051
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7742863919281744262}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e8f730aed83c50e449556961e487ae07, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &4053775728164009278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -171,6 +150,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a512b038a12c3a342abcebe3056f81a1, type: 3}
+--- !u!1 &3783180220838561903 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a512b038a12c3a342abcebe3056f81a1,
+    type: 3}
+  m_PrefabInstance: {fileID: 4053775728164009278}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4596872235904242389 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a512b038a12c3a342abcebe3056f81a1,

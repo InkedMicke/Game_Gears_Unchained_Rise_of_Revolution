@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &920789428759573870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6382238966081030394}
+  - component: {fileID: 9084680307609384931}
+  m_Layer: 0
+  m_Name: Transforms
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6382238966081030394
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920789428759573870}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3145170021113661979}
+  m_Father: {fileID: 5874702090734273546}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9084680307609384931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920789428759573870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 495db4d5cf2258341b6c0784a75a51e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &923055754141016874
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,6 +163,37 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &4170060972796025187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3145170021113661979}
+  m_Layer: 0
+  m_Name: Tr1
+  m_TagString: CameraTransform
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3145170021113661979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4170060972796025187}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1, y: -3.33, z: 3.36}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6382238966081030394}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7811270381862430988
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,6 +566,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -1274673525691316497, guid: 768cfb52798d8d441a6107418cfe8eb0,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 6382238966081030394}
+    - targetCorrespondingSourceObject: {fileID: -1274673525691316497, guid: 768cfb52798d8d441a6107418cfe8eb0,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7088980579030360638}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4040804667026976304, guid: 768cfb52798d8d441a6107418cfe8eb0,
@@ -520,15 +600,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lKillerObj: {fileID: 8301025668205715062}
+  transforms: {fileID: 920789428759573870}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   obstructionLayer:
     serializedVersion: 2
     m_Bits: 2048
-  lerpSpeed: 0.05
+  rotationSpeed: 50
   redLightSpeedWhenChasing: 0.5
-  rotations: []
+  objectsToLookAt: []
   seActivanCuandoSeEnciendeLaCamara: []
 --- !u!82 &4602198761035568678
 AudioSource:

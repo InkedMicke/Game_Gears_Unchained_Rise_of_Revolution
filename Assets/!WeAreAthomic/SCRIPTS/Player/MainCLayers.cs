@@ -40,7 +40,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Crouch")), _crouchLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Jump")), _jumpLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Pistol")), _pistolLayerMultiplier);
-            _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("SphereAttack")), _sphereAttackLayerMultiplier);
+            //_anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("SphereAttack")), _sphereAttackLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Slide")), _slideLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Hack")), _hackLayerMultiplier);
         }

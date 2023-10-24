@@ -13,24 +13,25 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
         private MainCMovement _mainCMovement;
 
         [SerializeField] private GameObject lKillerObj;
+        [SerializeField] private GameObject transforms;
         private GameObject _playerObj;
-    
+
         private Transform _lightKillerTr;
 
         private Quaternion _targetRotation;
-    
+
         public LayerMask groundLayer;
         public LayerMask obstructionLayer;
 
         [System.NonSerialized] public bool RayGotObstruction;
         private bool _isCameraOff;
-    
-        private int _currentRotation;
-    
-        [SerializeField] private float lerpSpeed = 0.05f;
+
+        private int currentRotation;
+
+        [SerializeField] private float rotationSpeed = 0.05f;
         [SerializeField] private float redLightSpeedWhenChasing = 0.01f;
-    
-        public List<Vector3> rotations;
+
+        [SerializeField] private List<Transform> objectsToLookAt;
         public UnityEvent[] seActivanCuandoSeEnciendeLaCamara;
 
         private void Awake()
@@ -39,42 +40,55 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
             _lightKillerTr = lKillerObj.transform;
             _playerObj = GameObject.FindGameObjectWithTag("Player");
             _mainCMovement = _playerObj.GetComponent<MainCMovement>();
-
         }
 
         private void Start()
         {
-            if (rotations.Count > 0)
+            var transformsArray = transforms.GetComponentsInChildren<Transform>();
+            foreach (Transform t in transformsArray)
             {
-                _currentRotation = Random.Range(0, rotations.Count);
+                if (t.CompareTag("CameraTransform"))
+                {
+                    objectsToLookAt.Add(t);
+                }
             }
         }
 
         private void Update()
         {
-            if (rotations.Count > 0)
+
+            if (objectsToLookAt.Count > 0)
             {
-                _targetRotation = Quaternion.Euler(rotations[_currentRotation]);
+                Vector3 lookDirection = objectsToLookAt[currentRotation].position - transform.position;
+
+                _targetRotation = Quaternion.LookRotation(lookDirection);
+
+                float step = rotationSpeed * Time.deltaTime;
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, step);
             }
-        
-            if (!(transform.rotation == _targetRotation) && !_isCameraOff && !_lKiller.IsFocusingPlayer)
+
+            var angle = Quaternion.Angle(transform.rotation, _targetRotation);
+
+            if (angle < 5f)
             {
-                transform.rotation = Quaternion.Lerp(transform.rotation, _targetRotation, lerpSpeed);
-                RayGotObstruction = false;
+                if (currentRotation == objectsToLookAt.Count - 1)
+                {
+                    currentRotation = 0;
+                }
+                else
+                {
+                    currentRotation++;
+                }
             }
-            else
-            {
-                _currentRotation = Random.Range(0, rotations.Count);
-            }
-        
+
             switch (_isCameraOff)
             {
                 case true:
-                {
-                    var offRotation = Quaternion.Euler(80f, 0f, 0f);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, offRotation, lerpSpeed);
-                    break;
-                }
+                    {
+                        var offRotation = Quaternion.Euler(80f, 0f, 0f);
+                        transform.rotation = Quaternion.Lerp(transform.rotation, offRotation, 5f);
+                        break;
+                    }
                 case false:
                     LookToPlayer();
                     SetLightPosition();
@@ -105,11 +119,11 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
                 }
             }
         }
-    
+
         private void SetLightPosition()
         {
             var ray = new Ray(transform.position, transform.forward);
-            if(Physics.Raycast(ray, out var hitInfo, 50f, groundLayer))
+            if (Physics.Raycast(ray, out var hitInfo, 50f, groundLayer))
             {
                 if (!_lKiller.IsFocusingPlayer)
                 {
@@ -121,7 +135,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
                 }
             }
         }
-    
+
         public void TurnOffCamera(float value)
         {
             _isCameraOff = true;
@@ -135,12 +149,12 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
             _lKiller.WhiteLight();
             _isCameraOff = false;
 
-            foreach(var t in seActivanCuandoSeEnciendeLaCamara)
+            foreach (var t in seActivanCuandoSeEnciendeLaCamara)
             {
                 t.Invoke();
             }
 
         }
-    
+
     }
 }
