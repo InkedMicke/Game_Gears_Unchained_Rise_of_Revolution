@@ -14,10 +14,10 @@ namespace _WeAreAthomic.SCRIPTS.Props
         private Transform _playerTr;
 
         public bool isActive;
-        public bool hasActivatedSomething;
         public bool canHack = true;
         private bool _isShowingButton;
 
+        public UnityEvent seActivacuandoLeDasAlBotonYNoPuedesHackear;
         public UnityEvent seActivanCuandoLeDasAlBoton;
         public UnityEvent seActivanCuandoTerminaElHack;
 
@@ -81,11 +81,6 @@ namespace _WeAreAthomic.SCRIPTS.Props
         {
             _isShowingButton = false;
             _eButtonObj.SetActive(false);
-        }
-
-        public void ToggleActivateSomething()
-        {
-            hasActivatedSomething = !hasActivatedSomething;
         }
 
         public void EnableCanHack()

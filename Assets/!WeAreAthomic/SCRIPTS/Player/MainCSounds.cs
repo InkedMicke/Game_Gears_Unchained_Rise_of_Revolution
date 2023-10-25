@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using Random = UnityEngine.Random;
 
 namespace _WeAreAthomic.SCRIPTS.Player
@@ -8,9 +9,15 @@ namespace _WeAreAthomic.SCRIPTS.Player
     public class MainCSounds : MonoBehaviour
     {
         [SerializeField] private GameObject soundComponentObj;
+
+        [SerializeField] private AudioMixerGroup sfxMixer;
+        [SerializeField] private AudioMixerGroup musicMixer;
+        [SerializeField] private AudioMixerGroup voicesMixer;
         
         [SerializeField] private List<AudioClip> attackClips;
         [SerializeField] private AudioClip hackInProcess;
+        [SerializeField] private AudioClip cannotHack;
+        [SerializeField] private AudioClip howFight;
 
         public void StopAttackSound()
         {
@@ -36,6 +43,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
             if (currentAudioSource != null)
             {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
                 currentAudioSource.clip = attackClips[randomNumber];
                 currentAudioSource.Play();
             }
@@ -46,6 +54,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
             if (currentAudioSource != null)
             {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
                 currentAudioSource.clip = hackInProcess;
                 currentAudioSource.volume = .7f;
                 currentAudioSource.Play();
@@ -63,6 +72,30 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 {
                     Destroy(audioSour);
                 }
+            }
+        }
+
+        public void PlayCannotHackSound()
+        {
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = cannotHack;
+                currentAudioSource.volume = .7f;
+                currentAudioSource.Play();
+            }
+        }
+
+        public void PlayHowFightSound()
+        {
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = howFight;
+                currentAudioSource.volume = .7f;
+                currentAudioSource.Play();
             }
         }
         

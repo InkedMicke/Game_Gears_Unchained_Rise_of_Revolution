@@ -15,6 +15,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCSwitchWeapon _mainSwitchWeapon;
         private MainCSounds _mainCSounds;
 
+        private Coroutine _hackCoroutine;
+
         [SerializeField] private Slider hackSlider;
 
         [SerializeField] private GameObject wrenchObj;
@@ -26,7 +28,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         public bool isHackingAnim;
         public bool isHacking;
-    
+
         private float _timeToHack;
         private float _actualTime;
 
@@ -47,10 +49,13 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         public void StartHacking(float value)
         {
-            FixPosition();
-            EnableHackAnim();
-            DisableWeapon();
-            _timeToHack = value;
+            if (!isHacking)
+            {
+                FixPosition();
+                EnableHackAnim();
+                DisableWeapon();
+                _timeToHack = value;
+            }
         }
 
         public void EndHacking()
@@ -60,11 +65,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
             button.EndHackInvoke();
             _bastetController.InvokeMoveToPlayer();
             _mainCSounds.StopHackInProcessSound();
-        }   
+            isHacking = false;
+        }
 
         private void UpdateUI()
         {
-            if(isHacking)
+            if (isHacking)
             {
                 hackSlider.value = Time.time;
             }
@@ -81,7 +87,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             robotObj.SetActive(true);
             var position = _currentInteract.transform.position;
-            var desiredPosRobot = new Vector3(position.x, position.y - .05f, position.z); 
+            var desiredPosRobot = new Vector3(position.x, position.y - .05f, position.z);
             robotObj.transform.position = desiredPosRobot + _currentInteract.transform.forward * 0.3f;
             Debug.DrawRay(position, _currentInteract.transform.forward * 0.8f, Color.magenta, 10f);
             var desiredPos = new Vector3(position.x, robotObj.transform.position.y, position.z);
@@ -94,20 +100,21 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _cc.enabled = false;
             var interactables = FindObjectsOfType<ButtonInteractable>();
 
-            foreach(var t in interactables)
+            foreach (var t in interactables)
             {
-                if(t.isActive == true)
+                if (t.isActive == true)
                 {
                     _currentInteract = t.gameObject;
                 }
             }
-            
+
             var r = new Ray(_currentInteract.transform.position, _currentInteract.transform.forward);
             var rayPos = r.GetPoint(1f);
             var desiredPos = new Vector3(rayPos.x, transform.position.y, rayPos.z);
             transform.position = desiredPos;
-            
-            var desiredRot = new Vector3(_currentInteract.transform.GetChild(0).position.x, transform.position.y, _currentInteract.transform.GetChild(0).position.z);
+
+            var desiredRot = new Vector3(_currentInteract.transform.GetChild(0).position.x, transform.position.y,
+                _currentInteract.transform.GetChild(0).position.z);
             transform.LookAt(desiredRot);
         }
 
@@ -131,13 +138,23 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         public void StopHack()
         {
-            StopCoroutine(nameof(Hack));
+            StopCoroutine(_hackCoroutine);
             isHacking = false;
             isHackingAnim = false;
             hackCanvas.SetActive(false);
             _mainCSounds.StopHackInProcessSound();
             _cc.enabled = true;
             _bastetController.InvokeMoveToPlayer();
+
+            var interactables = FindObjectsOfType<ButtonInteractable>();
+
+            foreach (var t in interactables)
+            {
+                if (t.isActive)
+                {
+                    t.isActive = false;
+                }
+            }
         }
 
         private void DisableWeapon()
@@ -158,6 +175,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 }
             }
         }
+
         private void EnableWeapon()
         {
             if (_mainSwitchWeapon.isUsingWrench)
@@ -181,7 +199,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             _mainCLayers.DisableHackLayer();
             isHackingAnim = false;
-            StartCoroutine(Hack(_timeToHack));
+            _hackCoroutine = StartCoroutine(Hack(_timeToHack));
             hackCanvas.SetActive(true);
             isHacking = true;
             hackSlider.minValue = Time.time;

@@ -25,7 +25,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
 
         private bool _isCameraOff;
 
-        private int currentRotation;
+        private int _currentRotation;
 
         [SerializeField] private float rotationSpeed = 0.05f;
         [SerializeField] private float redLightSpeedWhenChasing = 0.01f;
@@ -58,7 +58,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
 
             if (objectsToLookAt.Count > 0)
             {
-                Vector3 lookDirection = objectsToLookAt[currentRotation].position - transform.position;
+                Vector3 lookDirection = objectsToLookAt[_currentRotation].position - transform.position;
 
                 _targetRotation = Quaternion.LookRotation(lookDirection);
 
@@ -70,13 +70,13 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
 
             if (angle < 5f)
             {
-                if (currentRotation == objectsToLookAt.Count - 1)
+                if (_currentRotation == objectsToLookAt.Count - 1)
                 {
-                    currentRotation = 0;
+                    _currentRotation = 0;
                 }
                 else
                 {
-                    currentRotation++;
+                    _currentRotation++;
                 }
             }
 
@@ -122,6 +122,11 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
                     }
                 }
             }
+        }
+
+        public void PermanentDisabled()
+        {
+            TurnOffCamera(Mathf.Infinity);
         }
 
         private void SetLightPosition()
