@@ -5,13 +5,26 @@ using UnityEngine.Events;
 
 public class LabThirdRoomController : MonoBehaviour
 {
-    public GameObject movableFloor;
+    DummiesCollider_LAB _dummiesCollider;
+
+    [SerializeField] private GameObject wave1;
+    [SerializeField] private GameObject wave2;
+    [SerializeField] private GameObject movableFloor;
+    [SerializeField] private GameObject dummiesControllerObj;
     [SerializeField] private float speedOfFloor = 0.1f;
 
     [SerializeField] private UnityEvent seActivaCuandoSube;
     [SerializeField] private UnityEvent seActivaCuandoBaja;
+
+    private void Awake()
+    {
+        _dummiesCollider = dummiesControllerObj.GetComponent<DummiesCollider_LAB>();
+    }
+
     public void InvokeMoveUp()
     {
+        wave1.SetActive(true);
+        _dummiesCollider.MakeChild();
         StartCoroutine(MoveUp());
     }
     
