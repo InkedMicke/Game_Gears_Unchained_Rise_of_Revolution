@@ -267,14 +267,28 @@ MonoBehaviour:
   speedOfFloor: 0.1
   seActivaCuandoVaASubir:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4930179722679523210}
+        m_TargetAssemblyTypeName: _WeAreAthomic.SCRIPTS.Genericos.GToggleVisible,
+          Assembly-CSharp
+        m_MethodName: EnableVisible
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   seActivaCuandoVaABajar:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4930179722679523210}
-        m_TargetAssemblyTypeName: GToggleVisible, Assembly-CSharp
-        m_MethodName: ToggleVisible
-        m_Mode: 1
+        m_TargetAssemblyTypeName: _WeAreAthomic.SCRIPTS.Genericos.GToggleVisible,
+          Assembly-CSharp
+        m_MethodName: EnableVisible
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -285,7 +299,20 @@ MonoBehaviour:
         m_CallState: 2
   seActivaCuandoHaSubido:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4930179722679523210}
+        m_TargetAssemblyTypeName: _WeAreAthomic.SCRIPTS.Genericos.GToggleVisible,
+          Assembly-CSharp
+        m_MethodName: DisableVisible
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   seActivaCuandoHaBajado:
     m_PersistentCalls:
       m_Calls: []
@@ -2519,7 +2546,7 @@ PrefabInstance:
     - target: {fileID: 2854276401745928402, guid: 275e5ae013736be489148d587216bd29,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4422669462223877217, guid: 275e5ae013736be489148d587216bd29,
         type: 3}

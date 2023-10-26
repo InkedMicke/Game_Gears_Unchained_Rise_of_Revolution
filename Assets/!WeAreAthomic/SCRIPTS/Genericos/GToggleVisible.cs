@@ -1,18 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GToggleVisible : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Genericos
 {
-    public void ToggleVisible()
+    public class GToggleVisible : MonoBehaviour
     {
-        gameObject.SetActive(!gameObject);
-        Debug.Log("hola");
-    }
 
-    public void DelayedToggleVisible(float value)
-    {
-        Invoke(nameof(ToggleVisible), value);
-    }
+        public void EnableVisible(float value)
+        {
+            Invoke(nameof(Visible), value);
+        }
+        
+        public void DisableVisible(float value)
+        {
+            Invoke(nameof(Hide), value);
+        }
 
+        private void Visible()
+        {
+            gameObject.SetActive(true);
+        }
+
+        private void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+    }
 }

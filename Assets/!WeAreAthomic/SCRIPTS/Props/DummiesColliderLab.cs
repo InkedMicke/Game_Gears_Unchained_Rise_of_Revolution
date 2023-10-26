@@ -5,6 +5,8 @@ namespace _WeAreAthomic.SCRIPTS.Props
 {
     public class DummiesColliderLab : MonoBehaviour
     {
+        
+        
         [SerializeField] private GameObject movableFloor;
         
         [SerializeField] private List<GameObject> colisionList;
@@ -34,13 +36,13 @@ namespace _WeAreAthomic.SCRIPTS.Props
             }
         }
 
-        public void UndoChild()
+        public void UndoChild(GameObject obj)
         {
             foreach(var g in colisionList)
             {
                 var parent = g.transform.parent;
                 //parent.DetachChildren();
-                parent.SetParent(movableFloor.transform);
+                parent.SetParent(obj.transform);
             }
         }
     }

@@ -1,3 +1,4 @@
+using _WeAreAthomic.SCRIPTS.Genericos;
 using UnityEngine;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi
@@ -10,7 +11,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
 
         [SerializeField] private GameObject hurtBoxObj;
         
-        public bool playDeathAnim;
         public bool removeCollisionDeath;
         public bool isDeath;
 
@@ -23,18 +23,15 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
 
         private void Update()
         {
-            if (_gHealthManager.currentHealth <= 0 && playDeathAnim && !isDeath)
+            if (_gHealthManager.currentHealth <= 0 && !isDeath)
             {
                 isDeath = true;
-                _anim.SetBool(string.Format("isDeath"), true);
+                Debug.Log("hola");
+                _anim.SetTrigger(string.Format("isDeath"));
                 if (removeCollisionDeath)
                 {
                     _cc.enabled = false;
                 }
-            }
-            else if (_gHealthManager.currentHealth <= 0 && playDeathAnim)
-            {
-                Destroy(this.gameObject);
             }
         }
         public void HurtAnim()

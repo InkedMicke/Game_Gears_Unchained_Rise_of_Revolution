@@ -23,24 +23,16 @@ namespace _WeAreAthomic.SCRIPTS.Props
         private bool _floorIsUp;
         private bool _floorIsDown;
         private bool _isFloorMoving;
-        private bool _isWave1;
-        private bool _isWave2;
 
         private void Awake()
         {
             _dummiesCollider = dummieControllerObj.GetComponent<DummiesColliderLab>();
         }
 
-        private void Start()
-        {
-            _isWave1 = true;
-        }
-
         private void Update()
         {
-            if (_floorIsUp && _isWave1 && wave1.transform.childCount == 0 && !_isFloorMoving)
+            if (_floorIsUp && wave1.transform.childCount == 0 && !_isFloorMoving)
             {
-                _isWave1 = false;
                 goHereObj.SetActive(true);
             }
         }
@@ -48,16 +40,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
         public void InvokeMoveUp()
         {
             _dummiesCollider.ClearList();
-            if (_isWave1)
-            {
-                wave1.SetActive(true);
-            }
-
-            if (!_isWave1)
-            {
-                wave2.SetActive(true);
-            }
-
+            wave1.SetActive(true);
             StartCoroutine(MoveUp());
         }
 
@@ -79,12 +62,14 @@ namespace _WeAreAthomic.SCRIPTS.Props
                 movableFloor.transform.localPosition = temp;
                 if (movableFloor.transform.localPosition.y >= -0.918f)
                 {
+                    _dummiesCollider.UndoChild(wave1);
                     temp.y = -0.9186499f;
                     movableFloor.transform.localPosition = temp;
                     enable = false;
                     seActivaCuandoHaSubido.Invoke();
                     _floorIsUp = true;
                 }
+
                 yield return new WaitForSeconds(0.01f);
             }
 
@@ -105,14 +90,18 @@ namespace _WeAreAthomic.SCRIPTS.Props
 
                 if (movableFloor.transform.localPosition.y <= -9)
                 {
+                    wave2.SetActive(true);
                     temp.y = -9;
                     movableFloor.transform.localPosition = temp;
                     enable = false;
                     _floorIsDown = true;
                     seActivaCuandoHaBajado.Invoke();
+                    Invoke(nameof(InvokeMoveUp), 0f);
                 }
+
                 yield return new WaitForSeconds(0.01f);
             }
+
             _isFloorMoving = false;
         }
     }

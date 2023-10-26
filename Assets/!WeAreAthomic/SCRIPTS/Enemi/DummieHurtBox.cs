@@ -1,4 +1,5 @@
 using System.Collections;
+using _WeAreAthomic.SCRIPTS.Genericos;
 using UnityEngine;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi
@@ -16,6 +17,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
         private Transform _playerTr;
 
         [SerializeField] private ParticleSystem sparksHit;
+
+        [SerializeField] private bool useKnockback = true;
         
         [SerializeField] private float pushForce = 5f;
     
@@ -40,7 +43,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
             sparksHit.Play();
             if (!_dummieController.isDeath)
             {
-                StartCoroutine(nameof(PushBack));
+                if (useKnockback)
+                {
+                    StartCoroutine(nameof(PushBack));
+                }
+
                 _dummieSounds.PlayHurtSound();
             }
         }
