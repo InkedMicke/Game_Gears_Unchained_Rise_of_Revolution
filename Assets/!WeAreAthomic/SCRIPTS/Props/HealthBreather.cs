@@ -1,49 +1,51 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthBreather : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Props
 {
-    MainCHealthManager _mainHealth;
-
-    private GameObject _playerObj;
-
-    [SerializeField] private float healthPerHalfSecond = 4f;
-    [SerializeField] private float speedOfHealth = .1f;
-
-    private void Start()
+    public class HealthBreather : MonoBehaviour
     {
-        _playerObj = GameObject.FindGameObjectWithTag(string.Format("Player"));
-        _mainHealth = _playerObj.GetComponent<MainCHealthManager>();
-    }
+        MainCHealthManager _mainHealth;
 
-    public void StartHeal()
-    {
-        StartCoroutine(nameof(HealCoroutine));
-        Debug.Log("hola3");
-    }
+        private GameObject _playerObj;
 
-    public void EndHeal()
-    {
-        StopCoroutine(nameof(HealCoroutine));
-    }
+        [SerializeField] private float healthPerHalfSecond = 4f;
+        [SerializeField] private float speedOfHealth = .1f;
 
-    private IEnumerator HealCoroutine()
-    {
-        var enable = true;
-
-        while(enable)
+        private void Start()
         {
-            if (_mainHealth.currentHealth < _mainHealth.maxHealth)
-            {
-                _mainHealth.GetHealth(healthPerHalfSecond);
-            }
-            else
-            {
-                enable = false;
-            }
+            _playerObj = GameObject.FindGameObjectWithTag(string.Format("Player"));
+            _mainHealth = _playerObj.GetComponent<MainCHealthManager>();
+        }
 
-            yield return new WaitForSeconds(speedOfHealth);
+        public void StartHeal()
+        {
+            StartCoroutine(nameof(HealCoroutine));
+            Debug.Log("hola3");
+        }
+
+        public void EndHeal()
+        {
+            StopCoroutine(nameof(HealCoroutine));
+        }
+
+        private IEnumerator HealCoroutine()
+        {
+            var enable = true;
+
+            while(enable)
+            {
+                if (_mainHealth.currentHealth < _mainHealth.maxHealth)
+                {
+                    _mainHealth.GetHealth(healthPerHalfSecond);
+                }
+                else
+                {
+                    enable = false;
+                }
+
+                yield return new WaitForSeconds(speedOfHealth);
+            }
         }
     }
 }
