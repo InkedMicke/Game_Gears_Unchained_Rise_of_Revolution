@@ -5,7 +5,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
 {
     public class ButtonInteractable : MonoBehaviour, IInteractable
     {
-        RequiredActionForButton _requiredAction;
+        private RequiredActionForButton _requiredAction;
 
         [SerializeField] private GameObject _eButtonObj;
         [SerializeField] private GameObject _circleObj;
