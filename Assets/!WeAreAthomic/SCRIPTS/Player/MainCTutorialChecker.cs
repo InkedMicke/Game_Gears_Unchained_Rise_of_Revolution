@@ -36,14 +36,14 @@ public class MainCTutorialChecker : MonoBehaviour
 
     private void Start()
     {
-        _startDistance = _cc.transform.position.magnitude;
+/*        _startDistance = _cc.transform.position.magnitude;
         _currentScene = SceneManager.GetActiveScene();
         if(_currentScene.name == "S2_LABTUTORIAL")
         {
             StartCoroutine(CheckDistance());
             StartCoroutine(CheckHealth());
             StartCoroutine(CheckHacking());
-        }
+        }*/
     }
 
     private IEnumerator CheckDistance()

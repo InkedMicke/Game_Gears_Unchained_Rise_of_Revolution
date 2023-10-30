@@ -101,6 +101,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
                     {
                         _mainCSounds.PlayTutorialSound(4, "pc");
                         _mainCAttack.EnableCanAttack();
+                        Debug.Log("hola6");
                     }
                     _dummiesCollider.UndoChild(wave1);
                     temp.y = -0.9186499f;

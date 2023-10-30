@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using _WeAreAthomic.SCRIPTS.Props;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -34,6 +35,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private bool _canNextAttack;
         private bool _isSheathed;
         private bool _canAttack;
+        private bool _isMousePressed;
 
         public int attackCount;
 
@@ -58,6 +60,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _playerInputActions.Enable();
             _playerInputActions.Player.Attack.performed += Attack;
             _playerInputActions.Player.Attack.performed += NextCombo;
+            _playerInputActions.Player.Attack.performed += MouseDown;
+            _playerInputActions.Player.Attack.canceled += MouseUp;
 
             _weaponBC = weaponObj.GetComponent<BoxCollider>();
         }
@@ -69,8 +73,18 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void Update()
         {
-            Sheath();
             _currentScene = SceneManager.GetActiveScene();
+        }
+
+        private void MouseDown(InputAction.CallbackContext context)
+        {
+            StopCoroutine(Sheath());
+            _currentTimeSheath = Time.time;
+        }
+
+        private void MouseUp(InputAction.CallbackContext context)
+        {
+            StartCoroutine(Sheath());
         }
 
         private void Attack(InputAction.CallbackContext context)
@@ -97,24 +111,26 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
             if (_mainCMovement.IsGrounded() && CanAttack() && _canAttack && !_isSheathed)
             {
+    
                 ShowWeapon();
                 _isSheathed = true;
             }
         }
 
-        private void Sheath()
+        private IEnumerator Sheath()
         {
-            if (!IsAttacking && _isSheathed)
+            var enable = true;
+
+            while(enable)
             {
                 if (_currentTimeSheath + hideWeaponTimer < Time.time)
                 {
                     HideWeapon();
                     _isSheathed = false;
                 }
+                yield return new WaitForSeconds(0.01f);
             }
         }
-
-        private void OnDrawGizmos() => Gizmos.DrawWireSphere(middlePosTr.position, nearEnemieToGoFloat);
 
         private void NextCombo(InputAction.CallbackContext context)
         {
@@ -149,7 +165,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _mainCAnimator.SetAttackCountAnim(attackCount);
             _mainCLayers.DisableAttackLayer();
             timeGraceAttackPeriod = Time.time + timeNextAttack;
-            _currentTimeSheath = Time.time;
         }
 
         private void EnableWeaponCollision()
