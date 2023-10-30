@@ -64,7 +64,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void Start()
         {
-            _canAttack = true;
+            _canAttack = false;
         }
 
         private void Update()
@@ -75,14 +75,9 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void Attack(InputAction.CallbackContext context)
         {
-            if (_mainCMovement.IsGrounded() && CanAttack() && _canAttack|| _railGrindSystem.IsOnRail() && CanAttack())
+            if (_mainCMovement.IsGrounded() && CanAttack() && _canAttack && _isSheathed || _railGrindSystem.IsOnRail() && CanAttack())
             {
                 _mainCLayers.EnableAttackLayer();
-                if (!_isSheathed)
-                {
-                    ShowWeapon();
-                    _isSheathed = true;
-                }
 
                 _mainCSounds.StopAttackSound();
                 _mainCSounds.PlayAttackSound();
@@ -98,6 +93,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 IsAttacking = true;
 
                 _canNextAttack = false;
+            }
+
+            if (_mainCMovement.IsGrounded() && CanAttack() && _canAttack && !_isSheathed)
+            {
+                ShowWeapon();
+                _isSheathed = true;
             }
         }
 
@@ -167,7 +168,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         public void HideWeapon() => weaponObj.SetActive(false);
 
         public void EnableCanAttack() => _canAttack = true;
-        
+
         public void DisableCanAttack() => _canAttack = false;
 
         public void SetAttackCount(int value)

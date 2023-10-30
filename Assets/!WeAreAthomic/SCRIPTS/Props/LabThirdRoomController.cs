@@ -11,6 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
         private DummiesColliderLab _dummiesCollider;
         private MainCChargingSwordSphereTarget _chargingSwordSphereTarget;
         private MainCAttack _mainCAttack;
+        private MainCSounds _mainCSounds;
 
         [SerializeField] private GameObject wave1;
         [SerializeField] private GameObject wave2;
@@ -39,6 +40,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
             _playerObj = GameObject.FindGameObjectWithTag("Player");
             _mainCAttack = _playerObj.GetComponent<MainCAttack>();
             _chargingSwordSphereTarget = _playerObj.GetComponent<MainCChargingSwordSphereTarget>();
+            _mainCSounds = _playerObj.GetComponent<MainCSounds>();
         }
 
         private void Start()
@@ -94,6 +96,10 @@ namespace _WeAreAthomic.SCRIPTS.Props
                     {
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
+                    }
+                    if(_isWave1)
+                    {
+                        _mainCSounds.PlayTutorialSound(4, "pc");
                     }
                     _dummiesCollider.UndoChild(wave1);
                     temp.y = -0.9186499f;
