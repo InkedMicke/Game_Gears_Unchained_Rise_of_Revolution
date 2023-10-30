@@ -100,6 +100,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
                     if(_isWave1)
                     {
                         _mainCSounds.PlayTutorialSound(4, "pc");
+                        _mainCAttack.EnableCanAttack();
                     }
                     _dummiesCollider.UndoChild(wave1);
                     temp.y = -0.9186499f;
