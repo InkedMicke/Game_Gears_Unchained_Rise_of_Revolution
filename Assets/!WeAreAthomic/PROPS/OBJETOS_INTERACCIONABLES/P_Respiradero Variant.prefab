@@ -312,6 +312,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc0c9982aba2084f8240f26b9e6b7fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hurtbox: {fileID: 7031738207051682547}
+  particleEffects: {fileID: 1909707010660207347}
+  enableBreather: 1
   healthPerHalfSecond: 1
   speedOfHealth: 0.1
 --- !u!1001 &9046516098901664075
@@ -397,11 +400,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX_Humo_Respiradero
       objectReference: {fileID: 0}
+    - target: {fileID: 7425039536135826360, guid: 9255fbeea44e03a44a063fd6dbe0b3e9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9255fbeea44e03a44a063fd6dbe0b3e9, type: 3}
+--- !u!1 &1909707010660207347 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7425039536135826360, guid: 9255fbeea44e03a44a063fd6dbe0b3e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 9046516098901664075}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3077124902514435143 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6286896151434315020, guid: 9255fbeea44e03a44a063fd6dbe0b3e9,

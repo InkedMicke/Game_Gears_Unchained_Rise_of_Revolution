@@ -7,7 +7,11 @@ namespace _WeAreAthomic.SCRIPTS.Props
     {
         MainCHealthManager _mainHealth;
 
+        [SerializeField] private GameObject hurtbox;
+        [SerializeField] private GameObject particleEffects;
         private GameObject _playerObj;
+
+        [SerializeField] private bool enableBreather;
 
         [SerializeField] private float healthPerHalfSecond = 4f;
         [SerializeField] private float speedOfHealth = .1f;
@@ -16,17 +20,39 @@ namespace _WeAreAthomic.SCRIPTS.Props
         {
             _playerObj = GameObject.FindGameObjectWithTag(string.Format("Player"));
             _mainHealth = _playerObj.GetComponent<MainCHealthManager>();
+
+            if(!enableBreather)
+            {
+                DisableBreather();
+            }
         }
 
         public void StartHeal()
         {
-            StartCoroutine(nameof(HealCoroutine));
-            Debug.Log("hola3");
+            if (enableBreather)
+            {
+                StartCoroutine(nameof(HealCoroutine));
+            }
         }
 
         public void EndHeal()
         {
             StopCoroutine(nameof(HealCoroutine));
+        }
+
+        public void EnableBreather()
+        {
+            enableBreather = true;
+            hurtbox.SetActive(true);
+            particleEffects.SetActive(true);
+            particleEffects.GetComponent<ParticleSystem>().Play();
+        }
+
+        public void DisableBreather()
+        {
+            enableBreather = false;
+            hurtbox.SetActive(false);
+            particleEffects.SetActive(false);
         }
 
         private IEnumerator HealCoroutine()

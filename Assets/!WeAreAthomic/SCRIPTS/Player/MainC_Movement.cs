@@ -12,9 +12,9 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCLayers _mainCLayers;
         private MainCAttack _mainCAttack;
         private MainCPistol _mainCPistol;
-        private RailGrindSystem _railGrindSystem;
+        private MainCRailGrindSystem _railGrindSystem;
         private MainCHackingSystem _mainCHacking;
-        private ChargingSwordSphereTarget _chargingSword;
+        private MainCChargingSwordSphereTarget _chargingSword;
         private MainCAnimatorController _mainCAnimator;
         private CharacterController _cc;
         private GODMODE _godMode;
@@ -75,9 +75,9 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _mainCPistol = GetComponent<MainCPistol>();
             _cc = GetComponent<CharacterController>();
             _godMode = GetComponent<GODMODE>();
-            _railGrindSystem = GetComponent<RailGrindSystem>();
+            _railGrindSystem = GetComponent<MainCRailGrindSystem>();
             _mainCHacking = GetComponent<MainCHackingSystem>();
-            _chargingSword = GetComponent<ChargingSwordSphereTarget>();
+            _chargingSword = GetComponent<MainCChargingSwordSphereTarget>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
 
             _playerInputActions = new PlayerInputActions();

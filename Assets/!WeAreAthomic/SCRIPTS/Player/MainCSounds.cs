@@ -2,40 +2,131 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.DebugUI;
 using Random = UnityEngine.Random;
 
 namespace _WeAreAthomic.SCRIPTS.Player
 {
     public class MainCSounds : MonoBehaviour
     {
+        private Scene _currentScene;
+
         [SerializeField] private GameObject soundComponentObj;
+
+        [System.NonSerialized] public AudioClip currentExpressionClip;
 
         [SerializeField] private AudioMixerGroup sfxMixer;
         [SerializeField] private AudioMixerGroup musicMixer;
         [SerializeField] private AudioMixerGroup voicesMixer;
         
         [SerializeField] private List<AudioClip> attackClips;
+        [SerializeField] private List<AudioClip> tutorialClipsPC;
+        [SerializeField] private List<AudioClip> tutorialClipsGamepad;
+        [SerializeField] private List<AudioClip> expressionClips;
         [SerializeField] private AudioClip hackInProcess;
         [SerializeField] private AudioClip cannotHack;
         [SerializeField] private AudioClip howFight;
+
+        private bool isPaused;
+
+        private void Start()
+        {
+            _currentScene = SceneManager.GetActiveScene();
+            if (_currentScene.name == "S2_LABTUTORIAL")
+            {
+                PlayTutorialSound(0, "pc");
+            }
+        }
 
         public void StopAttackSound()
         {
             //attackAudioSource.Stop();
         }
 
+        public void RemoveAllSounds()
+        {
+            var audiosInSoundComponent = soundComponentObj.GetComponents<AudioSource>();
+
+            foreach (var audio in audiosInSoundComponent)
+            {
+                Destroy(audio);
+            }
+        }
+
+        public float GetAudioClipLength(string clipString)
+        {
+            var audiosInSoundComponent = soundComponentObj.GetComponents<AudioSource>();
+            foreach(var audio in audiosInSoundComponent)
+            {
+                if(audio.clip.name == clipString)
+                {
+                    return audio.clip.length;
+                }
+            }
+
+            return 0;
+        }
+
         private void Update()
         {
+
             var audiosInSoundComponent = soundComponentObj.GetComponents<AudioSource>();
 
             foreach (var audioSour in audiosInSoundComponent)
             {
-                if (!audioSour.isPlaying)
+                if (!audioSour.isPlaying && !isPaused)
                 {
                     Destroy(audioSour);
                 }
             }
         }
+
+        public void PlaySoundDelayed(string function, float delay)
+        {
+            Invoke(function, delay);
+        }
+
+        public void PlayTutorialSound(int value, string control)
+        {
+            if (control == "pc")
+            {
+                var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+                if (currentAudioSource != null)
+                {
+                    currentAudioSource.outputAudioMixerGroup = voicesMixer;
+                    currentAudioSource.clip = tutorialClipsPC[value];
+                    currentAudioSource.volume = .9f;
+                    currentAudioSource.Play();
+                }
+            }
+
+            if(control == "gamepad")
+            {
+                var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+                if (currentAudioSource != null)
+                {
+                    currentAudioSource.outputAudioMixerGroup = voicesMixer;
+                    currentAudioSource.clip = tutorialClipsGamepad[value];
+                    currentAudioSource.volume = .9f;
+                    currentAudioSource.Play();
+                }
+            }
+        }
+
+        public void PlayExpressionSound()
+        {
+            var randomNumber = Random.Range(0, expressionClips.Count);
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = expressionClips[randomNumber];
+                currentAudioSource.Play();
+                currentExpressionClip = currentAudioSource.clip;
+            }
+        }
+
 
         public void PlayAttackSound()
         {
@@ -56,7 +147,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             {
                 currentAudioSource.outputAudioMixerGroup = sfxMixer;
                 currentAudioSource.clip = hackInProcess;
-                currentAudioSource.volume = .7f;
+                currentAudioSource.volume = .3f;
                 currentAudioSource.Play();
                 currentAudioSource.loop = true;
             }
@@ -98,7 +189,16 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 currentAudioSource.Play();
             }
         }
-        
-        
+
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            isPaused = !hasFocus;
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            isPaused = pauseStatus;
+        }
+
     }
 }

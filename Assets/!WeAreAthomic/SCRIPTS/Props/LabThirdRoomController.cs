@@ -9,7 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
     public class LabThirdRoomController : MonoBehaviour
     {
         private DummiesColliderLab _dummiesCollider;
-        private ChargingSwordSphereTarget _chargingSwordSphereTarget;
+        private MainCChargingSwordSphereTarget _chargingSwordSphereTarget;
         private MainCAttack _mainCAttack;
 
         [SerializeField] private GameObject wave1;
@@ -38,7 +38,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
             _dummiesCollider = dummieControllerObj.GetComponent<DummiesColliderLab>();
             _playerObj = GameObject.FindGameObjectWithTag("Player");
             _mainCAttack = _playerObj.GetComponent<MainCAttack>();
-            _chargingSwordSphereTarget = _playerObj.GetComponent<ChargingSwordSphereTarget>();
+            _chargingSwordSphereTarget = _playerObj.GetComponent<MainCChargingSwordSphereTarget>();
         }
 
         private void Start()

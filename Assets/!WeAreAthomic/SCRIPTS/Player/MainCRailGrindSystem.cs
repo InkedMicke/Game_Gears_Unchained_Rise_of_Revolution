@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace _WeAreAthomic.SCRIPTS
 {
-    public class RailGrindSystem : MonoBehaviour
+    public class MainCRailGrindSystem : MonoBehaviour
     {
         private CharacterController _cc;
         private Animator _anim;

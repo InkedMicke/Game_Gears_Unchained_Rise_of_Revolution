@@ -12,7 +12,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private PlayerInputActions _playerInputActions;
         private MainCLayers _mainCLayers;
         private Animator _anim;
-        private RailGrindSystem _railGrindSystem;
+        private MainCRailGrindSystem _railGrindSystem;
         private MainCAnimatorController _mainCAnimator;
         private MainCSounds _mainCSounds;
         private BoxCollider _weaponBC;
@@ -50,7 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _mainCLayers = GetComponent<MainCLayers>();
             _anim = GetComponent<Animator>();
             _cc = GetComponent<CharacterController>();
-            _railGrindSystem = GetComponent<RailGrindSystem>();
+            _railGrindSystem = GetComponent<MainCRailGrindSystem>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _mainCSounds = GetComponent<MainCSounds>();
 

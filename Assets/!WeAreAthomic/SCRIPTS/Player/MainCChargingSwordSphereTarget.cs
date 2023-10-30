@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace _WeAreAthomic.SCRIPTS.Player
 {
-    public class ChargingSwordSphereTarget : MonoBehaviour
+    public class MainCChargingSwordSphereTarget : MonoBehaviour
     {
         private CharacterController _cc;
         private Animator _anim;
