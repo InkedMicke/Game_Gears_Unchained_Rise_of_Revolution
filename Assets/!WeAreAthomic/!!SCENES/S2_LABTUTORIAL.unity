@@ -382,12 +382,18 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 3207809442400025479}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 632424735}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15536c98d810a0949b974a418dcb398c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &632424735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 97504244444319991, guid: befc01eb549d2374181796db4f6b39cf,
+    type: 3}
+  m_PrefabInstance: {fileID: 3207809442400025479}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &690955755
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +440,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &727948644 stripped
 GameObject:
@@ -1138,6 +1144,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6422411229561103027, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: labThirdRoomObj
+      value: 
+      objectReference: {fileID: 632424735}
     - target: {fileID: 7192880527433479055, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1293,6 +1304,11 @@ PrefabInstance:
       propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 370576670366747774, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: useKnockback
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 789962197274122241, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
       propertyPath: m_IsActive
@@ -1332,6 +1348,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 2.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 1521013801917723364, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1588472668497688510, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
@@ -1692,7 +1713,7 @@ PrefabInstance:
     - target: {fileID: 4269492279315602273, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4269492279315602273, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
@@ -1747,6 +1768,16 @@ PrefabInstance:
     - target: {fileID: 4459723919158587845, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
       propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427575336770313255, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481704145167228784, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: useKnockback
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5805379695132419215, guid: befc01eb549d2374181796db4f6b39cf,
@@ -2184,6 +2215,21 @@ PrefabInstance:
       propertyPath: useKnockback
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7458605446526518778, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: useKnockback
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7836129537889724793, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871098591870244271, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: useKnockback
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8011852465737528516, guid: befc01eb549d2374181796db4f6b39cf,
         type: 3}
       propertyPath: speedOfHealth
@@ -2598,6 +2644,11 @@ PrefabInstance:
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425871690749705979, guid: befc01eb549d2374181796db4f6b39cf,
+        type: 3}
+      propertyPath: useKnockback
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8864677879138401107, guid: befc01eb549d2374181796db4f6b39cf, type: 3}

@@ -70,6 +70,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         [System.NonSerialized] public bool IsChargingSword;
         [System.NonSerialized] public bool IsSlidingOnEnemies;
+        [System.NonSerialized] public bool HasUnlockedAbility;
         private bool _isEventActive;
         private bool _canQuickTimeEvent;
         private bool _isMousePressed;
@@ -116,9 +117,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void MouseDown(InputAction.CallbackContext context)
         {
-            IsChargingSword = true;
-            _isMousePressed = true;
-            SpawnSphereDetector();
+            if (HasUnlockedAbility)
+            {
+                IsChargingSword = true;
+                _isMousePressed = true;
+                SpawnSphereDetector();
+            }
         }
 
         private void MouseUp(InputAction.CallbackContext context)
@@ -133,8 +137,9 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void StartChargingSword()
         {
-            if (_isMousePressed && !IsSlidingOnEnemies && Time.time > _totalCooldown && !_mainCSwitch.isUsingPistol)
+            if (_isMousePressed && !IsSlidingOnEnemies && Time.time > _totalCooldown && !_mainCSwitch.isUsingPistol && HasUnlockedAbility)
             {
+                Debug.Log("hola");
                 arrowDisplayer = GameObject.FindGameObjectsWithTag("ArrowDisplayer");
 
                 foreach (var gameObj in arrowDisplayer)
@@ -205,6 +210,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                         IsChargingSword = false;
                         IsSlidingOnEnemies = false;
                         _totalCooldown = Time.time + cooldown;
+                        _isSphereDetectorSpawned = false;
                     }
                 }
             }
@@ -236,6 +242,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 if (_sphereDetectorInst)
                 {
                     Destroy(_sphereDetectorInst);
+                    _isSphereDetectorSpawned = false;
                     IsChargingSword = false;
                 }
             }
@@ -296,6 +303,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
                 _mainCLayers.EnableAttackLayer();
                 _mainCAttack.SetAttackCount(1);
+                _mainCAttack.ShowWeapon();
                 filledCircle.color = _startColorFilledCircle;
                 quickCanvas.SetActive(true);
                 _currentGameOBject = gameObj;
@@ -307,7 +315,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
             //swordTrail.SetActive(false);
             IsSlidingOnEnemies = false;
-
+            _mainCLayers.DisableAttackLayer();
             _cc.enabled = true;
             IsChargingSword = false;
         }
@@ -409,6 +417,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 if (_sphereDetectorInst)
                 {
                     Destroy(_sphereDetectorInst);
+                    _isSphereDetectorSpawned = false;
                     IsChargingSword = false;
                 }
             }
@@ -472,6 +481,11 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private void DisableQrteCanvas()
         {
             quickCanvas.SetActive(false);
+        }
+
+        public void EnableHasUnlockedAbility()
+        {
+            HasUnlockedAbility = true;
         }
 
 

@@ -11,6 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
         private Animator _anim;
         private CharacterController _cc;
         private DummieSounds _dummieSounds;
+        private CapsuleCollider _cC;
 
         [SerializeField] private GameObject soundComponentObj;
         
@@ -19,6 +20,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
         [SerializeField] private ParticleSystem sparksHit;
 
         [SerializeField] private bool useKnockback = true;
+        private bool _isDeath;
         
         [SerializeField] private float pushForce = 5f;
     
@@ -29,6 +31,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
             _cc = GetComponentInParent<CharacterController>();
             _dummieController = GetComponentInParent<DummieController>();
             _dummieSounds = soundComponentObj.GetComponent<DummieSounds>();
+            _cC = GetComponent<CapsuleCollider>();
         }
 
         private void Start()
@@ -41,7 +44,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
             _gHealthManager.currentHealth -= value;
             _anim.SetTrigger(string.Format("isHurt"));
             sparksHit.Play();
-            if (!_dummieController.isDeath)
+            if (!_isDeath)
             {
                 if (useKnockback)
                 {
@@ -49,6 +52,19 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
                 }
 
                 _dummieSounds.PlayHurtSound();
+            }
+
+            CheckForDeath();
+        }
+
+        private void CheckForDeath()
+        {
+            if (_gHealthManager.currentHealth <= 0)
+            {
+                _isDeath = true;
+                _anim.SetBool(string.Format("isDeath"), true);
+                _cC.enabled = false;
+                _dummieController.DisableCharacterController();
             }
         }
 

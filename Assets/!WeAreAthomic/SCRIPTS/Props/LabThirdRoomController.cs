@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using _WeAreAthomic.SCRIPTS.Player;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,33 +9,54 @@ namespace _WeAreAthomic.SCRIPTS.Props
     public class LabThirdRoomController : MonoBehaviour
     {
         private DummiesColliderLab _dummiesCollider;
+        private ChargingSwordSphereTarget _chargingSwordSphereTarget;
+        private MainCAttack _mainCAttack;
 
         [SerializeField] private GameObject wave1;
         [SerializeField] private GameObject wave2;
         [SerializeField] private GameObject movableFloor;
         [SerializeField] private GameObject dummieControllerObj;
         [SerializeField] private GameObject goHereObj;
+        private GameObject _playerObj;
+        
         [SerializeField] private float speedOfFloor = 0.1f;
 
         [SerializeField] private UnityEvent seActivaCuandoVaASubir;
         [SerializeField] private UnityEvent seActivaCuandoVaABajar;
         [SerializeField] private UnityEvent seActivaCuandoHaSubido;
         [SerializeField] private UnityEvent seActivaCuandoHaBajado;
+        [SerializeField] private UnityEvent seActivaCuandoLasOleadasTerminan;
 
         private bool _floorIsUp;
         private bool _floorIsDown;
+        private bool _isWave1;
+        [System.NonSerialized] public bool IsWave2;
         private bool _isFloorMoving;
 
         private void Awake()
         {
             _dummiesCollider = dummieControllerObj.GetComponent<DummiesColliderLab>();
+            _playerObj = GameObject.FindGameObjectWithTag("Player");
+            _mainCAttack = _playerObj.GetComponent<MainCAttack>();
+            _chargingSwordSphereTarget = _playerObj.GetComponent<ChargingSwordSphereTarget>();
+        }
+
+        private void Start()
+        {
+            _isWave1 = true;
         }
 
         private void Update()
         {
-            if (_floorIsUp && wave1.transform.childCount == 0 && !_isFloorMoving)
+            if (_floorIsUp && !IsWave2 && wave1.transform.childCount == 0 && !_isFloorMoving)
             {
                 goHereObj.SetActive(true);
+            }
+            
+            if (_floorIsUp && IsWave2 && wave1.transform.childCount == 0 && !_isFloorMoving)
+            {
+                seActivaCuandoLasOleadasTerminan.Invoke();
+                _mainCAttack.EnableCanAttack();
             }
         }
 
@@ -55,6 +78,11 @@ namespace _WeAreAthomic.SCRIPTS.Props
             _floorIsDown = false;
             seActivaCuandoVaASubir.Invoke();
             _isFloorMoving = true;
+            if (!_isWave1)
+            {
+                IsWave2 = true;
+                _chargingSwordSphereTarget.EnableHasUnlockedAbility();
+            }
             while (enable)
             {
                 var temp = movableFloor.transform.localPosition;
@@ -62,6 +90,11 @@ namespace _WeAreAthomic.SCRIPTS.Props
                 movableFloor.transform.localPosition = temp;
                 if (movableFloor.transform.localPosition.y >= -0.918f)
                 {
+                    if (IsWave2)
+                    {
+                        _mainCAttack.DisableCanAttack();
+                        _mainCAttack.HideWeapon();
+                    }
                     _dummiesCollider.UndoChild(wave1);
                     temp.y = -0.9186499f;
                     movableFloor.transform.localPosition = temp;
@@ -82,16 +115,17 @@ namespace _WeAreAthomic.SCRIPTS.Props
             _floorIsUp = false;
             seActivaCuandoVaABajar.Invoke();
             _isFloorMoving = true;
+            _isWave1 = false;
             while (enable)
             {
                 var temp = movableFloor.transform.localPosition;
                 temp.y -= speedOfFloor;
                 movableFloor.transform.localPosition = temp;
 
-                if (movableFloor.transform.localPosition.y <= -9)
+                if (movableFloor.transform.localPosition.y <= -8.72f)
                 {
                     wave2.SetActive(true);
-                    temp.y = -9;
+                    temp.y = -8.72f;
                     movableFloor.transform.localPosition = temp;
                     enable = false;
                     _floorIsDown = true;

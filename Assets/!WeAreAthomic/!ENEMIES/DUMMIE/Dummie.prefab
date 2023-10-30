@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 2034747909571958795}
   - component: {fileID: 7829285129649768606}
   - component: {fileID: 2820041945708720828}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Dummie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,9 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hurtBoxObj: {fileID: 6142278380004551508}
-  playDeathAnim: 0
-  removeCollisionDeath: 0
-  isDeath: 0
+  removeCollisionOnDeath: 1
 --- !u!143 &7829285129649768606
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1914,6 +1912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundComponentObj: {fileID: 2963962393434010473}
   sparksHit: {fileID: 6768638902788567473}
+  useKnockback: 1
   pushForce: 20
 --- !u!54 &2675127905269865268
 Rigidbody:

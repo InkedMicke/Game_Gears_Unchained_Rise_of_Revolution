@@ -1,5 +1,8 @@
+using System;
+using _WeAreAthomic.SCRIPTS.Props;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace _WeAreAthomic.SCRIPTS.Player
 {
@@ -22,12 +25,15 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         public LayerMask enemyHurtBox;
 
+        private Scene _currentScene;
+
         [System.NonSerialized] public bool IsAttacking;
         [System.NonSerialized] public bool CanDealDamage;
         [System.NonSerialized] public bool CanMove;
         private bool _clickedOnTime;
         private bool _canNextAttack;
         private bool _isSheathed;
+        private bool _canAttack;
 
         public int attackCount;
 
@@ -56,11 +62,20 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _weaponBC = weaponObj.GetComponent<BoxCollider>();
         }
 
-        private void Update() => Sheath();
+        private void Start()
+        {
+            _canAttack = true;
+        }
+
+        private void Update()
+        {
+            Sheath();
+            _currentScene = SceneManager.GetActiveScene();
+        }
 
         private void Attack(InputAction.CallbackContext context)
         {
-            if (_mainCMovement.IsGrounded() && CanAttack() || _railGrindSystem.IsOnRail() && CanAttack())
+            if (_mainCMovement.IsGrounded() && CanAttack() && _canAttack|| _railGrindSystem.IsOnRail() && CanAttack())
             {
                 _mainCLayers.EnableAttackLayer();
                 if (!_isSheathed)
@@ -68,6 +83,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     ShowWeapon();
                     _isSheathed = true;
                 }
+
                 _mainCSounds.StopAttackSound();
                 _mainCSounds.PlayAttackSound();
                 attackCount++;
@@ -78,6 +94,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 {
                     _mainCLayers.DisableJumpLayer();
                 }
+
                 IsAttacking = true;
 
                 _canNextAttack = false;
@@ -86,9 +103,9 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void Sheath()
         {
-            if(!IsAttacking && _isSheathed)
+            if (!IsAttacking && _isSheathed)
             {
-                if(_currentTimeSheath + hideWeaponTimer < Time.time)
+                if (_currentTimeSheath + hideWeaponTimer < Time.time)
                 {
                     HideWeapon();
                     _isSheathed = false;
@@ -138,7 +155,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             weaponObj.GetComponent<BoxCollider>().enabled = true;
         }
-    
+
         private void DisableWeaponCollision()
         {
             weaponObj.GetComponent<BoxCollider>().enabled = false;
@@ -149,6 +166,10 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         public void HideWeapon() => weaponObj.SetActive(false);
 
+        public void EnableCanAttack() => _canAttack = true;
+        
+        public void DisableCanAttack() => _canAttack = false;
+
         public void SetAttackCount(int value)
         {
             attackCount = value;
@@ -157,9 +178,20 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private bool CanAttack()
         {
-            if (IsAttacking) { return false; }
-            if (_mainCMovement.IsCrouch) { return false; }
-            if (!(Time.time > timeGraceAttackPeriod)) { return false; }
+            if (IsAttacking)
+            {
+                return false;
+            }
+
+            if (_mainCMovement.IsCrouch)
+            {
+                return false;
+            }
+
+            if (!(Time.time > timeGraceAttackPeriod))
+            {
+                return false;
+            }
 
             return true;
         }
