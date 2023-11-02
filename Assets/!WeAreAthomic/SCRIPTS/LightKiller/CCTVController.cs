@@ -84,8 +84,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
             {
                 case true:
                     {
-                        var offRotation = Quaternion.Euler(80f, 0f, 0f);
-                        transform.rotation = Quaternion.Lerp(transform.rotation, offRotation, 5f);
+                        transform.localEulerAngles = new Vector3(55f, 0f, 0f);
                         break;
                     }
                 case false:
@@ -127,6 +126,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
         public void PermanentDisabled()
         {
             TurnOffCamera(Mathf.Infinity);
+            CancelInvoke(nameof(TurnOnCamera));
         }
 
         private void SetLightPosition()
@@ -154,6 +154,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
 
         public void TurnOnCamera()
         {
+            Debug.Log("hola4");
             lKillerObj.SetActive(true);
             _lKiller.WhiteLight();
             _isCameraOff = false;

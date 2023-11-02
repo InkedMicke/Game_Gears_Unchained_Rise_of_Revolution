@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class UIController : MonoBehaviour
+public class GUIController : MonoBehaviour
 {
     private PlayerInputActions _playerInputActions;
 
