@@ -54,7 +54,6 @@ public class MainCTutorialChecker : MonoBehaviour
             Vector3 desplazamiento = _cc.transform.position - lastPosition;
             _distanciaRecorrida += desplazamiento.magnitude;
             lastPosition = _cc.transform.position;
-            Debug.Log(_distanciaRecorrida);
 
             if(_distanciaRecorrida >= _startDistance + 20f)
             {

@@ -32,11 +32,11 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void Start()
         {
-            _currentScene = SceneManager.GetActiveScene();
+/*            _currentScene = SceneManager.GetActiveScene();
             if (_currentScene.name == "S2_LABTUTORIAL")
             {
                 PlayTutorialSound(0, "pc");
-            }
+            }*/
         }
 
         public void StopAttackSound()
