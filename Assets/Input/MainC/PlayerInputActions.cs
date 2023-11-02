@@ -134,6 +134,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuitWindow"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a563b08-0fd1-4829-aaec-fcbcdfdcc2f0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -367,6 +376,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Test"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8bae293a-afd4-4df3-a7f5-544d25a278cb"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""QuitWindow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -449,6 +469,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Slow = m_Player.FindAction("Slow", throwIfNotFound: true);
         m_Player_SecondaryAttack = m_Player.FindAction("SecondaryAttack", throwIfNotFound: true);
         m_Player_Test = m_Player.FindAction("Test", throwIfNotFound: true);
+        m_Player_QuitWindow = m_Player.FindAction("QuitWindow", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
@@ -525,6 +546,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Slow;
     private readonly InputAction m_Player_SecondaryAttack;
     private readonly InputAction m_Player_Test;
+    private readonly InputAction m_Player_QuitWindow;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -541,6 +563,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Slow => m_Wrapper.m_Player_Slow;
         public InputAction @SecondaryAttack => m_Wrapper.m_Player_SecondaryAttack;
         public InputAction @Test => m_Wrapper.m_Player_Test;
+        public InputAction @QuitWindow => m_Wrapper.m_Player_QuitWindow;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -586,6 +609,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Test.started += instance.OnTest;
             @Test.performed += instance.OnTest;
             @Test.canceled += instance.OnTest;
+            @QuitWindow.started += instance.OnQuitWindow;
+            @QuitWindow.performed += instance.OnQuitWindow;
+            @QuitWindow.canceled += instance.OnQuitWindow;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -626,6 +652,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Test.started -= instance.OnTest;
             @Test.performed -= instance.OnTest;
             @Test.canceled -= instance.OnTest;
+            @QuitWindow.started -= instance.OnQuitWindow;
+            @QuitWindow.performed -= instance.OnQuitWindow;
+            @QuitWindow.canceled -= instance.OnQuitWindow;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -730,6 +759,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnSlow(InputAction.CallbackContext context);
         void OnSecondaryAttack(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
+        void OnQuitWindow(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {
