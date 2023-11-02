@@ -18,6 +18,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCSounds _mainCSounds;
         private BoxCollider _weaponBC;
         private CharacterController _cc;
+        private MainCTutorialChecker _mainCTutorial;
 
         [SerializeField] private GameObject weaponObj;
 
@@ -55,6 +56,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _railGrindSystem = GetComponent<MainCRailGrindSystem>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _mainCSounds = GetComponent<MainCSounds>();
+            _mainCTutorial = GetComponent<MainCTutorialChecker>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -111,7 +113,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
             if (_mainCMovement.IsGrounded() && CanAttack() && _canAttack && !_isSheathed)
             {
-    
+                if(_mainCTutorial.isOnTutorial)
+                {
+                    _mainCSounds.RemoveAllSounds();
+                    _mainCSounds.PlayExpressionSound();
+                    _mainCSounds.PlayTutorialSound(4, "pc");
+                }
                 ShowWeapon();
                 _isSheathed = true;
             }

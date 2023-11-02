@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.DebugUI;
 
 namespace _WeAreAthomic.SCRIPTS.Props
@@ -9,12 +10,27 @@ namespace _WeAreAthomic.SCRIPTS.Props
 
     public class OpenDoorLab : MonoBehaviour
     {
+        public bool openDoor;
         private Animator _anim;
         [SerializeField] private AudioSource openDoorSound;
 
         private void Awake()
         {
             _anim = GetComponent<Animator>();
+        }
+
+        private void Update()
+        {
+            Test();
+        }
+
+        private void Test()
+        {
+            if (openDoor)
+            {
+                OpenDoor(0);
+                openDoor = false;
+            }
         }
 
         public void OpenDoor(float value)

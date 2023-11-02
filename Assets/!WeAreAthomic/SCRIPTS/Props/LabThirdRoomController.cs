@@ -59,6 +59,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
             {
                 seActivaCuandoLasOleadasTerminan.Invoke();
                 _mainCAttack.EnableCanAttack();
+                IsWave2 = false;
             }
         }
 
@@ -85,6 +86,9 @@ namespace _WeAreAthomic.SCRIPTS.Props
                 IsWave2 = true;
                 _chargingSwordSphereTarget.EnableHasUnlockedAbility();
             }
+
+            yield return new WaitForSeconds(1f);
+
             while (enable)
             {
                 var temp = movableFloor.transform.localPosition;
@@ -94,8 +98,8 @@ namespace _WeAreAthomic.SCRIPTS.Props
                 {
                     if (IsWave2)
                     {
-                        _mainCAttack.DisableCanAttack();
-                        _mainCAttack.HideWeapon();
+                        //_mainCAttack.DisableCanAttack();
+                        //_mainCAttack.HideWeapon();
                     }
                     if(_isWave1)
                     {
