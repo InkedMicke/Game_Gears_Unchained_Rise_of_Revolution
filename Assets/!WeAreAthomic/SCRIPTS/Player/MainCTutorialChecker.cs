@@ -35,17 +35,18 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _mainCHacking = GetComponent<MainCHackingSystem>();
         }
 
-        /*private void Start()
+        private void Start()
         {
             _startDistance = _cc.transform.position.magnitude;
             _currentScene = SceneManager.GetActiveScene();
             if (_currentScene.name == "S2_LABTUTORIAL")
             {
-                StartCoroutine(CheckDistance());
+                IsOnTutorial = true;
+/*                StartCoroutine(CheckDistance());
                 StartCoroutine(CheckHealth());
-                StartCoroutine(CheckHacking());
+                StartCoroutine(CheckHacking());*/
             }
-        }*/
+        }
 
         private IEnumerator CheckDistance()
         {
