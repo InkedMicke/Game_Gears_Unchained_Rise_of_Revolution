@@ -7,10 +7,9 @@ namespace _WeAreAthomic.SCRIPTS.Genericos
 {
     public class GLoadScene : MonoBehaviour
     {
-        public void LoadScene(string scene)
+        public void LoadScene(string scene, LoadSceneMode sceneMode)
         {
-            SceneManager.LoadScene(scene, LoadSceneMode.Single);
-            Debug.Log("hola3");
+            SceneManager.LoadScene(scene, sceneMode);
         }
     }
 }

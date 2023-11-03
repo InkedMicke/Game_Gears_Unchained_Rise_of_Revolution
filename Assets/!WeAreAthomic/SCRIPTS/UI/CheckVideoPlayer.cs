@@ -1,25 +1,26 @@
+using System;
 using _WeAreAthomic.SCRIPTS.Genericos;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Video;
+using _WeAreAthomic.SCRIPTS.Genericos;
+using UnityEngine.SceneManagement;
 
-public class CheckVideoPlayer : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.UI
 {
-    [SerializeField] private string sceneToLoad;
-
-    private void Start()
+    public class CheckVideoPlayer : MonoBehaviour
     {
+        [SerializeField] private string sceneToLoad;
 
-        var videoPlayer = GetComponent<VideoPlayer>();
+        private void Start()
+        {
+            var videoPlayer = GetComponent<VideoPlayer>();
+            videoPlayer.loopPointReached += EndReached;
+        }
 
-        videoPlayer.loopPointReached += EndReached;
-    }
-
-    void EndReached(VideoPlayer vp)
-    {
-        var loadScene = FindObjectOfType<GLoadScene>();
-        loadScene.LoadScene(sceneToLoad);
+        private void EndReached(VideoPlayer vp)
+        {
+            var loadScene = GetComponent<GLoadScene>();
+            loadScene.LoadScene(sceneToLoad, LoadSceneMode.Single);
+        }
     }
 }

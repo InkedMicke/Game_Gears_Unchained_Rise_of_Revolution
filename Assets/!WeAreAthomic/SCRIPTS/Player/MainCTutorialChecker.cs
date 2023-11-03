@@ -1,126 +1,130 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
-using UnityEngine;
-using _WeAreAthomic.SCRIPTS.Player;
 using _WeAreAthomic.SCRIPTS.Props;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class MainCTutorialChecker : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Player
 {
-    private CharacterController _cc;
-    private MainCSounds _mainCSounds;
-    private MainCHealthManager _mainCHealth;
-    private MainCHackingSystem _mainCHacking;
-
-    private Scene _currentScene;
-
-    [SerializeField] private GameObject breatherObj;
-    [SerializeField] private GameObject botonPosaMano;
-
-    private Vector3 lastPosition;
-
-    [System.NonSerialized] public bool isOnTutorial;
-    private bool _isRoom1;
-    private bool _isRoom2;
-    private bool _isRoom3;
-
-    private float _distanciaRecorrida = 0.0f;
-    private float _startDistance;
-
-    private void Awake()
+    public class MainCTutorialChecker : MonoBehaviour
     {
-        _cc = GetComponent<CharacterController>();
-        _mainCSounds = GetComponent<MainCSounds>();
-        _mainCHealth = GetComponent<MainCHealthManager>();
-        _mainCHacking = GetComponent<MainCHackingSystem>();
-    }
+        private CharacterController _cc;
+        private MainCSounds _mainCSounds;
+        private MainCHealthManager _mainCHealth;
+        private MainCHackingSystem _mainCHacking;
 
-    private void Start()
-    {
-/*        _startDistance = _cc.transform.position.magnitude;
-        _currentScene = SceneManager.GetActiveScene();
-        if (_currentScene.name == "S2_LABTUTORIAL")
+        private Scene _currentScene;
+
+        [SerializeField] private GameObject breatherObj;
+        [SerializeField] private GameObject botonPosaMano;
+
+        private Vector3 _lastPosition;
+
+        [System.NonSerialized] public bool IsOnTutorial;
+        private bool _isRoom1;
+        private bool _isRoom2;
+        private bool _isRoom3;
+
+        private float _distanciaRecorrida = 0.0f;
+        private float _startDistance;
+
+        private void Awake()
         {
-            StartCoroutine(CheckDistance());
-            StartCoroutine(CheckHealth());
-            StartCoroutine(CheckHacking());
+            _cc = GetComponent<CharacterController>();
+            _mainCSounds = GetComponent<MainCSounds>();
+            _mainCHealth = GetComponent<MainCHealthManager>();
+            _mainCHacking = GetComponent<MainCHackingSystem>();
+        }
+
+        /*private void Start()
+        {
+            _startDistance = _cc.transform.position.magnitude;
+            _currentScene = SceneManager.GetActiveScene();
+            if (_currentScene.name == "S2_LABTUTORIAL")
+            {
+                StartCoroutine(CheckDistance());
+                StartCoroutine(CheckHealth());
+                StartCoroutine(CheckHacking());
+            }
         }*/
-    }
 
-    private IEnumerator CheckDistance()
-    {
-        var enable = true;
-        while(enable)
+        private IEnumerator CheckDistance()
         {
-            Vector3 desplazamiento = _cc.transform.position - lastPosition;
-            _distanciaRecorrida += desplazamiento.magnitude;
-            lastPosition = _cc.transform.position;
-
-            if(_distanciaRecorrida >= _startDistance + 20f)
+            var enable = true;
+            while (enable)
             {
-                enable = false;
-                _mainCSounds.RemoveAllSounds();
-                _mainCSounds.PlayExpressionSound();
-                var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.currentExpressionClip.name);
-                Invoke(nameof(PlayTutorialOne), lengthOfClip);
+                var position = _cc.transform.position;
+                var desplazamiento = position - _lastPosition;
+                _distanciaRecorrida += desplazamiento.magnitude;
+                _lastPosition = position;
+
+                if (_distanciaRecorrida >= _startDistance + 20f)
+                {
+                    enable = false;
+                    _mainCSounds.RemoveAllSounds();
+                    _mainCSounds.PlayExpressionSound();
+                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.currentExpressionClip.name);
+                    Invoke(nameof(PlayTutorialOne), lengthOfClip);
+                }
+
+                yield return new WaitForSeconds(0.01f);
             }
-
-            yield return new WaitForSeconds(0.01f);
         }
-    }
 
-    private IEnumerator CheckHealth()
-    {
-        var enable = true;
-
-        while (enable)
+        private IEnumerator CheckHealth()
         {
-            if(_mainCHealth.currentHealth >= 100)
+            var enable = true;
+
+            while (enable)
             {
-                enable = false;
-                _mainCSounds.RemoveAllSounds();
-                _mainCSounds.PlayExpressionSound();
-                var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.currentExpressionClip.name);
-                Invoke(nameof(PlayTutorialTwo), lengthOfClip);
+                if (_mainCHealth.currentHealth >= 100)
+                {
+                    enable = false;
+                    _mainCSounds.RemoveAllSounds();
+                    _mainCSounds.PlayExpressionSound();
+                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.currentExpressionClip.name);
+                    Invoke(nameof(PlayTutorialTwo), lengthOfClip);
+                }
+
+                yield return new WaitForSeconds(0.01f);
             }
-            yield return new WaitForSeconds(0.01f);
         }
-    }
 
-    private IEnumerator CheckHacking()
-    {
-        var enable = true;
-
-        while (enable)
+        private IEnumerator CheckHacking()
         {
-            if (_mainCHacking.isHacking)
+            var enable = true;
+
+            while (enable)
             {
-                enable = false;
-                _mainCSounds.RemoveAllSounds();
-                _mainCSounds.PlayExpressionSound();
-                var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.currentExpressionClip.name);
-                Invoke(nameof(PlayTutorialThird), lengthOfClip);
+                if (_mainCHacking.isHacking)
+                {
+                    enable = false;
+                    _mainCSounds.RemoveAllSounds();
+                    _mainCSounds.PlayExpressionSound();
+                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.currentExpressionClip.name);
+                    Invoke(nameof(PlayTutorialThird), lengthOfClip);
+                }
+
+                yield return new WaitForSeconds(0.01f);
             }
-            yield return new WaitForSeconds(0.01f);
         }
-    }
 
-    private void PlayTutorialOne()
-    {
-        _mainCSounds.PlayTutorialSound(1, "pc");
-        var healthBreather = breatherObj.GetComponent<HealthBreather>();
-        healthBreather.EnableBreather();
-    }
+        private void PlayTutorialOne()
+        {
+            _mainCSounds.PlayTutorialSound(1, "pc");
+            var healthBreather = breatherObj.GetComponent<HealthBreather>();
+            healthBreather.EnableBreather();
+        }
 
-    private void PlayTutorialTwo()
-    {
-        _mainCSounds.PlayTutorialSound(2, "pc");
-        var buttonInt = botonPosaMano.GetComponent<ButtonInteractable>();
-        buttonInt.EnableCanHack();
-    }
+        private void PlayTutorialTwo()
+        {
+            _mainCSounds.PlayTutorialSound(2, "pc");
+            var buttonInt = botonPosaMano.GetComponent<ButtonInteractable>();
+            buttonInt.EnableCanHack();
+        }
 
-    private void PlayTutorialThird()
-    {
-        _mainCSounds.PlayTutorialSound(3, "pc");
+        private void PlayTutorialThird()
+        {
+            _mainCSounds.PlayTutorialSound(3, "pc");
+        }
     }
 }

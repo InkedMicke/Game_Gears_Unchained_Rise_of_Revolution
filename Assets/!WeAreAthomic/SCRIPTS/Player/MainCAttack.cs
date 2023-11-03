@@ -113,11 +113,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
             if (_mainCMovement.IsGrounded() && CanAttack() && _canAttack && !_isSheathed)
             {
-                if(_mainCTutorial.isOnTutorial)
+                if(_mainCTutorial.IsOnTutorial)
                 {
                     _mainCSounds.RemoveAllSounds();
                     _mainCSounds.PlayExpressionSound();
-                    _mainCSounds.PlayTutorialSound(4, "pc");
+                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.currentExpressionClip.name);
+                    Invoke(nameof(PlayTutorialFifth), lengthOfClip);
                 }
                 ShowWeapon();
                 _isSheathed = true;
@@ -197,6 +198,11 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             attackCount = value;
             _mainCAnimator.SetAttackCountAnim(value);
+        }
+        
+        private void PlayTutorialFifth()
+        {
+            _mainCSounds.PlayTutorialSound(5, "pc");
         }
 
         private bool CanAttack()
