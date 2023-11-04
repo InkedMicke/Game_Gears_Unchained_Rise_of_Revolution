@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using _WeAreAthomic.SCRIPTS.Player;
@@ -114,11 +115,22 @@ namespace _WeAreAthomic.SCRIPTS
                 IsSliding = true;
                 CanJumpOnRail = true;
                 GetAllTransforms();
+                FixPosition();
                 _mainCLayers.DisableJumpLayer();
                 _mainCAnimator.SetGrounded(true);
                 _mainCAnimator.SetFalling(false);
                 _mainCAnimator.SetJumping(false);
             }
+        }
+
+        private void FixPosition()
+        {
+            _cc.enabled = false;
+
+            var desiredPos = new Vector3(transform.position.z, transform.position.y,
+                directionsList[_childActual].position.z);
+
+            _cc.enabled = true;
         }
 
         private void GetAllTransforms()
@@ -130,7 +142,7 @@ namespace _WeAreAthomic.SCRIPTS
                 var padre1 = hit.collider.gameObject.transform.parent;
                 var padre2 = padre1.parent;
                 var padre3 = padre2.parent;
-                
+
                 Debug.Log(padre2);
 
                 var railContainer = padre3.GetChild(padre3.childCount - 1);
@@ -160,7 +172,7 @@ namespace _WeAreAthomic.SCRIPTS
                 }
 
                 _canSlide = true;
-                
+
                 _mainCAnimator.SetSliding(true);
                 _mainCLayers.EnableSlideLayer();
 
@@ -182,12 +194,14 @@ namespace _WeAreAthomic.SCRIPTS
                 _directionMove = (_currentDestination - transform.position).normalized;
 
                 _cc.Move(_directionMove * (railSpeed * Time.deltaTime));
-            
+                Debug.Log(directionsList[_childActual]);
+
                 var targetRotation = directionsList[_childActual].rotation;
 
                 targetRotation *= Quaternion.Euler(0, -90, 0);
 
-                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                transform.rotation =
+                    Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
                 if (IsOnRail())
                 {
@@ -206,7 +220,6 @@ namespace _WeAreAthomic.SCRIPTS
                         _childActual++;
                         _currentDestination = directionsList[_childActual].position;
                     }
-                
                 }
             }
         }
@@ -253,9 +266,26 @@ namespace _WeAreAthomic.SCRIPTS
             });
         }
 
-        public bool IsOnRail()
+        private void OnDrawGizmos()
         {
-            return Physics.CheckSphere(groundCheck.position, .3f, railLayer);
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(transform.position);
+        }
+
+        public bool IsOnRail(out RaycastHit hitInfo)
+        {
+            var center = groundCheck.position;
+            const float radius = 0.3f;
+
+            if (Physics.SphereCast(center, radius, Vector3.down, out hitInfo, 0.0f, railLayer))
+            {
+                // Hay una colisión, hitInfo contiene información sobre la colisión
+                return true;
+            }
+
+            // No hay colisión
+            hitInfo = new RaycastHit();
+            return false;
         }
     }
 }

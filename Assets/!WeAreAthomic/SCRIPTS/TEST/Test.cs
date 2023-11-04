@@ -11,12 +11,14 @@ namespace _WeAreAthomic.SCRIPTS.TEST
         [SerializeField] private AudioClip introClip;
         [SerializeField] private AudioClip loopClip;
 
-        private void Start()
+        public double musicDuration;
+        public double goalTime;
+
+        /*private void Start()
         {
             currentAudio.clip = introClip;
             currentAudio.Play();
-            //Invoke(nameof(PlayLoop), introClip.length - 1.5f);
-            StartCoroutine(PlayLoopDelayed(introClip.length));
+            Invoke(nameof(PlayLoop), introClip.length - 1f);
             Debug.Log(introClip.length);
         }
 
@@ -26,13 +28,29 @@ namespace _WeAreAthomic.SCRIPTS.TEST
             currentAudio.Play();
             currentAudio.loop = true;
             Debug.Log("hola3");
+        }*/
+
+        private void OnPlayMusic()
+        {
+            goalTime = AudioSettings.dspTime + .5f;
+            
+            currentAudio.PlayScheduled(goalTime);
+
+            musicDuration = (double)introClip.samples / introClip.frequency;
+
+            goalTime = goalTime + musicDuration;
         }
 
-        private IEnumerator PlayLoopDelayed(float delay)
+        private void Update()
         {
-            yield return new WaitForSeconds(delay);
-            PlayLoop();
+            if (AudioSettings.dspTime > goalTime - 1)
+            {
+                currentAudio.clip = loopClip;
+                currentAudio.PlayScheduled(goalTime);
+                
+                musicDuration = (double)loopClip.samples / loopClip.frequency;
+                goalTime = AudioSettings.dspTime + musicDuration;
+            }
         }
-        
     }
 }
