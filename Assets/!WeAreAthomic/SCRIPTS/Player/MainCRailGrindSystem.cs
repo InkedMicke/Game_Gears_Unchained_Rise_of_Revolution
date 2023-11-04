@@ -53,8 +53,8 @@ namespace _WeAreAthomic.SCRIPTS
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Player.Enable();
-            _playerInputActions.Player.Running.started += IncreaseBoost;
-            _playerInputActions.Player.Running.canceled += DrecreaseBoost;
+            //_playerInputActions.Player.Running.started += IncreaseBoost;
+            //_playerInputActions.Player.Running.canceled += DrecreaseBoost;
         }
 
         private void Update()
@@ -125,17 +125,19 @@ namespace _WeAreAthomic.SCRIPTS
         {
             var ray = new Ray(groundCheck.position, -Vector3.up);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 5f, railLayer))
+            if (Physics.Raycast(ray, out var hit, 5f, railLayer))
             {
                 var padre1 = hit.collider.gameObject.transform.parent;
                 var padre2 = padre1.parent;
                 var padre3 = padre2.parent;
+                
+                Debug.Log(padre2);
 
                 var railContainer = padre3.GetChild(padre3.childCount - 1);
 
-                Transform[] allChildren = railContainer.GetComponentsInChildren<Transform>();
+                var allChildren = railContainer.GetComponentsInChildren<Transform>();
 
-                foreach (Transform child in allChildren)
+                foreach (var child in allChildren)
                 {
                     if (child.CompareTag("RailTransform"))
                     {
@@ -209,16 +211,16 @@ namespace _WeAreAthomic.SCRIPTS
             }
         }
 
-        void IncreaseBoost(InputAction.CallbackContext context)
+        /*void IncreaseBoost(InputAction.CallbackContext context)
         {
             _canBoost = true;
-        }
+        }*/
 
-        void DrecreaseBoost(InputAction.CallbackContext context)
+        /*void DrecreaseBoost(InputAction.CallbackContext context)
         {
             _canBoost = false;
             _playbackMultiplier = 0;
-        }
+        }*/
 
         void BoostManager()
         {
