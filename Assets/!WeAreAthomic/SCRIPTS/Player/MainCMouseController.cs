@@ -43,8 +43,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
             {
                 _typeOfAttack = TypeOfAttack.normalAttack;
             }
-
-            Debug.Log(_typeOfAttack);
         }
 
         private void MousePressedUp(InputAction.CallbackContext context)

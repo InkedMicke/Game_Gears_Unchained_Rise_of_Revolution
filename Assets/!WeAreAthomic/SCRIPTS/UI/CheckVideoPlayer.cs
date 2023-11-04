@@ -20,7 +20,7 @@ namespace _WeAreAthomic.SCRIPTS.UI
         private void EndReached(VideoPlayer vp)
         {
             var loadScene = GetComponent<GLoadScene>();
-            loadScene.LoadScene(sceneToLoad, LoadSceneMode.Single);
+            loadScene.LoadSceneMode(sceneToLoad, LoadSceneMode.Single);
         }
     }
 }

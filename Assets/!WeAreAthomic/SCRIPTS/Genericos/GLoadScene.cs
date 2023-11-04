@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,14 @@ namespace _WeAreAthomic.SCRIPTS.Genericos
 {
     public class GLoadScene : MonoBehaviour
     {
-        public void LoadScene(string scene, LoadSceneMode sceneMode)
+        public void LoadSceneMode(string scene, LoadSceneMode sceneMode)
         {
             SceneManager.LoadScene(scene, sceneMode);
+        }
+        
+        public void LoadScene(string scene)
+        {
+            SceneManager.LoadScene(scene, UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
     }
 }

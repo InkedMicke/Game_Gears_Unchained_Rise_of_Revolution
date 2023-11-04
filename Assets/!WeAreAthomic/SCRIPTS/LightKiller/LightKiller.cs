@@ -4,7 +4,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
 {
     public class LightKiller : MonoBehaviour
     {
-        private CCTVController _controller;
+        private CctvController _controller;
 
         public GameObject luzObj;
         public GameObject cctv;
@@ -17,7 +17,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
         private void Awake()
         {
             _luz = luzObj.GetComponent<Light>();
-            _controller = cctv.GetComponent<CCTVController>();
+            _controller = cctv.GetComponent<CctvController>();
         }
 
         public void WhiteLight()

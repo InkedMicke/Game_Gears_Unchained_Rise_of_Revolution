@@ -7,10 +7,12 @@ using Random = UnityEngine.Random;
 
 namespace _WeAreAthomic.SCRIPTS.LightKiller
 {
-    public class CCTVController : MonoBehaviour
+    public class CctvController : MonoBehaviour
     {
         private LightKiller _lKiller;
         private MainCMovement _mainCMovement;
+
+        private AudioSource _cameraAudio;
 
         [SerializeField] private GameObject lKillerObj;
         [SerializeField] private GameObject transforms;
@@ -39,12 +41,13 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
             _lightKillerTr = lKillerObj.transform;
             _playerObj = GameObject.FindGameObjectWithTag("Player");
             _mainCMovement = _playerObj.GetComponent<MainCMovement>();
+            _cameraAudio = GetComponent<AudioSource>();
         }
 
         private void Start()
         {
             var transformsArray = transforms.GetComponentsInChildren<Transform>();
-            foreach (Transform t in transformsArray)
+            foreach (var t in transformsArray)
             {
                 if (t.CompareTag("CameraTransform"))
                 {
@@ -127,6 +130,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
         {
             TurnOffCamera(Mathf.Infinity);
             CancelInvoke(nameof(TurnOnCamera));
+            _cameraAudio.Stop();
         }
 
         private void SetLightPosition()
@@ -150,6 +154,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
             _isCameraOff = true;
             lKillerObj.SetActive(false);
             Invoke(nameof(TurnOnCamera), value);
+            _cameraAudio.Stop();
         }
 
         public void TurnOnCamera()
@@ -158,7 +163,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
             lKillerObj.SetActive(true);
             _lKiller.WhiteLight();
             _isCameraOff = false;
-
+            _cameraAudio.Play();
             foreach (var t in seActivanCuandoSeEnciendeLaCamara)
             {
                 t.Invoke();
