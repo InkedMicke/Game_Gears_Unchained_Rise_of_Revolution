@@ -5,7 +5,7 @@ using _WeAreAthomic.SCRIPTS.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace _WeAreAthomic.SCRIPTS
+namespace _WeAreAthomic.SCRIPTS.Player
 {
     public class MainCRailGrindSystem : MonoBehaviour
     {
@@ -268,24 +268,12 @@ namespace _WeAreAthomic.SCRIPTS
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(transform.position);
+
         }
 
-        public bool IsOnRail(out RaycastHit hitInfo)
+        public bool IsOnRail()
         {
-            var center = groundCheck.position;
-            const float radius = 0.3f;
-
-            if (Physics.SphereCast(center, radius, Vector3.down, out hitInfo, 0.0f, railLayer))
-            {
-                // Hay una colisión, hitInfo contiene información sobre la colisión
-                return true;
-            }
-
-            // No hay colisión
-            hitInfo = new RaycastHit();
-            return false;
+            return Physics.CheckSphere(groundCheck.position, .3f, railLayer);
         }
     }
 }
