@@ -52,6 +52,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 return false;}
         
             return true;
+
+            return false;
         }
     
     }

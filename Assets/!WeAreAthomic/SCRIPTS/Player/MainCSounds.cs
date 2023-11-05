@@ -2,19 +2,18 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.DebugUI;
 using Random = UnityEngine.Random;
 
 namespace _WeAreAthomic.SCRIPTS.Player
 {
     public class MainCSounds : MonoBehaviour
     {
-        private Scene _currentScene;
+        private UnityEngine.SceneManagement.Scene _currentScene;
 
         [SerializeField] private GameObject soundComponentObj;
 
-        [System.NonSerialized] public AudioClip currentExpressionClip;
+        [System.NonSerialized] public AudioClip CurrentExpressionClip;
+        [System.NonSerialized] public AudioClip CurrentTutorialClip;
 
         [SerializeField] private AudioMixerGroup sfxMixer;
         [SerializeField] private AudioMixerGroup musicMixer;
@@ -48,10 +47,15 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             var audiosInSoundComponent = soundComponentObj.GetComponents<AudioSource>();
 
-            foreach (var audio in audiosInSoundComponent)
+            foreach (var audioSor in audiosInSoundComponent)
             {
-                Destroy(audio);
+                Destroy(audioSor);
             }
+        }
+
+        public void RemoveAllTutorialSounds()
+        {
+            Destroy(CurrentTutorialClip);
         }
 
         public float GetAudioClipLength(string clipString)
@@ -98,6 +102,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     currentAudioSource.clip = tutorialClipsPC[value];
                     currentAudioSource.volume = .9f;
                     currentAudioSource.Play();
+                    CurrentTutorialClip = currentAudioSource.clip;
                 }
             }
 
@@ -110,6 +115,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     currentAudioSource.clip = tutorialClipsGamepad[value];
                     currentAudioSource.volume = .9f;
                     currentAudioSource.Play();
+                    CurrentTutorialClip = currentAudioSource.clip;
                 }
             }
         }
@@ -123,7 +129,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 currentAudioSource.outputAudioMixerGroup = sfxMixer;
                 currentAudioSource.clip = expressionClips[randomNumber];
                 currentAudioSource.Play();
-                currentExpressionClip = currentAudioSource.clip;
+                CurrentExpressionClip = currentAudioSource.clip;
             }
         }
 

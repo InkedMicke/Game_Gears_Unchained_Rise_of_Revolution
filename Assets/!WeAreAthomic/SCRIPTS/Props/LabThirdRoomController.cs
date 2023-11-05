@@ -58,7 +58,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
             if (_floorIsUp && IsWave2 && wave1.transform.childCount == 0 && !_isFloorMoving)
             {
                 seActivaCuandoLasOleadasTerminan.Invoke();
-                _mainCAttack.EnableCanAttack();
+                //_mainCAttack.EnableCanAttack();
                 IsWave2 = false;
             }
         }
@@ -98,8 +98,8 @@ namespace _WeAreAthomic.SCRIPTS.Props
                 {
                     if (IsWave2)
                     {
-                        //_mainCAttack.DisableCanAttack();
-                        //_mainCAttack.HideWeapon();
+                        _mainCAttack.DisableCanAttack();
+                        _mainCAttack.HideWeapon();
                         _mainCSounds.PlayTutorialSound(6, "pc");
                     }
                     if(_isWave1)

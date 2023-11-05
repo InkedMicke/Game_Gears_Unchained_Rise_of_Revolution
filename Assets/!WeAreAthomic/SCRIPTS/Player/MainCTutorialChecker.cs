@@ -12,7 +12,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCHealthManager _mainCHealth;
         private MainCHackingSystem _mainCHacking;
 
-        private Scene _currentScene;
+        private UnityEngine.SceneManagement.Scene _currentScene;
 
         [SerializeField] private GameObject breatherObj;
         [SerializeField] private GameObject botonPosaMano;
@@ -63,7 +63,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     enable = false;
                     _mainCSounds.RemoveAllSounds();
                     _mainCSounds.PlayExpressionSound();
-                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.currentExpressionClip.name);
+                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.CurrentExpressionClip.name);
                     Invoke(nameof(PlayTutorialOne), lengthOfClip);
                 }
 
@@ -82,7 +82,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     enable = false;
                     _mainCSounds.RemoveAllSounds();
                     _mainCSounds.PlayExpressionSound();
-                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.currentExpressionClip.name);
+                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.CurrentExpressionClip.name);
                     Invoke(nameof(PlayTutorialTwo), lengthOfClip);
                 }
 
@@ -101,7 +101,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     enable = false;
                     _mainCSounds.RemoveAllSounds();
                     _mainCSounds.PlayExpressionSound();
-                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.currentExpressionClip.name);
+                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.CurrentExpressionClip.name);
                     Invoke(nameof(PlayTutorialThird), lengthOfClip);
                 }
 

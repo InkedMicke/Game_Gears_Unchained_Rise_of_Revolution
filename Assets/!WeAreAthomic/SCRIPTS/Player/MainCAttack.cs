@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using _WeAreAthomic.SCRIPTS.Props;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -9,7 +8,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
 {
     public class MainCAttack : MainCMouseController
     {
-        private TypeOfAttack _attackTypo;
         private MainCMovement _mainCMovement;
         private PlayerInputActions _playerInputActions;
         private MainCLayers _mainCLayers;
@@ -28,7 +26,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         public LayerMask enemyHurtBox;
 
-        private Scene _currentScene;
+        private UnityEngine.SceneManagement.Scene _currentScene;
 
         [System.NonSerialized] public bool IsAttacking;
         [System.NonSerialized] public bool CanDealDamage;
@@ -38,8 +36,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private bool _isSheathed;
         private bool _canAttack;
         private bool _isMousePressed;
-        private bool attackTutorial;
-        private bool sheathTutorial;
+        private bool _attackTutorial;
+        private bool _sheathTutorial;
 
         public int attackCount;
 
@@ -50,7 +48,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         public float timeGraceAttackPeriod;
         private float _currentTimeSheath;
 
-        protected override private void Awake()
+        private protected override void Awake()
         {
             _mainCMovement = GetComponent<MainCMovement>();
             _mainCLayers = GetComponent<MainCLayers>();
@@ -69,18 +67,13 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _playerInputActions.Player.Attack.canceled += MouseUp;
 
             _weaponBC = weaponObj.GetComponent<BoxCollider>();
+            _canAttack = false;
+            
             base.Awake();
         }
 
-        protected private void Start()
+        private protected void Update()
         {
-            _canAttack = false;
-        }
-
-        protected override private void Update()
-        {
-            base.Update();
-            _attackTypo = _typeOfAttack;
             _currentScene = SceneManager.GetActiveScene();
         }
 
@@ -97,8 +90,15 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void Attack(InputAction.CallbackContext context)
         {
-            if (CanAttack() || _railGrindSystem.IsOnRail() && CanAttack())
+            if (CanAttack() && _isSheathed|| _railGrindSystem.IsOnRail() && CanAttack())
             {
+                if (_mainCTutorial.IsOnTutorial && !_attackTutorial)
+                {
+                    _mainCSounds.RemoveAllSounds();
+                    _mainCSounds.PlayExpressionSound();
+                    _attackTutorial = true;
+                }
+
                 _mainCLayers.EnableAttackLayer();
                 _mainCSounds.StopAttackSound();
                 _mainCSounds.PlayAttackSound();
@@ -116,16 +116,17 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 _canNextAttack = false;
             }
 
-            if (_mainCMovement.IsGrounded() && CanAttack() && _canAttack && !_isSheathed)
+            if (CanAttack() && !_isSheathed)
             {
-                if(_mainCTutorial.IsOnTutorial && !sheathTutorial)
+                if (_mainCTutorial.IsOnTutorial && !_sheathTutorial)
                 {
                     _mainCSounds.RemoveAllSounds();
                     _mainCSounds.PlayExpressionSound();
-                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.currentExpressionClip.name);
+                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.CurrentExpressionClip.name);
                     Invoke(nameof(PlayTutorialFifth), lengthOfClip);
-                    sheathTutorial = true;
+                    _sheathTutorial = true;
                 }
+
                 ShowWeapon();
                 _isSheathed = true;
             }
@@ -135,13 +136,14 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             var enable = true;
 
-            while(enable)
+            while (enable)
             {
                 if (_currentTimeSheath + hideWeaponTimer < Time.time)
                 {
                     HideWeapon();
                     _isSheathed = false;
                 }
+
                 yield return new WaitForSeconds(0.01f);
             }
         }
@@ -205,7 +207,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             attackCount = value;
             _mainCAnimator.SetAttackCountAnim(value);
         }
-        
+
         private void PlayTutorialFifth()
         {
             _mainCSounds.PlayTutorialSound(5, "pc");
@@ -218,32 +220,22 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 return false;
             }
 
-            if (_mainCMovement.IsCrouch)
-            {
-                return false;
-            }
-
             if (!(Time.time > timeGraceAttackPeriod))
             {
                 return false;
             }
 
-            if(!_isSheathed)
+            if (!_canAttack)
             {
                 return false;
             }
 
-            if(!_canAttack)
+            if (!_mainCMovement.IsGrounded())
             {
                 return false;
             }
 
-            if(!_mainCMovement.IsGrounded())
-            {
-                return false;
-            }
-
-            if(!(_attackTypo == TypeOfAttack.normalAttack))
+            if (_typeOfAttack != TypeOfAttack.NormalAttack)
             {
                 return false;
             }

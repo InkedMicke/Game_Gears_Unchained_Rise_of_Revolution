@@ -13,13 +13,17 @@ namespace _WeAreAthomic.SCRIPTS.TEST
 
         public double musicDuration;
         public double goalTime;
-
-        /*private void Start()
+        
+        
+        private void Awake()
         {
             currentAudio.clip = introClip;
             currentAudio.Play();
-            Invoke(nameof(PlayLoop), introClip.length - 1f);
-            Debug.Log(introClip.length);
+            Invoke(nameof(PlayLoop), currentAudio.clip.length);
+        }
+
+        private void Update()
+        {
         }
 
         private void PlayLoop()
@@ -27,30 +31,8 @@ namespace _WeAreAthomic.SCRIPTS.TEST
             currentAudio.clip = loopClip;
             currentAudio.Play();
             currentAudio.loop = true;
-            Debug.Log("hola3");
-        }*/
-
-        private void OnPlayMusic()
-        {
-            goalTime = AudioSettings.dspTime + .5f;
-            
-            currentAudio.PlayScheduled(goalTime);
-
-            musicDuration = (double)introClip.samples / introClip.frequency;
-
-            goalTime = goalTime + musicDuration;
         }
+        
 
-        private void Update()
-        {
-            if (AudioSettings.dspTime > goalTime - 1)
-            {
-                currentAudio.clip = loopClip;
-                currentAudio.PlayScheduled(goalTime);
-                
-                musicDuration = (double)loopClip.samples / loopClip.frequency;
-                goalTime = AudioSettings.dspTime + musicDuration;
-            }
-        }
     }
 }

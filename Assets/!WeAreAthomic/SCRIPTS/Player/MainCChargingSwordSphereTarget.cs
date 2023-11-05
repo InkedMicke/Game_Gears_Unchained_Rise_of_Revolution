@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using _WeAreAthomic.SCRIPTS.Enemi;
+using _WeAreAthomic.SCRIPTS.Scene;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 
 namespace _WeAreAthomic.SCRIPTS.Player
 {
-    public class MainCChargingSwordSphereTarget : MonoBehaviour
+    public class MainCChargingSwordSphereTarget : MainCMouseController
     {
         private CharacterController _cc;
         private Animator _anim;
@@ -77,7 +78,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private bool _isSphereDetectorSpawned;
         private bool _isSphereDetectorInstNotNull;
 
-        private void Awake()
+        private protected override void Awake()
         {
             _cc = GetComponent<CharacterController>();
             _anim = GetComponent<Animator>();
@@ -91,38 +92,36 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
-            _playerInputActions.Player.SecondaryAttack.performed += MouseDown;
-            _playerInputActions.Player.SecondaryAttack.canceled += MouseUp;
-        }
-
-        private void Start()
-        {
+            _playerInputActions.Player.Attack.performed += MouseDown;
+            _playerInputActions.Player.Attack.canceled += MouseUp;
+            
             _mainCameraObj = GameObject.FindGameObjectWithTag("MainCamera");
             _currentFOV = _mainCamera.fieldOfView;
             _startFOV = _currentFOV;
             _originalTimeScale = Time.timeScale;
             _startColorFilledCircle = filledCircle.color;
+            base.Awake();
         }
 
-
-        private void Update()
+        private protected void Update()
         {
-            //ChargeSword();
             StartChargingSword();
-
             _mainCamera.fieldOfView = _currentFOV;
             OnQuickTimeEvent();
             LookAtFloatingText();
+            if (HasUnlockedAbility && _isMousePressed)
+            {
+                if (_typeOfAttack == TypeOfAttack.ChargedAttack && !IsChargingSword)
+                {
+                    IsChargingSword = true;
+                    SpawnSphereDetector();
+                }
+            }
         }
 
         private void MouseDown(InputAction.CallbackContext context)
         {
-            if (HasUnlockedAbility)
-            {
-                IsChargingSword = true;
-                _isMousePressed = true;
-                SpawnSphereDetector();
-            }
+            _isMousePressed = true;
         }
 
         private void MouseUp(InputAction.CallbackContext context)
@@ -137,9 +136,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void StartChargingSword()
         {
-            if (_isMousePressed && !IsSlidingOnEnemies && Time.time > _totalCooldown && !_mainCSwitch.isUsingPistol && HasUnlockedAbility)
+            if (_typeOfAttack == TypeOfAttack.ChargedAttack && !IsSlidingOnEnemies && Time.time > _totalCooldown && !_mainCSwitch.isUsingPistol && HasUnlockedAbility)
             {
-                Debug.Log("hola");
                 arrowDisplayer = GameObject.FindGameObjectsWithTag("ArrowDisplayer");
 
                 foreach (var gameObj in arrowDisplayer)
