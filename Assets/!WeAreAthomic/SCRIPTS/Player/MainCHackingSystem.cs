@@ -201,6 +201,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             isHackingAnim = false;
             _hackCoroutine = StartCoroutine(Hack(_timeToHack));
             hackCanvas.SetActive(true);
+            Debug.Log("hola1");
             isHacking = true;
             hackSlider.minValue = Time.time;
             hackSlider.maxValue = Time.time + _timeToHack;

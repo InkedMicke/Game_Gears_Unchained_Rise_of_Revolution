@@ -42,9 +42,9 @@ namespace _WeAreAthomic.SCRIPTS.Player
             if (_currentScene.name == "S2_LABTUTORIAL")
             {
                 IsOnTutorial = true;
-/*                StartCoroutine(CheckDistance());
+                StartCoroutine(CheckDistance());
                 StartCoroutine(CheckHealth());
-                StartCoroutine(CheckHacking());*/
+                StartCoroutine(CheckHacking());
             }
         }
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _WeAreAthomic.SCRIPTS.Player;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,13 +19,17 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCMovement _mainCMove;
         private MainCAnimatorController _mainCAnimator;
 
+        private Coroutine _slideCorutine;
+
         private Collider[] _railCols;
 
         [SerializeField] private GameObject meshObj;
+        private GameObject _currentPipe;
 
         [SerializeField] private Transform groundCheck;
 
         [SerializeField] private LayerMask railLayer;
+        [SerializeField] private LayerMask obstacleLayer;
 
         private Vector3 _currentDestination;
         private Vector3 _directionMove;
@@ -64,6 +69,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _playerInputActions.Player.Enable();
             //_playerInputActions.Player.Running.started += IncreaseBoost;
             //_playerInputActions.Player.Running.canceled += DrecreaseBoost;
+            _playerInputActions.Player.Jump.performed += Jump;
         }
 
         private void Update()
@@ -127,7 +133,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 _mainCAnimator.SetGrounded(true);
                 _mainCAnimator.SetFalling(false);
                 _mainCAnimator.SetJumping(false);
-                StartCoroutine(nameof(SlideCoroutine));
+                _slideCorutine = StartCoroutine(nameof(SlideCoroutine));
             }
         }
 
@@ -190,19 +196,41 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private IEnumerator SlideCoroutine()
         {
+            _cc.enabled = false;
             _currentDestination = directionsList[_childActual].position;
             _directionMove = (_currentDestination - transform.position).normalized;
             _posOnAirTarget = new Vector3(directionsList[_childActual].position.x, transform.position.y, directionsList[_childActual].position.z);
 
-            while (Vector3.Distance(transform.position, _posOnAirTarget) > 0.3f)
+            while (Vector3.Distance(transform.position, _posOnAirTarget) > 0.3f && !_isJumping)
             {
                 RotateToNextDirectionList();
                 MoveToNextDirectionList();
-
+                Debug.Log("hola1");
                 yield return new WaitForSeconds(0.01f);
             }
             NextDirectionList();
 
+        }
+
+        private void Jump(InputAction.CallbackContext context)
+        {
+            if(ThereIsObstacle() && !_isJumping)
+            {
+                var ray = new Ray(groundCheck.position, groundCheck.transform.forward);
+                if(Physics.Raycast(ray, out RaycastHit hit, 4f, obstacleLayer))
+                {
+                    _currentPipe = hit.collider.gameObject;
+                    if (Vector3.Distance(hit.collider.gameObject.transform.position, transform.position) > 1f)
+                    {
+                        StopCoroutine(_slideCorutine);
+                        FixPositionFrontPipe();
+/*                        _isJumping = true;
+                        _anim.applyRootMotion = true;
+                        _anim.SetTrigger(string.Format("jumpRail"));
+                        Debug.Log("funciona");*/
+                    }
+                }
+            }
         }
 
         private void NextDirectionList()
@@ -211,26 +239,29 @@ namespace _WeAreAthomic.SCRIPTS.Player
             {
                 _childActual++;
                 StartCoroutine(nameof(SlideCoroutine));
-                StartCoroutine(nameof(RotateToNextDirectionList));
             }
         }
 
         private void MoveToNextDirectionList()
         {
             _posOnAirTarget = new Vector3(directionsList[_childActual].position.x, transform.position.y, directionsList[_childActual].position.z);
-            _cc.Move(_directionMove * (railSpeed * Time.deltaTime));
+            transform.position = Vector3.MoveTowards(transform.position, _currentDestination, railSpeed * Time.deltaTime);
         }
 
-        private IEnumerator RotateToNextDirectionList()
+        private void RotateToNextDirectionList()
         {
-            var difference = _currentDestination - transform.position;
-            Quaternion desiredRotation = Quaternion.LookRotation(difference);
-            while (meshObj.transform.rotation != desiredRotation)
-            {
-                meshObj.transform.rotation = Quaternion.Slerp(meshObj.transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
-                Debug.Log("hola3");
-                yield return null;
-            }
+            Vector3 targetDirection = _currentDestination - transform.position;
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+        }
+
+        private void FixPositionFrontPipe()
+        {
+            var ray = new Ray(_currentPipe.transform.position, _currentPipe.transform.forward);
+            var rayPos = ray.GetPoint(1f);
+            var desiredPos = new Vector3(transform.position.x, transform.position.y, rayPos.z);
+            transform.position = desiredPos;
         }
 
         void BoostManager()
@@ -276,6 +307,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
         public bool IsOnRail()
         {
             return Physics.CheckSphere(groundCheck.position, .1f, railLayer);
+        }
+
+        private bool ThereIsObstacle()
+        {
+            var ray = new Ray(groundCheck.position, groundCheck.transform.forward);
+            return Physics.Raycast(ray, 4f, obstacleLayer);
         }
     }
 }

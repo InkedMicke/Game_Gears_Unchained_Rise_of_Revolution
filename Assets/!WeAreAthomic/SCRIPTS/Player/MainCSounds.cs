@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace _WeAreAthomic.SCRIPTS.Player
@@ -31,11 +32,11 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void Start()
         {
-/*            _currentScene = SceneManager.GetActiveScene();
+            _currentScene = SceneManager.GetActiveScene();
             if (_currentScene.name == "S2_LABTUTORIAL")
             {
                 PlayTutorialSound(0, "pc");
-            }*/
+            }
         }
 
         public void StopAttackSound()

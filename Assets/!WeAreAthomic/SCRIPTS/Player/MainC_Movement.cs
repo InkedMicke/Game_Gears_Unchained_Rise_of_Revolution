@@ -418,18 +418,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     _mainCAnimator.SetGrounded(false);
                 }
             }
-
-            if (!IsGrounded() && _railGrindSystem.IsOnRail())
-            {
-                if (Time.time > _timeGraceJumpPeriod)
-                {
-                    _mainCLayers.EnableJumpLayer();
-                    IsJumping = true;
-                    _velocity.y = Mathf.Sqrt(jumpImpulseOnRail * -2 * gravity);
-                    _mainCAnimator.SetJumping(IsJumping);
-                    _mainCAnimator.SetGrounded(false);
-                }
-            }
         }
 
         private void MoveWhileAiming()
