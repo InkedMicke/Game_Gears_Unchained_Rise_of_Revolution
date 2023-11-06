@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using _WeAreAthomic.SCRIPTS.Player;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +20,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private Collider[] _railCols;
 
+        [SerializeField] private GameObject meshObj;
+
         [SerializeField] private Transform groundCheck;
 
         [SerializeField] private LayerMask railLayer;
@@ -25,6 +29,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private Vector3 _currentDestination;
         private Vector3 _directionMove;
         private Vector3 _velocity;
+        private Vector3 _posOnAirPlayer;
+        private Vector3 _posOnAirTarget;
 
         [System.NonSerialized] public bool IsSliding;
         [System.NonSerialized] public bool CanJumpOnRail;
@@ -79,7 +85,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
             }
 
             BoostManager();
-            Slide();
 
             if (_mainCMove.IsGrounded())
             {
@@ -108,7 +113,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 }
             }
 
-            _cc.Move(_velocity * Time.deltaTime);
+            //_cc.Move(_velocity * Time.deltaTime);
         }
 
         public void StartSliding()
@@ -122,6 +127,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 _mainCAnimator.SetGrounded(true);
                 _mainCAnimator.SetFalling(false);
                 _mainCAnimator.SetJumping(false);
+                StartCoroutine(nameof(SlideCoroutine));
             }
         }
 
@@ -139,14 +145,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private void GetAllTransforms()
         {
             var ray = new Ray(groundCheck.position, -Vector3.up);
-            Debug.Log(_railCols[0].gameObject);
             if (_railCols.Length > 0)
             {
                 var padre1 = _railCols[0].transform;
                 var padre2 = padre1.parent;
                 var padre3 = padre2.parent;
                 var padre4 = padre3.parent;
-                Debug.Log(padre3);
 
                 var railContainer = padre4.GetChild(padre4.childCount - 1);
 
@@ -184,54 +188,50 @@ namespace _WeAreAthomic.SCRIPTS.Player
             }
         }
 
-        private void Slide()
+        private IEnumerator SlideCoroutine()
         {
-            if (directionsList.Count > 0 && _canSlide)
+            _currentDestination = directionsList[_childActual].position;
+            _directionMove = (_currentDestination - transform.position).normalized;
+            _posOnAirTarget = new Vector3(directionsList[_childActual].position.x, transform.position.y, directionsList[_childActual].position.z);
+
+            while (Vector3.Distance(transform.position, _posOnAirTarget) > 0.3f)
             {
-                _currentDestination = directionsList[_childActual].position;
+                RotateToNextDirectionList();
+                MoveToNextDirectionList();
 
-                _directionMove = (_currentDestination - transform.position).normalized;
+                yield return new WaitForSeconds(0.01f);
+            }
+            NextDirectionList();
 
-                _cc.Move(_directionMove * (railSpeed * Time.deltaTime));
+        }
 
-                var targetRotation = directionsList[_childActual].rotation;
-
-                targetRotation *= Quaternion.Euler(0, -90, 0);
-
-                transform.rotation =
-                    Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-                if (IsOnRail())
-                {
-                    if (Vector3.Distance(transform.position, directionsList[_childActual].position) < 0.3f)
-                    {
-                        _childActual++;
-                        _currentDestination = directionsList[_childActual].position;
-                    }
-                }
-                else
-                {
-                    var desiredPos = new Vector3(directionsList[_childActual].position.x,
-                        transform.position.y, directionsList[_childActual].position.z);
-                    if (Vector3.Distance(transform.position, desiredPos) < 0.3f)
-                    {
-                        _childActual++;
-                        _currentDestination = directionsList[_childActual].position;
-                    }
-                }
+        private void NextDirectionList()
+        {
+            if(directionsList.Count > 0)
+            {
+                _childActual++;
+                StartCoroutine(nameof(SlideCoroutine));
+                StartCoroutine(nameof(RotateToNextDirectionList));
             }
         }
 
-        /*void IncreaseBoost(InputAction.CallbackContext context)
+        private void MoveToNextDirectionList()
         {
-            _canBoost = true;
-        }*/
+            _posOnAirTarget = new Vector3(directionsList[_childActual].position.x, transform.position.y, directionsList[_childActual].position.z);
+            _cc.Move(_directionMove * (railSpeed * Time.deltaTime));
+        }
 
-        /*void DrecreaseBoost(InputAction.CallbackContext context)
+        private IEnumerator RotateToNextDirectionList()
         {
-            _canBoost = false;
-            _playbackMultiplier = 0;
-        }*/
+            var difference = _currentDestination - transform.position;
+            Quaternion desiredRotation = Quaternion.LookRotation(difference);
+            while (meshObj.transform.rotation != desiredRotation)
+            {
+                meshObj.transform.rotation = Quaternion.Slerp(meshObj.transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+                Debug.Log("hola3");
+                yield return null;
+            }
+        }
 
         void BoostManager()
         {

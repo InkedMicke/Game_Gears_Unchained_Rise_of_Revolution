@@ -1160,9 +1160,9 @@ GameObject:
   - component: {fileID: 3041984638410706847}
   - component: {fileID: 6326130830157195552}
   - component: {fileID: 6657087395990442550}
+  - component: {fileID: 5090178159945674701}
   - component: {fileID: 1222688078557824484}
   - component: {fileID: 6083985201750387459}
-  - component: {fileID: 5090178159945674701}
   - component: {fileID: 8952184862595206149}
   - component: {fileID: 6475418683768865719}
   - component: {fileID: 8670273326439586584}
@@ -1368,6 +1368,30 @@ MonoBehaviour:
   pistolObj: {fileID: 5572763690839265368}
   isUsingWrench: 1
   isUsingPistol: 0
+--- !u!114 &5090178159945674701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537249443240097638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04a867dc8957360439e813df1e2f1ed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshObj: {fileID: 7823193721348096083}
+  groundCheck: {fileID: 7110690699828480967}
+  railLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  railSpeed: 15
+  railSpeedBoost: 30
+  rotationSpeed: 30
+  gravityRail: -40
+  jumpForceRail: 22
+  jumpDelay: 0.5
+  directionsList: []
 --- !u!114 &1222688078557824484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1423,29 +1447,6 @@ MonoBehaviour:
   robotObj: {fileID: 0}
   isHackingAnim: 0
   isHacking: 0
---- !u!114 &5090178159945674701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4537249443240097638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04a867dc8957360439e813df1e2f1ed5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundCheck: {fileID: 7110690699828480967}
-  railLayer:
-    serializedVersion: 2
-    m_Bits: 8192
-  railSpeed: 7
-  railSpeedBoost: 30
-  rotationSpeed: 10
-  gravityRail: -40
-  jumpForceRail: 22
-  jumpDelay: 0.5
-  directionsList: []
 --- !u!114 &8952184862595206149
 MonoBehaviour:
   m_ObjectHideFlags: 0
