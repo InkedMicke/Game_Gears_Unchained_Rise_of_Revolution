@@ -118,7 +118,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 IsSliding = true;
                 CanJumpOnRail = true;
                 GetAllTransforms();
-                FixPosition();
                 _mainCLayers.DisableJumpLayer();
                 _mainCAnimator.SetGrounded(true);
                 _mainCAnimator.SetFalling(false);
@@ -140,14 +139,16 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private void GetAllTransforms()
         {
             var ray = new Ray(groundCheck.position, -Vector3.up);
-
+            Debug.Log(_railCols[0].gameObject);
             if (_railCols.Length > 0)
             {
                 var padre1 = _railCols[0].transform;
                 var padre2 = padre1.parent;
                 var padre3 = padre2.parent;
+                var padre4 = padre3.parent;
+                Debug.Log(padre3);
 
-                var railContainer = padre3.GetChild(padre3.childCount - 1);
+                var railContainer = padre4.GetChild(padre4.childCount - 1);
 
                 var allChildren = railContainer.GetComponentsInChildren<Transform>();
 
@@ -172,6 +173,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
                         directionsList.Remove(t);
                     }
                 }
+
+                FixPosition();
 
                 _canSlide = true;
 
