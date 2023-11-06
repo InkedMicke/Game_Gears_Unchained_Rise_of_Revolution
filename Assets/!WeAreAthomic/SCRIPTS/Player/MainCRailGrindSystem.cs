@@ -16,6 +16,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCMovement _mainCMove;
         private MainCAnimatorController _mainCAnimator;
 
+        private Collider[] _railCols;
+
         [SerializeField] private Transform groundCheck;
 
         [SerializeField] private LayerMask railLayer;
@@ -62,6 +64,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             if (IsOnRail())
             {
+                _railCols = Physics.OverlapSphere(groundCheck.position, .3f, railLayer);
                 StartSliding();
             }
             else
@@ -126,9 +129,10 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private void FixPosition()
         {
             _cc.enabled = false;
-
-            var desiredPos = new Vector3(transform.position.z, transform.position.y,
+            var desiredPos = new Vector3(transform.position.x, transform.position.y,
                 directionsList[_childActual].position.z);
+
+            transform.position = desiredPos;
 
             _cc.enabled = true;
         }
@@ -137,13 +141,11 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             var ray = new Ray(groundCheck.position, -Vector3.up);
 
-            if (Physics.Raycast(ray, out var hit, 5f, railLayer))
+            if (_railCols.Length > 0)
             {
-                var padre1 = hit.collider.gameObject.transform.parent;
+                var padre1 = _railCols[0].transform;
                 var padre2 = padre1.parent;
                 var padre3 = padre2.parent;
-
-                Debug.Log(padre2);
 
                 var railContainer = padre3.GetChild(padre3.childCount - 1);
 
@@ -176,12 +178,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 _mainCAnimator.SetSliding(true);
                 _mainCLayers.EnableSlideLayer();
 
-
-/*            _cc.enabled = false;
-
-            transform.position = new Vector3(transform.position.x, transform.position.y, directionsList[childActual].position.z);
-
-            _cc.enabled = true;*/
             }
         }
 
@@ -194,7 +190,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 _directionMove = (_currentDestination - transform.position).normalized;
 
                 _cc.Move(_directionMove * (railSpeed * Time.deltaTime));
-                Debug.Log(directionsList[_childActual]);
 
                 var targetRotation = directionsList[_childActual].rotation;
 
@@ -268,12 +263,16 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void OnDrawGizmos()
         {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(groundCheck.position, .3f);
 
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(groundCheck.position, .1f);
         }
 
         public bool IsOnRail()
         {
-            return Physics.CheckSphere(groundCheck.position, .3f, railLayer);
+            return Physics.CheckSphere(groundCheck.position, .1f, railLayer);
         }
     }
 }
