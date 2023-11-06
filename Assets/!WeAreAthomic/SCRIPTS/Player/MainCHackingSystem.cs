@@ -95,7 +95,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _bastetController.InvokeRotation();
         }
 
-        public void FixPosition()
+        private void FixPosition()
         {
             _cc.enabled = false;
             var interactables = FindObjectsOfType<ButtonInteractable>();

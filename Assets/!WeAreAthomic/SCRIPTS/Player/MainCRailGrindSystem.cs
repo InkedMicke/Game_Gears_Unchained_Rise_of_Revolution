@@ -140,8 +140,10 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private void FixPosition()
         {
             _cc.enabled = false;
+            _currentDestination = directionsList[_childActual].position;
+            Debug.Log(_childActual);
             var desiredPos = new Vector3(transform.position.x, transform.position.y,
-                directionsList[_childActual].position.z);
+                _currentDestination.z);
 
             transform.position = desiredPos;
 
@@ -205,11 +207,18 @@ namespace _WeAreAthomic.SCRIPTS.Player
             {
                 RotateToNextDirectionList();
                 MoveToNextDirectionList();
-                Debug.Log("hola1");
                 yield return new WaitForSeconds(0.01f);
             }
             NextDirectionList();
 
+        }
+
+        private void StartSlideCoroutine()
+        {
+            _isJumping = false;
+            FixPosition();
+            _mainCAnimator.SetSliding(true);
+            _slideCorutine = StartCoroutine(nameof(SlideCoroutine));
         }
 
         private void Jump(InputAction.CallbackContext context)
@@ -217,17 +226,17 @@ namespace _WeAreAthomic.SCRIPTS.Player
             if(ThereIsObstacle() && !_isJumping)
             {
                 var ray = new Ray(groundCheck.position, groundCheck.transform.forward);
-                if(Physics.Raycast(ray, out RaycastHit hit, 4f, obstacleLayer))
+                if(Physics.Raycast(ray, out var hit, 4f, obstacleLayer))
                 {
                     _currentPipe = hit.collider.gameObject;
-                    if (Vector3.Distance(hit.collider.gameObject.transform.position, transform.position) > 1f)
+                    if (Vector3.Distance(hit.collider.gameObject.transform.position, transform.position) > 1.5f)
                     {
+                        _mainCAnimator.SetSliding(false);
                         StopCoroutine(_slideCorutine);
                         FixPositionFrontPipe();
-/*                        _isJumping = true;
+                        _isJumping = true;
                         _anim.applyRootMotion = true;
                         _anim.SetTrigger(string.Format("jumpRail"));
-                        Debug.Log("funciona");*/
                     }
                 }
             }
@@ -244,23 +253,26 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void MoveToNextDirectionList()
         {
-            _posOnAirTarget = new Vector3(directionsList[_childActual].position.x, transform.position.y, directionsList[_childActual].position.z);
-            transform.position = Vector3.MoveTowards(transform.position, _currentDestination, railSpeed * Time.deltaTime);
+            var position = transform.position;
+            _posOnAirTarget = new Vector3(directionsList[_childActual].position.x, position.y, directionsList[_childActual].position.z);
+            position = Vector3.MoveTowards(position, _currentDestination, railSpeed * Time.deltaTime);
+            transform.position = position;
         }
 
         private void RotateToNextDirectionList()
         {
-            Vector3 targetDirection = _currentDestination - transform.position;
-            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            var targetDirection = _currentDestination - transform.position;
+            var targetRotation = Quaternion.LookRotation(targetDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         }
 
         private void FixPositionFrontPipe()
         {
-            var ray = new Ray(_currentPipe.transform.position, _currentPipe.transform.forward);
-            var rayPos = ray.GetPoint(1f);
-            var desiredPos = new Vector3(transform.position.x, transform.position.y, rayPos.z);
+            var childPipe = _currentPipe.transform.GetChild(0);
+            var childPipePos = childPipe.transform.position;
+            var desiredPos = new Vector3(childPipePos.x, transform.position.y, childPipePos.z);
+            
             transform.position = desiredPos;
         }
 
@@ -276,14 +288,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 railSpeed += Time.deltaTime * 4;
             }
         }
-
-        /*private void ApplyGravityRail()
-    {
-        if (_isJumping || !IsOnRail() && CanJumpOnRail)
-        {
-            _velocity += transform.up * Time.deltaTime * gravityRail;
-        }
-    }*/
 
         private void SortList()
         {
@@ -312,7 +316,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private bool ThereIsObstacle()
         {
             var ray = new Ray(groundCheck.position, groundCheck.transform.forward);
-            return Physics.Raycast(ray, 4f, obstacleLayer);
+            return Physics.Raycast(ray, 3f, obstacleLayer);
         }
     }
 }
