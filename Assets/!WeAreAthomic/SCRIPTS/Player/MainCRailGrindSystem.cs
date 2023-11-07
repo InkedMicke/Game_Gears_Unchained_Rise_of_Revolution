@@ -7,6 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace _WeAreAthomic.SCRIPTS.Player
 {
@@ -18,6 +19,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCLayers _mainCLayers;
         private MainCMovement _mainCMove;
         private MainCAnimatorController _mainCAnimator;
+
+        private UnityEngine.SceneManagement.Scene _currentScene;
 
         private Collider[] _railCols;
 
@@ -35,6 +38,9 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private Vector3 _velocity;
         private Vector3 _posOnAirPlayer;
         private Vector3 _posOnAirTarget;
+
+        [SerializeField] private string labScene;
+        [SerializeField] private string sewerScene;
 
         [System.NonSerialized] public bool IsSliding;
         [System.NonSerialized] public bool CanJumpOnRail;
@@ -75,6 +81,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void Update()
         {
+            _currentScene = SceneManager.GetActiveScene();
             if (IsOnRail())
             {
                 _railCols = Physics.OverlapSphere(groundCheck.position, .3f, railLayer);
@@ -175,20 +182,41 @@ namespace _WeAreAthomic.SCRIPTS.Player
             var ray = new Ray(groundCheck.position, -Vector3.up);
             if (_railCols.Length > 0)
             {
-                var padre1 = _railCols[0].transform;
-                var padre2 = padre1.parent;
-                var padre3 = padre2.parent;
-                var padre4 = padre3.parent;
-
-                var railContainer = padre4.GetChild(padre4.childCount - 1);
-
-                var allChildren = railContainer.GetComponentsInChildren<Transform>();
-
-                foreach (var child in allChildren)
+                if (_currentScene.name == sewerScene)
                 {
-                    if (child.CompareTag("RailTransform"))
+                    var padre1 = _railCols[0].transform;
+                    var padre2 = padre1.parent;
+                    var padre3 = padre2.parent;
+                    var padre4 = padre3.parent;
+
+                    var railContainer = padre4.GetChild(padre4.childCount - 1);
+
+                    var allChildren = railContainer.GetComponentsInChildren<Transform>();
+
+                    foreach (var child in allChildren)
                     {
-                        directionsList.Add(child);
+                        if (child.CompareTag("RailTransform"))
+                        {
+                            directionsList.Add(child);
+                        }
+                    }
+                }
+
+                if (_currentScene.name == labScene)
+                {
+                    var padre1 = _railCols[0].transform;
+                    var padre2 = padre1.parent;
+
+                    var railContainer = padre2.GetChild(padre2.childCount - 1);
+
+                    var allChildren = railContainer.GetComponentsInChildren<Transform>();
+
+                    foreach (var child in allChildren)
+                    {
+                        if (child.CompareTag("RailTransform"))
+                        {
+                            directionsList.Add(child);
+                        }
                     }
                 }
 
