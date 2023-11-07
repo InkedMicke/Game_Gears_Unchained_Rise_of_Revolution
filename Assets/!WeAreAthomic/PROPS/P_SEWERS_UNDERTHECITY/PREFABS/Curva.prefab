@@ -32,7 +32,7 @@ Transform:
   - {fileID: 7362039735699661453}
   - {fileID: 8778986948994483562}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2854957296473495125
 GameObject:
@@ -45,7 +45,8 @@ GameObject:
   - component: {fileID: 1715888697446712303}
   - component: {fileID: 2458571341871502373}
   - component: {fileID: 8199161205915743490}
-  m_Layer: 0
+  - component: {fileID: 6135834169738714070}
+  m_Layer: 6
   m_Name: Paredes_Curva
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,6 +118,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6135834169738714070
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2854957296473495125}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7986823897813093800, guid: 595e0f7e18a6b7942a416c42d17734af, type: 3}
 --- !u!1 &5240352689008850073
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,7 +152,7 @@ GameObject:
   - component: {fileID: 8496423092719239057}
   - component: {fileID: 4476971107475117883}
   - component: {fileID: 4260235116630667302}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Coli_curva
   m_TagString: Untagged
   m_Icon: {fileID: 0}

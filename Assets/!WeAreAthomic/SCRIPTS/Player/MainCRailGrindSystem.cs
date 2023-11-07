@@ -19,8 +19,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCMovement _mainCMove;
         private MainCAnimatorController _mainCAnimator;
 
-        private Coroutine _slideCorutine;
-
         private Collider[] _railCols;
 
         [SerializeField] private GameObject meshObj;
@@ -44,7 +42,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private bool _isJumping;
         private bool _isFalling;
 
-        private int _childActual = 0;
+        public int _childActual = 0;
 
         [SerializeField] private float railSpeed = .1f;
         [SerializeField] private float railSpeedBoost = 30f;
@@ -119,6 +117,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 }
             }
 
+            Slide();
             //_cc.Move(_velocity * Time.deltaTime);
         }
 
@@ -126,6 +125,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             if (!IsSliding)
             {
+                _cc.enabled = false;
+                Debug.Log(_cc.enabled);
                 IsSliding = true;
                 CanJumpOnRail = true;
                 GetAllTransforms();
@@ -133,21 +134,18 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 _mainCAnimator.SetGrounded(true);
                 _mainCAnimator.SetFalling(false);
                 _mainCAnimator.SetJumping(false);
-                _slideCorutine = StartCoroutine(nameof(SlideCoroutine));
             }
         }
 
+
         private void FixPosition()
         {
-            _cc.enabled = false;
             _currentDestination = directionsList[_childActual].position;
-            Debug.Log(_childActual);
             var desiredPos = new Vector3(transform.position.x, transform.position.y,
                 _currentDestination.z);
 
             transform.position = desiredPos;
-
-            _cc.enabled = true;
+            
         }
 
         private void GetAllTransforms()
@@ -196,21 +194,24 @@ namespace _WeAreAthomic.SCRIPTS.Player
             }
         }
 
-        private IEnumerator SlideCoroutine()
+        private void Slide()
         {
-            _cc.enabled = false;
-            _currentDestination = directionsList[_childActual].position;
-            _directionMove = (_currentDestination - transform.position).normalized;
-            _posOnAirTarget = new Vector3(directionsList[_childActual].position.x, transform.position.y, directionsList[_childActual].position.z);
-
-            while (Vector3.Distance(transform.position, _posOnAirTarget) > 0.3f && !_isJumping)
+            if (_canSlide)
             {
+                _currentDestination = directionsList[_childActual].position;
+                _directionMove = (_currentDestination - transform.position).normalized;
+                _posOnAirTarget = new Vector3(directionsList[_childActual].position.x, transform.position.y,
+                    directionsList[_childActual].position.z);
                 RotateToNextDirectionList();
                 MoveToNextDirectionList();
-                yield return new WaitForSeconds(0.01f);
+                if (Vector3.Distance(transform.position, _posOnAirTarget) < 0.3f)
+                {
+                    if(directionsList.Count > 0)
+                    {
+                        _childActual++;
+                    }
+                }
             }
-            NextDirectionList();
-
         }
 
         private void StartSlideCoroutine()
@@ -218,7 +219,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _isJumping = false;
             FixPosition();
             _mainCAnimator.SetSliding(true);
-            _slideCorutine = StartCoroutine(nameof(SlideCoroutine));
+            _canSlide = true;
         }
 
         private void Jump(InputAction.CallbackContext context)
@@ -232,22 +233,13 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     if (Vector3.Distance(hit.collider.gameObject.transform.position, transform.position) > 1.5f)
                     {
                         _mainCAnimator.SetSliding(false);
-                        StopCoroutine(_slideCorutine);
+                        _canSlide = false;
                         FixPositionFrontPipe();
                         _isJumping = true;
                         _anim.applyRootMotion = true;
                         _anim.SetTrigger(string.Format("jumpRail"));
                     }
                 }
-            }
-        }
-
-        private void NextDirectionList()
-        {
-            if(directionsList.Count > 0)
-            {
-                _childActual++;
-                StartCoroutine(nameof(SlideCoroutine));
             }
         }
 
