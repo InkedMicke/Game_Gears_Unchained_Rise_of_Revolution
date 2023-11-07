@@ -47,6 +47,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _mainCSwitch = GetComponent<MainCSwitchWeapon>();;
             _mainCRailGrind = GetComponent<MainCRailGrindSystem>();
             _mainCAnim = GetComponent<MainCAnimatorController>();
+            base.Awake();
         }
 
         private protected void Update()
