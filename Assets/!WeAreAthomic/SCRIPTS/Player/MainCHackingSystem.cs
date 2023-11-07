@@ -145,6 +145,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _mainCSounds.StopHackInProcessSound();
             _cc.enabled = true;
             _bastetController.InvokeMoveToPlayer();
+            _mainCSounds.PlayCannotHackSound();
 
             var interactables = FindObjectsOfType<ButtonInteractable>();
 
