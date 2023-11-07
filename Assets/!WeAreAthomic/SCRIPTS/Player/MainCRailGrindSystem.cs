@@ -42,6 +42,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private bool _canBoost;
         private bool _isJumping;
         private bool _isFalling;
+        private bool _haveFirstTransfrom;
 
         public int _childActual = 0;
 
@@ -150,23 +151,23 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void FixPosition()
         {
-            if (directionsList.Count > 0)
-            {
-                // Calcula la posición promedio de los puntos en la lista.
-                var centerPosition = Vector3.zero;
-                
-                foreach (var direction in directionsList)
-                {
-                    centerPosition += direction.position;
-                }
-                centerPosition /= directionsList.Count;
+/*            _currentDestination = directionsList[_childActual].position;
+            var desiredPos = new Vector3();
 
-                // Ajusta la posición del jugador en el eje X y Z al centro del riel.
-                var playerPosition = transform.position;
-                playerPosition.x = centerPosition.x;
-                playerPosition.z = centerPosition.z;
-                transform.position = playerPosition;
+            if (_currentDestination.x - directionsList[_childActual - 1].transform.position.x < 1f)
+            {
+                desiredPos = new Vector3(_currentDestination.x, transform.position.y, transform.position.z);
+
+
             }
+
+            if (_currentDestination.z - directionsList[_childActual - 1].transform.position.z < 1f)
+            {
+                desiredPos = new Vector3(transform.position.x, transform.position.y, _currentDestination.z);
+            }
+
+            transform.position = desiredPos;*/
+
         }
 
         private void GetAllTransforms()
@@ -199,9 +200,15 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     var playerToObjDirection = t.position - transform.position;
                     var dotProduct = Vector3.Dot(playerToObjDirection.normalized, transform.forward.normalized);
 
-                    if (dotProduct < 0)
+                    if (dotProduct > 0 && !_haveFirstTransfrom)
                     {
-                        directionsList.Remove(t);
+                        _haveFirstTransfrom = true;
+                        break;
+                    }
+                    else
+                    {
+                        _childActual++;
+
                     }
                 }
 
@@ -227,7 +234,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 MoveToNextDirectionList();
                 if (Vector3.Distance(transform.position, _posOnAirTarget) < 0.3f)
                 {
-                    if(directionsList.Count > 0)
+                    if (directionsList.Count > 0)
                     {
                         _childActual++;
                     }
@@ -240,15 +247,15 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _mainCAnimator.SetSliding(true);
             _isJumping = false;
             Invoke(nameof(FixPosition), 0.1f);
-            //canSlide = true;
+            _canSlide = true;
         }
 
         private void Jump(InputAction.CallbackContext context)
         {
-            if(ThereIsObstacle() && !_isJumping)
+            if (ThereIsObstacle() && !_isJumping)
             {
                 var ray = new Ray(groundCheck.position, groundCheck.transform.forward);
-                if(Physics.Raycast(ray, out var hit, 4f, obstacleLayer))
+                if (Physics.Raycast(ray, out var hit, 4f, obstacleLayer))
                 {
                     _currentPipe = hit.collider.gameObject;
                     if (Vector3.Distance(hit.collider.gameObject.transform.position, transform.position) > 1.5f)
@@ -285,7 +292,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             var childPipe = _currentPipe.transform.GetChild(0);
             var childPipePos = childPipe.transform.position;
             var desiredPos = new Vector3(childPipePos.x, transform.position.y, childPipePos.z);
-            
+
             transform.position = desiredPos;
         }
 
