@@ -23,6 +23,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         [SerializeField] private GameObject meshObj;
         private GameObject _currentPipe;
+        private GameObject _currentRail;
 
         [SerializeField] private Transform groundCheck;
 
@@ -52,6 +53,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         [SerializeField] private float jumpDelay = .5f;
         private float _playbackMultiplier;
         private float jumpTotalDelay;
+        private float _playerOffset = 0.0f;
 
         public List<Transform> directionsList = new List<Transform>();
 
@@ -126,9 +128,9 @@ namespace _WeAreAthomic.SCRIPTS.Player
             if (!IsSliding)
             {
                 _cc.enabled = false;
-                Debug.Log(_cc.enabled);
                 IsSliding = true;
                 CanJumpOnRail = true;
+                GetRailGameObject();
                 GetAllTransforms();
                 _mainCLayers.DisableJumpLayer();
                 _mainCAnimator.SetGrounded(true);
@@ -137,15 +139,34 @@ namespace _WeAreAthomic.SCRIPTS.Player
             }
         }
 
+        private void GetRailGameObject()
+        {
+            var ray = new Ray(transform.position, -transform.up);
+            if (Physics.Raycast(ray, out var hit, 1f, railLayer))
+            {
+                _currentRail = hit.collider.gameObject;
+            }
+        }
 
         private void FixPosition()
         {
-            _currentDestination = directionsList[_childActual].position;
-            var desiredPos = new Vector3(transform.position.x, transform.position.y,
-                _currentDestination.z);
+            if (directionsList.Count > 0)
+            {
+                // Calcula la posición promedio de los puntos en la lista.
+                var centerPosition = Vector3.zero;
+                
+                foreach (var direction in directionsList)
+                {
+                    centerPosition += direction.position;
+                }
+                centerPosition /= directionsList.Count;
 
-            transform.position = desiredPos;
-            
+                // Ajusta la posición del jugador en el eje X y Z al centro del riel.
+                var playerPosition = transform.position;
+                playerPosition.x = centerPosition.x;
+                playerPosition.z = centerPosition.z;
+                transform.position = playerPosition;
+            }
         }
 
         private void GetAllTransforms()
@@ -216,10 +237,10 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void StartSlideCoroutine()
         {
-            _isJumping = false;
-            FixPosition();
             _mainCAnimator.SetSliding(true);
-            _canSlide = true;
+            _isJumping = false;
+            Invoke(nameof(FixPosition), 0.1f);
+            //canSlide = true;
         }
 
         private void Jump(InputAction.CallbackContext context)
