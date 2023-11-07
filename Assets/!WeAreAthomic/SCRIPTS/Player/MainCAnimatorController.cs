@@ -17,6 +17,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         [SerializeField] private string pistolMoveX = "pistolMoveX";
         [SerializeField] private string pistolMoveY = "pistolMoveY";
         [SerializeField] private string hack = "hack";
+        [SerializeField] private string aimOnRail = "railAiming";
 
         protected void Awake()
         {
@@ -76,6 +77,11 @@ namespace _WeAreAthomic.SCRIPTS.Player
         public void SetPistolMoveY(float value)
         {
             _anim.SetFloat(pistolMoveY, value);
+        }
+
+        public void SetAimOnRail(bool condition)
+        {
+            _anim.SetBool(aimOnRail, condition);
         }
 
         public void TriggerHack()

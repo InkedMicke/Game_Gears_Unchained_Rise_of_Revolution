@@ -3,15 +3,24 @@ using UnityEngine.InputSystem;
 
 namespace _WeAreAthomic.SCRIPTS.Player
 {
-    public class MainCPistol : MonoBehaviour
+    public class MainCPistol : MainCMouseController
     {
+        private enum typeOfAim
+        {
+            groundAim,
+            railAim
+        }
+
         private MainCAttack _mainCAttack;
         private MainCMovement _mainCMovement;
         private MainCLayers _mainCLayers;
         private MainCSwitchWeapon _mainCSwitch;
-        private PlayerInputActions _playerInputActions;
+        private MainCRailGrindSystem _mainCRailGrind;
         private CameraFollower _camFollower;
-    
+        private MainCAnimatorController _mainCAnim;
+
+        private typeOfAim _typeOfAim;
+
         [SerializeField] private GameObject cameraObj;
         [SerializeField] private GameObject cameraBaseObj;
         private Transform _closestTransform = null;
@@ -24,32 +33,37 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         [System.NonSerialized] public bool IsAiming;
         [System.NonSerialized] public bool IsAutoTargeting;
+        private bool _isAnimEnabled;
 
         [SerializeField] private float sphereDectorSize = 5f;
         public float _camLerpMultiplier;
         private float _closestDistance = Mathf.Infinity;
 
-        private void Awake()
+        private protected override void Awake()
         {
             _mainCAttack = GetComponent<MainCAttack>();
             _mainCMovement = GetComponent<MainCMovement>();
             _mainCLayers = GetComponent<MainCLayers>();
-            _mainCSwitch = GetComponent<MainCSwitchWeapon>();
-
-            _playerInputActions = new PlayerInputActions();
-            _playerInputActions.Enable();
-            _playerInputActions.Player.SecondaryAttack.performed += EnableAim;
-            _playerInputActions.Player.SecondaryAttack.canceled += DisableAim;
-        }
-    
-        private void Start()
-        {
-            _camFollower = cameraBaseObj.GetComponent<CameraFollower>();
+            _mainCSwitch = GetComponent<MainCSwitchWeapon>();;
+            _mainCRailGrind = GetComponent<MainCRailGrindSystem>();
+            _mainCAnim = GetComponent<MainCAnimatorController>();
         }
 
-        private void Update()
+        private protected void Update()
         {
-            AutoTargetNear();
+
+            if(_mainCMovement.IsGrounded())
+            {
+                _typeOfAim = typeOfAim.groundAim;
+            }
+
+            if(_mainCRailGrind.IsOnRail())
+            {
+                _typeOfAim = typeOfAim.railAim;
+            }
+
+            Aim();
+
         }
 
         private void AutoTargetNear()
@@ -97,32 +111,46 @@ namespace _WeAreAthomic.SCRIPTS.Player
             }
         }
 
-        private void EnableAim(InputAction.CallbackContext context)
+        private void Aim()
         {
-            if (CanAim())
+            switch(_typeOfAim)
             {
-                IsAiming = true;
-                _mainCLayers.EnablePistolLayer();
+                case typeOfAim.groundAim:
+                    AimingOnGround();
+                    break;
+                case typeOfAim.railAim:
+                    AimingOnRail();
+                    break;
             }
         }
 
-        private void DisableAim(InputAction.CallbackContext context)
+        private void AimingOnGround()
         {
-            if (IsAiming)
+            
+        }
+
+        private void AimingOnRail()
+        {
+            if(_isRightMouseDown)
             {
-                _mainCLayers.DisablePistolLayer();
-                IsAiming = false;
+                if(!_isAnimEnabled)
+                {
+                    _mainCLayers.EnablePistolLayer();
+                    _mainCAnim.SetAimOnRail(true);
+                    _isAnimEnabled = true;
+                }
+
+            }
+            else
+            {
+                if (_isAnimEnabled)
+                {
+                    _mainCLayers.DisablePistolLayer();
+                    _mainCAnim.SetAimOnRail(false);
+                    _isAnimEnabled = false;
+                }
             }
         }
 
-        private bool CanAim()
-        {
-            if (!_mainCSwitch.isUsingPistol)
-            {
-                return false;
-            }
-
-            return true;
-        }
     }
 }

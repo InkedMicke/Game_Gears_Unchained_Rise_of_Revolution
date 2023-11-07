@@ -220,9 +220,6 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     }
                 }
 
-
-                //SortList();
-
                 foreach (var t in directionsList.ToList())
                 {
                     var playerToObjDirection = t.position - transform.position;
