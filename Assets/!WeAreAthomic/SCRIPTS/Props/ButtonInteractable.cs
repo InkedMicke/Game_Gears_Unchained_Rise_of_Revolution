@@ -1,3 +1,4 @@
+using _WeAreAthomic.SCRIPTS.Player;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,6 +7,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
     public class ButtonInteractable : MonoBehaviour, IInteractable
     {
         private RequiredActionForButton _requiredAction;
+        private MainCHackingSystem _mainCHacking;
 
         [SerializeField] private GameObject _eButtonObj;
         [SerializeField] private GameObject _circleObj;
@@ -24,12 +26,9 @@ namespace _WeAreAthomic.SCRIPTS.Props
         protected virtual void Awake()
         {
             _requiredAction = GetComponent<RequiredActionForButton>();
-        }
-
-        protected virtual void Start()
-        {
             _playerTr = GameObject.FindGameObjectWithTag("Player").transform;
             _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
+            _mainCHacking = GameObject.FindGameObjectWithTag("Player").GetComponent<MainCHackingSystem>();
         }
 
         // Update is called once per frame
@@ -91,6 +90,10 @@ namespace _WeAreAthomic.SCRIPTS.Props
         public void DisableCanHack()
         {
             canHack = false;
+            if (isActive)
+            {
+                _mainCHacking.StopHack();
+            }
         }
 
     }
