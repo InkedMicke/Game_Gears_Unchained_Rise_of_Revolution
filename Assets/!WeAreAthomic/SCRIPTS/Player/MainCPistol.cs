@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,10 +7,10 @@ namespace _WeAreAthomic.SCRIPTS.Player
 {
     public class MainCPistol : MainCMouseController
     {
-        private enum typeOfAim
+        private enum TypeOfAim
         {
-            groundAim,
-            railAim
+            GroundAim,
+            RailAim
         }
 
         private MainCAttack _mainCAttack;
@@ -19,15 +21,17 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private CameraFollower _camFollower;
         private MainCAnimatorController _mainCAnim;
 
-        private typeOfAim _typeOfAim;
+        private TypeOfAim _typeOfAim;
 
         [SerializeField] private GameObject cameraObj;
         [SerializeField] private GameObject cameraBaseObj;
-        private Transform _closestTransform = null;
+        [SerializeField] private GameObject aimCameraObj;
 
         [SerializeField] private Transform camAimPosTr;
         [SerializeField] private Transform middlePos;
         [SerializeField] private Transform orientation;
+        [SerializeField] private Transform lookAtAim;
+        private Transform _closestTransform = null;
 
         [SerializeField] private LayerMask enemyHurtBox;
 
@@ -36,7 +40,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private bool _isAnimEnabled;
 
         [SerializeField] private float sphereDectorSize = 5f;
-        public float _camLerpMultiplier;
+        [SerializeField] private float cameraTransitionSpeed = 5f;
         private float _closestDistance = Mathf.Infinity;
 
         private protected override void Awake()
@@ -55,12 +59,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
             if(_mainCMovement.IsGrounded())
             {
-                _typeOfAim = typeOfAim.groundAim;
+                _typeOfAim = TypeOfAim.GroundAim;
             }
 
             if(_mainCRailGrind.IsOnRail())
             {
-                _typeOfAim = typeOfAim.railAim;
+                _typeOfAim = TypeOfAim.RailAim;
             }
 
             Aim();
@@ -76,7 +80,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
                 if(colliders.Length > 1)
                 {
-                    foreach (Collider col in colliders)
+                    foreach (var col in colliders)
                     {
                         var distance = Vector3.Distance(transform.position, col.transform.position);
 
@@ -116,12 +120,14 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             switch(_typeOfAim)
             {
-                case typeOfAim.groundAim:
+                case TypeOfAim.GroundAim:
                     AimingOnGround();
                     break;
-                case typeOfAim.railAim:
+                case TypeOfAim.RailAim:
                     AimingOnRail();
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -139,7 +145,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     _mainCLayers.EnablePistolLayer();
                     _mainCAnim.SetAimOnRail(true);
                     _isAnimEnabled = true;
+                    IsAiming = true;
+                    aimCameraObj.SetActive(true);
                 }
+
+                var desiredRot = new Vector3(lookAtAim.position.x, transform.position.y, lookAtAim.position.z);
+                transform.LookAt(desiredRot);
 
             }
             else
@@ -149,7 +160,10 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     _mainCLayers.DisablePistolLayer();
                     _mainCAnim.SetAimOnRail(false);
                     _isAnimEnabled = false;
+                    IsAiming = false;
+                    cameraObj.SetActive(true);
                 }
+                
             }
         }
 

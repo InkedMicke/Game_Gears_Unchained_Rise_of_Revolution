@@ -2,9 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using _WeAreAthomic.SCRIPTS.Player;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -19,6 +16,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private MainCLayers _mainCLayers;
         private MainCMovement _mainCMove;
         private MainCAnimatorController _mainCAnimator;
+        private MainCPistol _mainCPistol;
 
         private UnityEngine.SceneManagement.Scene _currentScene;
 
@@ -71,6 +69,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
             _mainCLayers = GetComponent<MainCLayers>();
             _mainCMove = GetComponent<MainCMovement>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
+            _mainCPistol = GetComponent<MainCPistol>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Player.Enable();
@@ -255,7 +254,11 @@ namespace _WeAreAthomic.SCRIPTS.Player
                 _directionMove = (_currentDestination - transform.position).normalized;
                 _posOnAirTarget = new Vector3(directionsList[_childActual].position.x, transform.position.y,
                     directionsList[_childActual].position.z);
-                RotateToNextDirectionList();
+                if (!_mainCPistol.IsAiming)
+                {
+                    RotateToNextDirectionList();
+                }
+
                 MoveToNextDirectionList();
                 if (Vector3.Distance(transform.position, _posOnAirTarget) < 0.3f)
                 {
