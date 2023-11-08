@@ -1,9 +1,8 @@
 using System;
-using Unity.VisualScripting;
+using _WeAreAthomic.SCRIPTS.Player;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-namespace _WeAreAthomic.SCRIPTS.Player
+namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCPistol : MainCMouseController
     {
@@ -34,10 +33,12 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private Transform _closestTransform = null;
 
         [SerializeField] private LayerMask enemyHurtBox;
+        [SerializeField] private LayerMask interactLayer;
 
         [System.NonSerialized] public bool IsAiming;
         [System.NonSerialized] public bool IsAutoTargeting;
         private bool _isAnimEnabled;
+        private bool _isShooting;
 
         [SerializeField] private float sphereDectorSize = 5f;
         [SerializeField] private float cameraTransitionSpeed = 5f;
@@ -138,7 +139,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private void AimingOnRail()
         {
-            if(_isRightMouseDown)
+            if(IsRightMouseDown)
             {
                 if(!_isAnimEnabled)
                 {
@@ -147,10 +148,20 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     _isAnimEnabled = true;
                     IsAiming = true;
                     aimCameraObj.SetActive(true);
+                    _mainCSwitch.SwitchWeapon();
                 }
 
                 var desiredRot = new Vector3(lookAtAim.position.x, transform.position.y, lookAtAim.position.z);
                 transform.LookAt(desiredRot);
+
+                if (IsLeftMouseDown && !_isShooting)
+                {
+                    var ray = new Ray(cameraObj.transform.position, cameraObj.transform.forward);
+                    if (Physics.Raycast(ray, out var hit, 20f, interactLayer))
+                    {
+                        
+                    }
+                }
 
             }
             else
@@ -162,9 +173,15 @@ namespace _WeAreAthomic.SCRIPTS.Player
                     _isAnimEnabled = false;
                     IsAiming = false;
                     cameraObj.SetActive(true);
+                    _mainCSwitch.SwitchWeapon();
                 }
                 
             }
+        }
+
+        private void DisableShooting()
+        {
+            _isShooting = false;
         }
 
     }

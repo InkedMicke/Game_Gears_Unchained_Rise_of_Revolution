@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Player
+namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCLayers : MonoBehaviour
     {

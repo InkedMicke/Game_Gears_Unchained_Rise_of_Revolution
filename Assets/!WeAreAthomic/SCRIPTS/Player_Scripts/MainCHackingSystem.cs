@@ -1,10 +1,10 @@
 using System.Collections;
-using _WeAreAthomic.SCRIPTS.Player.Robot;
-using _WeAreAthomic.SCRIPTS.Props;
+using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot;
+using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _WeAreAthomic.SCRIPTS.Player
+namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCHackingSystem : MonoBehaviour
     {

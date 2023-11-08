@@ -1,11 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-namespace _WeAreAthomic.SCRIPTS.Player.Robot
+namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot
 {
     public class BastetController : MonoBehaviour
     {

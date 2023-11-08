@@ -1,10 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace _WeAreAthomic.SCRIPTS.Player
+namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCMouseController : MonoBehaviour
     {
@@ -18,8 +16,8 @@ namespace _WeAreAthomic.SCRIPTS.Player
 
         private PlayerInputActions _playerInputActions;
 
-        private bool _isLeftMouseDown;
-        protected bool _isRightMouseDown;
+        protected bool IsLeftMouseDown;
+        protected bool IsRightMouseDown;
 
         private float _mouseMagnitude;
 
@@ -42,7 +40,7 @@ namespace _WeAreAthomic.SCRIPTS.Player
         {
             while (true)
             {
-                if (_isLeftMouseDown)
+                if (IsLeftMouseDown)
                 {
                     _mouseMagnitude += Time.deltaTime;
 
@@ -63,22 +61,22 @@ namespace _WeAreAthomic.SCRIPTS.Player
         private void LeftMousePressedUp(InputAction.CallbackContext context)
         {
             _mouseMagnitude = 0f;
-            _isLeftMouseDown = false;
+            IsLeftMouseDown = false;
         }
 
         private void LeftMousePressedDown(InputAction.CallbackContext context)
         {
-            _isLeftMouseDown = true;
+            IsLeftMouseDown = true;
         }
 
         private void RightMousePressedUp(InputAction.CallbackContext context)
         {
-            _isRightMouseDown = false;
+            IsRightMouseDown = false;
         }
 
         private void RightMousePressedDown(InputAction.CallbackContext context)
         {
-            _isRightMouseDown = true;
+            IsRightMouseDown = true;
         }
     }
 }

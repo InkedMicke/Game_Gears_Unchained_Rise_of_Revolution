@@ -1,12 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using _WeAreAthomic.SCRIPTS.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-namespace _WeAreAthomic.SCRIPTS.Player
+namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCRailGrindSystem : MonoBehaviour
     {

@@ -1,9 +1,11 @@
 using System.Collections;
+using _WeAreAthomic.SCRIPTS.Player;
 using _WeAreAthomic.SCRIPTS.Props;
+using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace _WeAreAthomic.SCRIPTS.Player
+namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCTutorialChecker : MonoBehaviour
     {

@@ -1,4 +1,5 @@
 using System.Collections;
+using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using UnityEngine;
 
 namespace _WeAreAthomic.SCRIPTS.Props

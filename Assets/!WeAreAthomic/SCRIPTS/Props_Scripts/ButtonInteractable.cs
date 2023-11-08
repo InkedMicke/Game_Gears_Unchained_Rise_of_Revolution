@@ -1,8 +1,10 @@
 using _WeAreAthomic.SCRIPTS.Player;
+using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using _WeAreAthomic.SCRIPTS.Props;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace _WeAreAthomic.SCRIPTS.Props
+namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {
     public class ButtonInteractable : MonoBehaviour, IInteractable
     {
