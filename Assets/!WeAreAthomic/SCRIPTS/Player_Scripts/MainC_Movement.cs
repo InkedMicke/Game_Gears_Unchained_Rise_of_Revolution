@@ -1,9 +1,8 @@
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-namespace _WeAreAthomic.SCRIPTS.Player
+namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCMovement : MonoBehaviour
     {

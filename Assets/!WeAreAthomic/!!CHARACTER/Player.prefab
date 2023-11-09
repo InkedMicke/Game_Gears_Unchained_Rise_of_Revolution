@@ -1344,8 +1344,13 @@ MonoBehaviour:
   enemyHurtBox:
     serializedVersion: 2
     m_Bits: 512
+  interactLayer:
+    serializedVersion: 2
+    m_Bits: 65536
+  _isShooting: 0
   sphereDectorSize: 3
   cameraTransitionSpeed: 100
+  shootingCooldown: 0.5
 --- !u!114 &6326130830157195552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1396,8 +1401,7 @@ MonoBehaviour:
     m_Bits: 2048
   labScene: S2_LABTUTORIAL
   sewerScene: S4_SEWERS_UNDERTHECITY
-  _childActual: 0
-  railSpeed: 8
+  railSpeed: 5
   railSpeedBoost: 30
   rotationSpeed: 30
   gravityRail: -40
@@ -2931,14 +2935,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7758350313152955895}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 1.33, y: 1.8, z: -1.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4836088337714508785}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &7763946756194708630
 GameObject:
   m_ObjectHideFlags: 0

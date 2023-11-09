@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using _WeAreAthomic.SCRIPTS.Player;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using UnityEngine;
 using UnityEngine.Events;

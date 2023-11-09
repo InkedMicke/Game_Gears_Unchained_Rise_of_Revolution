@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using _WeAreAthomic.SCRIPTS.Player;
+using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 

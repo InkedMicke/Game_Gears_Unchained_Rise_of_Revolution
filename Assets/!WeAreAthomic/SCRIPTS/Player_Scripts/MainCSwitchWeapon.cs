@@ -1,4 +1,3 @@
-using _WeAreAthomic.SCRIPTS.Player;
 using UnityEngine;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts

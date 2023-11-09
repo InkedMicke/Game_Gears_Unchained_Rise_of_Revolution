@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Player
+namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCAnimatorController : MonoBehaviour
     {

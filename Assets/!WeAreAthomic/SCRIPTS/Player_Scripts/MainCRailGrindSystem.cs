@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using _WeAreAthomic.SCRIPTS.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -47,7 +46,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool _isFalling;
         private bool _haveFirstTransfrom;
 
-        public int _childActual = 0;
+        private int _childActual = 0;
 
         [SerializeField] private float railSpeed = .1f;
         [SerializeField] private float railSpeedBoost = 30f;
@@ -55,10 +54,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float gravityRail = -15f;
         [SerializeField] private float jumpForceRail = 10f;
         [SerializeField] private float jumpDelay = .5f;
-        private float _playbackMultiplier;
-        private float jumpTotalDelay;
-        private float _playerOffset = 0.0f;
-
+        
         public List<Transform> directionsList = new List<Transform>();
 
         private void Awake()
@@ -95,9 +91,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _childActual = 0;
                 }
             }
-
-            BoostManager();
-
+            
             if (_mainCMove.IsGrounded())
             {
                 if (CanJumpOnRail)
@@ -322,20 +316,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             transform.position = desiredPos;
         }
-
-        void BoostManager()
-        {
-            if (_playbackMultiplier < 1 && IsSliding && _canBoost)
-            {
-                _playbackMultiplier += Time.deltaTime * 0.5f;
-            }
-
-            if (railSpeed < railSpeedBoost && _canBoost && IsSliding)
-            {
-                railSpeed += Time.deltaTime * 4;
-            }
-        }
-
+        
         private void SortList()
         {
             directionsList.Sort((a, b) =>

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using _WeAreAthomic.SCRIPTS.Player;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -67,10 +66,7 @@ public class CameraFollower : MonoBehaviour
         _rotX = Mathf.Clamp(_rotX, -clampAngle, clampAngle);
 
         LocalRotation = Quaternion.Euler(_rotX, _rotY, 0.0f);
-        if (!_mainCPistol.IsAiming)
-        {
-            transform.rotation = LocalRotation;
-        }
+        transform.rotation = LocalRotation;
     }
 
     private void LateUpdate()
@@ -79,9 +75,6 @@ public class CameraFollower : MonoBehaviour
 
         //move towards the game object that is the target
         var step = 20 * Time.deltaTime;
-        if (!_mainCPistol.IsAiming)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, step);
-        }
+        transform.position = Vector3.MoveTowards(transform.position, target.position, step);
     }
 }

@@ -36,8 +36,13 @@ using UnityEngine.InputSystem;
             var r = new Ray(transform.position, transform.forward);
             if(Physics.Raycast(r, out var hitInfo, interactRange, interactableLayer))
             {
-                _button = hitInfo.collider.gameObject.GetComponent<ButtonInteractable>();
-                _button.ShowButton();
+                if (_button == hitInfo.collider.gameObject.GetComponent<ButtonInteractable>())
+                {
+                    _button = hitInfo.collider.gameObject.GetComponent<ButtonInteractable>();
+                    _button.ShowButton();
+                }
+
+                
             }
             else
             {

@@ -1,6 +1,6 @@
 using System;
-using _WeAreAthomic.SCRIPTS.Player;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -19,6 +19,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCRailGrindSystem _mainCRailGrind;
         private CameraFollower _camFollower;
         private MainCAnimatorController _mainCAnim;
+        private PlayerInputActions _playerInputActions;
 
         private TypeOfAim _typeOfAim;
 
@@ -38,10 +39,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [System.NonSerialized] public bool IsAiming;
         [System.NonSerialized] public bool IsAutoTargeting;
         private bool _isAnimEnabled;
-        private bool _isShooting;
+        public bool _isShooting;
 
         [SerializeField] private float sphereDectorSize = 5f;
         [SerializeField] private float cameraTransitionSpeed = 5f;
+        [SerializeField] private float shootingCooldown = 0.5f;
         private float _closestDistance = Mathf.Infinity;
 
         private protected override void Awake()
@@ -52,6 +54,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCSwitch = GetComponent<MainCSwitchWeapon>();;
             _mainCRailGrind = GetComponent<MainCRailGrindSystem>();
             _mainCAnim = GetComponent<MainCAnimatorController>();
+
+            _playerInputActions = new PlayerInputActions();
+            _playerInputActions.Enable();
+            _playerInputActions.Player.Attack.performed += Shoot;
             base.Awake();
         }
 
@@ -134,7 +140,25 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void AimingOnGround()
         {
-            
+            AimingOnRail();
+        }
+        private void Shoot(InputAction.CallbackContext context)
+        {
+            if (!_isShooting)
+            {
+                Debug.Log("hola");
+                Debug.DrawRay(aimCameraObj.transform.position, aimCameraObj.transform.forward * 30f, Color.red, 2f);
+                var ray = new Ray(aimCameraObj.transform.position, aimCameraObj.transform.forward);
+                if (Physics.Raycast(ray, out var hit, 30f, interactLayer))
+                {
+                    _isShooting = true;
+                    if(hit.collider.gameObject.TryGetComponent(out IInteractable interactObj))
+                    {
+                        interactObj.Interact();
+                    }
+                    Invoke(nameof(DisableShooting), shootingCooldown);
+                }
+            }
         }
 
         private void AimingOnRail()
@@ -148,20 +172,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _isAnimEnabled = true;
                     IsAiming = true;
                     aimCameraObj.SetActive(true);
+                    aimCameraObj.transform.rotation = camAimPosTr.transform.rotation;
                     _mainCSwitch.SwitchWeapon();
                 }
 
                 var desiredRot = new Vector3(lookAtAim.position.x, transform.position.y, lookAtAim.position.z);
                 transform.LookAt(desiredRot);
-
-                if (IsLeftMouseDown && !_isShooting)
-                {
-                    var ray = new Ray(cameraObj.transform.position, cameraObj.transform.forward);
-                    if (Physics.Raycast(ray, out var hit, 20f, interactLayer))
-                    {
-                        
-                    }
-                }
 
             }
             else
@@ -172,7 +188,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCAnim.SetAimOnRail(false);
                     _isAnimEnabled = false;
                     IsAiming = false;
-                    cameraObj.SetActive(true);
+                    aimCameraObj.SetActive(false);
                     _mainCSwitch.SwitchWeapon();
                 }
                 

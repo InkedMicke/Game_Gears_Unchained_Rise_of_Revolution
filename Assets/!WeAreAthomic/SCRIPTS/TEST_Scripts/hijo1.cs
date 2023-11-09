@@ -1,5 +1,4 @@
 using UnityEngine;
-using _WeAreAthomic.SCRIPTS.Player;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
 
 namespace _WeAreAthomic.SCRIPTS.TEST

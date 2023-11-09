@@ -163,11 +163,12 @@ GameObject:
   - component: {fileID: 34662974}
   - component: {fileID: 34662973}
   - component: {fileID: 34662972}
-  - component: {fileID: 34662976}
   - component: {fileID: 34662977}
-  m_Layer: 10
+  - component: {fileID: 34662979}
+  - component: {fileID: 34662978}
+  m_Layer: 16
   m_Name: Cube
-  m_TagString: Test
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -258,43 +259,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &34662976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 34662971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77e05e52d61013e429a9355ceac26907, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionDetection:
-  - enabled: 1
-    detectionLayer:
-      serializedVersion: 2
-      m_Bits: 256
-    detectionType: 0
-    eventsToActivate:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1215145977}
-          m_TargetAssemblyTypeName: _WeAreAthomic.SCRIPTS.Player.ChargingSwordSphereTarget,
-            Assembly-CSharp
-          m_MethodName: EnableHasUnlockedAbility
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    additionalInfo: 
-  useTargetScript: 0
-  targetScript: {fileID: 0}
 --- !u!54 &34662977
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -322,6 +286,45 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &34662978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34662971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a9c9c17e4fa4446b7e5275b50c8eab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &34662979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34662971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f895a573c8d98f4eb5cf714d62b11f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itActivatesWhenInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 34662978}
+        m_TargetAssemblyTypeName: GDestroyObject, Assembly-CSharp
+        m_MethodName: DestroyThisObject
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &98486378 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9121287907120116574, guid: 83f67ca1ea1b30d428b0a604642e665c,
@@ -984,18 +987,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1215145977 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7783840542236596533, guid: 9d2ebbd4a4922de43ae8c77510eda865,
-    type: 3}
-  m_PrefabInstance: {fileID: 1277448176}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4217d48ee00d7cb43b887be1dcbf549e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1245687310
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1077,6 +1068,51 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 155516967118213694, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.8581767
+      objectReference: {fileID: 0}
+    - target: {fileID: 155516967118213694, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 155516967118213694, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.1736314
+      objectReference: {fileID: 0}
+    - target: {fileID: 155516967118213694, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 155516967118213694, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 155516967118213694, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 155516967118213694, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 155516967118213694, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 155516967118213694, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4277791799129827319, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_Name
