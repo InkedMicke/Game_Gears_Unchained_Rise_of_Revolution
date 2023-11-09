@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -148,25 +149,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        private void FixPosition()
+        private IEnumerator FixPosition(float value)
         {
-/*            _currentDestination = directionsList[_childActual].position;
-            var desiredPos = new Vector3();
-
-            if (_currentDestination.x - directionsList[_childActual - 1].transform.position.x < 1f)
-            {
-                desiredPos = new Vector3(_currentDestination.x, transform.position.y, transform.position.z);
-
-
-            }
-
-            if (_currentDestination.z - directionsList[_childActual - 1].transform.position.z < 1f)
-            {
-                desiredPos = new Vector3(transform.position.x, transform.position.y, _currentDestination.z);
-            }
-
-            transform.position = desiredPos;*/
-
+            yield return new WaitForSeconds(value);
+            var desiredPos = new Vector3(directionsList[_childActual].position.x, transform.position.y, transform.position.z);
+            transform.position = desiredPos;
+            Debug.Log("hola1");
         }
 
         private void GetAllTransforms()
@@ -196,7 +184,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                 if (_currentScene.name == labScene)
                 {
-                    var padre1 = _railCols[0].transform;
+                    var padre1 = _railCols[0].transform.parent;
                     var padre2 = padre1.parent;
 
                     var railContainer = padre2.GetChild(padre2.childCount - 1);
@@ -229,7 +217,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
                 }
 
-                FixPosition();
+                FixPosition(0);
 
                 _canSlide = true;
 
@@ -267,7 +255,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             _mainCAnimator.SetSliding(true);
             _isJumping = false;
-            Invoke(nameof(FixPosition), 0.1f);
+            FixPosition(.1f);
             _canSlide = true;
         }
 

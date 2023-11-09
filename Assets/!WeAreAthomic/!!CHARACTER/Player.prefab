@@ -1169,6 +1169,7 @@ GameObject:
   - component: {fileID: 7646570252809147268}
   - component: {fileID: 4726374708334233649}
   - component: {fileID: 530178520698779527}
+  - component: {fileID: 2577981023249174785}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1655,6 +1656,19 @@ MonoBehaviour:
   - {fileID: 7509997632906551187}
   - {fileID: 4773984964235713726}
   - {fileID: 3724133648667231922}
+--- !u!114 &2577981023249174785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537249443240097638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41866f4a10fc0e048b2979111cb565f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenuObj: {fileID: 0}
 --- !u!1 &4735085097479858567
 GameObject:
   m_ObjectHideFlags: 0
@@ -1728,6 +1742,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4594801647779526806}
   - component: {fileID: 4901877278535125210}
+  - component: {fileID: 7381251909444213419}
   m_Layer: 8
   m_Name: HurtBox
   m_TagString: Untagged
@@ -1773,6 +1788,43 @@ CapsuleCollider:
   m_Height: 1.79
   m_Direction: 1
   m_Center: {x: 0, y: 0.91, z: 0}
+--- !u!114 &7381251909444213419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4924955036015268849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6427950e11069249a35b8c9d1a377b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionDetection:
+  - enabled: 0
+    detectionLayer:
+      serializedVersion: 2
+      m_Bits: 2048
+    detectionTag: Pipe
+    detectionType: 0
+    eventsToActivate:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4537249443240097638}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    additionalInfo: 
+  useTargetScript: 0
+  targetScript: {fileID: 0}
 --- !u!1 &5013571528619706213
 GameObject:
   m_ObjectHideFlags: 0

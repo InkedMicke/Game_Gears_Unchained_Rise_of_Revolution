@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -146,7 +147,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (!_isShooting)
             {
-                Debug.Log("hola");
                 Debug.DrawRay(aimCameraObj.transform.position, aimCameraObj.transform.forward * 30f, Color.red, 2f);
                 var ray = new Ray(aimCameraObj.transform.position, aimCameraObj.transform.forward);
                 if (Physics.Raycast(ray, out var hit, 30f, interactLayer))

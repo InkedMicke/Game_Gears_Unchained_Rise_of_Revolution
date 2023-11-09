@@ -1,4 +1,3 @@
-using _WeAreAthomic.SCRIPTS.Scene;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,14 +27,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void TakeDamage(float damage)
         {
             currentHealth -= damage;
-            GameManager.Instance.currentHealth = currentHealth;
+            GameManagerSingleton.Instance.currentHealth = currentHealth;
             SetHealthSlider();
         }
 
         public void GetHealth(float health)
         {
             currentHealth += health;
-            GameManager.Instance.currentHealth = currentHealth;
+            GameManagerSingleton.Instance.currentHealth = currentHealth;
             SetHealthSlider();
         }
 

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using _WeAreAthomic.SCRIPTS.Enemi;
-using _WeAreAthomic.SCRIPTS.Scene;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -167,8 +166,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (!_isSphereDetectorSpawned && IsChargingSword)
             {
-                GameManager.Instance.ClearClosestsGameObject();
-                GameManager.Instance.ClearGameObject();
+                GameManagerSingleton.Instance.ClearClosestsGameObject();
+                GameManagerSingleton.Instance.ClearGameObject();
 
                 _sphereDetectorInst =
                     Instantiate(sphereDetectorObj, groundTr.transform.position, groundTr.transform.rotation);
@@ -180,9 +179,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (IsChargingSword)
             {
-                if (GameManager.Instance.gameObjectsList.Count > 0)
+                if (GameManagerSingleton.Instance.gameObjectsList.Count > 0)
                 {
-                    foreach (var gameObjects in GameManager.Instance.gameObjectsList)
+                    foreach (var gameObjects in GameManagerSingleton.Instance.gameObjectsList)
                     {
                         var actualTrs = gameObjects.transform;
 
@@ -194,8 +193,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                             _closestGameObject = gameObjects;
                         }
 
-                        GameManager.Instance.AddClosestGameObject(gameObjects);
-                        GameManager.Instance.SortClosestsGameObject();
+                        GameManagerSingleton.Instance.AddClosestGameObject(gameObjects);
                     }
 
                     StartCoroutine(nameof(SneakThroughEnemies));
@@ -233,9 +231,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _cc.enabled = false;
             IsSlidingOnEnemies = true;
             yield return new WaitForSeconds(0.1f);
-            var gameObjectsCopy = new List<GameObject>(GameManager.Instance.closestGameObjectsList);
+            var gameObjectsCopy = new List<GameObject>(GameManagerSingleton.Instance.closestGameObjectsList);
 
-            if (GameManager.Instance.closestGameObjectsList.Count == 0)
+            if (GameManagerSingleton.Instance.closestGameObjectsList.Count == 0)
             {
                 if (_sphereDetectorInst)
                 {
@@ -296,7 +294,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 var desiredRot = new Vector3(closestTr.position.x, position.y, closestTr.position.z);
                 transform.LookAt(desiredRot);
 
-                GameManager.Instance.RemoveClosestsGameObject(gameObj);
+                GameManagerSingleton.Instance.RemoveClosestsGameObject(gameObj);
                 mesh.SetActive(true);
 
                 _mainCLayers.EnableAttackLayer();
@@ -410,7 +408,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             Time.timeScale = _originalTimeScale;
         
-            if (GameManager.Instance.closestGameObjectsList.Count == 0)
+            if (GameManagerSingleton.Instance.closestGameObjectsList.Count == 0)
             {
                 if (_sphereDetectorInst)
                 {
