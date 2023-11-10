@@ -96,7 +96,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.Player.Running.performed += RunOn;
             _playerInputActions.Player.Running.canceled += RunOff;
             _playerInputActions.Player.Crouch.performed += StartEndCrouch;
-            _playerInputActions.Player.Jump.performed += Jump;
+            //_playerInputActions.Player.Jump.performed += Jump;
             _playerInputActions.Player.Test.performed += ReloadScene;
         }
 
@@ -106,7 +106,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.Player.Running.performed -= RunOn;
             _playerInputActions.Player.Running.canceled -= RunOff;
             _playerInputActions.Player.Crouch.performed -= StartEndCrouch;
-            _playerInputActions.Player.Jump.performed -= Jump;
+            //_playerInputActions.Player.Jump.performed -= Jump;
         }
 
         private void Update()
@@ -405,7 +405,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        private void Jump(InputAction.CallbackContext context)
+/*        private void Jump(InputAction.CallbackContext context)
         {
             if (IsGrounded() && !_railGrindSystem.IsOnRail())
             {
@@ -418,7 +418,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCAnimator.SetGrounded(false);
                 }
             }
-        }
+        }*/
 
         private void MoveWhileAiming()
         {
