@@ -65,6 +65,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 
         private void LookCamera()
         {
+            Debug.Log("hola3");
             controllerVector = _playerInputActions.Camera.Look.ReadValue<Vector2>();
             // We setup the rotation of the sticks here
 

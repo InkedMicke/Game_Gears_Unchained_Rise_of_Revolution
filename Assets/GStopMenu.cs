@@ -9,6 +9,8 @@ public class GStopMenu : MonoBehaviour
 
     [SerializeField] private GameObject mainMenuObj;
 
+    private bool _isActive;
+
     private void Awake()
     {
         _playerInputActions = new PlayerInputActions();
@@ -16,22 +18,46 @@ public class GStopMenu : MonoBehaviour
         _playerInputActions.Player.Escape.performed += ToggleMenu;
     }
 
+    private void Update()
+    {
+    }
+
     private void ToggleMenu(InputAction.CallbackContext context)
     {
-        mainMenuObj.SetActive(!mainMenuObj.activeSelf);
-        CursorMode(mainMenuObj.activeInHierarchy);
-        GameManagerSingleton.Instance.PauseGame(mainMenuObj.activeInHierarchy);
-        FreezeTime(mainMenuObj.activeInHierarchy);
-        Debug.Log("hola");
+        if (_isActive)
+        {
+            mainMenuObj.SetActive(true);
+            CursorMode(false);
+            GameManagerSingleton.Instance.PauseGame(false);
+            FreezeTime(_isActive);
+            _isActive = false;
+        }
+        else
+        {
+            mainMenuObj.SetActive(false);
+            CursorMode(true);
+            GameManagerSingleton.Instance.PauseGame(true);
+            _isActive = true;
+        }
+
+
 
     }
 
-    public void ToggleMenuCallable()
+    public void ToggleMenuCallable(bool condition)
     {
-        mainMenuObj.SetActive(!mainMenuObj.activeInHierarchy);
-        CursorMode(mainMenuObj.activeInHierarchy);
-        GameManagerSingleton.Instance.PauseGame(mainMenuObj.activeInHierarchy);
-        FreezeTime(mainMenuObj.activeInHierarchy);
+        mainMenuObj.SetActive(condition);
+        _isActive = condition;
+
+    }
+
+    public void ToggleToggleMenuCallable()
+    {
+        _isActive = !_isActive;
+        mainMenuObj.SetActive(_isActive);
+        CursorMode(_isActive);
+        GameManagerSingleton.Instance.PauseGame(_isActive);
+        FreezeTime(_isActive);
 
     }
 
@@ -53,5 +79,10 @@ public class GStopMenu : MonoBehaviour
     public void FreezeTime(bool condition)
     {
         Time.timeScale = condition ? 0 : 1;
+    }
+
+    public void GameState(bool condition)
+    {
+        GameManagerSingleton.Instance.PauseGame(condition);
     }
 }

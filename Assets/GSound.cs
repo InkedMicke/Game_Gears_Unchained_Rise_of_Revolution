@@ -5,23 +5,40 @@ using UnityEngine;
 public class GSound : MonoBehaviour
 {
     [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioSource audioSourceTwo;
     [SerializeField] AudioClip inClip;
     [SerializeField] AudioClip bucleClip;
 
+    private double musicDuration;
+    private double goalTime;
+    
+
     protected void Start()
     {
-        StartCoroutine(MusicSound());
+        OnPlayMusic();
     }
 
-    IEnumerator MusicSound()
+    private void OnPlayMusic()
     {
+        goalTime = AudioSettings.dspTime + .5f;
+
         audioSource.clip = inClip;
-        audioSource.Play();
+        audioSource.PlayScheduled(goalTime);
 
-        yield return new WaitForSecondsRealtime(inClip.length);
+        musicDuration = (double)inClip.samples / inClip.frequency;
+        goalTime += musicDuration;
 
-        audioSource.clip = bucleClip;
-        audioSource.Play();
-        audioSource.loop = true;
+    }
+
+    private void Update()
+    {
+        if(AudioSettings.dspTime > goalTime - 1)
+        {
+            audioSourceTwo.clip = bucleClip;
+            audioSourceTwo.PlayScheduled(goalTime);
+
+            musicDuration = (double)bucleClip.samples / bucleClip.frequency;
+            goalTime = AudioSettings.dspTime + musicDuration;
+        }
     }
 }
