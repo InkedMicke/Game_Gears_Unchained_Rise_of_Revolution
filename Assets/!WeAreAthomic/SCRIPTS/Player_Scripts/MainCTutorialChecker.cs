@@ -105,7 +105,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void PlayTutorialThird()
         {
             _mainCSounds.PlayTutorialSound(3, "pc");
-            goHerePosaMano.SetActive(false);
         }
     }
 }

@@ -23,6 +23,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         public UnityEvent seActivacuandoLeDasAlBotonYNoPuedesHackear;
         public UnityEvent seActivanCuandoLeDasAlBoton;
         public UnityEvent seActivanCuandoTerminaElHack;
+        public UnityEvent seActivanCuandoEstasHackenadoYSeCancela;
 
         protected virtual void Awake()
         {
@@ -94,6 +95,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             if (isActive)
             {
                 _mainCHacking.StopHack();
+                seActivanCuandoEstasHackenadoYSeCancela.Invoke();
             }
         }
 

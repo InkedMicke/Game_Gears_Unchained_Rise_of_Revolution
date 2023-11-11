@@ -14,8 +14,8 @@ namespace _WeAreAthomic.SCRIPTS.Props
 
         [SerializeField] private bool enableBreather;
 
-        [SerializeField] private float healthPerHalfSecond = 4f;
-        [SerializeField] private float speedOfHealth = .1f;
+        [SerializeField] private float healthAmount = 4f;
+        [SerializeField] private float healthPerTime = .1f;
 
         private void Start()
         {
@@ -64,14 +64,14 @@ namespace _WeAreAthomic.SCRIPTS.Props
             {
                 if (_mainHealth.currentHealth < _mainHealth.maxHealth)
                 {
-                    _mainHealth.GetHealth(healthPerHalfSecond);
+                    _mainHealth.GetHealth(healthAmount);
                 }
                 else
                 {
                     enable = false;
                 }
 
-                yield return new WaitForSeconds(speedOfHealth);
+                yield return new WaitForSeconds(healthPerTime);
             }
         }
     }
