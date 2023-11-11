@@ -96,6 +96,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void PlayTutorialTwo()
         {
+            goHereBreather.SetActive(false);
             _mainCSounds.PlayTutorialSound(2, "pc");
             var buttonInt = botonPosaMano.GetComponent<ButtonInteractable>();
             buttonInt.EnableCanHack();
