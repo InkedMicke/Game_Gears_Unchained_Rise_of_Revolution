@@ -46,7 +46,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                 }
 
-                if (_mouseMagnitude > .5f)
+                if (_mouseMagnitude > .3f)
                 {
                     _typeOfAttack = TypeOfAttack.ChargedAttack;
                 }

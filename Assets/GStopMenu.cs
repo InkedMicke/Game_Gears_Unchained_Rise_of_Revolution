@@ -18,6 +18,16 @@ public class GStopMenu : MonoBehaviour
 
     private void ToggleMenu(InputAction.CallbackContext context)
     {
+        mainMenuObj.SetActive(!mainMenuObj.activeSelf);
+        CursorMode(mainMenuObj.activeInHierarchy);
+        GameManagerSingleton.Instance.PauseGame(mainMenuObj.activeInHierarchy);
+        FreezeTime(mainMenuObj.activeInHierarchy);
+        Debug.Log("hola");
+
+    }
+
+    public void ToggleMenuCallable()
+    {
         mainMenuObj.SetActive(!mainMenuObj.activeInHierarchy);
         CursorMode(mainMenuObj.activeInHierarchy);
         GameManagerSingleton.Instance.PauseGame(mainMenuObj.activeInHierarchy);
@@ -25,7 +35,7 @@ public class GStopMenu : MonoBehaviour
 
     }
 
-    private void CursorMode(bool condition)
+    public void CursorMode(bool condition)
     {
         if (condition)
         {
@@ -40,7 +50,7 @@ public class GStopMenu : MonoBehaviour
 
     }
 
-    private void FreezeTime(bool condition)
+    public void FreezeTime(bool condition)
     {
         Time.timeScale = condition ? 0 : 1;
     }

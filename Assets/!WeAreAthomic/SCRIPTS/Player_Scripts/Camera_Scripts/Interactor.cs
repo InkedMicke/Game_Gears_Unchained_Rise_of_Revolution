@@ -1,73 +1,78 @@
 using _WeAreAthomic.SCRIPTS.Props;
 using _WeAreAthomic.SCRIPTS.Props_Scripts;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-    public interface IInteractable
+public interface IInteractable
+{
+    public void Interact();
+}
+
+
+public class Interactor : MonoBehaviour
+{
+    private PlayerInputActions _playerInputActions;
+    private ButtonInteractable _button;
+
+    public LayerMask interactableLayer;
+
+    [SerializeField] private float interactRange = 5f;
+
+    [System.NonSerialized] public bool isSeeing;
+
+    private void Awake()
     {
-        public void Interact();
+        _playerInputActions = new PlayerInputActions();
+        _playerInputActions.Enable();
+        _playerInputActions.Player.Interact.performed += InteractRay;
     }
 
-
-    public class Interactor : MonoBehaviour
+    private void FixedUpdate()
     {
-        private PlayerInputActions _playerInputActions;
-        private ButtonInteractable _button;
-
-        public LayerMask interactableLayer;
-
-        [SerializeField] private float interactRange = 5f;
-
-        [System.NonSerialized] public bool isSeeing;
-
-        private void Awake()
-        {
-            _playerInputActions = new PlayerInputActions();
-            _playerInputActions.Enable();
-            _playerInputActions.Player.Interact.performed += InteractRay;
-        }
-
-        private void FixedUpdate()
-        {
-            Ray();
-        }
-
-        void Ray()
-        {
-            var r = new Ray(transform.position, transform.forward);
-            if(Physics.Raycast(r, out var hitInfo, interactRange, interactableLayer))
-            {
-                if (_button == hitInfo.collider.gameObject.GetComponent<ButtonInteractable>())
-                {
-                    _button = hitInfo.collider.gameObject.GetComponent<ButtonInteractable>();
-                    _button.ShowButton();
-                }
-
-                
-            }
-            else
-            {
-                if (_button)
-                {
-                    _button.HideButton();
-                }
-            }
-        }
-
-        private void InteractRay(InputAction.CallbackContext context)
-        {
-            var r = new Ray(transform.position, transform.forward);
-            if(Physics.Raycast(r, out var hitInfo, interactRange, interactableLayer))
-            {
-                if(hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
-                {
-                    interactObj.Interact();
-                }
-            }
-        }
-
-        private void OnDrawGizmos()
-        {
-            Debug.DrawRay(transform.position, transform.forward * interactRange, Color.red);
-        }
-    
+        Ray();
     }
+
+    void Ray()
+    {
+        var r = new Ray(transform.position, transform.forward);
+        if (Physics.Raycast(r, out var hitInfo, interactRange, interactableLayer))
+        {
+            Debug.Log("hola2");
+            Debug.Log(hitInfo.collider.gameObject.name);
+
+            if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable _))
+            {
+                Debug.Log("hola3");
+                _button = hitInfo.collider.gameObject.GetComponent<ButtonInteractable>();
+                _button.ShowButton();
+            }
+
+
+        }
+        else
+        {
+            if (_button)
+            {
+                _button.HideButton();
+            }
+        }
+    }
+
+    private void InteractRay(InputAction.CallbackContext context)
+    {
+        var r = new Ray(transform.position, transform.forward);
+        if (Physics.Raycast(r, out var hitInfo, interactRange, interactableLayer))
+        {
+            if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
+            {
+                interactObj.Interact();
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Debug.DrawRay(transform.position, transform.forward * interactRange, Color.red);
+    }
+
+}

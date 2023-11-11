@@ -17,6 +17,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private BoxCollider _weaponBC;
         private CharacterController _cc;
         private MainCTutorialChecker _mainCTutorial;
+        private MainCChargingSwordSphereTarget _mainCChargingSwordSphere;
 
         [SerializeField] private GameObject weaponObj;
 
@@ -57,10 +58,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _mainCSounds = GetComponent<MainCSounds>();
             _mainCTutorial = GetComponent<MainCTutorialChecker>();
+            _mainCChargingSwordSphere = GetComponent<MainCChargingSwordSphereTarget>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
-            _playerInputActions.Player.Attack.canceled += Attack;
+            //_playerInputActions.Player.Attack.canceled += Attack;
             _playerInputActions.Player.Attack.performed += NextCombo;
             _playerInputActions.Player.Attack.performed += MouseDown;
             _playerInputActions.Player.Attack.canceled += MouseUp;
@@ -74,20 +76,27 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private protected void Update()
         {
             _currentScene = SceneManager.GetActiveScene();
+
+  
         }
 
         private void MouseDown(InputAction.CallbackContext context)
         {
-            StopCoroutine(Sheath());
+            if (!_mainCChargingSwordSphere.IsSlidingOnEnemies)
+            {
+                StopCoroutine(Sheath());
+            }
+            
             _currentTimeSheath = Time.time;
         }
 
         private void MouseUp(InputAction.CallbackContext context)
         {
             StartCoroutine(Sheath());
+            Attack();
         }
 
-        private void Attack(InputAction.CallbackContext context)
+        private void Attack()
         {
             if (CanAttack() && _isSheathed|| _railGrindSystem.IsOnRail() && CanAttack())
             {
@@ -147,9 +156,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
+        public void StopSheathCoroutine()
+        {
+            StopCoroutine(Sheath());
+        }
+
         private void NextCombo(InputAction.CallbackContext context)
         {
-            if (_canNextAttack)
+            if (_canNextAttack && !_mainCChargingSwordSphere.IsSlidingOnEnemies && IsAttacking)
             {
                 if (attackCount == 1)
                 {
@@ -180,14 +194,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator.SetAttackCountAnim(attackCount);
             _mainCLayers.DisableAttackLayer();
             timeGraceAttackPeriod = Time.time + timeNextAttack;
+            DisableNextAttack();
         }
 
-        private void EnableWeaponCollision()
+        public void EnableWeaponCollision()
         {
-            weaponObj.GetComponent<BoxCollider>().enabled = true;
+            if (!_mainCChargingSwordSphere.IsSlidingOnEnemies)
+            {
+                weaponObj.GetComponent<BoxCollider>().enabled = true;
+            }
         }
 
-        private void DisableWeaponCollision()
+        public void DisableWeaponCollision()
         {
             weaponObj.GetComponent<BoxCollider>().enabled = false;
             weaponObj.GetComponent<WrenchHitBox>().ClearList();

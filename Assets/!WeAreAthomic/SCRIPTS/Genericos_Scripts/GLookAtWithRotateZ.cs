@@ -10,7 +10,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos
         {
             var cameraPos = Camera.main.transform.position;
             transform.LookAt(cameraPos);
-            transform.Rotate(cameraPos.x, cameraPos.y, rotateAmount);
+            transform.Rotate(transform.position.x, cameraPos.y, rotateAmount);
             
         }
     }

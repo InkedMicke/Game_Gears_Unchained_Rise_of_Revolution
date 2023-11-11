@@ -164,9 +164,9 @@ GameObject:
   - component: {fileID: 34662973}
   - component: {fileID: 34662972}
   - component: {fileID: 34662977}
-  - component: {fileID: 34662979}
   - component: {fileID: 34662978}
-  m_Layer: 16
+  - component: {fileID: 34662979}
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 34662971}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.78, y: 0.39, z: 7.64}
+  m_LocalPosition: {x: -5.91, y: 0.39, z: 3.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -307,24 +307,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 34662971}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f895a573c8d98f4eb5cf714d62b11f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 77e05e52d61013e429a9355ceac26907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itActivatesWhenInteract:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 34662978}
-        m_TargetAssemblyTypeName: GDestroyObject, Assembly-CSharp
-        m_MethodName: DestroyThisObject
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  collisionDetection:
+  - enabled: 1
+    detectionLayer:
+      serializedVersion: 2
+      m_Bits: 256
+    detectionType: 0
+    eventsToActivate:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1277448177}
+          m_TargetAssemblyTypeName: _WeAreAthomic.SCRIPTS.Player_Scripts.MainCChargingSwordSphereTarget,
+            Assembly-CSharp
+          m_MethodName: EnableHasUnlockedAbility
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    additionalInfo: 
+  useTargetScript: 0
+  targetScript: {fileID: 0}
 --- !u!1 &98486378 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9121287907120116574, guid: 83f67ca1ea1b30d428b0a604642e665c,
@@ -1238,11 +1248,28 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 11.46
       objectReference: {fileID: 0}
+    - target: {fileID: 7963787505120842054, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -22
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d2ebbd4a4922de43ae8c77510eda865, type: 3}
+--- !u!114 &1277448177 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5891378154421494827, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+    type: 3}
+  m_PrefabInstance: {fileID: 1277448176}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4217d48ee00d7cb43b887be1dcbf549e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1294876248
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1615,10 +1642,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 380ecc66bbc39b848ab46e807ee24de0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObjectsList: []
-  closestGameObjectsList: []
-  railList: []
-  currentHealth: 100
 --- !u!1 &1518580523
 GameObject:
   m_ObjectHideFlags: 0

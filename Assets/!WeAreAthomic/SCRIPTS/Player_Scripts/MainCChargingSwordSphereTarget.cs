@@ -26,6 +26,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject quickCanvas;
         [SerializeField] private GameObject floatingTextPrefab;
         [SerializeField] private GameObject orientation;
+        [SerializeField] private GameObject wrenchObj;
         private GameObject _mainCameraObj;
 
         private Camera _mainCamera;
@@ -227,9 +228,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private IEnumerator SneakThroughEnemies()
         {
-            //mesh.SetActive(false);
+            //mesh.SetActive(false);F
             _cc.enabled = false;
             IsSlidingOnEnemies = true;
+            _mainCAttack.StopSheathCoroutine();
             yield return new WaitForSeconds(0.1f);
             var gameObjectsCopy = new List<GameObject>(GameManagerSingleton.Instance.closestGameObjectsList);
 
@@ -245,15 +247,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             foreach (var gameObj in gameObjectsCopy.Where(gameObj => !_isEventActive))
             {
-                _mainCAttack.SetAttackCount(0);
                 mesh.SetActive(false);
                 var closestTr = gameObj.transform;
                 var targetPosition = closestTr.position;
 
                 var position = transform.position;
-                var desiredTargetPosition = new Vector3(targetPosition.x, position.y, targetPosition.z);
-                var moveDirection = desiredTargetPosition - position;
-                moveDirection.Normalize();
 
                 if (Physics.Raycast(closestTr.transform.position, -closestTr.transform.forward, 1.5f, enemyHurtBoxLayer))
                 {
@@ -306,12 +304,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 StartQuickTimeEvent();
 
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSecondsRealtime(3.5f);
             }
 
             //swordTrail.SetActive(false);
             IsSlidingOnEnemies = false;
-            _mainCLayers.DisableAttackLayer();
             _cc.enabled = true;
             IsChargingSword = false;
         }
@@ -359,7 +356,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             // Finalizar el QTE y calcular el daño basado en la precisión
             _isEventActive = false;
             _canQuickTimeEvent = false;
-
             if (success)
             {
                 var clampedCircleSize = Mathf.Clamp(_currentCircleSize, minCircleSize, maxCircleSize);

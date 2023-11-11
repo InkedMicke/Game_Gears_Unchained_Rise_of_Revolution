@@ -96,7 +96,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.Player.Running.performed += RunOn;
             _playerInputActions.Player.Running.canceled += RunOff;
             _playerInputActions.Player.Crouch.performed += StartEndCrouch;
-            //_playerInputActions.Player.Jump.performed += Jump;
             _playerInputActions.Player.Test.performed += ReloadScene;
         }
 
@@ -106,7 +105,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.Player.Running.performed -= RunOn;
             _playerInputActions.Player.Running.canceled -= RunOff;
             _playerInputActions.Player.Crouch.performed -= StartEndCrouch;
-            //_playerInputActions.Player.Jump.performed -= Jump;
         }
 
         private void Update()
@@ -395,7 +393,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public Vector3 PositionOnFloorNotGrounded()
         {
             var ray = new Ray(transform.position, -transform.up);
-            if(Physics.Raycast(ray, out var hitInfo, Mathf.Infinity))
+            if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity))
             {
                 return hitInfo.point;
             }
@@ -404,21 +402,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return ray.GetPoint(2f);
             }
         }
-
-/*        private void Jump(InputAction.CallbackContext context)
-        {
-            if (IsGrounded() && !_railGrindSystem.IsOnRail())
-            {
-                if (Time.time > _timeGraceJumpPeriod && !_chargingSword.IsSlidingOnEnemies && !_chargingSword.IsChargingSword)
-                {
-                    _mainCLayers.EnableJumpLayer();
-                    IsJumping = true;
-                    _velocity.y = Mathf.Sqrt(jumpImpulse * -2 * gravity);
-                    _mainCAnimator.SetJumping(IsJumping);
-                    _mainCAnimator.SetGrounded(false);
-                }
-            }
-        }*/
 
         private void MoveWhileAiming()
         {

@@ -5,6 +5,14 @@ using Hedenrag.ExVar;
 
 public class GameManagerSingleton : SingletonScriptableObject<GameManagerSingleton>, ICallOnAll
 {
+    public enum Settings
+    {
+        SensivityX,
+        SensivityY
+    }
+
+    public Settings settings;
+
     public List<GameObject> gameObjectsList;
     public List<GameObject> closestGameObjectsList;
 
@@ -70,6 +78,18 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public void PauseGame(bool condition)
     {
         isGamePaused = condition;
+    }
+
+    public void EnumToValue(Settings currentSetting, int value)
+    {
+        if(currentSetting == Settings.SensivityX)
+        {
+            sensivityX = value;
+        }
+        else if(currentSetting == Settings.SensivityY)
+        {
+            sensivityY = value;
+        }
     }
 
 

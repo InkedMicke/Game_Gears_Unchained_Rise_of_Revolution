@@ -17,6 +17,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         [SerializeField] private GameObject breatherObj;
         [SerializeField] private GameObject botonPosaMano;
+        [SerializeField] private GameObject goHereMove;
+        [SerializeField] private GameObject goHereBreather;
+        [SerializeField] private GameObject goHerePosaMano;
 
         private Vector3 _lastPosition;
 
@@ -24,9 +27,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool _isRoom1;
         private bool _isRoom2;
         private bool _isRoom3;
-
-        private float _distanciaRecorrida = 0.0f;
-        private float _startDistance;
 
         private void Awake()
         {
@@ -38,37 +38,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Start()
         {
-            _startDistance = _cc.transform.position.magnitude;
             _currentScene = SceneManager.GetActiveScene();
             if (_currentScene.name == "S2_LABTUTORIAL")
             {
                 IsOnTutorial = true;
-                StartCoroutine(CheckDistance());
+                goHereMove.SetActive(true);
                 StartCoroutine(CheckHealth());
                 StartCoroutine(CheckHacking());
-            }
-        }
-
-        private IEnumerator CheckDistance()
-        {
-            var enable = true;
-            while (enable)
-            {
-                var position = _cc.transform.position;
-                var desplazamiento = position - _lastPosition;
-                _distanciaRecorrida += desplazamiento.magnitude;
-                _lastPosition = position;
-
-                if (_distanciaRecorrida >= _startDistance + 20f)
-                {
-                    enable = false;
-                    _mainCSounds.RemoveAllSounds();
-                    _mainCSounds.PlayExpressionSound();
-                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.CurrentExpressionClip.name);
-                    Invoke(nameof(PlayTutorialOne), lengthOfClip);
-                }
-
-                yield return new WaitForSeconds(0.01f);
             }
         }
 
@@ -110,11 +86,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        private void PlayTutorialOne()
+        public void PlayTutorialOne()
         {
             _mainCSounds.PlayTutorialSound(1, "pc");
             var healthBreather = breatherObj.GetComponent<HealthBreather>();
             healthBreather.EnableBreather();
+            goHereBreather.SetActive(true);
         }
 
         private void PlayTutorialTwo()
@@ -122,11 +99,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCSounds.PlayTutorialSound(2, "pc");
             var buttonInt = botonPosaMano.GetComponent<ButtonInteractable>();
             buttonInt.EnableCanHack();
+            goHerePosaMano.SetActive(true);
         }
 
         private void PlayTutorialThird()
         {
             _mainCSounds.PlayTutorialSound(3, "pc");
+            goHerePosaMano.SetActive(false);
         }
     }
 }

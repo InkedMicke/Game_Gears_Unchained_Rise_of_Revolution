@@ -53,7 +53,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
             {
                 LookCamera();
             }
-            Debug.Log(GameManagerSingleton.Instance.isGamePaused);
             UpdateData();
 
         }
@@ -81,7 +80,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 
             LocalRotation = Quaternion.Euler(_rotX, _rotY, 0.0f);
             transform.rotation = LocalRotation;
-            Debug.Log("hola2");
         }
 
         private void LateUpdate()
