@@ -26,17 +26,19 @@ public class GStopMenu : MonoBehaviour
     {
         if (_isActive)
         {
-            mainMenuObj.SetActive(true);
+            mainMenuObj.SetActive(false);
+            Debug.Log("hola");
             CursorMode(false);
             GameManagerSingleton.Instance.PauseGame(false);
-            FreezeTime(_isActive);
+            FreezeTime(false);
             _isActive = false;
         }
         else
         {
-            mainMenuObj.SetActive(false);
+            mainMenuObj.SetActive(true);
             CursorMode(true);
             GameManagerSingleton.Instance.PauseGame(true);
+            FreezeTime(true);
             _isActive = true;
         }
 
@@ -53,11 +55,21 @@ public class GStopMenu : MonoBehaviour
 
     public void ToggleToggleMenuCallable()
     {
-        _isActive = !_isActive;
-        mainMenuObj.SetActive(_isActive);
-        CursorMode(_isActive);
-        GameManagerSingleton.Instance.PauseGame(_isActive);
-        FreezeTime(_isActive);
+        if (_isActive)
+        {
+            mainMenuObj.SetActive(true);
+            CursorMode(false);
+            GameManagerSingleton.Instance.PauseGame(false);
+            FreezeTime(_isActive);
+            _isActive = false;
+        }
+        else
+        {
+            mainMenuObj.SetActive(false);
+            CursorMode(true);
+            GameManagerSingleton.Instance.PauseGame(true);
+            _isActive = true;
+        }
 
     }
 
