@@ -11,7 +11,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _attackLayerMultiplier;
         private float _finalAttackLayerMultiplier;
         private float _crouchLayerMultiplier;
-        private float _jumpLayerMultiplier;
         private float _pistolLayerMultiplier;
         private float _sphereAttackLayerMultiplier;
         private float _slideLayerMultiplier;
@@ -19,7 +18,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         [System.NonSerialized] public bool isAttackLayerActive;
         [System.NonSerialized] public bool isFinalAttackLayerActive;
-        [System.NonSerialized] public bool isJumpLayerActive;
         [System.NonSerialized] public bool isCrouchLayerActive;
         [System.NonSerialized] public bool isPistolLayerActive;
         private void Awake()
@@ -38,9 +36,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Attack")), _attackLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("FinalAttack")), _finalAttackLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Crouch")), _crouchLayerMultiplier);
-            _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Jump")), _jumpLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Pistol")), _pistolLayerMultiplier);
-            //_anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("SphereAttack")), _sphereAttackLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Slide")), _slideLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Hack")), _hackLayerMultiplier);
         }
@@ -68,18 +64,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (isCrouchLayerActive)
                 {
                     isCrouchLayerActive = false;
-                }
-            }
-
-            if (Math.Abs(_jumpLayerMultiplier - 1f) < 0.1f)
-            {
-                isJumpLayerActive = true;
-            }
-            else
-            {
-                if (isJumpLayerActive)
-                {
-                    isJumpLayerActive = false;
                 }
             }
 
@@ -131,16 +115,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void DisableCrouchLayer()
         {
             StartCoroutine(nameof(DisableCrouchCoroutine));
-        }
-    
-        public void EnableJumpLayer()
-        {
-            StartCoroutine(nameof(EnableJumpCoroutine));
-        }
-    
-        public void DisableJumpLayer()
-        {
-            StartCoroutine(nameof(DisableJumpCoroutine));
         }
     
         public void EnablePistolLayer()
@@ -284,42 +258,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (_crouchLayerMultiplier <= 0f)
                 {
                     _crouchLayerMultiplier = 0f;
-                    canDisableLayer = false;
-                }
-
-                yield return new WaitForSeconds(0.01f);
-            }
-        }
-    
-        private IEnumerator EnableJumpCoroutine()
-        {
-            var canEnableLayer = true;
-
-            while (canEnableLayer)
-            {
-                _jumpLayerMultiplier += 24 * Time.unscaledDeltaTime;
-
-                if (_jumpLayerMultiplier >= 1f)
-                {
-                    _jumpLayerMultiplier = 1f;
-                    canEnableLayer = false;
-                }
-
-                yield return new WaitForSeconds(0.01f);
-            }
-        }
-    
-        private IEnumerator DisableJumpCoroutine()
-        {
-            var canDisableLayer = true;
-
-            while (canDisableLayer)
-            {
-                _jumpLayerMultiplier -= 24 * Time.unscaledDeltaTime;
-
-                if (_jumpLayerMultiplier <= 0f)
-                {
-                    _jumpLayerMultiplier = 0f;
                     canDisableLayer = false;
                 }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using _WeAreAthomic.SCRIPTS.Props;
 using _WeAreAthomic.SCRIPTS.Props_Scripts;
@@ -12,6 +13,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCSounds _mainCSounds;
         private MainCHealthManager _mainCHealth;
         private MainCHackingSystem _mainCHacking;
+        private GStopMenu _gStopMenu;
 
         private UnityEngine.SceneManagement.Scene _currentScene;
 
@@ -20,10 +22,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject goHereMove;
         [SerializeField] private GameObject goHereBreather;
         [SerializeField] private GameObject goHerePosaMano;
+        [SerializeField] private GameObject wasdImage;
+        [SerializeField] private GameObject eImage;
+        [SerializeField] private GameObject izqImage;
 
         private Vector3 _lastPosition;
 
         [System.NonSerialized] public bool IsOnTutorial;
+        [System.NonSerialized] public bool IsOnTutorialImage;
         private bool _isRoom1;
         private bool _isRoom2;
         private bool _isRoom3;
@@ -34,6 +40,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCSounds = GetComponent<MainCSounds>();
             _mainCHealth = GetComponent<MainCHealthManager>();
             _mainCHacking = GetComponent<MainCHackingSystem>();
+            _gStopMenu = GetComponent<GStopMenu>();
+        }
+
+        private void Update()
+        {
+            Debug.Log(IsOnTutorialImage);
         }
 
         private void Start()
@@ -41,8 +53,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _currentScene = SceneManager.GetActiveScene();
             if (_currentScene.name == "S2_LABTUTORIAL")
             {
+                IsOnTutorialImage = true;
                 IsOnTutorial = true;
                 goHereMove.SetActive(true);
+                wasdImage.SetActive(true);
+                _gStopMenu.CursorMode(true);
                 StartCoroutine(CheckHealth());
                 StartCoroutine(CheckHacking());
             }
@@ -96,6 +111,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void PlayTutorialTwo()
         {
+            IsOnTutorialImage = true;
+            _gStopMenu.CursorMode(true);
+            eImage.SetActive(true);
             goHereBreather.SetActive(false);
             _mainCSounds.PlayTutorialSound(2, "pc");
             var buttonInt = botonPosaMano.GetComponent<ButtonInteractable>();
@@ -106,6 +124,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void PlayTutorialThird()
         {
             _mainCSounds.PlayTutorialSound(3, "pc");
+        }
+
+        public void AttackImage()
+        {
+            izqImage.SetActive(true);
+        }
+
+        public void SetIsOnTutorialImageBool(bool condition)
+        {
+            IsOnTutorialImage = condition;
         }
     }
 }

@@ -1,10 +1,10 @@
-using System;
 using System.Collections;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using _WeAreAthomic.SCRIPTS.Props;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace _WeAreAthomic.SCRIPTS.Props
+namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {
     public class LabThirdRoomController : MonoBehaviour
     {
@@ -12,6 +12,8 @@ namespace _WeAreAthomic.SCRIPTS.Props
         private MainCChargingSwordSphereTarget _chargingSwordSphereTarget;
         private MainCAttack _mainCAttack;
         private MainCSounds _mainCSounds;
+        private GStopMenu _gStopMenu;
+        private MainCTutorialChecker _mainCTutorial;
 
         [SerializeField] private GameObject wave1;
         [SerializeField] private GameObject wave2;
@@ -41,6 +43,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
             _mainCAttack = _playerObj.GetComponent<MainCAttack>();
             _chargingSwordSphereTarget = _playerObj.GetComponent<MainCChargingSwordSphereTarget>();
             _mainCSounds = _playerObj.GetComponent<MainCSounds>();
+            _mainCTutorial = _playerObj.GetComponent<MainCTutorialChecker>();
         }
 
         private void Start()
@@ -104,6 +107,8 @@ namespace _WeAreAthomic.SCRIPTS.Props
                     }
                     if(_isWave1)
                     {
+                        _mainCTutorial.AttackImage();
+                        _gStopMenu.CursorMode(true);
                         _mainCSounds.PlayTutorialSound(4, "pc");
                         _mainCAttack.EnableCanAttack();
                     }

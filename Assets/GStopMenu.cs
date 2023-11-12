@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GStopMenu : MonoBehaviour
 {
     private PlayerInputActions _playerInputActions;
+    private MainCTutorialChecker _mainCTutorial;
 
     [SerializeField] private GameObject mainMenuObj;
 
@@ -13,6 +15,8 @@ public class GStopMenu : MonoBehaviour
 
     private void Awake()
     {
+        _mainCTutorial = GetComponent<MainCTutorialChecker>();
+        
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Enable();
         _playerInputActions.Player.Escape.performed += ToggleMenu;
@@ -24,24 +28,26 @@ public class GStopMenu : MonoBehaviour
 
     private void ToggleMenu(InputAction.CallbackContext context)
     {
-        if (_isActive)
+        if (!_mainCTutorial.IsOnTutorialImage)
         {
-            mainMenuObj.SetActive(false);
-            Debug.Log("hola");
-            CursorMode(false);
-            GameManagerSingleton.Instance.PauseGame(false);
-            FreezeTime(false);
-            _isActive = false;
+            if (_isActive)
+            {
+                mainMenuObj.SetActive(false);
+                Debug.Log("hola");
+                CursorMode(false);
+                GameManagerSingleton.Instance.PauseGame(false);
+                FreezeTime(false);
+                _isActive = false;
+            }
+            else
+            {
+                mainMenuObj.SetActive(true);
+                CursorMode(true);
+                GameManagerSingleton.Instance.PauseGame(true);
+                FreezeTime(true);
+                _isActive = true;
+            }
         }
-        else
-        {
-            mainMenuObj.SetActive(true);
-            CursorMode(true);
-            GameManagerSingleton.Instance.PauseGame(true);
-            FreezeTime(true);
-            _isActive = true;
-        }
-
 
 
     }

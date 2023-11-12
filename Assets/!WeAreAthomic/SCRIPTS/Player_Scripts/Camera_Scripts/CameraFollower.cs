@@ -13,6 +13,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
         private PlayerInput _playerInput;
         protected PlayerInputActions _playerInputActions;
         private MainCPistol _mainCPistol;
+        private MainCTutorialChecker _mainCTutorial;
 
         protected Quaternion LocalRotation;
 
@@ -39,6 +40,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
         {
             cameraFollow = GameObject.FindGameObjectWithTag("Camera_Follow").transform;
             _mainCPistol = GameObject.FindGameObjectWithTag("Player").GetComponent<MainCPistol>();
+            _mainCTutorial = GameObject.FindGameObjectWithTag("Player").GetComponent<MainCTutorialChecker>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Camera.Enable();
@@ -49,7 +51,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 
         private protected virtual void Update()
         {
-            if (!GameManagerSingleton.Instance.isGamePaused)
+            if (!GameManagerSingleton.Instance.isGamePaused && !_mainCTutorial.IsOnTutorialImage)
             {
                 LookCamera();
             }

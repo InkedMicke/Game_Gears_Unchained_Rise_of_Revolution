@@ -114,10 +114,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCAnimator.SetAttackCountAnim(attackCount);
                 weaponObj.GetComponent<WrenchHitBox>().ClearList();
                 _canNextAttack = false;
-                if (_mainCLayers.isJumpLayerActive)
-                {
-                    _mainCLayers.DisableJumpLayer();
-                }
 
                 IsAttacking = true;
 

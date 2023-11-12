@@ -147,7 +147,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCAnimator.SetGrounded(true);
                     if (IsCrouch)
                     {
-                        _mainCLayers.DisableJumpLayer();
                     }
                     _timeGraceJumpPeriod = Time.time + timeNextJump;
                 }
@@ -366,7 +365,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void InvokeDisableAllLayers()
         {
             _mainCLayers.DisableCrouchLayer();
-            _mainCLayers.DisableJumpLayer();
             _mainCLayers.DisableAttackLayer();
             _mainCLayers.DisablePistolLayer();
         }

@@ -116,7 +116,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _isFalling = false;
                     //_anim.SetBool(string.Format("isGrounded"), true);
                     //_anim.SetBool(string.Format("isFalling"), false);
-                    _mainCLayers.DisableJumpLayer();
                 }
             }
 
@@ -133,7 +132,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 CanJumpOnRail = true;
                 GetRailGameObject();
                 GetAllTransforms();
-                _mainCLayers.DisableJumpLayer();
                 _mainCAnimator.SetGrounded(true);
                 _mainCAnimator.SetFalling(false);
                 _mainCAnimator.SetJumping(false);
