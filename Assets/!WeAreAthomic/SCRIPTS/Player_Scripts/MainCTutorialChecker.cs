@@ -103,6 +103,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void PlayTutorialOne()
         {
+            _mainCSounds.RemoveAllSounds();
             _mainCSounds.PlayTutorialSound(1, "pc");
             var healthBreather = breatherObj.GetComponent<HealthBreather>();
             healthBreather.EnableBreather();

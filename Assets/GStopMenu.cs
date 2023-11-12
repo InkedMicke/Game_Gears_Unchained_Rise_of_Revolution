@@ -66,7 +66,7 @@ public class GStopMenu : MonoBehaviour
             mainMenuObj.SetActive(true);
             CursorMode(false);
             GameManagerSingleton.Instance.PauseGame(false);
-            FreezeTime(_isActive);
+            FreezeTime(false);
             _isActive = false;
         }
         else
