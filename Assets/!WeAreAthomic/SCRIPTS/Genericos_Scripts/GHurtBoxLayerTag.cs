@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,7 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos
         public bool enabled;
         public LayerMask detectionLayer;
         public string detectionTag;
-        public DetectionType detectionType; // Agregamos el tipo de detección
+        public DetectionType detectionType; // Agregamos el tipo de detecciÃ³n
         public UnityEvent eventsToActivate;
         public string additionalInfo;
     }
@@ -43,7 +44,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos
             {
                 if (detectionInfo.enabled &&
                     ((detectionInfo.detectionLayer & (1 << other.gameObject.layer)) != 0) &&
-                    detectionInfo.detectionType == detectionType) // Comprobamos si la capa y el tipo de detección coinciden
+                    detectionInfo.detectionType == detectionType) // Comprobamos si la capa y el tipo de detecciÃ³n coinciden
                 {
                     if (other.CompareTag(detectionInfo.detectionTag))
                     {

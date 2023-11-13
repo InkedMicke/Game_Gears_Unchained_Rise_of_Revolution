@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using _WeAreAthomic.SCRIPTS.Genericos;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos
+namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 {
     [System.Serializable]
     public struct DetectionInfoLayer
