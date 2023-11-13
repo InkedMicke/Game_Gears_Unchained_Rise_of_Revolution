@@ -253,7 +253,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _currentPipe = hit.collider.gameObject;
                     if (_isFirstJump)
                     {
-                        Debug.Log("hola");
                         _gStopMenu.FreezeTime(false);
                         spaceTutCanvas.SetActive(false);
                         _isFirstJump = false;
