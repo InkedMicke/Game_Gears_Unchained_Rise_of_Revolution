@@ -16,6 +16,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCMovement _mainCMove;
         private MainCAnimatorController _mainCAnimator;
         private MainCPistol _mainCPistol;
+        private GStopMenu _gStopMenu;
 
         private Scene _currentScene;
 
@@ -48,6 +49,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool _isFalling;
         private bool _haveFirstTransfrom;
         private bool _isFirstJump = true;
+        private bool _isCanvasJump;
 
         private int _childActual = 0;
 
@@ -64,6 +66,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCMove = GetComponent<MainCMovement>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _mainCPistol = GetComponent<MainCPistol>();
+            _gStopMenu = GetComponent<GStopMenu>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Player.Enable();
@@ -77,9 +80,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 _railCols = Physics.OverlapSphere(groundCheck.position, .3f, railLayer);
                 StartSliding();
-                if (_isFirstJump && ThereIsObstacle())
+                if (!_isCanvasJump && ThereIsObstacle())
                 {
-             
+                    spaceTutCanvas.SetActive(true);
+                    _gStopMenu.FreezeTime(true);
+                    _isCanvasJump = true;
                 }
             }
             else
@@ -246,6 +251,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (Physics.Raycast(ray, out var hit, 4f, obstacleLayer))
                 {
                     _currentPipe = hit.collider.gameObject;
+                    if (_isFirstJump)
+                    {
+                        Debug.Log("hola");
+                        _gStopMenu.FreezeTime(false);
+                        spaceTutCanvas.SetActive(false);
+                        _isFirstJump = false;
+                    }
+                    
                     if (Vector3.Distance(hit.collider.gameObject.transform.position, transform.position) > 1.5f)
                     {
                         _mainCAnimator.SetSliding(false);
