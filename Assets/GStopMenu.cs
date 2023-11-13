@@ -61,6 +61,7 @@ public class GStopMenu : MonoBehaviour
 
     public void ToggleToggleMenuCallable()
     {
+        Debug.Log("hola1");
         if (_isActive)
         {
             mainMenuObj.SetActive(true);

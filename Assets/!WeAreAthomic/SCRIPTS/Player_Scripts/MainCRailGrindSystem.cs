@@ -22,6 +22,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Collider[] _railCols;
 
         [SerializeField] private GameObject meshObj;
+        [SerializeField] private GameObject spaceTutCanvas;
         private GameObject _currentPipe;
         private GameObject _currentRail;
 
@@ -46,6 +47,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool _isJumping;
         private bool _isFalling;
         private bool _haveFirstTransfrom;
+        private bool _isFirstJump = true;
 
         private int _childActual = 0;
 
@@ -75,6 +77,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 _railCols = Physics.OverlapSphere(groundCheck.position, .3f, railLayer);
                 StartSliding();
+                if (_isFirstJump && ThereIsObstacle())
+                {
+             
+                }
             }
             else
             {
@@ -92,20 +98,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (CanJumpOnRail)
                 {
                     CanJumpOnRail = false;
-                }
-            }
-
-            if (IsOnRail())
-            {
-                if (_isJumping && _velocity.y < 0)
-                {
-                    _isJumping = false;
-                    _isFalling = true;
-                }
-
-                if (_isFalling)
-                {
-                    _isFalling = false;
                 }
             }
 

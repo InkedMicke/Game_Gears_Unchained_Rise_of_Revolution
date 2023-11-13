@@ -44,6 +44,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _chargingSwordSphereTarget = _playerObj.GetComponent<MainCChargingSwordSphereTarget>();
             _mainCSounds = _playerObj.GetComponent<MainCSounds>();
             _mainCTutorial = _playerObj.GetComponent<MainCTutorialChecker>();
+            _gStopMenu = _playerObj.GetComponent<GStopMenu>();
         }
 
         private void Start()
