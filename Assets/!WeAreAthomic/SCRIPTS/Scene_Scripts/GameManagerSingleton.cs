@@ -17,6 +17,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public List<GameObject> closestGameObjectsList;
 
     public bool isGamePaused;
+    public bool thereIsCanvasBelow;
 
     public int sensivityX;
     public int sensivityY;
@@ -90,6 +91,11 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         {
             sensivityY = value;
         }
+    }
+
+    public void SetThereIsCanvasBelow(bool condition)
+    {
+        thereIsCanvasBelow = condition;
     }
 
 

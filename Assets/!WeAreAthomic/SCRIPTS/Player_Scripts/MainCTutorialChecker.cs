@@ -57,6 +57,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 IsOnTutorial = true;
                 goHereMove.SetActive(true);
                 wasdImage.SetActive(true);
+                GameManagerSingleton.Instance.SetThereIsCanvasBelow(true);
                 _gStopMenu.CursorMode(true);
                 _gStopMenu.FreezeTime(true);
                 StartCoroutine(CheckHealth());
@@ -116,6 +117,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             IsOnTutorialImage = true;
             _gStopMenu.CursorMode(true);
             _gStopMenu.FreezeTime(true);
+            GameManagerSingleton.Instance.SetThereIsCanvasBelow(true);
             eImage.SetActive(true);
             goHereBreather.SetActive(false);
             _mainCSounds.PlayTutorialSound(2, "pc");

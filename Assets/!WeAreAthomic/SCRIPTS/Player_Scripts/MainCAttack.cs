@@ -84,7 +84,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (!_mainCChargingSwordSphere.IsSlidingOnEnemies)
             {
-                StopCoroutine(Sheath());
+
             }
 
             _currentTimeSheath = Time.time;
@@ -92,7 +92,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void MouseUp(InputAction.CallbackContext context)
         {
-            StartCoroutine(Sheath());
+
             Attack();
         }
 
@@ -135,7 +135,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        private IEnumerator Sheath()
+        /*private IEnumerator Sheath()
         {
             var enable = true;
 
@@ -149,11 +149,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                 yield return new WaitForSeconds(0.01f);
             }
-        }
+        }*/
 
         public void StopSheathCoroutine()
         {
-            StopCoroutine(Sheath());
+
         }
 
         private void NextCombo(InputAction.CallbackContext context)

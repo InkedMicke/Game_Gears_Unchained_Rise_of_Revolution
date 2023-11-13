@@ -63,6 +63,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             {
                 seActivaCuandoLasOleadasTerminan.Invoke();
                 //_mainCAttack.EnableCanAttack();
+                _mainCAttack.HideWeapon();
                 IsWave2 = false;
             }
         }
@@ -108,6 +109,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                     }
                     if(_isWave1)
                     {
+                        _mainCTutorial.SetIsOnTutorialImageBool(true);
                         _mainCTutorial.AttackImage();
                         _gStopMenu.CursorMode(true);
                         _gStopMenu.FreezeTime(true);
