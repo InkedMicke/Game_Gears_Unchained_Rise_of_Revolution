@@ -17,7 +17,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCAnimatorController _mainCAnimator;
         private MainCPistol _mainCPistol;
 
-        private UnityEngine.SceneManagement.Scene _currentScene;
+        private Scene _currentScene;
 
         private Collider[] _railCols;
 
@@ -50,11 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private int _childActual = 0;
 
         [SerializeField] private float railSpeed = .1f;
-        [SerializeField] private float railSpeedBoost = 30f;
         [SerializeField] private float rotationSpeed = 5f;
-        [SerializeField] private float gravityRail = -15f;
-        [SerializeField] private float jumpForceRail = 10f;
-        [SerializeField] private float jumpDelay = .5f;
         
         public List<Transform> directionsList = new List<Transform>();
 
@@ -69,8 +65,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Player.Enable();
-            //_playerInputActions.Player.Running.started += IncreaseBoost;
-            //_playerInputActions.Player.Running.canceled += DrecreaseBoost;
             _playerInputActions.Player.Jump.performed += Jump;
         }
 
@@ -106,21 +100,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (_isJumping && _velocity.y < 0)
                 {
                     _isJumping = false;
-                    //_anim.SetBool(string.Format("isFalling"), true);
-                    //_anim.SetBool(string.Format("isJumping"), false);
                     _isFalling = true;
                 }
 
                 if (_isFalling)
                 {
                     _isFalling = false;
-                    //_anim.SetBool(string.Format("isGrounded"), true);
-                    //_anim.SetBool(string.Format("isFalling"), false);
                 }
             }
 
             Slide();
-            //_cc.Move(_velocity * Time.deltaTime);
         }
 
         public void StartSliding()

@@ -45,7 +45,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Update()
         {
-            Debug.Log(IsOnTutorialImage);
+
         }
 
         private void Start()
@@ -58,6 +58,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 goHereMove.SetActive(true);
                 wasdImage.SetActive(true);
                 _gStopMenu.CursorMode(true);
+                _gStopMenu.FreezeTime(true);
                 StartCoroutine(CheckHealth());
                 StartCoroutine(CheckHacking());
             }
@@ -114,6 +115,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             IsOnTutorialImage = true;
             _gStopMenu.CursorMode(true);
+            _gStopMenu.FreezeTime(true);
             eImage.SetActive(true);
             goHereBreather.SetActive(false);
             _mainCSounds.PlayTutorialSound(2, "pc");

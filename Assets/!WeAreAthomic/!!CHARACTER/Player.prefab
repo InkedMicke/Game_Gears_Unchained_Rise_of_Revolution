@@ -1318,7 +1318,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   attackCount: 0
-  timeNextAttack: 0.05
+  timeNextAttack: 0.1
   nearEnemieToGoFloat: 2
   rotationNearEnemie: 8
   hideWeaponTimer: 8
@@ -1403,11 +1403,7 @@ MonoBehaviour:
   labScene: S2_LABTUTORIAL
   sewerScene: S4_SEWERS_UNDERTHECITY
   railSpeed: 5
-  railSpeedBoost: 30
   rotationSpeed: 30
-  gravityRail: -40
-  jumpForceRail: 22
-  jumpDelay: 0.5
   directionsList: []
 --- !u!114 &1222688078557824484
 MonoBehaviour:
@@ -1439,7 +1435,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   damageMultiplier: 1.05
-  circleShrinkSpeed: 2
+  minCircleShrinkSpeed: 2
+  maxCircleShrinkSpeed: 4
   minCircleSize: 1
   maxCircleSize: 4
   maxSphereSize: 500
@@ -1561,6 +1558,9 @@ MonoBehaviour:
   goHereMove: {fileID: 0}
   goHereBreather: {fileID: 0}
   goHerePosaMano: {fileID: 0}
+  wasdImage: {fileID: 0}
+  eImage: {fileID: 0}
+  izqImage: {fileID: 0}
 --- !u!114 &4726374708334233649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2682,7 +2682,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6985355343345509885}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.89303, y: 6.6035285, z: 11.128022}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

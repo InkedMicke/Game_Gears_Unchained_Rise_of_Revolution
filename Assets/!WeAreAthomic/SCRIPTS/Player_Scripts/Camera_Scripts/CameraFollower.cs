@@ -44,9 +44,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Camera.Enable();
-
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
         }
 
         private protected virtual void Update()

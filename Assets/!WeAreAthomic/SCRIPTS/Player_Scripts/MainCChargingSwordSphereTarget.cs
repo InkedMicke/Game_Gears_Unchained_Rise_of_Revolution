@@ -19,6 +19,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCSwitchWeapon _mainCSwitch;
         private PlayerInputActions _playerInputActions;
         private MainCAnimatorController _mainCAnimator;
+        private MainCMovement _mainCMove;
 
         [SerializeField] private GameObject sphereDetectorObj;
         [SerializeField] private GameObject groundTr;
@@ -51,11 +52,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
 
         [SerializeField] private float damageMultiplier = 1.05f;
-        [SerializeField] private float circleShrinkSpeed = 2f;
+        [SerializeField] private float minCircleShrinkSpeed = 2f;
+        [SerializeField] private float maxCircleShrinkSpeed = 4f;
         [SerializeField] private float minCircleSize = 1f;
         [SerializeField] private float maxCircleSize = 4f;
         [SerializeField] private float maxSphereSize = 500f;
         [SerializeField] private float circleSizeGrowSpeed = 1f;
+        private float _currentCircleShrinkSpeed;
         private float _layerMultiplier;
         private float _currentAnimLength;
         private float _currentFOV;
@@ -89,6 +92,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCameraObj = GameObject.FindGameObjectWithTag(string.Format("MainCamera"));
             _mainCamera = _mainCameraObj.GetComponent<Camera>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
+            _mainCMove = GetComponent<MainCMovement>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -136,7 +140,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void StartChargingSword()
         {
-            if (_typeOfAttack == TypeOfAttack.ChargedAttack && !IsSlidingOnEnemies && Time.time > _totalCooldown && !_mainCSwitch.isUsingPistol && HasUnlockedAbility)
+            if (_typeOfAttack == TypeOfAttack.ChargedAttack && !IsSlidingOnEnemies && Time.time > _totalCooldown && !_mainCSwitch.isUsingPistol && HasUnlockedAbility && _mainCMove.IsGrounded())
             {
                 arrowDisplayer = GameObject.FindGameObjectsWithTag("ArrowDisplayer");
 
@@ -319,7 +323,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             Time.timeScale = 0.08f;
             _currentCircleSize = maxCircleSize;
 
-            circleShrinkSpeed = Random.Range(1f, 3f);
+            _currentCircleShrinkSpeed = Random.Range(minCircleShrinkSpeed, maxCircleShrinkSpeed);
 
             circleImage.gameObject.SetActive(true);
             circleImage.transform.localScale = Vector3.one * _currentCircleSize;
@@ -330,7 +334,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (_canQuickTimeEvent)
             {
-                var shrinkAmount = circleShrinkSpeed * Time.unscaledDeltaTime;
+                var shrinkAmount = _currentCircleShrinkSpeed * Time.unscaledDeltaTime;
                 _currentCircleSize -= shrinkAmount;
                 _currentCircleSize = Mathf.Clamp(_currentCircleSize, minCircleSize, maxCircleSize);
 

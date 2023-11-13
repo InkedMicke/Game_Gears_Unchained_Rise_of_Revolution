@@ -31,6 +31,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [System.NonSerialized] public bool IsAttacking;
         [System.NonSerialized] public bool CanDealDamage;
         [System.NonSerialized] public bool CanMove;
+        [System.NonSerialized] public bool IsFinalAttacking;
         private bool _clickedOnTime;
         private bool _canNextAttack;
         private bool _isSheathed;
@@ -62,14 +63,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
-            //_playerInputActions.Player.Attack.canceled += Attack;
             _playerInputActions.Player.Attack.performed += NextCombo;
             _playerInputActions.Player.Attack.performed += MouseDown;
             _playerInputActions.Player.Attack.canceled += MouseUp;
 
             _weaponBC = weaponObj.GetComponent<BoxCollider>();
             _canAttack = false;
-            
+
             base.Awake();
         }
 
@@ -77,7 +77,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             _currentScene = SceneManager.GetActiveScene();
 
-  
+
         }
 
         private void MouseDown(InputAction.CallbackContext context)
@@ -86,7 +86,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 StopCoroutine(Sheath());
             }
-            
+
             _currentTimeSheath = Time.time;
         }
 
@@ -98,7 +98,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Attack()
         {
-            if (CanAttack() && _isSheathed|| _railGrindSystem.IsOnRail() && CanAttack())
+            if (CanAttack() && _isSheathed || _railGrindSystem.IsOnRail() && CanAttack())
             {
                 if (_mainCTutorial.IsOnTutorial && !_attackTutorial)
                 {
@@ -109,7 +109,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                 _mainCLayers.EnableAttackLayer();
                 _mainCSounds.StopAttackSound();
-                _mainCSounds.PlayAttackSound();
                 attackCount++;
                 _mainCAnimator.SetAttackCountAnim(attackCount);
                 weaponObj.GetComponent<WrenchHitBox>().ClearList();
@@ -161,19 +160,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (_canNextAttack && !_mainCChargingSwordSphere.IsSlidingOnEnemies && IsAttacking)
             {
-                if (attackCount == 1)
+                if (attackCount == 2)
                 {
-                    _mainCSounds.StopAttackSound();
-                    _mainCSounds.PlayAttackSound();
+                    _mainCLayers.EnableFinalAttackLayer();
                     attackCount++;
                     _mainCAnimator.SetAttackCountAnim(attackCount);
                     _canNextAttack = false;
+                    IsFinalAttacking = true;
                 }
                 else
                 {
                     _mainCSounds.StopAttackSound();
-                    _mainCSounds.PlayAttackSound();
-                    SetAttackCount(1);
+                    attackCount++;
+                    _mainCAnimator.SetAttackCountAnim(attackCount);
                     _canNextAttack = false;
                 }
             }
@@ -189,8 +188,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             attackCount = 0;
             _mainCAnimator.SetAttackCountAnim(attackCount);
             _mainCLayers.DisableAttackLayer();
+            _mainCLayers.DisableFinalAttackLayer();
             timeGraceAttackPeriod = Time.time + timeNextAttack;
             DisableNextAttack();
+            IsFinalAttacking = false;
+            Debug.Log("hola");
         }
 
         public void EnableWeaponCollision()

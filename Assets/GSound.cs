@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class GSound : MonoBehaviour
 {
-    [SerializeField] AudioSource audioSource;
-    [SerializeField] AudioSource audioSourceTwo;
-    [SerializeField] AudioClip inClip;
-    [SerializeField] AudioClip bucleClip;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSourceTwo;
+    [SerializeField] private AudioClip inClip;
+    [SerializeField] private AudioClip bucleClip;
 
     private double musicDuration;
     private double goalTime;

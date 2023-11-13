@@ -110,7 +110,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void Update()
         {
             AnimatorController();
-            if (_canMove && !_godMode.isGodModeEnabled && !_railGrindSystem.CanJumpOnRail && !_mainCHacking.isHackingAnim)
+            if (_canMove && !_godMode.isGodModeEnabled && !_railGrindSystem.CanJumpOnRail && !_mainCHacking.isHackingAnim && !_mainCAttack.IsFinalAttacking)
             {
                 MoveKeyboard();
                 MoveGamepad();

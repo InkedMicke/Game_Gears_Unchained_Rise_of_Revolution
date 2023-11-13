@@ -83,13 +83,13 @@ public class GStopMenu : MonoBehaviour
     {
         if (condition)
         {
-            Cursor.visible = Cursor.visible;
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else
         {
-            Cursor.visible = !Cursor.visible;
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
     }

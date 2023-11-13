@@ -101,6 +101,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             StartCoroutine(nameof(DisableAttackCoroutine));
         }
+        
+        public void EnableFinalAttackLayer()
+        {
+            StartCoroutine(nameof(EnableFinalAttackCoroutine));
+        }
 
         public void DisableFinalAttackLayer()
         {

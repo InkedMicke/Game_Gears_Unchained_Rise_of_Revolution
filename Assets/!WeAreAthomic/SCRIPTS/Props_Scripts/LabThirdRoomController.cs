@@ -109,6 +109,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                     {
                         _mainCTutorial.AttackImage();
                         _gStopMenu.CursorMode(true);
+                        _gStopMenu.FreezeTime(true);
                         _mainCSounds.PlayTutorialSound(4, "pc");
                         _mainCAttack.EnableCanAttack();
                     }
