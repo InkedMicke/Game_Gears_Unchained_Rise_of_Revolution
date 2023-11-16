@@ -1202,7 +1202,7 @@ Transform:
   - {fileID: 5167669464062509496}
   - {fileID: 7354184153273855085}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &9001425476625582167
 Animator:
@@ -1693,9 +1693,10 @@ MonoBehaviour:
     m_Bits: 512
   mainCameraObj: {fileID: 0}
   bastetObj: {fileID: 8877340787400799380}
-  bastetPos: {fileID: 0}
   maxShoots: 8
   currentShoots: 0
+  radiusCheck: 8
+  attackCooldown: 10
   _bastetPositions: []
 --- !u!1 &4735085097479858567
 GameObject:

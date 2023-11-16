@@ -161,15 +161,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SecondBastetAttack"",
-                    ""type"": ""Button"",
-                    ""id"": ""f2327783-210b-4865-89f6-90371f23e0ab"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -436,17 +427,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""BastetAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""20cbc5eb-e07d-4533-9876-8c23273b38fb"",
-                    ""path"": ""<Keyboard>/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""SecondBastetAttack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -532,7 +512,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_QuitWindow = m_Player.FindAction("QuitWindow", throwIfNotFound: true);
         m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
         m_Player_BastetAttack = m_Player.FindAction("BastetAttack", throwIfNotFound: true);
-        m_Player_SecondBastetAttack = m_Player.FindAction("SecondBastetAttack", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
@@ -612,7 +591,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_QuitWindow;
     private readonly InputAction m_Player_Escape;
     private readonly InputAction m_Player_BastetAttack;
-    private readonly InputAction m_Player_SecondBastetAttack;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -632,7 +610,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @QuitWindow => m_Wrapper.m_Player_QuitWindow;
         public InputAction @Escape => m_Wrapper.m_Player_Escape;
         public InputAction @BastetAttack => m_Wrapper.m_Player_BastetAttack;
-        public InputAction @SecondBastetAttack => m_Wrapper.m_Player_SecondBastetAttack;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -687,9 +664,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @BastetAttack.started += instance.OnBastetAttack;
             @BastetAttack.performed += instance.OnBastetAttack;
             @BastetAttack.canceled += instance.OnBastetAttack;
-            @SecondBastetAttack.started += instance.OnSecondBastetAttack;
-            @SecondBastetAttack.performed += instance.OnSecondBastetAttack;
-            @SecondBastetAttack.canceled += instance.OnSecondBastetAttack;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -739,9 +713,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @BastetAttack.started -= instance.OnBastetAttack;
             @BastetAttack.performed -= instance.OnBastetAttack;
             @BastetAttack.canceled -= instance.OnBastetAttack;
-            @SecondBastetAttack.started -= instance.OnSecondBastetAttack;
-            @SecondBastetAttack.performed -= instance.OnSecondBastetAttack;
-            @SecondBastetAttack.canceled -= instance.OnSecondBastetAttack;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -849,7 +820,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnQuitWindow(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
         void OnBastetAttack(InputAction.CallbackContext context);
-        void OnSecondBastetAttack(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {
