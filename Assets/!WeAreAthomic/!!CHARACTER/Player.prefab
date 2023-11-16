@@ -1170,6 +1170,7 @@ GameObject:
   - component: {fileID: 4726374708334233649}
   - component: {fileID: 530178520698779527}
   - component: {fileID: 8632621977099333197}
+  - component: {fileID: 6487485381381677035}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1199,8 +1200,9 @@ Transform:
   - {fileID: 338022193008267308}
   - {fileID: 3948687345738380154}
   - {fileID: 5167669464062509496}
+  - {fileID: 7354184153273855085}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &9001425476625582167
 Animator:
@@ -1393,6 +1395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshObj: {fileID: 7823193721348096083}
+  spaceTutCanvas: {fileID: 0}
   groundCheck: {fileID: 7110690699828480967}
   railLayer:
     serializedVersion: 2
@@ -1673,6 +1676,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuObj: {fileID: 0}
+--- !u!114 &6487485381381677035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537249443240097638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8040ab084db48c24faeb454eed8cd310, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  mainCameraObj: {fileID: 0}
+  bastetObj: {fileID: 8877340787400799380}
+  bastetPos: {fileID: 0}
+  maxShoots: 8
+  currentShoots: 0
+  _bastetPositions: []
 --- !u!1 &4735085097479858567
 GameObject:
   m_ObjectHideFlags: 0
@@ -3285,6 +3309,37 @@ Transform:
   m_Children:
   - {fileID: 9081394191538656695}
   m_Father: {fileID: 1573852063160189145}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8877340787400799380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7354184153273855085}
+  m_Layer: 0
+  m_Name: BastetPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7354184153273855085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8877340787400799380}
+  m_LocalRotation: {x: 0.014682938, y: -0.068037644, z: -0.00067477534, w: -0.9975745}
+  m_LocalPosition: {x: -0.4458561, y: 1.6695375, z: 0.36693764}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4836088337714508785}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9144513608735900210

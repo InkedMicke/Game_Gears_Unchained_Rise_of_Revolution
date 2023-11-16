@@ -1,5 +1,98 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1932455586621201131
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7309832536005357205}
+  m_Layer: 0
+  m_Name: Muzzle1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7309832536005357205
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932455586621201131}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.085, y: 0.441, z: 0.673}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8945087017680515055}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2444213450758543565
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6904651028372263631}
+  m_Layer: 0
+  m_Name: Muzzle1 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6904651028372263631
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2444213450758543565}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.63, z: 0.673}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8945087017680515055}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4112577279208312132
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5234531217450931768}
+  m_Layer: 0
+  m_Name: Muzzle1 (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5234531217450931768
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4112577279208312132}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.064, y: 0.428, z: 0.673}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8945087017680515055}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7742863919281744262
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,6 +126,9 @@ Transform:
   - {fileID: 4730658663486940919}
   - {fileID: 4596872235904242389}
   - {fileID: 5667294924852170426}
+  - {fileID: 7309832536005357205}
+  - {fileID: 6904651028372263631}
+  - {fileID: 5234531217450931768}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48,10 +144,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e791e9828751da2429339683b6e06809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerObj: {fileID: 0}
   playerRightArm: {fileID: 0}
-  scannerObj: {fileID: 3783180220838561903}
+  scannerObj1: {fileID: 3783180220838561903}
+  scannerObj2: {fileID: 5038848595361551360}
+  bullet: {fileID: 3384922681658142711, guid: 1184a5557d14e9e4fb610494955412d7, type: 3}
+  bastetPos: {fileID: 0}
   moveSpeed: 50
   rotateSpeed: 1
+  attackMoveSpeed: 20
+  bastetMoveSpeed: 1
+  shootCount: 6
+  muzzles:
+  - {fileID: 7309832536005357205}
+  - {fileID: 6904651028372263631}
+  - {fileID: 5234531217450931768}
 --- !u!143 &5711135010223839244
 CharacterController:
   m_ObjectHideFlags: 0
@@ -150,6 +257,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ScannerFBX
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a512b038a12c3a342abcebe3056f81a1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -320,11 +432,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScannerFBX (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a512b038a12c3a342abcebe3056f81a1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a512b038a12c3a342abcebe3056f81a1, type: 3}
+--- !u!1 &5038848595361551360 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a512b038a12c3a342abcebe3056f81a1,
+    type: 3}
+  m_PrefabInstance: {fileID: 5272870499805653329}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5667294924852170426 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a512b038a12c3a342abcebe3056f81a1,

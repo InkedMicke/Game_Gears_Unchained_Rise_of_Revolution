@@ -1,5 +1,5 @@
 using System.Collections;
-using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot;
+using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts;
 using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using UnityEngine;
 using UnityEngine.UI;

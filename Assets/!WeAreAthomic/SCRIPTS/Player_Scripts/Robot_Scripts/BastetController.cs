@@ -1,30 +1,44 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Random = UnityEngine.Random;
+using Vector3 = UnityEngine.Vector3;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot
+namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
 {
     public class BastetController : MonoBehaviour
     {
-        CharacterController _cc;
+        private CharacterController _cc;
+        private MainCBastetAttack _mainCBastet;
 
-        private GameObject _playerObj;
+        [SerializeField] private GameObject playerObj;
         [SerializeField] private GameObject playerRightArm;
-        [SerializeField] private GameObject scannerObj;
+        [SerializeField] private GameObject scannerObj1;
+        [SerializeField] private GameObject scannerObj2;
+        [SerializeField] private GameObject bullet;
+
+        [SerializeField] private Transform bastetPos;
 
         [SerializeField] private float moveSpeed;
         [SerializeField] private float rotateSpeed = 0.1f;
+        [SerializeField] private float attackMoveSpeed = 5f;
+        [SerializeField] private float bastetMoveSpeed = 5f;
+
+        [SerializeField] private int shootCount = 6;
 
         private bool positive;
         private bool negative;
+        private bool _isShooting;
+        private bool _moveToBastetPos;
+
+        [SerializeField] private List<Transform> muzzles;
 
         private void Awake()
         {
             _cc = GetComponent<CharacterController>();
-        }
-
-        private void Start()
-        {
-            _playerObj = GameObject.FindGameObjectWithTag("Player");
+            _mainCBastet = playerObj.GetComponent<MainCBastetAttack>();
         }
 
         public void InvokeMoveToPlayer()
@@ -34,14 +48,30 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot
 
         public void InvokeRotation()
         {
-            scannerObj.SetActive(true);
+            ShowScanner();
             StartCoroutine(nameof(PositiveRotationX));
+        }
+
+        private void Update()
+        {
+            if (_moveToBastetPos)
+            {
+                var leftPos = playerObj.transform.position + Vector3.left;
+                var correctPos = new Vector3(leftPos.x, leftPos.y + 1.5f, leftPos.z);
+                var difference = correctPos - transform.position;
+                var moveDir = 3.5f * Time.deltaTime * difference.normalized;
+
+                if (Vector3.Distance(transform.position, correctPos) > 0.1f)
+                {
+                    _cc.Move(moveDir);
+                }
+            }
         }
 
         private IEnumerator MoveToPlayer()
         {
             var canEnableLayer = true;
-            scannerObj.SetActive(false);
+            HideScanner();
             while (canEnableLayer)
             {
                 var direction = playerRightArm.transform.position - transform.position;
@@ -124,6 +154,108 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot
 
                 yield return new WaitForSeconds(0.01f);
             }
+        }
+
+        public void StartMoveToAttackBastetPos(Transform bastetposs, GameObject enemy)
+        {
+            StartCoroutine(MoveToAttackBastetPos(bastetposs, enemy));
+        }
+
+        public void StartMoveToBastetPos(GameObject enemy)
+        {
+            _moveToBastetPos = true;
+            StartCoroutine(SecondShootEnemy(enemy));
+        }
+
+        private IEnumerator MoveToAttackBastetPos(Transform nextPos, GameObject enemy)
+        {
+            while (true)
+            {
+                var difference = nextPos.position - transform.position;
+                var moveDir = difference.normalized * (attackMoveSpeed * Time.deltaTime);
+                _cc.Move(moveDir);
+
+                var enemyPos = enemy.transform.position;
+                var lookAtFixed = new Vector3(enemyPos.x, enemyPos.y + .5f, enemyPos.z);
+                transform.LookAt(lookAtFixed);
+
+                if (Vector3.Distance(transform.position, nextPos.position) < 0.1f)
+                {
+                    _mainCBastet.SetCurrentShoots(_mainCBastet.currentShoots + 1);
+                    StartCoroutine(WaitForShoot(enemy));
+                    break;
+                }
+
+                yield return new WaitForSeconds(.01f);
+            }
+        }
+
+        private IEnumerator ShootEnemy(GameObject enemy)
+        {
+            yield return new WaitForSeconds(.2f);
+            var currentShoots = new int();
+            while (true)
+            {
+                var randomMuzzle = Random.Range(0, muzzles.Count);
+                var bulletObj = Instantiate(bullet, muzzles[randomMuzzle].position, Quaternion.identity);
+                var enemyPos = enemy.transform.position;
+                var lookAtFixed = new Vector3(enemyPos.x, enemyPos.y + .5f, enemyPos.z);
+                bulletObj.transform.LookAt(lookAtFixed);
+                currentShoots++;
+                if (currentShoots > shootCount - 1)
+                {
+                    _mainCBastet.NextPos();
+                    break;
+                }
+                yield return new WaitForSeconds(.2f);
+            }
+        }
+
+        private IEnumerator SecondShootEnemy(GameObject enemy)
+        {
+            var currentShoots = new int();
+            while (true)
+            {
+                var randomMuzzle = Random.Range(0, muzzles.Count);
+                var bulletObj = Instantiate(bullet, muzzles[randomMuzzle].position, Quaternion.identity);
+                var enemyPos = enemy.transform.position;
+                var lookAtFixed = new Vector3(enemyPos.x, enemyPos.y + .5f, enemyPos.z);
+                bulletObj.transform.LookAt(lookAtFixed);
+                transform.LookAt(lookAtFixed);
+                currentShoots++;
+                if (currentShoots > 25)
+                {
+                    _moveToBastetPos = false;
+                    break;
+                }
+                yield return new WaitForSeconds(Random.Range(.1f, .3f));
+            }
+        }
+
+        private IEnumerator WaitForShoot(GameObject enemy)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            StartCoroutine(ShootEnemy(enemy));
+        }
+
+        public void PosRightHand()
+        {
+            _cc.enabled = false;
+            transform.position = playerRightArm.transform.position;
+            _cc.enabled = true;
+        }
+
+        public void HideScanner()
+        {
+            scannerObj1.SetActive(false);
+            scannerObj2.SetActive(false);
+        }
+
+        private void ShowScanner()
+        {
+            scannerObj1.SetActive(true);
+            scannerObj2.SetActive(true);
         }
     }
 }
