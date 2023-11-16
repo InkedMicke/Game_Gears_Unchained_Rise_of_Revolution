@@ -1,4 +1,4 @@
-Shader "Lpk/LightModel/ToonLightBase"
+Shader"Lpk/LightModel/ToonLightBase"
 {
     Properties
     {
@@ -22,6 +22,9 @@ Shader "Lpk/LightModel/ToonLightBase"
         [Space]   
         _OutlineWidth      ("OutlineWidth", Range(0.0, 1.0))      = 0.15
         _OutlineColor      ("OutlineColor", Color)                = (0.0, 0.0, 0.0, 1)
+        [Space] 
+        _MaskMap           ("MaskMap", 2D)                        = "black" {}
+        _EmissiveStrength  ("EmissiveStrength", Range(0.0, 1000.0))= 1.0
     }
     SubShader
     {
@@ -56,6 +59,7 @@ Shader "Lpk/LightModel/ToonLightBase"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
 
             TEXTURE2D(_BaseMap); SAMPLER(sampler_BaseMap);
+            TEXTURE2D(_MaskMap); SAMPLER(sampler_MaskMap);
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _BaseColor;
@@ -67,6 +71,7 @@ Shader "Lpk/LightModel/ToonLightBase"
                 float _RimStepSmooth;
                 float _RimStep;
                 float4 _RimColor;
+                float _EmissiveStrength;
             CBUFFER_END
 
             struct Attributes
@@ -139,6 +144,7 @@ Shader "Lpk/LightModel/ToonLightBase"
                 NL = NL * 0.5 + 0.5;
 
                 float4 baseMap = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, uv);
+                float4 emisiveMap = SAMPLE_TEXTURE2D(_MaskMap, sampler_MaskMap, uv);
 
                 // return NH;
                float specularNH = smoothstep((1-_SpecularStep * 0.05)  - _SpecularStepSmooth * 0.05, (1-_SpecularStep* 0.05)  + _SpecularStepSmooth * 0.05, NH) ;
@@ -162,7 +168,11 @@ Shader "Lpk/LightModel/ToonLightBase"
                 float3 ambient =  rim * _RimColor + SampleSH(N) * _BaseColor * baseMap;
             
                 float3 finalColor = diffuse + ambient + specular;
+    
                 finalColor = MixFog(finalColor, input.fogCoord);
+    
+                finalColor = finalColor * 1.0 + (emisiveMap.b * _EmissiveStrength);
+              
                 return float4(finalColor , 1.0);
             }
             ENDHLSL
