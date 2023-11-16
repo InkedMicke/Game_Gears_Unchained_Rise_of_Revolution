@@ -13,7 +13,7 @@ public class GreenSoliderController : EnemyAI
     [SerializeField] private Transform muzzle1;
     [SerializeField] private Transform muzzle2;
 
-    private float timeToCancelAttack;
+    private float _timeToCancelAttack;
 
     private void Awake()
     {
@@ -31,7 +31,7 @@ public class GreenSoliderController : EnemyAI
         if(distanceToPlayer < distanceToSlow && distanceToPlayer > distanceToAttack)
         {
             _agent.speed = originalSpeed * 0.7f;
-            var number += Time.deltaTime;
+            _timeToCancelAttack += Time.deltaTime;
             StopCoroutine(ShootCoroutine());
             StopCoroutine(_shootCoroutine);
         }

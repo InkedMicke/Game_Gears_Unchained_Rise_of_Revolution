@@ -6,10 +6,21 @@ using UnityEngine;
 public class BastetBulletHurtBox : MonoBehaviour
 {
 
+    private void Start()
+    {
+        StartCoroutine(WaitUntilDestroy());
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        var dummie = other.GetComponent<DummieHurtBox>();
-        dummie.TakeDamage(5);
+        other.GetComponent<DummieHurtBox>()?.TakeDamage(5);
+        Destroy(this.gameObject);
+    }
+
+    private IEnumerator WaitUntilDestroy()
+    {
+        yield return new WaitForSeconds(10f);
+
         Destroy(this.gameObject);
     }
 }

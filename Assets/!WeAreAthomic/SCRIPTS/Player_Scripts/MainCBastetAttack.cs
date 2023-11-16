@@ -26,8 +26,6 @@ public class MainCBastetAttack : MonoBehaviour
     [SerializeField] private float attackCooldown = 10f;
     private float _totalCooldown = 0f;
 
-    public List<Transform> _bastetPositions;
-
     private void Awake()
     {
         _bastetController = bastetObj.GetComponent<BastetController>();
@@ -39,8 +37,6 @@ public class MainCBastetAttack : MonoBehaviour
 
     private void CheckEnemy(InputAction.CallbackContext context)
     {
-        Debug.Log("_totalCooldown: " + _totalCooldown);
-        Debug.Log("Time.Time: " + Time.time);
         if (!_isBastetAttacking && Time.time > _totalCooldown)
         {
             Debug.Log("hola2");
@@ -84,10 +80,5 @@ public class MainCBastetAttack : MonoBehaviour
     public void SetCurrentShoots(int value)
     {
         currentShoots = value;
-    }
-
-    private int RandomPos()
-    {
-        return Random.Range(0, _bastetPositions.Count);
     }
 }
