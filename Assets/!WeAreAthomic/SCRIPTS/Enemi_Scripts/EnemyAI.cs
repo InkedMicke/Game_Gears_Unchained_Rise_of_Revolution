@@ -12,7 +12,7 @@ public class EnemyAI : MonoBehaviour
     protected bool _isShooting;
 
     protected float distanceToSlow = 6f;
-    protected float distanceToAttack = 5f;
+    protected float distanceToAttack = 3f;
     protected float originalSpeed;
 
     void Start()

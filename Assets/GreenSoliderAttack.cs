@@ -9,13 +9,14 @@ public class GreenSoliderAttack : EnemyAI
 {
     private CharacterController _cc;
     private GreenSoliderHurtBox _greenSoliderHurtBox;
-    
+
     private Coroutine _shootCoroutine;
 
     [SerializeField] private AnimationCurve moveToDecalCurve;
-    
+
     [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject decalGroup;
+    private GameObject _currentDecal;
 
     [SerializeField] private Transform muzzle1;
     [SerializeField] private Transform muzzle2;
@@ -43,50 +44,81 @@ public class GreenSoliderAttack : EnemyAI
         decalScale = new Vector3(decalScale.x, decalScale.z, _startDecalSize);
         decalGroup.transform.localScale = decalScale;
         decalGroup.SetActive(true);
-        StartCoroutine(DecalSize());
+        StartCoroutine(DecalSize("+", .08f));
     }
 
-    private IEnumerator ShootCoroutine(Transform shootPos)
+    private IEnumerator ShootCoroutine()
     {
         while (true)
         {
             yield return new WaitForSeconds(.2f);
-            SpawnBullet(muzzle2, shootPos);
+            SpawnBullet(muzzle2);
 
             yield return new WaitForSeconds(.2f);
-            SpawnBullet(muzzle1, shootPos);
+            SpawnBullet(muzzle1);
 
             yield return new WaitForSeconds(.4f);
-            SpawnBullet(muzzle1, shootPos);
-            SpawnBullet(muzzle2, shootPos);
+            SpawnBullet(muzzle1);
+            SpawnBullet(muzzle2);
 
             yield return new WaitForSeconds(.5f);
+
+            StartCoroutine(CheckIfPlayer());
         }
     }
 
-    private void SpawnBullet(Transform muzzle, Transform shootPos)
+    private void SpawnBullet(Transform muzzle)
     {
-        var bulletObj = Instantiate(bullet, muzzle.position, transform.rotation);
+        Instantiate(bullet, muzzle.position, transform.rotation);
     }
 
-    private IEnumerator DecalSize()
+    private IEnumerator DecalSize(string symbol, float speed)
     {
-        var decal = Instantiate(decalGroup, transform.position, Quaternion.identity);
+        _currentDecal = Instantiate(decalGroup, transform.position, Quaternion.identity);
         var desiredPos = new Vector3(_playerTr.position.x, transform.position.y, _playerTr.position.z);
-        decal.transform.LookAt(desiredPos);
+        _currentDecal.transform.LookAt(desiredPos);
 
-        
-        while (decal.transform.localScale.z < 3)
+        if (symbol == "+")
         {
-            var decalScale = decal.transform.localScale;
-            decalScale = new Vector3(decalScale.x, decalScale.y, decalScale.z + .08f);
-            decal.transform.localScale = decalScale;
-            yield return new WaitForSeconds(.01f);
+            while (_currentDecal.transform.localScale.z < 3)
+            {
+                var decalScale = _currentDecal.transform.localScale;
+                decalScale = new Vector3(decalScale.x, decalScale.y, decalScale.z + speed);
+                _currentDecal.transform.localScale = decalScale;
+                yield return new WaitForSeconds(.01f);
+            }
         }
 
-        var lasChild = decal.transform.GetChild(decal.transform.childCount - 1);
+        if (symbol == "-")
+        {
+            while (_currentDecal.transform.localScale.z >= 0.001)
+            {
+                var decalScale = _currentDecal.transform.localScale;
+                decalScale = new Vector3(decalScale.x, decalScale.y, decalScale.z - speed);
+                _currentDecal.transform.localScale = decalScale;
+                yield return new WaitForSeconds(.01f);
+            }
+        }
 
-        StartCoroutine(ShootCoroutine(lasChild));
+        StartCoroutine(ShootCoroutine());
+    }
+
+    private IEnumerator CheckIfPlayer()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2f);
+
+            var decalHurtBox = _currentDecal.GetComponentInChildren<GreenDecalHurtBox>();
+            if (!decalHurtBox.IsPlayerInside)
+            {
+                StopAllCoroutines();
+                StartCoroutine(DecalSize("-", .5f));
+                IsShooting = false;
+                IsAttacking = false;
+                break;
+            }
+        }
     }
 
     /*private IEnumerator MoveToDecal(Transform endDecal)
