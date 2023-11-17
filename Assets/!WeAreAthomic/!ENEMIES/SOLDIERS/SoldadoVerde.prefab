@@ -110,11 +110,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2.5
+  m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 540
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -159,11 +159,12 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   bullet: {fileID: 3870155545384615628, guid: 6668df61b445054438534e36b8999fea, type: 3}
-  decalGroup: {fileID: 3994202332644210171, guid: ea3eb521952fe554aa6d80dd4a5ff583,
+  decalGroupPrefab: {fileID: 2144513413979249121, guid: 048ef0c52208bc542bc70ac4e67313b7,
     type: 3}
   muzzle1: {fileID: 2827741574302047759}
   muzzle2: {fileID: 3290446843222741444}
   checkRadius: 4
+  totalColdown: 0
 --- !u!114 &8698530833825578607
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -22,12 +22,15 @@ public class GreenSoliderMovement : EnemyAI
     {
         if (!_soldierAttack.IsAttacking && !_soldierAttack.IsShooting)
         {
+            _agent.isStopped = false;
             _agent.SetDestination(_playerTr.position);
+            Debug.Log("IsAttacking: " + _soldierAttack.IsAttacking);
+            Debug.Log("IsShooting: " + _soldierAttack.IsShooting);
         }
 
         var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
 
-        if (distanceToPlayer < distanceToAttack && !_soldierAttack.IsAttacking)
+        if (distanceToPlayer < distanceToAttack && !_soldierAttack.IsAttacking && Time.time > _soldierAttack.totalColdown)
         {
             _agent.isStopped = true;
             _soldierAttack.StartDecal();
