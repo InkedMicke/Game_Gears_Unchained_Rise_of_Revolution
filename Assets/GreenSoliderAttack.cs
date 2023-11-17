@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class GreenSoliderAttack : EnemyAI
 {
@@ -19,7 +20,7 @@ public class GreenSoliderAttack : EnemyAI
     [SerializeField] private Transform muzzle1;
     [SerializeField] private Transform muzzle2;
 
-    private Transform _staticPlayerPos;
+    private Vector3 _staticPlayerPos;
 
     [System.NonSerialized] public bool IsAttacking;
     [System.NonSerialized] public bool IsShooting;
@@ -45,35 +46,36 @@ public class GreenSoliderAttack : EnemyAI
         StartCoroutine(DecalSize());
     }
 
-    private IEnumerator ShootCoroutine(Transform staticPlayerPos)
+    private IEnumerator ShootCoroutine(Transform shootPos)
     {
         while (true)
         {
-            yield return new WaitForSeconds(.3f);
-            SpawnBullet(muzzle2);
+            yield return new WaitForSeconds(.2f);
+            SpawnBullet(muzzle2, shootPos);
 
-            yield return new WaitForSeconds(.3f);
-            SpawnBullet(muzzle1);
+            yield return new WaitForSeconds(.2f);
+            SpawnBullet(muzzle1, shootPos);
+
+            yield return new WaitForSeconds(.4f);
+            SpawnBullet(muzzle1, shootPos);
+            SpawnBullet(muzzle2, shootPos);
 
             yield return new WaitForSeconds(.5f);
-            SpawnBullet(muzzle1);
-            SpawnBullet(muzzle2);
-
-            yield return new WaitForSeconds(2f);
         }
     }
 
-    private void SpawnBullet(Transform muzzle)
+    private void SpawnBullet(Transform muzzle, Transform shootPos)
     {
-        var bulletObj = Instantiate(bullet, muzzle.position, Quaternion.identity);
-        var desiredPos = new Vector3(_playerTr.position.x, _playerTr.position.y + 1f, _playerTr.position.z);
-
-        bulletObj.transform.LookAt(desiredPos);
+        var bulletObj = Instantiate(bullet, muzzle.position, transform.rotation);
     }
 
     private IEnumerator DecalSize()
     {
         var decal = Instantiate(decalGroup, transform.position, Quaternion.identity);
+        var desiredPos = new Vector3(_playerTr.position.x, transform.position.y, _playerTr.position.z);
+        decal.transform.LookAt(desiredPos);
+
+        
         while (decal.transform.localScale.z < 3)
         {
             var decalScale = decal.transform.localScale;
@@ -107,5 +109,7 @@ public class GreenSoliderAttack : EnemyAI
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, checkRadius);
+
+        Debug.DrawRay(muzzle1.transform.position, muzzle1.forward * 3);
     }
 }
