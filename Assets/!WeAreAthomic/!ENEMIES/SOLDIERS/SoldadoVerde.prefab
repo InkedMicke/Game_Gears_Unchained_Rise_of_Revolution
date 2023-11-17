@@ -72,7 +72,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6335478140936921992}
   - component: {fileID: 719572451470864634}
-  - component: {fileID: 7817696804965770630}
+  - component: {fileID: 6460584741221924923}
+  - component: {fileID: 8698530833825578607}
+  - component: {fileID: 5895939196809832073}
   m_Layer: 0
   m_Name: SoldadoVerde
   m_TagString: Untagged
@@ -120,7 +122,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7817696804965770630
+--- !u!114 &6460584741221924923
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,12 +131,77 @@ MonoBehaviour:
   m_GameObject: {fileID: 7970255392764161239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 925b252e18bf0a74dadc24e03e789200, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c9234f6c8d3f794394fc7b94acca848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 3870155545384615628, guid: 0b579e343ccd0464499461d298987ce6, type: 3}
+  moveToDecalCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  bullet: {fileID: 3870155545384615628, guid: 6668df61b445054438534e36b8999fea, type: 3}
+  decalGroup: {fileID: 3994202332644210171, guid: ea3eb521952fe554aa6d80dd4a5ff583,
+    type: 3}
   muzzle1: {fileID: 2827741574302047759}
   muzzle2: {fileID: 3290446843222741444}
+  checkRadius: 4
+--- !u!114 &8698530833825578607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7970255392764161239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35337b4a35fcea44b826d1a2100f6160, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!143 &5895939196809832073
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7970255392764161239}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Height: 1.88
+  m_Radius: 0.35
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.91, z: 0}
 --- !u!1 &8202827297792976926
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,6 +212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8187944273788698538}
   - component: {fileID: 6395735996969651420}
+  - component: {fileID: 1895518675992872253}
   m_Layer: 9
   m_Name: HurtBox
   m_TagString: Untagged
@@ -190,6 +258,18 @@ CapsuleCollider:
   m_Height: 2.53
   m_Direction: 1
   m_Center: {x: 0, y: 0.76, z: 0}
+--- !u!114 &1895518675992872253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8202827297792976926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5406e8702107ac4187e2b15583ea85b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6910679163857495755
 PrefabInstance:
   m_ObjectHideFlags: 0

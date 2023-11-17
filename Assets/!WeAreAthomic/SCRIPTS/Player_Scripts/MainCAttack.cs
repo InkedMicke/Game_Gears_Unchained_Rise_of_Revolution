@@ -17,7 +17,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private BoxCollider _weaponBC;
         private CharacterController _cc;
         private MainCTutorialChecker _mainCTutorial;
-        private MainCChargingSwordSphereTarget _mainCChargingSwordSphere;
 
         [SerializeField] private GameObject weaponObj;
 
@@ -59,7 +58,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _mainCSounds = GetComponent<MainCSounds>();
             _mainCTutorial = GetComponent<MainCTutorialChecker>();
-            _mainCChargingSwordSphere = GetComponent<MainCChargingSwordSphereTarget>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -82,11 +80,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void MouseDown(InputAction.CallbackContext context)
         {
-            if (!_mainCChargingSwordSphere.IsSlidingOnEnemies)
-            {
-
-            }
-
             _currentTimeSheath = Time.time;
         }
 
@@ -158,7 +151,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void NextCombo(InputAction.CallbackContext context)
         {
-            if (_canNextAttack && !_mainCChargingSwordSphere.IsSlidingOnEnemies && IsAttacking)
+            if (_canNextAttack && IsAttacking)
             {
                 if (attackCount == 2)
                 {
@@ -197,10 +190,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void EnableWeaponCollision()
         {
-            if (!_mainCChargingSwordSphere.IsSlidingOnEnemies)
-            {
-                weaponObj.GetComponent<BoxCollider>().enabled = true;
-            }
+            weaponObj.GetComponent<BoxCollider>().enabled = true;
         }
 
         public void DisableWeaponCollision()

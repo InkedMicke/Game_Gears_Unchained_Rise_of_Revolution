@@ -1161,7 +1161,6 @@ GameObject:
   - component: {fileID: 6326130830157195552}
   - component: {fileID: 6657087395990442550}
   - component: {fileID: 5090178159945674701}
-  - component: {fileID: 1222688078557824484}
   - component: {fileID: 6083985201750387459}
   - component: {fileID: 8952184862595206149}
   - component: {fileID: 6475418683768865719}
@@ -1171,6 +1170,7 @@ GameObject:
   - component: {fileID: 530178520698779527}
   - component: {fileID: 8632621977099333197}
   - component: {fileID: 6487485381381677035}
+  - component: {fileID: 1080917763583922842}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1408,43 +1408,6 @@ MonoBehaviour:
   railSpeed: 5
   rotationSpeed: 30
   directionsList: []
---- !u!114 &1222688078557824484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4537249443240097638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4217d48ee00d7cb43b887be1dcbf549e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sphereDetectorObj: {fileID: 5440324624777498880, guid: 0e729c1958faa2b4f84857c52572f0ab,
-    type: 3}
-  groundTr: {fileID: 5080220068350771609}
-  mesh: {fileID: 7823193721348096083}
-  quickCanvas: {fileID: 0}
-  floatingTextPrefab: {fileID: 6984076976188262519, guid: 3243f218581ba0344ac62a622473a030,
-    type: 3}
-  orientation: {fileID: 8047325412755476988}
-  wrenchObj: {fileID: 7730229883123377233}
-  circleImage: {fileID: 0}
-  filledCircle: {fileID: 0}
-  minFOV: 40
-  cooldown: 5
-  arrowDisplayer: []
-  enemyHurtBoxLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  damageMultiplier: 1.05
-  minCircleShrinkSpeed: 2
-  maxCircleShrinkSpeed: 4
-  minCircleSize: 1
-  maxCircleSize: 4
-  maxSphereSize: 500
-  circleSizeGrowSpeed: 1
-  attackCountCharging: 0
 --- !u!114 &6083985201750387459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1697,7 +1660,18 @@ MonoBehaviour:
   currentShoots: 0
   radiusCheck: 8
   attackCooldown: 2
-  _bastetPositions: []
+--- !u!114 &1080917763583922842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537249443240097638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff5d95a1a83452d43ae48a3b44c47d1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4735085097479858567
 GameObject:
   m_ObjectHideFlags: 0
