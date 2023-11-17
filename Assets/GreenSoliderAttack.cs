@@ -56,7 +56,6 @@ public class GreenSoliderAttack : EnemyAI
 
         while (true)
         {
-            CheckIfPlayer();
             yield return new WaitForSeconds(.2f);
             SpawnBullet(muzzle2);
 
@@ -69,10 +68,7 @@ public class GreenSoliderAttack : EnemyAI
 
             yield return new WaitForSeconds(.5f);
 
-            if (!IsShooting)
-            {
-                break;
-            }
+            CheckIfPlayer();
         }
     }
 
@@ -99,7 +95,6 @@ public class GreenSoliderAttack : EnemyAI
             var decalScale = decalGroup.transform.localScale;
             decalScale = new Vector3(decalScale.x, decalScale.y, decalScale.z + speed);
             decalGroup.transform.localScale = decalScale;
-            CheckIfPlayer();
             yield return new WaitForSeconds(.01f);
         }
         _shootCoroutine = StartCoroutine(ShootCoroutine());
