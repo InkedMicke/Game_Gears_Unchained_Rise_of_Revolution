@@ -30,7 +30,7 @@ public class GreenSoliderMovement : EnemyAI
 
         var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
 
-        if (distanceToPlayer < distanceToAttack && !_soldierAttack.IsAttacking && Time.time > _soldierAttack.totalColdown)
+        if (distanceToPlayer < 5f && !_soldierAttack.IsAttacking && Time.time > _soldierAttack.totalColdown)
         {
             _agent.isStopped = true;
             _soldierAttack.StartDecal();

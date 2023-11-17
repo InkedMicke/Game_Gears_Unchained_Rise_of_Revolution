@@ -22,32 +22,52 @@ public class GreenSoliderAttack : EnemyAI
     [SerializeField] private Transform muzzle1;
     [SerializeField] private Transform muzzle2;
 
-    private Vector3 _staticPlayerPos;
-
     [System.NonSerialized] public bool IsAttacking;
     [System.NonSerialized] public bool IsShooting;
 
     [SerializeField] private float checkRadius = 5f;
     public float totalColdown;
-    private float _startDecalSize;
+    private float timeToStopShooting;
 
     private void Awake()
     {
         _cc = GetComponent<CharacterController>();
         _greenSoliderHurtBox = GetComponentInChildren<GreenSoliderHurtBox>();
         _agent = GetComponent<NavMeshAgent>();
-        _startDecalSize = decalGroupPrefab.transform.localScale.z;
     }
 
     public void StartDecal()
     {
         _agent.enabled = false;
         IsAttacking = true;
-        var decalScale = decalGroupPrefab.transform.localScale;
-        decalScale = new Vector3(decalScale.x, decalScale.z, _startDecalSize);
-        decalGroupPrefab.transform.localScale = decalScale;
-        decalGroupPrefab.SetActive(true);
-        _decalCoroutine= StartCoroutine(DecalSize(.04f));
+        _decalCoroutine = StartCoroutine(DecalSize(.2f));
+    }
+
+    private void Update()
+    {
+        if(IsShooting && _currentDecal != null)
+        {
+            var decalHurtBox = _currentDecal.GetComponentInChildren<GreenDecalHurtBox>();
+
+            if (!decalHurtBox.IsPlayerInside && !decalHurtBox.HasPlayerLeft)
+            {
+                timeToStopShooting += Time.deltaTime;
+                if(timeToStopShooting > 2.5f)
+                {
+                    if (IsShooting)
+                    {
+                        StopCoroutine(_shootCoroutine);
+                    }
+                    timeToStopShooting = 0f;
+                    StopCoroutine(_decalCoroutine);
+                    Destroy(_currentDecal);
+                    IsShooting = false;
+                    IsAttacking = false;
+                    totalColdown = Time.time + 4f;
+                    _agent.enabled = true;
+                }
+            }
+        }
     }
 
     private IEnumerator ShootCoroutine()
@@ -90,7 +110,7 @@ public class GreenSoliderAttack : EnemyAI
         var decalGroup = _currentDecal.transform.GetChild(0).transform;
 
 
-        while (decalGroup.transform.localScale.z < 3)
+        while (decalGroup.transform.localScale.z < 6)
         {
             var decalScale = decalGroup.transform.localScale;
             decalScale = new Vector3(decalScale.x, decalScale.y, decalScale.z + speed);
