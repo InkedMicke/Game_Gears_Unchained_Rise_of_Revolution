@@ -23,6 +23,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         private GameObject _playerObj;
         
         [SerializeField] private float speedOfFloor = 0.1f;
+        private float _initalMovableFloatY;
 
         [SerializeField] private UnityEvent seActivaCuandoVaASubir;
         [SerializeField] private UnityEvent seActivaCuandoVaABajar;
@@ -49,6 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         private void Start()
         {
+            _initalMovableFloatY = movableFloor.transform.localPosition.y;
             _isWave1 = true;
         }
 
@@ -56,13 +58,15 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         {
             if (_floorIsUp && !IsWave2 && wave1.transform.childCount == 0 && !_isFloorMoving)
             {
-                goHereObj.SetActive(true);
+                if (goHereObj)
+                {
+                    goHereObj.SetActive(true);
+                }
             }
             
             if (_floorIsUp && IsWave2 && wave1.transform.childCount == 0 && !_isFloorMoving)
             {
                 seActivaCuandoLasOleadasTerminan.Invoke();
-                //_mainCAttack.EnableCanAttack();
                 _mainCAttack.HideWeapon();
                 IsWave2 = false;
             }
@@ -89,7 +93,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             if (!_isWave1)
             {
                 IsWave2 = true;
-                _chargingSwordSphereTarget.EnableHasUnlockedAbility();
+                //_chargingSwordSphereTarget.EnableHasUnlockedAbility();
             }
 
             yield return new WaitForSeconds(1f);
@@ -99,7 +103,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 var temp = movableFloor.transform.localPosition;
                 temp.y += speedOfFloor;
                 movableFloor.transform.localPosition = temp;
-                if (movableFloor.transform.localPosition.y >= -0.918f)
+                if (movableFloor.transform.localPosition.y >= 0)
                 {
                     if (IsWave2)
                     {
@@ -117,7 +121,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                         _mainCAttack.EnableCanAttack();
                     }
                     _dummiesCollider.UndoChild(wave1);
-                    temp.y = -0.9186499f;
+                    temp.y = 0;
                     movableFloor.transform.localPosition = temp;
                     enable = false;
                     seActivaCuandoHaSubido.Invoke();
@@ -130,6 +134,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _isFloorMoving = false;
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator MoveDown()
         {
             var enable = true;
@@ -143,15 +148,17 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 temp.y -= speedOfFloor;
                 movableFloor.transform.localPosition = temp;
 
-                if (movableFloor.transform.localPosition.y <= -8.72f)
+                if (movableFloor.transform.localPosition.y <= _initalMovableFloatY)
                 {
                     wave2.SetActive(true);
-                    temp.y = -8.72f;
+                    temp.y = _initalMovableFloatY;
                     movableFloor.transform.localPosition = temp;
                     enable = false;
                     _floorIsDown = true;
                     seActivaCuandoHaBajado.Invoke();
-                    Invoke(nameof(InvokeMoveUp), 0f);
+                    _dummiesCollider.ClearList();
+                    wave1.SetActive(true);
+                    StartCoroutine(MoveUp());
                 }
 
                 yield return new WaitForSeconds(0.01f);

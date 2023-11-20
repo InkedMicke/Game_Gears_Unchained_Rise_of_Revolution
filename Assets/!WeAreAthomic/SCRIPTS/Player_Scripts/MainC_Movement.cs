@@ -1,3 +1,4 @@
+using _WeAreAthomic.SCRIPTS.Debug_Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -16,7 +17,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCHackingSystem _mainCHacking;
         private MainCAnimatorController _mainCAnimator;
         private CharacterController _cc;
-        private GODMODE _godMode;
+        private Godmode _godMode;
 
         [SerializeField] private GameObject cameraBaseObj;
         private GameObject _cameraObj;
@@ -73,7 +74,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAttack = GetComponent<MainCAttack>();
             _mainCPistol = GetComponent<MainCPistol>();
             _cc = GetComponent<CharacterController>();
-            _godMode = GetComponent<GODMODE>();
+            _godMode = GetComponent<Godmode>();
             _railGrindSystem = GetComponent<MainCRailGrindSystem>();
             _mainCHacking = GetComponent<MainCHackingSystem>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();

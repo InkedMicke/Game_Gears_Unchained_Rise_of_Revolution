@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Props
+namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {
     public class DummiesColliderLab : MonoBehaviour
     {

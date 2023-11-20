@@ -185,7 +185,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             timeGraceAttackPeriod = Time.time + timeNextAttack;
             DisableNextAttack();
             IsFinalAttacking = false;
-            Debug.Log("hola");
         }
 
         public void EnableWeaponCollision()

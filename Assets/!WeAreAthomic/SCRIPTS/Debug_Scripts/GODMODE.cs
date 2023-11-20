@@ -1,127 +1,126 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
-public class GODMODE : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
 {
-    private CharacterController _cc;
-    private PlayerInputActions _playerInputActions;
-    private MainCMovement _mainCMove;
-
-    private GameObject _cameraObj;
-
-    [SerializeField] private LayerMask defaultLayer;
-    [SerializeField] private LayerMask ignoreLayer;
-
-    public bool isGodModeEnabled;
-    private bool _isSpeedingUp;
-    private bool _isSpeedingDown;
-
-    private float _moveSpeed;
-
-    private void Awake()
+    public class Godmode : MonoBehaviour
     {
-        _cc = GetComponent<CharacterController>();
-        _mainCMove = GetComponent<MainCMovement>();
+        private CharacterController _cc;
+        private PlayerInputActions _playerInputActions;
+        private MainCMovement _mainCMove;
 
-        _playerInputActions = new PlayerInputActions();
-        _playerInputActions.Enable();
-        _playerInputActions.Player.GodMode.performed += EnableGodMode;
-        _playerInputActions.Player.Running.performed += ShiftDown;
-        _playerInputActions.Player.Running.canceled += ShiftUp;
-        _playerInputActions.Player.Slow.performed += CtrlDown;
-        _playerInputActions.Player.Slow.canceled += CtrlUp;
-    }
+        private GameObject _cameraObj;
 
-    private void Start()
-    {
-        _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
+        [SerializeField] private LayerMask defaultLayer;
+        [SerializeField] private LayerMask ignoreLayer;
 
-        var gameObj = transform.parent.gameObject;
-    }
+        public bool isGodModeEnabled;
+        private bool _isSpeedingUp;
+        private bool _isSpeedingDown;
 
-    private void Update()
-    {
-        GodMode();
-        AdjustSpeed();
-        var layerValue = isGodModeEnabled ? 14 : 0;
-        var validLayer = Mathf.Clamp(layerValue, 0, 31);
-        this.gameObject.layer = validLayer;
-    }
+        private float _moveSpeed;
 
-    private void EnableGodMode(InputAction.CallbackContext context)
-    {
-        isGodModeEnabled = !isGodModeEnabled;
-    }
-
-    private void GodMode()
-    {
-        if(isGodModeEnabled)
+        private void Awake()
         {
-            var moveVectorKeyboard = _playerInputActions.Player.MovementKeyboard.ReadValue<Vector2>();
+            _cc = GetComponent<CharacterController>();
+            _mainCMove = GetComponent<MainCMovement>();
 
-            var direction = new Vector3(moveVectorKeyboard.x, 0f, moveVectorKeyboard.y).normalized;
-            var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
-            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _mainCMove._turnSmoothVelocityKeyboard,
-                _mainCMove.turnSmoothTime);
-
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-
-            var moveDir = _cameraObj.transform.forward * (Time.deltaTime * 5f * direction.magnitude * _moveSpeed);
-
-            _cc.Move(moveDir);
-        }
-    }
-
-    private void AdjustSpeed()
-    {
-        if (_isSpeedingUp)
-        {
-            _moveSpeed += Time.deltaTime * 4f;
+            _playerInputActions = new PlayerInputActions();
+            _playerInputActions.Enable();
+            _playerInputActions.Player.GodMode.performed += EnableGodMode;
+            _playerInputActions.Player.Running.performed += ShiftDown;
+            _playerInputActions.Player.Running.canceled += ShiftUp;
+            _playerInputActions.Player.Slow.performed += CtrlDown;
+            _playerInputActions.Player.Slow.canceled += CtrlUp;
         }
 
-        if (_isSpeedingDown)
+        private void Start()
         {
-            if (_moveSpeed > 0)
+            _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
+
+            var gameObj = transform.parent.gameObject;
+        }
+
+        private void Update()
+        {
+            GodMode();
+            AdjustSpeed();
+            var layerValue = isGodModeEnabled ? 14 : 0;
+            var validLayer = Mathf.Clamp(layerValue, 0, 31);
+            this.gameObject.layer = validLayer;
+        }
+
+        private void EnableGodMode(InputAction.CallbackContext context)
+        {
+            isGodModeEnabled = !isGodModeEnabled;
+        }
+
+        private void GodMode()
+        {
+            if(isGodModeEnabled)
             {
-                _moveSpeed -= Time.deltaTime * 4f;
+                var moveVectorKeyboard = _playerInputActions.Player.MovementKeyboard.ReadValue<Vector2>();
+
+                var direction = new Vector3(moveVectorKeyboard.x, 0f, moveVectorKeyboard.y).normalized;
+                var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
+                var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _mainCMove._turnSmoothVelocityKeyboard,
+                    _mainCMove.turnSmoothTime);
+
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+
+                var moveDir = _cameraObj.transform.forward * (Time.deltaTime * 5f * direction.magnitude * _moveSpeed);
+
+                _cc.Move(moveDir);
             }
         }
-    }
 
-    private void ShiftUp(InputAction.CallbackContext context)
-    {
-        if (isGodModeEnabled)
+        private void AdjustSpeed()
         {
-            _isSpeedingUp = false;
-        }
-    }
-    private void ShiftDown(InputAction.CallbackContext context)
-    {
-        if (isGodModeEnabled)
-        {
-            _isSpeedingUp = true;
-        }
-    }
+            if (_isSpeedingUp)
+            {
+                _moveSpeed += Time.deltaTime * 4f;
+            }
 
-    private void CtrlUp(InputAction.CallbackContext context)
-    {
-        if (isGodModeEnabled)
-        {
-            _isSpeedingDown = false;
+            if (_isSpeedingDown)
+            {
+                if (_moveSpeed > 0)
+                {
+                    _moveSpeed -= Time.deltaTime * 4f;
+                }
+            }
         }
-    }
 
-    private void CtrlDown(InputAction.CallbackContext context)
-    {
-        if (isGodModeEnabled)
+        private void ShiftUp(InputAction.CallbackContext context)
         {
-            _isSpeedingDown = true;
+            if (isGodModeEnabled)
+            {
+                _isSpeedingUp = false;
+            }
         }
-    }
+        private void ShiftDown(InputAction.CallbackContext context)
+        {
+            if (isGodModeEnabled)
+            {
+                _isSpeedingUp = true;
+            }
+        }
+
+        private void CtrlUp(InputAction.CallbackContext context)
+        {
+            if (isGodModeEnabled)
+            {
+                _isSpeedingDown = false;
+            }
+        }
+
+        private void CtrlDown(InputAction.CallbackContext context)
+        {
+            if (isGodModeEnabled)
+            {
+                _isSpeedingDown = true;
+            }
+        }
     
+    }
 }

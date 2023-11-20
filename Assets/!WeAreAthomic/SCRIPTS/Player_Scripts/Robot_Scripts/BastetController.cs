@@ -46,7 +46,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         public void InvokeRotation()
         {
             ShowScanner();
-            StartCoroutine(nameof(PositiveRotationX));
         }
 
         private void Update()

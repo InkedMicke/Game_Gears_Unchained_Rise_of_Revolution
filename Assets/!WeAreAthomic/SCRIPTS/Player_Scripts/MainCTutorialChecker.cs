@@ -22,6 +22,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject goHereMove;
         [SerializeField] private GameObject goHereBreather;
         [SerializeField] private GameObject goHerePosaMano;
+        [SerializeField] private GameObject goHerePosaManoMove;
         [SerializeField] private GameObject wasdImage;
         [SerializeField] private GameObject eImage;
         [SerializeField] private GameObject izqImage;
@@ -76,8 +77,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     enable = false;
                     _mainCSounds.RemoveAllSounds();
                     _mainCSounds.PlayExpressionSound();
-                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.CurrentExpressionClip.name);
-                    Invoke(nameof(PlayTutorialTwo), lengthOfClip);
+                    goHerePosaManoMove.SetActive(true);
                 }
 
                 yield return new WaitForSeconds(0.01f);
@@ -112,7 +112,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             goHereBreather.SetActive(true);
         }
 
-        private void PlayTutorialTwo()
+        public void PlayTutorialTwo()
         {
             IsOnTutorialImage = true;
             _gStopMenu.CursorMode(true);

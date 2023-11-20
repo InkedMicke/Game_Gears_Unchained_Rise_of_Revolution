@@ -37,12 +37,9 @@ public class Interactor : MonoBehaviour
         var r = new Ray(transform.position, transform.forward);
         if (Physics.Raycast(r, out var hitInfo, interactRange, interactableLayer))
         {
-            Debug.Log("hola2");
-            Debug.Log(hitInfo.collider.gameObject.name);
 
             if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable _))
             {
-                Debug.Log("hola3");
                 _button = hitInfo.collider.gameObject.GetComponent<ButtonInteractable>();
                 _button.ShowButton();
             }
