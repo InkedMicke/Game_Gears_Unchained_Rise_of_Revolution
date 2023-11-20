@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos
+namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 {
     public class GLoadScene : MonoBehaviour
     {

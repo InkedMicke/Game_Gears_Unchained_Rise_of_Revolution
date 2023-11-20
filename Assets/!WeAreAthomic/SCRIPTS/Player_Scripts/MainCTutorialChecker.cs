@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using _WeAreAthomic.SCRIPTS.Props;
 using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using UnityEngine;

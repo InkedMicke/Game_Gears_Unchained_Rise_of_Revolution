@@ -9,6 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
         private PlayerInputActions _playerInputActions;
         private MainCMovement _mainCMove;
 
+        [SerializeField] private GameObject godModeContainer;
         private GameObject _cameraObj;
 
         [SerializeField] private LayerMask defaultLayer;
@@ -51,6 +52,11 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
         }
 
         private void EnableGodMode(InputAction.CallbackContext context)
+        {
+            godModeContainer.SetActive(!godModeContainer.activeSelf);
+        }
+
+        public void ToggleGodMode()
         {
             isGodModeEnabled = !isGodModeEnabled;
         }
