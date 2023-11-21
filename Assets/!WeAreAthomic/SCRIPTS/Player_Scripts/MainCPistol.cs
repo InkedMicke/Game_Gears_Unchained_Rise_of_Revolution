@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts;
+using System.Collections;
+using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -21,31 +23,41 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private CameraFollower _camFollower;
         private MainCAnimatorController _mainCAnim;
         private PlayerInputActions _playerInputActions;
+        private BastetController _bastetController;
 
         private TypeOfAim _typeOfAim;
 
+        private Camera _mainCamera;
+
+        private Coroutine _fovCoroutine;
+
         [SerializeField] private GameObject cameraObj;
         [SerializeField] private GameObject cameraBaseObj;
-        [SerializeField] private GameObject aimCameraObj;
+        [SerializeField] private GameObject bastetObj;
+        [SerializeField] private GameObject shootParticles;
+        [SerializeField] private GameObject bigBullet;
 
         [SerializeField] private Transform camAimPosTr;
         [SerializeField] private Transform middlePos;
         [SerializeField] private Transform orientation;
         [SerializeField] private Transform lookAtAim;
+        [SerializeField] private Transform cameraFollow;
         private Transform _closestTransform = null;
 
         [SerializeField] private LayerMask enemyHurtBox;
-        [SerializeField] private LayerMask interactLayer;
 
         [System.NonSerialized] public bool IsAiming;
         [System.NonSerialized] public bool IsAutoTargeting;
         private bool _isAnimEnabled;
-        public bool _isShooting;
+        private bool _isShooting;
+        private bool _isFovCorutineRunning;
 
         [SerializeField] private float sphereDectorSize = 5f;
         [SerializeField] private float cameraTransitionSpeed = 5f;
         [SerializeField] private float shootingCooldown = 0.5f;
         private float _closestDistance = Mathf.Infinity;
+        private float _initialFov;
+        private float _totalCooldown;
 
         private protected override void Awake()
         {
@@ -55,10 +67,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCSwitch = GetComponent<MainCSwitchWeapon>();;
             _mainCRailGrind = GetComponent<MainCRailGrindSystem>();
             _mainCAnim = GetComponent<MainCAnimatorController>();
+            _camFollower = cameraBaseObj.GetComponent<CameraFollower>();
+            _bastetController = bastetObj.GetComponent<BastetController>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
             _playerInputActions.Player.Attack.performed += Shoot;
+            _playerInputActions.Player.SecondaryAttack.performed += RightMouseDown;
+            _playerInputActions.Player.SecondaryAttack.canceled += RightMouseUp;
+
+            _mainCamera = cameraObj.GetComponent<Camera>();
+            _initialFov = _mainCamera.fieldOfView;
             base.Awake();
         }
 
@@ -79,49 +98,21 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         }
 
-        private void AutoTargetNear()
+        private void RightMouseDown(InputAction.CallbackContext context)
         {
-            if(IsAiming)
-            {
-                var colliders = Physics.OverlapSphere(middlePos.position, sphereDectorSize, enemyHurtBox);
-                Debug.Log("hola1");
+            _camFollower.cameraFollow = camAimPosTr;
+            _bastetController.HideScanner();
+            bastetObj.SetActive(true);
+            _bastetController.SetAbilityBastetAttack(true);
+            _bastetController.SetMoveToBastetPos(true);
 
-                if(colliders.Length > 1)
-                {
-                    foreach (var col in colliders)
-                    {
-                        var distance = Vector3.Distance(transform.position, col.transform.position);
+        }
 
-                        if (distance < _closestDistance)
-                        {
-                            _closestDistance = distance;
-                            _closestTransform = col.gameObject.transform;
-                        }
-                    }
-                }
-                else
-                {
-                    if (colliders.Length > 0)
-                    {
-                        IsAutoTargeting = true;
-                        _closestTransform = colliders[0].gameObject.transform;
-                    }
-                    else
-                    {
-                        if(IsAutoTargeting)
-                        {
-                            IsAutoTargeting = false;
-                        }
-                    }
-                }
-
-                if (colliders.Length > 0)
-                {
-                    var desiredPos = _closestTransform.transform.position;
-                    desiredPos = new Vector3(desiredPos.x, transform.position.y, desiredPos.z);
-                    transform.LookAt(desiredPos);
-                }
-            }
+        private void RightMouseUp(InputAction.CallbackContext context)
+        {
+            _camFollower.cameraFollow = cameraFollow;
+            _bastetController.SetAbilityBastetAttack(false);
+            _bastetController.SetMoveToBastetPos(false);
         }
 
         private void Aim()
@@ -145,18 +136,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         }
         private void Shoot(InputAction.CallbackContext context)
         {
-            if (!_isShooting)
+            if (Time.time > _totalCooldown && IsAiming)
             {
-                Debug.DrawRay(aimCameraObj.transform.position, aimCameraObj.transform.forward * 30f, Color.red, 2f);
-                var ray = new Ray(aimCameraObj.transform.position, aimCameraObj.transform.forward);
-                if (Physics.Raycast(ray, out var hit, 30f, interactLayer))
+                var ray = new Ray(cameraObj.transform.position, cameraObj.transform.forward);
+                if (Physics.Raycast(ray, out var hit, 20f))
                 {
-                    _isShooting = true;
-                    if(hit.collider.gameObject.TryGetComponent(out IInteractable interactObj))
-                    {
-                        interactObj.Interact();
-                    }
-                    Invoke(nameof(DisableShooting), shootingCooldown);
+                    _totalCooldown = Time.time + shootingCooldown;
+                    _bastetController.StartShoot(hit.collider.gameObject.transform.position, shootParticles, bigBullet, true);
+                }
+                else
+                {
+                    _totalCooldown = Time.time + shootingCooldown;
+                    _bastetController.StartShoot(ray.GetPoint(20f), shootParticles, bigBullet, false);
                 }
             }
         }
@@ -171,13 +162,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCAnim.SetAimOnRail(true);
                     _isAnimEnabled = true;
                     IsAiming = true;
-                    aimCameraObj.SetActive(true);
-                    aimCameraObj.transform.rotation = camAimPosTr.transform.rotation;
-                    _mainCSwitch.SwitchWeapon();
                 }
-
-                var desiredRot = new Vector3(lookAtAim.position.x, transform.position.y, lookAtAim.position.z);
-                transform.LookAt(desiredRot);
 
             }
             else
@@ -188,10 +173,42 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCAnim.SetAimOnRail(false);
                     _isAnimEnabled = false;
                     IsAiming = false;
-                    aimCameraObj.SetActive(false);
-                    _mainCSwitch.SwitchWeapon();
                 }
                 
+            }
+        }
+
+        private IEnumerator FovCamera(string opera)
+        {
+            if(opera == "+")
+            {
+                _isFovCorutineRunning = true;
+                while (true)
+                {
+                    if(_mainCamera.fieldOfView <= _initialFov - 5)
+                    {
+                        _mainCamera.fieldOfView = _initialFov - 10;
+                        _isFovCorutineRunning = false;
+                        break;
+                    }
+                    _mainCamera.fieldOfView -= Time.deltaTime * 50f;
+                    yield return new WaitForSeconds(0.01f);
+                }
+            }
+            else if(opera == "-") 
+            {
+                _isFovCorutineRunning = true;
+                while (true)
+                {
+                    if (_mainCamera.fieldOfView >= _initialFov)
+                    {
+                        _isFovCorutineRunning = false;
+                        _mainCamera.fieldOfView = _initialFov;
+                        break;
+                    }
+                    _mainCamera.fieldOfView += Time.deltaTime * 50f;
+                    yield return new WaitForSeconds(0.01f);
+                }
             }
         }
 

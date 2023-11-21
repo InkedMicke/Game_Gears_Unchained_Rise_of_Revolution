@@ -24,8 +24,6 @@ public class GreenSoliderMovement : EnemyAI
         {
             _agent.isStopped = false;
             _agent.SetDestination(_playerTr.position);
-            Debug.Log("IsAttacking: " + _soldierAttack.IsAttacking);
-            Debug.Log("IsShooting: " + _soldierAttack.IsShooting);
         }
 
         var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);

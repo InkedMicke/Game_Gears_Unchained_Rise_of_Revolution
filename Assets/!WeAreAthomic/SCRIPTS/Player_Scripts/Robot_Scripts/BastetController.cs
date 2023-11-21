@@ -13,10 +13,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         private CharacterController _cc;
         private MainCBastetAttack _mainCBastet;
 
+        [SerializeField] private LayerMask enemyHurtBoxLayer;
+
         [SerializeField] private GameObject playerObj;
         [SerializeField] private GameObject playerRightArm;
         [SerializeField] private GameObject scannerObj;
         [SerializeField] private GameObject bullet;
+        [SerializeField] private GameObject cameraObj;
 
         [SerializeField] private float moveSpeed;
         [SerializeField] private float rotateSpeed = 0.1f;
@@ -29,6 +32,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         private bool negative;
         private bool _isShooting;
         private bool _moveToBastetPos;
+        private bool _isAbilityAttacking;
 
         [SerializeField] private List<Transform> muzzles;
 
@@ -55,13 +59,52 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                 var leftPos = playerObj.transform.position + Vector3.left;
                 var correctPos = new Vector3(leftPos.x, leftPos.y + 1.5f, leftPos.z);
                 var difference = correctPos - transform.position;
-                var moveDir = 3.5f * Time.deltaTime * difference.normalized;
+                var moveDir = 5f * Time.deltaTime * difference.normalized;
 
                 if (Vector3.Distance(transform.position, correctPos) > 0.1f)
                 {
                     _cc.Move(moveDir);
                 }
+
+                if (_isAbilityAttacking)
+                {
+                    var ray = new Ray(cameraObj.transform.position, cameraObj.transform.forward);
+                    if(Physics.Raycast(ray, out var hit,20f, enemyHurtBoxLayer))
+                    {
+                        transform.LookAt(hit.collider.gameObject.transform.position);   
+                    }
+                    else
+                    {
+                        transform.LookAt(ray.GetPoint(20f));
+                    }
+                }
             }
+            else
+            {
+                var direction = playerRightArm.transform.position - transform.position;
+                _cc.Move(direction.normalized * moveSpeed * Time.deltaTime);
+                transform.LookAt(playerRightArm.transform);
+
+                if (Vector3.Distance(playerRightArm.transform.position, transform.position) < 0.3f)
+                {
+                    gameObject.SetActive(false);
+                }
+            }
+        }
+
+        public void SetMoveToBastetPos(bool condition)
+        {
+            _moveToBastetPos = condition;
+        }
+
+        public void SetAbilityBastetAttack(bool condition)
+        {
+            _isAbilityAttacking = condition;
+        }
+
+        public void StartMovetoPlayer()
+        {
+            StartCoroutine(MoveToPlayer());
         }
 
         private IEnumerator MoveToPlayer()
@@ -179,6 +222,32 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                 }
                 yield return new WaitForSeconds(Random.Range(.1f, .3f));
             }
+        }
+
+        public void StartShoot(Vector3 enemy, GameObject particles, GameObject bullet, bool condition)
+        {
+            StartCoroutine(Shoot(enemy, particles, bullet, condition));
+        }
+
+        public IEnumerator Shoot(Vector3 enemy, GameObject particles, GameObject bullet, bool condition)
+        {
+            var particle = Instantiate(particles, muzzles[0].transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(1f);
+
+            Destroy(particle);
+            var randomMuzzle = Random.Range(0, muzzles.Count);
+            var bulletObj = Instantiate(bullet, muzzles[randomMuzzle].position, Quaternion.identity);
+            var enemyPos = enemy;
+            if (condition)
+            {
+                var lookAtFixed = new Vector3(enemyPos.x, enemyPos.y + .5f, enemyPos.z);
+                bulletObj.transform.LookAt(lookAtFixed);
+            }
+            else
+            {
+                bulletObj.transform.LookAt(enemyPos);
+            }
+
         }
 
         private IEnumerator WaitForShoot(GameObject enemy)

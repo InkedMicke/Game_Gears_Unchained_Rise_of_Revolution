@@ -25,8 +25,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public LayerMask enemyHurtBox;
 
-        private UnityEngine.SceneManagement.Scene _currentScene;
-
         [System.NonSerialized] public bool IsAttacking;
         [System.NonSerialized] public bool CanDealDamage;
         [System.NonSerialized] public bool CanMove;
@@ -73,7 +71,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private protected void Update()
         {
-            _currentScene = SceneManager.GetActiveScene();
 
 
         }
