@@ -188,7 +188,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             ApplyGravity();
 
             _cc.Move(_moveDir);
-            Debug.Log("hola1");
 
             MoveWhileAiming();
             

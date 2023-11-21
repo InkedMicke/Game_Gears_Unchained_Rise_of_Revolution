@@ -25,6 +25,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCAnimatorController _mainCAnim;
         private PlayerInputActions _playerInputActions;
         private BastetController _bastetController;
+        private MainCPlayerInterface _mainCInterface;
 
         private TypeOfAim _typeOfAim;
 
@@ -56,13 +57,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool _isLeftMouseDown;
         private bool _isShooting;
         private bool _isChargingShoot;
+        private bool _isRecoveringShoot;
 
         [SerializeField] private float sphereDectorSize = 5f;
         [SerializeField] private float cameraTransitionSpeed = 5f;
-        [SerializeField] private float shootingCooldown = 0.5f;
         [SerializeField] private float shootingHoldTime = 5f;
         private float _closestDistance = Mathf.Infinity;
-        private float _totalCooldown;
         private float _shootingTime;
 
         private protected override void Awake()
@@ -75,6 +75,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnim = GetComponent<MainCAnimatorController>();
             _camFollower = cameraBaseObj.GetComponent<CameraFollower>();
             _bastetController = bastetObj.GetComponent<BastetController>();
+            _mainCInterface = GetComponent<MainCPlayerInterface>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -102,23 +103,34 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             Aim();
 
-            if (_isLeftMouseDown && !_isShooting)
+            if (GameManagerSingleton.Instance.bastetEnergy <= 0 && !_isRecoveringShoot)
+            {
+                _isRecoveringShoot = true;
+                _mainCInterface.localEnergy = 0;
+                GameManagerSingleton.Instance.bastetEnergy = 0;
+                Shoot(_shootingTime / 2.5f, _shootingTime * 20f);
+                DisableShooting();
+            }
+
+            if (_isLeftMouseDown && !_isShooting && IsAiming && !_isRecoveringShoot)
             {
                 _shootingTime += Time.deltaTime;
-                if(_shootingTime > shootingHoldTime)
+                GameManagerSingleton.Instance.bastetEnergy = _mainCInterface.localEnergy - (_shootingTime * 20f);
+                _mainCInterface.SetEnergySlider(_mainCInterface.localEnergy);
+                if (_shootingTime > shootingHoldTime)
                 {
                     Shoot(_shootingTime / 2.5f, _shootingTime * 20f);
                     _shootingTime = 0;
                 }
 
-                if(!_isChargingShoot && Time.time > _totalCooldown)
+                if(!_isChargingShoot)
                 {
                     if (IsAiming)
                     {
                         _isChargingShoot = true;
                         _shootingTime = 0;
                         _currentParticle = Instantiate(shootParticles, _bastetController.muzzles[0].transform.position, Quaternion.identity);
-                        _ps = _currentParticle.GetComponent<ParticleSystem>();
+                        _ps = _currentParticle.GetComponentInChildren<ParticleSystem>();
                         _ps.Stop();
                         var main = _ps.main;
                         main.duration = shootingHoldTime;
@@ -159,9 +171,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 Destroy(_currentParticle);
             }
 
-            if(IsAiming && !_isShooting)
+            if(IsAiming && !_isShooting && !_isRecoveringShoot)
             {
                 Shoot(_shootingTime / 2.5f, _shootingTime * 15f);
+                _mainCInterface.localEnergy = GameManagerSingleton.Instance.bastetEnergy;
             }
             _isLeftMouseDown = false;
         }
@@ -189,18 +202,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         }
         private void Shoot(float sizeBullet, float bulletSpeed)
         {
-            if (Time.time > _totalCooldown && IsAiming)
+            if (IsAiming)
             {
                 _isShooting = true;
                 var ray = new Ray(cameraObj.transform.position, cameraObj.transform.forward);
                 if (Physics.Raycast(ray, out var hit, 20f))
                 {
-                    _totalCooldown = Time.time + shootingCooldown;
                     _bastetController.Shoot(hit.collider.gameObject.transform.position, bigBullet, true, sizeBullet, bulletSpeed);
                 }
                 else
                 {
-                    _totalCooldown = Time.time + shootingCooldown;
                     _bastetController.Shoot(ray.GetPoint(20f), bigBullet, false, sizeBullet, bulletSpeed);
                 }
             }
