@@ -12,6 +12,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
     {
         private CharacterController _cc;
         private MainCBastetAttack _mainCBastet;
+        private MainCPistol _mainCPistol;
+
+        private Coroutine _shootCoroutine;
 
         [SerializeField] private LayerMask enemyHurtBoxLayer;
 
@@ -34,12 +37,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         private bool _moveToBastetPos;
         private bool _isAbilityAttacking;
 
-        [SerializeField] private List<Transform> muzzles;
+        public List<Transform> muzzles;
 
         private void Awake()
         {
             _cc = GetComponent<CharacterController>();
             _mainCBastet = playerObj.GetComponent<MainCBastetAttack>();
+            _mainCPistol = playerObj.GetComponent<MainCPistol>();
         }
 
         public void InvokeMoveToPlayer()
@@ -195,20 +199,20 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             }
         }
 
-        public void StartMoveToBastetPos(GameObject enemy)
+        public void StartMoveToBastetPos()
         {
             _moveToBastetPos = true;
-            StartCoroutine(ShootEnemy(enemy));
+            StartCoroutine(ShootEnemy());
         }
 
-        private IEnumerator ShootEnemy(GameObject enemy)
+        private IEnumerator ShootEnemy()
         {
             var currentShoots = new int();
             while (true)
             {
                 var randomMuzzle = Random.Range(0, muzzles.Count);
                 var bulletObj = Instantiate(bullet, muzzles[randomMuzzle].position, Quaternion.identity);
-                var enemyPos = enemy.transform.position;
+                var enemyPos = _mainCBastet.closestEnemyToShoot.transform.position;
                 var lookAtFixed = new Vector3(enemyPos.x, enemyPos.y + .5f, enemyPos.z);
                 bulletObj.transform.LookAt(lookAtFixed);
                 transform.LookAt(lookAtFixed);
@@ -224,19 +228,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             }
         }
 
-        public void StartShoot(Vector3 enemy, GameObject particles, GameObject bullet, bool condition)
+        public void Shoot(Vector3 enemy, GameObject bullet, bool condition, float sizeBullet, float bulletSpeed)
         {
-            StartCoroutine(Shoot(enemy, particles, bullet, condition));
-        }
-
-        public IEnumerator Shoot(Vector3 enemy, GameObject particles, GameObject bullet, bool condition)
-        {
-            var particle = Instantiate(particles, muzzles[0].transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(1f);
-
-            Destroy(particle);
             var randomMuzzle = Random.Range(0, muzzles.Count);
             var bulletObj = Instantiate(bullet, muzzles[randomMuzzle].position, Quaternion.identity);
+            bulletObj.GetComponent<GBullet>().bulletForce = bulletSpeed;
+            bulletObj.transform.localScale = new Vector3(sizeBullet, sizeBullet, sizeBullet);
             var enemyPos = enemy;
             if (condition)
             {
@@ -248,13 +245,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                 bulletObj.transform.LookAt(enemyPos);
             }
 
+            _mainCPistol.DisableShooting();
         }
 
-        private IEnumerator WaitForShoot(GameObject enemy)
+        private IEnumerator WaitForShoot()
         {
             yield return new WaitForSeconds(0.1f);
 
-            StartCoroutine(ShootEnemy(enemy));
+            StartCoroutine(ShootEnemy());
         }
 
         public void PosRightHand()

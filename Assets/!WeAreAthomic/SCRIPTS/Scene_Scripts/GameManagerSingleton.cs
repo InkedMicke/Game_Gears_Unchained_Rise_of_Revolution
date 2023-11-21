@@ -24,6 +24,8 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
 
     public float currentHealth = 100f;
 
+    public float bastetEnergy = 100f;
+
     private void Awake()
     {
 
