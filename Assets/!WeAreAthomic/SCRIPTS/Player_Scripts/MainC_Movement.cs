@@ -187,35 +187,15 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             ApplyGravity();
 
-            if (!_mainCPistol.IsAiming)
-            {
-                _cc.Move(_moveDir);
-            }
-            else
-            {
-                if (!_mainCPistol.IsAutoTargeting)
-                {
-                    transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, cameraBaseObj.transform.localEulerAngles.y, transform.localEulerAngles.z);
-                }
-
-                var moveDir = new Vector3();
-                if (_mainCPistol.IsAutoTargeting)
-                {
-                    moveDir = cameraBaseObj.transform.forward * _moveVectorKeyboard.y + cameraBaseObj.transform.right * _moveVectorKeyboard.x;
-                }
-                else
-                {
-                    moveDir = orientation.forward * _moveVectorKeyboard.y + orientation.right * _moveVectorKeyboard.x;
-                }
-                _cc.Move(moveDir * (Time.deltaTime * _moveSpeed));
-            }
+            _cc.Move(_moveDir);
+            Debug.Log("hola1");
 
             MoveWhileAiming();
             
             _mainCAnimator.SetPistolMoveX(_moveAimingX);
             _mainCAnimator.SetPistolMoveY(_moveAimingY);
 
-            if (_moveVectorKeyboard.magnitude > 0.1f && !_mainCPistol.IsAiming)
+            if (_moveVectorKeyboard.magnitude > 0.1f)
             {
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
             }

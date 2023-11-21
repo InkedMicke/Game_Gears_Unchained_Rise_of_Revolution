@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts;
 using System.Collections;
 using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts;
+using static UnityEngine.ParticleSystem;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -31,11 +32,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private Coroutine _fovCoroutine;
 
+        private ParticleSystem _ps;
+
         [SerializeField] private GameObject cameraObj;
         [SerializeField] private GameObject cameraBaseObj;
         [SerializeField] private GameObject bastetObj;
         [SerializeField] private GameObject shootParticles;
         [SerializeField] private GameObject bigBullet;
+        private GameObject _currentParticle;
 
         [SerializeField] private Transform camAimPosTr;
         [SerializeField] private Transform middlePos;
@@ -49,15 +53,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [System.NonSerialized] public bool IsAiming;
         [System.NonSerialized] public bool IsAutoTargeting;
         private bool _isAnimEnabled;
+        private bool _isLeftMouseDown;
         private bool _isShooting;
-        private bool _isFovCorutineRunning;
+        private bool _isChargingShoot;
 
         [SerializeField] private float sphereDectorSize = 5f;
         [SerializeField] private float cameraTransitionSpeed = 5f;
         [SerializeField] private float shootingCooldown = 0.5f;
+        [SerializeField] private float shootingHoldTime = 5f;
         private float _closestDistance = Mathf.Infinity;
-        private float _initialFov;
         private float _totalCooldown;
+        private float _shootingTime;
 
         private protected override void Awake()
         {
@@ -72,12 +78,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
-            _playerInputActions.Player.Attack.performed += Shoot;
+            _playerInputActions.Player.Attack.performed += LeftMouseDown;
+            _playerInputActions.Player.Attack.canceled += LeftMouseUp;
             _playerInputActions.Player.SecondaryAttack.performed += RightMouseDown;
             _playerInputActions.Player.SecondaryAttack.canceled += RightMouseUp;
 
             _mainCamera = cameraObj.GetComponent<Camera>();
-            _initialFov = _mainCamera.fieldOfView;
             base.Awake();
         }
 
@@ -95,6 +101,32 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             Aim();
+
+            if (_isLeftMouseDown && !_isShooting)
+            {
+                _shootingTime += Time.deltaTime;
+                if(_shootingTime > shootingHoldTime)
+                {
+                    Shoot(_shootingTime / 2.5f, _shootingTime * 20f);
+                    _shootingTime = 0;
+                }
+
+                if(!_isChargingShoot && Time.time > _totalCooldown)
+                {
+                    if (IsAiming)
+                    {
+                        _isChargingShoot = true;
+                        _shootingTime = 0;
+                        _currentParticle = Instantiate(shootParticles, _bastetController.muzzles[0].transform.position, Quaternion.identity);
+                        _ps = _currentParticle.GetComponent<ParticleSystem>();
+                        _ps.Stop();
+                        var main = _ps.main;
+                        main.duration = shootingHoldTime;
+                        _ps.Play();
+                        _currentParticle.transform.parent = _bastetController.muzzles[0].transform;
+                    }
+                }
+            }
 
         }
 
@@ -115,6 +147,27 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _bastetController.SetMoveToBastetPos(false);
         }
 
+        private void LeftMouseDown(InputAction.CallbackContext context)
+        {
+            _isLeftMouseDown = true;
+        }
+
+        private void LeftMouseUp(InputAction.CallbackContext context)
+        {
+            if(_currentParticle != null && IsAiming)
+            {
+                Destroy(_currentParticle);
+            }
+
+            if(IsAiming && !_isShooting)
+            {
+                Shoot(_shootingTime / 2.5f, _shootingTime * 15f);
+            }
+            _isLeftMouseDown = false;
+        }
+
+
+
         private void Aim()
         {
             switch(_typeOfAim)
@@ -134,22 +187,29 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             AimingOnRail();
         }
-        private void Shoot(InputAction.CallbackContext context)
+        private void Shoot(float sizeBullet, float bulletSpeed)
         {
             if (Time.time > _totalCooldown && IsAiming)
             {
+                _isShooting = true;
                 var ray = new Ray(cameraObj.transform.position, cameraObj.transform.forward);
                 if (Physics.Raycast(ray, out var hit, 20f))
                 {
                     _totalCooldown = Time.time + shootingCooldown;
-                    _bastetController.StartShoot(hit.collider.gameObject.transform.position, shootParticles, bigBullet, true);
+                    _bastetController.Shoot(hit.collider.gameObject.transform.position, bigBullet, true, sizeBullet, bulletSpeed);
                 }
                 else
                 {
                     _totalCooldown = Time.time + shootingCooldown;
-                    _bastetController.StartShoot(ray.GetPoint(20f), shootParticles, bigBullet, false);
+                    _bastetController.Shoot(ray.GetPoint(20f), bigBullet, false, sizeBullet, bulletSpeed);
                 }
             }
+        }
+
+        public void DisableShooting()
+        {
+            _isShooting = false;
+            _isChargingShoot = false; 
         }
 
         private void AimingOnRail()
@@ -176,45 +236,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 }
                 
             }
-        }
-
-        private IEnumerator FovCamera(string opera)
-        {
-            if(opera == "+")
-            {
-                _isFovCorutineRunning = true;
-                while (true)
-                {
-                    if(_mainCamera.fieldOfView <= _initialFov - 5)
-                    {
-                        _mainCamera.fieldOfView = _initialFov - 10;
-                        _isFovCorutineRunning = false;
-                        break;
-                    }
-                    _mainCamera.fieldOfView -= Time.deltaTime * 50f;
-                    yield return new WaitForSeconds(0.01f);
-                }
-            }
-            else if(opera == "-") 
-            {
-                _isFovCorutineRunning = true;
-                while (true)
-                {
-                    if (_mainCamera.fieldOfView >= _initialFov)
-                    {
-                        _isFovCorutineRunning = false;
-                        _mainCamera.fieldOfView = _initialFov;
-                        break;
-                    }
-                    _mainCamera.fieldOfView += Time.deltaTime * 50f;
-                    yield return new WaitForSeconds(0.01f);
-                }
-            }
-        }
-
-        private void DisableShooting()
-        {
-            _isShooting = false;
         }
 
     }

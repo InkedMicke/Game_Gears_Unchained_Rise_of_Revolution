@@ -7,7 +7,7 @@ public class GBullet : MonoBehaviour
 {
     private Rigidbody _rb;
     
-    [SerializeField] private float bulletForce = 50f;
+    public float bulletForce = 50f;
 
     private void Awake()
     {
