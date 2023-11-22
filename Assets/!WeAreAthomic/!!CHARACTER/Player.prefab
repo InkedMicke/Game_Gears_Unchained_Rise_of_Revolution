@@ -335,7 +335,6 @@ MonoBehaviour:
     m_Bits: 512
   sphereDectorSize: 3
   cameraTransitionSpeed: 100
-  shootingCooldown: 0.5
   shootingHoldTime: 5
 --- !u!114 &6326130830157195552
 MonoBehaviour:
@@ -1018,7 +1017,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 65efc76cd1705d848bba0dbaae5fb1d0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1848524638216514749}
   m_SourcePrefab: {fileID: 100100000, guid: 65efc76cd1705d848bba0dbaae5fb1d0, type: 3}
 --- !u!1 &5925534761903232601 stripped
 GameObject:
@@ -1026,6 +1029,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6844015308684241672}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1848524638216514749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5925534761903232601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab7673dc4e2cad4692f4a555ef62729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyHurtBox:
+    serializedVersion: 2
+    m_Bits: 512
+  colliderList: []
 --- !u!4 &6444768525562727651 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 65efc76cd1705d848bba0dbaae5fb1d0,

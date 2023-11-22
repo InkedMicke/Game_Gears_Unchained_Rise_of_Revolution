@@ -96,7 +96,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCSounds.PlayExpressionSound();
                     _attackTutorial = true;
                 }
-
                 _mainCLayers.EnableAttackLayer();
                 _mainCSounds.StopAttackSound();
                 attackCount++;
@@ -125,25 +124,35 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        /*private IEnumerator Sheath()
+
+
+        public void CheckForMoveToEnemy()
         {
-            var enable = true;
-
-            while (enable)
+            var ray = new Ray(middlePosTr.position, middlePosTr.forward);
+            if(Physics.Raycast(ray, out var hit,1f, enemyHurtBox))
             {
-                if (_currentTimeSheath + hideWeaponTimer < Time.time)
-                {
-                    HideWeapon();
-                    _isSheathed = false;
-                }
-
-                yield return new WaitForSeconds(0.01f);
+                var enemyTr = hit.collider.gameObject.transform;
+                MoveToEnemy(enemyTr);
             }
-        }*/
+        }
+
+
+
+        private void MoveToEnemy(Transform enemyPos)
+        {
+            var difference = enemyPos.position - transform.position;
+            _cc.Move(difference);
+        }
 
         public void StopSheathCoroutine()
         {
 
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.green;
+            Debug.DrawRay(middlePosTr.position, middlePosTr.forward * 1f);
         }
 
         private void NextCombo(InputAction.CallbackContext context)

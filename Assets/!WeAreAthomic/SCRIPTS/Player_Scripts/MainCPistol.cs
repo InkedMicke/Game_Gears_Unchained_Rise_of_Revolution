@@ -118,7 +118,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (_shootingTime > shootingHoldTime)
                 {
                     energySpent = GameManagerSingleton.Instance.bastetEnergy;
-                    Shoot(_shootingTime / 2.5f, _shootingTime * 20f);
+                    Shoot(_shootingTime / 2.5f, 60f);
                 }
                 else
                 {
@@ -198,7 +198,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if(IsAiming && !_isShooting && !_isRecoveringShoot)
             {
-                Shoot(_shootingTime / 2.5f, _shootingTime * 15f);
+                Shoot(_shootingTime / 2.5f, 60f);
                 _mainCInterface.localEnergy = GameManagerSingleton.Instance.bastetEnergy;
             }
             _isLeftMouseDown = false;

@@ -8,15 +8,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
     {
         private MainCAttack _mainCAttack;
 
-        private readonly Vector3 _boxSize = new Vector3(.2f, .1f, .5f);
-
         [SerializeField] private LayerMask enemyHurtBox;
 
-        public List<Collider> colliderList = new List<Collider>();
+        public List<Collider> colliderList = new();
 
         private void Awake()
         {
-            _mainCAttack = FindObjectOfType<MainCAttack>();
+            _mainCAttack = GetComponentInParent<MainCAttack>();
         }
 
         private void OnTriggerEnter(Collider other)
