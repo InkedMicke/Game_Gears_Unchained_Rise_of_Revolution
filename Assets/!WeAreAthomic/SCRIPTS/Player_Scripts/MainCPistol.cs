@@ -232,13 +232,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 _isShooting = true;
                 var ray = new Ray(cameraObj.transform.position, cameraObj.transform.forward);
-                if (Physics.Raycast(ray, out var hit, 20f))
+                if (Physics.Raycast(ray, out var hit, Mathf.Infinity, enemyHurtBox))
                 {
-                    _bastetController.Shoot(hit.collider.gameObject.transform.position, bigBullet, true, sizeBullet, bulletSpeed);
+                    _bastetController.Shoot(hit.point, bigBullet, hit.transform, sizeBullet, bulletSpeed);
                 }
                 else
                 {
-                    _bastetController.Shoot(ray.GetPoint(20f), bigBullet, false, sizeBullet, bulletSpeed);
+                    _bastetController.Shoot(ray.GetPoint(20f), bigBullet, null, sizeBullet, bulletSpeed);
                 }
             }
         }

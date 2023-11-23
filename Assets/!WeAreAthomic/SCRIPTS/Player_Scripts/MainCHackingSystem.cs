@@ -120,16 +120,15 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private IEnumerator Hack(float value)
         {
-            var canEnableLayer = true;
 
             _actualTime = Time.time + value;
 
-            while (canEnableLayer)
+            while (true)
             {
                 if (Time.time > _actualTime)
                 {
-                    canEnableLayer = false;
                     EndHacking();
+                    break;
                 }
 
                 yield return new WaitForSeconds(0.01f);

@@ -5,6 +5,13 @@ using Hedenrag.ExVar;
 
 public class GameManagerSingleton : SingletonScriptableObject<GameManagerSingleton>, ICallOnAll
 {
+    public enum DifficultyLevel
+    {
+        historia,
+        desafio,
+        maestro
+    }
+
     public enum Settings
     {
         SensivityX,
@@ -12,6 +19,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     }
 
     public Settings settings;
+    public DifficultyLevel _currentDifficulty;
 
     public List<GameObject> gameObjectsList;
     public List<GameObject> closestGameObjectsList;

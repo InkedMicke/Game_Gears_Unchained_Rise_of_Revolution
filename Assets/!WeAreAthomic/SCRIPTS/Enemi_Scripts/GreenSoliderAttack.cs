@@ -5,10 +5,11 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public class GreenSoliderAttack : EnemyAI
+public class GreenSoliderAttack : MonoBehaviour
 {
     private CharacterController _cc;
     private GreenSoliderHurtBox _greenSoliderHurtBox;
+    private NavMeshAgent _agent;
 
     private Coroutine _shootCoroutine;
     private Coroutine _decalCoroutine;
@@ -21,12 +22,14 @@ public class GreenSoliderAttack : EnemyAI
 
     [SerializeField] private Transform muzzle1;
     [SerializeField] private Transform muzzle2;
+    private Transform _playerTr => GameObject.FindGameObjectWithTag("Player").transform;
 
     [System.NonSerialized] public bool IsAttacking;
     [System.NonSerialized] public bool IsShooting;
 
     [SerializeField] private float checkRadius = 5f;
     public float totalColdown;
+    public float damage;
     private float timeToStopShooting;
 
     private void Awake()
