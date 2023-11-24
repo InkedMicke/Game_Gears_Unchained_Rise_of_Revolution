@@ -31,7 +31,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private Camera _mainCamera;
 
-        private Coroutine _fovCoroutine;
+        private Coroutine _recoverEnergyCoroutine;
 
         private ParticleSystem _ps;
 
@@ -109,10 +109,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _isRecoveringShoot = true;
                 _isChargingShoot = false;
                 GameManagerSingleton.Instance.bastetEnergy = 0;
-                StartCoroutine(RecoverEnergy());
             }
 
-            if (_isLeftMouseDown && !_isShooting && IsAiming && !_isRecoveringShoot && GameManagerSingleton.Instance.bastetEnergy > 0)
+            if (_isLeftMouseDown && !_isShooting && IsAiming && GameManagerSingleton.Instance.bastetEnergy >= 20 && GameManagerSingleton.Instance.bastetEnergy > 0)
             {
                 _shootingTime += Time.deltaTime;
                 if (_shootingTime > shootingHoldTime)
@@ -147,12 +146,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         }
 
-        private IEnumerator RecoverEnergy()
+        private IEnumerator RecoverEnergy(float waitTime)
         {
+
+            yield return new WaitForSeconds(waitTime);
+
+            _isRecoveringShoot = true;
+
             while (true)
             {
-                yield return new WaitForSeconds(1f);
-
+                if(!_isRecoveringShoot)
+                {
+                    break;
+                }
                 GameManagerSingleton.Instance.bastetEnergy += 5f;
                 _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
 
@@ -162,6 +168,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _isRecoveringShoot = false;
                     break;
                 }
+
+                yield return new WaitForSeconds(1.5f);
 
             }
         }
@@ -187,6 +195,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void LeftMouseDown(InputAction.CallbackContext context)
         {
             _isLeftMouseDown = true;
+
+            if(IsAiming && _isRecoveringShoot)
+            {
+                StopCoroutine(_recoverEnergyCoroutine);
+                _isRecoveringShoot = false;
+            }
         }
 
         private void LeftMouseUp(InputAction.CallbackContext context)
@@ -196,11 +210,22 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 Destroy(_currentParticle);
             }
 
-            if(IsAiming && !_isShooting && !_isRecoveringShoot)
+            if(IsAiming && !_isShooting && !_isRecoveringShoot && GameManagerSingleton.Instance.bastetEnergy >= 20)
             {
                 Shoot(_shootingTime / 2.5f, 60f);
                 _mainCInterface.localEnergy = GameManagerSingleton.Instance.bastetEnergy;
+
+                if(_shootingTime < 1f)
+                {
+                    GameManagerSingleton.Instance.bastetEnergy -= 20;
+                }
             }
+
+            if(GameManagerSingleton.Instance.bastetEnergy < 100f)
+            {
+                _recoverEnergyCoroutine = StartCoroutine(RecoverEnergy(5f));
+            }
+
             _isLeftMouseDown = false;
             _isChargingShoot = false;
         }
@@ -226,20 +251,22 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             AimingOnRail();
         }
+
         private void Shoot(float sizeBullet, float bulletSpeed)
         {
             if (IsAiming)
             {
                 _isShooting = true;
-                var ray = new Ray(cameraObj.transform.position, cameraObj.transform.forward);
-                if (Physics.Raycast(ray, out var hit, Mathf.Infinity, enemyHurtBox))
-                {
-                    _bastetController.Shoot(hit.point, bigBullet, hit.transform, sizeBullet, bulletSpeed);
-                }
+                var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
+                RaycastHit hit;
+
+                Vector3 targetPoint;
+
+                if (Physics.Raycast(ray, out hit))
+                    targetPoint = hit.point;
                 else
-                {
-                    _bastetController.Shoot(ray.GetPoint(20f), bigBullet, null, sizeBullet, bulletSpeed);
-                }
+                    targetPoint = ray.GetPoint(75f);
+                _bastetController.Shoot(targetPoint, bigBullet, sizeBullet, bulletSpeed);
             }
         }
 

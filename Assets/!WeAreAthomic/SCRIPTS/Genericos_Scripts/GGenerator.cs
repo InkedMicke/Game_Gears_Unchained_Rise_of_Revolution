@@ -3,10 +3,11 @@ using UnityEngine.Events;
 
 namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 {
-    public class GGenerator : MonoBehaviour, IInteractable
+    public class GGenerator : MonoBehaviour, IDamageable
     {
         [SerializeField] private UnityEvent itActivatesWhenInteract;
-        public void Interact()
+
+        public void InteractAttack()
         {
             itActivatesWhenInteract.Invoke();
         }
