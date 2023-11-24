@@ -21,53 +21,13 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.365
+    m_Value: 0.402
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.368
+    m_Value: 0.488
   rounded:
     m_OverrideState: 0
     m_Value: 0
---- !u!114 &-2396575430261888182
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
-  m_Name: Tonemapping
-  m_EditorClassIdentifier: 
-  active: 1
-  mode:
-    m_OverrideState: 1
-    m_Value: 2
-  neutralHDRRangeReductionMode:
-    m_OverrideState: 0
-    m_Value: 2
-  acesPreset:
-    m_OverrideState: 0
-    m_Value: 3
-  hueShiftAmount:
-    m_OverrideState: 0
-    m_Value: 0
-  detectPaperWhite:
-    m_OverrideState: 0
-    m_Value: 0
-  paperWhite:
-    m_OverrideState: 0
-    m_Value: 300
-  detectBrightnessLimits:
-    m_OverrideState: 0
-    m_Value: 1
-  minNits:
-    m_OverrideState: 0
-    m_Value: 0.005
-  maxNits:
-    m_OverrideState: 0
-    m_Value: 1000
 --- !u!114 &-777076493089127454
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -307,7 +267,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: 2390077829150261575}
-  - {fileID: -2396575430261888182}
   - {fileID: -7189550352738148303}
   - {fileID: 8800031060228802810}
   - {fileID: 215974434770363696}
@@ -327,13 +286,13 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.9663016, z: 0.95601165, w: 0.14610375}
+    m_Value: {x: 1, y: 0.9663016, z: 0.95601165, w: 0.07492937}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 0.8843278, y: 0.91324544, z: 1, w: -1.4577013e-10}
+    m_Value: {x: 0.8843278, y: 0.91324544, z: 1, w: -0.355872}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 0.9925038, y: 1, z: 0.9920476, w: 0.19480519}
+    m_Value: {x: 0.9925038, y: 1, z: 0.9920476, w: -0.19665378}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0
@@ -364,13 +323,13 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 2.02
+    m_Value: 2.73
   intensity:
     m_OverrideState: 1
-    m_Value: 0.45
+    m_Value: 1.94
   scatter:
     m_OverrideState: 1
-    m_Value: 0.246
+    m_Value: 0
   clamp:
     m_OverrideState: 0
     m_Value: 65398.22
@@ -408,10 +367,10 @@ MonoBehaviour:
   active: 1
   lift:
     m_OverrideState: 1
-    m_Value: {x: 0.99954504, y: 0.9920483, z: 1, w: -0.016233891}
+    m_Value: {x: 0.99954504, y: 0.9920483, z: 1, w: -0.051821083}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 0.97988355, y: 1, z: 0.9849117, w: -0.03246753}
+    m_Value: {x: 0.97988355, y: 1, z: 0.9849117, w: 0.46575308}
   gain:
-    m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 1, z: 1, w: 0.5160141}
