@@ -62,16 +62,20 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         {
             if (_floorIsUp && !IsWave2 && wave1.transform.childCount == 0 && !_isFloorMoving)
             {
+                foreach(var obj in firstReds)
+                {
+                    obj.SetActive(false);
+                }
+
                 if (goHereObj)
                 {
                     goHereObj.SetActive(true);
                 }
             }
 
-            if (_floorIsUp && IsWave2 && wave1.transform.childCount == 0 && !_isFloorMoving)
+            if (_floorIsUp && IsWave2 && wave2.transform.childCount == 0 && !_isFloorMoving)
             {
-                seActivaCuandoLasOleadasTerminan.Invoke();
-                _mainCAttack.HideWeapon();
+                StartCoroutine(MoveDownToZero());
                 IsWave2 = false;
             }
         }
@@ -90,7 +94,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         private IEnumerator MoveUp()
         {
-            var enable = true;
             _floorIsDown = false;
             seActivaCuandoVaASubir.Invoke();
             _isFloorMoving = true;
@@ -102,7 +105,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
             yield return new WaitForSeconds(1f);
 
-            while (enable)
+            while (true)
             {
                 var temp = movableFloor.transform.localPosition;
                 temp.y += speedOfFloor;
@@ -113,28 +116,36 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                     {
                         _mainCTutorial.SetIsOnTutorialImageBool(true);
                         _mainCTutorial.AttackImage();
-                        _gStopMenu.CursorMode(true);
-                        _gStopMenu.FreezeTime(true);
+                        GameManagerSingleton.Instance.CursorMode(true);
+                        GameManagerSingleton.Instance.FreezeTime(true);
                         _mainCSounds.PlayTutorialSound(4, "pc");
                         _mainCAttack.EnableCanAttack();
 
                         _dummiesCollider.UndoChild(wave1);
                         temp.y = 0;
                         movableFloor.transform.localPosition = temp;
-                        enable = false;
                         seActivaCuandoHaSubido.Invoke();
                         _floorIsUp = true;
+                        break;
                     }
                 }
 
-                else if (IsWave2)
+                if (IsWave2)
                 {
-                    if (movableFloor.transform.localPosition.y >= 2f)
+                    if (movableFloor.transform.localPosition.y >= 3f)
                     {
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
                         _mainCSounds.PlayTutorialSound(6, "pc");
                         GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
+
+                        _dummiesCollider.UndoChild(wave2);
+                        temp.y = 3f;
+                        movableFloor.transform.localPosition = temp;
+                        seActivaCuandoHaSubido.Invoke();
+                        _floorIsUp = true;
+                        lateralTresspasingContainer.SetActive(true);
+                        break;
                     }
                 }
 
@@ -147,12 +158,11 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator MoveDown()
         {
-            var enable = true;
             _floorIsUp = false;
             seActivaCuandoVaABajar.Invoke();
             _isFloorMoving = true;
             _isWave1 = false;
-            while (enable)
+            while (true)
             {
                 var temp = movableFloor.transform.localPosition;
                 temp.y -= speedOfFloor;
@@ -163,18 +173,44 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                     wave2.SetActive(true);
                     temp.y = _initalMovableFloatY;
                     movableFloor.transform.localPosition = temp;
-                    enable = false;
                     _floorIsDown = true;
                     seActivaCuandoHaBajado.Invoke();
                     _dummiesCollider.ClearList();
                     wave1.SetActive(true);
                     StartCoroutine(MoveUp());
+                    break;
                 }
 
                 yield return new WaitForSeconds(0.01f);
             }
 
             _isFloorMoving = false;
+        }
+
+        private IEnumerator MoveDownToZero()
+        {
+            while (true)
+            {
+                var temp = movableFloor.transform.localPosition;
+                temp.y -= speedOfFloor;
+                movableFloor.transform.localPosition = temp;
+
+                if (movableFloor.transform.localPosition.y <= 0)
+                {
+                    foreach (var obj in secondReds)
+                    {
+                        obj.SetActive(false);
+                    }
+                    seActivaCuandoLasOleadasTerminan.Invoke();
+                    _mainCAttack.HideWeapon();
+                    temp.y = 0f;
+                    movableFloor.transform.localPosition = temp;
+                    lateralTresspasingContainer.SetActive(false);
+                    break;
+                }
+
+                yield return new WaitForSeconds(0.01f);
+            }
         }
     }
 }

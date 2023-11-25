@@ -1,32 +1,29 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace _WeAreAthomic.SCRIPTS.TEST
 {
     public class Test : MonoBehaviour
-    { 
+    {
+        private PlayerInputActions _playerInputActions;
 
+        private bool toggled;
 
-/*        private void Awake()
+        private void Awake()
         {
-            currentAudio.clip = introClip;
-            currentAudio.Play();
-            Invoke(nameof(PlayLoop), currentAudio.clip.length);
+            _playerInputActions = new PlayerInputActions();
+            _playerInputActions.Enable();
+            _playerInputActions.Player.Test.performed += ToggleTime;
         }
 
-        private void PlayLoop()
+        private void ToggleTime(InputAction.CallbackContext context)
         {
-            currentAudio.clip = loopClip;
-            currentAudio.Play();
-            currentAudio.loop = true;
-        }*/
+            toggled = !toggled;
 
-        public void ShowMessage(string text)
-        {
-            Debug.Log(text);
+            Time.timeScale = toggled ? 0.1f : 1f;
         }
-        
 
     }
 }

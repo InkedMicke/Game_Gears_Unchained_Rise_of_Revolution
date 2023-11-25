@@ -27,25 +27,25 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 
         private void ToggleMenu(InputAction.CallbackContext context)
         {
-            if (!_mainCTutorial.IsOnTutorialImage)
+            if (!GameManagerSingleton.Instance.IsOnTutorialImage)
             {
                 if (_isActive)
                 {
                     mainMenuObj.SetActive(false);
                     if (!GameManagerSingleton.Instance.thereIsCanvasBelow)
                     {
-                        CursorMode(false);
+                        GameManagerSingleton.Instance.CursorMode(false);
                     }
                     GameManagerSingleton.Instance.PauseGame(false);
-                    FreezeTime(false);
+                    GameManagerSingleton.Instance.FreezeTime(false);
                     _isActive = false;
                 }
                 else
                 {
                     mainMenuObj.SetActive(true);
-                    CursorMode(true);
+                    GameManagerSingleton.Instance.CursorMode(true);
                     GameManagerSingleton.Instance.PauseGame(true);
-                    FreezeTime(true);
+                    GameManagerSingleton.Instance.FreezeTime(true);
                     _isActive = true;
                 }
             }
@@ -62,50 +62,22 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 
         public void ToggleToggleMenuCallable()
         {
-            Debug.Log("hola1");
             if (_isActive)
             {
                 mainMenuObj.SetActive(true);
-                CursorMode(false);
+                GameManagerSingleton.Instance.CursorMode(false);
                 GameManagerSingleton.Instance.PauseGame(false);
-                FreezeTime(false);
+                GameManagerSingleton.Instance.FreezeTime(false);
                 _isActive = false;
             }
             else
             {
                 mainMenuObj.SetActive(false);
-                CursorMode(true);
+                GameManagerSingleton.Instance.CursorMode(true);
                 GameManagerSingleton.Instance.PauseGame(true);
                 _isActive = true;
             }
 
-        }
-
-        public void CursorMode(bool condition)
-        {
-            if (condition)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
-
-        }
-        
-
-
-        public void FreezeTime(bool condition)
-        {
-            Time.timeScale = condition ? 0 : 1;
-        }
-
-        public void GameState(bool condition)
-        {
-            GameManagerSingleton.Instance.PauseGame(condition);
         }
     }
 }

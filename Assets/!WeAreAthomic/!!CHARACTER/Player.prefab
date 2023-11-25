@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 6487485381381677035}
   - component: {fileID: 1080917763583922842}
   - component: {fileID: 4412195746065222362}
+  - component: {fileID: 3943831598560812694}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -318,12 +319,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce77c32451dca8743a65d5f783b6d2f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pistolAttackData: {fileID: 11400000, guid: 5c9299014d918a54b824bf5499c6882f, type: 2}
   cameraObj: {fileID: 0}
   cameraBaseObj: {fileID: 0}
   bastetObj: {fileID: 0}
   shootParticles: {fileID: 7733202280339781718, guid: b2e12e31e0d513e4b9f83a974bea5e78,
     type: 3}
-  bigBullet: {fileID: 832508078984169968, guid: 401fc901c6313404292adfe66936e7f8,
+  bigBullet: {fileID: 3870155545384615628, guid: 6668df61b445054438534e36b8999fea,
     type: 3}
   camAimPosTr: {fileID: 1957530179364196664}
   middlePos: {fileID: 8571800359218887001}
@@ -336,6 +338,9 @@ MonoBehaviour:
   sphereDectorSize: 3
   cameraTransitionSpeed: 100
   shootingHoldTime: 5
+  bulletSpeed: 60
+  bulletSize: 1
+  energySpend: 20
 --- !u!114 &6326130830157195552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -654,6 +659,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   localEnergy: 0
   energySlider: {fileID: 0}
+--- !u!114 &3943831598560812694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537249443240097638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43effe601878776409062351c7075b33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4924955036015268849
 GameObject:
   m_ObjectHideFlags: 0
@@ -1054,9 +1071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab7673dc4e2cad4692f4a555ef62729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHurtBox:
-    serializedVersion: 2
-    m_Bits: 512
+  wrenchDamageData: {fileID: 11400000, guid: ad06cde7f1e032d44b83a8cacd9a52ec, type: 2}
   colliderList: []
 --- !u!65 &4816812555635906754
 BoxCollider:
@@ -1075,7 +1090,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.48, y: 1.3, z: 0.19}
   m_Center: {x: 0.0000038146973, y: 0.09, z: 0.000001905486}

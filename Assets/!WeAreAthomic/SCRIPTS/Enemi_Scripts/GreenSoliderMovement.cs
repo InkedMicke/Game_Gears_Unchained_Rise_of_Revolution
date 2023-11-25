@@ -7,6 +7,9 @@ public class GreenSoliderMovement : EnemyAI
 {
     private CharacterController _cc;
     private GreenSoliderAttack _soldierAttack;
+
+    private GameManagerSingleton.TypeOfEnemy _typeOfEnemy;
+
     private float _timeToCancelAttack;
 
     private void Awake()
@@ -16,6 +19,8 @@ public class GreenSoliderMovement : EnemyAI
         _soldierAttack = GetComponent<GreenSoliderAttack>();
 
         originalSpeed = _agent.speed;
+
+        _typeOfEnemy = GameManagerSingleton.TypeOfEnemy.GreenSoldier;
     }
 
     void Update()

@@ -31,7 +31,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Vector3 _lastPosition;
 
         [System.NonSerialized] public bool IsOnTutorial;
-        [System.NonSerialized] public bool IsOnTutorialImage;
         private bool _isRoom1;
         private bool _isRoom2;
         private bool _isRoom3;
@@ -55,13 +54,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _currentScene = SceneManager.GetActiveScene();
             if (_currentScene.name == "S2_LABTUTORIAL")
             {
-                IsOnTutorialImage = true;
+                GameManagerSingleton.Instance.IsOnTutorialImage = true;
                 IsOnTutorial = true;
                 goHereMove.SetActive(true);
                 wasdImage.SetActive(true);
                 GameManagerSingleton.Instance.SetThereIsCanvasBelow(true);
-                _gStopMenu.CursorMode(true);
-                _gStopMenu.FreezeTime(true);
+                GameManagerSingleton.Instance.CursorMode(true);
+                GameManagerSingleton.Instance.FreezeTime(true);
                 StartCoroutine(CheckHealth());
                 StartCoroutine(CheckHacking());
             }
@@ -116,9 +115,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void PlayTutorialTwo()
         {
-            IsOnTutorialImage = true;
-            _gStopMenu.CursorMode(true);
-            _gStopMenu.FreezeTime(true);
+            GameManagerSingleton.Instance.IsOnTutorialImage = true;
+            GameManagerSingleton.Instance.CursorMode(true);
+            GameManagerSingleton.Instance.FreezeTime(true);
             GameManagerSingleton.Instance.SetThereIsCanvasBelow(true);
             eImage.SetActive(true);
             goHereBreather.SetActive(false);
@@ -140,7 +139,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void SetIsOnTutorialImageBool(bool condition)
         {
-            IsOnTutorialImage = condition;
+            GameManagerSingleton.Instance.IsOnTutorialImage = condition;
         }
     }
 }

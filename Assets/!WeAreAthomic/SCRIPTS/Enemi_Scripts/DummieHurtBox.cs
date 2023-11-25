@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi
 {
-    public class DummieHurtBox : MonoBehaviour
+    public class DummieHurtBox : MonoBehaviour, IDamageable
     {
         private GHealthManager _gHealthManager;
         private DummieController _dummieController;
@@ -55,6 +55,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
             }
 
             CheckForDeath();
+        }
+
+        public void Damage(float value)
+        {
+            TakeDamage(value);
         }
 
         private void CheckForDeath()

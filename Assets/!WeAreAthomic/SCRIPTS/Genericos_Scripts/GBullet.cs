@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IDamageable
+public interface IInteractAttack
 {
     public void InteractAttack();
 }
@@ -12,6 +12,7 @@ public interface IDamageable
 public class GBullet : MonoBehaviour
 {
     private Rigidbody _rb;
+    private BastetBulletHitBox _bulletHurtBox;
 
     public float bulletForce = 50f;
 
@@ -25,16 +26,6 @@ public class GBullet : MonoBehaviour
     void Start()
     {
         _rb.AddForce(transform.forward * bulletForce, ForceMode.Impulse);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.TryGetComponent(out IDamageable interactableAttack))
-        {
-            interactableAttack.InteractAttack();
-        }
-
-        Destroy(gameObject);
     }
 
     private void Update()

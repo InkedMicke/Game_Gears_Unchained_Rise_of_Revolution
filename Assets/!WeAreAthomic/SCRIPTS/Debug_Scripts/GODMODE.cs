@@ -48,12 +48,13 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
             AdjustSpeed();
             var layerValue = isGodModeEnabled ? 14 : 0;
             var validLayer = Mathf.Clamp(layerValue, 0, 31);
-            this.gameObject.layer = validLayer;
+            gameObject.layer = validLayer;
         }
 
         private void EnableGodMode(InputAction.CallbackContext context)
         {
             godModeContainer.SetActive(!godModeContainer.activeSelf);
+            GameManagerSingleton.Instance.ToggleTotallyWindow();
         }
 
         public void ToggleGodMode()

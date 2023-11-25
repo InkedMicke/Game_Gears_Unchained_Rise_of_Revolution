@@ -78,5 +78,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             IsRightMouseDown = true;
         }
+
+
     }
 }

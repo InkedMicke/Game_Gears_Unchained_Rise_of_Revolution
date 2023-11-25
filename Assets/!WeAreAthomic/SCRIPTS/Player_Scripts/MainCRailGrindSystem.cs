@@ -84,7 +84,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (!_isCanvasJump && ThereIsObstacle())
                 {
                     spaceTutCanvas.SetActive(true);
-                    _gStopMenu.FreezeTime(true);
+                    GameManagerSingleton.Instance.FreezeTime(true);
                     _isCanvasJump = true;
                 }
             }
@@ -254,7 +254,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _currentPipe = hit.collider.gameObject;
                     if (_isFirstJump)
                     {
-                        _gStopMenu.FreezeTime(false);
+                        GameManagerSingleton.Instance.FreezeTime(false);
                         spaceTutCanvas.SetActive(false);
                         _isFirstJump = false;
                     }

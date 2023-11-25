@@ -15,6 +15,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         private MainCPistol _mainCPistol;
 
         private Coroutine _shootCoroutine;
+        private Coroutine _bastetPosCoroutine;
 
         [SerializeField] private LayerMask enemyHurtBoxLayer;
 
@@ -35,7 +36,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         private bool negative;
         private bool _isShooting;
         private bool _moveToBastetPos;
-        private bool _isAbilityAttacking;
 
         public List<Transform> muzzles;
 
@@ -51,54 +51,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             StartCoroutine(nameof(MoveToPlayer));
         }
 
-        private void Update()
+        public void StartMoveToBastetPos()
         {
-/*            if (_moveToBastetPos)
-            {
-                var leftPos = playerObj.transform.position + Vector3.left;
-                var correctPos = new Vector3(leftPos.x, leftPos.y + 1.5f, leftPos.z);
-                var difference = correctPos - transform.position;
-                var moveDir = 5f * Time.deltaTime * difference.normalized;
-
-                if (Vector3.Distance(transform.position, correctPos) > 0.1f)
-                {
-                    _cc.Move(moveDir);
-                }
-
-                if (_isAbilityAttacking)
-                {
-                    var ray = new Ray(cameraObj.transform.position, cameraObj.transform.forward);
-                    if(Physics.Raycast(ray, out var hit,20f, enemyHurtBoxLayer))
-                    {
-                        transform.LookAt(hit.collider.gameObject.transform.position);   
-                    }
-                    else
-                    {
-                        transform.LookAt(ray.GetPoint(20f));
-                    }
-                }
-            }
-            else
-            {
-                var direction = playerRightArm.transform.position - transform.position;
-                _cc.Move(direction.normalized * moveSpeed * Time.deltaTime);
-                transform.LookAt(playerRightArm.transform);
-
-                if (Vector3.Distance(playerRightArm.transform.position, transform.position) < 0.3f)
-                {
-                    gameObject.SetActive(false);
-                }
-            }*/
+            _bastetPosCoroutine = StartCoroutine(MoveToBastetPos());
         }
 
-        public void SetMoveToBastetPos(bool condition)
+        public void StopMoveToBastetPos()
         {
-            _moveToBastetPos = condition;
-        }
-
-        public void SetAbilityBastetAttack(bool condition)
-        {
-            _isAbilityAttacking = condition;
+            StopCoroutine(_bastetPosCoroutine);
         }
 
         public void StartMovetoPlayer()
@@ -106,9 +66,40 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             StartCoroutine(MoveToPlayer());
         }
 
+        private IEnumerator MoveToBastetPos()
+        {
+            while (true)
+            {
+                var leftPos = playerObj.transform.position + Vector3.left;
+                var correctPos = new Vector3(leftPos.x, leftPos.y + 1.5f, leftPos.z);
+                var difference = correctPos - transform.position;
+                var moveDir = 8f * Time.deltaTime * difference.normalized;
+
+                if (Vector3.Distance(transform.position, correctPos) > 0.05f)
+                {
+                    _cc.Move(moveDir);
+                }
+
+                if(_mainCPistol.IsAiming)
+                {
+                    var ray = new Ray(cameraObj.transform.position, cameraObj.transform.forward);
+                    if(Physics.Raycast(ray, out var hit, Mathf.Infinity))
+                    {
+                        transform.LookAt(hit.point);
+                    }
+                    else
+                    {
+                        transform.LookAt(ray.GetPoint(75f));
+                    }
+                }
+
+
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
         private IEnumerator MoveToPlayer()
         {
-            Debug.Log("hola1");
             _cc.enabled = true;
             HideScanner();
             while (true)
@@ -195,9 +186,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             }
         }
 
-        public void StartMoveToBastetPos()
+        public void StartShootEnemy()
         {
-            _moveToBastetPos = true;
             StartCoroutine(ShootEnemy());
         }
 
@@ -224,11 +214,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             }
         }
 
-        public void Shoot(Vector3 enemy, GameObject bullet, float sizeBullet, float bulletSpeed)
+        public void Shoot(Vector3 enemy, GameObject bullet, float sizeBullet, float bulletSpeed, PlayerDamageData pistolData)
         {
             var randomMuzzle = Random.Range(0, muzzles.Count);
             var bulletObj = Instantiate(bullet, muzzles[randomMuzzle].position, Quaternion.identity);
             var bulletComponent = bulletObj.GetComponent<GBullet>();
+            var bulletHitBoxComponent = bulletObj.GetComponent<BastetBulletHitBox>();
+            bulletHitBoxComponent.damageData = pistolData;
             var direction = enemy - muzzles[randomMuzzle].position;
             bulletObj.transform.forward = direction.normalized;
             bulletComponent.bulletForce = bulletSpeed;

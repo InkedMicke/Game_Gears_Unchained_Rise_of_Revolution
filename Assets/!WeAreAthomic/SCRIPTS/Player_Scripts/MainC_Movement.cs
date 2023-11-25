@@ -95,7 +95,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.Player.Running.performed += RunOn;
             _playerInputActions.Player.Running.canceled += RunOff;
             _playerInputActions.Player.Crouch.performed += StartEndCrouch;
-            _playerInputActions.Player.Test.performed += ReloadScene;
+            //_playerInputActions.Player.Test.performed += ReloadScene;
         }
 
         private void OnDisable()
@@ -344,7 +344,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             _mainCLayers.DisableCrouchLayer();
             _mainCLayers.DisableAttackLayer();
-            _mainCLayers.DisablePistolLayer();
         }
 
 

@@ -11,7 +11,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _attackLayerMultiplier;
         private float _finalAttackLayerMultiplier;
         private float _crouchLayerMultiplier;
-        private float _pistolLayerMultiplier;
         private float _sphereAttackLayerMultiplier;
         private float _slideLayerMultiplier;
         private float _hackLayerMultiplier;
@@ -19,7 +18,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [System.NonSerialized] public bool isAttackLayerActive;
         [System.NonSerialized] public bool isFinalAttackLayerActive;
         [System.NonSerialized] public bool isCrouchLayerActive;
-        [System.NonSerialized] public bool isPistolLayerActive;
         private void Awake()
         {
             _anim = GetComponent<Animator>();
@@ -36,7 +34,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Attack")), _attackLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("FinalAttack")), _finalAttackLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Crouch")), _crouchLayerMultiplier);
-            _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Pistol")), _pistolLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Slide")), _slideLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Hack")), _hackLayerMultiplier);
         }
@@ -78,18 +75,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     isFinalAttackLayerActive = false;
                 }
             }
-        
-            if (Math.Abs(_pistolLayerMultiplier - 1f) < 0.1f)
-            {
-                isPistolLayerActive = true;
-            }
-            else
-            {
-                if (isPistolLayerActive)
-                {
-                    isPistolLayerActive = false;
-                }
-            }
         }
 
         public void EnableAttackLayer()
@@ -120,16 +105,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void DisableCrouchLayer()
         {
             StartCoroutine(nameof(DisableCrouchCoroutine));
-        }
-    
-        public void EnablePistolLayer()
-        {
-            StartCoroutine(nameof(EnablePistolCoroutine));
-        }
-    
-        public void DisablePistolLayer()
-        {
-            StartCoroutine(nameof(DisablePistolCoroutine));
         }
     
         public void EnableSphereAttackLayer()
@@ -263,42 +238,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (_crouchLayerMultiplier <= 0f)
                 {
                     _crouchLayerMultiplier = 0f;
-                    canDisableLayer = false;
-                }
-
-                yield return new WaitForSeconds(0.01f);
-            }
-        }
-    
-        private IEnumerator EnablePistolCoroutine()
-        {
-            var canEnableLayer = true;
-
-            while (canEnableLayer)
-            {
-                _pistolLayerMultiplier += 24 * Time.unscaledDeltaTime;
-
-                if (_pistolLayerMultiplier >= 1f)
-                {
-                    _pistolLayerMultiplier = 1f;
-                    canEnableLayer = false;
-                }
-
-                yield return new WaitForSeconds(0.01f);
-            }
-        }
-    
-        private IEnumerator DisablePistolCoroutine()
-        {
-            var canDisableLayer = true;
-
-            while (canDisableLayer)
-            {
-                _pistolLayerMultiplier -= 24 * Time.unscaledDeltaTime;
-
-                if (_pistolLayerMultiplier <= 0f)
-                {
-                    _pistolLayerMultiplier = 0f;
                     canDisableLayer = false;
                 }
 

@@ -4,11 +4,10 @@ using UnityEngine.InputSystem;
 using _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts;
 using System.Collections;
 using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts;
-using static UnityEngine.ParticleSystem;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
-    public class MainCPistol : MainCMouseController
+    public class MainCPistol : MonoBehaviour
     {
         private enum TypeOfAim
         {
@@ -35,6 +34,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private ParticleSystem _ps;
 
+        [SerializeField] private PlayerDamageData _pistolAttackData;
+
         [SerializeField] private GameObject cameraObj;
         [SerializeField] private GameObject cameraBaseObj;
         [SerializeField] private GameObject bastetObj;
@@ -55,18 +56,23 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [System.NonSerialized] public bool IsAutoTargeting;
         private bool _isAnimEnabled;
         private bool _isLeftMouseDown;
+        private bool _isRightMouseDown;
         private bool _isShooting;
         private bool _isChargingShoot;
         private bool _isRecoveringShoot;
+        private bool _isWaitingForRecoveringShoot;
 
         [SerializeField] private float sphereDectorSize = 5f;
         [SerializeField] private float cameraTransitionSpeed = 5f;
         [SerializeField] private float shootingHoldTime = 5f;
+        [SerializeField] private float bulletSpeed = 60f;
+        [SerializeField] private float bulletSize = 3f;
+        [SerializeField] private float energySpend = 20f;
+        [SerializeField] private float shootCooldown = 1f;
         private float _closestDistance = Mathf.Infinity;
-        private float _shootingTime;
-        private float energySpent;
+        private float _totalCooldown;
 
-        private protected override void Awake()
+        private void Awake()
         {
             _mainCAttack = GetComponent<MainCAttack>();
             _mainCMovement = GetComponent<MainCMovement>();
@@ -86,7 +92,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.Player.SecondaryAttack.canceled += RightMouseUp;
 
             _mainCamera = cameraObj.GetComponent<Camera>();
-            base.Awake();
+
+
+            if (GameManagerSingleton.Instance.bastetEnergy < 100 && !_isRecoveringShoot && !_isWaitingForRecoveringShoot)
+            {
+                _recoverEnergyCoroutine = StartCoroutine(RecoverEnergy(5f));
+                _isWaitingForRecoveringShoot = true;
+            }
         }
 
         private protected void Update()
@@ -104,46 +116,44 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             Aim();
 
-            if (GameManagerSingleton.Instance.bastetEnergy <= 0 && !_isRecoveringShoot)
+        }
+
+        private void RightMouseDown(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack)
             {
-                _isRecoveringShoot = true;
-                _isChargingShoot = false;
-                GameManagerSingleton.Instance.bastetEnergy = 0;
+                _camFollower.cameraFollow = camAimPosTr;
+                _bastetController.HideScanner();
+                bastetObj.SetActive(true);
+                _bastetController.PosRightHand();
+                _bastetController.StartMoveToBastetPos();
             }
+            _isRightMouseDown = true;
+        }
 
-            if (_isLeftMouseDown && !_isShooting && IsAiming && GameManagerSingleton.Instance.bastetEnergy >= 20 && GameManagerSingleton.Instance.bastetEnergy > 0)
+        private void RightMouseUp(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack)
             {
-                _shootingTime += Time.deltaTime;
-                if (_shootingTime > shootingHoldTime)
-                {
-                    energySpent = GameManagerSingleton.Instance.bastetEnergy;
-                    Shoot(_shootingTime / 2.5f, 60f);
-                }
-                else
-                {
-                    energySpent = GameManagerSingleton.Instance.bastetEnergy * (_shootingTime / shootingHoldTime) * Time.deltaTime;
-                }
-
-                GameManagerSingleton.Instance.bastetEnergy -= energySpent;
-                _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
-
-                if (!_isChargingShoot && !_isRecoveringShoot)
-                {
-                    if (IsAiming)
-                    {
-                        _isChargingShoot = true;
-                        _shootingTime = 0;
-                        _currentParticle = Instantiate(shootParticles, _bastetController.muzzles[0].transform.position, Quaternion.identity);
-                        _ps = _currentParticle.GetComponentInChildren<ParticleSystem>();
-                        _ps.Stop();
-                        var main = _ps.main;
-                        main.duration = shootingHoldTime;
-                        _ps.Play();
-                        _currentParticle.transform.parent = _bastetController.muzzles[0].transform;
-                    }
-                }
+                _camFollower.cameraFollow = cameraFollow;
+                _bastetController.StopMoveToBastetPos();
+                _bastetController.InvokeMoveToPlayer();
             }
+            _isRightMouseDown = false;
+        }
 
+        private void LeftMouseDown(InputAction.CallbackContext context)
+        {
+            _isLeftMouseDown = true;
+            if(GameManagerSingleton.Instance.bastetEnergy >= 20 && Time.time > _totalCooldown)
+            {
+                Shoot();
+            }
+        }
+
+        private void LeftMouseUp(InputAction.CallbackContext context)
+        {
+            _isLeftMouseDown = false;
         }
 
         private IEnumerator RecoverEnergy(float waitTime)
@@ -159,7 +169,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     break;
                 }
-                GameManagerSingleton.Instance.bastetEnergy += 5f;
+                GameManagerSingleton.Instance.bastetEnergy += .5f;
                 _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
 
                 if (GameManagerSingleton.Instance.bastetEnergy > 100f)
@@ -169,73 +179,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     break;
                 }
 
-                yield return new WaitForSeconds(1.5f);
+                yield return new WaitForSeconds(.1f);
 
             }
-        }
-
-        private void RightMouseDown(InputAction.CallbackContext context)
-        {
-            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack)
-            {
-                _camFollower.cameraFollow = camAimPosTr;
-                _bastetController.HideScanner();
-                bastetObj.SetActive(true);
-                _bastetController.PosRightHand();
-                _bastetController.SetAbilityBastetAttack(true);
-                _bastetController.SetMoveToBastetPos(true);
-            }
-        }
-
-        private void RightMouseUp(InputAction.CallbackContext context)
-        {
-            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack)
-            {
-                _camFollower.cameraFollow = cameraFollow;
-                _bastetController.SetAbilityBastetAttack(false);
-                _bastetController.SetMoveToBastetPos(false);
-            }
-        }
-
-        private void LeftMouseDown(InputAction.CallbackContext context)
-        {
-            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack)
-            {
-                _isLeftMouseDown = true;
-            }
-
-            if(IsAiming && _isRecoveringShoot)
-            {
-                StopCoroutine(_recoverEnergyCoroutine);
-                _isRecoveringShoot = false;
-            }
-        }
-
-        private void LeftMouseUp(InputAction.CallbackContext context)
-        {
-            if(_currentParticle != null && IsAiming)
-            {
-                Destroy(_currentParticle);
-            }
-
-            if(IsAiming && !_isShooting && !_isRecoveringShoot && GameManagerSingleton.Instance.bastetEnergy >= 20)
-            {
-                Shoot(_shootingTime / 2.5f, 60f);
-                _mainCInterface.localEnergy = GameManagerSingleton.Instance.bastetEnergy;
-
-                if(_shootingTime < 1f)
-                {
-                    GameManagerSingleton.Instance.bastetEnergy -= 20;
-                }
-            }
-
-            if(GameManagerSingleton.Instance.bastetEnergy < 100f)
-            {
-                _recoverEnergyCoroutine = StartCoroutine(RecoverEnergy(5f));
-            }
-
-            _isLeftMouseDown = false;
-            _isChargingShoot = false;
         }
 
 
@@ -260,10 +206,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             AimingOnRail();
         }
 
-        private void Shoot(float sizeBullet, float bulletSpeed)
+        private void Shoot()
         {
             if (IsAiming)
             {
+                if (_isRecoveringShoot)
+                {
+                    StopCoroutine(_recoverEnergyCoroutine);
+                }
+                _isWaitingForRecoveringShoot = false;
+                _isRecoveringShoot = false;
                 _isShooting = true;
                 var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
                 RaycastHit hit;
@@ -274,7 +226,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     targetPoint = hit.point;
                 else
                     targetPoint = ray.GetPoint(75f);
-                _bastetController.Shoot(targetPoint, bigBullet, sizeBullet, bulletSpeed);
+                _bastetController.Shoot(targetPoint, bigBullet, bulletSize, bulletSpeed, _pistolAttackData);
+                _totalCooldown = Time.time + shootCooldown;
+                if (!GameManagerSingleton.Instance.IsUnlimitedEnergy)
+                {
+                    GameManagerSingleton.Instance.TakeEnergy(energySpend);
+                    _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
+                }
+
+                if (GameManagerSingleton.Instance.bastetEnergy < 100 && !_isRecoveringShoot && !_isWaitingForRecoveringShoot)
+                {
+                    _recoverEnergyCoroutine = StartCoroutine(RecoverEnergy(5f));
+                    _isWaitingForRecoveringShoot = true;
+                }
             }
         }
 
@@ -285,11 +249,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void AimingOnRail()
         {
-            if(IsRightMouseDown)
+            if(_isRightMouseDown)
             {
                 if(!_isAnimEnabled)
                 {
-                    _mainCLayers.EnablePistolLayer();
                     _mainCAnim.SetAimOnRail(true);
                     _isAnimEnabled = true;
                     IsAiming = true;
@@ -300,7 +263,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (_isAnimEnabled)
                 {
-                    _mainCLayers.DisablePistolLayer();
                     _mainCAnim.SetAimOnRail(false);
                     _isAnimEnabled = false;
                     IsAiming = false;

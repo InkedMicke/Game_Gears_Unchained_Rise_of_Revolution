@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 {
-    public class GGenerator : MonoBehaviour, IDamageable
+    public class GGenerator : MonoBehaviour, IInteractAttack
     {
         [SerializeField] private UnityEvent itActivatesWhenInteract;
 

@@ -161,9 +161,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (attackCount == 2)
                 {
+                    _mainCLayers.DisableAttackLayer();
                     _mainCLayers.EnableFinalAttackLayer();
                     attackCount++;
                     _mainCAnimator.SetAttackCountAnim(attackCount);
+                    _anim.applyRootMotion = true;
                     _canNextAttack = false;
                     IsFinalAttacking = true;
                 }
@@ -183,6 +185,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void EndAttack()
         {
+            _anim.applyRootMotion = false;
             IsAttacking = false;
             attackCount = 0;
             _mainCAnimator.SetAttackCountAnim(attackCount);

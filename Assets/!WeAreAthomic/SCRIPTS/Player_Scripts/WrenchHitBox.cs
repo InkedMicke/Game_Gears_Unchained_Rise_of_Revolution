@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using _WeAreAthomic.SCRIPTS.Enemi;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -8,7 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
     {
         private MainCAttack _mainCAttack;
 
-        [SerializeField] private LayerMask enemyHurtBox;
+        [SerializeField] private PlayerDamageData wrenchDamageData;
 
         public List<Collider> colliderList = new();
 
@@ -19,13 +20,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void OnTriggerEnter(Collider other)
         {
-            if ((enemyHurtBox.value & (1 << other.gameObject.layer)) != 0)
+            if (other.TryGetComponent(out IDamageable damageable))
             {
-                if (!colliderList.Contains(other))
+                if (wrenchDamageData != null)
                 {
-                    other.GetComponent<DummieHurtBox>().TakeDamage(20);
-                    SpeedDownTime();
-                    Invoke(nameof(SpeedUpTime), .008f);
+                    damageable.Damage(GameManagerSingleton.Instance.GetDamage(wrenchDamageData, other));
                     colliderList.Add(other);
                 }
             }
