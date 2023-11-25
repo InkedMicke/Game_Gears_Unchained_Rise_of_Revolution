@@ -431,6 +431,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &894568548 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3299771474255909389, guid: ffffc1760f21ed248a2899863bbcf9fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5222077474484771271}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcbf23cb9053e744a8b0d107f7b9c3db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1047355879
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,12 +628,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5222077474484771271}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1145736357 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5328738333055028945, guid: ffffc1760f21ed248a2899863bbcf9fd,
+--- !u!114 &1145736358 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
     type: 3}
   m_PrefabInstance: {fileID: 5222077474484771271}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c480f92101831b4ca3ef71a35919d6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1169231830 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1218246936044144784, guid: ffffc1760f21ed248a2899863bbcf9fd,
@@ -645,6 +663,9 @@ MonoBehaviour:
   movableFloor: {fileID: 1129699269}
   dummieControllerObj: {fileID: 222464108279490799}
   goHereObj: {fileID: 3008385058797262991}
+  firstReds: []
+  secondReds: []
+  lateralTresspasingContainer: {fileID: 0}
   speedOfFloor: 0.1
   seActivaCuandoVaASubir:
     m_PersistentCalls:
@@ -1013,7 +1034,7 @@ PrefabInstance:
     - target: {fileID: 155516967118213694, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.69
+      value: 27.54
       objectReference: {fileID: 0}
     - target: {fileID: 155516967118213694, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
@@ -1034,6 +1055,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 155516967118213694, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.000011024685
       objectReference: {fileID: 0}
     - target: {fileID: 155516967118213694, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
@@ -1124,37 +1150,65 @@ PrefabInstance:
     - target: {fileID: 457468790471507755, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_LocalPosition.x
+<<<<<<< Updated upstream
       value: 25.788912
+=======
+      value: 25.334372
+>>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 457468790471507755, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_LocalPosition.y
+<<<<<<< Updated upstream
       value: 1.9468395
+=======
+      value: 1.6696404
+>>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 457468790471507755, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_LocalPosition.z
+<<<<<<< Updated upstream
       value: 3.1306973
+=======
+      value: 27.023993
+>>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 457468790471507755, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_LocalRotation.w
+<<<<<<< Updated upstream
       value: 0.93147045
+=======
+      value: 0.9761228
+>>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 457468790471507755, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_LocalRotation.x
+<<<<<<< Updated upstream
       value: 0.03694393
+=======
+      value: 0.21625048
+>>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 457468790471507755, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_LocalRotation.y
+<<<<<<< Updated upstream
       value: 0.3612861
+=======
+      value: 0.019954966
+>>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 457468790471507755, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_LocalRotation.z
+<<<<<<< Updated upstream
       value: -0.021687644
+=======
+      value: -0.0046803937
+>>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 1309899142898700900, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
@@ -1628,11 +1682,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6051862779255074103, guid: 9d2ebbd4a4922de43ae8c77510eda865,
-        type: 3}
-      propertyPath: playerRightArm
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6422411229561103027, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: labThirdRoomObj
@@ -1831,11 +1880,6 @@ PrefabInstance:
     - target: {fileID: 9021387556741110903, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9115977270300307903, guid: 9d2ebbd4a4922de43ae8c77510eda865,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9205974703476004521, guid: 9d2ebbd4a4922de43ae8c77510eda865,
@@ -2420,6 +2464,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
       propertyPath: seActivanCuandoLeDasAlBoton.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 99970893}
@@ -2427,11 +2491,66 @@ PrefabInstance:
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 1145736358}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 5023215450266500469}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 691384908}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 894568548}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: OpenDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: _WeAreAthomic.SCRIPTS.Props.ButtonInteractable, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: _WeAreAthomic.SCRIPTS.Props.OpenDoorLab, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: seActivanCuandoLeDasAlBoton.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5002528853476204882, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
@@ -2471,7 +2590,7 @@ PrefabInstance:
     - target: {fileID: 5845166750942640785, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.16
+      value: 3.7
       objectReference: {fileID: 0}
     - target: {fileID: 5845166750942640785, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
@@ -2511,6 +2630,11 @@ PrefabInstance:
     - target: {fileID: 6340589533756441848, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6430890631725299444, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6821788784242164898, guid: ffffc1760f21ed248a2899863bbcf9fd,
@@ -2610,6 +2734,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8938201301807066964, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8938201301807066964, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8938201301807066964, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[5].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8938201301807066964, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
       propertyPath: seActivanCuandoLeDasAlBoton.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 99970893}
@@ -2617,12 +2756,42 @@ PrefabInstance:
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 1145736357}
+      objectReference: {fileID: 5023215450266500469}
+    - target: {fileID: 8938201301807066964, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 691384908}
     - target: {fileID: 8938201301807066964, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
-      objectReference: {fileID: 691384908}
+      objectReference: {fileID: 1145736358}
+    - target: {fileID: 8938201301807066964, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 8938201301807066964, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
+      value: EnableCanHack
+      objectReference: {fileID: 0}
+    - target: {fileID: 8938201301807066964, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8938201301807066964, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[5].m_TargetAssemblyTypeName
+      value: _WeAreAthomic.SCRIPTS.Props_Scripts.ButtonInteractable, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8938201301807066964, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8938201301807066964, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument

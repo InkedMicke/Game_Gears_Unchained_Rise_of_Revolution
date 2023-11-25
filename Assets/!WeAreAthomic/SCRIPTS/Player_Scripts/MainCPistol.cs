@@ -176,25 +176,33 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void RightMouseDown(InputAction.CallbackContext context)
         {
-            _camFollower.cameraFollow = camAimPosTr;
-            _bastetController.HideScanner();
-            bastetObj.SetActive(true);
-            _bastetController.PosRightHand();
-            _bastetController.SetAbilityBastetAttack(true);
-            _bastetController.SetMoveToBastetPos(true);
-
+            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack)
+            {
+                _camFollower.cameraFollow = camAimPosTr;
+                _bastetController.HideScanner();
+                bastetObj.SetActive(true);
+                _bastetController.PosRightHand();
+                _bastetController.SetAbilityBastetAttack(true);
+                _bastetController.SetMoveToBastetPos(true);
+            }
         }
 
         private void RightMouseUp(InputAction.CallbackContext context)
         {
-            _camFollower.cameraFollow = cameraFollow;
-            _bastetController.SetAbilityBastetAttack(false);
-            _bastetController.SetMoveToBastetPos(false);
+            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack)
+            {
+                _camFollower.cameraFollow = cameraFollow;
+                _bastetController.SetAbilityBastetAttack(false);
+                _bastetController.SetMoveToBastetPos(false);
+            }
         }
 
         private void LeftMouseDown(InputAction.CallbackContext context)
         {
-            _isLeftMouseDown = true;
+            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack)
+            {
+                _isLeftMouseDown = true;
+            }
 
             if(IsAiming && _isRecoveringShoot)
             {

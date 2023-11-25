@@ -26,6 +26,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
 
     public bool isGamePaused;
     public bool thereIsCanvasBelow;
+    public bool HasUnlockedBastetAttack;
 
     public int sensivityX;
     public int sensivityY;
@@ -33,6 +34,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public float currentHealth = 100f;
 
     public float bastetEnergy = 100f;
+
 
     private void Awake()
     {
@@ -106,6 +108,11 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public void SetThereIsCanvasBelow(bool condition)
     {
         thereIsCanvasBelow = condition;
+    }
+
+    public void SetHasUnlockedBastetAttack(bool condition)
+    {
+
     }
 
 

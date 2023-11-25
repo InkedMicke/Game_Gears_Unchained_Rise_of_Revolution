@@ -51,14 +51,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             StartCoroutine(nameof(MoveToPlayer));
         }
 
-        public void InvokeRotation()
-        {
-            ShowScanner();
-        }
-
         private void Update()
         {
-            if (_moveToBastetPos)
+/*            if (_moveToBastetPos)
             {
                 var leftPos = playerObj.transform.position + Vector3.left;
                 var correctPos = new Vector3(leftPos.x, leftPos.y + 1.5f, leftPos.z);
@@ -93,7 +88,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                 {
                     gameObject.SetActive(false);
                 }
-            }
+            }*/
         }
 
         public void SetMoveToBastetPos(bool condition)
@@ -113,9 +108,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
 
         private IEnumerator MoveToPlayer()
         {
-            var canEnableLayer = true;
+            Debug.Log("hola1");
+            _cc.enabled = true;
             HideScanner();
-            while (canEnableLayer)
+            while (true)
             {
                 var direction = playerRightArm.transform.position - transform.position;
                 _cc.Move(direction.normalized * moveSpeed * Time.deltaTime);
@@ -123,8 +119,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
 
                 if (Vector3.Distance(playerRightArm.transform.position, transform.position) < 0.3f)
                 {
-                    canEnableLayer = false;
                     gameObject.SetActive(false);
+                    break;
                 }
 
                 yield return new WaitForSeconds(0.01f);
@@ -260,7 +256,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             scannerObj.SetActive(false);
         }
 
-        private void ShowScanner()
+        public void ShowScanner()
         {
             scannerObj.SetActive(true);
         }

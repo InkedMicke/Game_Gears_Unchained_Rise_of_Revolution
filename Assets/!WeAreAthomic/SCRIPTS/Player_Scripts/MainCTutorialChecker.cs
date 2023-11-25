@@ -16,7 +16,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCHackingSystem _mainCHacking;
         private GStopMenu _gStopMenu;
 
-        private UnityEngine.SceneManagement.Scene _currentScene;
+        private Scene _currentScene;
 
         [SerializeField] private GameObject breatherObj;
         [SerializeField] private GameObject botonPosaMano;
@@ -79,6 +79,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCSounds.RemoveAllSounds();
                     _mainCSounds.PlayExpressionSound();
                     goHerePosaManoMove.SetActive(true);
+                    goHereBreather.SetActive(false);
                 }
 
                 yield return new WaitForSeconds(0.01f);
