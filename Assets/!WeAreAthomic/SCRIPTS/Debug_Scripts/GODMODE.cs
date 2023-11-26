@@ -12,9 +12,6 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
         [SerializeField] private GameObject godModeContainer;
         private GameObject _cameraObj;
 
-        [SerializeField] private LayerMask defaultLayer;
-        [SerializeField] private LayerMask ignoreLayer;
-
         public bool isGodModeEnabled;
         private bool _isSpeedingUp;
         private bool _isSpeedingDown;
@@ -46,7 +43,7 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
         {
             GodMode();
             AdjustSpeed();
-            var layerValue = isGodModeEnabled ? 14 : 0;
+            var layerValue = isGodModeEnabled ? 14 : 16;
             var validLayer = Mathf.Clamp(layerValue, 0, 31);
             gameObject.layer = validLayer;
         }

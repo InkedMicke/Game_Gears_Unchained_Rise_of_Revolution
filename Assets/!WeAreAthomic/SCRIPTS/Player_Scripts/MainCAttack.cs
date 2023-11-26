@@ -17,6 +17,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private BoxCollider _weaponBC;
         private CharacterController _cc;
         private MainCTutorialChecker _mainCTutorial;
+        private WrenchHitBox _wrenchHitBox;
+        private MainCPistol _mainCPistol;
 
         [SerializeField] private GameObject weaponObj;
 
@@ -56,6 +58,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _mainCSounds = GetComponent<MainCSounds>();
             _mainCTutorial = GetComponent<MainCTutorialChecker>();
+            _mainCPistol = GetComponent<MainCPistol>();
+            _wrenchHitBox = weaponObj.GetComponent<WrenchHitBox>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -88,7 +92,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Attack()
         {
-            if (CanAttack() && _isSheathed || _railGrindSystem.IsOnRail() && CanAttack())
+            if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
             {
                 if (_mainCTutorial.IsOnTutorial && !_attackTutorial)
                 {
@@ -124,24 +128,36 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-
-
-        public void CheckForMoveToEnemy()
+        public void MoveToEnemy(Collider other)
         {
-            var ray = new Ray(middlePosTr.position, middlePosTr.forward);
-            if(Physics.Raycast(ray, out var hit,1f, enemyHurtBox))
+            if (!_wrenchHitBox.GotHit)
             {
-                var enemyTr = hit.collider.gameObject.transform;
-                MoveToEnemy(enemyTr);
+                _wrenchHitBox.SetGotHit(true);
+                var enemyPos = other.gameObject.transform.position;
+                var direction = enemyPos - transform.position;
+                direction.y = 0f;
+                _cc.Move(direction * 0.7f);
             }
         }
 
-
-
-        private void MoveToEnemy(Transform enemyPos)
+        private IEnumerator MoveToEnemyCoroutine(Collider other)
         {
-            var difference = enemyPos.position - transform.position;
-            _cc.Move(difference);
+            while(true)
+            {
+                var enemyPos = other.gameObject.transform.position;
+                var direction = enemyPos - transform.position;
+                direction.y = 0f;
+                if(direction.magnitude > 1f)
+                {
+                    _cc.Move(direction.normalized * 20f * Time.deltaTime);
+                }
+                else
+                {
+                    break;
+                }
+
+                yield return new WaitForSeconds(0.01f);
+            }
         }
 
         public void StopSheathCoroutine()
@@ -205,7 +221,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void DisableWeaponCollision()
         {
             weaponObj.GetComponent<BoxCollider>().enabled = false;
-            weaponObj.GetComponent<WrenchHitBox>().ClearList();
+            _wrenchHitBox.ClearList();
+            _wrenchHitBox.SetGotHit(false);
         }
 
         public void ShowWeapon() => weaponObj.SetActive(true);

@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 1080917763583922842}
   - component: {fileID: 4412195746065222362}
   - component: {fileID: 3943831598560812694}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -269,6 +269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18c83c301c467b1419acb681fbc0cb35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBulletLayer:
+    serializedVersion: 2
+    m_Bits: 0
   cameraBaseObj: {fileID: 0}
   orientation: {fileID: 6962321048089876896}
   checkGrounded: {fileID: 7110690699828480967}
@@ -338,9 +341,10 @@ MonoBehaviour:
   sphereDectorSize: 3
   cameraTransitionSpeed: 100
   shootingHoldTime: 5
-  bulletSpeed: 60
+  bulletSpeed: 50
   bulletSize: 1
   energySpend: 20
+  shootCooldown: 1
 --- !u!114 &6326130830157195552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,12 +460,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   godModeContainer: {fileID: 0}
-  defaultLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  ignoreLayer:
-    serializedVersion: 2
-    m_Bits: 16384
   isGodModeEnabled: 0
 --- !u!114 &8670273326439586584
 MonoBehaviour:

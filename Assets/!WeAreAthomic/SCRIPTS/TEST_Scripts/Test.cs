@@ -22,7 +22,7 @@ namespace _WeAreAthomic.SCRIPTS.TEST
         {
             toggled = !toggled;
 
-            Time.timeScale = toggled ? 0.1f : 1f;
+            Time.timeScale = toggled ? 0.05f : 1f;
         }
 
     }

@@ -27,6 +27,7 @@ public class BastetBulletHitBox : MonoBehaviour
             }
         }
 
+
         Destroy(gameObject);
     }
 

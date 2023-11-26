@@ -2,6 +2,7 @@ using _WeAreAthomic.SCRIPTS.Debug_Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -18,6 +19,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCAnimatorController _mainCAnimator;
         private CharacterController _cc;
         private Godmode _godMode;
+
+        [SerializeField] private LayerMask playerBulletLayer;
 
         [SerializeField] private GameObject cameraBaseObj;
         private GameObject _cameraObj;
@@ -78,7 +81,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _railGrindSystem = GetComponent<MainCRailGrindSystem>();
             _mainCHacking = GetComponent<MainCHackingSystem>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
-
             _playerInputActions = new PlayerInputActions();
         }
 

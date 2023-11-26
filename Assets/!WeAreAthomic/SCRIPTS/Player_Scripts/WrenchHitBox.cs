@@ -13,6 +13,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public List<Collider> colliderList = new();
 
+        public bool GotHit;
+
         private void Awake()
         {
             _mainCAttack = GetComponentInParent<MainCAttack>();
@@ -27,12 +29,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     damageable.Damage(GameManagerSingleton.Instance.GetDamage(wrenchDamageData, other));
                     colliderList.Add(other);
                 }
+
+                _mainCAttack.MoveToEnemy(other);
             }
         }
 
         public void ClearList()
         {
             colliderList.Clear();
+        }
+
+        public void SetGotHit(bool gotHit)
+        {
+            GotHit = gotHit;
         }
 
         private void SpeedUpTime()
