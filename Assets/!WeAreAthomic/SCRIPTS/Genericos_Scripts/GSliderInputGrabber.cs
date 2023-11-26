@@ -7,15 +7,15 @@ public class GSliderInputGrabber : MonoBehaviour
 {
     private Slider _slider;
 
-    public GameManagerSingleton.Settings settings;
+    public MonoBehaviour targetScript;
 
     private void Awake()
     {
         _slider = GetComponent<Slider>();
     }
 
-    public void AddValueToGameManager()
+    public void SendDataToTargetScript()
     {
-        GameManagerSingleton.Instance.EnumToValue(settings, (int)_slider.value);
+        targetScript.SendMessage("GetDataFromSlider", _slider.value);
     }
 }
