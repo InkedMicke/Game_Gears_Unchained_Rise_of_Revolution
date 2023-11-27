@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class GUIController : MonoBehaviour
+public class GEscapeClose : MonoBehaviour
 {
     private PlayerInputActions _playerInputActions;
 

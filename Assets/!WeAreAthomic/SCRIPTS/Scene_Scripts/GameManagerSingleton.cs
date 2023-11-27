@@ -33,11 +33,13 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public List<GameObject> gameObjectsList;
     public List<GameObject> closestGameObjectsList;
 
-    public bool isGamePaused;
+    public bool IsGamePaused;
     public bool thereIsCanvasBelow;
     public bool HasUnlockedBastetAttack;
     public bool IsUnlimitedEnergy;
     public bool IsOnTutorialImage;
+    public bool IsGodModeEnabled;
+    public bool IsStopMenuEnabled;
     private bool _toggledTotally;
 
     public int sensivityX;
@@ -56,7 +58,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         gameObjectsList.Clear();
         closestGameObjectsList.Clear();
 
-        isGamePaused = false;
+        IsGamePaused = false;
 
     }
 
@@ -102,19 +104,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
 
     public void PauseGame(bool condition)
     {
-        isGamePaused = condition;
-    }
-
-    public void EnumToValue(Settings currentSetting, int value)
-    {
-        if (currentSetting == Settings.SensivityX)
-        {
-            sensivityX = value;
-        }
-        else if (currentSetting == Settings.SensivityY)
-        {
-            sensivityY = value;
-        }
+        IsGamePaused = condition;
     }
 
     public void SetThereIsCanvasBelow(bool condition)
@@ -137,6 +127,31 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         IsUnlimitedEnergy = condition;
     }
 
+    public void SetGodModeBool(bool condition)
+    {
+        IsGodModeEnabled = condition;
+    }
+
+    public void SetIsStopMenuEnabled(bool condition)
+    {
+        IsStopMenuEnabled = condition;
+    }
+
+    public void SetIsOnTutorialImage(bool condition)
+    {
+        IsOnTutorialImage = condition;
+    }
+
+    public void FreezeTime(bool condition)
+    {
+        Time.timeScale = condition ? 0 : 1;
+    }
+
+    public void GameState(bool condition)
+    {
+        IsGamePaused = condition;
+    }
+
     public void ToggleIsUnlimitedEnergy()
     {
         IsUnlimitedEnergy = !IsUnlimitedEnergy;
@@ -145,11 +160,6 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         {
             bastetEnergy = 100f;
         }
-    }
-
-    public void SetIsOnTutorialImage(bool condition)
-    {
-        IsOnTutorialImage = condition;
     }
 
     public void CursorMode(bool condition)
@@ -165,16 +175,6 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
             Cursor.visible = false;
         }
 
-    }
-
-    public void FreezeTime(bool condition)
-    {
-        Time.timeScale = condition ? 0 : 1;
-    }
-
-    public void GameState(bool condition)
-    {
-        isGamePaused = condition;
     }
 
     public void CloseTotallyWindow()
@@ -208,6 +208,11 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         }
     }
 
+    public void ToggleGodModeBool()
+    {
+        IsGodModeEnabled = !IsGodModeEnabled;
+    }
+
     public float GetDamage(PlayerDamageData damageData, Collider other)
     {
         switch (_currentDifficulty)
@@ -237,6 +242,18 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         }
 
         return 0;
+    }
+
+    public void EnumToValue(Settings currentSetting, int value)
+    {
+        if (currentSetting == Settings.SensivityX)
+        {
+            sensivityX = value;
+        }
+        else if (currentSetting == Settings.SensivityY)
+        {
+            sensivityY = value;
+        }
     }
 
 

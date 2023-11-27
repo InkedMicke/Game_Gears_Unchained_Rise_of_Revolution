@@ -7,7 +7,7 @@ public class GCloseUI : MonoBehaviour
     [SerializeField] private GameObject stopMenu;
     public void Close(GameObject obj)
     {
-        if (GameManagerSingleton.Instance.isGamePaused) 
+        if (GameManagerSingleton.Instance.IsGamePaused) 
         {
             stopMenu.SetActive(true);
         }

@@ -144,7 +144,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void GetAllTransforms()
         {
-            var ray = new Ray(groundCheck.position, -Vector3.up);
             if (_railCols.Length > 0)
             {
                 if (_currentScene.name == sewerScene)

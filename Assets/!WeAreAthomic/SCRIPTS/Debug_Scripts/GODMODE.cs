@@ -12,7 +12,6 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
         [SerializeField] private GameObject godModeContainer;
         private GameObject _cameraObj;
 
-        public bool isGodModeEnabled;
         private bool _isSpeedingUp;
         private bool _isSpeedingDown;
 
@@ -35,33 +34,29 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
         private void Start()
         {
             _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
-
-            var gameObj = transform.parent.gameObject;
         }
 
         private void Update()
         {
             GodMode();
             AdjustSpeed();
-            var layerValue = isGodModeEnabled ? 14 : 16;
+            var layerValue = GameManagerSingleton.Instance.IsGodModeEnabled ? 14 : 16;
             var validLayer = Mathf.Clamp(layerValue, 0, 31);
             gameObject.layer = validLayer;
         }
 
         private void EnableGodMode(InputAction.CallbackContext context)
         {
-            godModeContainer.SetActive(!godModeContainer.activeSelf);
-            GameManagerSingleton.Instance.ToggleTotallyWindow();
-        }
-
-        public void ToggleGodMode()
-        {
-            isGodModeEnabled = !isGodModeEnabled;
+            if (!GameManagerSingleton.Instance.IsStopMenuEnabled)
+            {
+                godModeContainer.SetActive(!godModeContainer.activeSelf);
+                GameManagerSingleton.Instance.ToggleTotallyWindow();
+            }
         }
 
         private void GodMode()
         {
-            if(isGodModeEnabled)
+            if(GameManagerSingleton.Instance.IsGodModeEnabled)
             {
                 var moveVectorKeyboard = _playerInputActions.Player.MovementKeyboard.ReadValue<Vector2>();
 
@@ -97,14 +92,14 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
 
         private void ShiftUp(InputAction.CallbackContext context)
         {
-            if (isGodModeEnabled)
+            if (GameManagerSingleton.Instance.IsGodModeEnabled)
             {
                 _isSpeedingUp = false;
             }
         }
         private void ShiftDown(InputAction.CallbackContext context)
         {
-            if (isGodModeEnabled)
+            if (GameManagerSingleton.Instance.IsGodModeEnabled)
             {
                 _isSpeedingUp = true;
             }
@@ -112,7 +107,7 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
 
         private void CtrlUp(InputAction.CallbackContext context)
         {
-            if (isGodModeEnabled)
+            if (GameManagerSingleton.Instance.IsGodModeEnabled)
             {
                 _isSpeedingDown = false;
             }
@@ -120,7 +115,7 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
 
         private void CtrlDown(InputAction.CallbackContext context)
         {
-            if (isGodModeEnabled)
+            if (GameManagerSingleton.Instance.IsGodModeEnabled)
             {
                 _isSpeedingDown = true;
             }

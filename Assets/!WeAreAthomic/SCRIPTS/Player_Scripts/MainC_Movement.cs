@@ -111,7 +111,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void Update()
         {
             AnimatorController();
-            if (_canMove && !_godMode.isGodModeEnabled && !_railGrindSystem.CanJumpOnRail && !_mainCHacking.isHackingAnim && !_mainCAttack.IsFinalAttacking)
+            if (_canMove && !GameManagerSingleton.Instance.IsGodModeEnabled && !_railGrindSystem.CanJumpOnRail && !_mainCHacking.isHackingAnim && !_mainCAttack.IsFinalAttacking)
             {
                 MoveKeyboard();
                 MoveGamepad();
@@ -129,7 +129,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void AnimatorController()
         {
-            if (!_godMode.isGodModeEnabled)
+            if (!GameManagerSingleton.Instance.IsGodModeEnabled)
             {
                 if (!IsGrounded() && _velocity.y < 0 && !_railGrindSystem.IsOnRail() || !_railGrindSystem.IsOnRail() && _velocity.y < 0 && !IsGrounded())
                 {
@@ -158,7 +158,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void ApplyGravity()
         {
-            if (IsJumping || !IsGrounded() && !_godMode.isGodModeEnabled && !_railGrindSystem.IsOnRail())
+            if (IsJumping || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_railGrindSystem.IsOnRail())
             {
                 _velocity += transform.up.normalized * (gravity * Time.deltaTime);
                 _velocity.z = 0f;

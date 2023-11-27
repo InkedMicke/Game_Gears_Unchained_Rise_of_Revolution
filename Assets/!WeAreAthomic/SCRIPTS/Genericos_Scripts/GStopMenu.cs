@@ -29,7 +29,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
         {
             if (!GameManagerSingleton.Instance.IsOnTutorialImage)
             {
-                if (_isActive)
+                if (GameManagerSingleton.Instance.IsStopMenuEnabled)
                 {
                     mainMenuObj.SetActive(false);
                     if (!GameManagerSingleton.Instance.thereIsCanvasBelow)
@@ -38,7 +38,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                     }
                     GameManagerSingleton.Instance.PauseGame(false);
                     GameManagerSingleton.Instance.FreezeTime(false);
-                    _isActive = false;
+                    GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
                 }
                 else
                 {
@@ -46,6 +46,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                     GameManagerSingleton.Instance.CursorMode(true);
                     GameManagerSingleton.Instance.PauseGame(true);
                     GameManagerSingleton.Instance.FreezeTime(true);
+                    GameManagerSingleton.Instance.SetIsStopMenuEnabled(true);
                     _isActive = true;
                 }
             }
