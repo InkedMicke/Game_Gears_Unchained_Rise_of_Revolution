@@ -40,6 +40,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public bool IsOnTutorialImage;
     public bool IsGodModeEnabled;
     public bool IsStopMenuEnabled;
+    public bool IsSettingsMenuEnabled;
     private bool _toggledTotally;
 
     public int sensivityX;
@@ -140,6 +141,11 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public void SetIsOnTutorialImage(bool condition)
     {
         IsOnTutorialImage = condition;
+    }
+    
+    public void SetIsSettingsMenuEnabled(bool condition)
+    {
+        IsSettingsMenuEnabled = condition;
     }
 
     public void FreezeTime(bool condition)

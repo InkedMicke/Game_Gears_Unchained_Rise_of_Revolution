@@ -255,11 +255,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 _isUsingGamepad = true;
                 _isUsingKeyboard = false;
-                if (!IsJumping && !IsFalling && !IsCrouch && !_mainCAttack.IsAttacking)
-                {
-                    InvokeDisableAllLayers();
-                    _mainCAttack.timeGraceAttackPeriod = Time.time + .2f;
-                }
             }
             else
             {
@@ -273,26 +268,28 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (_isUsingKeyboard) return;
 
 
-            _movement = new Vector3(_moveVectorGamepad.x, 0.0f, _moveVectorGamepad.y);
+            _movement = new Vector3(_moveVectorGamepad.x, 0.0f, _moveVectorGamepad.y).normalized;
 
             var moveSpeed = _isRunningGamepad ? runSpeed : walkSpeed;
 
             var desiredSpeed = _movement.magnitude * moveSpeed / 2 * 2.0f;
         
 
-            _cc.Move(_movement * Time.deltaTime);
+            //_cc.Move(_movement * Time.deltaTime);
 
             var actualSpeed = _mainCAnimator.GetMoveSpeed();
-            var interpolatedSpeed = Mathf.Lerp(actualSpeed, desiredSpeed, Time.deltaTime * 4.0f);
+            var interpolatedSpeed = Mathf.Lerp(actualSpeed, desiredSpeed, Time.deltaTime * 8.0f);
             _mainCAnimator.SetMoveSpeed(interpolatedSpeed);
 
             var direction = new Vector3(_moveVectorGamepad.x, 0f, _moveVectorGamepad.y).normalized;
-            var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
+            var targetAngle = Mathf.Atan2(_movement.x, _movement.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
             var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityGamepad,
                 turnSmoothTime);
 
 
-            var moveDir = orientation.forward * (Time.deltaTime * _moveSpeed * direction.magnitude);
+            var moveDir = orientation.forward * (Time.deltaTime * interpolatedSpeed * direction.magnitude);
+
+            _cc.Move(moveDir);
 
             if (_moveVectorGamepad.magnitude > 0.1)
             {
