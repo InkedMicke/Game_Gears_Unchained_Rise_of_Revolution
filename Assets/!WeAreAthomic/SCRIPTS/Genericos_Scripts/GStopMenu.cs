@@ -1,6 +1,9 @@
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+
 namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 {
     public class GStopMenu : MonoBehaviour
@@ -9,6 +12,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
         private MainCTutorialChecker _mainCTutorial;
 
         [SerializeField] private GameObject mainMenuObj;
+        [SerializeField] private GameObject firstButton;
 
         private bool _isActive;
 
@@ -27,10 +31,11 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 
         private void ToggleMenu(InputAction.CallbackContext context)
         {
-            if (!GameManagerSingleton.Instance.IsOnTutorialImage)
+            if (!GameManagerSingleton.Instance.IsOnTutorialImage && !GameManagerSingleton.Instance.IsSettingsMenuEnabled)
             {
                 if (GameManagerSingleton.Instance.IsStopMenuEnabled)
                 {
+                    EventSystem.current.SetSelectedGameObject(null);
                     mainMenuObj.SetActive(false);
                     if (!GameManagerSingleton.Instance.thereIsCanvasBelow)
                     {
@@ -47,6 +52,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                     GameManagerSingleton.Instance.PauseGame(true);
                     GameManagerSingleton.Instance.FreezeTime(true);
                     GameManagerSingleton.Instance.SetIsStopMenuEnabled(true);
+                    EventSystem.current.SetSelectedGameObject(firstButton);
                     _isActive = true;
                 }
             }

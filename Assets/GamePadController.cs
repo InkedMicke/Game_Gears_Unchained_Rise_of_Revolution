@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.LowLevel;
 
 public class GamePadController : MonoBehaviour
 {
     private PlayerInputActions _playerInputActions;
 
-    [SerializeField] private GameObject gamepadPointer;
-
     private Vector2 vectorGamepad;
+    private Vector2 lastMousePosition;
 
     private bool _isActive;
 
@@ -22,30 +23,46 @@ public class GamePadController : MonoBehaviour
 
     private void Update()
     {
-        if(GameManagerSingleton.Instance.IsStopMenuEnabled)
+        if (GameManagerSingleton.Instance.IsStopMenuEnabled || GameManagerSingleton.Instance.IsSettingsMenuEnabled)
         {
             vectorGamepad = _playerInputActions.Player.MovementGamepad.ReadValue<Vector2>();
             if (vectorGamepad.magnitude > .1f)
             {
-                if(!_isActive)
+                if (!_isActive)
                 {
-                    gamepadPointer.SetActive(true);
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
                     _isActive = true;
                 }
+
+                if(Cursor.visible)
+                {
+                    Debug.Log("hola1");
+                    GameManagerSingleton.Instance.CursorMode(false);
+                }
+            }
+            else
+            {
+                if(_isActive)
+                {
+                    _isActive = false;
+                }
+
+                var currentMousePosition = Mouse.current.position.ReadValue();
+
+                if (currentMousePosition != lastMousePosition)
+                {
+                    GameManagerSingleton.Instance.CursorMode(true);
+                    // Realiza acciones cuando el ratón se mueve
+                }
+                else
+                {
+                    Debug.Log("El ratón está quieto");
+                    // Realiza acciones cuando el ratón está quieto
+                }
+
+                lastMousePosition = currentMousePosition;
             }
         }
-
-        if(_isActive)
-        {
-            PointerPositionOnScreen();
-        }
-    }
-
-    private void PointerPositionOnScreen()
-    {
-        var mousePosition = Mouse.current.position.ReadValue();
-        var speed = 5f;
-        Vector2 newPosition = mousePosition + vectorGamepad * speed * Time.deltaTime;
-        Mouse.current.WarpCursorPosition(newPosition);
     }
 }

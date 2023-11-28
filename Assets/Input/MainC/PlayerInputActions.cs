@@ -136,15 +136,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""QuitWindow"",
-                    ""type"": ""Button"",
-                    ""id"": ""7a563b08-0fd1-4829-aaec-fcbcdfdcc2f0"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Escape"",
                     ""type"": ""Button"",
                     ""id"": ""39489e85-dd0c-4f76-8271-73b632b0863a"",
@@ -428,17 +419,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8bae293a-afd4-4df3-a7f5-544d25a278cb"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""QuitWindow"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""43638489-9aa2-4126-806a-72b1351ed5f4"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
@@ -523,40 +503,22 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""GamepadControl"",
-            ""id"": ""4153a30a-c706-4cf9-b4a3-c6766e7a423c"",
+            ""name"": ""UI"",
+            ""id"": ""41bba156-dcd9-4cbc-aaf9-f662c8f6a6f4"",
             ""actions"": [
                 {
-                    ""name"": ""SelectUp"",
-                    ""type"": ""Button"",
-                    ""id"": ""84fcfb80-5c35-428f-959b-596b5ff0dce8"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""Navigate"",
+                    ""type"": ""Value"",
+                    ""id"": ""a3fdd19e-f462-4bcf-b2c9-fc6798f34027"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""SelectDown"",
+                    ""name"": ""LeaveUI"",
                     ""type"": ""Button"",
-                    ""id"": ""c865fec7-28f8-48d0-81d7-194e6d94bc58"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SelectRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""14b485ec-79da-4b04-b0c9-6062bea12aa9"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SelectLeft"",
-                    ""type"": ""Button"",
-                    ""id"": ""35f42250-ea26-43a5-9c54-6b47141e61d6"",
+                    ""id"": ""915b62d2-4b9e-48f8-a562-e5bbcb704ef1"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -565,46 +527,79 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": """",
-                    ""id"": ""f7d90107-92eb-4c34-a5bb-cf87c03a8574"",
+                    ""name"": ""DPad"",
+                    ""id"": ""431bfc2c-7f12-4e22-947d-410dea60344c"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""658078d5-a82a-4120-8413-0e94e2ce7e2e"",
                     ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""SelectUp"",
+                    ""action"": ""Navigate"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""2c715751-e956-433b-87a8-5f0018be4f8f"",
+                    ""name"": ""down"",
+                    ""id"": ""b06eaabe-0cf0-4e76-9ed5-9c1ea428aca6"",
                     ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""SelectDown"",
+                    ""action"": ""Navigate"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""b33b047c-df40-4856-a280-d231018b38c0"",
-                    ""path"": ""<Gamepad>/dpad/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""SelectRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c168d44c-d1d0-471f-8a5f-50cb8cd8ce84"",
+                    ""name"": ""left"",
+                    ""id"": ""84b03d32-643d-4694-b616-8860193f07b7"",
                     ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""SelectLeft"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""8de788ec-a73a-42ef-b4b9-99063825458c"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a331d022-367b-4493-be40-7a850aabf376"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""LeaveUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""840993a6-07b1-4abc-85ba-6d99959e9f21"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""LeaveUI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -661,19 +656,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Slow = m_Player.FindAction("Slow", throwIfNotFound: true);
         m_Player_SecondaryAttack = m_Player.FindAction("SecondaryAttack", throwIfNotFound: true);
         m_Player_Test = m_Player.FindAction("Test", throwIfNotFound: true);
-        m_Player_QuitWindow = m_Player.FindAction("QuitWindow", throwIfNotFound: true);
         m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
         m_Player_BastetAttack = m_Player.FindAction("BastetAttack", throwIfNotFound: true);
         m_Player_BastetAimAttack = m_Player.FindAction("BastetAimAttack", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
-        // GamepadControl
-        m_GamepadControl = asset.FindActionMap("GamepadControl", throwIfNotFound: true);
-        m_GamepadControl_SelectUp = m_GamepadControl.FindAction("SelectUp", throwIfNotFound: true);
-        m_GamepadControl_SelectDown = m_GamepadControl.FindAction("SelectDown", throwIfNotFound: true);
-        m_GamepadControl_SelectRight = m_GamepadControl.FindAction("SelectRight", throwIfNotFound: true);
-        m_GamepadControl_SelectLeft = m_GamepadControl.FindAction("SelectLeft", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
+        m_UI_LeaveUI = m_UI.FindAction("LeaveUI", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -747,7 +739,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Slow;
     private readonly InputAction m_Player_SecondaryAttack;
     private readonly InputAction m_Player_Test;
-    private readonly InputAction m_Player_QuitWindow;
     private readonly InputAction m_Player_Escape;
     private readonly InputAction m_Player_BastetAttack;
     private readonly InputAction m_Player_BastetAimAttack;
@@ -767,7 +758,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Slow => m_Wrapper.m_Player_Slow;
         public InputAction @SecondaryAttack => m_Wrapper.m_Player_SecondaryAttack;
         public InputAction @Test => m_Wrapper.m_Player_Test;
-        public InputAction @QuitWindow => m_Wrapper.m_Player_QuitWindow;
         public InputAction @Escape => m_Wrapper.m_Player_Escape;
         public InputAction @BastetAttack => m_Wrapper.m_Player_BastetAttack;
         public InputAction @BastetAimAttack => m_Wrapper.m_Player_BastetAimAttack;
@@ -816,9 +806,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Test.started += instance.OnTest;
             @Test.performed += instance.OnTest;
             @Test.canceled += instance.OnTest;
-            @QuitWindow.started += instance.OnQuitWindow;
-            @QuitWindow.performed += instance.OnQuitWindow;
-            @QuitWindow.canceled += instance.OnQuitWindow;
             @Escape.started += instance.OnEscape;
             @Escape.performed += instance.OnEscape;
             @Escape.canceled += instance.OnEscape;
@@ -868,9 +855,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Test.started -= instance.OnTest;
             @Test.performed -= instance.OnTest;
             @Test.canceled -= instance.OnTest;
-            @QuitWindow.started -= instance.OnQuitWindow;
-            @QuitWindow.performed -= instance.OnQuitWindow;
-            @QuitWindow.canceled -= instance.OnQuitWindow;
             @Escape.started -= instance.OnEscape;
             @Escape.performed -= instance.OnEscape;
             @Escape.canceled -= instance.OnEscape;
@@ -944,75 +928,59 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public CameraActions @Camera => new CameraActions(this);
 
-    // GamepadControl
-    private readonly InputActionMap m_GamepadControl;
-    private List<IGamepadControlActions> m_GamepadControlActionsCallbackInterfaces = new List<IGamepadControlActions>();
-    private readonly InputAction m_GamepadControl_SelectUp;
-    private readonly InputAction m_GamepadControl_SelectDown;
-    private readonly InputAction m_GamepadControl_SelectRight;
-    private readonly InputAction m_GamepadControl_SelectLeft;
-    public struct GamepadControlActions
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_Navigate;
+    private readonly InputAction m_UI_LeaveUI;
+    public struct UIActions
     {
         private @PlayerInputActions m_Wrapper;
-        public GamepadControlActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @SelectUp => m_Wrapper.m_GamepadControl_SelectUp;
-        public InputAction @SelectDown => m_Wrapper.m_GamepadControl_SelectDown;
-        public InputAction @SelectRight => m_Wrapper.m_GamepadControl_SelectRight;
-        public InputAction @SelectLeft => m_Wrapper.m_GamepadControl_SelectLeft;
-        public InputActionMap Get() { return m_Wrapper.m_GamepadControl; }
+        public UIActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
+        public InputAction @LeaveUI => m_Wrapper.m_UI_LeaveUI;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(GamepadControlActions set) { return set.Get(); }
-        public void AddCallbacks(IGamepadControlActions instance)
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
         {
-            if (instance == null || m_Wrapper.m_GamepadControlActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_GamepadControlActionsCallbackInterfaces.Add(instance);
-            @SelectUp.started += instance.OnSelectUp;
-            @SelectUp.performed += instance.OnSelectUp;
-            @SelectUp.canceled += instance.OnSelectUp;
-            @SelectDown.started += instance.OnSelectDown;
-            @SelectDown.performed += instance.OnSelectDown;
-            @SelectDown.canceled += instance.OnSelectDown;
-            @SelectRight.started += instance.OnSelectRight;
-            @SelectRight.performed += instance.OnSelectRight;
-            @SelectRight.canceled += instance.OnSelectRight;
-            @SelectLeft.started += instance.OnSelectLeft;
-            @SelectLeft.performed += instance.OnSelectLeft;
-            @SelectLeft.canceled += instance.OnSelectLeft;
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @Navigate.started += instance.OnNavigate;
+            @Navigate.performed += instance.OnNavigate;
+            @Navigate.canceled += instance.OnNavigate;
+            @LeaveUI.started += instance.OnLeaveUI;
+            @LeaveUI.performed += instance.OnLeaveUI;
+            @LeaveUI.canceled += instance.OnLeaveUI;
         }
 
-        private void UnregisterCallbacks(IGamepadControlActions instance)
+        private void UnregisterCallbacks(IUIActions instance)
         {
-            @SelectUp.started -= instance.OnSelectUp;
-            @SelectUp.performed -= instance.OnSelectUp;
-            @SelectUp.canceled -= instance.OnSelectUp;
-            @SelectDown.started -= instance.OnSelectDown;
-            @SelectDown.performed -= instance.OnSelectDown;
-            @SelectDown.canceled -= instance.OnSelectDown;
-            @SelectRight.started -= instance.OnSelectRight;
-            @SelectRight.performed -= instance.OnSelectRight;
-            @SelectRight.canceled -= instance.OnSelectRight;
-            @SelectLeft.started -= instance.OnSelectLeft;
-            @SelectLeft.performed -= instance.OnSelectLeft;
-            @SelectLeft.canceled -= instance.OnSelectLeft;
+            @Navigate.started -= instance.OnNavigate;
+            @Navigate.performed -= instance.OnNavigate;
+            @Navigate.canceled -= instance.OnNavigate;
+            @LeaveUI.started -= instance.OnLeaveUI;
+            @LeaveUI.performed -= instance.OnLeaveUI;
+            @LeaveUI.canceled -= instance.OnLeaveUI;
         }
 
-        public void RemoveCallbacks(IGamepadControlActions instance)
+        public void RemoveCallbacks(IUIActions instance)
         {
-            if (m_Wrapper.m_GamepadControlActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IGamepadControlActions instance)
+        public void SetCallbacks(IUIActions instance)
         {
-            foreach (var item in m_Wrapper.m_GamepadControlActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_GamepadControlActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public GamepadControlActions @GamepadControl => new GamepadControlActions(this);
+    public UIActions @UI => new UIActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -1054,7 +1022,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnSlow(InputAction.CallbackContext context);
         void OnSecondaryAttack(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
-        void OnQuitWindow(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
         void OnBastetAttack(InputAction.CallbackContext context);
         void OnBastetAimAttack(InputAction.CallbackContext context);
@@ -1063,11 +1030,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnLook(InputAction.CallbackContext context);
     }
-    public interface IGamepadControlActions
+    public interface IUIActions
     {
-        void OnSelectUp(InputAction.CallbackContext context);
-        void OnSelectDown(InputAction.CallbackContext context);
-        void OnSelectRight(InputAction.CallbackContext context);
-        void OnSelectLeft(InputAction.CallbackContext context);
+        void OnNavigate(InputAction.CallbackContext context);
+        void OnLeaveUI(InputAction.CallbackContext context);
     }
 }

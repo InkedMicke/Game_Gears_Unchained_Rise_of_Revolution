@@ -13,7 +13,7 @@ public class GEscapeClose : MonoBehaviour
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Enable();
 
-        _playerInputActions.Player.QuitWindow.performed += EscapeAction;
+        _playerInputActions.UI.LeaveUI.performed += EscapeAction;
     }
     
     private void EscapeAction(InputAction.CallbackContext context)

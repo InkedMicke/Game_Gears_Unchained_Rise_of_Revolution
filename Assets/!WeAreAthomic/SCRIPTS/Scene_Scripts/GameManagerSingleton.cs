@@ -168,6 +168,11 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         }
     }
 
+
+    /// <summary>
+    /// If True Cursor Free, If False Cursor Locked
+    /// </summary>
+    /// <param name="condition"></param>
     public void CursorMode(bool condition)
     {
         if (condition)

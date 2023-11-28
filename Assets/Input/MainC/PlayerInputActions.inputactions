@@ -114,15 +114,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "QuitWindow",
-                    "type": "Button",
-                    "id": "7a563b08-0fd1-4829-aaec-fcbcdfdcc2f0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Escape",
                     "type": "Button",
                     "id": "39489e85-dd0c-4f76-8271-73b632b0863a",
@@ -406,17 +397,6 @@
                 },
                 {
                     "name": "",
-                    "id": "8bae293a-afd4-4df3-a7f5-544d25a278cb",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "QuitWindow",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "43638489-9aa2-4126-806a-72b1351ed5f4",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
@@ -501,40 +481,22 @@
             ]
         },
         {
-            "name": "GamepadControl",
-            "id": "4153a30a-c706-4cf9-b4a3-c6766e7a423c",
+            "name": "UI",
+            "id": "41bba156-dcd9-4cbc-aaf9-f662c8f6a6f4",
             "actions": [
                 {
-                    "name": "SelectUp",
-                    "type": "Button",
-                    "id": "84fcfb80-5c35-428f-959b-596b5ff0dce8",
-                    "expectedControlType": "Button",
+                    "name": "Navigate",
+                    "type": "Value",
+                    "id": "a3fdd19e-f462-4bcf-b2c9-fc6798f34027",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
-                    "name": "SelectDown",
+                    "name": "LeaveUI",
                     "type": "Button",
-                    "id": "c865fec7-28f8-48d0-81d7-194e6d94bc58",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SelectRight",
-                    "type": "Button",
-                    "id": "14b485ec-79da-4b04-b0c9-6062bea12aa9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SelectLeft",
-                    "type": "Button",
-                    "id": "35f42250-ea26-43a5-9c54-6b47141e61d6",
+                    "id": "915b62d2-4b9e-48f8-a562-e5bbcb704ef1",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -543,46 +505,79 @@
             ],
             "bindings": [
                 {
-                    "name": "",
-                    "id": "f7d90107-92eb-4c34-a5bb-cf87c03a8574",
+                    "name": "DPad",
+                    "id": "431bfc2c-7f12-4e22-947d-410dea60344c",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "658078d5-a82a-4120-8413-0e94e2ce7e2e",
                     "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "SelectUp",
+                    "action": "Navigate",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "2c715751-e956-433b-87a8-5f0018be4f8f",
+                    "name": "down",
+                    "id": "b06eaabe-0cf0-4e76-9ed5-9c1ea428aca6",
                     "path": "<Gamepad>/dpad/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "SelectDown",
+                    "action": "Navigate",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "b33b047c-df40-4856-a280-d231018b38c0",
-                    "path": "<Gamepad>/dpad/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "SelectRight",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c168d44c-d1d0-471f-8a5f-50cb8cd8ce84",
+                    "name": "left",
+                    "id": "84b03d32-643d-4694-b616-8860193f07b7",
                     "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "SelectLeft",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "8de788ec-a73a-42ef-b4b9-99063825458c",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "a331d022-367b-4493-be40-7a850aabf376",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "LeaveUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "840993a6-07b1-4abc-85ba-6d99959e9f21",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "LeaveUI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
