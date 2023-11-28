@@ -1,5 +1,6 @@
 using System.Collections;
 using _WeAreAthomic.SCRIPTS.Genericos;
+using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using UnityEngine;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi
@@ -12,8 +13,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
         private CharacterController _cc;
         private DummieSounds _dummieSounds;
         private CapsuleCollider _cC;
+        private MainCAttack _mainCAttack;
 
         [SerializeField] private GameObject soundComponentObj;
+        private GameObject _playerObj;
         
         private Transform _playerTr;
 
@@ -36,7 +39,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
 
         private void Start()
         {
-            _playerTr = GameObject.FindGameObjectWithTag("Player").transform;
+            _playerObj = GameObject.FindGameObjectWithTag("Player");
+            _playerTr = _playerObj.transform;
+            _mainCAttack = _playerObj.GetComponent<MainCAttack>();
         }
 
         public void TakeDamage(float value)
@@ -46,7 +51,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
             sparksHit.Play();
             if (!_isDeath)
             {
-                if (useKnockback)
+                if (useKnockback && _mainCAttack.attackCount != 2)
                 {
                     StartCoroutine(nameof(PushBack));
                 }

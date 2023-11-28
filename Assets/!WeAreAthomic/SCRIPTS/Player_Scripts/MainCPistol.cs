@@ -123,7 +123,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void RightMouseDown(InputAction.CallbackContext context)
         {
-            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack)
+            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack && !GameManagerSingleton.Instance.IsSettingsMenuEnabled && !GameManagerSingleton.Instance.IsStopMenuEnabled)
             {
                 crosshair.SetActive(true);
                 _camFollower.cameraFollow = camAimPosTr;
@@ -137,7 +137,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void RightMouseUp(InputAction.CallbackContext context)
         {
-            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack)
+            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack && !GameManagerSingleton.Instance.IsSettingsMenuEnabled && !GameManagerSingleton.Instance.IsStopMenuEnabled)
             {
                 crosshair.SetActive(false);
                 _camFollower.cameraFollow = cameraFollow;

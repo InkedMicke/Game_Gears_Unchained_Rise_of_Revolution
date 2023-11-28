@@ -233,7 +233,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""752d3c7b-113e-4afc-b9da-b45c4dfbb8c3"",
-                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -310,7 +310,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f6bc9e42-8aed-44b1-b5cf-f5a9e5743d2f"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -365,7 +365,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7312f757-8adb-475c-931e-e8c25649e08f"",
-                    ""path"": ""<Gamepad>/start"",
+                    ""path"": ""<Gamepad>/select"",
                     ""interactions"": ""Hold(duration=2,pressPoint=0.5)"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -523,6 +523,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReTab"",
+                    ""type"": ""Button"",
+                    ""id"": ""36e8e27a-48c3-4878-be2f-a263cd349177"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AvTab"",
+                    ""type"": ""Button"",
+                    ""id"": ""48cbdc2e-44db-4b80-835c-1ecbe98b9fc0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -602,6 +620,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""LeaveUI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a04986e-9197-4aac-a826-11525fbf5f0c"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ReTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b237ebd-b7c6-41c3-b657-3befde5657ad"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""AvTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -666,6 +706,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
         m_UI_LeaveUI = m_UI.FindAction("LeaveUI", throwIfNotFound: true);
+        m_UI_ReTab = m_UI.FindAction("ReTab", throwIfNotFound: true);
+        m_UI_AvTab = m_UI.FindAction("AvTab", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -933,12 +975,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_Navigate;
     private readonly InputAction m_UI_LeaveUI;
+    private readonly InputAction m_UI_ReTab;
+    private readonly InputAction m_UI_AvTab;
     public struct UIActions
     {
         private @PlayerInputActions m_Wrapper;
         public UIActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
         public InputAction @LeaveUI => m_Wrapper.m_UI_LeaveUI;
+        public InputAction @ReTab => m_Wrapper.m_UI_ReTab;
+        public InputAction @AvTab => m_Wrapper.m_UI_AvTab;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -954,6 +1000,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LeaveUI.started += instance.OnLeaveUI;
             @LeaveUI.performed += instance.OnLeaveUI;
             @LeaveUI.canceled += instance.OnLeaveUI;
+            @ReTab.started += instance.OnReTab;
+            @ReTab.performed += instance.OnReTab;
+            @ReTab.canceled += instance.OnReTab;
+            @AvTab.started += instance.OnAvTab;
+            @AvTab.performed += instance.OnAvTab;
+            @AvTab.canceled += instance.OnAvTab;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -964,6 +1016,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LeaveUI.started -= instance.OnLeaveUI;
             @LeaveUI.performed -= instance.OnLeaveUI;
             @LeaveUI.canceled -= instance.OnLeaveUI;
+            @ReTab.started -= instance.OnReTab;
+            @ReTab.performed -= instance.OnReTab;
+            @ReTab.canceled -= instance.OnReTab;
+            @AvTab.started -= instance.OnAvTab;
+            @AvTab.performed -= instance.OnAvTab;
+            @AvTab.canceled -= instance.OnAvTab;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1034,5 +1092,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnNavigate(InputAction.CallbackContext context);
         void OnLeaveUI(InputAction.CallbackContext context);
+        void OnReTab(InputAction.CallbackContext context);
+        void OnAvTab(InputAction.CallbackContext context);
     }
 }

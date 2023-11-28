@@ -129,7 +129,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void MoveToEnemy(Collider other)
         {
-            if (!_wrenchHitBox.GotHit)
+            if (!_wrenchHitBox.GotHit && attackCount != 2)
             {
                 _wrenchHitBox.SetGotHit(true);
                 var enemyPos = other.gameObject.transform.position;

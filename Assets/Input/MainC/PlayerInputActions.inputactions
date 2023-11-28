@@ -211,7 +211,7 @@
                 {
                     "name": "",
                     "id": "752d3c7b-113e-4afc-b9da-b45c4dfbb8c3",
-                    "path": "<Gamepad>/leftStickPress",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -288,7 +288,7 @@
                 {
                     "name": "",
                     "id": "f6bc9e42-8aed-44b1-b5cf-f5a9e5743d2f",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -343,7 +343,7 @@
                 {
                     "name": "",
                     "id": "7312f757-8adb-475c-931e-e8c25649e08f",
-                    "path": "<Gamepad>/start",
+                    "path": "<Gamepad>/select",
                     "interactions": "Hold(duration=2,pressPoint=0.5)",
                     "processors": "",
                     "groups": "Gamepad",
@@ -501,6 +501,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ReTab",
+                    "type": "Button",
+                    "id": "36e8e27a-48c3-4878-be2f-a263cd349177",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AvTab",
+                    "type": "Button",
+                    "id": "48cbdc2e-44db-4b80-835c-1ecbe98b9fc0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -578,6 +596,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "LeaveUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3a04986e-9197-4aac-a826-11525fbf5f0c",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ReTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b237ebd-b7c6-41c3-b657-3befde5657ad",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "AvTab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

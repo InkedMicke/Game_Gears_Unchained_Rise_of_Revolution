@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Hedenrag.ExVar;
 using static UnityEngine.EventSystems.EventTrigger;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class GameManagerSingleton : SingletonScriptableObject<GameManagerSingleton>, ICallOnAll
 {
@@ -32,6 +34,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
 
     public List<GameObject> gameObjectsList;
     public List<GameObject> closestGameObjectsList;
+    public GameObject gamepadController;
 
     public bool IsGamePaused;
     public bool thereIsCanvasBelow;
@@ -142,7 +145,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     {
         IsOnTutorialImage = condition;
     }
-    
+
     public void SetIsSettingsMenuEnabled(bool condition)
     {
         IsSettingsMenuEnabled = condition;
@@ -158,11 +161,16 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         IsGamePaused = condition;
     }
 
+    public void SetEventSystemSelectedObj(GameObject obj)
+    {
+        EventSystem.current.SetSelectedGameObject(obj);
+    }
+
     public void ToggleIsUnlimitedEnergy()
     {
         IsUnlimitedEnergy = !IsUnlimitedEnergy;
 
-        if(IsUnlimitedEnergy)
+        if (IsUnlimitedEnergy)
         {
             bastetEnergy = 100f;
         }
