@@ -41,6 +41,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject bastetObj;
         [SerializeField] private GameObject shootParticles;
         [SerializeField] private GameObject bigBullet;
+        [SerializeField] private GameObject crosshair;
         private GameObject _currentParticle;
 
         [SerializeField] private Transform camAimPosTr;
@@ -87,7 +88,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
             _playerInputActions.Player.Attack.performed += LeftMouseDown;
-            _playerInputActions.Player.Attack.canceled += LeftMouseUp;
+            _playerInputActions.Player.Attack.canceled += LeftMouseUp;            
+            _playerInputActions.Player.BastetAimAttack.performed += LeftMouseDown;
+            _playerInputActions.Player.BastetAimAttack.canceled += LeftMouseUp;
             _playerInputActions.Player.SecondaryAttack.performed += RightMouseDown;
             _playerInputActions.Player.SecondaryAttack.canceled += RightMouseUp;
 
@@ -122,6 +125,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (GameManagerSingleton.Instance.HasUnlockedBastetAttack)
             {
+                crosshair.SetActive(true);
                 _camFollower.cameraFollow = camAimPosTr;
                 _bastetController.HideScanner();
                 bastetObj.SetActive(true);
@@ -135,6 +139,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (GameManagerSingleton.Instance.HasUnlockedBastetAttack)
             {
+                crosshair.SetActive(false);
                 _camFollower.cameraFollow = cameraFollow;
                 _bastetController.StopMoveToBastetPos();
                 _bastetController.InvokeMoveToPlayer();

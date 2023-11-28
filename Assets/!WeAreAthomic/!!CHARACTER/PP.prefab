@@ -755,7 +755,7 @@ PrefabInstance:
     - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
         type: 3}
@@ -765,12 +765,12 @@ PrefabInstance:
     - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
         type: 3}
@@ -781,7 +781,8 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 3961063828451299202}
+      objectReference: {fileID: 11400000, guid: 9a55ca7bcafd462418845ea959ab9c54,
+        type: 2}
     - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
@@ -811,7 +812,12 @@ PrefabInstance:
     - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: ToggleMenuCallable
+      value: OpenTotallyWindow
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: SetIsSettingsMenuEnabled
       objectReference: {fileID: 0}
     - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
         type: 3}
@@ -821,12 +827,12 @@ PrefabInstance:
     - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: GStopMenu, Assembly-CSharp
+      value: GameManagerSingleton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: GStopMenu, Assembly-CSharp
+      value: GameManagerSingleton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
         type: 3}
@@ -836,11 +842,21 @@ PrefabInstance:
     - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020085367559004424, guid: d8775e33e33e8e84bb6e0903f8dc6436,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6045175124824436578, guid: d8775e33e33e8e84bb6e0903f8dc6436,
@@ -1301,6 +1317,11 @@ PrefabInstance:
       objectReference: {fileID: 1758679809071585897}
     - target: {fileID: 3041984638410706847, guid: fefbaa6b55d08b34ba68dddc4393a15b,
         type: 3}
+      propertyPath: crosshair
+      value: 
+      objectReference: {fileID: 6780628771133280510}
+    - target: {fileID: 3041984638410706847, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
       propertyPath: cameraBaseObj
       value: 
       objectReference: {fileID: 4236300561351042608}
@@ -1551,18 +1572,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4698870022926328271}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3961063828451299202 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8632621977099333197, guid: fefbaa6b55d08b34ba68dddc4393a15b,
-    type: 3}
-  m_PrefabInstance: {fileID: 4698870022926328271}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9205974703476004521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41866f4a10fc0e048b2979111cb565f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5427402524312072185 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 749775348436864566, guid: fefbaa6b55d08b34ba68dddc4393a15b,
@@ -1763,6 +1772,12 @@ MonoBehaviour:
 --- !u!224 &4257735353978382876 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8737986113585439797, guid: 21f23b0891688874cb251647d2360e8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 4779748217183964713}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6780628771133280510 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2039200842724138711, guid: 21f23b0891688874cb251647d2360e8e,
     type: 3}
   m_PrefabInstance: {fileID: 4779748217183964713}
   m_PrefabAsset: {fileID: 0}
@@ -2571,6 +2586,10 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7009679992553942580, guid: 727e3a0bc05420d428f78b0d5787160c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6995137999482570401}
     - targetCorrespondingSourceObject: {fileID: 5435165846757849023, guid: 727e3a0bc05420d428f78b0d5787160c,
         type: 3}
       insertIndex: -1
@@ -2586,6 +2605,45 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8063934328980150559}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6995137999482570401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058270442536023851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0cadbd8103494c448858175510e0218, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionsWhenEscape:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1058270442536023851}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: 9a55ca7bcafd462418845ea959ab9c54, type: 2}
+        m_TargetAssemblyTypeName: GameManagerSingleton, Assembly-CSharp
+        m_MethodName: SetIsSettingsMenuEnabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2286372129620987441 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8093543414451738414, guid: 727e3a0bc05420d428f78b0d5787160c,

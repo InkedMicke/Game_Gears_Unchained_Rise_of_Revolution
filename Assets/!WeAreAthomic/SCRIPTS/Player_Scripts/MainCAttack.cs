@@ -81,13 +81,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void MouseDown(InputAction.CallbackContext context)
         {
+            Attack();
             _currentTimeSheath = Time.time;
         }
 
         private void MouseUp(InputAction.CallbackContext context)
         {
-
-            Attack();
         }
 
         private void Attack()
@@ -207,6 +206,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator.SetAttackCountAnim(attackCount);
             _mainCLayers.DisableAttackLayer();
             _mainCLayers.DisableFinalAttackLayer();
+            Debug.Log("hola1");
             timeGraceAttackPeriod = Time.time + timeNextAttack;
             DisableNextAttack();
             IsFinalAttacking = false;
@@ -262,11 +262,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             if (!_mainCMovement.IsGrounded())
-            {
-                return false;
-            }
-
-            if (_typeOfAttack != TypeOfAttack.NormalAttack)
             {
                 return false;
             }
