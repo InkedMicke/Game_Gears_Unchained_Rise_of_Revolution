@@ -159,11 +159,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        public void StopSheathCoroutine()
-        {
-
-        }
-
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
@@ -206,7 +201,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator.SetAttackCountAnim(attackCount);
             _mainCLayers.DisableAttackLayer();
             _mainCLayers.DisableFinalAttackLayer();
-            Debug.Log("hola1");
             timeGraceAttackPeriod = Time.time + timeNextAttack;
             DisableNextAttack();
             IsFinalAttacking = false;

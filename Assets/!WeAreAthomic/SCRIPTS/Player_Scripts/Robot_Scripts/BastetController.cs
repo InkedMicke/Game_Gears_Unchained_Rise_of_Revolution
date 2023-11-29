@@ -77,7 +77,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
 
                 if (Vector3.Distance(transform.position, correctPos) > 0.05f)
                 {
-                    _cc.Move(moveDir);
+                    //_cc.Move(moveDir);
+                    transform.position = Vector3.MoveTowards(transform.position, correctPos, bastetMoveSpeed * Time.deltaTime);
                 }
 
                 if(_mainCPistol.IsAiming)

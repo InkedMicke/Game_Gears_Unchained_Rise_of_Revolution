@@ -86,9 +86,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCInterface = GetComponent<MainCPlayerInterface>();
 
             _playerInputActions = new PlayerInputActions();
-            _playerInputActions.Enable();
-            _playerInputActions.Player.Attack.performed += LeftMouseDown;
-            _playerInputActions.Player.Attack.canceled += LeftMouseUp;            
+            _playerInputActions.Enable();           
             _playerInputActions.Player.BastetAimAttack.performed += LeftMouseDown;
             _playerInputActions.Player.BastetAimAttack.canceled += LeftMouseUp;
             _playerInputActions.Player.SecondaryAttack.performed += RightMouseDown;

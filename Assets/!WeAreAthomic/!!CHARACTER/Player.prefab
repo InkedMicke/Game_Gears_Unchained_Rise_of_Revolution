@@ -330,6 +330,7 @@ MonoBehaviour:
     type: 3}
   bigBullet: {fileID: 3870155545384615628, guid: 6668df61b445054438534e36b8999fea,
     type: 3}
+  crosshair: {fileID: 0}
   camAimPosTr: {fileID: 1957530179364196664}
   middlePos: {fileID: 8571800359218887001}
   orientation: {fileID: 6962321048089876896}
@@ -343,8 +344,8 @@ MonoBehaviour:
   shootingHoldTime: 5
   bulletSpeed: 50
   bulletSize: 1
-  energySpend: 20
-  shootCooldown: 1
+  energySpend: 10
+  shootCooldown: 0.4
 --- !u!114 &6326130830157195552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,7 +461,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   godModeContainer: {fileID: 0}
-  isGodModeEnabled: 0
 --- !u!114 &8670273326439586584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -609,6 +609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuObj: {fileID: 0}
+  firstButton: {fileID: 0}
 --- !u!114 &6487485381381677035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1071,6 +1072,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wrenchDamageData: {fileID: 11400000, guid: ad06cde7f1e032d44b83a8cacd9a52ec, type: 2}
   colliderList: []
+  GotHit: 0
 --- !u!65 &4816812555635906754
 BoxCollider:
   m_ObjectHideFlags: 0
