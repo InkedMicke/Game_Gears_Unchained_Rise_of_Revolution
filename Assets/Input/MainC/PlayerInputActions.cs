@@ -343,7 +343,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""68a55374-19d9-4c85-a40c-2aedcfbb0ed9"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -468,6 +468,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
+                    ""action"": ""BastetAimAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2c462071-7883-41c2-a4b7-bbcf67e34986"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
                     ""action"": ""BastetAimAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

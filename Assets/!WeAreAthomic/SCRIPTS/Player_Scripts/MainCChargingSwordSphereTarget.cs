@@ -235,7 +235,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             //mesh.SetActive(false);F
             _cc.enabled = false;
             IsSlidingOnEnemies = true;
-            _mainCAttack.StopSheathCoroutine();
             yield return new WaitForSeconds(0.1f);
             var gameObjectsCopy = new List<GameObject>(GameManagerSingleton.Instance.closestGameObjectsList);
 

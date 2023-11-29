@@ -98,6 +98,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 3995283987654693012, guid: 57c52de963afc9840a24071f59d354ef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6367707203153790396, guid: 57c52de963afc9840a24071f59d354ef,
         type: 3}
       propertyPath: m_Layer
@@ -139,10 +144,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1673929289038525371}
-    - targetCorrespondingSourceObject: {fileID: 7887587906704532359, guid: 57c52de963afc9840a24071f59d354ef,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8456021669391914326}
   m_SourcePrefab: {fileID: 100100000, guid: 57c52de963afc9840a24071f59d354ef, type: 3}
 --- !u!1 &524193051771245404 stripped
 GameObject:
@@ -186,6 +187,18 @@ MonoBehaviour:
   itActivatesWhenInteract:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 4926394185431945802}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1148459840117332723}
         m_TargetAssemblyTypeName: GDestroyObject, Assembly-CSharp
         m_MethodName: DestroyThisObject
@@ -260,7 +273,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.9141345, y: 2.137967, z: 2.7642803}
   m_Center: {x: 4.4603043, y: 3.6049428, z: -4.3959556}
@@ -330,24 +343,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!1 &8837286536982715461 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7887587906704532359, guid: 57c52de963afc9840a24071f59d354ef,
-    type: 3}
-  m_PrefabInstance: {fileID: 1716449946082230210}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8456021669391914326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8837286536982715461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f895a573c8d98f4eb5cf714d62b11f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itActivatesWhenInteract:
-    m_PersistentCalls:
-      m_Calls: []

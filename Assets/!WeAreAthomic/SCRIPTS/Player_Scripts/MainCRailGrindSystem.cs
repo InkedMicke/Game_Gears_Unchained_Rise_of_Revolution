@@ -235,7 +235,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        private void StartSlideCoroutine()
+        public void StartSlideCoroutine()
         {
             _mainCAnimator.SetSliding(true);
             _isJumping = false;
@@ -323,7 +323,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool ThereIsObstacle()
         {
             var ray = new Ray(groundCheck.position, groundCheck.transform.forward);
-            return Physics.Raycast(ray, 3f, obstacleLayer);
+            return Physics.Raycast(ray, 2f, obstacleLayer);
         }
     }
 }
