@@ -306,15 +306,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             });
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(groundCheck.position, .3f);
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(groundCheck.position, .1f);
-        }
-
         public bool IsOnRail()
         {
             return Physics.CheckSphere(groundCheck.position, .1f, railLayer);
