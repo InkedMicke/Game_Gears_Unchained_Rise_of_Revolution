@@ -1,15 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class GreenSoliderAttack : MonoBehaviour
 {
-    private CharacterController _cc;
-    private GreenSoliderHurtBox _greenSoliderHurtBox;
     private NavMeshAgent _agent;
+    private SoldierAnimator _soldierAnim;
 
     private Coroutine _shootCoroutine;
     private Coroutine _decalCoroutine;
@@ -21,22 +21,22 @@ public class GreenSoliderAttack : MonoBehaviour
     private GameObject _currentDecal;
 
     [SerializeField] private Transform muzzle1;
-    [SerializeField] private Transform muzzle2;
     private Transform _playerTr => GameObject.FindGameObjectWithTag("Player").transform;
 
     [System.NonSerialized] public bool IsAttacking;
     [System.NonSerialized] public bool IsShooting;
+    private bool _hasEndedShootAnim;
 
     [SerializeField] private float checkRadius = 5f;
+    [SerializeField] private float speedShooting = 1.5f;
     public float totalColdown;
     public float damage;
     private float timeToStopShooting;
 
     private void Awake()
     {
-        _cc = GetComponent<CharacterController>();
-        _greenSoliderHurtBox = GetComponentInChildren<GreenSoliderHurtBox>();
         _agent = GetComponent<NavMeshAgent>();
+        _soldierAnim = GetComponent<SoldierAnimator>();
     }
 
     public void StartDecal()
@@ -48,14 +48,14 @@ public class GreenSoliderAttack : MonoBehaviour
 
     private void Update()
     {
-        if(IsShooting && _currentDecal != null)
+        if (IsShooting && _currentDecal != null)
         {
             var decalHurtBox = _currentDecal.GetComponentInChildren<GreenDecalHurtBox>();
 
             if (!decalHurtBox.IsPlayerInside && !decalHurtBox.HasPlayerLeft)
             {
                 timeToStopShooting += Time.deltaTime;
-                if(timeToStopShooting > 2.5f)
+                if (timeToStopShooting > 2.5f)
                 {
                     if (IsShooting)
                     {
@@ -76,28 +76,23 @@ public class GreenSoliderAttack : MonoBehaviour
     private IEnumerator ShootCoroutine()
     {
         IsShooting = true;
-
-        while (true)
+        while (!CheckIfPlayer())
         {
-            yield return new WaitForSeconds(.2f);
-            SpawnBullet(muzzle2);
+            _hasEndedShootAnim = false;
+            _soldierAnim.ShootTrigger();
+            _soldierAnim.SetAnimatorSpeed(speedShooting);
 
-            yield return new WaitForSeconds(.2f);
-            SpawnBullet(muzzle1);
-
-            yield return new WaitForSeconds(.4f);
-            SpawnBullet(muzzle1);
-            SpawnBullet(muzzle2);
-
-            yield return new WaitForSeconds(.5f);
-
-            CheckIfPlayer();
+            while (!_hasEndedShootAnim)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            Debug.Log("endedAnim");
         }
     }
 
-    private void SpawnBullet(Transform muzzle)
+    public void SpawnBullet()
     {
-        Instantiate(bullet, muzzle.position, transform.rotation);
+        Instantiate(bullet, muzzle1.position, transform.rotation);
     }
 
     private IEnumerator DecalSize(float speed)
@@ -124,16 +119,13 @@ public class GreenSoliderAttack : MonoBehaviour
 
     }
 
-    private void CheckIfPlayer()
+    private bool CheckIfPlayer()
     {
         var decalHurtBox = _currentDecal.GetComponentInChildren<GreenDecalHurtBox>();
 
         if (!decalHurtBox.IsPlayerInside && decalHurtBox.HasPlayerLeft)
         {
-            if (IsShooting)
-            {
-                StopCoroutine(_shootCoroutine);
-            }
+            
 
             StopCoroutine(_decalCoroutine);
 
@@ -142,8 +134,20 @@ public class GreenSoliderAttack : MonoBehaviour
             IsAttacking = false;
             totalColdown = Time.time + 4f;
             _agent.enabled = true;
-        }
 
+            if (IsShooting)
+            {
+                StopCoroutine(_shootCoroutine);
+                _soldierAnim.SetAnimatorSpeed(1f);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void EndShootAnim()
+    {
+        _hasEndedShootAnim = true;
     }
 
     private void OnDrawGizmos()

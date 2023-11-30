@@ -225,11 +225,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                 Vector3 targetPoint;
 
-                if (Physics.Raycast(ray, out hit))
+                Transform t = null;
+
+                if (Physics.Raycast(ray, out hit)) {
                     targetPoint = hit.point;
-                else
+                    if(hit.collider.gameObject.layer == enemyHurtBox)
+                    t = hit.transform;
+
+                }
+                else {
                     targetPoint = ray.GetPoint(75f);
-                _bastetController.Shoot(targetPoint, bigBullet, bulletSize, bulletSpeed, _pistolAttackData);
+                }
+                _bastetController.Shoot(targetPoint, t, bigBullet, bulletSize, bulletSpeed, _pistolAttackData);
                 _totalCooldown = Time.time + shootCooldown;
                 if (!GameManagerSingleton.Instance.IsUnlimitedEnergy)
                 {

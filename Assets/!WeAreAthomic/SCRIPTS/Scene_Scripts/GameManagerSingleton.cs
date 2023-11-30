@@ -1,10 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Hedenrag.ExVar;
-using static UnityEngine.EventSystems.EventTrigger;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class GameManagerSingleton : SingletonScriptableObject<GameManagerSingleton>, ICallOnAll
 {

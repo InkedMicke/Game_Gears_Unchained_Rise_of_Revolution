@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 
 public class GreenSoliderHurtBox : MonoBehaviour, IDamageable
 {

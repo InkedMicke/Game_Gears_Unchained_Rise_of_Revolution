@@ -215,7 +215,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             }
         }
 
-        public void Shoot(Vector3 enemy, GameObject bullet, float sizeBullet, float bulletSpeed, PlayerDamageData pistolData)
+        public void Shoot(Vector3 enemy, Transform enemyTarget, GameObject bullet, float sizeBullet, float bulletSpeed, PlayerDamageData pistolData)
         {
             var randomMuzzle = Random.Range(0, muzzles.Count);
             var bulletObj = Instantiate(bullet, muzzles[randomMuzzle].position, Quaternion.identity);
@@ -225,6 +225,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             var direction = enemy - muzzles[randomMuzzle].position;
             bulletObj.transform.forward = direction.normalized;
             bulletComponent.bulletForce = bulletSpeed;
+            bulletComponent.target = new(enemyTarget, enemyTarget != null);
             bulletObj.transform.localScale = new Vector3(sizeBullet, sizeBullet, sizeBullet);
 
             _mainCPistol.DisableShooting();

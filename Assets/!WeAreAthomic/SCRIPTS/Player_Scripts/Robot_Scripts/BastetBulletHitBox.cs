@@ -1,12 +1,6 @@
-using _WeAreAthomic.SCRIPTS.Enemi;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public interface IDamageable
-{
-    public void Damage(float value);
-}
+using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 
 public class BastetBulletHitBox : MonoBehaviour
 {

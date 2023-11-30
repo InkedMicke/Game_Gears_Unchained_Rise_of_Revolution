@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using _WeAreAthomic.SCRIPTS.Enemi;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
+using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {

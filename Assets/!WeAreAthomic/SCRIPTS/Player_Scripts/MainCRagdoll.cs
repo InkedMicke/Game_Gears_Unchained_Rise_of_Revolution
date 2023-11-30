@@ -21,7 +21,6 @@ public class MainCRagdoll : MonoBehaviour
 
     public void SetEnabled(bool enabled)
     {
-        Debug.Log("hola1");
         var isKinematic = !enabled;
         foreach(var rb in _rbs)
         {

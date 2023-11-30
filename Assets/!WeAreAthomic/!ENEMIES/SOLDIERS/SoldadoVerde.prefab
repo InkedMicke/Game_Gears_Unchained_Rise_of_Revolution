@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &423394642350802139
+--- !u!1 &7336517342201430183
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2827741574302047759}
+  - component: {fileID: 7743651597484593264}
   m_Layer: 0
   m_Name: Muzzle1
   m_TagString: Untagged
@@ -16,52 +16,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2827741574302047759
+--- !u!4 &7743651597484593264
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423394642350802139}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_GameObject: {fileID: 7336517342201430183}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: 0.001, y: -1.415, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7728636986346427985}
+  m_Father: {fileID: 728557792826265411}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3873056130570786227
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3290446843222741444}
-  m_Layer: 0
-  m_Name: Muzzle2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3290446843222741444
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3873056130570786227}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7728636986346427985}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: -180}
 --- !u!1 &7970255392764161239
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,10 +40,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6335478140936921992}
+  - component: {fileID: 7864609738589064973}
   - component: {fileID: 719572451470864634}
   - component: {fileID: 6460584741221924923}
   - component: {fileID: 8698530833825578607}
   - component: {fileID: 5895939196809832073}
+  - component: {fileID: 5738154880865817068}
   m_Layer: 0
   m_Name: SoldadoVerde
   m_TagString: Untagged
@@ -100,6 +71,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &7864609738589064973
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7970255392764161239}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 76ce5392553f1ba429ad2cde5c60f663, type: 3}
+  m_Controller: {fileID: 9100000, guid: db08918d33e3ba24b9918b4eaa3408d3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!195 &719572451470864634
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -110,7 +102,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 540
@@ -158,11 +150,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  bullet: {fileID: 3870155545384615628, guid: 6668df61b445054438534e36b8999fea, type: 3}
+  bullet: {fileID: 3870155545384615628, guid: 0b579e343ccd0464499461d298987ce6, type: 3}
   decalGroupPrefab: {fileID: 2144513413979249121, guid: 048ef0c52208bc542bc70ac4e67313b7,
     type: 3}
-  muzzle1: {fileID: 2827741574302047759}
-  muzzle2: {fileID: 3290446843222741444}
+  muzzle1: {fileID: 7743651597484593264}
   checkRadius: 4
   totalColdown: 0
   damage: 0
@@ -204,6 +195,21 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.91, z: 0}
+--- !u!114 &5738154880865817068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7970255392764161239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5adbfd5eaf86f324ab26514050170ad9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkingAnimString: isWalking
+  backWalkingAnimString: isBackWalking
+  shootAnimString: shoot
 --- !u!1 &8202827297792976926
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,16 +724,18 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: -8513424388201257645, guid: 76ce5392553f1ba429ad2cde5c60f663, type: 3}
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 76ce5392553f1ba429ad2cde5c60f663,
+    - targetCorrespondingSourceObject: {fileID: -1812909498023395591, guid: 76ce5392553f1ba429ad2cde5c60f663,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2827741574302047759}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 76ce5392553f1ba429ad2cde5c60f663,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3290446843222741444}
+      addedObject: {fileID: 7743651597484593264}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76ce5392553f1ba429ad2cde5c60f663, type: 3}
+--- !u!4 &728557792826265411 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1812909498023395591, guid: 76ce5392553f1ba429ad2cde5c60f663,
+    type: 3}
+  m_PrefabInstance: {fileID: 7839389372295328186}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7728636986346427985 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 76ce5392553f1ba429ad2cde5c60f663,

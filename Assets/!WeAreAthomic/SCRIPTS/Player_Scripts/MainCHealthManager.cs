@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
+using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
-    public class MainCHealthManager : MonoBehaviour
+    public class MainCHealthManager : MonoBehaviour, IDamageable
     {
         [SerializeField] private Slider healthSlider;
 
@@ -24,7 +25,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        public void TakeDamage(float damage)
+        public void Damage(float damage)
         {
             currentHealth -= damage;
             GameManagerSingleton.Instance.currentHealth = currentHealth;

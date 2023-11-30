@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class GreenSoliderMovement : EnemyAI
 {
-    private CharacterController _cc;
     private GreenSoliderAttack _soldierAttack;
+    private SoldierAnimator _soldierAnim;
 
     private GameManagerSingleton.TypeOfEnemy _typeOfEnemy;
 
@@ -14,9 +14,9 @@ public class GreenSoliderMovement : EnemyAI
 
     private void Awake()
     {
-        _cc = GetComponent<CharacterController>();
         _agent = GetComponent<NavMeshAgent>();
         _soldierAttack = GetComponent<GreenSoliderAttack>();
+        _soldierAnim = GetComponent<SoldierAnimator>();
 
         originalSpeed = _agent.speed;
 
@@ -29,6 +29,7 @@ public class GreenSoliderMovement : EnemyAI
         {
             _agent.isStopped = false;
             _agent.SetDestination(_playerTr.position);
+            _soldierAnim.SetWalking(true);
         }
 
         var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
@@ -36,6 +37,7 @@ public class GreenSoliderMovement : EnemyAI
         if (distanceToPlayer < 5f && !_soldierAttack.IsAttacking && Time.time > _soldierAttack.totalColdown)
         {
             _agent.isStopped = true;
+            _soldierAnim.SetWalking(false);
             _soldierAttack.StartDecal();
         }
         
