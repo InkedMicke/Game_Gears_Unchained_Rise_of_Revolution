@@ -62,7 +62,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         {
             if (!_isBastetAttacking && Time.time > _totalCooldown)
             {
-                Debug.Log("hola2");
                 var collider = Physics.OverlapSphere(transform.position, radiusCheck, enemyLayer);
                 if (collider.Length > 0)
                 {
@@ -93,6 +92,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             _bastetController.HideScanner();
             _bastetController.PosRightHand();
             _bastetController.StartMoveToBastetPos();
+            _bastetController.StartShootEnemy();
         }
 
         private void OnDrawGizmos()

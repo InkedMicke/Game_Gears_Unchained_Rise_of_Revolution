@@ -1,3 +1,4 @@
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -18,6 +19,11 @@ public class GEscapeClose : MonoBehaviour
     
     private void EscapeAction(InputAction.CallbackContext context)
     {
-        actionsWhenEscape.Invoke();
+        if (GameManagerSingleton.Instance.IsGamePaused)
+        {
+            actionsWhenEscape.Invoke();
+            MethodBase methodBase = MethodBase.GetCurrentMethod();
+            Debug.Log(methodBase.Name);
+        }
     }
 }

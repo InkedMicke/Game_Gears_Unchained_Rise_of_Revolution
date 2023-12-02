@@ -75,7 +75,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                 var difference = correctPos - transform.position;
                 var moveDir = 8f * Time.deltaTime * difference.normalized;
 
-                if (Vector3.Distance(transform.position, correctPos) > 0.05f)
+                if (Vector3.Distance(transform.position, correctPos) > 0.1f)
                 {
                     //_cc.Move(moveDir);
                     transform.position = Vector3.MoveTowards(transform.position, correctPos, bastetMoveSpeed * Time.deltaTime);

@@ -103,6 +103,10 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         return closestGameObjectsList[0];
     }
 
+    /// <summary>
+    /// If true game is paused, if not is "unpaused"
+    /// </summary>
+    /// <param name="condition"></param>
     public void PauseGame(bool condition)
     {
         IsGamePaused = condition;

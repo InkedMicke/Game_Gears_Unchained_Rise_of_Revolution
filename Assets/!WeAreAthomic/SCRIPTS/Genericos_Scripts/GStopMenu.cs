@@ -44,6 +44,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                     GameManagerSingleton.Instance.PauseGame(false);
                     GameManagerSingleton.Instance.FreezeTime(false);
                     GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
+                    _isActive = false;
                 }
                 else
                 {
