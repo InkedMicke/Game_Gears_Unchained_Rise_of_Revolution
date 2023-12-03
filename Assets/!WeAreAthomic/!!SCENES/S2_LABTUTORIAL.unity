@@ -679,6 +679,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5378a8e6fbbd4b40ac1a42b2fbc41d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsGamepadActive: 0
+  selectedColor: {r: 0, g: 0, b: 0, a: 0}
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
+  tabsSettings: []
+  panelsSettings: []
 --- !u!1 &1129699269 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6506368504201834415, guid: ffffc1760f21ed248a2899863bbcf9fd,
@@ -822,12 +827,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcbf23cb9053e744a8b0d107f7b9c3db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1550259203 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7651005957300369747, guid: ffffc1760f21ed248a2899863bbcf9fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5222077474484771271}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cd36ce867b3de74f9fb8d01dba3359a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1582753335 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6159510737840791617, guid: 9d2ebbd4a4922de43ae8c77510eda865,
     type: 3}
   m_PrefabInstance: {fileID: 1931530715}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1752159077 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3713516774922837671, guid: ffffc1760f21ed248a2899863bbcf9fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5222077474484771271}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cd36ce867b3de74f9fb8d01dba3359a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1784618556
 GameObject:
   m_ObjectHideFlags: 0
@@ -2676,7 +2705,7 @@ PrefabInstance:
     - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.size
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
@@ -2692,6 +2721,16 @@ PrefabInstance:
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[5].m_Mode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
@@ -2720,6 +2759,26 @@ PrefabInstance:
       objectReference: {fileID: 894568548}
     - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 1550259203}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[5].m_Target
+      value: 
+      objectReference: {fileID: 1752159077}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[5].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ToggleActive
       objectReference: {fileID: 0}
@@ -2732,6 +2791,16 @@ PrefabInstance:
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
       value: OpenDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: PermanentDisabled
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
+      value: PermanentDisabled
       objectReference: {fileID: 0}
     - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
@@ -2750,6 +2819,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
+      value: _WeAreAthomic.SCRIPTS.LightKiller.CctvController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[5].m_TargetAssemblyTypeName
+      value: _WeAreAthomic.SCRIPTS.LightKiller.CctvController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
       propertyPath: seActivanCuandoLeDasAlBoton.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
       value: 3
       objectReference: {fileID: 0}
@@ -2762,6 +2841,16 @@ PrefabInstance:
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4872474331872857430, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5002528853476204882, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}

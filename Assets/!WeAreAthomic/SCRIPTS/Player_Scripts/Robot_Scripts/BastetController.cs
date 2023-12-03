@@ -46,29 +46,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             _mainCPistol = playerObj.GetComponent<MainCPistol>();
         }
 
-        public void InvokeMoveToPlayer()
+        private void Update()
         {
-            StartCoroutine(nameof(MoveToPlayer));
-        }
-
-        public void StartMoveToBastetPos()
-        {
-            _bastetPosCoroutine = StartCoroutine(MoveToBastetPos());
-        }
-
-        public void StopMoveToBastetPos()
-        {
-            StopCoroutine(_bastetPosCoroutine);
-        }
-
-        public void StartMovetoPlayer()
-        {
-            StartCoroutine(MoveToPlayer());
-        }
-
-        private IEnumerator MoveToBastetPos()
-        {
-            while (true)
+            if(_moveToBastetPos)
             {
                 var leftPos = playerObj.transform.position + Vector3.left;
                 var correctPos = new Vector3(leftPos.x, leftPos.y + 1.5f, leftPos.z);
@@ -81,10 +61,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                     transform.position = Vector3.MoveTowards(transform.position, correctPos, bastetMoveSpeed * Time.deltaTime);
                 }
 
-                if(_mainCPistol.IsAiming)
+                if (_mainCPistol.IsAiming)
                 {
                     var ray = new Ray(cameraObj.transform.position, cameraObj.transform.forward);
-                    if(Physics.Raycast(ray, out var hit, Mathf.Infinity))
+                    if (Physics.Raycast(ray, out var hit, Mathf.Infinity))
                     {
                         transform.LookAt(hit.point);
                     }
@@ -93,10 +73,27 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                         transform.LookAt(ray.GetPoint(75f));
                     }
                 }
-
-
-                yield return new WaitForSeconds(0.01f);
             }
+        }
+
+        public void InvokeMoveToPlayer()
+        {
+            StartCoroutine(nameof(MoveToPlayer));
+        }
+
+        public void StartMoveToBastetPos()
+        {
+            _moveToBastetPos = true;
+        }
+
+        public void StopMoveToBastetPos()
+        {
+            _moveToBastetPos = false;
+        }
+
+        public void StartMovetoPlayer()
+        {
+            StartCoroutine(MoveToPlayer());
         }
 
         private IEnumerator MoveToPlayer()
@@ -206,7 +203,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                 currentShoots++;
                 if (currentShoots > 25)
                 {
-                    _moveToBastetPos = false;
                     _mainCBastet.DisableBastetAttacking();
                     StartCoroutine(MoveToPlayer());
                     break;

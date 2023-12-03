@@ -16,6 +16,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
         private CapsuleCollider _cC;
         private MainCAttack _mainCAttack;
 
+        [SerializeField] private LayerMask obstacles;
+
         [SerializeField] private GameObject soundComponentObj;
         private GameObject _playerObj;
         
@@ -79,24 +81,33 @@ namespace _WeAreAthomic.SCRIPTS.Enemi
             }
         }
 
+        private void OnDrawGizmos()
+        {
+            Debug.DrawRay(transform.position, -transform.forward * 1f);
+        }
+
         public IEnumerator PushBack()
         {
             var enable = true;
             var t = .2f;
-            while (enable)
+            var ray = new Ray(transform.position, -transform.forward);
+            if (!Physics.Raycast(ray, .5f, obstacles))
             {
-                t -= 4f * Time.unscaledDeltaTime;
-                var playerDesiredPos = new Vector3(_playerTr.position.x, transform.position.y, _playerTr.position.z);
-                var moveDirection = (playerDesiredPos - transform.position).normalized;
-                _cc.Move(-(moveDirection) * Time.deltaTime * pushForce);
-
-                if (t <= 0f)
+                while (enable)
                 {
-                    t = 0f;
-                    enable = false;
-                }
+                    t -= 4f * Time.unscaledDeltaTime;
+                    var playerDesiredPos = new Vector3(_playerTr.position.x, transform.position.y, _playerTr.position.z);
+                    var moveDirection = (playerDesiredPos - transform.position).normalized;
+                    _cc.Move(-moveDirection * Time.deltaTime * pushForce);
 
-                yield return new WaitForSeconds(0.01f);
+                    if (t <= 0f)
+                    {
+                        t = 0f;
+                        enable = false;
+                    }
+
+                    yield return new WaitForSeconds(0.01f);
+                }
             }
         }
     }
