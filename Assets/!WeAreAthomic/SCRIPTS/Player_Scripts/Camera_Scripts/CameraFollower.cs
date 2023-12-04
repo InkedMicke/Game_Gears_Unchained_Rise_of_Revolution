@@ -49,7 +49,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
         private protected virtual void Update()
         {
 
-            if (!GameManagerSingleton.Instance.IsGamePaused && !GameManagerSingleton.Instance.IsOnTutorialImage)
+            if (!GameManagerSingleton.Instance.IsGamePaused)
             {
                 LookCamera();
             }

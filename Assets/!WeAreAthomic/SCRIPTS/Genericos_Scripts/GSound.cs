@@ -11,6 +11,9 @@ public class GSound : MonoBehaviour
 
     private double musicDuration;
     private double goalTime;
+
+    private bool _isInClipPlayed;
+    private bool _isBucleClipPlayed;
     
 
     protected void Start()
@@ -23,6 +26,7 @@ public class GSound : MonoBehaviour
         goalTime = AudioSettings.dspTime + .5f;
 
         audioSource.clip = inClip;
+        _isInClipPlayed = true;
         audioSource.PlayScheduled(goalTime);
 
         musicDuration = (double)inClip.samples / inClip.frequency;
@@ -32,10 +36,42 @@ public class GSound : MonoBehaviour
 
     private void Update()
     {
-        if(AudioSettings.dspTime > goalTime - 1)
+        if(GameManagerSingleton.Instance.IsGamePaused)
+        {
+            if(_isInClipPlayed && audioSource.isPlaying)
+            {
+                Debug.Log("hola1");
+                audioSource.Pause();
+            }         
+            
+            if(_isBucleClipPlayed && audioSourceTwo.isPlaying)
+            {
+                Debug.Log("hola2");
+                audioSourceTwo.Pause();
+            }
+        }
+
+        if (!GameManagerSingleton.Instance.IsGamePaused)
+        {
+            if (_isInClipPlayed && !audioSource.isPlaying)
+            {
+                Debug.Log("hola3");
+                audioSource.UnPause();
+            }
+
+            if (_isBucleClipPlayed && !audioSourceTwo.isPlaying)
+            {
+                Debug.Log("hola4");
+                audioSourceTwo.UnPause();
+            }
+        }
+
+        if (AudioSettings.dspTime > goalTime - 1)
         {
             audioSourceTwo.clip = bucleClip;
             audioSourceTwo.PlayScheduled(goalTime);
+            _isBucleClipPlayed = true;
+            _isInClipPlayed = false;
 
             musicDuration = (double)bucleClip.samples / bucleClip.frequency;
             goalTime = AudioSettings.dspTime + musicDuration;

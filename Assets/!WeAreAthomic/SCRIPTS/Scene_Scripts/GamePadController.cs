@@ -39,7 +39,6 @@ public class GamePadController : MonoBehaviour
         {
             GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
             GameManagerSingleton.Instance.GameState(false);
-            GameManagerSingleton.Instance.SetIsOnTutorialImage(false);
             GameManagerSingleton.Instance.SetIsSettingsMenuEnabled(false);
         }
     }

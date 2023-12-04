@@ -92,7 +92,20 @@ public class GreenSoliderAttack : MonoBehaviour
 
     public void SpawnBullet()
     {
-        Instantiate(bullet, muzzle1.position, transform.rotation);
+        for (int i = 0; i < 5; i++) // Cambia este valor según la cantidad de proyectiles que quieres disparar
+        {
+            var bulletObj = Instantiate(bullet, muzzle1.position, transform.rotation);
+            var rb = bulletObj.GetComponent<Rigidbody2D>();
+
+            // Aplicar una rotación aleatoria al proyectil dentro del ángulo de dispersión
+            float spread = Random.Range(-5, 5);
+            var spreadRotation = Quaternion.Euler(0f, 0f, spread);
+            var spreadDirection = spreadRotation * muzzle1.right;
+
+            // Aplicar fuerza al proyectil con la dirección aleatoria
+            rb.AddForce(spreadDirection * bulletObj.GetComponent<GBullet>().bulletForce, ForceMode2D.Impulse); // Ajusta la fuerza según tu escala y necesidades
+        }
+
     }
 
     private IEnumerator DecalSize(float speed)

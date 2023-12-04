@@ -8,7 +8,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCSounds : MonoBehaviour
     {
-        private UnityEngine.SceneManagement.Scene _currentScene;
+        private Scene _currentScene;
 
         [SerializeField] private GameObject soundComponentObj;
 
@@ -41,6 +41,26 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void StopAttackSound()
         {
             //attackAudioSource.Stop();
+        }
+
+        public void PauseCurrentSounds()
+        {
+            var audiosInSoundComponent = soundComponentObj.GetComponents<AudioSource>();
+
+            foreach (var audioSor in audiosInSoundComponent)
+            {
+                audioSor.Pause();
+            }
+        }
+
+        public void UnPauseCurrentSounds()
+        {
+            var audiosInSoundComponent = soundComponentObj.GetComponents<AudioSource>();
+
+            foreach (var audioSor in audiosInSoundComponent)
+            {
+                audioSor.UnPause();
+            }
         }
 
         public void RemoveAllSounds()
@@ -79,7 +99,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             foreach (var audioSour in audiosInSoundComponent)
             {
-                if (!audioSour.isPlaying && !isPaused)
+                if (!audioSour.isPlaying && !isPaused && !GameManagerSingleton.Instance.IsGamePaused)
                 {
                     Destroy(audioSour);
                 }
@@ -101,6 +121,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     currentAudioSource.outputAudioMixerGroup = voicesMixer;
                     currentAudioSource.clip = tutorialClipsPC[value];
                     currentAudioSource.volume = .9f;
+                    currentAudioSource.playOnAwake = false;
                     currentAudioSource.Play();
                     CurrentTutorialClip = currentAudioSource.clip;
                 }

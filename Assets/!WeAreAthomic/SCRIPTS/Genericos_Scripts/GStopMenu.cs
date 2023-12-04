@@ -10,6 +10,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
     {
         private PlayerInputActions _playerInputActions;
         private MainCTutorialChecker _mainCTutorial;
+        private MainCSounds _mainCSounds;
 
         [SerializeField] private GameObject mainMenuObj;
         [SerializeField] private GameObject firstButton;
@@ -19,7 +20,8 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
         private void Awake()
         {
             _mainCTutorial = GetComponent<MainCTutorialChecker>();
-        
+            _mainCSounds = GetComponent<MainCSounds>();
+
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
             _playerInputActions.Player.Escape.performed += ToggleMenu;
@@ -31,7 +33,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 
         private void ToggleMenu(InputAction.CallbackContext context)
         {
-            if (!GameManagerSingleton.Instance.IsOnTutorialImage && !GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+            if (!GameManagerSingleton.Instance.IsSettingsMenuEnabled)
             {
                 if (GameManagerSingleton.Instance.IsStopMenuEnabled)
                 {
@@ -44,6 +46,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                     GameManagerSingleton.Instance.PauseGame(false);
                     GameManagerSingleton.Instance.FreezeTime(false);
                     GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
+                    _mainCSounds.UnPauseCurrentSounds();
                     _isActive = false;
                 }
                 else
@@ -54,6 +57,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                     GameManagerSingleton.Instance.FreezeTime(true);
                     GameManagerSingleton.Instance.SetIsStopMenuEnabled(true);
                     EventSystem.current.SetSelectedGameObject(firstButton);
+                    _mainCSounds.PauseCurrentSounds();
                     _isActive = true;
                 }
             }

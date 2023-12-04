@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7336517342201430183
+--- !u!1 &227273504376343712
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,29 +8,29 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7743651597484593264}
+  - component: {fileID: 6153274476758399260}
   m_Layer: 0
-  m_Name: Muzzle1
+  m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7743651597484593264
+--- !u!4 &6153274476758399260
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7336517342201430183}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 0.001, y: -1.415, z: -0}
+  m_GameObject: {fileID: 227273504376343712}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.028, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 728557792826265411}
+  m_Father: {fileID: 8466406467154038386}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: -180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7970255392764161239
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,8 +153,9 @@ MonoBehaviour:
   bullet: {fileID: 3870155545384615628, guid: 0b579e343ccd0464499461d298987ce6, type: 3}
   decalGroupPrefab: {fileID: 2144513413979249121, guid: 048ef0c52208bc542bc70ac4e67313b7,
     type: 3}
-  muzzle1: {fileID: 7743651597484593264}
+  muzzle1: {fileID: 6153274476758399260}
   checkRadius: 4
+  speedShooting: 1.5
   totalColdown: 0
   damage: 0
 --- !u!114 &8698530833825578607
@@ -724,21 +725,21 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: -8513424388201257645, guid: 76ce5392553f1ba429ad2cde5c60f663, type: 3}
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -1812909498023395591, guid: 76ce5392553f1ba429ad2cde5c60f663,
+    - targetCorrespondingSourceObject: {fileID: 1852576806548013000, guid: 76ce5392553f1ba429ad2cde5c60f663,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7743651597484593264}
+      addedObject: {fileID: 6153274476758399260}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76ce5392553f1ba429ad2cde5c60f663, type: 3}
---- !u!4 &728557792826265411 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -1812909498023395591, guid: 76ce5392553f1ba429ad2cde5c60f663,
-    type: 3}
-  m_PrefabInstance: {fileID: 7839389372295328186}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7728636986346427985 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 76ce5392553f1ba429ad2cde5c60f663,
+    type: 3}
+  m_PrefabInstance: {fileID: 7839389372295328186}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8466406467154038386 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 76ce5392553f1ba429ad2cde5c60f663,
     type: 3}
   m_PrefabInstance: {fileID: 7839389372295328186}
   m_PrefabAsset: {fileID: 0}

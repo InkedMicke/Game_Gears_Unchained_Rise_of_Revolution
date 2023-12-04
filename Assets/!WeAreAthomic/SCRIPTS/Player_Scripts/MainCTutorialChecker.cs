@@ -44,23 +44,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _gStopMenu = GetComponent<GStopMenu>();
         }
 
-        private void Update()
-        {
-
-        }
-
         private void Start()
         {
             _currentScene = SceneManager.GetActiveScene();
             if (_currentScene.name == "S2_LABTUTORIAL")
             {
-                GameManagerSingleton.Instance.IsOnTutorialImage = true;
                 IsOnTutorial = true;
                 goHereMove.SetActive(true);
                 wasdImage.SetActive(true);
-                GameManagerSingleton.Instance.SetThereIsCanvasBelow(true);
-                GameManagerSingleton.Instance.CursorMode(true);
-                GameManagerSingleton.Instance.FreezeTime(true);
                 StartCoroutine(CheckHealth());
                 StartCoroutine(CheckHacking());
             }
@@ -87,17 +78,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private IEnumerator CheckHacking()
         {
-            var enable = true;
-
-            while (enable)
+            while (true)
             {
                 if (_mainCHacking.isHacking)
                 {
-                    enable = false;
                     _mainCSounds.RemoveAllSounds();
                     _mainCSounds.PlayExpressionSound();
                     var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.CurrentExpressionClip.name);
                     Invoke(nameof(PlayTutorialThird), lengthOfClip);
+                    eImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
+                    break;
                 }
 
                 yield return new WaitForSeconds(0.01f);
@@ -115,11 +105,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void PlayTutorialTwo()
         {
-            GameManagerSingleton.Instance.IsOnTutorialImage = true;
-            GameManagerSingleton.Instance.CursorMode(true);
-            GameManagerSingleton.Instance.FreezeTime(true);
-            GameManagerSingleton.Instance.SetThereIsCanvasBelow(true);
-            eImage.SetActive(true);
             goHereBreather.SetActive(false);
             _mainCSounds.PlayTutorialSound(2, "pc");
             var buttonInt = botonPosaMano.GetComponent<ButtonInteractable>();
@@ -135,11 +120,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void AttackImage()
         {
             izqImage.SetActive(true);
-        }
-
-        public void SetIsOnTutorialImageBool(bool condition)
-        {
-            GameManagerSingleton.Instance.IsOnTutorialImage = condition;
         }
     }
 }

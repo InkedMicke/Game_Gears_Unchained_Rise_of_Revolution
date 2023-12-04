@@ -23,11 +23,6 @@ public class GBullet : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
     }
 
-    void Start()
-    {
-        _rb.AddForce(transform.forward * bulletForce, ForceMode.Impulse);
-    }
-
     private void Update()
     {
        if (target)

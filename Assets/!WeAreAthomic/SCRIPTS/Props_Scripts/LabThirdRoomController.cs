@@ -24,6 +24,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         [SerializeField] private GameObject[] firstReds;
         [SerializeField] private GameObject[] secondReds;
         [SerializeField] private GameObject lateralTresspasingContainer;
+        [SerializeField] private GameObject leftTutorial;
         private GameObject _playerObj;
 
         [SerializeField] private float speedOfFloor = 0.1f;
@@ -70,6 +71,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 if (goHereObj)
                 {
                     goHereObj.SetActive(true);
+                    leftTutorial.GetComponent<Animator>().SetTrigger(string.Format("close"));
                 }
             }
 
@@ -114,10 +116,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 {
                     if (movableFloor.transform.localPosition.y >= 0)
                     {
-                        _mainCTutorial.SetIsOnTutorialImageBool(true);
                         _mainCTutorial.AttackImage();
-                        GameManagerSingleton.Instance.CursorMode(true);
-                        GameManagerSingleton.Instance.FreezeTime(true);
                         _mainCSounds.PlayTutorialSound(4, "pc");
                         _mainCAttack.EnableCanAttack();
 

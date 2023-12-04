@@ -37,7 +37,6 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public bool thereIsCanvasBelow;
     public bool HasUnlockedBastetAttack;
     public bool IsUnlimitedEnergy;
-    public bool IsOnTutorialImage;
     public bool IsGodModeEnabled;
     public bool IsStopMenuEnabled;
     public bool IsSettingsMenuEnabled;
@@ -140,11 +139,6 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public void SetIsStopMenuEnabled(bool condition)
     {
         IsStopMenuEnabled = condition;
-    }
-
-    public void SetIsOnTutorialImage(bool condition)
-    {
-        IsOnTutorialImage = condition;
     }
 
     public void SetIsSettingsMenuEnabled(bool condition)
