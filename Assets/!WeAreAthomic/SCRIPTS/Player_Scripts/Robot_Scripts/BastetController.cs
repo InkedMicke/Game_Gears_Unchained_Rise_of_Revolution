@@ -200,6 +200,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                 var lookAtFixed = new Vector3(enemyPos.x, enemyPos.y + .5f, enemyPos.z);
                 bulletObj.transform.LookAt(lookAtFixed);
                 transform.LookAt(lookAtFixed);
+                bulletObj.GetComponent<Rigidbody>().AddForce(transform.forward * 50f, ForceMode.Impulse);
                 currentShoots++;
                 if (currentShoots > 25)
                 {
@@ -223,6 +224,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             bulletComponent.bulletForce = bulletSpeed;
             bulletComponent.target = new(enemyTarget, enemyTarget != null);
             bulletObj.transform.localScale = new Vector3(sizeBullet, sizeBullet, sizeBullet);
+            bulletObj.GetComponent<Rigidbody>().AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
 
             _mainCPistol.DisableShooting();
         }

@@ -39,7 +39,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             _cc = GetComponent<CharacterController>();
             _mainCSounds = GetComponent<MainCSounds>();
-            _mainCHealth = GetComponent<MainCHealthManager>();
+            _mainCHealth = GetComponentInChildren<MainCHealthManager>();
             _mainCHacking = GetComponent<MainCHackingSystem>();
             _gStopMenu = GetComponent<GStopMenu>();
         }
