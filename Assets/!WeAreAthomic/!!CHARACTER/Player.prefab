@@ -144,7 +144,6 @@ GameObject:
   - component: {fileID: 6083985201750387459}
   - component: {fileID: 8952184862595206149}
   - component: {fileID: 6475418683768865719}
-  - component: {fileID: 8670273326439586584}
   - component: {fileID: 7646570252809147268}
   - component: {fileID: 4726374708334233649}
   - component: {fileID: 530178520698779527}
@@ -468,21 +467,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   godModeContainer: {fileID: 0}
---- !u!114 &8670273326439586584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4537249443240097638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14b998cc002cb7845bca45063b62e8ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthSlider: {fileID: 0}
-  currentHealth: 50
-  maxHealth: 100
 --- !u!114 &7646570252809147268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -700,8 +684,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4594801647779526806}
   - component: {fileID: 4901877278535125210}
-  - component: {fileID: 7381251909444213419}
   - component: {fileID: 7955523078606263523}
+  - component: {fileID: 7381251909444213419}
+  - component: {fileID: 7264280247195265134}
   m_Layer: 8
   m_Name: HurtBox
   m_TagString: Untagged
@@ -747,6 +732,33 @@ CapsuleCollider:
   m_Height: 1.79
   m_Direction: 1
   m_Center: {x: 0, y: 0.91, z: 0}
+--- !u!54 &7955523078606263523
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4924955036015268849}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!114 &7381251909444213419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -784,33 +796,21 @@ MonoBehaviour:
     additionalInfo: 
   useTargetScript: 0
   targetScript: {fileID: 0}
---- !u!54 &7955523078606263523
-Rigidbody:
+--- !u!114 &7264280247195265134
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4924955036015268849}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 2
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b998cc002cb7845bca45063b62e8ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthSlider: {fileID: 0}
+  currentHealth: 50
+  maxHealth: 100
 --- !u!1 &5080220068350771609
 GameObject:
   m_ObjectHideFlags: 0

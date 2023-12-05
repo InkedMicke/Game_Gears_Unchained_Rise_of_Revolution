@@ -7,8 +7,10 @@ public class GreenSoldierBulletHitBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.name);
         if (other.TryGetComponent(out IDamageable damageable))
         {
+            Debug.Log("hola1");
             damageable.Damage(damage);
         }
         Destroy(gameObject);
