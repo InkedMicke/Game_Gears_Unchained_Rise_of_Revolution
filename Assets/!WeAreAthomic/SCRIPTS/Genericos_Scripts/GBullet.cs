@@ -21,6 +21,8 @@ public class GBullet : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+
+        //_rb.AddForce(transform.forward * bulletForce, ForceMode.Impulse);
     }
 
     private void Update()

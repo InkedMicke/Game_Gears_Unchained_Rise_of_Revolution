@@ -29,6 +29,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             currentHealth -= damage;
             GameManagerSingleton.Instance.currentHealth = currentHealth;
+            Debug.Log("hola2");
             SetHealthSlider();
         }
 

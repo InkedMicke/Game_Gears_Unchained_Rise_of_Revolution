@@ -20,7 +20,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
         private void Start()
         {
             _playerObj = GameObject.FindGameObjectWithTag(string.Format("Player"));
-            _mainHealth = _playerObj.GetComponent<MainCHealthManager>();
+            _mainHealth = _playerObj.GetComponentInChildren<MainCHealthManager>();
 
             if(!enableBreather)
             {
