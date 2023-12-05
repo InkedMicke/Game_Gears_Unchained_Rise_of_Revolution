@@ -2,7 +2,6 @@ using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 {

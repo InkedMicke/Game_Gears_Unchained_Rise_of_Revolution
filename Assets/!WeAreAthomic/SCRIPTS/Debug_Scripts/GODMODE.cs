@@ -8,6 +8,7 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
         private CharacterController _cc;
         private PlayerInputActions _playerInputActions;
         private MainCMovement _mainCMove;
+        private MainCTutorialChecker _mainCTutorial;
 
         [SerializeField] private GameObject godModeContainer;
         private GameObject _cameraObj;
@@ -21,6 +22,7 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
         {
             _cc = GetComponent<CharacterController>();
             _mainCMove = GetComponent<MainCMovement>();
+            _mainCTutorial = GetComponent<MainCTutorialChecker>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -88,6 +90,13 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
                     _moveSpeed -= Time.deltaTime * 4f;
                 }
             }
+        }
+
+        public void SkipTutorial()
+        {
+            GameManagerSingleton.Instance.SetSkippedTutorial(true);
+            _mainCTutorial.HideAllTutorialImages();
+            _mainCTutorial.StopAllTutorialCoroutine();
         }
 
         private void ShiftUp(InputAction.CallbackContext context)
