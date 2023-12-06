@@ -40,6 +40,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public bool IsGodModeEnabled;
     public bool IsStopMenuEnabled;
     public bool IsSettingsMenuEnabled;
+    public bool SkippedTutorial;
     private bool _toggledTotally;
 
     public int sensivityX;
@@ -154,6 +155,11 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public void GameState(bool condition)
     {
         IsGamePaused = condition;
+    }
+
+    public void SetSkippedTutorial(bool condition)
+    {
+        SkippedTutorial = condition;
     }
 
     public void SetEventSystemSelectedObj(GameObject obj)
