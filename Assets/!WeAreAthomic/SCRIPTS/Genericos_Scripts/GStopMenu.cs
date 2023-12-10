@@ -11,7 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
         private MainCTutorialChecker _mainCTutorial;
         private MainCSounds _mainCSounds;
 
-        [SerializeField] private GameObject mainMenuObj;
+        [SerializeField] private GameObject stopMenuContainer;
         [SerializeField] private GameObject firstButton;
 
         private bool _isActive;
@@ -37,7 +37,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                 if (GameManagerSingleton.Instance.IsStopMenuEnabled)
                 {
                     EventSystem.current.SetSelectedGameObject(null);
-                    mainMenuObj.SetActive(false);
+                    stopMenuContainer.SetActive(false);
                     if (!GameManagerSingleton.Instance.thereIsCanvasBelow)
                     {
                         GameManagerSingleton.Instance.CursorMode(false);
@@ -50,7 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                 }
                 else
                 {
-                    mainMenuObj.SetActive(true);
+                    stopMenuContainer.SetActive(true);
                     GameManagerSingleton.Instance.CursorMode(true);
                     GameManagerSingleton.Instance.PauseGame(true);
                     GameManagerSingleton.Instance.FreezeTime(true);
@@ -66,7 +66,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 
         public void ToggleMenuCallable(bool condition)
         {
-            mainMenuObj.SetActive(condition);
+            stopMenuContainer.SetActive(condition);
             _isActive = condition;
 
         }
@@ -75,7 +75,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
         {
             if (_isActive)
             {
-                mainMenuObj.SetActive(true);
+                stopMenuContainer.SetActive(true);
                 GameManagerSingleton.Instance.CursorMode(false);
                 GameManagerSingleton.Instance.PauseGame(false);
                 GameManagerSingleton.Instance.FreezeTime(false);
@@ -83,7 +83,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
             }
             else
             {
-                mainMenuObj.SetActive(false);
+                stopMenuContainer.SetActive(false);
                 GameManagerSingleton.Instance.CursorMode(true);
                 GameManagerSingleton.Instance.PauseGame(true);
                 _isActive = true;

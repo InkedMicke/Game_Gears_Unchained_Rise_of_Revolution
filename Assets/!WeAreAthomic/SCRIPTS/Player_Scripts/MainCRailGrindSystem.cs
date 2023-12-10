@@ -23,7 +23,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private Collider[] _railCols;
 
-        [SerializeField] private GameObject meshObj;
         [SerializeField] private GameObject spaceTutCanvas;
         private GameObject _currentPipe;
         private GameObject _currentRail;
@@ -34,9 +33,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private LayerMask obstacleLayer;
 
         private Vector3 _currentDestination;
-        private Vector3 _directionMove;
-        private Vector3 _velocity;
-        private Vector3 _posOnAirPlayer;
         private Vector3 _posOnAirTarget;
 
         [SerializeField] private string labScene;
@@ -216,7 +212,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (_canSlide)
             {
                 _currentDestination = directionsList[_childActual].position;
-                _directionMove = (_currentDestination - transform.position).normalized;
                 _posOnAirTarget = new Vector3(directionsList[_childActual].position.x, transform.position.y,
                     directionsList[_childActual].position.z);
                 if (!_mainCPistol.IsAiming)

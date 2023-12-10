@@ -14,6 +14,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCHealthManager _mainCHealth;
         private MainCHackingSystem _mainCHacking;
         private GStopMenu _gStopMenu;
+        private MainCAttack _mainCAttack;
 
         private Coroutine _checkHealthCoroutine;
         private Coroutine _checkHackCoroutine;
@@ -46,6 +47,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCHealth = GetComponentInChildren<MainCHealthManager>();
             _mainCHacking = GetComponent<MainCHackingSystem>();
             _gStopMenu = GetComponent<GStopMenu>();
+            _mainCAttack = GetComponent<MainCAttack>();
         }
 
         private void Start()
@@ -58,6 +60,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 wasdImage.SetActive(true);
                 _checkHealthCoroutine = StartCoroutine(CheckHealth());
                 _checkHackCoroutine = StartCoroutine(CheckHacking());
+                _mainCAttack.DisableCanAttack();
+            }
+            else
+            {
+                _mainCAttack.EnableCanAttack();
             }
         }
 

@@ -9,13 +9,24 @@ public class MainCRagdoll : MonoBehaviour
 
     public List<Rigidbody> prueba;
 
+    public bool ragDoll;
+
     private void Start()
     {
         _rbs = transform.GetComponentsInChildren<Rigidbody>();
-        SetEnabled(false);
         foreach (var rb in _rbs)
         {
             prueba.Add(rb);
+        }
+
+        SetEnabled(false);
+    }
+
+    private void Update()
+    {
+        if(ragDoll)
+        {
+            SetEnabled(true);
         }
     }
 

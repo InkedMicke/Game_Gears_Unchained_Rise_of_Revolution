@@ -27,7 +27,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public LayerMask enemyHurtBox;
 
         [System.NonSerialized] public bool IsAttacking;
-        [System.NonSerialized] public bool CanDealDamage;
         [System.NonSerialized] public bool CanMove;
         [System.NonSerialized] public bool IsFinalAttacking;
         private bool _clickedOnTime;

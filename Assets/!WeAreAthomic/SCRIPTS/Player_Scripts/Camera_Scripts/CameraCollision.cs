@@ -31,6 +31,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
             if (Physics.Linecast(transform.parent.position, desiredCameraPos, out var hit, colLayers))
             {
                 distance = Mathf.Clamp((hit.distance * 0.87f), minDistance, maxDistance);
+                Debug.Log(hit.collider.gameObject.name);
             }
             else
             {

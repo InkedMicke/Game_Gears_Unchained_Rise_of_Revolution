@@ -19,6 +19,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCAnimatorController _mainCAnimator;
         private CharacterController _cc;
         private Godmode _godMode;
+        private MainCHealthManager _mainCHealth;
 
         [SerializeField] private LayerMask playerBulletLayer;
 
@@ -82,6 +83,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCHacking = GetComponent<MainCHackingSystem>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _playerInputActions = new PlayerInputActions();
+            _mainCHealth = GetComponentInChildren<MainCHealthManager>();
         }
 
         private void Start()
@@ -111,7 +113,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void Update()
         {
             AnimatorController();
-            if (_canMove && !GameManagerSingleton.Instance.IsGodModeEnabled && !_railGrindSystem.CanJumpOnRail && !_mainCHacking.isHackingAnim && !_mainCAttack.IsFinalAttacking)
+            if (_canMove && !GameManagerSingleton.Instance.IsGodModeEnabled && !_railGrindSystem.CanJumpOnRail && !_mainCHacking.isHackingAnim && !_mainCAttack.IsFinalAttacking && !_mainCHealth.IsDeath)
             {
                 MoveKeyboard();
                 MoveGamepad();

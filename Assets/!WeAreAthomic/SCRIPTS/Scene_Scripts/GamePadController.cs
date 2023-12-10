@@ -8,11 +8,11 @@ using UnityEngine.UI;
 public class GamePadController : MonoBehaviour
 {
     private PlayerInputActions _playerInputActions;
+    private MainCInputSwitcher _mainCInputSwitcher;
 
     private Scene _currentScene;
 
     private Vector2 vectorGamepad;
-    private Vector2 lastMousePosition;
 
     private bool _isActive;
     public bool IsGamepadActive;
@@ -27,6 +27,8 @@ public class GamePadController : MonoBehaviour
 
     private void Awake()
     {
+        _mainCInputSwitcher = GetComponent<MainCInputSwitcher>();
+
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Enable();
         _playerInputActions.UI.Navigate.performed += HideCursorIfVisible;
@@ -47,8 +49,8 @@ public class GamePadController : MonoBehaviour
     {
         if (GameManagerSingleton.Instance.IsStopMenuEnabled || GameManagerSingleton.Instance.IsSettingsMenuEnabled)
         {
-            vectorGamepad = _playerInputActions.Player.MovementGamepad.ReadValue<Vector2>();
-            if (vectorGamepad.magnitude > .1f)
+/*            vectorGamepad = _playerInputActions.Player.MovementGamepad.ReadValue<Vector2>();
+            if (_mainCInputSwitcher.isUsingGamepad)
             {
                 IsGamepadActive = true;
                 if (!_isActive)
@@ -70,9 +72,9 @@ public class GamePadController : MonoBehaviour
                     _isActive = false;
                 }
 
-                var currentMousePosition = Mouse.current.position.ReadValue();
 
-                if (currentMousePosition != lastMousePosition)
+
+                if (_mainCInputSwitcher.isUsingMouse)
                 {
                     if (IsGamepadActive)
                     {
@@ -83,8 +85,8 @@ public class GamePadController : MonoBehaviour
                     // Realiza acciones cuando el ratón se mueve
                 }
 
-                lastMousePosition = currentMousePosition;
-            }
+
+            }*/
         }
     }
 
