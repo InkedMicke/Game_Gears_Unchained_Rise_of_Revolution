@@ -223,7 +223,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8187944273788698538}
   - component: {fileID: 6395735996969651420}
+  - component: {fileID: 1342642170455199101}
   - component: {fileID: 1895518675992872253}
+  - component: {fileID: 3710949005130519278}
   m_Layer: 9
   m_Name: GreenHurtBox
   m_TagString: Untagged
@@ -269,6 +271,33 @@ CapsuleCollider:
   m_Height: 2.53
   m_Direction: 1
   m_Center: {x: 0, y: 0.76, z: 0}
+--- !u!54 &1342642170455199101
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8202827297792976926}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!114 &1895518675992872253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +310,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5406e8702107ac4187e2b15583ea85b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3710949005130519278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8202827297792976926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c456195e3df0a6540b9f6ec5af422b92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthSlider: {fileID: 2674764648277795039}
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1001 &5409347893104496395
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -420,6 +464,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5409347893104496395}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2674764648277795039 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7930682233820458964, guid: efaedc6625acc0b4ea60a335535fe799,
+    type: 3}
+  m_PrefabInstance: {fileID: 5409347893104496395}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6910679163857495755
 PrefabInstance:
   m_ObjectHideFlags: 0
