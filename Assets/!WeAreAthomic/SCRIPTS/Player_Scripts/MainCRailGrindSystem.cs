@@ -50,7 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool _isFirstJump = true;
         private bool _isCanvasJump;
 
-        private int _childActual = 0;
+        public int _childActual = 0;
 
         [SerializeField] private float railSpeed = .1f;
         [SerializeField] private float rotationSpeed = 5f;
@@ -78,7 +78,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void Update()
         {
             _currentScene = SceneManager.GetActiveScene();
-            if (IsOnRail())
+            if (IsOnRail() && !_isJumping)
             {
                 _railCols = Physics.OverlapSphere(groundCheck.position, .3f, railLayer);
                 StartSliding();
@@ -192,15 +192,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     var playerToObjDirection = t.position - transform.position;
                     var dotProduct = Vector3.Dot(playerToObjDirection.normalized, transform.forward.normalized);
 
-                    if (dotProduct > 0 && !_haveFirstTransfrom)
+                    if (dotProduct > 0)
                     {
-                        _haveFirstTransfrom = true;
                         break;
                     }
                     else
                     {
                         _childActual++;
-
                     }
                 }
 
