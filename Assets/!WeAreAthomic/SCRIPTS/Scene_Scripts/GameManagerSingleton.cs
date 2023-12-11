@@ -247,12 +247,14 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
                     return damageData.easyDifficult.greenDamage;
                 }
                 break;
+
             case DifficultyLevel.desafio:
                 if (other.gameObject.name == "GreenHurtBox")
                 {
                     return damageData.normalDifficult.greenDamage;
                 }
                 break;
+
             case DifficultyLevel.maestro:
                 if (other.gameObject.name == "GreenHurtBox")
                 {
