@@ -10,6 +10,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCRailGrindSystem : MonoBehaviour
     {
+
         private CharacterController _cc;
         private Animator _anim;
         private PlayerInputActions _playerInputActions;
@@ -18,6 +19,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCAnimatorController _mainCAnimator;
         private MainCPistol _mainCPistol;
         private GStopMenu _gStopMenu;
+        private MainVFXCharacter _mainVFXCharacter;
 
         private Scene _currentScene;
 
@@ -55,6 +57,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         
         public List<Transform> directionsList = new List<Transform>();
 
+
+
         private void Awake()
         {
             _cc = GetComponent<CharacterController>();
@@ -64,6 +68,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _mainCPistol = GetComponent<MainCPistol>();
             _gStopMenu = GetComponent<GStopMenu>();
+            _mainVFXCharacter = GetComponent<MainVFXCharacter>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Player.Enable();
@@ -108,6 +113,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void StartSliding()
         {
+
             if (!IsSliding)
             {
                 _cc.enabled = false;
@@ -118,6 +124,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCAnimator.SetGrounded(true);
                 _mainCAnimator.SetFalling(false);
                 _mainCAnimator.SetJumping(false);
+                _mainVFXCharacter.ToggleRail();
             }
         }
 

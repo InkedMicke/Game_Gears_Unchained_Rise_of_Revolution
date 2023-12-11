@@ -15,15 +15,23 @@ public class MainVFXCharacter : MonoBehaviour
     [SerializeField] private ParticleSystem slash2;
     [SerializeField] private ParticleSystem slash3;
 
+    [Header("Rail")]
+
+    [SerializeField] private GameObject vfxSparks;
+    [SerializeField] private GameObject vfxSpeedLines;
 
     
 
 
 
 
+
+
+
+
     public void ActivateRightStep()
     {
-        Instantiate(vfxStep, rightFoot.position,Quaternion.identity);
+        Instantiate(vfxStep, rightFoot.position, Quaternion.identity);
     }
     public void ActivateLeftStep()
     {
@@ -40,6 +48,16 @@ public class MainVFXCharacter : MonoBehaviour
     public void ActivateSlash3()
     {
         slash3.Play();
+    }
+
+    public void ToggleRail()
+    {
+        var  active = new bool();
+
+        active = !active;
+
+        vfxSparks.SetActive(active);
+        vfxSpeedLines.SetActive(active);
     }
 
 }
