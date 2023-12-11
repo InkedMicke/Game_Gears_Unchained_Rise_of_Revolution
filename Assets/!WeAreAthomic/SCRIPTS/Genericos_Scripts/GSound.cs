@@ -40,13 +40,11 @@ public class GSound : MonoBehaviour
         {
             if(_isInClipPlayed && audioSource.isPlaying)
             {
-                Debug.Log("hola1");
                 audioSource.Pause();
             }         
             
             if(_isBucleClipPlayed && audioSourceTwo.isPlaying)
             {
-                Debug.Log("hola2");
                 audioSourceTwo.Pause();
             }
         }
@@ -55,13 +53,11 @@ public class GSound : MonoBehaviour
         {
             if (_isInClipPlayed && !audioSource.isPlaying)
             {
-                Debug.Log("hola3");
                 audioSource.UnPause();
             }
 
             if (_isBucleClipPlayed && !audioSourceTwo.isPlaying)
             {
-                Debug.Log("hola4");
                 audioSourceTwo.UnPause();
             }
         }

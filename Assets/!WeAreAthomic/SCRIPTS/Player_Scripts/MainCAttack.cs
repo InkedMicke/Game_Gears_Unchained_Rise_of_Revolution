@@ -33,9 +33,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool _canNextAttack;
         private bool _isSheathed;
         private bool _canAttack;
-        private bool _isMousePressed;
+        private bool _isLeftMousePressed;
         private bool _attackTutorial;
         private bool _sheathTutorial;
+        private bool _isChargingAttack;
 
         public int attackCount;
 
@@ -71,57 +72,73 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             base.Awake();
         }
 
-        private protected void Update()
+        private void Update()
         {
-
-
+            ChargeAttack();
         }
 
         private void MouseDown(InputAction.CallbackContext context)
         {
-            Attack();
-            _currentTimeSheath = Time.time;
+            _isLeftMousePressed = true;
         }
 
         private void MouseUp(InputAction.CallbackContext context)
         {
+            _isLeftMousePressed = false;
+            Attack();
+            _currentTimeSheath = Time.time;
         }
 
         private void Attack()
         {
-            if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
+            if (_typeOfAttack == TypeOfAttack.NormalAttack)
             {
-                if (_mainCTutorial.IsOnTutorial && !_attackTutorial)
+                if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
-                    _mainCSounds.RemoveAllSounds();
-                    _mainCSounds.PlayExpressionSound();
-                    _attackTutorial = true;
+                    if (_mainCTutorial.IsOnTutorial && !_attackTutorial)
+                    {
+                        _mainCSounds.RemoveAllSounds();
+                        _mainCSounds.PlayExpressionSound();
+                        _attackTutorial = true;
+                    }
+                    _mainCLayers.EnableAttackLayer();
+                    _mainCSounds.StopAttackSound();
+                    attackCount++;
+                    _mainCAnimator.SetAttackCountAnim(attackCount);
+                    weaponObj.GetComponent<WrenchHitBox>().ClearList();
+                    _canNextAttack = false;
+
+                    IsAttacking = true;
+
+                    _canNextAttack = false;
                 }
-                _mainCLayers.EnableAttackLayer();
-                _mainCSounds.StopAttackSound();
-                attackCount++;
-                _mainCAnimator.SetAttackCountAnim(attackCount);
-                weaponObj.GetComponent<WrenchHitBox>().ClearList();
-                _canNextAttack = false;
 
-                IsAttacking = true;
+                if (CanAttack() && !_isSheathed)
+                {
+                    if (_mainCTutorial.IsOnTutorial && !_sheathTutorial)
+                    {
+                        _mainCSounds.RemoveAllSounds();
+                        _mainCSounds.PlayExpressionSound();
+                        var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.CurrentExpressionClip.name);
+                        Invoke(nameof(PlayTutorialFifth), lengthOfClip);
+                        _sheathTutorial = true;
+                    }
 
-                _canNextAttack = false;
+                    ShowWeapon();
+                    _isSheathed = true;
+                }
             }
-
-            if (CanAttack() && !_isSheathed)
+            else
             {
-                if (_mainCTutorial.IsOnTutorial && !_sheathTutorial)
-                {
-                    _mainCSounds.RemoveAllSounds();
-                    _mainCSounds.PlayExpressionSound();
-                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.CurrentExpressionClip.name);
-                    Invoke(nameof(PlayTutorialFifth), lengthOfClip);
-                    _sheathTutorial = true;
-                }
 
-                ShowWeapon();
-                _isSheathed = true;
+            }
+        }
+
+        private void ChargeAttack()
+        {
+            if(!_isChargingAttack && _mouseMagnitude > timeToCharged)
+            {
+                _isChargingAttack = true;
             }
         }
 
@@ -139,12 +156,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private IEnumerator MoveToEnemyCoroutine(Collider other)
         {
-            while(true)
+            while (true)
             {
                 var enemyPos = other.gameObject.transform.position;
                 var direction = enemyPos - transform.position;
                 direction.y = 0f;
-                if(direction.magnitude > 1f)
+                if (direction.magnitude > 1f)
                 {
                     _cc.Move(direction.normalized * 20f * Time.deltaTime);
                 }
@@ -155,12 +172,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                 yield return new WaitForSeconds(0.01f);
             }
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.green;
-            Debug.DrawRay(middlePosTr.position, middlePosTr.forward * 1f);
         }
 
         private void NextCombo(InputAction.CallbackContext context)

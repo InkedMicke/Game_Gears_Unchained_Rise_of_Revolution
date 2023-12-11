@@ -2224,7 +2224,7 @@ Transform:
   - {fileID: 8442462779739023718}
   - {fileID: 8955086337922746776}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8240707643706739422
 Animator:
@@ -2420,6 +2420,7 @@ MonoBehaviour:
     m_Bits: 2048
   labScene: S2_LABTUTORIAL
   sewerScene: S4_SEWERS_UNDERTHECITY
+  _childActual: 0
   railSpeed: 5
   rotationSpeed: 30
   directionsList: []
@@ -2992,7 +2993,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4592075407643773932}
-  - component: {fileID: 472187990481503812}
   m_Layer: 0
   m_Name: Maat_Rig
   m_TagString: Untagged
@@ -3017,27 +3017,6 @@ Transform:
   m_Father: {fileID: 3953601784478877334}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &472187990481503812
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6282870315127746270}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 465b971fa38114e4998a688b3033b32d, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6386136891931232913
 GameObject:
   m_ObjectHideFlags: 0
