@@ -1,7 +1,7 @@
 using _WeAreAthomic.SCRIPTS.Genericos;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi
+namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 {
     public class DummieController : MonoBehaviour
     {

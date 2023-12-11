@@ -1,19 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 
-public class GreenSoliderHurtBox : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 {
-    private SoldierHealthManager _healthManager;
 
-    private void Awake()
+    public class GreenSoliderHurtBox : MonoBehaviour
     {
-        _healthManager = GetComponent<SoldierHealthManager>();
-    }
+        private SoldierHealthManager _healthManager;
 
-    public bool CheckIfPlayerIsNear(float radius)
-    {
-        return Physics.CheckSphere(transform.position, radius);
+        private void Awake()
+        {
+            _healthManager = GetComponent<SoldierHealthManager>();
+        }
+
+        public bool CheckIfPlayerIsNear(float radius)
+        {
+            return Physics.CheckSphere(transform.position, radius);
+        }
     }
 }

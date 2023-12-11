@@ -3,43 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class GreenSoliderMovement : EnemyAI
+namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 {
-    private GreenSoliderAttack _soldierAttack;
-    private SoldierAnimator _soldierAnim;
-
-    private GameManagerSingleton.TypeOfEnemy _typeOfEnemy;
-
-    private float _timeToCancelAttack;
-
-    private void Awake()
+    public class GreenSoliderMovement : EnemyAI
     {
-        _agent = GetComponent<NavMeshAgent>();
-        _soldierAttack = GetComponent<GreenSoliderAttack>();
-        _soldierAnim = GetComponent<SoldierAnimator>();
+        private GreenSoliderAttack _soldierAttack;
+        private SoldierAnimator _soldierAnim;
+        private SoldierHealthManager _healthManager;
 
-        originalSpeed = _agent.speed;
+        private GameManagerSingleton.TypeOfEnemy _typeOfEnemy;
 
-        _typeOfEnemy = GameManagerSingleton.TypeOfEnemy.GreenSoldier;
-    }
-
-    void Update()
-    {
-        if (!_soldierAttack.IsAttacking && !_soldierAttack.IsShooting)
+        private void Awake()
         {
-            _agent.isStopped = false;
-            _agent.SetDestination(_playerTr.position);
-            _soldierAnim.SetWalking(true);
+            _agent = GetComponent<NavMeshAgent>();
+            _soldierAttack = GetComponent<GreenSoliderAttack>();
+            _soldierAnim = GetComponent<SoldierAnimator>();
+            _healthManager = GetComponentInChildren<SoldierHealthManager>();
+
+            originalSpeed = _agent.speed;
+
+            _typeOfEnemy = GameManagerSingleton.TypeOfEnemy.GreenSoldier;
         }
 
-        var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
-
-        if (distanceToPlayer < 5f && !_soldierAttack.IsAttacking && Time.time > _soldierAttack.totalColdown)
+        void Update()
         {
-            _agent.isStopped = true;
-            _soldierAnim.SetWalking(false);
-            _soldierAttack.StartDecal();
+            if (!_soldierAttack.IsAttacking && !_soldierAttack.IsShooting && !_healthManager.IsDeath)
+            {
+                _agent.isStopped = false;
+                _agent.SetDestination(_playerTr.position);
+                _soldierAnim.SetWalking(true);
+            }
+
+            var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
+
+            if (distanceToPlayer < 5f && !_soldierAttack.IsAttacking && Time.time > _soldierAttack.totalColdown && !_healthManager.IsDeath)
+            {
+                _agent.isStopped = true;
+                _soldierAnim.SetWalking(false);
+                _soldierAttack.StartDecal();
+            }
+
         }
-        
     }
 }

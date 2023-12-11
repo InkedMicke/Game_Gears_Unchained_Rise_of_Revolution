@@ -4,7 +4,7 @@ using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi
+namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 {
     public class DummieHurtBox : MonoBehaviour, IDamageable
     {

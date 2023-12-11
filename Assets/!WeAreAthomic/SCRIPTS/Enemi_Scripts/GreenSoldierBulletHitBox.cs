@@ -1,16 +1,20 @@
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 using UnityEngine;
 
-public class GreenSoldierBulletHitBox : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 {
-    [SerializeField] private float damage = 5;
 
-    private void OnTriggerEnter(Collider other)
+    public class GreenSoldierBulletHitBox : MonoBehaviour
     {
-        if (other.TryGetComponent(out IDamageable damageable))
+        [SerializeField] private float damage = 5;
+
+        private void OnTriggerEnter(Collider other)
         {
-            damageable.Damage(damage);
+            if (other.TryGetComponent(out IDamageable damageable))
+            {
+                damageable.Damage(damage);
+            }
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 }

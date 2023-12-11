@@ -3,21 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GreenDecalHurtBox : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 {
-    [NonSerialized] public bool IsPlayerInside;
-    [NonSerialized] public bool HasPlayerLeft;
-
-
-    private void OnTriggerEnter(Collider other)
+    public class GreenDecalHurtBox : MonoBehaviour
     {
-        IsPlayerInside = true;
-        HasPlayerLeft = false;
-    }
+        [NonSerialized] public bool IsPlayerInside;
+        [NonSerialized] public bool HasPlayerLeft;
 
-    private void OnTriggerExit(Collider other)
-    {
-        IsPlayerInside = false;
-        HasPlayerLeft = true;
+
+        private void OnTriggerEnter(Collider other)
+        {
+            IsPlayerInside = true;
+            HasPlayerLeft = false;
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            IsPlayerInside = false;
+            HasPlayerLeft = true;
+        }
     }
 }

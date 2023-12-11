@@ -2,31 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DummieSounds : MonoBehaviour
+namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 {
-    [SerializeField] private List<AudioClip> hurtClips;
-
-    private void Update()
+    public class DummieSounds : MonoBehaviour
     {
-        var audiosInSoundComponent = GetComponents<AudioSource>();
+        [SerializeField] private List<AudioClip> hurtClips;
 
-        foreach (var audioSour in audiosInSoundComponent)
+        private void Update()
         {
-            if (!audioSour.isPlaying)
+            var audiosInSoundComponent = GetComponents<AudioSource>();
+
+            foreach (var audioSour in audiosInSoundComponent)
             {
-                Destroy(audioSour);
+                if (!audioSour.isPlaying)
+                {
+                    Destroy(audioSour);
+                }
             }
         }
-    }
-    
-    public void PlayHurtSound()
-    {
-        var randomNumber = Random.Range(0, hurtClips.Count);
-        var currentAudioSource = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
-        if (!ReferenceEquals(currentAudioSource, null))
+
+        public void PlayHurtSound()
         {
-            currentAudioSource.clip = hurtClips[randomNumber];
-            currentAudioSource.Play();
+            var randomNumber = Random.Range(0, hurtClips.Count);
+            var currentAudioSource = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
+            if (!ReferenceEquals(currentAudioSource, null))
+            {
+                currentAudioSource.clip = hurtClips[randomNumber];
+                currentAudioSource.Play();
+            }
         }
     }
 }

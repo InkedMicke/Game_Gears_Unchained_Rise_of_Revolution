@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using _WeAreAthomic.SCRIPTS.Enemi;
+using _WeAreAthomic.SCRIPTS.Enemi_Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
