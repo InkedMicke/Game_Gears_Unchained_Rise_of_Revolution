@@ -17,7 +17,7 @@ public class BastetBulletHitBox : MonoBehaviour
         {
             if (damageData != null)
             {
-                damageable.Damage(GameManagerSingleton.Instance.GetDamage(damageData, other));
+                damageable.Damage(GameManagerSingleton.Instance.GetDamage(damageData, other.gameObject));
             }
         }
         else

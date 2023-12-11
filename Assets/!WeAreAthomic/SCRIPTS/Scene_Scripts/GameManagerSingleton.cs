@@ -233,7 +233,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         IsGodModeEnabled = !IsGodModeEnabled;
     }
 
-    public float GetDamage(PlayerDamageData damageData, Collider other)
+    public float GetDamage(PlayerDamageData damageData, GameObject other)
     {
         switch (_currentDifficulty)
         {

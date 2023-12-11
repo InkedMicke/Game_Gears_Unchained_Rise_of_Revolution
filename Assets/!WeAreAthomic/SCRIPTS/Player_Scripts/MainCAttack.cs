@@ -19,9 +19,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private WrenchHitBox _wrenchHitBox;
         private MainCPistol _mainCPistol;
 
+        [SerializeField] private PlayerDamageData abilityAttackDmgData;
+
         [SerializeField] private GameObject weaponObj;
+        [SerializeField] private GameObject scannerPrefab;
+        private GameObject scannerInst;
 
         [SerializeField] private Transform middlePosTr;
+        [SerializeField] private Transform groundTr;
         private Transform _closestObject;
 
         public LayerMask enemyHurtBox;
@@ -29,6 +34,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [System.NonSerialized] public bool IsAttacking;
         [System.NonSerialized] public bool CanMove;
         [System.NonSerialized] public bool IsFinalAttacking;
+        public bool IsChargingAttack;
         private bool _clickedOnTime;
         private bool _canNextAttack;
         private bool _isSheathed;
@@ -36,7 +42,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool _isLeftMousePressed;
         private bool _attackTutorial;
         private bool _sheathTutorial;
-        private bool _isChargingAttack;
 
         public int attackCount;
 
@@ -44,6 +49,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float nearEnemieToGoFloat = 2.5f;
         [SerializeField] private float rotationNearEnemie = 8f;
         [SerializeField] private float hideWeaponTimer = 8f;
+        [SerializeField] private float scannerSizeSpeed = .1f;
         public float timeGraceAttackPeriod;
         private float _currentTimeSheath;
 
@@ -87,6 +93,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _isLeftMousePressed = false;
             Attack();
             _currentTimeSheath = Time.time;
+            if(IsChargingAttack)
+            {
+                SetAttackCount(5);
+            }
         }
 
         private void Attack()
@@ -136,9 +146,20 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void ChargeAttack()
         {
-            if(!_isChargingAttack && _mouseMagnitude > timeToCharged)
+            if(CanChargeAttack())
             {
-                _isChargingAttack = true;
+                _mainCLayers.EnableAbilityAttackLayer();
+                SetAttackCount(4);
+                scannerInst = Instantiate(scannerPrefab, groundTr.position, Quaternion.identity);
+                IsChargingAttack = true;
+            }
+
+            if(_mouseMagnitude > timeToCharged && _isLeftMousePressed)
+            {
+                if(scannerInst != null && scannerInst.transform.localScale.x < 17)
+                {
+                    scannerInst.transform.localScale += Vector3.one * scannerSizeSpeed;
+                }
             }
         }
 
@@ -152,6 +173,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 direction.y = 0f;
                 _cc.Move(direction * 0.2f);
             }
+        }
+
+        public void ApplyAbilityDamage()
+        {
+            scannerInst.GetComponent<ScannerHitBox>().ApplyDamage(abilityAttackDmgData);
+        }
+
+        public void DestroyScanner()
+        {
+            Destroy(scannerInst);
         }
 
         private IEnumerator MoveToEnemyCoroutine(Collider other)
@@ -210,6 +241,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator.SetAttackCountAnim(attackCount);
             _mainCLayers.DisableAttackLayer();
             _mainCLayers.DisableFinalAttackLayer();
+            _mainCLayers.DisableAbilityAttackLayer();
             timeGraceAttackPeriod = Time.time + timeNextAttack;
             DisableNextAttack();
             IsFinalAttacking = false;
@@ -265,6 +297,31 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             if (!_mainCMovement.IsGrounded())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CanChargeAttack()
+        {
+            if(IsChargingAttack)
+            {
+                return false;
+            }
+
+            if(!(_mouseMagnitude > timeToCharged))
+            {
+                return false;
+            }
+
+            if(!_isSheathed)
+            {
+                return false;
+            }
+
+            if(_mainCPistol.IsAiming)
             {
                 return false;
             }
