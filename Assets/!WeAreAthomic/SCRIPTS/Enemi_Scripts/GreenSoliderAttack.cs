@@ -1,8 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -15,6 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private NavMeshAgent _agent;
         private SoldierAnimator _soldierAnim;
         private SoldierHealthManager _healthManager;
+        private GreenSoliderMovement _greenMove;
 
         private Coroutine _shootCoroutine;
         private Coroutine _decalCoroutine;
@@ -32,20 +29,23 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         [System.NonSerialized] public bool IsAttacking;
         [System.NonSerialized] public bool IsShooting;
         private bool _hasEndedShootAnim;
+        private bool _waitForDisableShoot;
 
         [SerializeField] private float checkRadius = 5f;
         [SerializeField] private float speedShooting = 1.5f;
         [SerializeField] private float spreadAngle = 2f;
         [SerializeField] private float shootAngle = .6f;
+        [SerializeField] private float maxTimeToStopShooting = 2.5f;
+        private float _timeToStopShooting;
         public float totalColdown;
         public float damage;
-        private float timeToStopShooting;
 
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
             _soldierAnim = GetComponent<SoldierAnimator>();
             _healthManager = GetComponentInChildren<SoldierHealthManager>();
+            _greenMove = GetComponent<GreenSoliderMovement>();
         }
 
         public void StartDecal()
@@ -57,35 +57,14 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         private void Update()
         {
-            if (IsShooting && _currentDecal != null && !_healthManager.IsDeath)
-            {
-                var decalHurtBox = _currentDecal.GetComponentInChildren<GreenDecalHurtBox>();
-
-                if (!decalHurtBox.IsPlayerInside && !decalHurtBox.HasPlayerLeft)
-                {
-                    timeToStopShooting += Time.deltaTime;
-                    if (timeToStopShooting > 2.5f)
-                    {
-                        if (IsShooting)
-                        {
-                            StopCoroutine(_shootCoroutine);
-                        }
-                        timeToStopShooting = 0f;
-                        StopCoroutine(_decalCoroutine);
-                        Destroy(_currentDecal);
-                        IsShooting = false;
-                        IsAttacking = false;
-                        totalColdown = Time.time + 4f;
-                        _agent.enabled = true;
-                    }
-                }
-            }
+            CheckForDisableShoot();
+            TimerToDisableShoot();
         }
 
         private IEnumerator ShootCoroutine()
         {
             IsShooting = true;
-            while (!CheckIfPlayer())
+            while (IsShooting)
             {
                 _hasEndedShootAnim = false;
                 _soldierAnim.ShootTrigger();
@@ -147,44 +126,51 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         }
 
-        private bool CheckIfPlayer()
+        private bool CheckForDisableShoot()
         {
             if (_currentDecal != null)
             {
                 var decalHurtBox = _currentDecal.GetComponentInChildren<GreenDecalHurtBox>();
 
-
-                if (!decalHurtBox.IsPlayerInside || decalHurtBox.HasPlayerLeft)
+                if(decalHurtBox.HasPlayerLeft)
                 {
-
-
-                    StopCoroutine(_decalCoroutine);
-
-                    Destroy(_currentDecal);
-                    IsShooting = false;
-                    IsAttacking = false;
-                    totalColdown = Time.time + 4f;
-                    _agent.enabled = true;
-
-                    if (IsShooting)
-                    {
-                        StopCoroutine(_shootCoroutine);
-                        _soldierAnim.SetAnimatorSpeed(1f);
-                        return true;
-                    }
+                    return true;
                 }
             }
+
             return false;
         }
 
-        private void CheckForDisableShoot()
+        private void TimerToDisableShoot()
         {
-
+             if(_waitForDisableShoot)
+            {
+                _timeToStopShooting -= Time.deltaTime;
+                if(_timeToStopShooting <= 0f)
+                {
+                    StopCoroutine(_decalCoroutine);
+                    Destroy(_currentDecal);
+                    _agent.enabled = true;
+                    IsAttacking = false;
+                    IsShooting = false;
+                    _greenMove.SetChasePlayer(true);
+                }
+            }
         }
 
         public void EndShootAnim()
         {
             _hasEndedShootAnim = true;
+            if (CheckForDisableShoot())
+            {
+                if(!_waitForDisableShoot)
+                {
+                    _timeToStopShooting = maxTimeToStopShooting;
+                }
+                _waitForDisableShoot = true;
+            }
+            else
+                _waitForDisableShoot = false;
         }
 
         private void OnDrawGizmos()

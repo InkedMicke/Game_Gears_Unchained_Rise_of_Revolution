@@ -9,9 +9,9 @@ namespace _WeAreAthomic.SCRIPTS.Genericos
         private void Update()
         {
             var cameraPos = Camera.main.transform.position;
-            transform.LookAt(cameraPos);
-            transform.Rotate(transform.position.x, cameraPos.y, rotateAmount);
-            
+            transform.LookAt(new Vector3(cameraPos.x, transform.position.y, cameraPos.z), Vector3.up);
+            transform.Rotate(0f, 0f, rotateAmount);
+
         }
     }
 }

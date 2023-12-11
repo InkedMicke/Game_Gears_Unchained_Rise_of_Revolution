@@ -19,7 +19,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         protected bool IsLeftMouseDown;
         protected bool IsRightMouseDown;
 
-        private float _mouseMagnitude;
+        protected float _mouseMagnitude;
+        protected float timeToCharged = .4f;
 
         private protected virtual void Awake()
         {
@@ -46,7 +47,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                 }
 
-                if (_mouseMagnitude > .3f)
+                if (_mouseMagnitude > timeToCharged)
                 {
                     _typeOfAttack = TypeOfAttack.ChargedAttack;
                 }

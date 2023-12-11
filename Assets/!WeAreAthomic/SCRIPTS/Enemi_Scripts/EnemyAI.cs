@@ -9,18 +9,12 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
     {
         protected NavMeshAgent _agent;
 
-        protected Transform _playerTr;
-
         protected bool _isShooting;
 
         protected float distanceToSlow = 6f;
         protected float distanceToAttack = 3f;
         protected float originalSpeed;
-
-        void Start()
-        {
-            _playerTr = GameObject.FindGameObjectWithTag("Player").transform;
-        }
+        protected float patrolSpeed = 2f;
     }
 }
 

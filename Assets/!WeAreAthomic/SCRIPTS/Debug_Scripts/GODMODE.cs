@@ -95,6 +95,7 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
         public void SkipTutorial()
         {
             GameManagerSingleton.Instance.SetSkippedTutorial(true);
+            GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
             _mainCTutorial.HideAllTutorialImages();
             _mainCTutorial.StopAllTutorialCoroutine();
         }

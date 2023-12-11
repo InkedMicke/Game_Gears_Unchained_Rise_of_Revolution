@@ -10,6 +10,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
     
         private float _attackLayerMultiplier;
         private float _finalAttackLayerMultiplier;
+        private float _abilityAttackLayerMultiplier;
         private float _crouchLayerMultiplier;
         private float _sphereAttackLayerMultiplier;
         private float _slideLayerMultiplier;
@@ -36,6 +37,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Crouch")), _crouchLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Slide")), _slideLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Hack")), _hackLayerMultiplier);
+            _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("AbilityAttack")), _abilityAttackLayerMultiplier);
         }
 
         private void EvaluateLayers()
@@ -95,6 +97,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void DisableFinalAttackLayer()
         {
             StartCoroutine(nameof(DisableFinalAttackCoroutine));
+        }        
+        
+        public void EnableAbilityAttackLayer()
+        {
+            StartCoroutine(nameof(EnableAbilityAttackCoroutine));
+        }
+
+        public void DisableAbilityAttackLayer()
+        {
+            StartCoroutine(nameof(DisableAbilityAttackCoroutine));
         }
 
         public void EnableCrouchLayer()
@@ -202,6 +214,42 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (_finalAttackLayerMultiplier <= 0f)
                 {
                     _finalAttackLayerMultiplier = 0f;
+                    canDisableLayer = false;
+                }
+
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+                
+        private IEnumerator EnableAbilityAttackCoroutine()
+        {
+            var canEnableLayer = true;
+
+            while (canEnableLayer)
+            {
+                _abilityAttackLayerMultiplier += 24 * Time.unscaledDeltaTime;
+
+                if (_abilityAttackLayerMultiplier >= 1f)
+                {
+                    _abilityAttackLayerMultiplier = 1f;
+                    canEnableLayer = false;
+                }
+
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
+        private IEnumerator DisableAbilityAttackCoroutine()
+        {
+            var canDisableLayer = true;
+
+            while (canDisableLayer)
+            {
+                _abilityAttackLayerMultiplier -= 24 * Time.unscaledDeltaTime;
+
+                if (_abilityAttackLayerMultiplier <= 0f)
+                {
+                    _abilityAttackLayerMultiplier = 0f;
                     canDisableLayer = false;
                 }
 

@@ -55,6 +55,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _currentScene = SceneManager.GetActiveScene();
             if (_currentScene.name == "S2_LABTUTORIAL")
             {
+                GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(false);
                 IsOnTutorial = true;
                 goHereMove.SetActive(true);
                 wasdImage.SetActive(true);
@@ -65,6 +66,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             else
             {
                 _mainCAttack.EnableCanAttack();
+                GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
             }
         }
 

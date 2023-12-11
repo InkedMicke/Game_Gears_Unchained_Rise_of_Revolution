@@ -160,6 +160,7 @@ MonoBehaviour:
   speedShooting: 1.5
   spreadAngle: 0.5
   shootAngle: 0.6
+  maxTimeToStopShooting: 2.5
   totalColdown: 0
   damage: 0
 --- !u!114 &8698530833825578607
@@ -174,6 +175,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35337b4a35fcea44b826d1a2100f6160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: {fileID: 0}
+  useWaypoint: 0
 --- !u!143 &5895939196809832073
 CharacterController:
   m_ObjectHideFlags: 0
@@ -227,15 +230,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1536e2992d223b14e862ee53d4d415f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 10
-  angle: 115
+  radius: 15
+  angle: 110
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   obstructionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2113
   canSeePlayer: 0
 --- !u!1 &8202827297792976926
 GameObject:
