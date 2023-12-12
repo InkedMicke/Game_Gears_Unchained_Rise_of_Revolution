@@ -14,7 +14,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         protected float distanceToSlow = 6f;
         protected float distanceToAttack = 3f;
         protected float originalSpeed;
-        protected float patrolSpeed = 1f;
+        public float patrolSpeed = 1f;
     }
 }
 

@@ -246,6 +246,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             DisableNextAttack();
             IsFinalAttacking = false;
             _canNextAttack = false;
+            IsChargingAttack = false;
         }
 
         public void EnableWeaponCollision()

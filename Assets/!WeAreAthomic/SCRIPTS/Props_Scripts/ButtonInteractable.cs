@@ -50,7 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         private void ShowCircle()
         {
-            if (Vector3.Distance(transform.position, _playerTr.position) < 10 && !_isShowingButton)
+            if (Vector3.Distance(transform.position, _playerTr.position) < 10 && !_isShowingButton && !_mainCHacking.IsHacking)
             {
                 _circleObj.SetActive(true);
             }
@@ -72,6 +72,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 seActivanCuandoLeDasAlBoton.Invoke();
                 ToggleActive();
                 _mainCHacking.StartHacking(timeToHack, typeOfHacked);
+                HideButton();
             }
         }
 
@@ -85,8 +86,11 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         public void ShowButton()
         {
-            _isShowingButton = true;
-            _eButtonObj.SetActive(true);
+            if (!_mainCHacking.IsHacking) 
+            {
+                _isShowingButton = true;
+                _eButtonObj.SetActive(true);
+            }
         }
 
         public void HideButton()

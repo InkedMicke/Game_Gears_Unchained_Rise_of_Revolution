@@ -52,16 +52,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (!IsHacking)
             {
                 _timeToHack = timeHack;
-                if (typeOfHacked == TypeOfHacked.prop)
-                {
-                    FixPosition();
-                    EnableHackAnim();
-                }
-                else
-                {
-                    SpawnRobot();
-                    EndAnimHack();
-                }
 
                 var interactables = FindObjectsOfType<ButtonInteractable>();
 
@@ -73,7 +63,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
                 }
 
-                DisableWeapon();
+                if (typeOfHacked == TypeOfHacked.prop)
+                {
+                    FixPosition();
+                    EnableHackAnim();
+                    DisableWeapon();
+                }
+                else
+                {
+                    SpawnRobot();
+                    EndAnimHack();
+                }
+
             }
         }
 
