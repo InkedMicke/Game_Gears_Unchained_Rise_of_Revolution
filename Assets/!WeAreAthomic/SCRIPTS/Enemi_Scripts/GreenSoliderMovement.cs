@@ -47,6 +47,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
                 _isPatrolling = true;
                 _agent.stoppingDistance = 0f;
                 _agent.autoBraking = false;
+                _agent.speed = patrolSpeed;
             }
         }
 
@@ -88,7 +89,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         public void CheckIfPlayerIsInSight() 
         {
-            if(_fov.canSeePlayer && !_isChasingPlayer) 
+            if(_fov.canSeePlayer && !_isChasingPlayer && !_soldierAttack.IsAttacking) 
             {
                 _isChasingPlayer = true;
                 AgentValuesToChase();
@@ -108,7 +109,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             if(_isChasingPlayer)
             {
                 _agent.SetDestination(_playerTr.position);
-
+                _soldierAnim.SetWalking(true);
                 var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
 
                 if (distanceToPlayer < 5f && !_soldierAttack.IsAttacking && !_healthManager.IsDeath)
@@ -131,6 +132,12 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             {
                 AgentValuesToChase();
             }
+        }
+
+        public void DisableMovement()
+        {
+            _agent.speed = 0;
+            _agent.isStopped = true;
         }
     }
 }

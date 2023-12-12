@@ -94,7 +94,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             while (true)
             {
                 _isCheckingHack = true;
-                if (_mainCHacking.isHacking)
+                if (_mainCHacking.IsHacking)
                 {
                     _isCheckingHack = false;
                     _mainCSounds.RemoveAllSounds();

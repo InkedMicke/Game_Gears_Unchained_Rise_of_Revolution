@@ -1,24 +1,33 @@
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
-using _WeAreAthomic.SCRIPTS.Props;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {
+    public enum TypeOfHacked
+    {
+        prop,
+        soldier
+    }
+
     public class ButtonInteractable : MonoBehaviour, IInteractable
     {
-        private RequiredActionForButton _requiredAction;
         private MainCHackingSystem _mainCHacking;
+
+        [SerializeField] private TypeOfHacked typeOfHacked;
 
         [SerializeField] private GameObject _eButtonObj;
         [SerializeField] private GameObject _circleObj;
         private GameObject _cameraObj;
+        private GameObject _playerObj;
 
         private Transform _playerTr;
 
         public bool isActive;
         public bool canHack = true;
         private bool _isShowingButton;
+
+        [SerializeField] private float timeToHack;
 
         public UnityEvent seActivacuandoLeDasAlBotonYNoPuedesHackear;
         public UnityEvent seActivanCuandoLeDasAlBoton;
@@ -27,10 +36,10 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         protected virtual void Awake()
         {
-            _requiredAction = GetComponent<RequiredActionForButton>();
-            _playerTr = GameObject.FindGameObjectWithTag("Player").transform;
+            _playerObj = GameObject.FindGameObjectWithTag("Player");
+            _playerTr = _playerObj.transform;
             _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
-            _mainCHacking = GameObject.FindGameObjectWithTag("Player").GetComponent<MainCHackingSystem>();
+            _mainCHacking = _playerObj.GetComponent<MainCHackingSystem>();
         }
 
         // Update is called once per frame
@@ -58,9 +67,11 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         public void Interact()
         {
-            if (canHack)
+            if (canHack && !_mainCHacking.IsHacking)
             {
                 seActivanCuandoLeDasAlBoton.Invoke();
+                ToggleActive();
+                _mainCHacking.StartHacking(timeToHack, typeOfHacked);
             }
         }
 

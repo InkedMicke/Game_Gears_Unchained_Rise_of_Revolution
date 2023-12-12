@@ -26,7 +26,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private GameObject _currentWeapon;
 
         public bool isHackingAnim;
-        public bool isHacking;
+        public bool IsHacking;
 
         private float _timeToHack;
         private float _actualTime;
@@ -44,16 +44,36 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void Update()
         {
             UpdateUI();
+            RobotPos();
         }
 
-        public void StartHacking(float value)
+        public void StartHacking(float timeHack, TypeOfHacked typeOfHacked)
         {
-            if (!isHacking)
+            if (!IsHacking)
             {
-                FixPosition();
-                EnableHackAnim();
+                _timeToHack = timeHack;
+                if (typeOfHacked == TypeOfHacked.prop)
+                {
+                    FixPosition();
+                    EnableHackAnim();
+                }
+                else
+                {
+                    SpawnRobot();
+                    EndAnimHack();
+                }
+
+                var interactables = FindObjectsOfType<ButtonInteractable>();
+
+                foreach (var t in interactables)
+                {
+                    if (t.isActive == true)
+                    {
+                        _currentInteract = t.gameObject;
+                    }
+                }
+
                 DisableWeapon();
-                _timeToHack = value;
             }
         }
 
@@ -64,12 +84,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             button.EndHackInvoke();
             _bastetController.InvokeMoveToPlayer();
             _mainCSounds.StopHackInProcessSound();
-            isHacking = false;
+            IsHacking = false;
         }
 
         private void UpdateUI()
         {
-            if (isHacking)
+            if (IsHacking)
             {
                 hackSlider.value = Time.time;
             }
@@ -85,27 +105,26 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void SpawnRobot()
         {
             robotObj.SetActive(true);
-            robotObj.GetComponent<CharacterController>().enabled = false;
-            var position = _currentInteract.transform.position;
-            var desiredPosRobot = new Vector3(position.x, position.y - .05f, position.z);
-            robotObj.transform.position = desiredPosRobot + _currentInteract.transform.forward * 0.3f;
-            var desiredPos = new Vector3(position.x, robotObj.transform.position.y, position.z);
-            robotObj.transform.LookAt(desiredPos);
+            robotObj.GetComponent<CharacterController>().enabled = false;;
             _bastetController.ShowScanner();
+            IsHacking = true;
+        }
+
+        public void RobotPos()
+        {
+            if (IsHacking && robotObj.activeSelf)
+            {
+                var position = _currentInteract.transform.position;
+                var desiredPosRobot = new Vector3(position.x, position.y - .05f, position.z);
+                robotObj.transform.position = desiredPosRobot + _currentInteract.transform.forward * 0.3f;
+                var desiredPos = new Vector3(position.x, robotObj.transform.position.y, position.z);
+                robotObj.transform.LookAt(desiredPos);
+            }
         }
 
         private void FixPosition()
         {
             _cc.enabled = false;
-            var interactables = FindObjectsOfType<ButtonInteractable>();
-
-            foreach (var t in interactables)
-            {
-                if (t.isActive == true)
-                {
-                    _currentInteract = t.gameObject;
-                }
-            }
 
             var r = new Ray(_currentInteract.transform.position, _currentInteract.transform.forward);
             var rayPos = r.GetPoint(1f);
@@ -137,7 +156,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void StopHack()
         {
             StopCoroutine(_hackCoroutine);
-            isHacking = false;
+            IsHacking = false;
             isHackingAnim = false;
             hackCanvas.SetActive(false);
             _mainCSounds.StopHackInProcessSound();
@@ -172,7 +191,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             isHackingAnim = false;
             _hackCoroutine = StartCoroutine(Hack(_timeToHack));
             hackCanvas.SetActive(true);
-            isHacking = true;
             hackSlider.minValue = Time.time;
             hackSlider.maxValue = Time.time + _timeToHack;
             _cc.enabled = true;
