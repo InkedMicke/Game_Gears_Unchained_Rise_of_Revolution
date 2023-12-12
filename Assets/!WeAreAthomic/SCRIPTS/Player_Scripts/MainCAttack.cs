@@ -18,6 +18,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCTutorialChecker _mainCTutorial;
         private WrenchHitBox _wrenchHitBox;
         private MainCPistol _mainCPistol;
+        private MainCPlayerInterface _mainCInterface;
 
         [SerializeField] private PlayerDamageData abilityAttackDmgData;
 
@@ -42,6 +43,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool _isLeftMousePressed;
         private bool _attackTutorial;
         private bool _sheathTutorial;
+        private bool _hasUnlockedAbilityAttack;
 
         public int attackCount;
 
@@ -50,6 +52,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float rotationNearEnemie = 8f;
         [SerializeField] private float hideWeaponTimer = 8f;
         [SerializeField] private float scannerSizeSpeed = .1f;
+        [SerializeField] private float scannerSize = 15f;
         public float timeGraceAttackPeriod;
         private float _currentTimeSheath;
 
@@ -65,6 +68,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCTutorial = GetComponent<MainCTutorialChecker>();
             _mainCPistol = GetComponent<MainCPistol>();
             _wrenchHitBox = weaponObj.GetComponent<WrenchHitBox>();
+            _mainCInterface = GetComponent<MainCPlayerInterface>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -138,15 +142,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _isSheathed = true;
                 }
             }
-            else
-            {
-
-            }
         }
 
         private void ChargeAttack()
         {
-            if(CanChargeAttack())
+            if(CanChargeAttack() && _hasUnlockedAbilityAttack)
             {
                 _mainCLayers.EnableAbilityAttackLayer();
                 SetAttackCount(4);
@@ -154,10 +154,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 IsChargingAttack = true;
             }
 
-            if(_mouseMagnitude > timeToCharged && _isLeftMousePressed)
+            if(_mouseMagnitude > timeToCharged && _isLeftMousePressed && _hasUnlockedAbilityAttack)
             {
-                if(scannerInst != null && scannerInst.transform.localScale.x < 17)
+                if(scannerInst != null && scannerInst.transform.localScale.x < scannerSize)
                 {
+                    GameManagerSingleton.Instance.bastetEnergy -= Time.deltaTime;
+                    _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
                     scannerInst.transform.localScale += Vector3.one * scannerSizeSpeed;
                 }
             }
@@ -273,6 +275,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             attackCount = value;
             _mainCAnimator.SetAttackCountAnim(value);
+        }
+
+        public void SetHasUnlockedAbilityAttack(bool condition)
+        {
+            _hasUnlockedAbilityAttack = condition;
         }
 
         private void PlayTutorialFifth()

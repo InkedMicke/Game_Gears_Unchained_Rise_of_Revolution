@@ -18,11 +18,14 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         [SerializeField] private GameObject wave1;
         [SerializeField] private GameObject wave2;
+        [SerializeField] private GameObject wave3;
         [SerializeField] private GameObject movableFloor;
         [SerializeField] private GameObject dummieControllerObj;
         [SerializeField] private GameObject goHereObj;
+        [SerializeField] private GameObject goHereAbilityAttackObj;
         [SerializeField] private GameObject[] firstReds;
         [SerializeField] private GameObject[] secondReds;
+        [SerializeField] private GameObject[] thirdReds;
         [SerializeField] private GameObject lateralTresspasingContainer;
         [SerializeField] private GameObject leftTutorial;
         private GameObject _playerObj;
@@ -39,7 +42,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         private bool _floorIsUp;
         private bool _floorIsDown;
         private bool _isWave1;
-        [System.NonSerialized] public bool IsWave2;
+        private bool _isWave3;
+        private bool _isWave2;
         private bool _isFloorMoving;
 
         private void Awake()
@@ -61,24 +65,34 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         private void Update()
         {
-            if (_floorIsUp && !IsWave2 && wave1.transform.childCount == 0 && !_isFloorMoving)
+            if (_floorIsUp && _isWave1 && wave1.transform.childCount == 0 && !_isFloorMoving)
             {
-                foreach(var obj in firstReds)
+                foreach (var obj in firstReds)
                 {
                     obj.SetActive(false);
                 }
-
-                if (goHereObj)
-                {
-                    goHereObj.SetActive(true);
-                    leftTutorial.GetComponent<Animator>().SetTrigger(string.Format("close"));
-                }
+                goHereObj.SetActive(true);
+                leftTutorial.GetComponent<Animator>().SetTrigger(string.Format("close"));
+                _isWave1 = false;
+                _isWave2 = true;
             }
 
-            if (_floorIsUp && IsWave2 && wave2.transform.childCount == 0 && !_isFloorMoving)
+            if (_floorIsUp && _isWave2 && wave2.transform.childCount == 0 && !_isFloorMoving)
+            {
+                foreach (var obj in secondReds)
+                {
+                    obj.SetActive(false);
+                }
+                goHereObj.SetActive(true);
+                _isWave2 = false;
+                _isWave3 = true;
+            }
+
+
+            if (_floorIsUp && _isWave3 && wave3.transform.childCount == 0 && !_isFloorMoving)
             {
                 StartCoroutine(MoveDownToZero());
-                IsWave2 = false;
+                _isWave3 = false;
             }
         }
 
@@ -99,11 +113,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _floorIsDown = false;
             seActivaCuandoVaASubir.Invoke();
             _isFloorMoving = true;
-            if (!_isWave1)
-            {
-                IsWave2 = true;
-                //_chargingSwordSphereTarget.EnableHasUnlockedAbility();
-            }
 
             yield return new WaitForSeconds(1f);
 
@@ -129,7 +138,26 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                     }
                 }
 
-                if (IsWave2)
+                if (_isWave2)
+                {
+                    if (movableFloor.transform.localPosition.y >= 0f)
+                    {
+                        _mainCAttack.DisableCanAttack();
+                        _mainCAttack.HideWeapon();
+                        _mainCSounds.PlayTutorialSound(6, "pc");
+                        GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
+
+                        _dummiesCollider.UndoChild(wave2);
+                        temp.y = 0f;
+                        movableFloor.transform.localPosition = temp;
+                        seActivaCuandoHaSubido.Invoke();
+                        _floorIsUp = true;
+                        goHereAbilityAttackObj.SetActive(true);
+                        break;
+                    }
+                }
+
+                if (_isWave3)
                 {
                     if (movableFloor.transform.localPosition.y >= 3f)
                     {
@@ -160,7 +188,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _floorIsUp = false;
             seActivaCuandoVaABajar.Invoke();
             _isFloorMoving = true;
-            _isWave1 = false;
             while (true)
             {
                 var temp = movableFloor.transform.localPosition;
@@ -169,7 +196,15 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
                 if (movableFloor.transform.localPosition.y <= _initalMovableFloatY)
                 {
-                    wave2.SetActive(true);
+                    if (_isWave2)
+                    {
+                        wave2.SetActive(true);
+                    }      
+                    
+                    if (_isWave3)
+                    {
+                        wave3.SetActive(true);
+                    }
                     temp.y = _initalMovableFloatY;
                     movableFloor.transform.localPosition = temp;
                     _floorIsDown = true;
@@ -196,7 +231,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
                 if (movableFloor.transform.localPosition.y <= 0)
                 {
-                    foreach (var obj in secondReds)
+                    foreach (var obj in thirdReds)
                     {
                         obj.SetActive(false);
                     }

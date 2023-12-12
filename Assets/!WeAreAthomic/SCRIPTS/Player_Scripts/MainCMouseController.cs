@@ -20,7 +20,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         protected bool IsRightMouseDown;
 
         protected float _mouseMagnitude;
-        protected float timeToCharged = .4f;
+        protected float timeToCharged = .2f;
 
         private protected virtual void Awake()
         {
