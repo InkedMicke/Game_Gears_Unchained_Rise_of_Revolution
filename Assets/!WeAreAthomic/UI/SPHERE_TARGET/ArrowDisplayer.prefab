@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1414888155084652322}
   - component: {fileID: 1414888155084652323}
   - component: {fileID: 1414888155084652320}
-  - component: {fileID: 1223320156322990378}
+  - component: {fileID: 285913928957073815}
+  - component: {fileID: 1142458318918840444}
   m_Layer: 0
   m_Name: ArrowDisplayer
   m_TagString: ArrowDisplayer
@@ -32,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &1414888155084652323
 MeshFilter:
@@ -84,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1223320156322990378
+--- !u!114 &285913928957073815
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,6 +94,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1414888155084652326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c2d6e7badc2e2c4d94a93c144ba2c01, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e7036f928dc26746be74ba4f6e8d082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1142458318918840444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414888155084652326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30b07495ca505454dbf19c7ad544d21a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateAmount: 90
