@@ -9,18 +9,22 @@ public class MainVFXCharacter : MonoBehaviour
 
     [SerializeField] private Transform rightFoot;
     [SerializeField] private Transform leftFoot;
+    [SerializeField] private Transform edgeWrench;
 
     [Header("Slash")]
     [SerializeField] private ParticleSystem slash1;
     [SerializeField] private ParticleSystem slash2;
     [SerializeField] private ParticleSystem slash3;
+    [SerializeField] private ParticleSystem slash4;
 
     [Header("Rail")]
 
     [SerializeField] private GameObject vfxSparks;
     [SerializeField] private GameObject vfxSpeedLines;
 
-    
+    [Header("Chispas")]
+    [SerializeField] private GameObject chispasVFX;
+
 
 
 
@@ -48,6 +52,14 @@ public class MainVFXCharacter : MonoBehaviour
     public void ActivateSlash3()
     {
         slash3.Play();
+    }    
+    
+    public void ActivateSlash4()
+    {
+        slash4.Play();
+        var chispas = Instantiate(chispasVFX, edgeWrench.position, Quaternion.identity);
+        chispas.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+        Destroy(chispas, 1f);
     }
 
     public void ToggleRail()
