@@ -24,6 +24,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         [SerializeField] private GameObject weaponObj;
         [SerializeField] private GameObject scannerPrefab;
+        [SerializeField] private GameObject tut_ES;
         private GameObject scannerInst;
 
         [SerializeField] private Transform middlePosTr;
@@ -45,6 +46,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool _sheathTutorial;
         private bool _hasUnlockedAbilityAttack;
         private bool _runOutEnergy;
+        private bool _canAbilityAttack = true;
 
         public int attackCount;
 
@@ -99,9 +101,33 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _isLeftMousePressed = false;
             Attack();
             _currentTimeSheath = Time.time;
-            if(IsChargingAttack && GameManagerSingleton.Instance.bastetEnergy > 0)
+            _canAbilityAttack = true;
+            if (IsChargingAttack && GameManagerSingleton.Instance.bastetEnergy > 0)
             {
-                SetAttackCount(5);
+                if (_mainCTutorial.FirstTimeAbility && scannerInst.transform.localScale.x >= scannerSize)
+                {
+                    SetAttackCount(5);
+                    tut_ES.transform.GetChild(1).gameObject.SetActive(false);
+                    tut_ES.transform.GetChild(0).gameObject.SetActive(false);
+                    _mainCMovement.EnableMovement();
+                    _mainCTutorial.SetFirstAbilityAttack(false);
+                }
+
+                if(_mainCTutorial.FirstTimeAbility && scannerInst.transform.localScale.x < scannerSize)
+                {
+                    EndAttack();
+                    tut_ES.transform.GetChild(1).gameObject.SetActive(false);
+                    tut_ES.transform.GetChild(0).gameObject.SetActive(true);
+                    if(scannerInst != null)
+                    {
+                        Destroy(scannerInst);
+                    }
+                }
+
+                if(!_mainCTutorial.FirstTimeAbility)
+                {
+                    SetAttackCount(5);
+                }
             }
         }
 
@@ -148,8 +174,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void ChargeAttack()
         {
-            if(CanChargeAttack() && _hasUnlockedAbilityAttack)
+            if(CanChargeAttack() && _hasUnlockedAbilityAttack && GameManagerSingleton.Instance.bastetEnergy > 20f)
             {
+                if(_mainCTutorial.FirstTimeAbility)
+                {
+                    tut_ES.transform.GetChild(0).gameObject.SetActive(true);
+                }
                 _mainCLayers.EnableAbilityAttackLayer();
                 SetAttackCount(4);
                 weaponObj.SetActive(true);
@@ -164,13 +194,27 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     SetAttackCount(5);
                     _runOutEnergy = true;
+                    _canAbilityAttack = false;
                 }
 
-                if(scannerInst != null && scannerInst.transform.localScale.x < scannerSize && GameManagerSingleton.Instance.bastetEnergy > 0)
+
+                if (scannerInst != null)
                 {
-                    GameManagerSingleton.Instance.bastetEnergy -= energySpendSpeed;
-                    _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
-                    scannerInst.transform.localScale += Vector3.one * scannerSizeSpeed;
+                    if (scannerInst.transform.localScale.x >= scannerSize && _mainCTutorial.FirstTimeAbility)
+                    {
+                        tut_ES.transform.GetChild(0).gameObject.SetActive(false);
+                        tut_ES.transform.GetChild(1).gameObject.SetActive(true);
+                    }
+
+                    if (scannerInst.transform.localScale.x < scannerSize && GameManagerSingleton.Instance.bastetEnergy > 0)
+                    {
+                        if (!_mainCTutorial.FirstTimeAbility)
+                        {
+                            GameManagerSingleton.Instance.bastetEnergy -= energySpendSpeed;
+                            _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
+                        }
+                        scannerInst.transform.localScale += Vector3.one * scannerSizeSpeed;
+                    }
                 }
             }
         }
