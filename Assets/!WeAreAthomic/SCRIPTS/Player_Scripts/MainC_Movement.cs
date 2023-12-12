@@ -470,12 +470,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        private void EnableMovement()
+        public void EnableMovement()
         {
             _canMove = true;
         }
 
-        private void DisableMovement()
+        public void DisableMovement()
         {
             _canMove = false;
         }

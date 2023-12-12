@@ -34,6 +34,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Vector3 _lastPosition;
 
         [System.NonSerialized] public bool IsOnTutorial;
+        public bool FirstTimeAbility;
         private bool _isRoom1;
         private bool _isRoom2;
         private bool _isRoom3;
@@ -57,6 +58,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(false);
                 IsOnTutorial = true;
+                FirstTimeAbility = true;
                 goHereMove.SetActive(true);
                 wasdImage.SetActive(true);
                 _checkHealthCoroutine = StartCoroutine(CheckHealth());
@@ -69,6 +71,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
                 _mainCAttack.SetHasUnlockedAbilityAttack(true);
             }
+        }
+
+        public void SetFirstAbilityAttack(bool condition)
+        {
+            FirstTimeAbility = condition;
         }
 
         private IEnumerator CheckHealth()

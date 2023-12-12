@@ -91,7 +91,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
             if (_floorIsUp && _isWave3 && wave3.transform.childCount == 0 && !_isFloorMoving)
             {
-                Debug.Log("hola1");
                 StartCoroutine(MoveDownToZero());
                 _isWave3 = false;
                 _mainCAttack.SetHasUnlockedAbilityAttack(false);

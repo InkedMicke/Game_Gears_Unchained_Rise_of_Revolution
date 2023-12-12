@@ -147,7 +147,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void LeftMouseDown(InputAction.CallbackContext context)
         {
             _isLeftMouseDown = true;
-            if(GameManagerSingleton.Instance.bastetEnergy >= 20 && Time.time > _totalCooldown)
+            if(GameManagerSingleton.Instance.bastetEnergy >= 20 && Time.time > _totalCooldown && GameManagerSingleton.Instance.HasUnlockedBastetAttack)
             {
                 Shoot();
             }
@@ -217,8 +217,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void StopRecoveringEnergy()
         {
-            StopCoroutine(_recoverEnergyCoroutine);
-            _isRecoveringShoot = false;
+            if (_isRecoveringShoot)
+            {
+                StopCoroutine(_recoverEnergyCoroutine);
+                _isRecoveringShoot = false;
+            }
         }
 
         private void Shoot()
