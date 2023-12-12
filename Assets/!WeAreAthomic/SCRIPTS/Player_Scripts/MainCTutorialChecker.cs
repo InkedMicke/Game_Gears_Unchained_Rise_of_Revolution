@@ -67,6 +67,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 _mainCAttack.EnableCanAttack();
                 GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
+                _mainCAttack.SetHasUnlockedAbilityAttack(true);
             }
         }
 

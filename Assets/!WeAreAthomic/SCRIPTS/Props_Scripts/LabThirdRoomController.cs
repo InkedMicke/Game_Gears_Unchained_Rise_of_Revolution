@@ -91,8 +91,11 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
             if (_floorIsUp && _isWave3 && wave3.transform.childCount == 0 && !_isFloorMoving)
             {
+                Debug.Log("hola1");
                 StartCoroutine(MoveDownToZero());
                 _isWave3 = false;
+                _mainCAttack.SetHasUnlockedAbilityAttack(false);
+                _mainCAttack.EnableCanAttack();
             }
         }
 
@@ -145,7 +148,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
                         _mainCSounds.PlayTutorialSound(6, "pc");
-                        GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
 
                         _dummiesCollider.UndoChild(wave2);
                         temp.y = 0f;
@@ -161,12 +163,12 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 {
                     if (movableFloor.transform.localPosition.y >= 3f)
                     {
+                        _mainCAttack.SetHasUnlockedAbilityAttack(false);
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
                         _mainCSounds.PlayTutorialSound(6, "pc");
                         GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
-
-                        _dummiesCollider.UndoChild(wave2);
+                        _dummiesCollider.UndoChild(wave3);
                         temp.y = 3f;
                         movableFloor.transform.localPosition = temp;
                         seActivaCuandoHaSubido.Invoke();

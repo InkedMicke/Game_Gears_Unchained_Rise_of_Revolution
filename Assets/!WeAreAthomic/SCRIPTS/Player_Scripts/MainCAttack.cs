@@ -44,6 +44,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool _attackTutorial;
         private bool _sheathTutorial;
         private bool _hasUnlockedAbilityAttack;
+        private bool _runOutEnergy;
 
         public int attackCount;
 
@@ -53,6 +54,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float hideWeaponTimer = 8f;
         [SerializeField] private float scannerSizeSpeed = .1f;
         [SerializeField] private float scannerSize = 15f;
+        [SerializeField] private float energySpendSpeed = 4f;
         public float timeGraceAttackPeriod;
         private float _currentTimeSheath;
 
@@ -97,7 +99,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _isLeftMousePressed = false;
             Attack();
             _currentTimeSheath = Time.time;
-            if(IsChargingAttack)
+            if(IsChargingAttack && GameManagerSingleton.Instance.bastetEnergy > 0)
             {
                 SetAttackCount(5);
             }
@@ -150,15 +152,23 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 _mainCLayers.EnableAbilityAttackLayer();
                 SetAttackCount(4);
+                weaponObj.SetActive(true);
                 scannerInst = Instantiate(scannerPrefab, groundTr.position, Quaternion.identity);
                 IsChargingAttack = true;
+                _mainCPistol.StopRecoveringEnergy();
             }
 
             if(_mouseMagnitude > timeToCharged && _isLeftMousePressed && _hasUnlockedAbilityAttack)
             {
-                if(scannerInst != null && scannerInst.transform.localScale.x < scannerSize)
+                if(GameManagerSingleton.Instance.bastetEnergy <= 0 && !_runOutEnergy)
                 {
-                    GameManagerSingleton.Instance.bastetEnergy -= Time.deltaTime;
+                    SetAttackCount(5);
+                    _runOutEnergy = true;
+                }
+
+                if(scannerInst != null && scannerInst.transform.localScale.x < scannerSize && GameManagerSingleton.Instance.bastetEnergy > 0)
+                {
+                    GameManagerSingleton.Instance.bastetEnergy -= energySpendSpeed;
                     _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
                     scannerInst.transform.localScale += Vector3.one * scannerSizeSpeed;
                 }
@@ -237,6 +247,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void EndAttack()
         {
+            if(IsChargingAttack)
+            {
+                _mainCPistol.StartRecoveringEnergy(5f);
+            }
             _anim.applyRootMotion = false;
             IsAttacking = false;
             attackCount = 0;
@@ -280,6 +294,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void SetHasUnlockedAbilityAttack(bool condition)
         {
             _hasUnlockedAbilityAttack = condition;
+        }
+
+        public void SetRunOutEnergy(bool condition)
+        {
+            _runOutEnergy = condition;
         }
 
         private void PlayTutorialFifth()

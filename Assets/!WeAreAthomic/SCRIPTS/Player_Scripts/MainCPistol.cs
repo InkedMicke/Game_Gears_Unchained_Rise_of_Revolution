@@ -97,8 +97,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if (GameManagerSingleton.Instance.bastetEnergy < 100 && !_isRecoveringShoot && !_isWaitingForRecoveringShoot)
             {
-                _recoverEnergyCoroutine = StartCoroutine(RecoverEnergy(5f));
-                _isWaitingForRecoveringShoot = true;
+                StartRecoveringEnergy(5f);
             }
         }
 
@@ -165,6 +164,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             yield return new WaitForSeconds(waitTime);
 
             _isRecoveringShoot = true;
+            _isWaitingForRecoveringShoot = false;
 
             while (true)
             {
@@ -174,7 +174,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 }
                 GameManagerSingleton.Instance.bastetEnergy += .5f;
                 _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
-
+                _mainCAttack.SetRunOutEnergy(false);
                 if (GameManagerSingleton.Instance.bastetEnergy > 100f)
                 {
                     GameManagerSingleton.Instance.bastetEnergy = 100f;
@@ -209,13 +209,25 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             AimingOnRail();
         }
 
+        public void StartRecoveringEnergy(float waitTimeEnergy)
+        {
+            _recoverEnergyCoroutine = StartCoroutine(RecoverEnergy(waitTimeEnergy));
+            _isWaitingForRecoveringShoot = true;
+        }
+
+        public void StopRecoveringEnergy()
+        {
+            StopCoroutine(_recoverEnergyCoroutine);
+            _isRecoveringShoot = false;
+        }
+
         private void Shoot()
         {
             if (IsAiming)
             {
                 if (_isRecoveringShoot)
                 {
-                    StopCoroutine(_recoverEnergyCoroutine);
+                    StopRecoveringEnergy();
                 }
                 _isWaitingForRecoveringShoot = false;
                 _isRecoveringShoot = false;
@@ -246,7 +258,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                 if (GameManagerSingleton.Instance.bastetEnergy < 100 && !_isRecoveringShoot && !_isWaitingForRecoveringShoot)
                 {
-                    _recoverEnergyCoroutine = StartCoroutine(RecoverEnergy(5f));
+                    StartRecoveringEnergy(5f);
                     _isWaitingForRecoveringShoot = true;
                 }
             }
