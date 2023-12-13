@@ -22,6 +22,7 @@ public class GVideos : MonoBehaviour
         videoPlayer.clip = videos[_currentVideo];
         videoPlayer.Play();
         _currentVideo++;
+        videoPlayer.loopPointReached += EndReached;
     }
 
     public void NextVideo()
@@ -39,5 +40,10 @@ public class GVideos : MonoBehaviour
                 sceneLoader.LoadScene(sceneString);
             }
         }
+    }
+
+    void EndReached(VideoPlayer vp)
+    {
+        NextVideo();
     }
 }
