@@ -479,6 +479,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _canMove = false;
         }
 
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(checkGrounded.position, .1f);
+        }
+
         public bool IsGrounded()
         {
             return Physics.CheckSphere(checkGrounded.position, .1f, groundLayer);
