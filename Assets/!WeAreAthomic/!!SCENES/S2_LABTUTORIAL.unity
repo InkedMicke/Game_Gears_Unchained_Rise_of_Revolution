@@ -1075,6 +1075,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d629afbac5f73a4d85c268cbcef1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1216104303 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4058685271934719764, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+    type: 3}
+  m_PrefabInstance: {fileID: 1216104301}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1217370417 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5135415797796984889, guid: ffffc1760f21ed248a2899863bbcf9fd,
@@ -1451,6 +1457,121 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5222077474484771271}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1988578015
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1988578016}
+  - component: {fileID: 1988578017}
+  - component: {fileID: 1988578019}
+  - component: {fileID: 1988578018}
+  m_Layer: 10
+  m_Name: FirstTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1988578016
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988578015}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.01, y: 0, z: 12.69}
+  m_LocalScale: {x: 13.613981, y: 5.6872, z: 2.0262}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5222077474484771272}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1988578017
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988578015}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1988578018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988578015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a9c9c17e4fa4446b7e5275b50c8eab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1988578019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988578015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e05e52d61013e429a9355ceac26907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionDetection:
+  - enabled: 1
+    detectionLayer:
+      serializedVersion: 2
+      m_Bits: 256
+    detectionType: 0
+    eventsToActivate:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1496058296}
+          m_TargetAssemblyTypeName: _WeAreAthomic.SCRIPTS.Props.OpenDoorLab, Assembly-CSharp
+          m_MethodName: CloseDoor
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1988578018}
+          m_TargetAssemblyTypeName: GDestroyObject, Assembly-CSharp
+          m_MethodName: DestroyThisObject
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    additionalInfo: 
+  useTargetScript: 0
+  targetScript: {fileID: 0}
 --- !u!114 &2029581524 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4981343290038141223, guid: 9d2ebbd4a4922de43ae8c77510eda865,
@@ -1740,47 +1861,77 @@ PrefabInstance:
     - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 321359145}
+      objectReference: {fileID: 1169231834}
     - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1169231834}
+      objectReference: {fileID: 894568548}
     - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
-      propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DestroyThisObject
+      propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 321359145}
+    - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
-      propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: InvokeMoveUp
       objectReference: {fileID: 0}
     - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
+      propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: CloseDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: DestroyThisObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
       propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GDestroyObject, Assembly-CSharp
+      value: _WeAreAthomic.SCRIPTS.Props_Scripts.LabThirdRoomController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: _WeAreAthomic.SCRIPTS.Props_Scripts.LabThirdRoomController, Assembly-CSharp
+      value: _WeAreAthomic.SCRIPTS.Props.OpenDoorLab, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: GDestroyObject, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628577860417385141, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2054051492814076222, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
@@ -2360,7 +2511,7 @@ PrefabInstance:
     - target: {fileID: 5654028268062494798, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5761464857005585222, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
@@ -2690,7 +2841,7 @@ PrefabInstance:
     - target: {fileID: 6132110868882139360, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6132110868882139360, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
@@ -2706,7 +2857,7 @@ PrefabInstance:
         type: 3}
       propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1216104303}
     - target: {fileID: 6132110868882139360, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[2].m_Target
@@ -2725,7 +2876,7 @@ PrefabInstance:
     - target: {fileID: 6132110868882139360, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SetTrigger
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 6132110868882139360, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
@@ -2740,7 +2891,7 @@ PrefabInstance:
     - target: {fileID: 6132110868882139360, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: UnityEngine.Animator, UnityEngine
+      value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6132110868882139360, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
@@ -2750,7 +2901,7 @@ PrefabInstance:
     - target: {fileID: 6132110868882139360, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: collisionDetection.Array.data[0].eventsToActivate.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
-      value: close
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6132110868882139360, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
@@ -3220,12 +3371,22 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2077479253}
+    - targetCorrespondingSourceObject: {fileID: 6214155240306916518, guid: ffffc1760f21ed248a2899863bbcf9fd,
+        type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 1988578016}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8408641142464033838, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5222077474484771275}
   m_SourcePrefab: {fileID: 100100000, guid: ffffc1760f21ed248a2899863bbcf9fd, type: 3}
+--- !u!4 &5222077474484771272 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6214155240306916518, guid: ffffc1760f21ed248a2899863bbcf9fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5222077474484771271}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5222077474484771273 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8408641142464033838, guid: ffffc1760f21ed248a2899863bbcf9fd,

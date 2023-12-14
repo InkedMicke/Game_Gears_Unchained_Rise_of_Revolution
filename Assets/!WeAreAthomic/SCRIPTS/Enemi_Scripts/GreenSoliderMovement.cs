@@ -52,10 +52,12 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         void Update()
         {
-
-            CheckIfPlayerIsInSight();
-            FollowPath();
-            ChasePlayer();
+            if (!_healthManager.IsDeath)
+            {
+                CheckIfPlayerIsInSight();
+                FollowPath();
+                ChasePlayer();
+            }
 
         }
 
@@ -85,6 +87,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         {
             _agent.stoppingDistance = initalStoppingDistance;
             _agent.autoBraking = true;
+            _agent.isStopped = false;
             _agent.speed = chaseSpeed;
         }
 
@@ -110,8 +113,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         public void SetChasePlayer(bool chase)
         {
-            _isChasingPlayer = chase;
             _isPatrolling = !chase;
+            _isChasingPlayer = chase;
             if(chase)
             {
                 AgentValuesToChase();

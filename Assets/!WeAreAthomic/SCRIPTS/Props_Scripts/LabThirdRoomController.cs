@@ -93,7 +93,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             {
                 StartCoroutine(MoveDownToZero());
                 _isWave3 = false;
-                _mainCAttack.SetHasUnlockedAbilityAttack(false);
+                _mainCAttack.SetHasUnlockedAbilityAttack(true);
+                _mainCAttack.ShowWeapon();
                 _mainCAttack.EnableCanAttack();
                 _mainCTutorial.movedDerImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
                 _mainCTutorial.movedIzqImage.GetComponent<Animator>().SetTrigger(string.Format("close"));

@@ -10,6 +10,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
         private PlayerInputActions _playerInputActions;
         private MainCTutorialChecker _mainCTutorial;
         private MainCSounds _mainCSounds;
+        private MainCInputSwitcher _mainCInputSwitcher;
 
         [SerializeField] private GameObject stopMenuContainer;
         [SerializeField] private GameObject firstButton;
@@ -20,6 +21,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
         {
             _mainCTutorial = GetComponent<MainCTutorialChecker>();
             _mainCSounds = GetComponent<MainCSounds>();
+            _mainCInputSwitcher = GetComponent<MainCInputSwitcher>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -36,7 +38,6 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
             {
                 if (GameManagerSingleton.Instance.IsStopMenuEnabled)
                 {
-                    EventSystem.current.SetSelectedGameObject(null);
                     stopMenuContainer.SetActive(false);
                     if (!GameManagerSingleton.Instance.thereIsCanvasBelow)
                     {
@@ -50,12 +51,20 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                 }
                 else
                 {
+                    if(_mainCInputSwitcher.isUsingMouse)
+                    {
+                        EventSystem.current.SetSelectedGameObject(null);
+                    }
+
+                    if (_mainCInputSwitcher.isUsingGamepad)
+                    {
+                        EventSystem.current.SetSelectedGameObject(firstButton);
+                    }
                     stopMenuContainer.SetActive(true);
                     GameManagerSingleton.Instance.CursorMode(true);
                     GameManagerSingleton.Instance.PauseGame(true);
                     GameManagerSingleton.Instance.FreezeTime(true);
                     GameManagerSingleton.Instance.SetIsStopMenuEnabled(true);
-                    EventSystem.current.SetSelectedGameObject(firstButton);
                     _mainCSounds.PauseCurrentSounds();
                     _isActive = true;
                 }

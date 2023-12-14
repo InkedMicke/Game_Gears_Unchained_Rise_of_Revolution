@@ -55,6 +55,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [System.NonSerialized] public float _turnSmoothVelocityKeyboard;
         [SerializeField] private float walkSpeed;
         [SerializeField] private float runSpeed;
+        [SerializeField] private float crouchSpeed;
         [SerializeField] private float timeNextCrouch = 0.5f;
         [SerializeField] private float timeNextJump = 0.5f;
         [SerializeField] private float jumpImpulse = 5f;
@@ -298,11 +299,25 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
+        public void PushPlayerToPos()
+        {
+            var objectToJump = GameObject.FindGameObjectWithTag("Test");
+            DisableMovement();
+            _cc.enabled = false;
+            var rbCom = gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
+            var difference = objectToJump.transform.position - transform.position;
+            rbCom.AddForce(difference.normalized + difference, ForceMode.Impulse);
+
+        }
+
         private void RunOn(InputAction.CallbackContext context)
         {
-            _isRunningKeyboard = true;
+            if (!IsCrouch)
+            {
+                _isRunningKeyboard = true;
 
-            _isRunningGamepad = !_isRunningGamepad;
+                _isRunningGamepad = !_isRunningGamepad;
+            }
         }
 
         private void RunOff(InputAction.CallbackContext context)
@@ -312,10 +327,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void StartEndCrouch(InputAction.CallbackContext context)
         {
-            IsCrouch = !IsCrouch;
 
             if (Time.time > _timeGraceCrouchPeriod)
             {
+                IsCrouch = !IsCrouch;
                 _mainCAnimator.SetCrouch(IsCrouch);
                 _timeGraceCrouchPeriod = Time.time + timeNextCrouch;
 

@@ -28,7 +28,7 @@ public class MainCInputSwitcher : MonoBehaviour
             isUsingMouse = true;
         }
 
-        if (currentMousePosition != lastMousePosition)
+        if (currentMousePosition.magnitude > 0.1f)
         {
             isUsingMouse = true;
         }

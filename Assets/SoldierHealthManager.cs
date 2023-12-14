@@ -36,6 +36,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             currentHealth -= damage;
             SetHealthSlider(currentHealth);
             CheckForDeath();
+            _greenMove.SetChasePlayer(true);
         }
 
         private void CheckForDeath()
