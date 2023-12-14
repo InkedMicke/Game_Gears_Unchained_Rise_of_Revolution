@@ -82,6 +82,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                     obj.SetActive(false);
                 }
                 _mainCSounds.PlayTutorialSound(7, "pc");
+                leftTutorial.GetComponent<Animator>().SetTrigger(string.Format("close"));
                 goHereObj.SetActive(true);
                 _isWave2 = false;
                 _isWave3 = true;
@@ -118,19 +119,31 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             seActivaCuandoVaASubir.Invoke();
             _isFloorMoving = true;
 
+            if(_isWave1)
+            {
+                _mainCSounds.PlayTutorialSound(4, "pc");
+            }
+
             yield return new WaitForSeconds(1f);
 
             while (true)
             {
                 var temp = movableFloor.transform.localPosition;
-                temp.y += speedOfFloor;
+                if (_isWave3)
+                {
+                    temp.y += speedOfFloor / 2;
+                }
+                else
+                {
+                    temp.y += speedOfFloor;
+                }
+
                 movableFloor.transform.localPosition = temp;
                 if (_isWave1)
                 {
                     if (movableFloor.transform.localPosition.y >= 0)
                     {
                         _mainCTutorial.AttackImage();
-                        _mainCSounds.PlayTutorialSound(4, "pc");
                         _mainCAttack.EnableCanAttack();
 
                         _dummiesCollider.UndoChild(wave1);
@@ -149,8 +162,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
                         _mainCSounds.PlayTutorialSound(6, "pc");
-                        _mainCTutorial.movedDerImage.SetActive(true);
-                        _mainCTutorial.movedIzqImage.SetActive(true);
+                        _mainCTutorial.AttackImage();
                         _dummiesCollider.UndoChild(wave2);
                         temp.y = 0f;
                         movableFloor.transform.localPosition = temp;
@@ -168,7 +180,9 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                         _mainCAttack.SetHasUnlockedAbilityAttack(false);
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
-                        _mainCSounds.PlayTutorialSound(8, "pc");_mainCSounds.PlayTutorialSound(8, "pc");
+                        _mainCSounds.PlayTutorialSound(8, "pc");
+                        _mainCTutorial.movedDerImage.SetActive(true);
+                        _mainCTutorial.movedIzqImage.SetActive(true);
                         GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
                         _dummiesCollider.UndoChild(wave3);
                         temp.y = 3f;

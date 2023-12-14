@@ -57,8 +57,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float scannerSizeSpeed = .1f;
         [SerializeField] private float scannerSize = 15f;
         [SerializeField] private float energySpendSpeed = 4f;
+        [SerializeField] private float abilityAttackcooldown = 2f;
         public float timeGraceAttackPeriod;
         private float _currentTimeSheath;
+        private float _abilityAttackTotalCooldown;
 
         private protected override void Awake()
         {
@@ -124,6 +126,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
                 }
 
+                _abilityAttackTotalCooldown = Time.time + abilityAttackcooldown;
+
                 var arrows = GameObject.FindGameObjectsWithTag("ArrowDisplayer");
 
                 if(arrows.Length > 0)
@@ -184,7 +188,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void ChargeAttack()
         {
-            if(CanChargeAttack() && _hasUnlockedAbilityAttack && GameManagerSingleton.Instance.bastetEnergy > 20f)
+            if(CanChargeAttack() && _hasUnlockedAbilityAttack && GameManagerSingleton.Instance.bastetEnergy > 20f && Time.time > _abilityAttackTotalCooldown && !IsAttacking)
             {
                 if(_mainCTutorial.FirstTimeAbility)
                 {
@@ -198,7 +202,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCPistol.StopRecoveringEnergy();
             }
 
-            if(_mouseMagnitude > timeToCharged && _isLeftMousePressed && _hasUnlockedAbilityAttack)
+            if(_mouseMagnitude > timeToCharged && _isLeftMousePressed && _hasUnlockedAbilityAttack && Time.time > _abilityAttackTotalCooldown && !IsAttacking)
             {
                 if(GameManagerSingleton.Instance.bastetEnergy <= 0 && !_runOutEnergy)
                 {

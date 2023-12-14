@@ -6,6 +6,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 {
     public class DummieSounds : MonoBehaviour
     {
+        [Range(0,1)]
+        [SerializeField] private float volumeClips;
+
         [SerializeField] private List<AudioClip> hurtClips;
 
         private void Update()
@@ -28,6 +31,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             if (!ReferenceEquals(currentAudioSource, null))
             {
                 currentAudioSource.clip = hurtClips[randomNumber];
+                currentAudioSource.volume = volumeClips;
                 currentAudioSource.Play();
             }
         }

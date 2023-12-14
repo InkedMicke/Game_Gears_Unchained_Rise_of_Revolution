@@ -6,6 +6,6 @@ public class GTutorialKey : MonoBehaviour
 {
     public void DisableThisGameobject()
     {
-        gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
     }
 }
