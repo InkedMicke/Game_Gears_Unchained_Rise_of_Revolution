@@ -81,6 +81,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 {
                     obj.SetActive(false);
                 }
+                _mainCSounds.PlayTutorialSound(7, "pc");
                 goHereObj.SetActive(true);
                 _isWave2 = false;
                 _isWave3 = true;
@@ -167,7 +168,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                         _mainCAttack.SetHasUnlockedAbilityAttack(false);
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
-                        _mainCSounds.PlayTutorialSound(7, "pc");
+                        _mainCSounds.PlayTutorialSound(8, "pc");_mainCSounds.PlayTutorialSound(8, "pc");
                         GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
                         _dummiesCollider.UndoChild(wave3);
                         temp.y = 3f;

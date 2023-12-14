@@ -124,6 +124,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
                 }
 
+                var arrows = GameObject.FindGameObjectsWithTag("ArrowDisplayer");
+
+                if(arrows.Length > 0)
+                {
+                    foreach(var arrow in arrows)
+                    {
+                        Destroy(arrow);
+                    }
+                }
+
                 if(!_mainCTutorial.FirstTimeAbility)
                 {
                     SetAttackCount(5);
