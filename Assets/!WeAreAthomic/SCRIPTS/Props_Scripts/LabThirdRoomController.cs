@@ -14,6 +14,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         private MainCSounds _mainCSounds;
         private GStopMenu _gStopMenu;
         private MainCTutorialChecker _mainCTutorial;
+        private MainCMovement _mainCMovement;
 
         [SerializeField] private GameObject wave1;
         [SerializeField] private GameObject wave2;
@@ -27,6 +28,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         [SerializeField] private GameObject[] thirdReds;
         [SerializeField] private GameObject lateralTresspasingContainer;
         [SerializeField] private GameObject leftTutorial;
+        [SerializeField] private GameObject movableFloorPivot;
         private GameObject _playerObj;
 
         [SerializeField] private float speedOfFloor = 0.1f;
@@ -53,6 +55,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _mainCSounds = _playerObj.GetComponent<MainCSounds>();
             _mainCTutorial = _playerObj.GetComponent<MainCTutorialChecker>();
             _gStopMenu = _playerObj.GetComponent<GStopMenu>();
+            _mainCMovement = _playerObj.GetComponent<MainCMovement>();
         }
 
         private void Start()
@@ -73,6 +76,9 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 leftTutorial.GetComponent<Animator>().SetTrigger(string.Format("close"));
                 _isWave1 = false;
                 _isWave2 = true;
+                var floor = Instantiate(movableFloorPivot, _playerObj.transform.position  - Vector3.right * 1.4f, Quaternion.identity);
+                _mainCMovement.StartFollowTrajectory();
+                Freeze();
             }
 
             if (_floorIsUp && _isWave2 && wave2.transform.childCount == 0 && !_isFloorMoving)
@@ -83,9 +89,12 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 }
                 _mainCSounds.PlayTutorialSound(7, "pc");
                 leftTutorial.GetComponent<Animator>().SetTrigger(string.Format("close"));
+                var floor = Instantiate(movableFloorPivot, _playerObj.transform.position - Vector3.right * 1.4f, Quaternion.identity);
+                _mainCMovement.StartFollowTrajectory();
                 goHereObj.SetActive(true);
                 _isWave2 = false;
                 _isWave3 = true;
+                _mainCMovement.StartFollowTrajectory();
             }
 
 
@@ -100,6 +109,11 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 _mainCTutorial.movedIzqImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
                 _mainCSounds.PlayTutorialSound(9, "pc");
             }
+        }
+
+        private void Freeze()
+        {
+            GameManagerSingleton.Instance.FreezeTime(true);
         }
 
         public void InvokeMoveUp()

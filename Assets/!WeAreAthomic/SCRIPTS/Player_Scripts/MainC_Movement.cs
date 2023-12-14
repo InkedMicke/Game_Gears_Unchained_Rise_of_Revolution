@@ -1,4 +1,5 @@
 using _WeAreAthomic.SCRIPTS.Debug_Scripts;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -19,12 +20,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private CharacterController _cc;
         private Godmode _godMode;
         private MainCHealthManager _mainCHealth;
+        private Rigidbody _rb;
+        private GTrajectory _trajectory;
+
+        private Scene _currentScene;
 
         [SerializeField] private LayerMask playerBulletLayer;
 
         [SerializeField] private GameObject cameraBaseObj;
         private GameObject _cameraObj;
 
+        [SerializeField] private Transform landLoc;
         public Transform orientation;
         public Transform checkGrounded;
 
@@ -36,6 +42,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Vector3 _moveDir;
         private Vector3 _movement;
         private Vector3 _velocity;
+        private Vector3[] puntosTrayectoria;
 
         [System.NonSerialized] public bool IsCrouch;
         [System.NonSerialized] public bool IsJumping;
@@ -51,6 +58,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool isMoveWhileAimingSPressed;
         private bool isMoveWhileAimingAPressed;
         private bool isMoveWhileAimingDPressed;
+        private bool _isPushOnAir;
+        private bool _isFollowingTrajectory;
+
+        private int indexPoint = 2;
 
         [System.NonSerialized] public float _turnSmoothVelocityKeyboard;
         [SerializeField] private float walkSpeed;
@@ -62,6 +73,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float jumpImpulseOnRail = 5f;
         [SerializeField] private float gravity = -9.8f;
         [SerializeField] private float aimSpeed;
+        [SerializeField] private float pushJumpForce = 10f;
+        [SerializeField] private float pushMaxHeight = 5f;
+        [SerializeField] private float pushJumpDuration = 2f;
         public float turnSmoothTime = 0.1f;
         private float _moveSpeed;
         private float _horizontal;
@@ -70,6 +84,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _timeGraceJumpPeriod;
         private float _moveAimingX;
         private float _moveAimingY;
+        private float _pushTimeElapsed;
 
         private void Awake()
         {
@@ -84,6 +99,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _playerInputActions = new PlayerInputActions();
             _mainCHealth = GetComponentInChildren<MainCHealthManager>();
+            _currentScene = SceneManager.GetActiveScene();
+            if(_currentScene.name == "S2_LABTUTORIAL" || _currentScene.name ==  "TESTING")
+            {
+                _trajectory = GetComponent<GTrajectory>();
+            }
         }
 
         private void Start()
@@ -99,7 +119,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.Player.Running.performed += RunOn;
             _playerInputActions.Player.Running.canceled += RunOff;
             _playerInputActions.Player.Crouch.performed += StartEndCrouch;
-            //_playerInputActions.Player.Test.performed += ReloadScene;
         }
 
         private void OnDisable()
@@ -121,6 +140,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             CrouchWalking();
             ApplyGravity();
+            //IfOnAirAfterPush();
         }
 
         private void ReloadScene(InputAction.CallbackContext context)
@@ -160,7 +180,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void ApplyGravity()
         {
-            if (IsJumping || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_railGrindSystem.IsOnRail())
+            if (IsJumping || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_railGrindSystem.IsOnRail() && !_isFollowingTrajectory)
             {
                 _velocity += transform.up.normalized * (gravity * Time.deltaTime);
                 _velocity.z = 0f;
@@ -299,14 +319,34 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        public void PushPlayerToPos()
+        public void StartFollowTrajectory()
         {
-            var objectToJump = GameObject.FindGameObjectWithTag("Test");
-            DisableMovement();
-            _cc.enabled = false;
-            var rbCom = gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
-            var difference = objectToJump.transform.position - transform.position;
-            rbCom.AddForce(difference.normalized + difference, ForceMode.Impulse);
+            StartCoroutine(FollowTrajectory());
+        }
+
+        private IEnumerator FollowTrajectory()
+        {
+            _isFollowingTrajectory = true;
+            puntosTrayectoria =_trajectory.CalcularPuntosTrayectoria();
+            indexPoint = 1;
+
+            while(true)
+            {
+                var difference = puntosTrayectoria[indexPoint] - transform.position;
+                var moveDir = 25f * Time.deltaTime * difference.normalized;
+                _cc.Move(moveDir);
+                Debug.DrawRay(transform.position, puntosTrayectoria[indexPoint].normalized * 5);
+                if (Vector3.Distance(transform.position, puntosTrayectoria[indexPoint]) < 0.1f)
+                {
+                    indexPoint++;
+                }
+
+                if (IsGrounded())
+                {
+                    break;
+                }
+                yield return new WaitForEndOfFrame();
+            }
 
         }
 
@@ -496,8 +536,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(checkGrounded.position, .1f);
+            if(_isFollowingTrajectory)
+            {
+                foreach(var t in puntosTrayectoria)
+                {
+                    Gizmos.DrawWireSphere(t, 0.1f);
+                }
+            }
         }
 
         public bool IsGrounded()

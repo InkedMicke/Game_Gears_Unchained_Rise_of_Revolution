@@ -20,7 +20,7 @@ namespace _WeAreAthomic.SCRIPTS.TEST
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
             //_playerInputActions.Player.Test.performed += ToggleTime;
-            _playerInputActions.Player.Test.performed += Die;
+            //_playerInputActions.Player.Test.performed += Die;
         }
 
         private void ToggleTime(InputAction.CallbackContext context)

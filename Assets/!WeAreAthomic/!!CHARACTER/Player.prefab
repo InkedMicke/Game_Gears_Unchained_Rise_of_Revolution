@@ -2193,6 +2193,7 @@ GameObject:
   - component: {fileID: 7621926829757928742}
   - component: {fileID: 8560368454650083858}
   - component: {fileID: 8729382000879257512}
+  - component: {fileID: 8265303273977001949}
   m_Layer: 16
   m_Name: Player
   m_TagString: Player
@@ -2313,6 +2314,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 131072
   cameraBaseObj: {fileID: 0}
+  landLoc: {fileID: 0}
   orientation: {fileID: 7832683807876494435}
   checkGrounded: {fileID: 8876326123089069106}
   groundLayer:
@@ -2327,6 +2329,9 @@ MonoBehaviour:
   jumpImpulseOnRail: 5
   gravity: -20
   aimSpeed: 8
+  pushJumpForce: 10
+  pushMaxHeight: 5
+  pushJumpDuration: 2
   turnSmoothTime: 0.05
 --- !u!114 &7418738073728035398
 MonoBehaviour:
@@ -2812,6 +2817,22 @@ MonoBehaviour:
   vfxSpeedLines: {fileID: 3399135060996146196}
   chispasVFX: {fileID: 5991678360541835482, guid: 624911b7a0c7d2c4d9c1a0227df9c902,
     type: 3}
+--- !u!114 &8265303273977001949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821918579687998185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a45da9216865de04e86d4ddb66ba35ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objetivo: {fileID: 0}
+  alturaMaximaFactor: 0.5
+  velocidad: 5
+  intervaloTiempo: 0.1
 --- !u!1 &5844683505940322764
 GameObject:
   m_ObjectHideFlags: 0
