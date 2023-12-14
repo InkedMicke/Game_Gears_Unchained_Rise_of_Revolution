@@ -12,6 +12,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private SoldierAnimator _soldierAnim;
         private SoldierHealthManager _healthManager;
         private GreenSoliderMovement _greenMove;
+        private GreenDecalHurtBox _decalHurtBox;
 
         private Coroutine _shootCoroutine;
         private Coroutine _decalCoroutine;
@@ -36,9 +37,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         [SerializeField] private float spreadAngle = 2f;
         [SerializeField] private float shootAngle = .6f;
         [SerializeField] private float maxTimeToStopShooting = 2.5f;
+        [SerializeField] private float rotationSpeed = 5f;
         private float _timeToStopShooting;
         public float totalColdown;
-        public float damage;
 
         private void Awake()
         {
@@ -50,9 +51,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         public void StartDecal()
         {
-            _agent.enabled = false;
+            _agent.isStopped = true;
             IsAttacking = true;
-            _decalCoroutine = StartCoroutine(DecalSize(.2f));
+            StartCoroutine(TurnToPlayer());
         }
 
         private void Update()
@@ -64,7 +65,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private IEnumerator ShootCoroutine()
         {
             IsShooting = true;
-            while (IsShooting)
+            while (IsShooting && !_healthManager.IsDeath)
             {
                 _hasEndedShootAnim = false;
                 _soldierAnim.ShootTrigger();
@@ -100,6 +101,32 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         }
 
+        private IEnumerator TurnToPlayer()
+        {
+            while (true)
+            {
+                var currentPlayerPos = _playerTr.transform.position;
+
+                // Calcular la dirección hacia el objetivo
+                Vector3 targetDirection = currentPlayerPos - transform.position;
+
+                // Calcular la rotación hacia el objetivo
+                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+
+                // Rotar suavemente hacia el objetivo
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+                // Si estamos casi mirando al objetivo, detener la rotación
+                if (Quaternion.Angle(transform.rotation, targetRotation) < 6f)
+                {
+                    _decalCoroutine = StartCoroutine(DecalSize(.2f));
+                    yield break;
+                }
+
+                yield return new WaitForEndOfFrame();
+            }
+        }
+
         private IEnumerator DecalSize(float speed)
         {
             yield return new WaitForSeconds(.2f);
@@ -107,8 +134,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             {
                 _currentDecal = Instantiate(decalGroupPrefab, transform.position, Quaternion.identity);
             }
+
             var desiredPos = new Vector3(_playerTr.position.x, transform.position.y, _playerTr.position.z);
-            transform.LookAt(desiredPos);
             _currentDecal.transform.LookAt(desiredPos);
             var decalGroup = _currentDecal.transform.GetChild(0).transform;
             var decal = decalGroup.GetChild(0).transform;
@@ -130,9 +157,14 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         {
             if (_currentDecal != null)
             {
-                var decalHurtBox = _currentDecal.GetComponentInChildren<GreenDecalHurtBox>();
+                _decalHurtBox = _currentDecal.GetComponentInChildren<GreenDecalHurtBox>();
 
-                if(decalHurtBox.HasPlayerLeft)
+                if(_decalHurtBox.HasPlayerLeft)
+                {
+                    return true;
+                }
+
+                if(!_decalHurtBox.HasPlayerLeft && !_decalHurtBox.IsPlayerInside)
                 {
                     return true;
                 }
@@ -150,10 +182,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
                 {
                     StopCoroutine(_decalCoroutine);
                     Destroy(_currentDecal);
-                    _agent.enabled = true;
                     IsAttacking = false;
                     IsShooting = false;
                     _greenMove.SetChasePlayer(true);
+                    _waitForDisableShoot = false;
                 }
             }
         }
@@ -171,14 +203,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             }
             else
                 _waitForDisableShoot = false;
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(transform.position, checkRadius);
-
-            Debug.DrawRay(muzzle1.transform.position, muzzle1.forward * 3);
         }
     }
 }

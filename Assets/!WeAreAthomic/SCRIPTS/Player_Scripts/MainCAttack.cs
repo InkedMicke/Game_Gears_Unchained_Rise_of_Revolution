@@ -126,6 +126,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
                 }
 
+                _mainCMovement.EnableMovement();
+
                 _abilityAttackTotalCooldown = Time.time + abilityAttackcooldown;
 
                 var arrows = GameObject.FindGameObjectsWithTag("ArrowDisplayer");
@@ -196,6 +198,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 }
                 _mainCLayers.EnableAbilityAttackLayer();
                 SetAttackCount(4);
+                _mainCMovement.DisableMovement();
                 weaponObj.SetActive(true);
                 scannerInst = Instantiate(scannerPrefab, groundTr.position, Quaternion.identity);
                 IsChargingAttack = true;
