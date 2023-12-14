@@ -7,6 +7,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
     public class HealthBreather : MonoBehaviour
     {
         MainCHealthManager _mainHealth;
+        
 
         [SerializeField] private GameObject hurtbox;
         [SerializeField] private GameObject particleEffects;
