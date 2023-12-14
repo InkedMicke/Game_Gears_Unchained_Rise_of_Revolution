@@ -20,17 +20,39 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private AudioMixerGroup voicesMixer;
         
         [SerializeField] private List<AudioClip> attackClips;
+        [Range(0, 1)]
+        [SerializeField] private float attackVolume;
         [SerializeField] private List<AudioClip> tutorialClipsPC;
         [SerializeField] private List<AudioClip> tutorialClipsGamepad;
+        [Range(0, 1)]
+        [SerializeField] private float tutorialVolume;
         [SerializeField] private List<AudioClip> expressionClips;
+        [Range(0, 1)]
+        [SerializeField] private float expressionVolume;
         [SerializeField] private List<AudioClip> effortClips;
+        [Range(0, 1)]
+        [SerializeField] private float effortVolume;
         [SerializeField] private List<AudioClip> hurtClips;
+        [Range(0, 1)]
+        [SerializeField] private float hurtVolume;
         [SerializeField] private List<AudioClip> dieClips;
+        [Range(0, 1)]
+        [SerializeField] private float dieVolume;
         [SerializeField] private List<AudioClip> jumpClips;
+        [Range(0, 1)]
+        [SerializeField] private float jumpVolume;
         [SerializeField] private List<AudioClip> callBastetClips;
+        [Range(0, 1)]
+        [SerializeField] private float callBasteVolume;
         [SerializeField] private AudioClip hackInProcess;
+        [Range(0, 1)]
+        [SerializeField] private float hackInProcessVolume;
         [SerializeField] private AudioClip cannotHack;
+        [Range(0, 1)]
+        [SerializeField] private float cannotHackVolume;
         [SerializeField] private AudioClip howFight;
+        [Range(0, 1)]
+        [SerializeField] private float howFightVolume;
 
         private bool isPaused;
 
@@ -125,7 +147,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     currentAudioSource.outputAudioMixerGroup = voicesMixer;
                     currentAudioSource.clip = tutorialClipsPC[value];
-                    currentAudioSource.volume = .9f;
+                    currentAudioSource.volume = tutorialVolume;
                     currentAudioSource.playOnAwake = false;
                     currentAudioSource.Play();
                     CurrentTutorialClip = currentAudioSource.clip;
@@ -139,7 +161,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     currentAudioSource.outputAudioMixerGroup = voicesMixer;
                     currentAudioSource.clip = tutorialClipsGamepad[value];
-                    currentAudioSource.volume = .9f;
+                    currentAudioSource.volume = tutorialVolume;
                     currentAudioSource.Play();
                     CurrentTutorialClip = currentAudioSource.clip;
                 }
@@ -154,6 +176,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 currentAudioSource.outputAudioMixerGroup = sfxMixer;
                 currentAudioSource.clip = expressionClips[randomNumber];
+                currentAudioSource.volume = expressionVolume;
                 currentAudioSource.Play();
                 CurrentExpressionClip = currentAudioSource.clip;
             }
@@ -168,6 +191,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 currentAudioSource.outputAudioMixerGroup = sfxMixer;
                 currentAudioSource.clip = attackClips[randomNumber];
+                currentAudioSource.volume = attackVolume;
                 currentAudioSource.Play();
             }
         }
@@ -179,7 +203,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 currentAudioSource.outputAudioMixerGroup = sfxMixer;
                 currentAudioSource.clip = hackInProcess;
-                currentAudioSource.volume = .3f;
+                currentAudioSource.volume = hackInProcessVolume;
                 currentAudioSource.Play();
                 currentAudioSource.loop = true;
             }
@@ -205,7 +229,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 currentAudioSource.outputAudioMixerGroup = sfxMixer;
                 currentAudioSource.clip = cannotHack;
-                currentAudioSource.volume = .7f;
+                currentAudioSource.volume = cannotHackVolume;
                 currentAudioSource.Play();
             }
         }
@@ -217,7 +241,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 currentAudioSource.outputAudioMixerGroup = sfxMixer;
                 currentAudioSource.clip = howFight;
-                currentAudioSource.volume = .7f;
+                currentAudioSource.volume = howFightVolume;
                 currentAudioSource.Play();
             }
         }

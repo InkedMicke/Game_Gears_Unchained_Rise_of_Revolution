@@ -172,7 +172,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     break;
                 }
-                GameManagerSingleton.Instance.bastetEnergy += .5f;
+                GameManagerSingleton.Instance.bastetEnergy += 1f;
                 _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
                 _mainCAttack.SetRunOutEnergy(false);
                 if (GameManagerSingleton.Instance.bastetEnergy > 100f)
