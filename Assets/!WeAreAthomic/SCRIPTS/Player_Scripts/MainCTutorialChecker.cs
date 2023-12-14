@@ -29,7 +29,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject goHerePosaManoMove;
         [SerializeField] private GameObject wasdImage;
         [SerializeField] private GameObject eImage;
-        [SerializeField] private GameObject izqImage;
+        public GameObject izqImage;
+        public GameObject movedIzqImage;
+        public GameObject movedDerImage;
 
         private Vector3 _lastPosition;
 

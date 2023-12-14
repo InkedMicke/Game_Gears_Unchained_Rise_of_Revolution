@@ -10,7 +10,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
     public class LabThirdRoomController : MonoBehaviour
     {
         private DummiesColliderLab _dummiesCollider;
-        private MainCChargingSwordSphereTarget _chargingSwordSphereTarget;
         private MainCAttack _mainCAttack;
         private MainCSounds _mainCSounds;
         private GStopMenu _gStopMenu;
@@ -51,7 +50,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _dummiesCollider = dummieControllerObj.GetComponent<DummiesColliderLab>();
             _playerObj = GameObject.FindGameObjectWithTag("Player");
             _mainCAttack = _playerObj.GetComponent<MainCAttack>();
-            _chargingSwordSphereTarget = _playerObj.GetComponent<MainCChargingSwordSphereTarget>();
             _mainCSounds = _playerObj.GetComponent<MainCSounds>();
             _mainCTutorial = _playerObj.GetComponent<MainCTutorialChecker>();
             _gStopMenu = _playerObj.GetComponent<GStopMenu>();
@@ -95,6 +93,9 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 _isWave3 = false;
                 _mainCAttack.SetHasUnlockedAbilityAttack(false);
                 _mainCAttack.EnableCanAttack();
+                _mainCTutorial.movedDerImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
+                _mainCTutorial.movedIzqImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
+                _mainCSounds.PlayTutorialSound(9, "pc");
             }
         }
 
@@ -147,7 +148,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
                         _mainCSounds.PlayTutorialSound(6, "pc");
-
+                        _mainCTutorial.movedDerImage.SetActive(true);
+                        _mainCTutorial.movedIzqImage.SetActive(true);
                         _dummiesCollider.UndoChild(wave2);
                         temp.y = 0f;
                         movableFloor.transform.localPosition = temp;
@@ -165,7 +167,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                         _mainCAttack.SetHasUnlockedAbilityAttack(false);
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
-                        _mainCSounds.PlayTutorialSound(6, "pc");
+                        _mainCSounds.PlayTutorialSound(7, "pc");
                         GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
                         _dummiesCollider.UndoChild(wave3);
                         temp.y = 3f;
