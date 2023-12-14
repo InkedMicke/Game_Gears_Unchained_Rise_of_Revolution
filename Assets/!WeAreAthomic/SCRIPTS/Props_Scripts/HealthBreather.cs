@@ -18,6 +18,8 @@ namespace _WeAreAthomic.SCRIPTS.Props
         [SerializeField] private float healthAmount = 4f;
         [SerializeField] private float healthPerTime = .1f;
 
+        [SerializeField] private AudioSource healthSound;
+
         private void Start()
         {
             _playerObj = GameObject.FindGameObjectWithTag(string.Format("Player"));
@@ -60,8 +62,9 @@ namespace _WeAreAthomic.SCRIPTS.Props
         private IEnumerator HealCoroutine()
         {
             var enable = true;
+            healthSound.Play();
 
-            while(enable)
+            while (enable)
             {
                 if (_mainHealth.currentHealth < _mainHealth.maxHealth)
                 {
