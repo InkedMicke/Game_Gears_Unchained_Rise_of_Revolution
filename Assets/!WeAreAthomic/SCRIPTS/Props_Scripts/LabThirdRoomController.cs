@@ -78,7 +78,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 _isWave2 = true;
                 var floor = Instantiate(movableFloorPivot, _playerObj.transform.position  - Vector3.right * 1.4f, Quaternion.identity);
                 _mainCMovement.StartFollowTrajectory();
-                Freeze();
             }
 
             if (_floorIsUp && _isWave2 && wave2.transform.childCount == 0 && !_isFloorMoving)
