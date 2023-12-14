@@ -23,6 +23,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private List<AudioClip> tutorialClipsPC;
         [SerializeField] private List<AudioClip> tutorialClipsGamepad;
         [SerializeField] private List<AudioClip> expressionClips;
+        [SerializeField] private List<AudioClip> effortClips;
+        [SerializeField] private List<AudioClip> hurtClips;
+        [SerializeField] private List<AudioClip> dieClips;
+        [SerializeField] private List<AudioClip> jumpClips;
+        [SerializeField] private List<AudioClip> callBastetClips;
         [SerializeField] private AudioClip hackInProcess;
         [SerializeField] private AudioClip cannotHack;
         [SerializeField] private AudioClip howFight;

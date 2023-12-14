@@ -32,7 +32,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _fov = GetComponent<FieldOfView>();
             _healthManager = GetComponentInChildren<SoldierHealthManager>();
 
-            originalSpeed = _agent.speed;
             initalStoppingDistance = _agent.stoppingDistance;
 
             _typeOfEnemy = GameManagerSingleton.TypeOfEnemy.GreenSoldier;
@@ -57,21 +56,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             CheckIfPlayerIsInSight();
             FollowPath();
             ChasePlayer();
-/*            if (!_soldierAttack.IsAttacking && !_soldierAttack.IsShooting && !_healthManager.IsDeath)
-            {
-                _agent.isStopped = false;
-                _agent.SetDestination(_playerTr.position);
-                _soldierAnim.SetWalking(true);
-            }
-
-            var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
-
-            if (distanceToPlayer < 5f && !_soldierAttack.IsAttacking && Time.time > _soldierAttack.totalColdown && !_healthManager.IsDeath)
-            {
-                _agent.isStopped = true;
-                _soldierAnim.SetWalking(false);
-                _soldierAttack.StartDecal();
-            }*/
 
         }
 
@@ -101,7 +85,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         {
             _agent.stoppingDistance = initalStoppingDistance;
             _agent.autoBraking = true;
-            _agent.speed = originalSpeed;
+            _agent.speed = chaseSpeed;
         }
 
         public void ChasePlayer()

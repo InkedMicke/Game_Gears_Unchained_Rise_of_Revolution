@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 719572451470864634}
   - component: {fileID: 6460584741221924923}
   - component: {fileID: 8698530833825578607}
-  - component: {fileID: 5895939196809832073}
   - component: {fileID: 5738154880865817068}
   - component: {fileID: 7960632178198509863}
   m_Layer: 0
@@ -176,35 +175,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35337b4a35fcea44b826d1a2100f6160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chaseSpeed: 2
   patrolSpeed: 1
   waypoints: {fileID: 0}
   useWaypoint: 0
---- !u!143 &5895939196809832073
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7970255392764161239}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Height: 1.88
-  m_Radius: 0.35
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.91, z: 0}
 --- !u!114 &5738154880865817068
 MonoBehaviour:
   m_ObjectHideFlags: 0
