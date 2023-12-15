@@ -29,6 +29,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject goHerePosaManoMove;
         [SerializeField] private GameObject wasdImage;
         [SerializeField] private GameObject eImage;
+        [SerializeField] private GameObject respiraderoImage;
+        [SerializeField] private GameObject camarasImage;
         public GameObject izqImage;
         public GameObject movedIzqImage;
         public GameObject movedDerImage;
@@ -92,6 +94,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCSounds.PlayExpressionSound();
                     goHerePosaManoMove.SetActive(true);
                     goHereBreather.SetActive(false);
+                    respiraderoImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
                     break;
                 }
 
@@ -146,6 +149,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCSounds.PlayTutorialSound(1, "pc");
             var healthBreather = breatherObj.GetComponent<HealthBreather>();
             healthBreather.EnableBreather();
+            respiraderoImage.SetActive(true);
             goHereBreather.SetActive(true);
         }
 
