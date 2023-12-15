@@ -11,6 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
     {
         private LightKiller _lKiller;
         private MainCMovement _mainCMovement;
+        private MainCHackingSystem _mainCHacking;
 
         private AudioSource _cameraAudio;
 
@@ -41,6 +42,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
             _lightKillerTr = lKillerObj.transform;
             _playerObj = GameObject.FindGameObjectWithTag("Player");
             _mainCMovement = _playerObj.GetComponent<MainCMovement>();
+            _mainCHacking = _playerObj.GetComponent<MainCHackingSystem>();
             _cameraAudio = GetComponent<AudioSource>();
         }
 
@@ -121,6 +123,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
                     if (_lKiller.IsFocusingPlayer)
                     {
                         _lKiller.WhiteLight();
+                        _mainCHacking.SetGotCahed(false);
                     }
                 }
             }
@@ -159,7 +162,6 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
 
         public void TurnOnCamera()
         {
-            Debug.Log("hola4");
             lKillerObj.SetActive(true);
             _lKiller.WhiteLight();
             _isCameraOff = false;

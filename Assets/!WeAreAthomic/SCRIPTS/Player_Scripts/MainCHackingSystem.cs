@@ -27,6 +27,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public bool isHackingAnim;
         public bool IsHacking;
+        public bool GotCahed;
 
         private float _timeToHack;
         private float _actualTime;
@@ -154,24 +155,32 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
+        public void SetGotCahed(bool gotCahed)
+        {
+            GotCahed = gotCahed;
+        }
+
         public void StopHack()
         {
-            StopCoroutine(_hackCoroutine);
-            IsHacking = false;
-            isHackingAnim = false;
-            hackCanvas.SetActive(false);
-            _mainCSounds.StopHackInProcessSound();
-            _cc.enabled = true;
-            _bastetController.InvokeMoveToPlayer();
-            _mainCSounds.PlayCannotHackSound();
-
-            var interactables = FindObjectsOfType<ButtonInteractable>();
-
-            foreach (var t in interactables)
+            if (IsHacking)
             {
-                if (t.isActive)
+                StopCoroutine(_hackCoroutine);
+                IsHacking = false;
+                isHackingAnim = false;
+                hackCanvas.SetActive(false);
+                _mainCSounds.StopHackInProcessSound();
+                _cc.enabled = true;
+                _bastetController.InvokeMoveToPlayer();
+                _mainCSounds.PlayCannotHackSound();
+
+                var interactables = FindObjectsOfType<ButtonInteractable>();
+
+                foreach (var t in interactables)
                 {
-                    t.isActive = false;
+                    if (t.isActive)
+                    {
+                        t.isActive = false;
+                    }
                 }
             }
         }
