@@ -93,7 +93,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 goHereObj.SetActive(true);
                 _isWave2 = false;
                 _isWave3 = true;
-                _mainCMovement.StartFollowTrajectory();
             }
 
 
