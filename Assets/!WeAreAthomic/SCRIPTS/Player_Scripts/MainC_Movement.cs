@@ -140,7 +140,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             CrouchWalking();
             ApplyGravity();
-            //IfOnAirAfterPush();
+            FollowTrajectory();
         }
 
         private void ReloadScene(InputAction.CallbackContext context)
@@ -321,10 +321,43 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void StartFollowTrajectory()
         {
-            StartCoroutine(FollowTrajectory());
+            StartCoroutine(FollowTrajectoryCoroutine());
         }
 
-        private IEnumerator FollowTrajectory()
+        public void SetFollowTrajectory(bool condition)
+        {
+            _isFollowingTrajectory = condition;
+            if(_isFollowingTrajectory)
+            {
+                _cc.enabled = false;
+                indexPoint = 2;
+                puntosTrayectoria = _trajectory.CalcularPuntosTrayectoria();
+            }
+        }
+
+        private void FollowTrajectory()
+        {
+
+            if (_isFollowingTrajectory)
+            {
+                var difference = puntosTrayectoria[indexPoint] - transform.position;
+                var moveDir = 25f * Time.deltaTime * difference.normalized;
+                //_cc.Move(moveDir);
+                transform.position = Vector3.MoveTowards(transform.position, puntosTrayectoria[indexPoint], 20f * Time.deltaTime);
+                if (Vector3.Distance(transform.position, puntosTrayectoria[indexPoint]) < 0.1f)
+                {
+                    indexPoint++;
+                }
+
+                if (IsGrounded())
+                {
+                    _cc.enabled = true; 
+                    _isFollowingTrajectory = false;
+                }
+            }
+        }
+
+        private IEnumerator FollowTrajectoryCoroutine()
         {
             _isFollowingTrajectory = true;
             puntosTrayectoria =_trajectory.CalcularPuntosTrayectoria();

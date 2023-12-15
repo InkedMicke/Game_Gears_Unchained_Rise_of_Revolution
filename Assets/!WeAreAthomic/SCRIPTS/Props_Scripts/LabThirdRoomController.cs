@@ -77,7 +77,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 _isWave1 = false;
                 _isWave2 = true;
                 var floor = Instantiate(movableFloorPivot, _playerObj.transform.position  - Vector3.right * 1.4f, Quaternion.identity);
-                _mainCMovement.StartFollowTrajectory();
+                _mainCMovement.SetFollowTrajectory(true);
             }
 
             if (_floorIsUp && _isWave2 && wave2.transform.childCount == 0 && !_isFloorMoving)
@@ -89,7 +89,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 _mainCSounds.PlayTutorialSound(7, "pc");
                 leftTutorial.GetComponent<Animator>().SetTrigger(string.Format("close"));
                 var floor = Instantiate(movableFloorPivot, _playerObj.transform.position - Vector3.right * 1.4f, Quaternion.identity);
-                _mainCMovement.StartFollowTrajectory();
+                _mainCMovement.SetFollowTrajectory(true);
                 goHereObj.SetActive(true);
                 _isWave2 = false;
                 _isWave3 = true;
