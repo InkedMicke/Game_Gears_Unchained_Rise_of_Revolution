@@ -9,6 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Animator _anim;
         private CharacterController _cc;
         private MainCRagdoll _mainCRagdoll;
+        private MainCSounds _mainSounds;
 
         [SerializeField] private Slider healthSlider;
 
@@ -22,6 +23,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _anim = GetComponentInParent<Animator>();
             _cc = GetComponentInParent<CharacterController>();
             _mainCRagdoll = GetComponentInParent<MainCRagdoll>();
+            _mainSounds = GetComponent<MainCSounds>();
         }
 
         private void Start()
@@ -42,6 +44,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             currentHealth -= damage;
             GameManagerSingleton.Instance.currentHealth = currentHealth;
+            _mainSounds.PlayHurtSound();
             CheckDeath();
             SetHealthSlider();
         }
@@ -69,6 +72,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Death()
         {
+            _mainSounds.PlayDieSound();
             _anim.enabled = false;
             _cc.enabled = false;
             _mainCRagdoll.SetEnabled(true);

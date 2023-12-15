@@ -20,6 +20,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCPistol _mainCPistol;
         private GStopMenu _gStopMenu;
         private MainVFXCharacter _mainVFXCharacter;
+        private MainCSounds _mainCSounds;
 
         private Scene _currentScene;
 
@@ -69,6 +70,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCPistol = GetComponent<MainCPistol>();
             _gStopMenu = GetComponent<GStopMenu>();
             _mainVFXCharacter = GetComponent<MainVFXCharacter>();
+            _mainCSounds = GetComponent<MainCSounds>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Player.Enable();
@@ -266,6 +268,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                         _isJumping = true;
                         _anim.applyRootMotion = true;
                         _anim.SetTrigger(string.Format("jumpRail"));
+                        _mainCSounds.PlayJumpSound();
+
                     }
                 }
             }
