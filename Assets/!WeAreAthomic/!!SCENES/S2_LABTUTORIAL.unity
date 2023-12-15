@@ -924,7 +924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &757922770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1224,7 +1224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 845835031}
   m_Layer: 0
-  m_Name: ___________________SYSTEM_LAB__________________
+  m_Name: ___________________SYSTEM_GAME__________________
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1248,7 +1248,7 @@ Transform:
   - {fileID: 1792414305}
   - {fileID: 757922772}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &875081631 stripped
 GameObject:
@@ -2498,7 +2498,7 @@ PrefabInstance:
     - target: {fileID: 5677470060418912918, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5677470060418912918, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
@@ -4284,30 +4284,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 699553455}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 757922769}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
     additionalInfo: 
   useTargetScript: 0
   targetScript: {fileID: 0}
@@ -4399,7 +4375,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1844222333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7098,7 +7074,7 @@ PrefabInstance:
     - target: {fileID: 4218046014581208286, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: seActivaCuandoLasOleadasTerminan.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4218046014581208286, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
@@ -7114,7 +7090,7 @@ PrefabInstance:
         type: 3}
       propertyPath: seActivaCuandoLasOleadasTerminan.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 757922769}
+      objectReference: {fileID: 1792414306}
     - target: {fileID: 4218046014581208286, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: seActivaCuandoLasOleadasTerminan.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
@@ -7143,7 +7119,7 @@ PrefabInstance:
     - target: {fileID: 4218046014581208286, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: seActivaCuandoLasOleadasTerminan.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: SetActive
+      value: LoadSceneAsync
       objectReference: {fileID: 0}
     - target: {fileID: 4218046014581208286, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
@@ -7158,7 +7134,7 @@ PrefabInstance:
     - target: {fileID: 4218046014581208286, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: seActivaCuandoLasOleadasTerminan.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: Hedenrag.SceneLoader.SceneLoaderMultipleAsync, SceneLoaderAssembly
       objectReference: {fileID: 0}
     - target: {fileID: 4218046014581208286, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
