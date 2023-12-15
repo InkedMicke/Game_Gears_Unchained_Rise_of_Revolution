@@ -5,6 +5,9 @@ using UnityEngine;
 public class GTrajectory : MonoBehaviour
 {
     public Transform objetivo;
+
+    [SerializeField] private bool seeTrajectory;
+
     [Range(0.1f, 20f)] public float alturaMaximaFactor = 0.5f; // Factor para ajustar la altura máxima en función de la distancia
     [Range(0.1f, 20f)] public float velocidad = 5f;
     [Range(0.08f, 20f)] public float intervaloTiempo = 0.1f;
@@ -58,10 +61,12 @@ public class GTrajectory : MonoBehaviour
 
     void DibujarTrayectoria()
     {
-        // Dibujar los puntos de la trayectoria
-        foreach (Vector3 punto in puntosTrayectoria)
+        if (seeTrajectory)
         {
-            Gizmos.DrawSphere(punto, 0.1f);
+            foreach (Vector3 punto in puntosTrayectoria)
+            {
+                Gizmos.DrawSphere(punto, 0.1f);
+            }
         }
     }
 
