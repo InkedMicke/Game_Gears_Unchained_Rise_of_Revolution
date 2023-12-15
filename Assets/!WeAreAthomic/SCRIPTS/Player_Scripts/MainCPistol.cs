@@ -236,13 +236,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _isRecoveringShoot = false;
                 _isShooting = true;
                 var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-                RaycastHit hit;
 
                 Vector3 targetPoint;
 
                 Transform t = null;
-
-                if (Physics.Raycast(ray, out hit)) {
+                if (Physics.Raycast(ray, out RaycastHit hit)) {
                     targetPoint = hit.point;
                     if(hit.collider.gameObject.layer == enemyHurtBox)
                     t = hit.transform;

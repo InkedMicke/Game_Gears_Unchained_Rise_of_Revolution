@@ -29,6 +29,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         [SerializeField] private GameObject lateralTresspasingContainer;
         [SerializeField] private GameObject leftTutorial;
         [SerializeField] private GameObject movableFloorPivot;
+        [SerializeField] private GameObject triggerElevator;
         private GameObject _playerObj;
 
         [SerializeField] private float speedOfFloor = 0.1f;
@@ -72,12 +73,12 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 {
                     obj.SetActive(false);
                 }
-                goHereObj.SetActive(true);
+                triggerElevator.SetActive(true);
+                //goHereObj.SetActive(true);
+                StartCoroutine(PushWait());
                 leftTutorial.GetComponent<Animator>().SetTrigger(string.Format("close"));
                 _isWave1 = false;
                 _isWave2 = true;
-                var floor = Instantiate(movableFloorPivot, _playerObj.transform.position  - Vector3.right * 1.4f, Quaternion.identity);
-                _mainCMovement.SetFollowTrajectory(true);
             }
 
             if (_floorIsUp && _isWave2 && wave2.transform.childCount == 0 && !_isFloorMoving)
@@ -86,11 +87,11 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 {
                     obj.SetActive(false);
                 }
+                triggerElevator.SetActive(true);
+                StartCoroutine(PushWait());
                 _mainCSounds.PlayTutorialSound(7, "pc");
                 leftTutorial.GetComponent<Animator>().SetTrigger(string.Format("close"));
-                var floor = Instantiate(movableFloorPivot, _playerObj.transform.position - Vector3.right * 1.4f, Quaternion.identity);
-                _mainCMovement.SetFollowTrajectory(true);
-                goHereObj.SetActive(true);
+                //goHereObj.SetActive(true);
                 _isWave2 = false;
                 _isWave3 = true;
             }
@@ -119,6 +120,20 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _dummiesCollider.ClearList();
             wave1.SetActive(true);
             StartCoroutine(MoveUp());
+        }
+
+        private IEnumerator PushWait()
+        {
+            yield return new WaitForSeconds(1.6f);
+            if (!triggerElevator.GetComponent<TriggerElevator>().IsActivated)
+            {
+                Instantiate(movableFloorPivot, _playerObj.transform.position - Vector3.right * 1.4f, Quaternion.identity);
+                _mainCMovement.SetFollowTrajectory(true);
+            }
+            else
+            {
+                triggerElevator.GetComponent<TriggerElevator>().SetIsActivated(false);
+            }
         }
 
         public void InvokeMoveDown()
