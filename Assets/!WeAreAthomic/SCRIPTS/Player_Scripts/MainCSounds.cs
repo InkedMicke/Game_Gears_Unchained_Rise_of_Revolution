@@ -256,5 +256,61 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             isPaused = pauseStatus;
         }
 
+        public void PlayEffordSound()
+        {
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+
+            var randomNumber = Random.Range(0, effortClips.Count);
+
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = effortClips[randomNumber];
+                currentAudioSource.volume = effortVolume;
+                currentAudioSource.Play();
+            }
+        }
+        public void PlayHurtSound()
+        {
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+
+            var randomNumber = Random.Range(0, hurtClips.Count);
+
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = hurtClips[randomNumber];
+                currentAudioSource.volume = hurtVolume;
+                currentAudioSource.Play();
+            }
+        }
+        public void PlayDieSound()
+        {
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+
+            var randomNumber = Random.Range(0, dieClips.Count);
+
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = dieClips[randomNumber];
+                currentAudioSource.volume = dieVolume;
+                currentAudioSource.Play();
+            }
+        }
+        public void PlayJumpSound()
+        {
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+
+            var randomNumber = Random.Range(0, jumpClips.Count);
+
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = jumpClips[randomNumber];
+                currentAudioSource.volume = jumpVolume;
+                currentAudioSource.Play();
+            }
+        }
     }
 }

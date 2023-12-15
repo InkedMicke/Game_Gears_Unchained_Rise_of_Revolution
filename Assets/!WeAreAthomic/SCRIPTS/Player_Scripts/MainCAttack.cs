@@ -165,6 +165,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCAnimator.SetAttackCountAnim(attackCount);
                     weaponObj.GetComponent<WrenchHitBox>().ClearList();
                     _canNextAttack = false;
+                    _mainCSounds.PlayAttackSound();
+                    _mainCSounds.PlayEffordSound();
 
                     IsAttacking = true;
 
@@ -282,6 +284,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (_canNextAttack && IsAttacking)
             {
+                _mainCSounds.PlayAttackSound();
+                _mainCSounds.PlayEffordSound();
                 if (attackCount == 2)
                 {
                     _mainCLayers.DisableAttackLayer();
