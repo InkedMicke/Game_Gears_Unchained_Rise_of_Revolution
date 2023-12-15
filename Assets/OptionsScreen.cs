@@ -42,6 +42,7 @@ public class OptionsScreen : MonoBehaviour
         }
 
         m_resText.text = resolutions[resIndex].x.ToString() + " x " +  resolutions[resIndex].y.ToString();
+        Debug.Log(resolutions.Count);
     }
 
     public void SetFullscreen(bool on)
@@ -52,8 +53,9 @@ public class OptionsScreen : MonoBehaviour
 
     public void NextResolution()
     {
-        if(resIndex < resolutions.Count)
+        if (resIndex <= resolutions.Count)
         {
+            Debug.Log(resIndex);
             resIndex++;
             UpdateText();
         }
@@ -61,6 +63,7 @@ public class OptionsScreen : MonoBehaviour
     
     public void PreviousResolution()
     {
+        Debug.Log("hola1");
         if (resIndex > 0)
         {
             resIndex--;
@@ -70,7 +73,7 @@ public class OptionsScreen : MonoBehaviour
 
     public void UpdateText()
     {
-        m_resText.text = resolutions[resIndex].x.ToString() + " x " + resolutions[resIndex].y.ToString();
+        m_resText.text = resolutions[resIndex - 1].x.ToString() + " x " + resolutions[resIndex - 1].y.ToString();
     }
 
     public void ChangeResolution(Vector2Int screenSize)
