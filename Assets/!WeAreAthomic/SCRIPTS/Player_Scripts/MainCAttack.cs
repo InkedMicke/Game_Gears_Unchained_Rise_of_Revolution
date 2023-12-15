@@ -113,6 +113,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     tut_ES.transform.GetChild(0).gameObject.SetActive(false);
                     _mainCMovement.EnableMovement();
                     _mainCTutorial.SetFirstAbilityAttack(false);
+                    GameManagerSingleton.Instance.TakeEnergy(75);
+                    _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
                 }
 
                 if(_mainCTutorial.FirstTimeAbility && scannerInst.transform.localScale.x < scannerSize)
