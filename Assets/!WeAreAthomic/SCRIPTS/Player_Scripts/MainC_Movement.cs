@@ -329,7 +329,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _isFollowingTrajectory = condition;
             if(_isFollowingTrajectory)
             {
-                _cc.enabled = false;
                 indexPoint = 2;
                 puntosTrayectoria = _trajectory.CalcularPuntosTrayectoria();
             }

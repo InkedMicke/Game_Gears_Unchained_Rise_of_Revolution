@@ -128,6 +128,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             if (!triggerElevator.GetComponent<TriggerElevator>().IsActivated)
             {
                 Instantiate(movableFloorPivot, _playerObj.transform.position - Vector3.right * 1.4f, Quaternion.identity);
+                _playerObj.GetComponent<CharacterController>().enabled = false;
                 _mainCMovement.SetFollowTrajectory(true);
             }
             else
@@ -146,8 +147,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _floorIsDown = false;
             seActivaCuandoVaASubir.Invoke();
             _isFloorMoving = true;
-
-            if(_isWave1)
+            triggerElevator.GetComponent<TriggerElevator>().SetIsActivated(false);
+            if (_isWave1)
             {
                 _mainCSounds.PlayTutorialSound(4, "pc");
             }
