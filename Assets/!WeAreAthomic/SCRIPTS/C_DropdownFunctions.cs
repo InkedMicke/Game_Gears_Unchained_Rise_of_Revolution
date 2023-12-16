@@ -47,6 +47,8 @@ public class C_DropdownFunctions : MonoBehaviour
                 dropdown.AddOptions(idiomasEN);
                 ActivarObjetosEN();
                 DesactivarObjetosES();
+
+                index = 0;
                 
 
                 break;
