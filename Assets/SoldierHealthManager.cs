@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
+
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 {
     public class SoldierHealthManager : MonoBehaviour, IDamageable
     {
         private GreenSoliderMovement _greenMove;
+        
        [SerializeField] private C_DisolveEnemi _disolveEnemi;
 
         [SerializeField] private Slider healthSlider;
@@ -61,6 +64,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _greenMove.DisableMovement();
             botonSoldier.SetActive(false);
             _disolveEnemi.StartDisolving();
+          
+            
         }
 
         public void SetMaxhealthSlider(float maxHealth)
