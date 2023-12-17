@@ -19,9 +19,10 @@ public class C_DropdownFunctions : MonoBehaviour
         idiomasES.Add("ESPAÑOL");
         idiomasES.Add("INGLES");
 
-        idiomasEN.Add("ENGLISH");
+        
         idiomasEN.Add("SPANISH");
-       
+        idiomasEN.Add("ENGLISH");
+
 
         dropdown.AddOptions(idiomasES);
 
@@ -38,18 +39,17 @@ public class C_DropdownFunctions : MonoBehaviour
                 dropdown.ClearOptions();
                 dropdown.AddOptions(idiomasES);
                 ActivarObjetosES();
-                DesactivarObjetosEN();    
+                DesactivarObjetosEN();
+                dropdown.SetValueWithoutNotify(0);
                 
-                    break;
+                 break;
 
             case 1: //Ingles (DESDE ESPAÑOL)
                 dropdown.ClearOptions();
                 dropdown.AddOptions(idiomasEN);
                 ActivarObjetosEN();
                 DesactivarObjetosES();
-
-                index = 0;
-                
+                dropdown.SetValueWithoutNotify(1);
 
                 break;
                 
