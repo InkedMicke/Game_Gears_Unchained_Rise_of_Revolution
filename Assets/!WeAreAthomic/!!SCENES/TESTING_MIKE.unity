@@ -1780,7 +1780,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &108786908
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1990,6 +1990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resDropdown: {fileID: 1672416520}
+  screenDropdown: {fileID: 848146012}
   fullScreen: 0
   resolutions: []
   resString: []
@@ -3767,6 +3768,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2037067858}
+        m_TargetAssemblyTypeName: UIChanges, Assembly-CSharp
+        m_MethodName: SaveChanges
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 302580166}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -10464,7 +10477,19 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 112477991}
+        m_TargetAssemblyTypeName: OptionsScreen, Assembly-CSharp
+        m_MethodName: SetFullscreenValue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &848146013
 MonoBehaviour:
@@ -22393,7 +22418,7 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.27281976, y: 3.199585}
   m_SizeDelta: {x: 12.42428, y: -6.3982}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -24485,7 +24510,7 @@ MonoBehaviour:
           m_CallState: 2
         - m_Target: {fileID: 2037067858}
           m_TargetAssemblyTypeName: UIChanges, Assembly-CSharp
-          m_MethodName: UndoChanges
+          m_MethodName: CancelChanges
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -29052,7 +29077,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &1897127453654594539
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -29132,7 +29157,7 @@ MonoBehaviour:
           m_CallState: 2
         - m_Target: {fileID: 2037067858}
           m_TargetAssemblyTypeName: UIChanges, Assembly-CSharp
-          m_MethodName: ApplyChanges
+          m_MethodName: SaveChanges
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -29409,7 +29434,7 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -29578,8 +29603,8 @@ RectTransform:
   m_Father: {fileID: 2167641173974073809}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -16.599998}
   m_SizeDelta: {x: 0, y: 45.57}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -30557,6 +30582,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: "Camara_LAB_Ense\xF1arPosamano_Fondo"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7537706045650868167, guid: fb5ebdce1ae885e4fa7c71556f77a37f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7776395267820686555, guid: fb5ebdce1ae885e4fa7c71556f77a37f,
         type: 3}

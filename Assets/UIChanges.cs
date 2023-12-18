@@ -7,29 +7,34 @@ public class UIChanges : MonoBehaviour
     [Header("Audio")]
     [Header("Graphics")]
     [SerializeField] private OptionsScreen optScreen;
-    private Vector2Int temporalRes;
+    private Vector2Int _temporalRes;
+    private int _temporalIntRes;
+    private bool _temporalScreen;
+    private int _temporalIntScreen;
     //[Header("Language")]
     //[Header("Controls")]
 
-    private void Start()
+    public void SaveChanges()
     {
+        // Actualizar variables temporales
+        _temporalRes = optScreen.GetActiveRes();
+        _temporalIntRes = optScreen.resDropdown.value;
+        _temporalScreen = optScreen.fullScreen;
+        _temporalIntScreen = optScreen.screenDropdown.value;
 
+        // Aplicar cambios
+        optScreen.ChangeResolution(_temporalRes, _temporalScreen);
+
+        
     }
 
-    public void SetTemporalChanges()
+    public void CancelChanges()
     {
-        temporalRes = optScreen.GetActiveRes();
-    }
+        // Aplicar cambios directamente
+        optScreen.ChangeResolution(_temporalRes, _temporalScreen);
 
-    public void ApplyChanges()
-    {
-        optScreen.ChangeResolution(optScreen.GetActiveRes());
-        temporalRes = optScreen.GetActiveRes();
-    }
-
-    public void UndoChanges()
-    {
-        optScreen.ChangeResolution(temporalRes);
-        optScreen.resDropdown.SetValueWithoutNotify(optScreen.GetValueFromVector2Int(temporalRes));
+        // Aplicar cambios a la UI
+        optScreen.resDropdown.SetValueWithoutNotify(_temporalIntRes);
+        optScreen.screenDropdown.SetValueWithoutNotify(_temporalIntScreen);
     }
 }
