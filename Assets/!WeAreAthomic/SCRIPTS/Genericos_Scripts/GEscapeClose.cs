@@ -22,8 +22,6 @@ public class GEscapeClose : MonoBehaviour
         if (GameManagerSingleton.Instance.IsGamePaused)
         {
             actionsWhenEscape.Invoke();
-            MethodBase methodBase = MethodBase.GetCurrentMethod();
-            Debug.Log(methodBase.Name);
         }
     }
 }

@@ -42,7 +42,6 @@ public class OptionsScreen : MonoBehaviour
         }
 
         m_resText.text = resolutions[resIndex].x.ToString() + " x " +  resolutions[resIndex].y.ToString();
-        Debug.Log(resolutions.Count);
     }
 
     public void SetFullscreen(bool on)

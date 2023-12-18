@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts;
 using System.Collections;
 using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -78,7 +79,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAttack = GetComponent<MainCAttack>();
             _mainCMovement = GetComponent<MainCMovement>();
             _mainCLayers = GetComponent<MainCLayers>();
-            _mainCSwitch = GetComponent<MainCSwitchWeapon>();;
+            _mainCSwitch = GetComponent<MainCSwitchWeapon>(); ;
             _mainCRailGrind = GetComponent<MainCRailGrindSystem>();
             _mainCAnim = GetComponent<MainCAnimatorController>();
             _camFollower = cameraBaseObj.GetComponent<CameraFollower>();
@@ -86,7 +87,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCInterface = GetComponent<MainCPlayerInterface>();
 
             _playerInputActions = new PlayerInputActions();
-            _playerInputActions.Enable();           
+            _playerInputActions.Enable();
             _playerInputActions.Player.BastetAimAttack.performed += LeftMouseDown;
             _playerInputActions.Player.BastetAimAttack.canceled += LeftMouseUp;
             _playerInputActions.Player.SecondaryAttack.performed += RightMouseDown;
@@ -104,12 +105,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private protected void Update()
         {
 
-            if(_mainCMovement.IsGrounded())
+            if (_mainCMovement.IsGrounded())
             {
                 _typeOfAim = TypeOfAim.GroundAim;
             }
 
-            if(_mainCRailGrind.IsOnRail())
+            if (_mainCRailGrind.IsOnRail())
             {
                 _typeOfAim = TypeOfAim.RailAim;
             }
@@ -147,7 +148,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void LeftMouseDown(InputAction.CallbackContext context)
         {
             _isLeftMouseDown = true;
-            if(GameManagerSingleton.Instance.bastetEnergy >= 20 && Time.time > _totalCooldown && GameManagerSingleton.Instance.HasUnlockedBastetAttack)
+            if (GameManagerSingleton.Instance.bastetEnergy >= 20 && Time.time > _totalCooldown && GameManagerSingleton.Instance.HasUnlockedBastetAttack)
             {
                 Shoot();
             }
@@ -168,7 +169,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             while (true)
             {
-                if(!_isRecoveringShoot)
+                if (!_isRecoveringShoot)
                 {
                     break;
                 }
@@ -191,7 +192,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Aim()
         {
-            switch(_typeOfAim)
+            switch (_typeOfAim)
             {
                 case TypeOfAim.GroundAim:
                     AimingOnGround();
@@ -240,13 +241,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 Vector3 targetPoint;
 
                 Transform t = null;
-                if (Physics.Raycast(ray, out RaycastHit hit)) {
+                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, enemyHurtBox))
+                {
                     targetPoint = hit.point;
-                    if(hit.collider.gameObject.layer == enemyHurtBox)
+
                     t = hit.transform;
 
                 }
-                else {
+                else
+                {
+                    Debug.Log("hola1");
                     targetPoint = ray.GetPoint(75f);
                 }
                 _bastetController.Shoot(targetPoint, t, bigBullet, bulletSize, bulletSpeed, _pistolAttackData);
@@ -272,9 +276,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void AimingOnRail()
         {
-            if(_isRightMouseDown)
+            if (_isRightMouseDown)
             {
-                if(!_isAnimEnabled)
+                if (!_isAnimEnabled)
                 {
                     _mainCAnim.SetAimOnRail(true);
                     _isAnimEnabled = true;
@@ -290,7 +294,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _isAnimEnabled = false;
                     IsAiming = false;
                 }
-                
+
             }
         }
 
