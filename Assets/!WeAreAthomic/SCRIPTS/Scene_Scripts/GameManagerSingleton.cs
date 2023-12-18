@@ -33,6 +33,8 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public List<GameObject> closestGameObjectsList;
     public GameObject gamepadController;
 
+    public Vector2Int CurrentRes;
+
     public bool IsGamePaused;
     public bool thereIsCanvasBelow;
     public bool HasUnlockedBastetAttack;
@@ -41,6 +43,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public bool IsStopMenuEnabled;
     public bool IsSettingsMenuEnabled;
     public bool SkippedTutorial;
+    public bool IsFullscreen;
     private bool _toggledTotally;
 
     public int sensivityX;

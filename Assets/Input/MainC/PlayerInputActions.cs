@@ -161,6 +161,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeAbility"",
+                    ""type"": ""Button"",
+                    ""id"": ""6357323a-6323-483e-972c-ff583aab8568"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InvokeAbility"",
+                    ""type"": ""Button"",
+                    ""id"": ""e4a73913-acc2-4768-abb7-4a17ad41e0a3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -233,7 +251,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""752d3c7b-113e-4afc-b9da-b45c4dfbb8c3"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -310,7 +328,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f6bc9e42-8aed-44b1-b5cf-f5a9e5743d2f"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -343,7 +361,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""68a55374-19d9-4c85-a40c-2aedcfbb0ed9"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -480,6 +498,39 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Mouse"",
                     ""action"": ""BastetAimAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03c1a202-3d06-415a-96ff-9b7a7398a006"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ChangeAbility"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0d4b324e-d873-446f-b272-23fda7adb9fb"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""InvokeAbility"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""800a5df6-59c1-4675-ac9e-f361314feb19"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""InvokeAbility"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -710,6 +761,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
         m_Player_BastetAttack = m_Player.FindAction("BastetAttack", throwIfNotFound: true);
         m_Player_BastetAimAttack = m_Player.FindAction("BastetAimAttack", throwIfNotFound: true);
+        m_Player_ChangeAbility = m_Player.FindAction("ChangeAbility", throwIfNotFound: true);
+        m_Player_InvokeAbility = m_Player.FindAction("InvokeAbility", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
@@ -795,6 +848,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Escape;
     private readonly InputAction m_Player_BastetAttack;
     private readonly InputAction m_Player_BastetAimAttack;
+    private readonly InputAction m_Player_ChangeAbility;
+    private readonly InputAction m_Player_InvokeAbility;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -814,6 +869,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Escape => m_Wrapper.m_Player_Escape;
         public InputAction @BastetAttack => m_Wrapper.m_Player_BastetAttack;
         public InputAction @BastetAimAttack => m_Wrapper.m_Player_BastetAimAttack;
+        public InputAction @ChangeAbility => m_Wrapper.m_Player_ChangeAbility;
+        public InputAction @InvokeAbility => m_Wrapper.m_Player_InvokeAbility;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -868,6 +925,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @BastetAimAttack.started += instance.OnBastetAimAttack;
             @BastetAimAttack.performed += instance.OnBastetAimAttack;
             @BastetAimAttack.canceled += instance.OnBastetAimAttack;
+            @ChangeAbility.started += instance.OnChangeAbility;
+            @ChangeAbility.performed += instance.OnChangeAbility;
+            @ChangeAbility.canceled += instance.OnChangeAbility;
+            @InvokeAbility.started += instance.OnInvokeAbility;
+            @InvokeAbility.performed += instance.OnInvokeAbility;
+            @InvokeAbility.canceled += instance.OnInvokeAbility;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -917,6 +980,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @BastetAimAttack.started -= instance.OnBastetAimAttack;
             @BastetAimAttack.performed -= instance.OnBastetAimAttack;
             @BastetAimAttack.canceled -= instance.OnBastetAimAttack;
+            @ChangeAbility.started -= instance.OnChangeAbility;
+            @ChangeAbility.performed -= instance.OnChangeAbility;
+            @ChangeAbility.canceled -= instance.OnChangeAbility;
+            @InvokeAbility.started -= instance.OnInvokeAbility;
+            @InvokeAbility.performed -= instance.OnInvokeAbility;
+            @InvokeAbility.canceled -= instance.OnInvokeAbility;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1094,6 +1163,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnEscape(InputAction.CallbackContext context);
         void OnBastetAttack(InputAction.CallbackContext context);
         void OnBastetAimAttack(InputAction.CallbackContext context);
+        void OnChangeAbility(InputAction.CallbackContext context);
+        void OnInvokeAbility(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {

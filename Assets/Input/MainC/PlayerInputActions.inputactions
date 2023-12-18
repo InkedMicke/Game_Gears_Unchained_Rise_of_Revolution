@@ -139,6 +139,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ChangeAbility",
+                    "type": "Button",
+                    "id": "6357323a-6323-483e-972c-ff583aab8568",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "InvokeAbility",
+                    "type": "Button",
+                    "id": "e4a73913-acc2-4768-abb7-4a17ad41e0a3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -211,7 +229,7 @@
                 {
                     "name": "",
                     "id": "752d3c7b-113e-4afc-b9da-b45c4dfbb8c3",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/leftStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -288,7 +306,7 @@
                 {
                     "name": "",
                     "id": "f6bc9e42-8aed-44b1-b5cf-f5a9e5743d2f",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -321,7 +339,7 @@
                 {
                     "name": "",
                     "id": "68a55374-19d9-4c85-a40c-2aedcfbb0ed9",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -458,6 +476,39 @@
                     "processors": "",
                     "groups": "Mouse",
                     "action": "BastetAimAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "03c1a202-3d06-415a-96ff-9b7a7398a006",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ChangeAbility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d4b324e-d873-446f-b272-23fda7adb9fb",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "InvokeAbility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "800a5df6-59c1-4675-ac9e-f361314feb19",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "InvokeAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
