@@ -26,14 +26,19 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         BlueSoldier
     }
 
+    public enum TypeOfInput
+    {
+        gamepad,
+        pc
+    }
+
     public Settings settings;
     public DifficultyLevel _currentDifficulty = DifficultyLevel.historia;
+    public TypeOfInput typeOfInput = TypeOfInput.pc;
 
     public List<GameObject> gameObjectsList;
     public List<GameObject> closestGameObjectsList;
     public GameObject gamepadController;
-
-    public Vector2Int CurrentRes;
 
     public bool IsGamePaused;
     public bool thereIsCanvasBelow;
@@ -163,7 +168,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public void SetSkippedTutorial(bool condition)
     {
         SkippedTutorial = condition;
-    }
+    }    
 
     public void SetEventSystemSelectedObj(GameObject obj)
     {

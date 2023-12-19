@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UIChanges : MonoBehaviour
 {
+    [Header("General")]
+    [SerializeField] private List<GameObject> panels;
     [Header("Audio")]
     [Header("Graphics")]
     [SerializeField] private OptionsScreen optScreen;
@@ -12,9 +14,26 @@ public class UIChanges : MonoBehaviour
     private bool _temporalScreen;
     private int _temporalIntScreen;
     //[Header("Language")]
-    //[Header("Controls")]
+    [Header("Controls")]
+    [SerializeField] private OptionsControls optControls;
 
-    public void SaveChanges()
+    public void AutoSaveChanges()
+    {
+        foreach(var obj in panels)
+        {
+            if(obj.activeSelf)
+            {
+                break;
+            }
+        }
+    }
+
+    public void SaveChangesAudio()
+    {
+
+    }
+
+    public void SaveChangesGraphics()
     {
         // Actualizar variables temporales
         _temporalRes = optScreen.GetActiveRes();
@@ -25,8 +44,19 @@ public class UIChanges : MonoBehaviour
         // Aplicar cambios
         optScreen.ChangeResolution(_temporalRes, _temporalScreen);
 
-        
+
     }
+
+    public void SaveChangesLanguage()
+    {
+
+    }
+
+    public void SaveChangesControls()
+    {
+
+    }
+
 
     public void CancelChanges()
     {

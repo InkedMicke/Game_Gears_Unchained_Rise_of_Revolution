@@ -117,6 +117,7 @@ public class OptionsScreen : MonoBehaviour
 
     public Vector2Int GetActiveRes()
     {
+        Debug.Log(resDropdown.value);
         return resolutions[resDropdown.value];
     }
 
