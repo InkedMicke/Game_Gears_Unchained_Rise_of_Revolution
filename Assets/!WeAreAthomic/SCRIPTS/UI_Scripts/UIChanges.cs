@@ -6,7 +6,7 @@ public class UIChanges : MonoBehaviour
 {
     [Header("General")]
     [SerializeField] private List<GameObject> panels;
-    [Header("Audio")]
+    //[Header("Audio")]
     [Header("Graphics")]
     [SerializeField] private OptionsScreen optScreen;
     private Vector2Int _temporalRes;
@@ -16,13 +16,39 @@ public class UIChanges : MonoBehaviour
     //[Header("Language")]
     [Header("Controls")]
     [SerializeField] private OptionsControls optControls;
+    private TypeOfInput _temporalTypeInput = TypeOfInput.pc;
+    private int _temporalIntTypeInput;
+    private int _temporalSensivityX;
+    private int _temporalSensivityY;
+    private int _temporalSliderSensivityX;
+    private int _temporalSliderSensivityY;
+
+    private int _currentPanel;
 
     public void AutoSaveChanges()
     {
-        foreach(var obj in panels)
+        foreach (var obj in panels)
         {
-            if(obj.activeSelf)
+            _currentPanel++;
+            if (obj.activeSelf)
             {
+                switch (_currentPanel)
+                {
+                    case 1:
+                        SaveChangesAudio();
+                        break;
+                    case 2:
+                        SaveChangesGraphics();
+                        break;
+                    case 3:
+                        SaveChangesLanguage();
+                        break;
+                    case 4:
+                        Debug.Log("hola1");
+                        SaveChangesControls();
+                        break;
+                }
+                _currentPanel = 0;
                 break;
             }
         }
@@ -54,7 +80,16 @@ public class UIChanges : MonoBehaviour
 
     public void SaveChangesControls()
     {
+        // Actualizar variables temporales
+        _temporalTypeInput = GameManagerSingleton.Instance.typeOfInput;
+        _temporalIntTypeInput = optControls.inputDropdown.value;
+        _temporalSensivityX = GameManagerSingleton.Instance.sensivityX;
+        _temporalSensivityY = GameManagerSingleton.Instance.sensivityY;
+        _temporalSliderSensivityX = (int)optControls.sensivityXSlider.value;
+        _temporalSliderSensivityY = (int)optControls.sensivityYSlider.value;
 
+
+        // Aplicar cambios
     }
 
 
@@ -62,9 +97,16 @@ public class UIChanges : MonoBehaviour
     {
         // Aplicar cambios directamente
         optScreen.ChangeResolution(_temporalRes, _temporalScreen);
+        GameManagerSingleton.Instance.typeOfInput = _temporalTypeInput;
+        GameManagerSingleton.Instance.sensivityX = _temporalSensivityX;
+        GameManagerSingleton.Instance.sensivityY = _temporalSensivityY;
 
         // Aplicar cambios a la UI
         optScreen.resDropdown.SetValueWithoutNotify(_temporalIntRes);
         optScreen.screenDropdown.SetValueWithoutNotify(_temporalIntScreen);
+        optControls.inputDropdown.SetValueWithoutNotify(_temporalIntTypeInput);
+        optControls.sensivityXSlider.value = _temporalSliderSensivityX;
+        optControls.sensivityYSlider.value = _temporalSliderSensivityY;
+
     }
 }

@@ -3,6 +3,19 @@ using UnityEngine;
 using Hedenrag.ExVar;
 using UnityEngine.EventSystems;
 
+
+public enum TypeOfInput
+{
+    gamepad,
+    pc
+}
+
+public enum Language
+{
+    es,
+    en
+}
+
 public class GameManagerSingleton : SingletonScriptableObject<GameManagerSingleton>, ICallOnAll
 {
     public enum DifficultyLevel
@@ -26,12 +39,6 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         BlueSoldier
     }
 
-    public enum TypeOfInput
-    {
-        gamepad,
-        pc
-    }
-
     public Settings settings;
     public DifficultyLevel _currentDifficulty = DifficultyLevel.historia;
     public TypeOfInput typeOfInput = TypeOfInput.pc;
@@ -51,6 +58,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public bool IsFullscreen;
     private bool _toggledTotally;
 
+    public int maxSensivity;
     public int sensivityX;
     public int sensivityY;
 

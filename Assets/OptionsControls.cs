@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OptionsControls : MonoBehaviour
 {
-    [SerializeField] private TMP_Dropdown inputDropdown;
+    public TMP_Dropdown inputDropdown;
+    public Slider sensivityXSlider;
+    public Slider sensivityYSlider;
 
     public void ValueFromInputDropdown(int value)
     {
         if(value == 0)
         {
-            //GameManagerSingleton.Instance.typeOfInput = GameManagerSingleton.TypeOfInput.pc;
+            GameManagerSingleton.Instance.typeOfInput = TypeOfInput.pc;
         }
         else
         {
-            //GameManagerSingleton.Instance.typeOfInput = GameManagerSingleton.TypeOfInput.gamepad;
+            GameManagerSingleton.Instance.typeOfInput = TypeOfInput.gamepad;
         }
     }
 }

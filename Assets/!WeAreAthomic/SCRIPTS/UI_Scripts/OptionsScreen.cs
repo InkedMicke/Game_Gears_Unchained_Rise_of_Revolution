@@ -7,6 +7,7 @@ public class OptionsScreen : MonoBehaviour
 {
     public TMP_Dropdown resDropdown;
     public TMP_Dropdown screenDropdown;
+    public TMP_Dropdown qualityDropdown;
 
     private Vector2Int screenSize;
 
@@ -17,6 +18,8 @@ public class OptionsScreen : MonoBehaviour
 
     public List<Vector2Int> resolutions = new List<Vector2Int>();
     public List<string> resString = new List<string>();
+    private List<string> qualityListES;
+    private List<string> qualityListEN;
 
     private void Awake()
     {
@@ -27,6 +30,19 @@ public class OptionsScreen : MonoBehaviour
         resolutions.Add(new Vector2Int(1366, 768));
         resolutions.Add(new Vector2Int(1600, 900));
         resolutions.Add(new Vector2Int(1920, 1080));
+
+        qualityListES.Add("BAJA");
+        qualityListES.Add("MEDIA");
+        qualityListES.Add("ALTA");
+        qualityListES.Add("ULTRA");
+
+        qualityListEN.Add("LOW");
+        qualityListEN.Add("MID");
+        qualityListEN.Add("HIGH");
+        qualityListEN.Add("ULTRA");
+
+        qualityDropdown.ClearOptions();
+        qualityDropdown.AddOptions(qualityListES);
 
         foreach (var res in resolutions)
         {
