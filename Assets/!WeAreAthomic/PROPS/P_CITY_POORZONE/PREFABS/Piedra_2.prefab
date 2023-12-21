@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 350738185788271504}
   - component: {fileID: 2810812995568048153}
   - component: {fileID: 1812210873383240204}
-  - component: {fileID: 5224926684335873143}
+  - component: {fileID: 26918348780433907}
   m_Layer: 11
   m_Name: Piedra_2
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5224926684335873143
-BoxCollider:
+--- !u!64 &26918348780433907
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,6 +102,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5392078, y: 0.50661385, z: 0.7715069}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5302568919011541938, guid: 64788d606de9fd046824d767944533e8, type: 3}

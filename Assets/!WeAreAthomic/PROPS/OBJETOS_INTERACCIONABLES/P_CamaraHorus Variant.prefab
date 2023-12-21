@@ -92,7 +92,7 @@ Light:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 100
   m_Range: 10
-  m_SpotAngle: 30
+  m_SpotAngle: 55
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
@@ -247,8 +247,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.9
-  m_Height: 4.16
+  m_Radius: 1.2
+  m_Height: 6
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &724838008337620578
@@ -375,7 +375,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8301025668205715062}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.39, y: 1.47, z: 5.69}
+  m_LocalPosition: {x: 1.39, y: 5, z: 5.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -666,7 +666,7 @@ MonoBehaviour:
   obstructionLayer:
     serializedVersion: 2
     m_Bits: 2048
-  rotationSpeed: 50
+  rotationSpeed: 10
   redLightSpeedWhenChasing: 0.5
   objectsToLookAt: []
   seActivanCuandoSeEnciendeLaCamara: []
@@ -683,7 +683,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 868ef9a1ad35fee41bdd8fdb9359ed53, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.03
   m_Pitch: 1
   Loop: 1
   Mute: 0
