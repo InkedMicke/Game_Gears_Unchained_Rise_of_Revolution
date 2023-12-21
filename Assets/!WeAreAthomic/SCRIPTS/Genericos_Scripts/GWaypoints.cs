@@ -12,7 +12,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts {
                 Gizmos.DrawSphere(t.position, waypointsSize);
             }
 
-            Gizmos.color = Color.red;
+            Gizmos.color = Color.yellow;
             for (int i = 0; i < transform.childCount - 1; i++) {
                 Gizmos.DrawLine(transform.GetChild(i).position, transform.GetChild(i + 1).position);
             }
