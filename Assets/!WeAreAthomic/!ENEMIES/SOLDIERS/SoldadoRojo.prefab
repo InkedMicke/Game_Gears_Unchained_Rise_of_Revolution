@@ -160,6 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4790905211562971815}
   - component: {fileID: 6751121438588578715}
+  - component: {fileID: 3703994341950143804}
   - component: {fileID: 7730352689891949153}
   - component: {fileID: 781794855474848299}
   - component: {fileID: 2243072282387716024}
@@ -213,6 +214,27 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &3703994341950143804
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8414676083931559048}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 76ce5392553f1ba429ad2cde5c60f663, type: 3}
+  m_Controller: {fileID: 9100000, guid: db08918d33e3ba24b9918b4eaa3408d3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &7730352689891949153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,7 +767,8 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4c25550d9d761c84c8c694ce211ad565, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 76ce5392553f1ba429ad2cde5c60f663, type: 3}
     m_RemovedGameObjects:
     - {fileID: -8513424388201257645, guid: 76ce5392553f1ba429ad2cde5c60f663, type: 3}
     m_AddedGameObjects:
