@@ -8,7 +8,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts {
 
         private void OnDrawGizmos() {
             foreach (Transform t in transform) {
-                Gizmos.color = Color.blue;
+                Gizmos.color = Color.yellow;
                 Gizmos.DrawSphere(t.position, waypointsSize);
             }
 
