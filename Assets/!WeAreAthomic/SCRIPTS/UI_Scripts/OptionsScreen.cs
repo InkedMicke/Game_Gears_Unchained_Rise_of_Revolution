@@ -18,8 +18,8 @@ public class OptionsScreen : MonoBehaviour
 
     public List<Vector2Int> resolutions = new List<Vector2Int>();
     public List<string> resString = new List<string>();
-    private List<string> qualityListES;
-    private List<string> qualityListEN;
+    public List<string> qualityListES;
+    public List<string> qualityListEN;
 
     private void Awake()
     {
@@ -133,7 +133,6 @@ public class OptionsScreen : MonoBehaviour
 
     public Vector2Int GetActiveRes()
     {
-        Debug.Log(resDropdown.value);
         return resolutions[resDropdown.value];
     }
 
