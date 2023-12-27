@@ -188,7 +188,6 @@ GameObject:
   - component: {fileID: 626877159642984629}
   - component: {fileID: 6708588474655486696}
   - component: {fileID: 2675127905269865268}
-  - component: {fileID: 3131649111447163280}
   - component: {fileID: 2926012163222276709}
   m_Layer: 9
   m_Name: DummieHurtBox
@@ -258,27 +257,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!65 &3131649111447163280
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6142278380004551508}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.53614324, y: 1.9678844, z: 0.39413095}
-  m_Center: {x: -0.003822898, y: -0.31435186, z: 0.009549012}
 --- !u!136 &2926012163222276709
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -298,10 +276,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.18706092
-  m_Height: 1
+  m_Radius: 0.28
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.36, z: 0}
 --- !u!1001 &2344443533420448137
 PrefabInstance:
   m_ObjectHideFlags: 0
