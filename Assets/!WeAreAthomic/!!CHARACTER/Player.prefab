@@ -2261,7 +2261,7 @@ CharacterController:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 131072
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -2460,6 +2460,7 @@ MonoBehaviour:
   robotObj: {fileID: 0}
   isHackingAnim: 0
   IsHacking: 0
+  GotCahed: 0
 --- !u!114 &8156547131111017134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2507,7 +2508,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c3e7cc2b29a15bf49a9dd8c2b7be455a, type: 3}
   - {fileID: 8300000, guid: 59fe9332e57f3a4469d1e26c39f7094c, type: 3}
   - {fileID: 8300000, guid: 3afc4ea8b9cd31e4483174373995ecf9, type: 3}
-  tutorialVolume: 0.692
+  tutorialVolume: 1
   expressionClips:
   - {fileID: 8300000, guid: 8b2218acda9b13f4ab519784929fc0cc, type: 3}
   expressionVolume: 0.4
@@ -2545,14 +2546,30 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d2a4eedee5b5ff24e8500ed7313395a1, type: 3}
   - {fileID: 8300000, guid: 1caa3297b5b50c243899e0b14bca7b07, type: 3}
   jumpVolume: 0.4
+  stepClipsIndoors:
+  - {fileID: 8300000, guid: 55743f2285a1c9341b142e12f16a6c14, type: 3}
+  - {fileID: 8300000, guid: a86b0507d78e0634ba83254d241cda0b, type: 3}
+  - {fileID: 8300000, guid: 1f8158a29e0ccc246bae75e636eb609b, type: 3}
+  - {fileID: 8300000, guid: 977097805a801224890ad07bfc8f40e9, type: 3}
+  - {fileID: 8300000, guid: 00f03c69fab166d43a1e692eb53bc14d, type: 3}
+  stepClipsIndoorsVolume: 0.002
+  stepClipsOutdoors:
+  - {fileID: 8300000, guid: 551db9228fafef641a482ad4954011b9, type: 3}
+  - {fileID: 8300000, guid: b9d8d2cf55783ab4b85a33475ad5d73d, type: 3}
+  - {fileID: 8300000, guid: 842ec46584c628e44b22a311f5d5615f, type: 3}
+  - {fileID: 8300000, guid: e39de2678ed823343aeee7343e3671f9, type: 3}
+  - {fileID: 8300000, guid: 8113d6a59376d9c49a2ff125a19c5d47, type: 3}
+  - {fileID: 8300000, guid: 756531757a930e24b8a2378598efd903, type: 3}
+  - {fileID: 8300000, guid: a3484a1e2c71ca9409ef66a405bc1f0c, type: 3}
+  stepClipsOutdoorsVolume: 0
   callBastetClips:
   - {fileID: 8300000, guid: c0db11289318383458628e57136a3fb7, type: 3}
   - {fileID: 8300000, guid: eecce41de82063f4583f405db0fa03c0, type: 3}
   callBasteVolume: 0.5
   hackInProcess: {fileID: 8300000, guid: 1db1809132fa24649b702638c59b7cfd, type: 3}
-  hackInProcessVolume: 0.113
+  hackInProcessVolume: 0.01
   cannotHack: {fileID: 8300000, guid: 7e320e868c3b35a49bfdc9edaa3801f0, type: 3}
-  cannotHackVolume: 0.2
+  cannotHackVolume: 0.02
   howFight: {fileID: 8300000, guid: a84e748eb901d2d42a488df4f5295d48, type: 3}
   howFightVolume: 0.5
 --- !u!114 &6156758546523602922
@@ -3791,7 +3808,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 131072
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -3820,7 +3837,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 131072
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1

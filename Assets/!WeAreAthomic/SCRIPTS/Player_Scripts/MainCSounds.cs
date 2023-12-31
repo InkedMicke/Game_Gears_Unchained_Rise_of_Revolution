@@ -41,6 +41,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private List<AudioClip> jumpClips;
         [Range(0, 1)]
         [SerializeField] private float jumpVolume;
+        [SerializeField] private List<AudioClip> stepClipsIndoors;
+        [Range(0, 1)]
+        [SerializeField] private float stepClipsIndoorsVolume;
+        [SerializeField] private List<AudioClip> stepClipsOutdoors;
+        [Range(0, 1)]
+        [SerializeField] private float stepClipsOutdoorsVolume;
         [SerializeField] private List<AudioClip> callBastetClips;
         [Range(0, 1)]
         [SerializeField] private float callBasteVolume;
@@ -309,6 +315,20 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 currentAudioSource.outputAudioMixerGroup = sfxMixer;
                 currentAudioSource.clip = jumpClips[randomNumber];
                 currentAudioSource.volume = jumpVolume;
+                currentAudioSource.Play();
+            }
+        }
+        public void PlayStepsIndoorsSound()
+        {
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+
+            var randomNumber = Random.Range(0, stepClipsIndoors.Count);
+
+            if (currentAudioSource != null)//Hay que hacer aqui un IF estamos en suelo interior o suelo exterior
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = stepClipsIndoors[randomNumber];
+                currentAudioSource.volume = stepClipsIndoorsVolume;
                 currentAudioSource.Play();
             }
         }
