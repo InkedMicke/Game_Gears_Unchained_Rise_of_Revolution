@@ -73,6 +73,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _closestDistance = Mathf.Infinity;
         private float _totalCooldown;
 
+        [SerializeField] private AudioSource shootSoundClip;
         private void Awake()
         {
             _mainCAttack = GetComponent<MainCAttack>();
@@ -235,6 +236,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _isWaitingForRecoveringShoot = false;
                 _isRecoveringShoot = false;
                 _isShooting = true;
+                shootSoundClip.Play();
                 var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
 
                 Vector3 targetPoint;
