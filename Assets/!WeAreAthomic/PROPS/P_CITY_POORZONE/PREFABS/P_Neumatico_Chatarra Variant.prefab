@@ -63,6 +63,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 1.329
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bf61535f903e8d24bb69f11a3487f34c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bf61535f903e8d24bb69f11a3487f34c,
         type: 3}
       propertyPath: m_Name
@@ -71,7 +76,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: bf61535f903e8d24bb69f11a3487f34c,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -80,7 +85,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bf61535f903e8d24bb69f11a3487f34c,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 123927661811950291}
+      addedObject: {fileID: 7193878673018970693}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bf61535f903e8d24bb69f11a3487f34c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5547527018667386602}
   m_SourcePrefab: {fileID: 100100000, guid: bf61535f903e8d24bb69f11a3487f34c, type: 3}
 --- !u!1 &52562620574834585 stripped
 GameObject:
@@ -88,8 +97,35 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 899546459406246600}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &123927661811950291
-SphereCollider:
+--- !u!54 &7193878673018970693
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52562620574834585}
+  serializedVersion: 4
+  m_Mass: 14
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!65 &5547527018667386602
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -107,5 +143,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.9244824
-  m_Center: {x: 0.000007631445, y: 0.27529642, z: -0.0000001870184}
+  m_Size: {x: 1.8489648, y: 0.55059284, z: 1.702538}
+  m_Center: {x: 0.000007628735, y: 0.27529657, z: 0.03939768}
