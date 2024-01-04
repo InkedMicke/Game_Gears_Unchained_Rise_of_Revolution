@@ -2170,7 +2170,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3007980108983807698}
   - component: {fileID: 7472576631926805804}
-  - component: {fileID: 3477356686648307400}
   m_Layer: 5
   m_Name: Graphic_Panel_OK
   m_TagString: Untagged
@@ -2211,6 +2210,7 @@ MonoBehaviour:
   resDropdown: {fileID: 4575605580980255599}
   screenDropdown: {fileID: 1456749710342459463}
   qualityDropdown: {fileID: 1185567050893323449}
+  antiAliDropdown: {fileID: 5410620640971394752}
   _urpQualityLow: {fileID: 11400000, guid: c4251f1f1c30c414d9cd257c9d9edaad, type: 2}
   _urpQualityMedium: {fileID: 11400000, guid: d0e2fc18fe036412f8223b3b3d9ad574, type: 2}
   _urpQualityHigh: {fileID: 11400000, guid: e1260c1148f6143b28bae5ace5e9c5d1, type: 2}
@@ -2220,23 +2220,6 @@ MonoBehaviour:
   resString: []
   qualityListES: []
   qualityListEN: []
---- !u!114 &3477356686648307400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 909330678329187781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9816f4d6f6fdec74a9ee756c42e191f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  qualityDropdown: {fileID: 1185567050893323449}
-  _urpQualityLow: {fileID: 0}
-  _urpQualityMedium: {fileID: 11400000, guid: d0e2fc18fe036412f8223b3b3d9ad574, type: 2}
-  _urpQualityHigh: {fileID: 11400000, guid: e1260c1148f6143b28bae5ace5e9c5d1, type: 2}
-  _urpQualityUltra: {fileID: 11400000, guid: 7b7fd9122c28c4d15b667c7040e3b3fd, type: 2}
 --- !u!1 &921108993984136597
 GameObject:
   m_ObjectHideFlags: 0
@@ -2644,7 +2627,7 @@ GameObject:
   - component: {fileID: 318044712774866438}
   - component: {fileID: 5410620640971394752}
   m_Layer: 5
-  m_Name: ES/EN_LANDROPDOWN (5)
+  m_Name: ES/EN_AntiAli
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2771,7 +2754,19 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7472576631926805804}
+        m_TargetAssemblyTypeName: OptionsScreen, Assembly-CSharp
+        m_MethodName: SetQualityLevelDropdown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!1 &1093593479058273651
 GameObject:
@@ -3455,7 +3450,7 @@ GameObject:
   - component: {fileID: 2476091788757512343}
   - component: {fileID: 4575605580980255599}
   m_Layer: 5
-  m_Name: ES/EN_LANDROPDOWN (3)
+  m_Name: ES/EN_resolucion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5970,7 +5965,7 @@ GameObject:
   - component: {fileID: 7604258854767165489}
   - component: {fileID: 1185567050893323449}
   m_Layer: 5
-  m_Name: ES/EN_LANDROPDOWN (6)
+  m_Name: ES/EN_QualitySett
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16800,7 +16795,7 @@ GameObject:
   - component: {fileID: 2189264491008165018}
   - component: {fileID: 1456749710342459463}
   m_Layer: 5
-  m_Name: ES/EN_LANDROPDOWN (4)
+  m_Name: ES/EN_pantallacompleta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20389,7 +20384,7 @@ GameObject:
   - component: {fileID: 2230821090200183325}
   - component: {fileID: 7938317299860747857}
   m_Layer: 5
-  m_Name: ES_LANDROPDOWN (6)
+  m_Name: ES_Sombras
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

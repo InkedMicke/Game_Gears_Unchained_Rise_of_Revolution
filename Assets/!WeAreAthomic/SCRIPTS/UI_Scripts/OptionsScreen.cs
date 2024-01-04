@@ -9,9 +9,7 @@ public class OptionsScreen : MonoBehaviour
     public TMP_Dropdown resDropdown;
     public TMP_Dropdown screenDropdown;
     public TMP_Dropdown qualityDropdown;
-
-
-    
+    public TMP_Dropdown antiAliDropdown;
 
     [SerializeField] private UniversalRenderPipelineAsset _urpQualityLow;
     [SerializeField] private UniversalRenderPipelineAsset _urpQualityMedium;
@@ -176,4 +174,6 @@ public class OptionsScreen : MonoBehaviour
 
         QualitySettings.SetQualityLevel(index, false);
     }
+
+  
 }
