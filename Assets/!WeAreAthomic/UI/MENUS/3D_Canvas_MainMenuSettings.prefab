@@ -2170,13 +2170,14 @@ GameObject:
   m_Component:
   - component: {fileID: 3007980108983807698}
   - component: {fileID: 7472576631926805804}
+  - component: {fileID: 3477356686648307400}
   m_Layer: 5
   m_Name: Graphic_Panel_OK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3007980108983807698
 Transform:
   m_ObjectHideFlags: 0
@@ -2213,6 +2214,25 @@ MonoBehaviour:
   fullScreen: 0
   resolutions: []
   resString: []
+  qualityListES: []
+  qualityListEN: []
+--- !u!114 &3477356686648307400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 909330678329187781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9816f4d6f6fdec74a9ee756c42e191f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  qualityDropdown: {fileID: 1185567050893323449}
+  _urpQualityLow: {fileID: 0}
+  _urpQualityMedium: {fileID: 11400000, guid: d0e2fc18fe036412f8223b3b3d9ad574, type: 2}
+  _urpQualityHigh: {fileID: 11400000, guid: e1260c1148f6143b28bae5ace5e9c5d1, type: 2}
+  _urpQualityUltra: {fileID: 11400000, guid: 7b7fd9122c28c4d15b667c7040e3b3fd, type: 2}
 --- !u!1 &921108993984136597
 GameObject:
   m_ObjectHideFlags: 0
@@ -6069,9 +6089,23 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: RAPIDA
       m_Image: {fileID: 0}
+    - m_Text: MUYRAPIDA
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3477356686648307400}
+        m_TargetAssemblyTypeName: C_SetQuality, Assembly-CSharp
+        m_MethodName: SetQualityLevelDropdown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!1 &2766071595328782849
 GameObject:
@@ -15288,7 +15322,7 @@ RectTransform:
   - {fileID: 8097478540004144009}
   - {fileID: 5765031653857759198}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 16.349, y: 179.607, z: 21.59}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
