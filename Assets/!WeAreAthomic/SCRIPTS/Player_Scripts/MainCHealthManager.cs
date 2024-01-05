@@ -23,7 +23,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _anim = GetComponentInParent<Animator>();
             _cc = GetComponentInParent<CharacterController>();
             _mainCRagdoll = GetComponentInParent<MainCRagdoll>();
-            _mainSounds = GetComponent<MainCSounds>();
+            _mainSounds = GetComponentInParent<MainCSounds>();
         }
 
         private void Start()

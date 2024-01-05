@@ -45,7 +45,6 @@ public class UIChanges : MonoBehaviour
                         SaveChangesLanguage();
                         break;
                     case 4:
-                        Debug.Log("hola1");
                         SaveChangesControls();
                         break;
                 }
