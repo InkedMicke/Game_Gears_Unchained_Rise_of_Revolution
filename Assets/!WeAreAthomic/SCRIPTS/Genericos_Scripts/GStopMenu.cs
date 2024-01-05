@@ -2,6 +2,7 @@ using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 {
@@ -14,6 +15,8 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 
         [SerializeField] private GameObject stopMenuContainer;
         [SerializeField] private GameObject firstButton;
+        [SerializeField] private GameObject playerInterface;
+        [SerializeField] private GameObject tutKeys;
 
         private bool _isActive;
 
@@ -25,14 +28,27 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
-            _playerInputActions.Player.Escape.performed += ToggleMenu;
+            _playerInputActions.PlayerPC.Escape.performed += InputPC;
+            _playerInputActions.PlayerGamepad.Escape.performed += InputGamepad;
         }
 
-        private void Update()
+        private void InputPC(InputAction.CallbackContext context)
         {
+            if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            {
+                ToggleMenu();
+            }
         }
 
-        private void ToggleMenu(InputAction.CallbackContext context)
+        private void InputGamepad(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+            {
+                ToggleMenu();
+            }
+        }
+
+        private void ToggleMenu()
         {
             if (!GameManagerSingleton.Instance.IsSettingsMenuEnabled)
             {
@@ -43,6 +59,8 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                     {
                         GameManagerSingleton.Instance.CursorMode(false);
                     }
+                    tutKeys.SetActive(true);
+                    playerInterface.SetActive(true);
                     GameManagerSingleton.Instance.PauseGame(false);
                     GameManagerSingleton.Instance.FreezeTime(false);
                     GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
@@ -61,6 +79,8 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                         EventSystem.current.SetSelectedGameObject(firstButton);
                     }
                     stopMenuContainer.SetActive(true);
+                    tutKeys.SetActive(false);
+                    playerInterface.SetActive(false);
                     GameManagerSingleton.Instance.CursorMode(true);
                     GameManagerSingleton.Instance.PauseGame(true);
                     GameManagerSingleton.Instance.FreezeTime(true);

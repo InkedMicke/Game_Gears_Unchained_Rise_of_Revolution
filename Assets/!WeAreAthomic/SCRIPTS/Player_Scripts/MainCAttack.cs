@@ -78,9 +78,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
-            _playerInputActions.Player.Attack.performed += NextCombo;
-            _playerInputActions.Player.Attack.performed += MouseDown;
-            _playerInputActions.Player.Attack.canceled += MouseUp;
+            _playerInputActions.PlayerPC.Attack.performed += NextCombo;
+            _playerInputActions.PlayerPC.Attack.performed += MouseDown;
+            _playerInputActions.PlayerPC.Attack.canceled += MouseUp;
+            _playerInputActions.PlayerGamepad.Attack.performed += NextCombo;
+            _playerInputActions.PlayerGamepad.Attack.performed += GamepadDown;
+            _playerInputActions.PlayerGamepad.Attack.canceled += GamepadUp;
 
             _weaponBC = weaponObj.GetComponent<BoxCollider>();
             _canAttack = false;
@@ -93,12 +96,39 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             ChargeAttack();
         }
 
+        private void GamepadDown(InputAction.CallbackContext context)
+        {
+            if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+            {
+                ControlDown();
+            }
+        }
+
+        private void GamepadUp(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+            {
+                ControlUp();
+            }
+        }
+
         private void MouseDown(InputAction.CallbackContext context)
         {
-            _isLeftMousePressed = true;
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            {
+                ControlDown();
+            }
         }
 
         private void MouseUp(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            {
+                ControlUp();
+            }
+        }
+
+        private void ControlUp()
         {
             _isLeftMousePressed = false;
             Attack();
@@ -115,14 +145,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCTutorial.SetFirstAbilityAttack(false);
                     GameManagerSingleton.Instance.TakeEnergy(75);
                     _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
+                    _mainCSounds.RemoveAllTutorialSounds();
+                    _mainCSounds.PlayExpressionSound();
                 }
 
-                if(_mainCTutorial.FirstTimeAbility && scannerInst.transform.localScale.x < scannerSize)
+                if (_mainCTutorial.FirstTimeAbility && scannerInst.transform.localScale.x < scannerSize)
                 {
                     EndAttack();
                     tut_ES.transform.GetChild(1).gameObject.SetActive(false);
                     tut_ES.transform.GetChild(0).gameObject.SetActive(true);
-                    if(scannerInst != null)
+                    if (scannerInst != null)
                     {
                         Destroy(scannerInst);
                     }
@@ -134,19 +166,24 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                 var arrows = GameObject.FindGameObjectsWithTag("ArrowDisplayer");
 
-                if(arrows.Length > 0)
+                if (arrows.Length > 0)
                 {
-                    foreach(var arrow in arrows)
+                    foreach (var arrow in arrows)
                     {
                         Destroy(arrow);
                     }
                 }
 
-                if(!_mainCTutorial.FirstTimeAbility)
+                if (!_mainCTutorial.FirstTimeAbility)
                 {
                     SetAttackCount(5);
                 }
             }
+        }
+
+        private void ControlDown()
+        {
+            _isLeftMousePressed = true;
         }
 
         private void Attack()

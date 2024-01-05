@@ -97,7 +97,6 @@ public class UIChanges : MonoBehaviour
     public void CancelChanges()
     {
         // Aplicar cambios directamente
-        Debug.LogError(_temporalScreenMode + " + " + _temporalRes);
         GameManagerSingleton.Instance.typeOfInput = _temporalTypeInput;
         GameManagerSingleton.Instance.sensivityX = _temporalSensivityX;
         GameManagerSingleton.Instance.sensivityY = _temporalSensivityY;

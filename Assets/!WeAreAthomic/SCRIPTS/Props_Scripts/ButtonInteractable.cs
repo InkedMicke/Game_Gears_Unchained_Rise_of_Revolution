@@ -16,8 +16,9 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         [SerializeField] private TypeOfHacked typeOfHacked;
 
-        [SerializeField] private GameObject _eButtonObj;
-        [SerializeField] private GameObject _circleObj;
+        [SerializeField] private GameObject eButtonObj;
+        [SerializeField] private GameObject eastButtonObj;
+        [SerializeField] private GameObject circleObj;
         private GameObject _cameraObj;
         private GameObject _playerObj;
 
@@ -52,11 +53,11 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         {
             if (Vector3.Distance(transform.position, _playerTr.position) < 10 && !_isShowingButton && !_mainCHacking.IsHacking)
             {
-                _circleObj.SetActive(true);
+                circleObj.SetActive(true);
             }
             else
             {
-                _circleObj.SetActive(false);
+                circleObj.SetActive(false);
             }
         }
 
@@ -81,6 +82,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             if (canHack)
             {
                 seActivanCuandoTerminaElHack.Invoke();
+                isActive = false;
             }
         }
 
@@ -89,14 +91,24 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             if (!_mainCHacking.IsHacking) 
             {
                 _isShowingButton = true;
-                _eButtonObj.SetActive(true);
+                switch (GameManagerSingleton.Instance.typeOfInput)
+                {
+                    case TypeOfInput.pc:
+                        eButtonObj.SetActive(true);
+                        break;               
+                    case TypeOfInput.gamepad:
+                        eastButtonObj.SetActive(true);
+                        break;
+                }
+                eButtonObj.SetActive(true);
             }
         }
 
         public void HideButton()
         {
             _isShowingButton = false;
-            _eButtonObj.SetActive(false);
+            eButtonObj.SetActive(false);
+            eastButtonObj.SetActive(false);
         }
 
         public void EnableCanHack()
@@ -111,6 +123,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             {
                 _mainCHacking.StopHack();
                 seActivanCuandoEstasHackenadoYSeCancela.Invoke();
+                isActive = false;
             }
         }
 

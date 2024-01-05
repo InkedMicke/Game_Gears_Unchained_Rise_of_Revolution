@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,10 +5,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 {
     public class CameraFollower : MonoBehaviour
     {
-        private PlayerInput _playerInput;
         protected PlayerInputActions _playerInputActions;
-        private MainCPistol _mainCPistol;
-        private MainCTutorialChecker _mainCTutorial;
 
         protected Quaternion LocalRotation;
 
@@ -39,8 +31,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
         private void Start()
         {
             cameraFollow = GameObject.FindGameObjectWithTag("Camera_Follow").transform;
-            _mainCPistol = GameObject.FindGameObjectWithTag("Player").GetComponent<MainCPistol>();
-            _mainCTutorial = GameObject.FindGameObjectWithTag("Player").GetComponent<MainCTutorialChecker>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Camera.Enable();
@@ -65,13 +55,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 
         private void LookCamera()
         {
-            controllerVector = _playerInputActions.Camera.Look.ReadValue<Vector2>();
+
             // We setup the rotation of the sticks here
+
+            controllerVector = _playerInputActions.Camera.Look.ReadValue<Vector2>();
+
 
             mouseVector = Mouse.current.delta.ReadValue() * Time.smoothDeltaTime;
 
-            _finalInputX = (controllerVector.x * controllerSensitivityX) + (mouseVector.x * mouseSensitivityX);
-            _finalInputY = (-(controllerVector.y) * controllerSensitivityY) + -(mouseVector.y * mouseSensitivityY);
+            _finalInputX = mouseVector.x * mouseSensitivityX + (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad ? controllerVector.x * controllerSensitivityX : 0);
+            _finalInputY = -(mouseVector.y * mouseSensitivityY) + (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad ? -controllerVector.y * controllerSensitivityY : 0);
 
             _rotY += _finalInputX * Time.deltaTime;
             _rotX += _finalInputY * Time.deltaTime;

@@ -1707,7 +1707,6 @@ GameObject:
   - component: {fileID: 2335585093335240332}
   - component: {fileID: 6328901879445383314}
   - component: {fileID: 650044349492970980}
-  - component: {fileID: 721661188810802954}
   - component: {fileID: 4980552153837842974}
   m_Layer: 10
   m_Name: Trigger
@@ -1779,18 +1778,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &721661188810802954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4023805449930896912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22a9c9c17e4fa4446b7e5275b50c8eab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4980552153837842974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1803,6 +1790,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c698f1c9be28b4c83d5918781b6e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  seActivaCuandoEstaElTiempoNecesarioDentro:
+    m_PersistentCalls:
+      m_Calls: []
+  IsPlayerInside: 0
+  IsActivated: 0
 --- !u!1 &4202889767421102456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1869,6 +1861,7 @@ MonoBehaviour:
   lateralTresspasingContainer: {fileID: 5151868597141770415}
   leftTutorial: {fileID: 0}
   movableFloorPivot: {fileID: 0}
+  triggerElevator: {fileID: 0}
   speedOfFloor: 0.1
   seActivaCuandoVaASubir:
     m_PersistentCalls:

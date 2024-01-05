@@ -76,6 +76,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float pushJumpForce = 10f;
         [SerializeField] private float pushMaxHeight = 5f;
         [SerializeField] private float pushJumpDuration = 2f;
+        [SerializeField] private float dashSpeed = 20f;
+        [SerializeField] private float dashCooldown = 2f;
         public float turnSmoothTime = 0.1f;
         private float _moveSpeed;
         private float _horizontal;
@@ -85,6 +87,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _moveAimingX;
         private float _moveAimingY;
         private float _pushTimeElapsed;
+        private float _dashTime = .10f;
+        private float _dashTotalCooldown;
 
         private void Awake()
         {
@@ -99,6 +103,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _playerInputActions = new PlayerInputActions();
             _mainCHealth = GetComponentInChildren<MainCHealthManager>();
+            
             _currentScene = SceneManager.GetActiveScene();
             if(_currentScene.name == "S2_LABTUTORIAL" || _currentScene.name ==  "TESTING")
             {
@@ -111,22 +116,36 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
 
             _canMove = true;
+
+            GameManagerSingleton.Instance.PauseGame(false);
+            GameManagerSingleton.Instance.SetIsSettingsMenuEnabled(false);
+            GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
         }
 
         private void OnEnable()
         {
             _playerInputActions.Enable();
-            _playerInputActions.Player.Running.performed += RunOn;
-            _playerInputActions.Player.Running.canceled += RunOff;
-            _playerInputActions.Player.Crouch.performed += StartEndCrouch;
+            _playerInputActions.PlayerPC.Running.performed += RunOn;
+            _playerInputActions.PlayerPC.Running.canceled += RunOff;
+            _playerInputActions.PlayerPC.Crouch.performed += StartEndCrouch;
+            _playerInputActions.PlayerPC.Jump.performed += StartDashPC;
+            _playerInputActions.PlayerGamepad.Running.performed += RunOn;
+            _playerInputActions.PlayerGamepad.Running.canceled += RunOff;
+            _playerInputActions.PlayerGamepad.Crouch.performed += StartEndCrouch;
+            _playerInputActions.PlayerGamepad.Jump.performed += StartDashGamepad;
         }
 
-        private void OnDisable()
+        private void OnDisable() 
         {
             _playerInputActions.Disable();
-            _playerInputActions.Player.Running.performed -= RunOn;
-            _playerInputActions.Player.Running.canceled -= RunOff;
-            _playerInputActions.Player.Crouch.performed -= StartEndCrouch;
+            _playerInputActions.PlayerPC.Running.performed -= RunOn;
+            _playerInputActions.PlayerPC.Running.canceled -= RunOff;
+            _playerInputActions.PlayerPC.Crouch.performed -= StartEndCrouch;
+            _playerInputActions.PlayerPC.Jump.performed -= StartDashPC;
+            _playerInputActions.PlayerGamepad.Running.performed -= RunOn;
+            _playerInputActions.PlayerGamepad.Running.canceled -= RunOff;
+            _playerInputActions.PlayerGamepad.Crouch.performed -= StartEndCrouch;
+            _playerInputActions.PlayerGamepad.Jump.performed -= StartDashGamepad;
         }
 
         private void Update()
@@ -134,18 +153,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             AnimatorController();
             if (_canMove && !GameManagerSingleton.Instance.IsGodModeEnabled && !_railGrindSystem.CanJumpOnRail && !_mainCHacking.isHackingAnim && !_mainCAttack.IsFinalAttacking && !_mainCHealth.IsDeath && !_railGrindSystem.IsSliding)
             {
-                MoveKeyboard();
-                MoveGamepad();
+                if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+                {
+                    MoveKeyboard();
+                }
+                else
+                    MoveGamepad();
+
             }
 
             CrouchWalking();
             ApplyGravity();
             FollowTrajectory();
-        }
-
-        private void ReloadScene(InputAction.CallbackContext context)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
 
@@ -190,7 +209,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void MoveKeyboard()
         {
-            _moveVectorKeyboard = _playerInputActions.Player.MovementKeyboard.ReadValue<Vector2>();
+            _moveVectorKeyboard = _playerInputActions.PlayerPC.MovementKeyboard.ReadValue<Vector2>();
 
             if (_moveVectorKeyboard.magnitude > 0.1f)
             {
@@ -271,7 +290,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void MoveGamepad()
         {
-            _moveVectorGamepad = _playerInputActions.Player.MovementGamepad.ReadValue<Vector2>();
+            _moveVectorGamepad = _playerInputActions.PlayerPC.MovementGamepad.ReadValue<Vector2>();
 
             if (_moveVectorGamepad.magnitude > 0.1f)
             {
@@ -380,6 +399,46 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 yield return new WaitForEndOfFrame();
             }
 
+        }
+
+        private void StartDashPC(InputAction.CallbackContext context)
+        {
+            if(Time.time > _dashTotalCooldown && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            {
+                StartCoroutine(Dash());
+            }
+        }        
+        
+        private void StartDashGamepad(InputAction.CallbackContext context)
+        {
+            if(Time.time > _dashTotalCooldown && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+            {
+                StartCoroutine(Dash());
+            }
+        }
+
+        private IEnumerator Dash()
+        {
+            _mainCLayers.EnableSlideLayer();
+            _mainCAnimator.TriggerDash();
+            DisableMovement();
+            _mainCAttack.DisableCanAttack();
+            _dashTotalCooldown = Time.time + dashCooldown;
+            var startTime = Time.time;
+
+            while(Time.time < startTime + _dashTime)
+            {
+                _cc.Move(orientation.forward * dashSpeed * Time.deltaTime);
+
+                yield return new WaitForEndOfFrame();
+            }
+        }
+
+        public void EndDash()
+        {
+            _mainCLayers.DisableSlideLayer();
+            EnableMovement();
+            _mainCAttack.EnableCanAttack();
         }
 
         private void RunOn(InputAction.CallbackContext context)

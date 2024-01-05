@@ -96,8 +96,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
-            _playerInputActions.Player.Attack.performed += MouseDown;
-            _playerInputActions.Player.Attack.canceled += MouseUp;
+            _playerInputActions.PlayerPC.Attack.performed += MouseDown;
+            _playerInputActions.PlayerPC.Attack.canceled += MouseUp;
             
             _mainCameraObj = GameObject.FindGameObjectWithTag("MainCamera");
             _currentFOV = _mainCamera.fieldOfView;

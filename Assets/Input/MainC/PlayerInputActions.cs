@@ -24,7 +24,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInputActions"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""PlayerPC"",
             ""id"": ""2fa885ff-48e9-481b-b9d3-5e7a1426bd07"",
             ""actions"": [
                 {
@@ -250,39 +250,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""752d3c7b-113e-4afc-b9da-b45c4dfbb8c3"",
-                    ""path"": ""<Gamepad>/leftStickPress"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Running"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""47a207a2-ac84-474a-b390-10fbf56e25c4"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""MovementGamepad"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""402d9017-0582-4a3f-9b8d-0b5f90f400bd"",
-                    ""path"": ""<Gamepad>/rightStickPress"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Crouch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""194ab606-d8fe-4972-ba4c-1270d1105b4f"",
                     ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
@@ -305,33 +272,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9d550ae6-a20a-4413-a8e0-9c85dbc2b442"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""f51c3f22-205b-45f7-8ae4-8515009aea81"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse"",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f6bc9e42-8aed-44b1-b5cf-f5a9e5743d2f"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -360,33 +305,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""68a55374-19d9-4c85-a40c-2aedcfbb0ed9"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""90f1200e-2e8f-40fd-827a-95c769df2fd7"",
                     ""path"": ""<Keyboard>/f11"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""GodMode"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7312f757-8adb-475c-931e-e8c25649e08f"",
-                    ""path"": ""<Gamepad>/select"",
-                    ""interactions"": ""Hold(duration=2,pressPoint=0.5)"",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
                     ""action"": ""GodMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -415,17 +338,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3ce974ae-cabc-4a73-8524-c94417999db6"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""SecondaryAttack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""252cd847-e339-495b-b7cf-129b7c845df0"",
                     ""path"": ""<Keyboard>/m"",
                     ""interactions"": """",
@@ -448,45 +360,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f66207be-bac4-48fa-83f8-0d27fecec6fe"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Escape"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""9019109f-d6ef-4afb-99c1-e5aa02301e7c"",
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""BastetAttack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b365f44a-fcff-4663-83d4-9bd0f48a15de"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""BastetAttack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c68d1891-6524-411b-a583-94aee3df5a17"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""BastetAimAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -500,21 +379,336 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""BastetAimAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""PlayerGamepad"",
+            ""id"": ""affe4afd-dc20-451b-8730-7685212ed02c"",
+            ""actions"": [
+                {
+                    ""name"": ""MovementKeyboard"",
+                    ""type"": ""Value"",
+                    ""id"": ""d375b07b-aa70-429f-87b6-9295075ac12f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Running"",
+                    ""type"": ""Button"",
+                    ""id"": ""d0864d20-0d0b-4a2a-8907-02ab1985cc6e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MovementGamepad"",
+                    ""type"": ""Value"",
+                    ""id"": ""e52d590a-36c7-4adc-a9cc-f8155d3a3d6d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""022836b1-ad67-4a14-a734-80f41fba4f5f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""cd202755-5231-4488-b018-9c6e400ede67"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff46c55a-be85-4e17-8183-ee096b51c10d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""ab447f72-1d19-451f-92f8-fd6e1b2c690c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""9bcb41fd-5286-4b61-846f-832c3d680fd4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GodMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""5d735c9c-0df1-4941-a1d3-b4b657646b1f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slow"",
+                    ""type"": ""Button"",
+                    ""id"": ""2dbae06a-e2a4-43fc-8403-34b440fdb15b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SecondaryAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""f707f86a-1d08-4c10-ac19-8fe149d5a501"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Test"",
+                    ""type"": ""Button"",
+                    ""id"": ""524715cf-04ab-49a7-b836-a6ad4f8a5b68"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""92b8bb74-aaa5-4be7-9db8-56f3e4f9f3c4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BastetAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""ae5c5254-62b0-4455-b8ad-f1d4bf867f6f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BastetAimAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""df238ab9-d44b-4baa-982c-46f5b487424b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChargeAbility"",
+                    ""type"": ""Button"",
+                    ""id"": ""0c10ba25-ece0-4dd7-ac64-363270195b9a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InvokeAbility"",
+                    ""type"": ""Button"",
+                    ""id"": ""0e000f24-67fc-47ff-b133-8d4efea64dd5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
                     ""name"": """",
-                    ""id"": ""03c1a202-3d06-415a-96ff-9b7a7398a006"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""id"": ""7e11ba3d-0669-4dfc-927b-9ef72e3a7946"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ChangeAbility"",
+                    ""action"": ""Running"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0d4b324e-d873-446f-b272-23fda7adb9fb"",
+                    ""id"": ""4a4c24e7-d117-4034-963e-f550442ab8c2"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MovementGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d3cb92f9-7bf6-475b-a279-1a93d9e444b9"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2635a938-847a-438c-9b48-449ba0ab49fb"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1941f3ea-fc17-4154-8800-b478a62ef918"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7813eb80-b0da-48eb-b976-b67e157f9e44"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""985043aa-c43e-4241-975d-d7e7d46a84b4"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32bd11da-4945-4465-b332-fc3a4c35693d"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": ""Hold(duration=2,pressPoint=0.5)"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""GodMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b27139e8-472d-4907-9869-313ffec7bd74"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""SecondaryAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4098572-9a93-43c6-ba6e-221a6de4bfb8"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SecondaryAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4360635b-cb3a-4a2e-a828-9eeb3e5452f1"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cad18391-f0c0-43be-b5da-8bb2c9cd8236"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""BastetAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4a593bb-1665-403a-b7b0-ee5de64b6469"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""BastetAimAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ed9e3c2-c9e2-4fd9-bd80-4f24939e2ec5"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""BastetAimAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""70b827a4-c435-4632-bfd2-18cabccb37d2"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ChargeAbility"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d6ec669-9e52-47d0-9bf4-5e383fccf391"",
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -525,7 +719,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""800a5df6-59c1-4675-ac9e-f361314feb19"",
+                    ""id"": ""c666cb8a-1efb-48d0-bb63-1bdcb2b62b50"",
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -744,25 +938,44 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_MovementKeyboard = m_Player.FindAction("MovementKeyboard", throwIfNotFound: true);
-        m_Player_Running = m_Player.FindAction("Running", throwIfNotFound: true);
-        m_Player_MovementGamepad = m_Player.FindAction("MovementGamepad", throwIfNotFound: true);
-        m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
-        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
-        m_Player_SwitchWeapon = m_Player.FindAction("SwitchWeapon", throwIfNotFound: true);
-        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_GodMode = m_Player.FindAction("GodMode", throwIfNotFound: true);
-        m_Player_Slow = m_Player.FindAction("Slow", throwIfNotFound: true);
-        m_Player_SecondaryAttack = m_Player.FindAction("SecondaryAttack", throwIfNotFound: true);
-        m_Player_Test = m_Player.FindAction("Test", throwIfNotFound: true);
-        m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
-        m_Player_BastetAttack = m_Player.FindAction("BastetAttack", throwIfNotFound: true);
-        m_Player_BastetAimAttack = m_Player.FindAction("BastetAimAttack", throwIfNotFound: true);
-        m_Player_ChangeAbility = m_Player.FindAction("ChangeAbility", throwIfNotFound: true);
-        m_Player_InvokeAbility = m_Player.FindAction("InvokeAbility", throwIfNotFound: true);
+        // PlayerPC
+        m_PlayerPC = asset.FindActionMap("PlayerPC", throwIfNotFound: true);
+        m_PlayerPC_MovementKeyboard = m_PlayerPC.FindAction("MovementKeyboard", throwIfNotFound: true);
+        m_PlayerPC_Running = m_PlayerPC.FindAction("Running", throwIfNotFound: true);
+        m_PlayerPC_MovementGamepad = m_PlayerPC.FindAction("MovementGamepad", throwIfNotFound: true);
+        m_PlayerPC_Crouch = m_PlayerPC.FindAction("Crouch", throwIfNotFound: true);
+        m_PlayerPC_Jump = m_PlayerPC.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerPC_Attack = m_PlayerPC.FindAction("Attack", throwIfNotFound: true);
+        m_PlayerPC_SwitchWeapon = m_PlayerPC.FindAction("SwitchWeapon", throwIfNotFound: true);
+        m_PlayerPC_Interact = m_PlayerPC.FindAction("Interact", throwIfNotFound: true);
+        m_PlayerPC_GodMode = m_PlayerPC.FindAction("GodMode", throwIfNotFound: true);
+        m_PlayerPC_Slow = m_PlayerPC.FindAction("Slow", throwIfNotFound: true);
+        m_PlayerPC_SecondaryAttack = m_PlayerPC.FindAction("SecondaryAttack", throwIfNotFound: true);
+        m_PlayerPC_Test = m_PlayerPC.FindAction("Test", throwIfNotFound: true);
+        m_PlayerPC_Escape = m_PlayerPC.FindAction("Escape", throwIfNotFound: true);
+        m_PlayerPC_BastetAttack = m_PlayerPC.FindAction("BastetAttack", throwIfNotFound: true);
+        m_PlayerPC_BastetAimAttack = m_PlayerPC.FindAction("BastetAimAttack", throwIfNotFound: true);
+        m_PlayerPC_ChangeAbility = m_PlayerPC.FindAction("ChangeAbility", throwIfNotFound: true);
+        m_PlayerPC_InvokeAbility = m_PlayerPC.FindAction("InvokeAbility", throwIfNotFound: true);
+        // PlayerGamepad
+        m_PlayerGamepad = asset.FindActionMap("PlayerGamepad", throwIfNotFound: true);
+        m_PlayerGamepad_MovementKeyboard = m_PlayerGamepad.FindAction("MovementKeyboard", throwIfNotFound: true);
+        m_PlayerGamepad_Running = m_PlayerGamepad.FindAction("Running", throwIfNotFound: true);
+        m_PlayerGamepad_MovementGamepad = m_PlayerGamepad.FindAction("MovementGamepad", throwIfNotFound: true);
+        m_PlayerGamepad_Crouch = m_PlayerGamepad.FindAction("Crouch", throwIfNotFound: true);
+        m_PlayerGamepad_Jump = m_PlayerGamepad.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerGamepad_Attack = m_PlayerGamepad.FindAction("Attack", throwIfNotFound: true);
+        m_PlayerGamepad_SwitchWeapon = m_PlayerGamepad.FindAction("SwitchWeapon", throwIfNotFound: true);
+        m_PlayerGamepad_Interact = m_PlayerGamepad.FindAction("Interact", throwIfNotFound: true);
+        m_PlayerGamepad_GodMode = m_PlayerGamepad.FindAction("GodMode", throwIfNotFound: true);
+        m_PlayerGamepad_Slow = m_PlayerGamepad.FindAction("Slow", throwIfNotFound: true);
+        m_PlayerGamepad_SecondaryAttack = m_PlayerGamepad.FindAction("SecondaryAttack", throwIfNotFound: true);
+        m_PlayerGamepad_Test = m_PlayerGamepad.FindAction("Test", throwIfNotFound: true);
+        m_PlayerGamepad_Escape = m_PlayerGamepad.FindAction("Escape", throwIfNotFound: true);
+        m_PlayerGamepad_BastetAttack = m_PlayerGamepad.FindAction("BastetAttack", throwIfNotFound: true);
+        m_PlayerGamepad_BastetAimAttack = m_PlayerGamepad.FindAction("BastetAimAttack", throwIfNotFound: true);
+        m_PlayerGamepad_ChargeAbility = m_PlayerGamepad.FindAction("ChargeAbility", throwIfNotFound: true);
+        m_PlayerGamepad_InvokeAbility = m_PlayerGamepad.FindAction("InvokeAbility", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
@@ -830,56 +1043,56 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
-    private readonly InputActionMap m_Player;
-    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_MovementKeyboard;
-    private readonly InputAction m_Player_Running;
-    private readonly InputAction m_Player_MovementGamepad;
-    private readonly InputAction m_Player_Crouch;
-    private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Attack;
-    private readonly InputAction m_Player_SwitchWeapon;
-    private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_GodMode;
-    private readonly InputAction m_Player_Slow;
-    private readonly InputAction m_Player_SecondaryAttack;
-    private readonly InputAction m_Player_Test;
-    private readonly InputAction m_Player_Escape;
-    private readonly InputAction m_Player_BastetAttack;
-    private readonly InputAction m_Player_BastetAimAttack;
-    private readonly InputAction m_Player_ChangeAbility;
-    private readonly InputAction m_Player_InvokeAbility;
-    public struct PlayerActions
+    // PlayerPC
+    private readonly InputActionMap m_PlayerPC;
+    private List<IPlayerPCActions> m_PlayerPCActionsCallbackInterfaces = new List<IPlayerPCActions>();
+    private readonly InputAction m_PlayerPC_MovementKeyboard;
+    private readonly InputAction m_PlayerPC_Running;
+    private readonly InputAction m_PlayerPC_MovementGamepad;
+    private readonly InputAction m_PlayerPC_Crouch;
+    private readonly InputAction m_PlayerPC_Jump;
+    private readonly InputAction m_PlayerPC_Attack;
+    private readonly InputAction m_PlayerPC_SwitchWeapon;
+    private readonly InputAction m_PlayerPC_Interact;
+    private readonly InputAction m_PlayerPC_GodMode;
+    private readonly InputAction m_PlayerPC_Slow;
+    private readonly InputAction m_PlayerPC_SecondaryAttack;
+    private readonly InputAction m_PlayerPC_Test;
+    private readonly InputAction m_PlayerPC_Escape;
+    private readonly InputAction m_PlayerPC_BastetAttack;
+    private readonly InputAction m_PlayerPC_BastetAimAttack;
+    private readonly InputAction m_PlayerPC_ChangeAbility;
+    private readonly InputAction m_PlayerPC_InvokeAbility;
+    public struct PlayerPCActions
     {
         private @PlayerInputActions m_Wrapper;
-        public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MovementKeyboard => m_Wrapper.m_Player_MovementKeyboard;
-        public InputAction @Running => m_Wrapper.m_Player_Running;
-        public InputAction @MovementGamepad => m_Wrapper.m_Player_MovementGamepad;
-        public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
-        public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @Attack => m_Wrapper.m_Player_Attack;
-        public InputAction @SwitchWeapon => m_Wrapper.m_Player_SwitchWeapon;
-        public InputAction @Interact => m_Wrapper.m_Player_Interact;
-        public InputAction @GodMode => m_Wrapper.m_Player_GodMode;
-        public InputAction @Slow => m_Wrapper.m_Player_Slow;
-        public InputAction @SecondaryAttack => m_Wrapper.m_Player_SecondaryAttack;
-        public InputAction @Test => m_Wrapper.m_Player_Test;
-        public InputAction @Escape => m_Wrapper.m_Player_Escape;
-        public InputAction @BastetAttack => m_Wrapper.m_Player_BastetAttack;
-        public InputAction @BastetAimAttack => m_Wrapper.m_Player_BastetAimAttack;
-        public InputAction @ChangeAbility => m_Wrapper.m_Player_ChangeAbility;
-        public InputAction @InvokeAbility => m_Wrapper.m_Player_InvokeAbility;
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public PlayerPCActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MovementKeyboard => m_Wrapper.m_PlayerPC_MovementKeyboard;
+        public InputAction @Running => m_Wrapper.m_PlayerPC_Running;
+        public InputAction @MovementGamepad => m_Wrapper.m_PlayerPC_MovementGamepad;
+        public InputAction @Crouch => m_Wrapper.m_PlayerPC_Crouch;
+        public InputAction @Jump => m_Wrapper.m_PlayerPC_Jump;
+        public InputAction @Attack => m_Wrapper.m_PlayerPC_Attack;
+        public InputAction @SwitchWeapon => m_Wrapper.m_PlayerPC_SwitchWeapon;
+        public InputAction @Interact => m_Wrapper.m_PlayerPC_Interact;
+        public InputAction @GodMode => m_Wrapper.m_PlayerPC_GodMode;
+        public InputAction @Slow => m_Wrapper.m_PlayerPC_Slow;
+        public InputAction @SecondaryAttack => m_Wrapper.m_PlayerPC_SecondaryAttack;
+        public InputAction @Test => m_Wrapper.m_PlayerPC_Test;
+        public InputAction @Escape => m_Wrapper.m_PlayerPC_Escape;
+        public InputAction @BastetAttack => m_Wrapper.m_PlayerPC_BastetAttack;
+        public InputAction @BastetAimAttack => m_Wrapper.m_PlayerPC_BastetAimAttack;
+        public InputAction @ChangeAbility => m_Wrapper.m_PlayerPC_ChangeAbility;
+        public InputAction @InvokeAbility => m_Wrapper.m_PlayerPC_InvokeAbility;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerPC; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerActions instance)
+        public static implicit operator InputActionMap(PlayerPCActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerPCActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PlayerPCActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerPCActionsCallbackInterfaces.Add(instance);
             @MovementKeyboard.started += instance.OnMovementKeyboard;
             @MovementKeyboard.performed += instance.OnMovementKeyboard;
             @MovementKeyboard.canceled += instance.OnMovementKeyboard;
@@ -933,7 +1146,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @InvokeAbility.canceled += instance.OnInvokeAbility;
         }
 
-        private void UnregisterCallbacks(IPlayerActions instance)
+        private void UnregisterCallbacks(IPlayerPCActions instance)
         {
             @MovementKeyboard.started -= instance.OnMovementKeyboard;
             @MovementKeyboard.performed -= instance.OnMovementKeyboard;
@@ -988,21 +1201,195 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @InvokeAbility.canceled -= instance.OnInvokeAbility;
         }
 
-        public void RemoveCallbacks(IPlayerActions instance)
+        public void RemoveCallbacks(IPlayerPCActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PlayerPCActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerActions instance)
+        public void SetCallbacks(IPlayerPCActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PlayerPCActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PlayerPCActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerActions @Player => new PlayerActions(this);
+    public PlayerPCActions @PlayerPC => new PlayerPCActions(this);
+
+    // PlayerGamepad
+    private readonly InputActionMap m_PlayerGamepad;
+    private List<IPlayerGamepadActions> m_PlayerGamepadActionsCallbackInterfaces = new List<IPlayerGamepadActions>();
+    private readonly InputAction m_PlayerGamepad_MovementKeyboard;
+    private readonly InputAction m_PlayerGamepad_Running;
+    private readonly InputAction m_PlayerGamepad_MovementGamepad;
+    private readonly InputAction m_PlayerGamepad_Crouch;
+    private readonly InputAction m_PlayerGamepad_Jump;
+    private readonly InputAction m_PlayerGamepad_Attack;
+    private readonly InputAction m_PlayerGamepad_SwitchWeapon;
+    private readonly InputAction m_PlayerGamepad_Interact;
+    private readonly InputAction m_PlayerGamepad_GodMode;
+    private readonly InputAction m_PlayerGamepad_Slow;
+    private readonly InputAction m_PlayerGamepad_SecondaryAttack;
+    private readonly InputAction m_PlayerGamepad_Test;
+    private readonly InputAction m_PlayerGamepad_Escape;
+    private readonly InputAction m_PlayerGamepad_BastetAttack;
+    private readonly InputAction m_PlayerGamepad_BastetAimAttack;
+    private readonly InputAction m_PlayerGamepad_ChargeAbility;
+    private readonly InputAction m_PlayerGamepad_InvokeAbility;
+    public struct PlayerGamepadActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public PlayerGamepadActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MovementKeyboard => m_Wrapper.m_PlayerGamepad_MovementKeyboard;
+        public InputAction @Running => m_Wrapper.m_PlayerGamepad_Running;
+        public InputAction @MovementGamepad => m_Wrapper.m_PlayerGamepad_MovementGamepad;
+        public InputAction @Crouch => m_Wrapper.m_PlayerGamepad_Crouch;
+        public InputAction @Jump => m_Wrapper.m_PlayerGamepad_Jump;
+        public InputAction @Attack => m_Wrapper.m_PlayerGamepad_Attack;
+        public InputAction @SwitchWeapon => m_Wrapper.m_PlayerGamepad_SwitchWeapon;
+        public InputAction @Interact => m_Wrapper.m_PlayerGamepad_Interact;
+        public InputAction @GodMode => m_Wrapper.m_PlayerGamepad_GodMode;
+        public InputAction @Slow => m_Wrapper.m_PlayerGamepad_Slow;
+        public InputAction @SecondaryAttack => m_Wrapper.m_PlayerGamepad_SecondaryAttack;
+        public InputAction @Test => m_Wrapper.m_PlayerGamepad_Test;
+        public InputAction @Escape => m_Wrapper.m_PlayerGamepad_Escape;
+        public InputAction @BastetAttack => m_Wrapper.m_PlayerGamepad_BastetAttack;
+        public InputAction @BastetAimAttack => m_Wrapper.m_PlayerGamepad_BastetAimAttack;
+        public InputAction @ChargeAbility => m_Wrapper.m_PlayerGamepad_ChargeAbility;
+        public InputAction @InvokeAbility => m_Wrapper.m_PlayerGamepad_InvokeAbility;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerGamepad; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerGamepadActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerGamepadActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerGamepadActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerGamepadActionsCallbackInterfaces.Add(instance);
+            @MovementKeyboard.started += instance.OnMovementKeyboard;
+            @MovementKeyboard.performed += instance.OnMovementKeyboard;
+            @MovementKeyboard.canceled += instance.OnMovementKeyboard;
+            @Running.started += instance.OnRunning;
+            @Running.performed += instance.OnRunning;
+            @Running.canceled += instance.OnRunning;
+            @MovementGamepad.started += instance.OnMovementGamepad;
+            @MovementGamepad.performed += instance.OnMovementGamepad;
+            @MovementGamepad.canceled += instance.OnMovementGamepad;
+            @Crouch.started += instance.OnCrouch;
+            @Crouch.performed += instance.OnCrouch;
+            @Crouch.canceled += instance.OnCrouch;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
+            @SwitchWeapon.started += instance.OnSwitchWeapon;
+            @SwitchWeapon.performed += instance.OnSwitchWeapon;
+            @SwitchWeapon.canceled += instance.OnSwitchWeapon;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+            @GodMode.started += instance.OnGodMode;
+            @GodMode.performed += instance.OnGodMode;
+            @GodMode.canceled += instance.OnGodMode;
+            @Slow.started += instance.OnSlow;
+            @Slow.performed += instance.OnSlow;
+            @Slow.canceled += instance.OnSlow;
+            @SecondaryAttack.started += instance.OnSecondaryAttack;
+            @SecondaryAttack.performed += instance.OnSecondaryAttack;
+            @SecondaryAttack.canceled += instance.OnSecondaryAttack;
+            @Test.started += instance.OnTest;
+            @Test.performed += instance.OnTest;
+            @Test.canceled += instance.OnTest;
+            @Escape.started += instance.OnEscape;
+            @Escape.performed += instance.OnEscape;
+            @Escape.canceled += instance.OnEscape;
+            @BastetAttack.started += instance.OnBastetAttack;
+            @BastetAttack.performed += instance.OnBastetAttack;
+            @BastetAttack.canceled += instance.OnBastetAttack;
+            @BastetAimAttack.started += instance.OnBastetAimAttack;
+            @BastetAimAttack.performed += instance.OnBastetAimAttack;
+            @BastetAimAttack.canceled += instance.OnBastetAimAttack;
+            @ChargeAbility.started += instance.OnChargeAbility;
+            @ChargeAbility.performed += instance.OnChargeAbility;
+            @ChargeAbility.canceled += instance.OnChargeAbility;
+            @InvokeAbility.started += instance.OnInvokeAbility;
+            @InvokeAbility.performed += instance.OnInvokeAbility;
+            @InvokeAbility.canceled += instance.OnInvokeAbility;
+        }
+
+        private void UnregisterCallbacks(IPlayerGamepadActions instance)
+        {
+            @MovementKeyboard.started -= instance.OnMovementKeyboard;
+            @MovementKeyboard.performed -= instance.OnMovementKeyboard;
+            @MovementKeyboard.canceled -= instance.OnMovementKeyboard;
+            @Running.started -= instance.OnRunning;
+            @Running.performed -= instance.OnRunning;
+            @Running.canceled -= instance.OnRunning;
+            @MovementGamepad.started -= instance.OnMovementGamepad;
+            @MovementGamepad.performed -= instance.OnMovementGamepad;
+            @MovementGamepad.canceled -= instance.OnMovementGamepad;
+            @Crouch.started -= instance.OnCrouch;
+            @Crouch.performed -= instance.OnCrouch;
+            @Crouch.canceled -= instance.OnCrouch;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
+            @SwitchWeapon.started -= instance.OnSwitchWeapon;
+            @SwitchWeapon.performed -= instance.OnSwitchWeapon;
+            @SwitchWeapon.canceled -= instance.OnSwitchWeapon;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+            @GodMode.started -= instance.OnGodMode;
+            @GodMode.performed -= instance.OnGodMode;
+            @GodMode.canceled -= instance.OnGodMode;
+            @Slow.started -= instance.OnSlow;
+            @Slow.performed -= instance.OnSlow;
+            @Slow.canceled -= instance.OnSlow;
+            @SecondaryAttack.started -= instance.OnSecondaryAttack;
+            @SecondaryAttack.performed -= instance.OnSecondaryAttack;
+            @SecondaryAttack.canceled -= instance.OnSecondaryAttack;
+            @Test.started -= instance.OnTest;
+            @Test.performed -= instance.OnTest;
+            @Test.canceled -= instance.OnTest;
+            @Escape.started -= instance.OnEscape;
+            @Escape.performed -= instance.OnEscape;
+            @Escape.canceled -= instance.OnEscape;
+            @BastetAttack.started -= instance.OnBastetAttack;
+            @BastetAttack.performed -= instance.OnBastetAttack;
+            @BastetAttack.canceled -= instance.OnBastetAttack;
+            @BastetAimAttack.started -= instance.OnBastetAimAttack;
+            @BastetAimAttack.performed -= instance.OnBastetAimAttack;
+            @BastetAimAttack.canceled -= instance.OnBastetAimAttack;
+            @ChargeAbility.started -= instance.OnChargeAbility;
+            @ChargeAbility.performed -= instance.OnChargeAbility;
+            @ChargeAbility.canceled -= instance.OnChargeAbility;
+            @InvokeAbility.started -= instance.OnInvokeAbility;
+            @InvokeAbility.performed -= instance.OnInvokeAbility;
+            @InvokeAbility.canceled -= instance.OnInvokeAbility;
+        }
+
+        public void RemoveCallbacks(IPlayerGamepadActions instance)
+        {
+            if (m_Wrapper.m_PlayerGamepadActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerGamepadActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerGamepadActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerGamepadActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerGamepadActions @PlayerGamepad => new PlayerGamepadActions(this);
 
     // Camera
     private readonly InputActionMap m_Camera;
@@ -1146,7 +1533,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_GamepadSchemeIndex];
         }
     }
-    public interface IPlayerActions
+    public interface IPlayerPCActions
     {
         void OnMovementKeyboard(InputAction.CallbackContext context);
         void OnRunning(InputAction.CallbackContext context);
@@ -1164,6 +1551,26 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnBastetAttack(InputAction.CallbackContext context);
         void OnBastetAimAttack(InputAction.CallbackContext context);
         void OnChangeAbility(InputAction.CallbackContext context);
+        void OnInvokeAbility(InputAction.CallbackContext context);
+    }
+    public interface IPlayerGamepadActions
+    {
+        void OnMovementKeyboard(InputAction.CallbackContext context);
+        void OnRunning(InputAction.CallbackContext context);
+        void OnMovementGamepad(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
+        void OnSwitchWeapon(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+        void OnGodMode(InputAction.CallbackContext context);
+        void OnSlow(InputAction.CallbackContext context);
+        void OnSecondaryAttack(InputAction.CallbackContext context);
+        void OnTest(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
+        void OnBastetAttack(InputAction.CallbackContext context);
+        void OnBastetAimAttack(InputAction.CallbackContext context);
+        void OnChargeAbility(InputAction.CallbackContext context);
         void OnInvokeAbility(InputAction.CallbackContext context);
     }
     public interface ICameraActions

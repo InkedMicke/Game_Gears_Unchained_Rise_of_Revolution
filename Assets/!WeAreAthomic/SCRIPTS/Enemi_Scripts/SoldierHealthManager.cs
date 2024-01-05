@@ -64,8 +64,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _greenMove.DisableMovement();
             botonSoldier.SetActive(false);
             _disolveEnemi.StartDisolving();
-          
-            
         }
 
         public void SetMaxhealthSlider(float maxHealth)

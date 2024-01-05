@@ -24,7 +24,8 @@ public class Interactor : MonoBehaviour
     {
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Enable();
-        _playerInputActions.Player.Interact.performed += InteractRay;
+        _playerInputActions.PlayerPC.Interact.performed += InputPC;
+        _playerInputActions.PlayerGamepad.Interact.performed += InputGamepad;
     }
 
     private void FixedUpdate()
@@ -55,7 +56,23 @@ public class Interactor : MonoBehaviour
         }
     }
 
-    private void InteractRay(InputAction.CallbackContext context)
+    private void InputPC(InputAction.CallbackContext context)
+    {
+        if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+        {
+            InteractRay();
+        }
+    }
+
+    private void InputGamepad(InputAction.CallbackContext context)
+    {
+        if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+        {
+            InteractRay();
+        }
+    }
+
+    private void InteractRay()
     {
         var r = new Ray(transform.position, transform.forward);
         if (Physics.Raycast(r, out var hitInfo, interactRange, interactableLayer))

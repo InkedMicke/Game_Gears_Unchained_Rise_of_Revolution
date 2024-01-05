@@ -26,10 +26,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
-            _playerInputActions.Player.Attack.performed += LeftMousePressedDown;
-            _playerInputActions.Player.Attack.canceled += LeftMousePressedUp;
-            _playerInputActions.Player.SecondaryAttack.performed += RightMousePressedDown;
-            _playerInputActions.Player.SecondaryAttack.canceled += RightMousePressedUp;
+            _playerInputActions.PlayerPC.Attack.performed += LeftMousePressedDown;
+            _playerInputActions.PlayerPC.Attack.canceled += LeftMousePressedUp;
+            _playerInputActions.PlayerPC.SecondaryAttack.performed += RightMousePressedDown;
+            _playerInputActions.PlayerPC.SecondaryAttack.canceled += RightMousePressedUp;
         }
 
         private void Start()

@@ -17,8 +17,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private MainCAttack _mainCAttack;
         private MainCMovement _mainCMovement;
-        private MainCLayers _mainCLayers;
-        private MainCSwitchWeapon _mainCSwitch;
         private MainCRailGrindSystem _mainCRailGrind;
         private CameraFollower _camFollower;
         private MainCAnimatorController _mainCAnim;
@@ -78,8 +76,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             _mainCAttack = GetComponent<MainCAttack>();
             _mainCMovement = GetComponent<MainCMovement>();
-            _mainCLayers = GetComponent<MainCLayers>();
-            _mainCSwitch = GetComponent<MainCSwitchWeapon>(); ;
             _mainCRailGrind = GetComponent<MainCRailGrindSystem>();
             _mainCAnim = GetComponent<MainCAnimatorController>();
             _camFollower = cameraBaseObj.GetComponent<CameraFollower>();
@@ -88,10 +84,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
-            _playerInputActions.Player.BastetAimAttack.performed += LeftMouseDown;
-            _playerInputActions.Player.BastetAimAttack.canceled += LeftMouseUp;
-            _playerInputActions.Player.SecondaryAttack.performed += RightMouseDown;
-            _playerInputActions.Player.SecondaryAttack.canceled += RightMouseUp;
+            _playerInputActions.PlayerPC.BastetAimAttack.performed += LeftMouseDown;
+            _playerInputActions.PlayerPC.BastetAimAttack.canceled += LeftMouseUp;
+            _playerInputActions.PlayerPC.SecondaryAttack.performed += RightMouseDown;
+            _playerInputActions.PlayerPC.SecondaryAttack.canceled += RightMouseUp;
+            _playerInputActions.PlayerGamepad.BastetAimAttack.performed += LeftGamepadDown;
+            _playerInputActions.PlayerGamepad.BastetAimAttack.canceled += LeftGamepadUp;
+            _playerInputActions.PlayerGamepad.SecondaryAttack.performed += RightGamepadDown;
+            _playerInputActions.PlayerGamepad.SecondaryAttack.canceled += RightGamepadUp;
 
             _mainCamera = cameraObj.GetComponent<Camera>();
 
@@ -121,19 +121,67 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void RightMouseDown(InputAction.CallbackContext context)
         {
-            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack && !GameManagerSingleton.Instance.IsSettingsMenuEnabled && !GameManagerSingleton.Instance.IsStopMenuEnabled)
-            {
-                crosshair.SetActive(true);
-                _camFollower.cameraFollow = camAimPosTr;
-                _bastetController.HideScanner();
-                bastetObj.SetActive(true);
-                _bastetController.PosRightHand();
-                _bastetController.StartMoveToBastetPos();
-            }
-            _isRightMouseDown = true;
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+                RightControlDown();
         }
 
         private void RightMouseUp(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+                RightControlUp();
+        }
+
+        private void LeftMouseDown(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+                LeftControlDown();
+        }
+
+        private void LeftMouseUp(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+                LeftControlUp();
+        }
+
+        private void RightGamepadDown(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+                RightControlDown();
+        }
+
+        private void RightGamepadUp(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+                RightControlUp();
+        }
+
+        private void LeftGamepadDown(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+                LeftControlDown();
+        }
+
+        private void LeftGamepadUp(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+                LeftControlUp();
+        }
+
+        private void LeftControlUp()
+        {
+            _isLeftMouseDown = false;
+        }
+
+        private void LeftControlDown()
+        {
+            _isLeftMouseDown = true;
+            if (GameManagerSingleton.Instance.bastetEnergy >= 20 && Time.time > _totalCooldown && GameManagerSingleton.Instance.HasUnlockedBastetAttack)
+            {
+                Shoot();
+            }
+        }
+
+        private void RightControlUp()
         {
             if (GameManagerSingleton.Instance.HasUnlockedBastetAttack && !GameManagerSingleton.Instance.IsSettingsMenuEnabled && !GameManagerSingleton.Instance.IsStopMenuEnabled)
             {
@@ -145,18 +193,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _isRightMouseDown = false;
         }
 
-        private void LeftMouseDown(InputAction.CallbackContext context)
+        private void RightControlDown()
         {
-            _isLeftMouseDown = true;
-            if (GameManagerSingleton.Instance.bastetEnergy >= 20 && Time.time > _totalCooldown && GameManagerSingleton.Instance.HasUnlockedBastetAttack)
+            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack && !GameManagerSingleton.Instance.IsSettingsMenuEnabled && !GameManagerSingleton.Instance.IsStopMenuEnabled)
             {
-                Shoot();
+                crosshair.SetActive(true);
+                _camFollower.cameraFollow = camAimPosTr;
+                _bastetController.HideScanner();
+                bastetObj.SetActive(true);
+                _bastetController.PosRightHand();
+                _bastetController.StartMoveToBastetPos();
             }
-        }
-
-        private void LeftMouseUp(InputAction.CallbackContext context)
-        {
-            _isLeftMouseDown = false;
+            _isRightMouseDown = true;
         }
 
         private IEnumerator RecoverEnergy(float waitTime)

@@ -8,12 +8,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCHackingSystem : MonoBehaviour
     {
-        private Animator _anim;
         private MainCLayers _mainCLayers;
         private CharacterController _cc;
         private BastetController _bastetController;
         private MainCSwitchWeapon _mainSwitchWeapon;
         private MainCSounds _mainCSounds;
+        private MainCAnimatorController _mainCAnim;
 
         private Coroutine _hackCoroutine;
 
@@ -34,12 +34,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Awake()
         {
-            _anim = GetComponent<Animator>();
             _mainCLayers = GetComponent<MainCLayers>();
             _cc = GetComponent<CharacterController>();
             _bastetController = robotObj.GetComponent<BastetController>();
             _mainSwitchWeapon = GetComponent<MainCSwitchWeapon>();
             _mainCSounds = GetComponent<MainCSounds>();
+            _mainCAnim = GetComponent<MainCAnimatorController>();
         }
 
         private void Update()
@@ -53,6 +53,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (!IsHacking)
             {
                 _timeToHack = timeHack;
+
+                _mainCAnim.SetMoveSpeed(0);
 
                 var interactables = FindObjectsOfType<ButtonInteractable>();
 
@@ -100,7 +102,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void EnableHackAnim()
         {
             isHackingAnim = true;
-            _anim.SetTrigger(string.Format("hack"));
+            _mainCAnim.TriggerHack();
             _mainCLayers.EnableHackLayer();
         }
 

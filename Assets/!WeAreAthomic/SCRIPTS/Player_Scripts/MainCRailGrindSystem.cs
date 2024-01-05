@@ -73,8 +73,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCSounds = GetComponent<MainCSounds>();
 
             _playerInputActions = new PlayerInputActions();
-            _playerInputActions.Player.Enable();
-            _playerInputActions.Player.Jump.performed += Jump;
+            _playerInputActions.PlayerPC.Enable();
+            _playerInputActions.PlayerPC.Jump.performed += InputPC;
+            _playerInputActions.PlayerGamepad.Jump.performed += InputGamepad;
         }
 
         private void Update()
@@ -111,6 +112,22 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             Slide();
+        }
+
+        private void InputPC(InputAction.CallbackContext context)
+        {
+            if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            {
+                Jump();
+            }
+        }
+
+        private void InputGamepad(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+            {
+                Jump();
+            }
         }
 
         public void StartSliding()
@@ -245,7 +262,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _canSlide = true;
         }
 
-        private void Jump(InputAction.CallbackContext context)
+        private void Jump()
         {
             if (ThereIsObstacle() && !_isJumping)
             {

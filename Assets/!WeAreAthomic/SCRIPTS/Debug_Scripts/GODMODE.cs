@@ -26,11 +26,11 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
-            _playerInputActions.Player.GodMode.performed += EnableGodMode;
-            _playerInputActions.Player.Running.performed += ShiftDown;
-            _playerInputActions.Player.Running.canceled += ShiftUp;
-            _playerInputActions.Player.Slow.performed += CtrlDown;
-            _playerInputActions.Player.Slow.canceled += CtrlUp;
+            _playerInputActions.PlayerPC.GodMode.performed += EnableGodMode;
+            _playerInputActions.PlayerPC.Running.performed += ShiftDown;
+            _playerInputActions.PlayerPC.Running.canceled += ShiftUp;
+            _playerInputActions.PlayerPC.Slow.performed += CtrlDown;
+            _playerInputActions.PlayerPC.Slow.canceled += CtrlUp;
         }
 
         private void Start()
@@ -60,7 +60,7 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
         {
             if(GameManagerSingleton.Instance.IsGodModeEnabled)
             {
-                var moveVectorKeyboard = _playerInputActions.Player.MovementKeyboard.ReadValue<Vector2>();
+                var moveVectorKeyboard = _playerInputActions.PlayerPC.MovementKeyboard.ReadValue<Vector2>();
 
                 var direction = new Vector3(moveVectorKeyboard.x, 0f, moveVectorKeyboard.y).normalized;
                 var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;

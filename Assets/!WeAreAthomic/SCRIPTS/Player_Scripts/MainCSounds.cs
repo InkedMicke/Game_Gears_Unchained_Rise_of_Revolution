@@ -108,7 +108,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void RemoveAllTutorialSounds()
         {
-            Destroy(CurrentTutorialClip);
+            var audiosInSoundComponent = soundComponentObj.GetComponents<AudioSource>();
+            foreach (var audioSour in audiosInSoundComponent)
+            {
+                if(audioSour.clip == CurrentTutorialClip)
+                {
+                    Destroy(audioSour);
+                }
+            }
         }
 
         public float GetAudioClipLength(string clipString)

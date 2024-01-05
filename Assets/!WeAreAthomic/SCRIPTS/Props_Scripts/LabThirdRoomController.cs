@@ -130,6 +130,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 Instantiate(movableFloorPivot, _playerObj.transform.position - Vector3.right * 1.4f, Quaternion.identity);
                 _playerObj.GetComponent<CharacterController>().enabled = false;
                 _mainCMovement.SetFollowTrajectory(true);
+                triggerElevator.GetComponent<TriggerElevator>().SetIsActivated(false);
             }
             else
             {
@@ -147,7 +148,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _floorIsDown = false;
             seActivaCuandoVaASubir.Invoke();
             _isFloorMoving = true;
-            triggerElevator.GetComponent<TriggerElevator>().SetIsActivated(false);
             if (_isWave1)
             {
                 _mainCSounds.PlayTutorialSound(4, "pc");
@@ -190,7 +190,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                     {
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
-                        _mainCSounds.PlayTutorialSound(6, "pc");
                         _mainCTutorial.AttackImage();
                         _dummiesCollider.UndoChild(wave2);
                         temp.y = 0f;

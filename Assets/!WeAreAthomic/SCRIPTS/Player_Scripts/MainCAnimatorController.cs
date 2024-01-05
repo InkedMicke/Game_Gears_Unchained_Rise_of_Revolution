@@ -18,6 +18,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private string pistolMoveY = "pistolMoveY";
         [SerializeField] private string hack = "hack";
         [SerializeField] private string aimOnRail = "railAiming";
+        [SerializeField] private string dash = "dash";
 
         protected void Awake()
         {
@@ -87,6 +88,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void TriggerHack()
         {
             _anim.SetTrigger(hack);
+        }        
+        
+        public void TriggerDash()
+        {
+            _anim.SetTrigger(dash);
         }
     }
 }

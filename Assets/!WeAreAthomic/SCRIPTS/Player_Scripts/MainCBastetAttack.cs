@@ -36,7 +36,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
-            _playerInputActions.Player.BastetAttack.performed += CheckEnemy;
+            _playerInputActions.PlayerPC.BastetAttack.performed += InputPC;
+            _playerInputActions.PlayerGamepad.BastetAttack.performed += InputGamepad;
         }
 
         private void Update()
@@ -58,7 +59,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             }
         }
 
-        private void CheckEnemy(InputAction.CallbackContext context)
+        private void InputPC(InputAction.CallbackContext context)
+        {
+            if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            CheckEnemy();
+        }
+
+        private void InputGamepad(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+                CheckEnemy();
+        }
+
+        private void CheckEnemy()
         {
             if (!_isBastetAttacking && Time.time > _totalCooldown)
             {
