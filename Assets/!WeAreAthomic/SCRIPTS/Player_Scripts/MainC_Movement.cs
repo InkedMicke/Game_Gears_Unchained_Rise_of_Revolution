@@ -26,6 +26,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private Scene _currentScene;
 
+        [SerializeField] private AnimationCurve dashSpeedCurve;
+
         [SerializeField] private LayerMask playerBulletLayer;
 
         [SerializeField] private GameObject cameraBaseObj;
@@ -421,16 +423,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private IEnumerator Dash()
         {
-            //_mainCLayers.EnableSlideLayer();
-            //_mainCAnimator.TriggerDash();
             DisableMovement();
             _mainCAttack.DisableCanAttack();
             _dashTotalCooldown = Time.time + dashCooldown;
             var startTime = Time.time;
+
             while (Time.time < startTime + _dashTime)
             {
                 _gTrail.StartTrail();
-                _cc.Move(orientation.forward * dashSpeed * Time.deltaTime);
+
+                float curveTime = (Time.time - startTime) / _dashTime;
+                float speedMultiplier = dashSpeedCurve.Evaluate(curveTime);
+
+                _cc.Move(orientation.forward * dashSpeed * speedMultiplier * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
             }
 

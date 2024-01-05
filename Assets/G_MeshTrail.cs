@@ -58,7 +58,7 @@ public class G_MeshTrail : MonoBehaviour
                     newMaterials[j] = mat;
                 }
                 mr.materials = newMaterials;
-                Debug.Log("hola1");
+
                 // Inicia la corrutina para animar la variable del shader en el material
                 StartCoroutine(AnimateMaterialFloat(mr.materials, 0, shaderVarRate, shaderVarRefreshRate));
 
