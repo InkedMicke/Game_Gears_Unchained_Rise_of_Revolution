@@ -2176,7 +2176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3007980108983807698
 Transform:
   m_ObjectHideFlags: 0
@@ -2814,7 +2814,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -6092,19 +6092,7 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7472576631926805804}
-        m_TargetAssemblyTypeName: OptionsScreen, Assembly-CSharp
-        m_MethodName: SetQualityLevelDropdown
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_AlphaFadeSpeed: 0.15
 --- !u!1 &2766071595328782849
 GameObject:
@@ -15321,7 +15309,7 @@ RectTransform:
   - {fileID: 8097478540004144009}
   - {fileID: 5765031653857759198}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 16.349, y: 179.607, z: 21.59}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -18184,7 +18172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2285611235250744604
 Transform:
   m_ObjectHideFlags: 0
@@ -22989,12 +22977,12 @@ PrefabInstance:
     - target: {fileID: 594777245137785997, guid: 3f4258ecb7398dd47bd8a5cc1778fc24,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 594777245137785997, guid: 3f4258ecb7398dd47bd8a5cc1778fc24,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4583807143370167660, guid: 3f4258ecb7398dd47bd8a5cc1778fc24,
         type: 3}
@@ -23184,17 +23172,17 @@ PrefabInstance:
     - target: {fileID: 8752920372513429369, guid: 3f4258ecb7398dd47bd8a5cc1778fc24,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8752920372513429369, guid: 3f4258ecb7398dd47bd8a5cc1778fc24,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8752920372513429369, guid: 3f4258ecb7398dd47bd8a5cc1778fc24,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25459,6 +25447,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2228608615339104140}
+    - targetCorrespondingSourceObject: {fileID: 5766721128513896511, guid: 931d8b016282b2540bfc6e4d8afb1a68,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1758493462812328356}
+    - targetCorrespondingSourceObject: {fileID: 5766721128513896511, guid: 931d8b016282b2540bfc6e4d8afb1a68,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8997023063292430656}
   m_SourcePrefab: {fileID: 100100000, guid: 931d8b016282b2540bfc6e4d8afb1a68, type: 3}
 --- !u!1 &2135422635738381114 stripped
 GameObject:
@@ -25564,6 +25560,19 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1758493462812328356}
+          m_TargetAssemblyTypeName: _WeAreAthomic.SCRIPTS.Genericos_Scripts.GUnityEvent,
+            Assembly-CSharp
+          m_MethodName: InvokeEvent
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   - eventID: 1
     callback:
       m_PersistentCalls:
@@ -25619,6 +25628,46 @@ MonoBehaviour:
   clickMat: {fileID: 2100000, guid: 56da9bdecf9196a4d9c104baf2e0b938, type: 2}
   objectsToChangeMat:
   - {fileID: 2135422635738381114}
+--- !u!114 &1758493462812328356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135422635738381114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708903eed8ddfe8468948e9abaab0bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8997023063292430656}
+        m_TargetAssemblyTypeName: _WeAreAthomic.SCRIPTS.TEST.Test, Assembly-CSharp
+        m_MethodName: DebugText
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: hola10
+          m_BoolArgument: 0
+        m_CallState: 2
+  onStart: 0
+--- !u!114 &8997023063292430656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135422635738381114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43effe601878776409062351c7075b33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6275357967877496988 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1924027769827449753, guid: 931d8b016282b2540bfc6e4d8afb1a68,
@@ -26046,12 +26095,12 @@ PrefabInstance:
     - target: {fileID: 594777245137785997, guid: 3f4258ecb7398dd47bd8a5cc1778fc24,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 594777245137785997, guid: 3f4258ecb7398dd47bd8a5cc1778fc24,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4583807143370167660, guid: 3f4258ecb7398dd47bd8a5cc1778fc24,
         type: 3}
@@ -26241,17 +26290,17 @@ PrefabInstance:
     - target: {fileID: 8752920372513429369, guid: 3f4258ecb7398dd47bd8a5cc1778fc24,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8752920372513429369, guid: 3f4258ecb7398dd47bd8a5cc1778fc24,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8752920372513429369, guid: 3f4258ecb7398dd47bd8a5cc1778fc24,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

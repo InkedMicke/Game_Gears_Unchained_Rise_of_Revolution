@@ -3337,7 +3337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8198585771958467074}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: 3DCanvasPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6825,18 +6825,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2958368349766941713}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7999712660249112265 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5047000335752237784, guid: 9fc2cbb6fed12634ba6d62e6f29f6d57,
-    type: 3}
-  m_PrefabInstance: {fileID: 2958368349766941713}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3780089723288457518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8128,11 +8116,6 @@ PrefabInstance:
       propertyPath: hackCanvas
       value: 
       objectReference: {fileID: 3247775509059027941}
-    - target: {fileID: 6083985201750387459, guid: fefbaa6b55d08b34ba68dddc4393a15b,
-        type: 3}
-      propertyPath: hackSlider
-      value: 
-      objectReference: {fileID: 7999712660249112265}
     - target: {fileID: 6151391398507938174, guid: fefbaa6b55d08b34ba68dddc4393a15b,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -8303,11 +8286,6 @@ PrefabInstance:
       propertyPath: hackCanvas
       value: 
       objectReference: {fileID: 3247775509059027941}
-    - target: {fileID: 8646339526130789239, guid: fefbaa6b55d08b34ba68dddc4393a15b,
-        type: 3}
-      propertyPath: hackSlider
-      value: 
-      objectReference: {fileID: 7999712660249112265}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4619626796965975422, guid: fefbaa6b55d08b34ba68dddc4393a15b, type: 3}
@@ -8789,6 +8767,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1093593479058273651, guid: 45aa2851bcea3044dbcba11d70baef41,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1898818751428628010, guid: 45aa2851bcea3044dbcba11d70baef41,
         type: 3}
       propertyPath: m_Pivot.x
@@ -8928,6 +8911,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5313058777788949382, guid: 45aa2851bcea3044dbcba11d70baef41,
+        type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 6244405467077772867, guid: 45aa2851bcea3044dbcba11d70baef41,
         type: 3}

@@ -12,6 +12,7 @@ public class UIChanges : MonoBehaviour
     private int _temporalIntRes;
     private bool _temporalScreenMode;
     private int _temporalIntScreen;
+    private int _temporalIntQuality;
     //[Header("Language")]
     [Header("Controls")]
     [SerializeField] private OptionsControls optControls;
@@ -66,11 +67,11 @@ public class UIChanges : MonoBehaviour
         _temporalIntRes = optScreen.resDropdown.value;
         _temporalScreenMode = optScreen.fullScreen;
         _temporalIntScreen = optScreen.screenDropdown.value;
+        _temporalIntQuality = optScreen.qualityDropdown.value;
 
         // Aplicar cambios
         optScreen.ChangeResolution(_temporalRes, _temporalScreenMode);
-
-
+        optScreen.SetQualityLevelDropdown(_temporalIntQuality);
     }
 
     public void SaveChangesLanguage()
@@ -103,6 +104,7 @@ public class UIChanges : MonoBehaviour
         // Aplicar cambios a la UI
         optScreen.resDropdown.SetValueWithoutNotify(_temporalIntRes);
         optScreen.screenDropdown.SetValueWithoutNotify(_temporalIntScreen);
+        optScreen.qualityDropdown.SetValueWithoutNotify(_temporalIntQuality);
         optControls.inputDropdown.SetValueWithoutNotify(_temporalIntTypeInput);
         optControls.sensivityXSlider.value = _temporalSliderSensivityX;
         optControls.sensivityYSlider.value = _temporalSliderSensivityY;

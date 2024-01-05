@@ -17,5 +17,10 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                 events.Invoke();
             }
         }
+
+        public void InvokeEvent()
+        {
+            events.Invoke();
+        }
     }
 }

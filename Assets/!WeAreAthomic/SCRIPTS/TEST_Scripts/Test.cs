@@ -35,5 +35,10 @@ namespace _WeAreAthomic.SCRIPTS.TEST
             _mainCHealth.Damage(_mainCHealth.currentHealth);
         }
 
+        public void DebugText(string text)
+        {
+            Debug.Log(text);
+        }
+
     }
 }
