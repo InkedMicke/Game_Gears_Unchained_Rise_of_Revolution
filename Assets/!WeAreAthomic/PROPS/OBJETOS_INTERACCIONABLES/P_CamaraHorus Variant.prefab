@@ -189,11 +189,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3530356693919500400}
   m_LocalRotation: {x: 0.105306216, y: -0, z: 0.000000007450581, w: 0.99443984}
-  m_LocalPosition: {x: -0.017, y: 0.282, z: 1.051}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.008514395, y: 0.034093983, z: 0.28159958}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4054057971353150734}
+  m_Father: {fileID: 2266667524466731249}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 12.09, y: 0, z: 0}
 --- !u!20 &1182487218665500329
@@ -228,7 +228,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 30
   field of view: 90
   orthographic: 0
   orthographic size: 5
@@ -237,14 +237,14 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: b475f65323b9be449b56f05dea6f725f, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!114 &9137496382989802394
@@ -750,10 +750,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 768cfb52798d8d441a6107418cfe8eb0,
-        type: 3}
-      insertIndex: 0
-      addedObject: {fileID: 6571392815007324379}
     - targetCorrespondingSourceObject: {fileID: -1274673525691316497, guid: 768cfb52798d8d441a6107418cfe8eb0,
         type: 3}
       insertIndex: -1
@@ -762,6 +758,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7088980579030360638}
+    - targetCorrespondingSourceObject: {fileID: -6864467312869250540, guid: 768cfb52798d8d441a6107418cfe8eb0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6571392815007324379}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4040804667026976304, guid: 768cfb52798d8d441a6107418cfe8eb0,
         type: 3}
@@ -899,9 +899,9 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!4 &4054057971353150734 stripped
+--- !u!4 &2266667524466731249 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 768cfb52798d8d441a6107418cfe8eb0,
+  m_CorrespondingSourceObject: {fileID: -6864467312869250540, guid: 768cfb52798d8d441a6107418cfe8eb0,
     type: 3}
   m_PrefabInstance: {fileID: 4596012770618835685}
   m_PrefabAsset: {fileID: 0}
