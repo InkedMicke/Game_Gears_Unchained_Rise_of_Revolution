@@ -22,6 +22,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCHealthManager _mainCHealth;
         private Rigidbody _rb;
         private GTrajectory _trajectory;
+        private G_MeshTrail _gTrail;
 
         private Scene _currentScene;
 
@@ -78,6 +79,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float pushJumpDuration = 2f;
         [SerializeField] private float dashSpeed = 20f;
         [SerializeField] private float dashCooldown = 2f;
+        [SerializeField] private float _dashTime = .10f;
         public float turnSmoothTime = 0.1f;
         private float _moveSpeed;
         private float _horizontal;
@@ -87,7 +89,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _moveAimingX;
         private float _moveAimingY;
         private float _pushTimeElapsed;
-        private float _dashTime = .10f;
         private float _dashTotalCooldown;
 
         private void Awake()
@@ -103,6 +104,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _playerInputActions = new PlayerInputActions();
             _mainCHealth = GetComponentInChildren<MainCHealthManager>();
+            _gTrail = GetComponent<G_MeshTrail>();
             
             _currentScene = SceneManager.GetActiveScene();
             if(_currentScene.name == "S2_LABTUTORIAL" || _currentScene.name ==  "TESTING")
@@ -419,26 +421,26 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private IEnumerator Dash()
         {
-            _mainCLayers.EnableSlideLayer();
-            _mainCAnimator.TriggerDash();
+            //_mainCLayers.EnableSlideLayer();
+            //_mainCAnimator.TriggerDash();
             DisableMovement();
             _mainCAttack.DisableCanAttack();
             _dashTotalCooldown = Time.time + dashCooldown;
             var startTime = Time.time;
-
-            while(Time.time < startTime + _dashTime)
+            while (Time.time < startTime + _dashTime)
             {
+                _gTrail.StartTrail();
                 _cc.Move(orientation.forward * dashSpeed * Time.deltaTime);
-
                 yield return new WaitForEndOfFrame();
             }
+
+            EnableMovement();
+            _mainCAttack.EnableCanAttack();
         }
 
         public void EndDash()
         {
-            _mainCLayers.DisableSlideLayer();
-            EnableMovement();
-            _mainCAttack.EnableCanAttack();
+            //_mainCLayers.DisableSlideLayer();
         }
 
         private void RunOn(InputAction.CallbackContext context)

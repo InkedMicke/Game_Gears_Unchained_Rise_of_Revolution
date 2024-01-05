@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class C_MeshTrail : MonoBehaviour
+public class G_MeshTrail : MonoBehaviour
 {
     [SerializeField] private float activeTime = 2f;
 
@@ -19,16 +19,16 @@ public class C_MeshTrail : MonoBehaviour
     private bool isTrailActive;
     [SerializeField] private SkinnedMeshRenderer[] skinnedMeshRenderers;
 
-    void Update()
+    public void StartTrail()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isTrailActive)
+        if(!isTrailActive)
         {
             isTrailActive = true;
-            StartCoroutine(ActivateTrail(activeTime));
+            ActivateTrail(activeTime);
         }
     }
 
-    IEnumerator ActivateTrail(float timeActive)
+    private void ActivateTrail(float timeActive)
     {
         while (timeActive > 0)
         {
@@ -58,7 +58,7 @@ public class C_MeshTrail : MonoBehaviour
                     newMaterials[j] = mat;
                 }
                 mr.materials = newMaterials;
-
+                Debug.Log("hola1");
                 // Inicia la corrutina para animar la variable del shader en el material
                 StartCoroutine(AnimateMaterialFloat(mr.materials, 0, shaderVarRate, shaderVarRefreshRate));
 
@@ -67,7 +67,7 @@ public class C_MeshTrail : MonoBehaviour
             }
 
             // Espera un cierto tiempo antes de la próxima iteración
-            yield return new WaitForSeconds(meshRefreshRate);
+            //yield return new WaitForSeconds(meshRefreshRate);
         }
         // Marca que el rastro ya no está activo
         isTrailActive = false;

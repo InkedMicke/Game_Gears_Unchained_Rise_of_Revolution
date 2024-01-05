@@ -4261,6 +4261,7 @@ GameObject:
   - component: {fileID: 8560368454650083858}
   - component: {fileID: 8729382000879257512}
   - component: {fileID: 8265303273977001949}
+  - component: {fileID: 2060323058226009461}
   m_Layer: 16
   m_Name: Player
   m_TagString: Player
@@ -4365,6 +4366,7 @@ MonoBehaviour:
   pistolMoveY: pistolMoveY
   hack: hack
   aimOnRail: railAiming
+  dash: dash
 --- !u!114 &294128395308933352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4399,8 +4401,9 @@ MonoBehaviour:
   pushJumpForce: 10
   pushMaxHeight: 5
   pushJumpDuration: 2
-  dashSpeed: 20
+  dashSpeed: 25
   dashCooldown: 2
+  _dashTime: 0.15
   turnSmoothTime: 0.05
 --- !u!114 &7418738073728035398
 MonoBehaviour:
@@ -4794,6 +4797,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopMenuContainer: {fileID: 0}
   firstButton: {fileID: 0}
+  playerInterface: {fileID: 0}
+  tutKeys: {fileID: 0}
 --- !u!114 &589968473874659019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4923,6 +4928,28 @@ MonoBehaviour:
   alturaMaximaFactor: 0.5
   velocidad: 5
   intervaloTiempo: 0.1
+--- !u!114 &2060323058226009461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821918579687998185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78160671eb61fe442a5960f530f15446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeTime: 0.15
+  meshRefreshRate: 0.04
+  meshDestroyDelay: 1
+  positionToSpawn: {fileID: 3953601784478877334}
+  mat: {fileID: 2100000, guid: e3b10f8cfbd8d9743a2e3f317c3accb4, type: 2}
+  shaderVarRef: _Alpha
+  shaderVarRate: 0.1
+  shaderVarRefreshRate: 0.05
+  skinnedMeshRenderers:
+  - {fileID: 5003330625246461898}
 --- !u!1 &5844683505940322764
 GameObject:
   m_ObjectHideFlags: 0
