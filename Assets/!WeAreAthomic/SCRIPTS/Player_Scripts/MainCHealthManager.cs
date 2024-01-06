@@ -10,6 +10,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private CharacterController _cc;
         private MainCRagdoll _mainCRagdoll;
         private MainCSounds _mainSounds;
+        private MainCAttack _mainCAttack;
+        private MainCPlayerInterface _mainCInterface;
 
         [SerializeField] private Slider healthSlider;
 
@@ -24,6 +26,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _cc = GetComponentInParent<CharacterController>();
             _mainCRagdoll = GetComponentInParent<MainCRagdoll>();
             _mainSounds = GetComponentInParent<MainCSounds>();
+            _mainCInterface = GetComponentInParent<MainCPlayerInterface>();
+            _mainCAttack = GetComponentInParent<MainCAttack>();
         }
 
         private void Start()
@@ -76,6 +80,26 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _anim.enabled = false;
             _cc.enabled = false;
             _mainCRagdoll.SetEnabled(true);
+        }
+
+        public void Revive()
+        {
+            _cc.enabled = true;
+            _anim.enabled = true;
+            currentHealth = 100;
+            GameManagerSingleton.Instance.currentHealth = currentHealth;
+            SetHealthSlider();
+            IsDeath = false;
+            _mainCAttack.SetIsSheathed(false);
+            _mainCRagdoll.ResetBody();
+        }
+
+        public void Die()
+        {
+            currentHealth = 0;
+            GameManagerSingleton.Instance.currentHealth = currentHealth;
+            SetHealthSlider();
+            Death();
         }
 
         public void SetHealthSlider()

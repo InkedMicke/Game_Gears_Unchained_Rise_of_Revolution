@@ -2116,10 +2116,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49dfe33657d855e4284a8bb1a56b5d91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scenesVolumeList: {fileID: 5113689789675009407}
   resDropdown: {fileID: 4575605580980255599}
   screenDropdown: {fileID: 1456749710342459463}
   qualityDropdown: {fileID: 1185567050893323449}
-  antiAliDropdown: {fileID: 0}
+  brightnessSlider: {fileID: 6330585392108362020}
   _urpQualityLow: {fileID: 11400000, guid: c4251f1f1c30c414d9cd257c9d9edaad, type: 2}
   _urpQualityMedium: {fileID: 11400000, guid: d0e2fc18fe036412f8223b3b3d9ad574, type: 2}
   _urpQualityHigh: {fileID: 11400000, guid: e1260c1148f6143b28bae5ace5e9c5d1, type: 2}
@@ -14422,7 +14423,7 @@ RectTransform:
   - {fileID: 8097478540004144009}
   - {fileID: 5765031653857759198}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 16.349, y: 179.607, z: 21.59}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -23207,12 +23208,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc6a80bafc879f4fbc0db0821fe043d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _optionsScreen: {fileID: 0}
 --- !u!224 &2314151103727044673 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4583807143370167660, guid: 3f4258ecb7398dd47bd8a5cc1778fc24,
     type: 3}
   m_PrefabInstance: {fileID: 2270219268098399533}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6330585392108362020 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5213956409819251721, guid: 3f4258ecb7398dd47bd8a5cc1778fc24,
+    type: 3}
+  m_PrefabInstance: {fileID: 2270219268098399533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2203575830368309270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2271013308187303287
 PrefabInstance:
   m_ObjectHideFlags: 0

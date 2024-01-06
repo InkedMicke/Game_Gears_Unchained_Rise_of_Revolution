@@ -19,7 +19,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         [SerializeField] private Slider hackSlider;
 
-        [SerializeField] private GameObject wrenchObj;
+        public GameObject wrenchObj;
         [SerializeField] private GameObject hackCanvas;
         [SerializeField] private GameObject robotObj;
         private GameObject _currentInteract;

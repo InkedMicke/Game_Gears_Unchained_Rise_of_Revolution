@@ -220,7 +220,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             var bulletHitBoxComponent = bulletObj.GetComponent<BastetBulletHitBox>();
             bulletHitBoxComponent.damageData = pistolData;
             var direction = enemy - muzzles[randomMuzzle].position;
-            Debug.Log(direction);
             bulletObj.transform.forward = direction.normalized;
             bulletComponent.bulletForce = bulletSpeed;
             bulletComponent.target = new(enemyTarget, enemyTarget != null);

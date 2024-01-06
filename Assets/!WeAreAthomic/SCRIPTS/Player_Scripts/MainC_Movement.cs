@@ -33,7 +33,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject cameraBaseObj;
         private GameObject _cameraObj;
 
-        [SerializeField] private Transform landLoc;
         public Transform orientation;
         public Transform checkGrounded;
 

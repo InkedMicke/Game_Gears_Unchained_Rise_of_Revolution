@@ -7,9 +7,9 @@ public class MainVFXCharacter : MonoBehaviour
     [Header("Steps")]
     [SerializeField] private GameObject vfxStep;
 
-    [SerializeField] private Transform rightFoot;
-    [SerializeField] private Transform leftFoot;
-    [SerializeField] private Transform edgeWrench;
+    public Transform rightFoot;
+    public Transform leftFoot;
+    public Transform edgeWrench;
 
     [Header("Slash")]
     [SerializeField] private ParticleSystem slash1;

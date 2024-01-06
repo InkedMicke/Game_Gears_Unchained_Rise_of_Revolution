@@ -17,7 +17,7 @@ public class G_MeshTrail : MonoBehaviour
     public float shaderVarRefreshRate = 0.05f;
 
     private bool isTrailActive;
-    [SerializeField] private SkinnedMeshRenderer[] skinnedMeshRenderers;
+    public SkinnedMeshRenderer[] skinnedMeshRenderers;
 
     public void StartTrail()
     {

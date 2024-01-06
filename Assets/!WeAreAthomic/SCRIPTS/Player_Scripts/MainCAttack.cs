@@ -22,7 +22,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         [SerializeField] private PlayerDamageData abilityAttackDmgData;
 
-        [SerializeField] private GameObject weaponObj;
+        public GameObject weaponObj;
         [SerializeField] private GameObject scannerPrefab;
         [SerializeField] private GameObject tut_ES;
         private GameObject scannerInst;
@@ -188,13 +188,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Attack()
         {
-            Debug.Log("hola1");
             if (_typeOfAttack == TypeOfAttack.NormalAttack)
             {
-                Debug.Log("hola2");
                 if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
-                    Debug.Log("hola3");
                     _mainCMovement.StopDash();
                     _mainCMovement.EnableMovement();
                     if (_mainCTutorial.IsOnTutorial && !_attackTutorial)
@@ -400,6 +397,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator.SetAttackCountAnim(value);
         }
 
+        public void SetIsSheathed(bool condition)
+        {
+            _isSheathed = condition;
+        }
+
         public void SetHasUnlockedAbilityAttack(bool condition)
         {
             _hasUnlockedAbilityAttack = condition;
@@ -419,19 +421,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (IsAttacking)
             {
-                Debug.Log("hola4");
                 return false;
             }
 
             if (!(Time.time > timeGraceAttackPeriod))
             {
-                Debug.Log("hola5");
                 return false;
             }
 
             if (!_canAttack)
             {
-                Debug.Log("hola6");
                 return false;
             }
 

@@ -6438,7 +6438,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerRightArm
       value: 
-      objectReference: {fileID: 5263376048003230468}
+      objectReference: {fileID: 6591858148831626674}
     - target: {fileID: 8945087017680515055, guid: f286237c8e115ea4289ce86409d24065,
         type: 3}
       propertyPath: m_RootOrder
@@ -8236,6 +8236,16 @@ PrefabInstance:
       propertyPath: tut_ES
       value: 
       objectReference: {fileID: 6555295698515574798}
+    - target: {fileID: 7621926829757928742, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
+      propertyPath: cameraBase
+      value: 
+      objectReference: {fileID: 4236300561351042608}
+    - target: {fileID: 7621926829757928742, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
+      propertyPath: godmodeContainer
+      value: 
+      objectReference: {fileID: 6155795812988524072}
     - target: {fileID: 7714023328541333105, guid: fefbaa6b55d08b34ba68dddc4393a15b,
         type: 3}
       propertyPath: robotObj
@@ -8296,15 +8306,27 @@ PrefabInstance:
       addedObject: {fileID: 3091360817480239405}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fefbaa6b55d08b34ba68dddc4393a15b, type: 3}
+--- !u!114 &1171027241183129985 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5869859861386743886, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+    type: 3}
+  m_PrefabInstance: {fileID: 4698870022926328271}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b998cc002cb7845bca45063b62e8ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1296510549924619046 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5821918579687998185, guid: fefbaa6b55d08b34ba68dddc4393a15b,
     type: 3}
   m_PrefabInstance: {fileID: 4698870022926328271}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5263376048003230468 stripped
+--- !u!1 &6591858148831626674 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 594186816484625099, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+  m_CorrespondingSourceObject: {fileID: 1895805901476914301, guid: fefbaa6b55d08b34ba68dddc4393a15b,
     type: 3}
   m_PrefabInstance: {fileID: 4698870022926328271}
   m_PrefabAsset: {fileID: 0}
@@ -9697,6 +9719,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3814308433062179089, guid: 1b7f39238110e10469295fe3211ab094,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1171027241183129985}
+    - target: {fileID: 3814308433062179089, guid: 1b7f39238110e10469295fe3211ab094,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Revive
+      objectReference: {fileID: 0}
+    - target: {fileID: 3814308433062179089, guid: 1b7f39238110e10469295fe3211ab094,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: _WeAreAthomic.SCRIPTS.Player_Scripts.MainCHealthManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 4032149475069740384, guid: 1b7f39238110e10469295fe3211ab094,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -9821,6 +9858,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -215.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320143342284436682, guid: 1b7f39238110e10469295fe3211ab094,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1171027241183129985}
+    - target: {fileID: 8320143342284436682, guid: 1b7f39238110e10469295fe3211ab094,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Die
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320143342284436682, guid: 1b7f39238110e10469295fe3211ab094,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: _WeAreAthomic.SCRIPTS.Player_Scripts.MainCHealthManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8458205018602785791, guid: 1b7f39238110e10469295fe3211ab094,
         type: 3}

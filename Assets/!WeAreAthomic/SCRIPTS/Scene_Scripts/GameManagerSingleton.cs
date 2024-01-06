@@ -56,7 +56,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public bool IsSettingsMenuEnabled;
     public bool SkippedTutorial;
     public bool IsFullscreen;
-    private bool _toggledTotally;
+    public bool _toggledTotally;
 
     public int maxSensivity;
     public int sensivityX;
