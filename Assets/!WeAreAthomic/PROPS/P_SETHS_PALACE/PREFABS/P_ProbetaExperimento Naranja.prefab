@@ -5477,6 +5477,7 @@ GameObject:
   - component: {fileID: 4553815479914427244}
   - component: {fileID: 5881937274288900415}
   - component: {fileID: 8485368976599120942}
+  - component: {fileID: 1659269845002944352}
   m_Layer: 0
   m_Name: polySurface7
   m_TagString: Untagged
@@ -5549,6 +5550,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1659269845002944352
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075931790728012026}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7843526606762953986, guid: 6c1338cf26ab9484dabe7fbfe94a5a5d, type: 3}
 --- !u!1 &2233045500858062740
 GameObject:
   m_ObjectHideFlags: 0
@@ -5647,7 +5670,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8613944809662513422}
-  - component: {fileID: 3027367310231534682}
+  - component: {fileID: 7101192233073652145}
   m_Layer: 0
   m_Name: P_ProbetaExperimento Naranja
   m_TagString: Untagged
@@ -5671,29 +5694,35 @@ Transform:
   - {fileID: 4553815479914427244}
   - {fileID: 1374909227732519570}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3027367310231534682
-BoxCollider:
+--- !u!54 &7101192233073652145
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2655580630630685242}
-  m_Material: {fileID: 0}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.585624, y: 6.7428427, z: 2.5260694}
-  m_Center: {x: -0.045217633, y: -1.4113545, z: -0.18492734}
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2889958727767072073
 GameObject:
   m_ObjectHideFlags: 0
