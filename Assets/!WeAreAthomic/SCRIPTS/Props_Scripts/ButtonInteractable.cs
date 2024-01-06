@@ -1,3 +1,4 @@
+using _WeAreAthomic.SCRIPTS.Enemi_Scripts;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using UnityEngine;
 using UnityEngine.Events;
@@ -90,17 +91,41 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         {
             if (!_mainCHacking.IsHacking) 
             {
-                _isShowingButton = true;
-                switch (GameManagerSingleton.Instance.typeOfInput)
+                if(typeOfHacked == TypeOfHacked.prop)
                 {
-                    case TypeOfInput.pc:
+                    if (transform.parent.GetComponent<GreenSoliderMovement>().IsChasingPlayer)
+                    {
+
+                    }
+                    else
+                    {
+                        _isShowingButton = true;
+                        switch (GameManagerSingleton.Instance.typeOfInput)
+                        {
+                            case TypeOfInput.pc:
+                                eButtonObj.SetActive(true);
+                                break;
+                            case TypeOfInput.gamepad:
+                                eastButtonObj.SetActive(true);
+                                break;
+                        }
                         eButtonObj.SetActive(true);
-                        break;               
-                    case TypeOfInput.gamepad:
-                        eastButtonObj.SetActive(true);
-                        break;
+                    }
                 }
-                eButtonObj.SetActive(true);
+                else
+                {
+                    _isShowingButton = true;
+                    switch (GameManagerSingleton.Instance.typeOfInput)
+                    {
+                        case TypeOfInput.pc:
+                            eButtonObj.SetActive(true);
+                            break;
+                        case TypeOfInput.gamepad:
+                            eastButtonObj.SetActive(true);
+                            break;
+                    }
+                    eButtonObj.SetActive(true);
+                }
             }
         }
 

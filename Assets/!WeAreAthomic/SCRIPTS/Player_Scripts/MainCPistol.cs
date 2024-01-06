@@ -277,20 +277,15 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (IsAiming)
             {
-                Debug.Log("hola1");
                 if (_isRecoveringShoot)
                 {
                     StopRecoveringEnergy();
                 }
-                Debug.Log("hola2");
                 _isWaitingForRecoveringShoot = false;
                 _isRecoveringShoot = false;
                 _isShooting = true;
-                Debug.Log("hola3");
                 //shootSoundClip.Play();
-                Debug.Log("hola4");
                 var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-                Debug.Log("hola5");
                 Vector3 targetPoint;
                 Transform t = null;
                 if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, enemyHurtBox))
@@ -304,7 +299,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     targetPoint = ray.GetPoint(75f);
                 }
-                Debug.Log("hola6");
                 _bastetController.Shoot(targetPoint, t, bigBullet, bulletSize, bulletSpeed, _pistolAttackData);
                 _totalCooldown = Time.time + shootCooldown;
                 if (!GameManagerSingleton.Instance.IsUnlimitedEnergy)

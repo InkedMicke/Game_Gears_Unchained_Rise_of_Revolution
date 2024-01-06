@@ -12,6 +12,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private SoldierAnimator _soldierAnim;
         private SoldierHealthManager _healthManager;
         private GreenSoliderMovement _greenMove;
+        private SoldierHealthManager _soldierHealth;
         private GreenDecalHurtBox _decalHurtBox;
 
         private Coroutine _shootCoroutine;
@@ -47,6 +48,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _soldierAnim = GetComponent<SoldierAnimator>();
             _healthManager = GetComponentInChildren<SoldierHealthManager>();
             _greenMove = GetComponent<GreenSoliderMovement>();
+            _soldierHealth = GetComponentInChildren<SoldierHealthManager>();
         }
 
         public void StartDecal()
@@ -103,7 +105,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         private IEnumerator TurnToPlayer()
         {
-            while (true)
+            while (!_soldierHealth.IsDeath)
             {
                 var currentPlayerPos = _playerTr.transform.position;
 
@@ -151,6 +153,17 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             }
             _shootCoroutine = StartCoroutine(ShootCoroutine());
 
+        }
+
+        /// <summary>
+        /// Destroy decal if exists
+        /// </summary>
+        public void DestroyDecal()
+        {
+            if(_currentDecal != null)
+            {
+                Destroy(_currentDecal);
+            }
         }
 
         private bool CheckForDisableShoot()

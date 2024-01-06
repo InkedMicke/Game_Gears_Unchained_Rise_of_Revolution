@@ -22,6 +22,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         [SerializeField] private PlayerDamageData abilityAttackDmgData;
 
+        [SerializeField] private Material lowRangeMaterial;
+        [SerializeField] private Material maxRangeMaterial;
+
         public GameObject weaponObj;
         [SerializeField] private GameObject scannerPrefab;
         [SerializeField] private GameObject tut_ES;
@@ -94,6 +97,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void Update()
         {
             ChargeAttack();
+            if(IsChargingAttack && scannerInst != null)
+            {
+                ChangeMaterialScanner();
+            }
         }
 
         private void GamepadDown(InputAction.CallbackContext context)
@@ -184,6 +191,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void ControlDown()
         {
             _isLeftMousePressed = true;
+        }
+
+        private void ChangeMaterialScanner()
+        {
+            if(scannerInst.transform.localScale.x >= scannerSize)
+            {
+                if(scannerInst.GetComponent<MeshRenderer>().material != maxRangeMaterial)
+                {
+                    scannerInst.GetComponent<MeshRenderer>().material = maxRangeMaterial;
+                }
+            }
         }
 
         private void Attack()

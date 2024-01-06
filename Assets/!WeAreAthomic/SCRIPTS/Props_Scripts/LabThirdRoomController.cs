@@ -15,6 +15,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         private GStopMenu _gStopMenu;
         private MainCTutorialChecker _mainCTutorial;
         private MainCMovement _mainCMovement;
+        private TriggerElevator _triggerElevator;
 
         [SerializeField] private GameObject wave1;
         [SerializeField] private GameObject wave2;
@@ -57,6 +58,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _mainCTutorial = _playerObj.GetComponent<MainCTutorialChecker>();
             _gStopMenu = _playerObj.GetComponent<GStopMenu>();
             _mainCMovement = _playerObj.GetComponent<MainCMovement>();
+            _triggerElevator = triggerElevator.GetComponent<TriggerElevator>();
         }
 
         private void Start()
@@ -130,11 +132,11 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 Instantiate(movableFloorPivot, _playerObj.transform.position - Vector3.right * 1.4f, Quaternion.identity);
                 _playerObj.GetComponent<CharacterController>().enabled = false;
                 _mainCMovement.SetFollowTrajectory(true);
-                triggerElevator.GetComponent<TriggerElevator>().SetIsActivated(false);
+                _triggerElevator.SetIsActivated(false);
             }
             else
             {
-                triggerElevator.GetComponent<TriggerElevator>().SetIsActivated(false);
+                _triggerElevator.SetIsActivated(false);
             }
         }
 
@@ -188,6 +190,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 {
                     if (movableFloor.transform.localPosition.y >= 0f)
                     {
+                        _triggerElevator.SetIsActivated(false);
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
                         _mainCTutorial.AttackImage();

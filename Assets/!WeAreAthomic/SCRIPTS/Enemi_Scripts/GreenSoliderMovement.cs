@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
+using _WeAreAthomic.SCRIPTS.Player_Scripts;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 {
@@ -10,16 +11,19 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private SoldierAnimator _soldierAnim;
         private SoldierHealthManager _healthManager;
         private FieldOfView _fov;
+        private MainCHackingSystem _mainCHacking;
 
         private GameManagerSingleton.TypeOfEnemy _typeOfEnemy;
 
         [SerializeField] private GWaypoints waypoints;
 
+        [SerializeField] private GameObject botonPuerta;
+
         private Transform currentWaypoint;
         private Transform _playerTr => GameObject.FindGameObjectWithTag("Player").transform;
 
         [SerializeField] private bool useWaypoint;
-        private bool _isChasingPlayer;
+        [System.NonSerialized] public bool IsChasingPlayer;
         private bool _isPatrolling;
 
         private float initalStoppingDistance;
@@ -31,6 +35,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _soldierAnim = GetComponent<SoldierAnimator>();
             _fov = GetComponent<FieldOfView>();
             _healthManager = GetComponentInChildren<SoldierHealthManager>();
+            _mainCHacking = _playerTr.gameObject.GetComponent<MainCHackingSystem>();
 
             initalStoppingDistance = _agent.stoppingDistance;
 
@@ -58,7 +63,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
                 FollowPath();
                 ChasePlayer();
             }
-
         }
 
         public void FollowPath() 
@@ -75,11 +79,14 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         public void CheckIfPlayerIsInSight() 
         {
-            if(_fov.canSeePlayer && !_isChasingPlayer && !_soldierAttack.IsAttacking) 
+            if(_fov.canSeePlayer && !IsChasingPlayer && !_soldierAttack.IsAttacking) 
             {
-                _isChasingPlayer = true;
+                IsChasingPlayer = true;
                 AgentValuesToChase();
                 _isPatrolling = false;
+                botonPuerta.SetActive(false);
+                _mainCHacking.StopHack();
+                
             }
         }
 
@@ -93,7 +100,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         public void ChasePlayer()
         {
-            if(_isChasingPlayer)
+            if(IsChasingPlayer)
             {
                 _agent.SetDestination(_playerTr.position);
                 _soldierAnim.SetWalking(true);
@@ -104,7 +111,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
                     _agent.isStopped = true;
                     _soldierAnim.SetWalking(false);
                     _soldierAttack.StartDecal();
-                    _isChasingPlayer = false;
+                    IsChasingPlayer = false;
                     _isPatrolling = false;
                 }
             }
@@ -114,7 +121,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         public void SetChasePlayer(bool chase)
         {
             _isPatrolling = !chase;
-            _isChasingPlayer = chase;
+            IsChasingPlayer = chase;
             if(chase)
             {
                 AgentValuesToChase();

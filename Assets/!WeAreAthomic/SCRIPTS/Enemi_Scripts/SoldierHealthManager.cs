@@ -11,6 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
     public class SoldierHealthManager : MonoBehaviour, IDamageable
     {
         private GreenSoliderMovement _greenMove;
+        private GreenSoliderAttack _greenAttack;
         
        [SerializeField] private C_DisolveEnemi _disolveEnemi;
 
@@ -29,7 +30,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private void Awake()
         {
             _greenMove = GetComponentInParent<GreenSoliderMovement>();
-            
+            _greenAttack = GetComponentInParent<GreenSoliderAttack>();
+
 
             currentHealth = maxHealth;
             SetMaxhealthSlider(maxHealth);
@@ -64,6 +66,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _greenMove.DisableMovement();
             botonSoldier.SetActive(false);
             _disolveEnemi.StartDisolving();
+            Debug.Log("hola1");
+            _greenAttack.DestroyDecal();
         }
 
         public void SetMaxhealthSlider(float maxHealth)
