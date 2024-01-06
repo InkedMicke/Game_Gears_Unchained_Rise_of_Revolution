@@ -1,15 +1,20 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class OptionsScreen : MonoBehaviour
 {
+    [SerializeField] private ScenesVolumeList scenesVolumeList;
+
+    private ColorAdjustments colorAdjustments;
+
     public TMP_Dropdown resDropdown;
     public TMP_Dropdown screenDropdown;
     public TMP_Dropdown qualityDropdown;
-    public TMP_Dropdown antiAliDropdown;
+
+    public Slider brightnessSlider; 
 
     [SerializeField] private UniversalRenderPipelineAsset _urpQualityLow;
     [SerializeField] private UniversalRenderPipelineAsset _urpQualityMedium;
@@ -82,6 +87,8 @@ public class OptionsScreen : MonoBehaviour
         resDropdown.AddOptions(resString);
 
         resDropdown.SetValueWithoutNotify(GetValueFromVector2Int(resolutions[resolutions.Count - 1]));
+
+        brightnessSlider.value = GameManagerSingleton.Instance.brightness;
     }
 
     public void SetFullscreenValue()
@@ -173,6 +180,22 @@ public class OptionsScreen : MonoBehaviour
         }
 
         QualitySettings.SetQualityLevel(index, false);
+    }
+
+    public void SetBrightness(float value)
+    {
+        GameManagerSingleton.Instance.brightness = value;
+        if(scenesVolumeList.labVolume != null)
+        {
+            scenesVolumeList.labVolume.profile.TryGet(out colorAdjustments);
+            colorAdjustments.postExposure.value = value;
+        }        
+        
+        if(scenesVolumeList.poorVolume != null)
+        {
+            scenesVolumeList.labVolume.profile.TryGet(out colorAdjustments);
+            colorAdjustments.postExposure.value = value;
+        }
     }
 
   

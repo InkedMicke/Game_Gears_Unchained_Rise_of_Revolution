@@ -50,6 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [System.NonSerialized] public bool IsCrouch;
         [System.NonSerialized] public bool IsJumping;
         [System.NonSerialized] public bool IsFalling;
+        [System.NonSerialized] public bool IsDashing;
         private bool _isRunningKeyboard;
         private bool _isRunningGamepad;
         private bool _isCrouchWalking;
@@ -84,13 +85,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float _dashTime = .10f;
         public float turnSmoothTime = 0.1f;
         private float _moveSpeed;
-        private float _horizontal;
         private float _turnSmoothVelocityGamepad;
         private float _timeGraceCrouchPeriod;
         private float _timeGraceJumpPeriod;
         private float _moveAimingX;
         private float _moveAimingY;
-        private float _pushTimeElapsed;
         private float _dashTotalCooldown;
 
         private void Awake()
@@ -421,15 +420,22 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
+        public void StopDash()
+        {
+            StopCoroutine(Dash());
+            _mainCLayers.DisableSlideLayer();
+            IsDashing = false;
+        }
+
         private IEnumerator Dash()
         {
-            DisableMovement();
-            _mainCAttack.DisableCanAttack();
+            IsDashing = true;
             _mainCLayers.EnableSlideLayer();
-            _dashTotalCooldown = Time.time + dashCooldown;
-            var startTime = Time.time;
             _mainCAnimator.TriggerDash();
-
+            DisableMovement();
+            _dashTotalCooldown = Time.time + dashCooldown;
+            yield return new WaitForSeconds(0.1f);
+            var startTime = Time.time;
             while (Time.time < startTime + _dashTime)
             {
                 _gTrail.StartTrail();
@@ -442,14 +448,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             EnableMovement();
-            _mainCAttack.EnableCanAttack();
-            EndDash();
         }
-        private IEnumerator EndDash()
+        private void EndDash()
         {
-            yield return new WaitForSeconds(2f);
             _mainCLayers.DisableSlideLayer();
-            
+            IsDashing = false;
         }
     
 

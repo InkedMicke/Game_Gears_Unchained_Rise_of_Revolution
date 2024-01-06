@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,8 +12,8 @@ public class GSliderInputGrabber : MonoBehaviour
         _slider = GetComponent<Slider>();
     }
 
-    public void SendDataToTargetScript()
+    public void SendDataToTargetScript(string functionName)
     {
-        targetScript.SendMessage("GetDataFromSlider", _slider.value);
+        targetScript.SendMessage(functionName, _slider.value);
     }
 }

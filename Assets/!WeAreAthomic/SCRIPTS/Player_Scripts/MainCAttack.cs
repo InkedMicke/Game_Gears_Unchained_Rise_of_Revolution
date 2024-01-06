@@ -188,10 +188,15 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Attack()
         {
+            Debug.Log("hola1");
             if (_typeOfAttack == TypeOfAttack.NormalAttack)
             {
+                Debug.Log("hola2");
                 if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
+                    Debug.Log("hola3");
+                    _mainCMovement.StopDash();
+                    _mainCMovement.EnableMovement();
                     if (_mainCTutorial.IsOnTutorial && !_attackTutorial)
                     {
                         _mainCSounds.RemoveAllSounds();
@@ -414,16 +419,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (IsAttacking)
             {
+                Debug.Log("hola4");
                 return false;
             }
 
             if (!(Time.time > timeGraceAttackPeriod))
             {
+                Debug.Log("hola5");
                 return false;
             }
 
             if (!_canAttack)
             {
+                Debug.Log("hola6");
                 return false;
             }
 

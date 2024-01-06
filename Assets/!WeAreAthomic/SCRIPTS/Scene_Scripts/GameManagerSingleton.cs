@@ -63,8 +63,8 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public int sensivityY;
 
     public float currentHealth = 100f;
-
     public float bastetEnergy = 100f;
+    public float brightness;
 
 
     private void Awake()
