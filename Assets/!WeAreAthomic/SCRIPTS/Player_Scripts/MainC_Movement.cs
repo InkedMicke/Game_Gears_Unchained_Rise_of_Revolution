@@ -425,8 +425,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             DisableMovement();
             _mainCAttack.DisableCanAttack();
+            _mainCLayers.EnableSlideLayer();
             _dashTotalCooldown = Time.time + dashCooldown;
             var startTime = Time.time;
+            _mainCAnimator.TriggerDash();
 
             while (Time.time < startTime + _dashTime)
             {
@@ -441,12 +443,15 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             EnableMovement();
             _mainCAttack.EnableCanAttack();
+            EndDash();
         }
-
-        public void EndDash()
+        private IEnumerator EndDash()
         {
-            //_mainCLayers.DisableSlideLayer();
+            yield return new WaitForSeconds(2f);
+            _mainCLayers.DisableSlideLayer();
+            
         }
+    
 
         private void RunOn(InputAction.CallbackContext context)
         {
