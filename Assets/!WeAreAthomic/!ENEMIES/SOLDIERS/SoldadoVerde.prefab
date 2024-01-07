@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 5738154880865817068}
   - component: {fileID: 7960632178198509863}
   - component: {fileID: 5829422827742403961}
+  - component: {fileID: 5498398354827162633}
   m_Layer: 0
   m_Name: SoldadoVerde
   m_TagString: Untagged
@@ -231,15 +232,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 10
-  angle: 0
+  angle: 360
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   obstructionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2049
   canSeePlayer: 0
+--- !u!114 &5498398354827162633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7970255392764161239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ac5256204ff8a34fbcd24ea2c8f47be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8202827297792976926
 GameObject:
   m_ObjectHideFlags: 0

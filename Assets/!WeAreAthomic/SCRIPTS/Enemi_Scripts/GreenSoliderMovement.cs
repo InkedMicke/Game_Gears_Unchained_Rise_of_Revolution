@@ -11,7 +11,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private SoldierAnimator _soldierAnim;
         private SoldierHealthManager _healthManager;
         private FieldOfView _fov;
+        private FieldOfViewHear _fovHear;
         private MainCHackingSystem _mainCHacking;
+        private MainCMovement _mainCMove;
 
         private GameManagerSingleton.TypeOfEnemy _typeOfEnemy;
 
@@ -34,8 +36,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _soldierAttack = GetComponent<GreenSoliderAttack>();
             _soldierAnim = GetComponent<SoldierAnimator>();
             _fov = GetComponent<FieldOfView>();
+            _fovHear = GetComponent<FieldOfViewHear>();
             _healthManager = GetComponentInChildren<SoldierHealthManager>();
             _mainCHacking = _playerTr.gameObject.GetComponent<MainCHackingSystem>();
+            _mainCMove = _playerTr.gameObject.GetComponent<MainCMovement>();
 
             initalStoppingDistance = _agent.stoppingDistance;
 
@@ -60,6 +64,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             if (!_healthManager.IsDeath)
             {
                 CheckIfPlayerIsInSight();
+                CheckIfPlayerHeared();
                 FollowPath();
                 ChasePlayer();
             }
@@ -90,8 +95,21 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             }
         }
 
+        private void CheckIfPlayerHeared()
+        {
+            if(_fovHear.canSeePlayer && !IsChasingPlayer && !_soldierAttack.IsAttacking && !_mainCMove.IsCrouch)
+            {
+                IsChasingPlayer = true;
+                AgentValuesToChase();
+                _isPatrolling = false;
+                botonPuerta.SetActive(false);
+                _mainCHacking.StopHack();
+            }
+        }
+
         public void AgentValuesToChase()
         {
+            Debug.Log("hola2");
             _agent.stoppingDistance = initalStoppingDistance;
             _agent.autoBraking = true;
             _agent.isStopped = false;
