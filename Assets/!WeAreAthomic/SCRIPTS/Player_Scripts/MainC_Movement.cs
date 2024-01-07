@@ -23,6 +23,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Rigidbody _rb;
         private GTrajectory _trajectory;
         private G_MeshTrail _gTrail;
+        private MainCSounds _mainCSounds;
 
         private Scene _currentScene;
 
@@ -105,7 +106,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions = new PlayerInputActions();
             _mainCHealth = GetComponentInChildren<MainCHealthManager>();
             _gTrail = GetComponent<G_MeshTrail>();
-            
+            _mainCSounds = GetComponent<MainCSounds>();
             _currentScene = SceneManager.GetActiveScene();
             if(_currentScene.name == "S2_LABTUTORIAL" || _currentScene.name ==  "TESTING")
             {
@@ -429,6 +430,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private IEnumerator Dash()
         {
             IsDashing = true;
+            _mainCSounds.PlayJumpSound();
             _mainCLayers.EnableSlideLayer();
             _mainCAnimator.TriggerDash();
             DisableMovement();

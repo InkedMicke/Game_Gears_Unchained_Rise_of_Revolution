@@ -14,6 +14,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCPlayerInterface _mainCInterface;
 
         [SerializeField] private Slider healthSlider;
+       
 
         public bool IsDeath;
 
@@ -46,11 +47,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void Damage(float damage)
         {
-            currentHealth -= damage;
-            GameManagerSingleton.Instance.currentHealth = currentHealth;
-            _mainSounds.PlayHurtSound();
-            CheckDeath();
-            SetHealthSlider();
+            if (!IsDeath)
+            {
+                currentHealth -= damage;
+                GameManagerSingleton.Instance.currentHealth = currentHealth;
+                _mainSounds.RemoveAllSounds();
+                _mainSounds.PlayHurtSound();
+                SetHealthSlider();
+                CheckDeath();
+            }
+            
         }
 
         public void GetHealth(float health)
@@ -76,10 +82,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Death()
         {
-            _mainSounds.PlayDieSound();
+           
             _anim.enabled = false;
             _cc.enabled = false;
             _mainCRagdoll.SetEnabled(true);
+            _mainSounds.PlayDieSound();
         }
 
         public void Revive()
