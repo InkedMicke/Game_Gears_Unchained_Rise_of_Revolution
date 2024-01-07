@@ -173,6 +173,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 hackCanvas.SetActive(false);
                 _mainCSounds.StopHackInProcessSound();
                 _cc.enabled = true;
+                _mainCLayers.DisableHackLayer();
                 _bastetController.InvokeMoveToPlayer();
                 _mainCSounds.PlayCannotHackSound();
 
@@ -200,14 +201,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void EndAnimHack()
         {
-            _mainCLayers.DisableHackLayer();
-            isHackingAnim = false;
-            _hackCoroutine = StartCoroutine(Hack(_timeToHack));
-            hackCanvas.SetActive(true);
-            hackSlider.minValue = Time.time;
-            hackSlider.maxValue = Time.time + _timeToHack;
-            _cc.enabled = true;
-            _mainCSounds.PlayHackInProcessSound();
+            if (IsHacking)
+            {
+                _mainCLayers.DisableHackLayer();
+                isHackingAnim = false;
+                _hackCoroutine = StartCoroutine(Hack(_timeToHack));
+                hackCanvas.SetActive(true);
+                hackSlider.minValue = Time.time;
+                hackSlider.maxValue = Time.time + _timeToHack;
+                _cc.enabled = true;
+                _mainCSounds.PlayHackInProcessSound();
+            }
         }
     }
 }

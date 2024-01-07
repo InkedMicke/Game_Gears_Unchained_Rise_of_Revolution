@@ -21,7 +21,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [System.NonSerialized] public bool isCrouchLayerActive;
         private void Awake()
         {
-            _anim = GetComponent<Animator>();
+            _anim = GetComponentInChildren<Animator>();
         }
 
         private void Update()

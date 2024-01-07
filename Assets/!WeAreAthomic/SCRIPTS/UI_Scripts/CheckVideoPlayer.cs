@@ -9,7 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.UI
 {
     public class CheckVideoPlayer : MonoBehaviour
     {
-        [SerializeField] private string sceneToLoad;
+        [SerializeField] private Scenes sceneToLoad;
 
         private void Start()
         {

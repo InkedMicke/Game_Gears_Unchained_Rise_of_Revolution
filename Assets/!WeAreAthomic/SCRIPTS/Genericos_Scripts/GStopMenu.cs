@@ -50,46 +50,48 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 
         private void ToggleMenu()
         {
-            if (!GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+            if (!GameManagerSingleton.Instance.IsGameOverEnabled && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
             {
-                if (GameManagerSingleton.Instance.IsStopMenuEnabled)
+                if (!GameManagerSingleton.Instance.IsSettingsMenuEnabled)
                 {
-                    stopMenuContainer.SetActive(false);
-                    if (!GameManagerSingleton.Instance.thereIsCanvasBelow)
+                    if (GameManagerSingleton.Instance.IsStopMenuEnabled)
                     {
-                        GameManagerSingleton.Instance.CursorMode(false);
+                        stopMenuContainer.SetActive(false);
+                        if (!GameManagerSingleton.Instance.thereIsCanvasBelow)
+                        {
+                            GameManagerSingleton.Instance.CursorMode(false);
+                        }
+                        tutKeys.SetActive(true);
+                        playerInterface.SetActive(true);
+                        GameManagerSingleton.Instance.PauseGame(false);
+                        GameManagerSingleton.Instance.FreezeTime(false);
+                        GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
+                        _mainCSounds.UnPauseCurrentSounds();
+                        _isActive = false;
                     }
-                    tutKeys.SetActive(true);
-                    playerInterface.SetActive(true);
-                    GameManagerSingleton.Instance.PauseGame(false);
-                    GameManagerSingleton.Instance.FreezeTime(false);
-                    GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
-                    _mainCSounds.UnPauseCurrentSounds();
-                    _isActive = false;
-                }
-                else
-                {
-                    if(_mainCInputSwitcher.isUsingMouse)
+                    else
                     {
-                        EventSystem.current.SetSelectedGameObject(null);
-                    }
+                        if (_mainCInputSwitcher.isUsingMouse)
+                        {
+                            EventSystem.current.SetSelectedGameObject(null);
+                        }
 
-                    if (_mainCInputSwitcher.isUsingGamepad)
-                    {
-                        EventSystem.current.SetSelectedGameObject(firstButton);
+                        if (_mainCInputSwitcher.isUsingGamepad)
+                        {
+                            EventSystem.current.SetSelectedGameObject(firstButton);
+                        }
+                        stopMenuContainer.SetActive(true);
+                        tutKeys.SetActive(false);
+                        playerInterface.SetActive(false);
+                        GameManagerSingleton.Instance.CursorMode(true);
+                        GameManagerSingleton.Instance.PauseGame(true);
+                        GameManagerSingleton.Instance.FreezeTime(true);
+                        GameManagerSingleton.Instance.SetIsStopMenuEnabled(true);
+                        _mainCSounds.PauseCurrentSounds();
+                        _isActive = true;
                     }
-                    stopMenuContainer.SetActive(true);
-                    tutKeys.SetActive(false);
-                    playerInterface.SetActive(false);
-                    GameManagerSingleton.Instance.CursorMode(true);
-                    GameManagerSingleton.Instance.PauseGame(true);
-                    GameManagerSingleton.Instance.FreezeTime(true);
-                    GameManagerSingleton.Instance.SetIsStopMenuEnabled(true);
-                    _mainCSounds.PauseCurrentSounds();
-                    _isActive = true;
                 }
             }
-
 
         }
 

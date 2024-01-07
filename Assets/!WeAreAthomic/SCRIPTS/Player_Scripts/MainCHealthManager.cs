@@ -1,34 +1,40 @@
 using UnityEngine;
 using UnityEngine.UI;
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
+using System.Collections;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCHealthManager : MonoBehaviour, IDamageable
     {
-        private Animator _anim;
         private CharacterController _cc;
         private MainCRagdoll _mainCRagdoll;
         private MainCSounds _mainSounds;
         private MainCAttack _mainCAttack;
         private MainCPlayerInterface _mainCInterface;
+        private MainCAnimatorController _mainCAnim;
 
         [SerializeField] private Slider healthSlider;
-       
+
+        [SerializeField] private GameObject gameOverCanvas;
+        [SerializeField] private GameObject cameraBase;
+
+        [SerializeField] private float timeToGameover = 1.5f;
 
         public bool IsDeath;
+        public bool CanReceiveDamage = true;
 
         public float currentHealth = 50f;
         public float maxHealth = 100f;
 
         private void Awake()
         {
-            _anim = GetComponentInParent<Animator>();
             _cc = GetComponentInParent<CharacterController>();
             _mainCRagdoll = GetComponentInParent<MainCRagdoll>();
             _mainSounds = GetComponentInParent<MainCSounds>();
             _mainCInterface = GetComponentInParent<MainCPlayerInterface>();
             _mainCAttack = GetComponentInParent<MainCAttack>();
+            _mainCAnim = GetComponentInParent<MainCAnimatorController>();
         }
 
         private void Start()
@@ -47,7 +53,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void Damage(float damage)
         {
-            if (!IsDeath)
+            if (!IsDeath && CanReceiveDamage)
             {
                 currentHealth -= damage;
                 GameManagerSingleton.Instance.currentHealth = currentHealth;
@@ -56,7 +62,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 SetHealthSlider();
                 CheckDeath();
             }
-            
+
         }
 
         public void GetHealth(float health)
@@ -68,7 +74,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void CheckDeath()
         {
-            if(currentHealth <= 0)
+            if (currentHealth <= 0)
             {
                 if (!IsDeath)
                 {
@@ -82,23 +88,24 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Death()
         {
-           
-            _anim.enabled = false;
+            _mainCAnim.AnimEnabled(false);
             _cc.enabled = false;
             _mainCRagdoll.SetEnabled(true);
             _mainSounds.PlayDieSound();
+            StartCoroutine(WaitForGameOver());
         }
 
         public void Revive()
         {
-            _cc.enabled = true;
-            _anim.enabled = true;
+            _mainCRagdoll.SetEnabled(false);
+            CanReceiveDamage = false;
             currentHealth = 100;
             GameManagerSingleton.Instance.currentHealth = currentHealth;
             SetHealthSlider();
             IsDeath = false;
             _mainCAttack.SetIsSheathed(false);
             _mainCRagdoll.ResetBody();
+            StartCoroutine(InvencibilityTime());
         }
 
         public void Die()
@@ -107,6 +114,38 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             GameManagerSingleton.Instance.currentHealth = currentHealth;
             SetHealthSlider();
             Death();
+        }
+
+        public void PosToCheckpoint()
+        {
+            transform.parent.position = GameManagerSingleton.Instance.currentCheckpoint;
+            cameraBase.transform.position = GameManagerSingleton.Instance.currentCheckpoint;
+            _mainCAnim.ResetAnimatorComponent();
+            _mainCAnim.AnimEnabled(true);
+            _cc.enabled = true;
+        }
+
+        private IEnumerator WaitForGameOver()
+        {
+            yield return new WaitForSeconds(timeToGameover);
+
+            gameOverCanvas.SetActive(true);
+            GameManagerSingleton.Instance.SetIsGameOverMenuEnabled(true);
+            GameManagerSingleton.Instance.OpenTotallyWindow();
+        }
+
+        private IEnumerator InvencibilityTime()
+        {
+            yield return new WaitForSeconds(2f);
+
+            CanReceiveDamage = true;
+        }
+
+        private IEnumerator waitTest()
+        {
+            yield return new WaitForSeconds(1f);
+            Debug.Log("hola2");
+
         }
 
         public void SetHealthSlider()

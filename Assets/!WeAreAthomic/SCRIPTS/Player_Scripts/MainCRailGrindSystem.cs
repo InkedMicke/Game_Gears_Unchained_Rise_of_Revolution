@@ -63,7 +63,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void Awake()
         {
             _cc = GetComponent<CharacterController>();
-            _anim = GetComponent<Animator>();
+            _anim = GetComponentInChildren<Animator>();
             _mainCLayers = GetComponent<MainCLayers>();
             _mainCMove = GetComponent<MainCMovement>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
@@ -161,7 +161,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             yield return new WaitForSeconds(value);
             var desiredPos = new Vector3(directionsList[_childActual].position.x, transform.position.y, transform.position.z);
             transform.position = desiredPos;
-            Debug.Log("hola1");
         }
 
         private void GetAllTransforms()
@@ -178,6 +177,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     var railContainer = padre4.GetChild(padre4.childCount - 1);
 
                     var allChildren = railContainer.GetComponentsInChildren<Transform>();
+                    Debug.Log(railContainer);
 
                     foreach (var child in allChildren)
                     {
@@ -244,7 +244,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 }
 
                 MoveToNextDirectionList();
-                if (Vector3.Distance(transform.position, _posOnAirTarget) < 0.3f)
+                if (Vector3.Distance(transform.position, _posOnAirTarget) < 0.5f)
                 {
                     if (directionsList.Count > 0)
                     {

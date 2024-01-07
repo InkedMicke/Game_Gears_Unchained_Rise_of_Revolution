@@ -10,7 +10,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
     {
         private PlayerInput _playerInput;
         private PlayerInputActions _playerInputActions;
-        private Animator _anim;
         private MainCLayers _mainCLayers;
         private MainCAttack _mainCAttack;
         private MainCPistol _mainCPistol;
@@ -94,7 +93,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Awake()
         {
-            _anim = GetComponent<Animator>();
             _mainCLayers = GetComponent<MainCLayers>();
             _mainCAttack = GetComponent<MainCAttack>();
             _mainCPistol = GetComponent<MainCPistol>();
@@ -154,6 +152,15 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void Update()
         {
             AnimatorController();
+
+
+            CrouchWalking();
+            ApplyGravity();
+            FollowTrajectory();
+        }
+
+        private void FixedUpdate()
+        {
             if (_canMove && !GameManagerSingleton.Instance.IsGodModeEnabled && !_railGrindSystem.CanJumpOnRail && !_mainCHacking.isHackingAnim && !_mainCAttack.IsFinalAttacking && !_mainCHealth.IsDeath && !_railGrindSystem.IsSliding)
             {
                 if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
@@ -162,12 +169,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 }
                 else
                     MoveGamepad();
-
             }
-
-            CrouchWalking();
-            ApplyGravity();
-            FollowTrajectory();
         }
 
 
@@ -196,8 +198,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _timeGraceJumpPeriod = Time.time + timeNextJump;
                 }
             }
-            _mainCAnimator.SetPistolMoveX(_moveAimingX);
-            _mainCAnimator.SetPistolMoveY(_moveAimingY);
         }
 
         private void ApplyGravity()
@@ -214,36 +214,27 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             _moveVectorKeyboard = _playerInputActions.PlayerPC.MovementKeyboard.ReadValue<Vector2>();
 
-            if (_moveVectorKeyboard.magnitude > 0.1f)
-            {
-                _isUsingKeyboard = true;
-                _isUsingGamepad = false;
-            }
- 
-            if (_isUsingGamepad) return;
+            var direction = CalculateMovementDirection(_moveVectorKeyboard);
 
-            var direction = new Vector3(_moveVectorKeyboard.x, 0f, _moveVectorKeyboard.y).normalized;
             var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
-            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityKeyboard,
-                turnSmoothTime);
+            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityKeyboard, turnSmoothTime);
 
             _moveDir = orientation.forward * (Time.deltaTime * _moveSpeed * direction.magnitude);
-            
+
             _mainCAnimator.SetMoveSpeed(_moveSpeed);
 
             ApplyGravity();
 
             _cc.Move(_moveDir);
 
-            MoveWhileAiming();
-            
-            _mainCAnimator.SetPistolMoveX(_moveAimingX);
-            _mainCAnimator.SetPistolMoveY(_moveAimingY);
-
             if (_moveVectorKeyboard.magnitude > 0.1f)
             {
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
             }
+        
+
+        MoveWhileAiming();
+            
 
             //arreglar cuando mantienes la W se suma y resta a la vez el moveSpeed
             if (_moveVectorKeyboard.magnitude > 0.1f && !_isRunningKeyboard)
@@ -295,23 +286,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             _moveVectorGamepad = _playerInputActions.PlayerPC.MovementGamepad.ReadValue<Vector2>();
 
-            if (_moveVectorGamepad.magnitude > 0.1f)
-            {
-                _isUsingGamepad = true;
-                _isUsingKeyboard = false;
-            }
-            else
-            {
-                if (_isRunningGamepad)
-                {
-                    _isRunningGamepad = false;
-                }
-            }
-
-
-            if (_isUsingKeyboard) return;
-
-
             _movement = new Vector3(_moveVectorGamepad.x, 0.0f, _moveVectorGamepad.y).normalized;
 
             var moveSpeed = _isRunningGamepad ? runSpeed : walkSpeed;
@@ -339,6 +313,29 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
             }
+        }
+
+        private Vector3 CalculateMovementDirection(Vector2 inputDirection)
+        {
+            var direction = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
+
+            // Detectar la inclinación de la superficie usando Raycast
+            RaycastHit hit;
+            if (Physics.Raycast(checkGrounded.position, Vector3.down, out hit, .5f))
+            {
+                // Calcular la dirección de la rampa proyectando la normal en el plano horizontal
+                Vector3 rampDirection = Vector3.ProjectOnPlane(hit.normal, Vector3.up).normalized;
+
+                var verticalSlopeAngle = Vector3.Angle(rampDirection, Vector3.up);
+
+                // Modificar la dirección de movimiento según el ángulo de la rampa
+                if (verticalSlopeAngle > 10)
+                {
+                    Debug.DrawRay(hit.point, direction.normalized * 100f, Color.magenta, 2f);
+                    direction = Vector3.ProjectOnPlane(direction, hit.normal).normalized;
+                }
+            }
+            return direction;
         }
 
         public void StartFollowTrajectory()
@@ -650,6 +647,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     Gizmos.DrawWireSphere(t, 0.1f);
                 }
             }
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(checkGrounded.position, .1f);
         }
 
         public bool IsGrounded()

@@ -88,7 +88,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 175427163831382389}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.087, z: 0}
+  m_LocalPosition: {x: 0, y: -0.002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -256,52 +256,6 @@ Transform:
   m_Father: {fileID: 3953601784478877334}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5014162261175886851
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8855248624342287110}
-  - component: {fileID: 6518963974795493025}
-  m_Layer: 0
-  m_Name: Rig 1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8855248624342287110
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5014162261175886851}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3953601784478877334}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6518963974795493025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5014162261175886851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Weight: 1
-  m_Effectors: []
 --- !u!1 &5427380633014476030
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +296,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3953601784478877334}
-  - component: {fileID: 8240707643706739422}
+  - component: {fileID: 4355429804995384829}
   - component: {fileID: 2700445464397738688}
   - component: {fileID: 8736006538644211507}
   - component: {fileID: 294128395308933352}
@@ -354,8 +308,6 @@ GameObject:
   - component: {fileID: 8156547131111017134}
   - component: {fileID: 6156758546523602922}
   - component: {fileID: 4237099692295455833}
-  - component: {fileID: 5728114685307011585}
-  - component: {fileID: 2808730068753098177}
   - component: {fileID: 6959285264927564952}
   - component: {fileID: 589968473874659019}
   - component: {fileID: 6611464287988843329}
@@ -393,13 +345,12 @@ Transform:
   - {fileID: 2753448327355556005}
   - {fileID: 6624492165851561840}
   - {fileID: 8712391713574069247}
-  - {fileID: 8855248624342287110}
   - {fileID: 8442462779739023718}
   - {fileID: 8955086337922746776}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &8240707643706739422
+--- !u!95 &4355429804995384829
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -466,8 +417,6 @@ MonoBehaviour:
   isJumping: isJumping
   isGrounded: isGrounded
   isSliding: isSliding
-  pistolMoveX: pistolMoveX
-  pistolMoveY: pistolMoveY
   hack: hack
   aimOnRail: railAiming
   dash: dash
@@ -813,105 +762,6 @@ MonoBehaviour:
   movedIzqImage: {fileID: 0}
   movedDerImage: {fileID: 0}
   FirstTimeAbility: 0
---- !u!114 &5728114685307011585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5821918579687998185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RigLayers:
-  - m_Rig: {fileID: 6518963974795493025}
-    m_Active: 1
-  m_Effectors: []
---- !u!114 &2808730068753098177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5821918579687998185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boneShape: 1
-  drawBones: 1
-  drawTripods: 0
-  boneSize: 1
-  tripodSize: 1
-  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
-  m_Transforms:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &6959285264927564952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1004,7 +854,10 @@ MonoBehaviour:
   matrigPrefab: {fileID: 9392647117017190, guid: 3f50f72433c502940a09e9ba10f49496,
     type: 3}
   godmodeContainer: {fileID: 0}
+  hips: {fileID: 2812223359493779352}
   prueba: []
+  bones: []
+  bonesPos: []
   ragDoll: 0
 --- !u!114 &8560368454650083858
 MonoBehaviour:
@@ -1311,7 +1164,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 0}
+  gameOverCanvas: {fileID: 0}
+  cameraBase: {fileID: 0}
+  timeToGameover: 2
   IsDeath: 0
+  CanReceiveDamage: 1
   currentHealth: 50
   maxHealth: 100
 --- !u!1 &8828226641775649965
@@ -2188,6 +2045,12 @@ Transform:
 --- !u!137 &2402805393333922494 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1332789935442608498, guid: 3f50f72433c502940a09e9ba10f49496,
+    type: 3}
+  m_PrefabInstance: {fileID: 3686055165737724876}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2812223359493779352 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1450292783081636948, guid: 3f50f72433c502940a09e9ba10f49496,
     type: 3}
   m_PrefabInstance: {fileID: 3686055165737724876}
   m_PrefabAsset: {fileID: 0}

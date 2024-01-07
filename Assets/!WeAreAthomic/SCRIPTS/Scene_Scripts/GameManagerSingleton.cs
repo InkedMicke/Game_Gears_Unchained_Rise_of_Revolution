@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Hedenrag.ExVar;
 using UnityEngine.EventSystems;
-
+using UnityEditor.Animations;
 
 public enum TypeOfInput
 {
@@ -43,9 +43,15 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public DifficultyLevel _currentDifficulty = DifficultyLevel.historia;
     public TypeOfInput typeOfInput = TypeOfInput.pc;
 
+    public Avatar mattAvatar;
+
+    public AnimatorController mattController;
+
     public List<GameObject> gameObjectsList;
     public List<GameObject> closestGameObjectsList;
     public GameObject gamepadController;
+    
+    public Vector3 currentCheckpoint;
 
     public bool IsGamePaused;
     public bool thereIsCanvasBelow;
@@ -54,6 +60,8 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public bool IsGodModeEnabled;
     public bool IsStopMenuEnabled;
     public bool IsSettingsMenuEnabled;
+    public bool IsGameOverEnabled;
+    public bool IsAbilityMenuEnabled;
     public bool SkippedTutorial;
     public bool IsFullscreen;
     public bool _toggledTotally;
@@ -61,6 +69,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public int maxSensivity;
     public int sensivityX;
     public int sensivityY;
+    public int gearsItem;
 
     public float currentHealth = 100f;
     public float bastetEnergy = 100f;
@@ -161,6 +170,11 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public void SetIsSettingsMenuEnabled(bool condition)
     {
         IsSettingsMenuEnabled = condition;
+    }    
+    
+    public void SetIsGameOverMenuEnabled(bool condition)
+    {
+        IsGameOverEnabled = condition;
     }
 
     public void FreezeTime(bool condition)
@@ -176,6 +190,10 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public void SetSkippedTutorial(bool condition)
     {
         SkippedTutorial = condition;
+    }    
+    public void SetIsAbilityMenuTutorial(bool condition)
+    {
+        IsAbilityMenuEnabled = condition;
     }    
 
     public void SetEventSystemSelectedObj(GameObject obj)

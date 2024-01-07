@@ -14,13 +14,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private string isJumping = "isJumping";
         [SerializeField] private string isGrounded = "isGrounded";
         [SerializeField] private string isSliding = "isSliding";
-        [SerializeField] private string pistolMoveX = "pistolMoveX";
-        [SerializeField] private string pistolMoveY = "pistolMoveY";
         [SerializeField] private string hack = "hack";
         [SerializeField] private string aimOnRail = "railAiming";
         [SerializeField] private string dash = "dash";
 
         protected void Awake()
+        {
+            ResetAnimatorComponent();
+        }
+
+        public void ResetAnimatorComponent()
         {
             _anim = GetComponent<Animator>();
         }
@@ -70,16 +73,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _anim.SetBool(isSliding, condition);
         }
 
-        public void SetPistolMoveX(float value)
-        {
-            _anim.SetFloat(pistolMoveX, value);
-        }
-
-        public void SetPistolMoveY(float value)
-        {
-            _anim.SetFloat(pistolMoveY, value);
-        }
-
         public void SetAimOnRail(bool condition)
         {
             _anim.SetBool(aimOnRail, condition);
@@ -93,6 +86,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void TriggerDash()
         {
             _anim.SetTrigger(dash);
+        }
+
+        public void SetRootMotion(bool condition)
+        {
+            _anim.applyRootMotion = condition;
+        }
+
+        public void AnimEnabled(bool condition)
+        {
+            _anim.enabled = condition;
         }
     }
 }

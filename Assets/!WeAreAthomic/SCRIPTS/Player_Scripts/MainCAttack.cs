@@ -9,7 +9,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCMovement _mainCMovement;
         private PlayerInputActions _playerInputActions;
         private MainCLayers _mainCLayers;
-        private Animator _anim;
         private MainCRailGrindSystem _railGrindSystem;
         private MainCAnimatorController _mainCAnimator;
         private MainCSounds _mainCSounds;
@@ -69,7 +68,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             _mainCMovement = GetComponent<MainCMovement>();
             _mainCLayers = GetComponent<MainCLayers>();
-            _anim = GetComponent<Animator>();
             _cc = GetComponent<CharacterController>();
             _railGrindSystem = GetComponent<MainCRailGrindSystem>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
@@ -206,7 +204,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Attack()
         {
-            if (_typeOfAttack == TypeOfAttack.NormalAttack)
+            if (_typeOfAttack == TypeOfAttack.NormalAttack && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
             {
                 if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
@@ -251,7 +249,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void ChargeAttack()
         {
-            if(CanChargeAttack() && _hasUnlockedAbilityAttack && GameManagerSingleton.Instance.bastetEnergy > 20f && Time.time > _abilityAttackTotalCooldown && !IsAttacking)
+            if(CanChargeAttack() && _hasUnlockedAbilityAttack && GameManagerSingleton.Instance.bastetEnergy > 20f && Time.time > _abilityAttackTotalCooldown && !IsAttacking && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
             {
                 if(_mainCTutorial.FirstTimeAbility)
                 {
@@ -351,7 +349,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCLayers.EnableFinalAttackLayer();
                     attackCount++;
                     _mainCAnimator.SetAttackCountAnim(attackCount);
-                    _anim.applyRootMotion = true;
+                    _mainCAnimator.SetRootMotion(true);
                     _canNextAttack = false;
                     IsFinalAttacking = true;
                 }
@@ -375,7 +373,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 _mainCPistol.StartRecoveringEnergy(5f);
             }
-            _anim.applyRootMotion = false;
+            _mainCAnimator.SetRootMotion(false);
             IsAttacking = false;
             attackCount = 0;
             _mainCAnimator.SetAttackCountAnim(attackCount);

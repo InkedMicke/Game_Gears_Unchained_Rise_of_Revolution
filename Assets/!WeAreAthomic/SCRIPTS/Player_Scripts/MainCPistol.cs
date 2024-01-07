@@ -175,7 +175,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void LeftControlDown()
         {
             _isLeftMouseDown = true;
-            if (GameManagerSingleton.Instance.bastetEnergy >= 20 && Time.time > _totalCooldown && GameManagerSingleton.Instance.HasUnlockedBastetAttack)
+            if (GameManagerSingleton.Instance.bastetEnergy >= 20 && Time.time > _totalCooldown && GameManagerSingleton.Instance.HasUnlockedBastetAttack && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
             {
                 Shoot();
             }
@@ -183,7 +183,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void RightControlUp()
         {
-            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack && !GameManagerSingleton.Instance.IsSettingsMenuEnabled && !GameManagerSingleton.Instance.IsStopMenuEnabled)
+            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack && !GameManagerSingleton.Instance.IsSettingsMenuEnabled && !GameManagerSingleton.Instance.IsStopMenuEnabled && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
             {
                 crosshair.SetActive(false);
                 _camFollower.cameraFollow = cameraFollow;
@@ -195,7 +195,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void RightControlDown()
         {
-            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack && !GameManagerSingleton.Instance.IsSettingsMenuEnabled && !GameManagerSingleton.Instance.IsStopMenuEnabled)
+            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack && !GameManagerSingleton.Instance.IsSettingsMenuEnabled && !GameManagerSingleton.Instance.IsStopMenuEnabled && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
             {
                 crosshair.SetActive(true);
                 _camFollower.cameraFollow = camAimPosTr;

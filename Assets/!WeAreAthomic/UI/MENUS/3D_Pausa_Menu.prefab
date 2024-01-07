@@ -517,7 +517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &988014085091962222
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1475,7 +1475,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6293842666178035673}
   - component: {fileID: 1700961170496810837}
-  - component: {fileID: 733272437319751019}
   - component: {fileID: 7773982595042915537}
   - component: {fileID: 6002758942352683340}
   - component: {fileID: 6717253244360286370}
@@ -1523,25 +1522,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4447707207903996393}
   m_CullTransparentMesh: 1
---- !u!114 &733272437319751019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4447707207903996393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12386ee9e8f1ba64cb6da642130b17f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panels:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  optScreen: {fileID: 0}
-  optControls: {fileID: 0}
 --- !u!223 &7773982595042915537
 Canvas:
   m_ObjectHideFlags: 0
@@ -2386,8 +2366,8 @@ GameObject:
   - component: {fileID: 894402997918188919}
   - component: {fileID: 1720703846138978737}
   - component: {fileID: 8926046530773458950}
-  - component: {fileID: 5866867411622091947}
   - component: {fileID: 4658497967231749436}
+  - component: {fileID: 6853307772067358734}
   m_Layer: 5
   m_Name: Boton_Continuar
   m_TagString: Untagged
@@ -2548,7 +2528,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 733272437319751019}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: UIChanges, Assembly-CSharp
           m_MethodName: AutoSaveChanges
           m_Mode: 1
@@ -2576,28 +2556,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!64 &5866867411622091947
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7088775117081107192}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 3742418645415677047, guid: 6720708e38812054880f901866137db1, type: 3}
 --- !u!114 &4658497967231749436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2615,6 +2573,27 @@ MonoBehaviour:
   clickMat: {fileID: 2100000, guid: 56da9bdecf9196a4d9c104baf2e0b938, type: 2}
   objectsToChangeMat:
   - {fileID: 7088775117081107192}
+--- !u!65 &6853307772067358734
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7088775117081107192}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 383.56046, y: 86.64143, z: 31.649872}
+  m_Center: {x: 0.000061035156, y: -0.000030517578, z: 111.34}
 --- !u!1 &7398027934118447777
 GameObject:
   m_ObjectHideFlags: 0
@@ -3034,7 +3013,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 733272437319751019}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: UIChanges, Assembly-CSharp
           m_MethodName: AutoSaveChanges
           m_Mode: 1

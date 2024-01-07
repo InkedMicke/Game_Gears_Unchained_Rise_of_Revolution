@@ -13,7 +13,7 @@ public class GVideos : MonoBehaviour
 
     [SerializeField] private bool loadSceneOnFinish;
 
-    [SerializeField] private string sceneString = "sample";
+    [SerializeField] private Scenes sceneToLoad;
 
     private int _currentVideo;
 
@@ -37,7 +37,8 @@ public class GVideos : MonoBehaviour
         {
             if(loadSceneOnFinish)
             {
-                sceneLoader.LoadScene(sceneString);
+                sceneLoader.sceneToLoad = sceneToLoad;
+                sceneLoader.LoadScene();
             }
         }
     }
