@@ -12,6 +12,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
     {
         private GreenSoliderMovement _greenMove;
         private GreenSoliderAttack _greenAttack;
+        private SoldierAgent _soldierAgent;
         
        [SerializeField] private C_DisolveEnemi _disolveEnemi;
 
@@ -31,7 +32,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         {
             _greenMove = GetComponentInParent<GreenSoliderMovement>();
             _greenAttack = GetComponentInParent<GreenSoliderAttack>();
-
+            _soldierAgent = GetComponentInParent<SoldierAgent>();
 
             currentHealth = maxHealth;
             SetMaxhealthSlider(maxHealth);
@@ -43,7 +44,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             currentHealth -= damage;
             SetHealthSlider(currentHealth);
             CheckForDeath();
-            _greenMove.SetChasePlayer(true);
+            if (!IsDeath)
+            {
+                _greenMove.SetChasePlayer(true);
+            }
         }
 
         private void CheckForDeath()
@@ -61,12 +65,13 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private void Death()
         {
             mesh.SetActive(false);
+            _soldierAgent.StopTotallyAgent();
+            Debug.Log("hola1");
             healthSliderObj.SetActive(false);
             soldierWithoutBones.SetActive(true);
             _greenMove.DisableMovement();
             botonSoldier.SetActive(false);
             _disolveEnemi.StartDisolving();
-            Debug.Log("hola1");
             _greenAttack.DestroyDecal();
         }
 
