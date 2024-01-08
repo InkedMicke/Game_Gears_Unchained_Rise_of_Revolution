@@ -26,6 +26,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public GameObject weaponObj;
         [SerializeField] private GameObject scannerPrefab;
+        [SerializeField] private GameObject explosionEffect;
+        [SerializeField] private Transform explosionEffectPosition;
         [SerializeField] private GameObject tut_ES;
         private GameObject scannerInst;
 
@@ -482,5 +484,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             return true;
         }
+        public void InstanciateExplosion()
+        {
+            Instantiate(explosionEffect, explosionEffectPosition.position, Quaternion.identity);
+
+        }
     }
+    
 }
