@@ -11,7 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
     public class BastetController : MonoBehaviour
     {
         private CharacterController _cc;
-        private MainCBastetAttack _mainCBastet;
+        private MainCBastetRapidFire _mainCBastet;
         private MainCPistol _mainCPistol;
 
         private Coroutine _shootCoroutine;
@@ -24,6 +24,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         [SerializeField] private GameObject scannerObj;
         [SerializeField] private GameObject bullet;
         [SerializeField] private GameObject cameraObj;
+        private GameObject _savedClosestEnemy;
 
         [SerializeField] private float moveSpeed;
         [SerializeField] private float rotateSpeed = 0.1f;
@@ -42,7 +43,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         private void Awake()
         {
             _cc = GetComponent<CharacterController>();
-            _mainCBastet = playerObj.GetComponent<MainCBastetAttack>();
+            _mainCBastet = playerObj.GetComponent<MainCBastetRapidFire>();
             _mainCPistol = playerObj.GetComponent<MainCPistol>();
         }
 
@@ -196,10 +197,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             {
                 var randomMuzzle = Random.Range(0, muzzles.Count);
                 var bulletObj = Instantiate(bullet, muzzles[randomMuzzle].position, Quaternion.identity);
-                var enemyPos = _mainCBastet.closestEnemyToShoot.transform.position;
-                var lookAtFixed = new Vector3(enemyPos.x, enemyPos.y + .5f, enemyPos.z);
+                _savedClosestEnemy = _mainCBastet.closestEnemyToShoot;
+                var enemyPos = _mainCBastet.closestEnemyToShoot != null ? _mainCBastet.closestEnemyToShoot.transform.position : _savedClosestEnemy.transform.position;
+                var lookAtFixed = new Vector3(enemyPos.x, enemyPos.y + .1f, enemyPos.z);
                 bulletObj.transform.LookAt(lookAtFixed);
                 transform.LookAt(lookAtFixed);
+                var difference = lookAtFixed - transform.position;
+                Debug.DrawRay(transform.position, difference * 10, Color.red, 2f);
                 bulletObj.GetComponent<Rigidbody>().AddForce(transform.forward * 50f, ForceMode.Impulse);
                 currentShoots++;
                 if (currentShoots > 25)

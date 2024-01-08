@@ -15,6 +15,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private DummieSounds _dummieSounds;
         private CapsuleCollider _cC;
         private MainCAttack _mainCAttack;
+        private SoldierHurtBox _soldierHurtbox;
 
         [SerializeField] private LayerMask obstacles;
 
@@ -26,7 +27,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         [SerializeField] private ParticleSystem sparksHit;
 
         [SerializeField] private bool useKnockback = true;
-        private bool _isDeath;
         
         [SerializeField] private float pushForce = 5f;
     
@@ -38,6 +38,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _dummieController = GetComponentInParent<DummieController>();
             _dummieSounds = soundComponentObj.GetComponent<DummieSounds>();
             _cC = GetComponent<CapsuleCollider>();
+            _soldierHurtbox = GetComponent<SoldierHurtBox>();
         }
 
         private void Start()
@@ -52,7 +53,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _gHealthManager.currentHealth -= value;
             _anim.SetTrigger(string.Format("isHurt"));
             sparksHit.Play();
-            if (!_isDeath)
+            if (!_soldierHurtbox.IsDeath)
             {
                 if (useKnockback && _mainCAttack.attackCount != 2)
                 {
@@ -74,7 +75,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         {
             if (_gHealthManager.currentHealth <= 0)
             {
-                _isDeath = true;
+                _soldierHurtbox.SetDeath(true);
                 _anim.SetBool(string.Format("isDeath"), true);
                 _cC.enabled = false;
                 _dummieController.DisableCharacterController();

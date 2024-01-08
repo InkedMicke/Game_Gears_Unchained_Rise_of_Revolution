@@ -1,9 +1,6 @@
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.AI;
 
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
@@ -13,7 +10,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private GreenSoliderMovement _greenMove;
         private GreenSoliderAttack _greenAttack;
         private SoldierAgent _soldierAgent;
-        
+        private SoldierHurtBox _soldierHurtbox;
+
        [SerializeField] private C_DisolveEnemi _disolveEnemi;
 
         [SerializeField] private Slider healthSlider;
@@ -23,8 +21,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         [SerializeField] private GameObject healthSliderObj;
         [SerializeField] private GameObject botonSoldier;
 
-        public bool IsDeath;
-
         public float maxHealth = 100f;
         public float currentHealth = 0f;
 
@@ -33,6 +29,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _greenMove = GetComponentInParent<GreenSoliderMovement>();
             _greenAttack = GetComponentInParent<GreenSoliderAttack>();
             _soldierAgent = GetComponentInParent<SoldierAgent>();
+            _soldierHurtbox = GetComponent<SoldierHurtBox>();
 
             currentHealth = maxHealth;
             SetMaxhealthSlider(maxHealth);
@@ -44,7 +41,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             currentHealth -= damage;
             SetHealthSlider(currentHealth);
             CheckForDeath();
-            if (!IsDeath)
+            if (!_soldierHurtbox.IsDeath)
             {
                 _greenMove.SetChasePlayer(true);
             }
@@ -54,9 +51,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         {
             if (currentHealth <= 0)
             {
-                if (!IsDeath)
+                if (!_soldierHurtbox.IsDeath)
                 {
-                    IsDeath = true;
+                    _soldierHurtbox.SetDeath(true);
                     Death();
                 }
             }
@@ -66,7 +63,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         {
             mesh.SetActive(false);
             _soldierAgent.StopTotallyAgent();
-            Debug.Log("hola1");
             healthSliderObj.SetActive(false);
             soldierWithoutBones.SetActive(true);
             _greenMove.DisableMovement();

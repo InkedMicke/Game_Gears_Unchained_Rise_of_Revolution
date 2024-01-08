@@ -16,6 +16,5 @@ public class SoldierAgent : MonoBehaviour
     {
         _agent.isStopped = true;
         _agent.speed = 0;
-        Debug.Log("hola");
     }
 }

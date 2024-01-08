@@ -3,15 +3,15 @@ using UnityEngine;
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 {
 
-    public class GreenSoliderHurtBox : MonoBehaviour
+    public class SoldierHurtBox : MonoBehaviour
     {
-        private SoldierHealthManager _healthManager;
 
-        private void Awake()
+        public bool IsDeath;
+
+        public void SetDeath(bool isDeath)
         {
-            _healthManager = GetComponent<SoldierHealthManager>();
+            IsDeath = isDeath;
         }
-
         public bool CheckIfPlayerIsNear(float radius)
         {
             return Physics.CheckSphere(transform.position, radius);

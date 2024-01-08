@@ -9,7 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
     {
         private GreenSoliderAttack _soldierAttack;
         private SoldierAnimator _soldierAnim;
-        private SoldierHealthManager _healthManager;
+        private SoldierHurtBox _soldierHurtbox;
         private FieldOfView _fov;
         private FieldOfViewHear _fovHear;
         private MainCHackingSystem _mainCHacking;
@@ -37,9 +37,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _soldierAnim = GetComponent<SoldierAnimator>();
             _fov = GetComponent<FieldOfView>();
             _fovHear = GetComponent<FieldOfViewHear>();
-            _healthManager = GetComponentInChildren<SoldierHealthManager>();
             _mainCHacking = _playerTr.gameObject.GetComponent<MainCHackingSystem>();
             _mainCMove = _playerTr.gameObject.GetComponent<MainCMovement>();
+            _soldierHurtbox = GetComponentInChildren<SoldierHurtBox>();
 
             initalStoppingDistance = _agent.stoppingDistance;
 
@@ -61,7 +61,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         void Update()
         {
-            if (!_healthManager.IsDeath)
+            if (!_soldierHurtbox.IsDeath)
             {
                 CheckIfPlayerIsInSight();
                 CheckIfPlayerHeared();
@@ -109,7 +109,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         public void AgentValuesToChase()
         {
-            Debug.Log("hola2");
             _agent.stoppingDistance = initalStoppingDistance;
             _agent.autoBraking = true;
             _agent.isStopped = false;
@@ -124,7 +123,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
                 _soldierAnim.SetWalking(true);
                 var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
 
-                if (distanceToPlayer < 5f && !_soldierAttack.IsAttacking && !_healthManager.IsDeath)
+                if (distanceToPlayer < 5f && !_soldierAttack.IsAttacking && !_soldierHurtbox.IsDeath)
                 {
                     _agent.isStopped = true;
                     _soldierAnim.SetWalking(false);

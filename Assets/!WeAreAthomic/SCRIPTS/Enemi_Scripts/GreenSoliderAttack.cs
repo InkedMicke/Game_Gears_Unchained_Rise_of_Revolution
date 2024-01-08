@@ -10,9 +10,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
     {
         private NavMeshAgent _agent;
         private SoldierAnimator _soldierAnim;
-        private SoldierHealthManager _healthManager;
+        private SoldierHurtBox _soldierHurtBox;
         private GreenSoliderMovement _greenMove;
-        private SoldierHealthManager _soldierHealth;
         private GreenDecalHurtBox _decalHurtBox;
 
         private Coroutine _shootCoroutine;
@@ -46,9 +45,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         {
             _agent = GetComponent<NavMeshAgent>();
             _soldierAnim = GetComponent<SoldierAnimator>();
-            _healthManager = GetComponentInChildren<SoldierHealthManager>();
             _greenMove = GetComponent<GreenSoliderMovement>();
-            _soldierHealth = GetComponentInChildren<SoldierHealthManager>();
         }
 
         public void StartDecal()
@@ -67,7 +64,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private IEnumerator ShootCoroutine()
         {
             IsShooting = true;
-            while (IsShooting && !_healthManager.IsDeath)
+            while (IsShooting && !_soldierHurtBox.IsDeath)
             {
                 _hasEndedShootAnim = false;
                 _soldierAnim.ShootTrigger();
@@ -105,7 +102,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         private IEnumerator TurnToPlayer()
         {
-            while (!_soldierHealth.IsDeath)
+            while (!_soldierHurtBox.IsDeath)
             {
                 var currentPlayerPos = _playerTr.transform.position;
 

@@ -203,9 +203,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 626877159642984629}
-  - component: {fileID: 6708588474655486696}
   - component: {fileID: 2675127905269865268}
   - component: {fileID: 2926012163222276709}
+  - component: {fileID: 6708588474655486696}
+  - component: {fileID: 3131435632685781462}
   m_Layer: 9
   m_Name: DummieHurtBox
   m_TagString: Test
@@ -228,25 +229,6 @@ Transform:
   m_Father: {fileID: 3527498842540889131}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6708588474655486696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6142278380004551508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 069fd21ce9ac61442af37ae217522777, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obstacles:
-    serializedVersion: 2
-    m_Bits: 2048
-  soundComponentObj: {fileID: 2963962393434010473}
-  sparksHit: {fileID: 6768638902788567473}
-  useKnockback: 1
-  pushForce: 10
 --- !u!54 &2675127905269865268
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -297,6 +279,38 @@ CapsuleCollider:
   m_Height: 2.14
   m_Direction: 1
   m_Center: {x: 0, y: -0.36, z: 0}
+--- !u!114 &6708588474655486696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6142278380004551508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 069fd21ce9ac61442af37ae217522777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacles:
+    serializedVersion: 2
+    m_Bits: 2048
+  soundComponentObj: {fileID: 2963962393434010473}
+  sparksHit: {fileID: 6768638902788567473}
+  useKnockback: 1
+  pushForce: 10
+--- !u!114 &3131435632685781462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6142278380004551508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5406e8702107ac4187e2b15583ea85b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDeath: 0
 --- !u!1001 &2344443533420448137
 PrefabInstance:
   m_ObjectHideFlags: 0

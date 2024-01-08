@@ -1,20 +1,16 @@
-using System.Collections.Generic;
-using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts;
+using _WeAreAthomic.SCRIPTS.Enemi_Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
 {
-    public class MainCBastetAttack : MonoBehaviour
+    public class MainCBastetRapidFire : MonoBehaviour
     {
         private PlayerInputActions _playerInputActions;
         private BastetController _bastetController;
 
         [SerializeField] private LayerMask enemyLayer;
 
-        [SerializeField] private GameObject mainCameraObj;
         [SerializeField] private GameObject bastetObj;
         public GameObject closestEnemyToShoot;
 
@@ -45,24 +41,31 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             if (_isBastetAttacking)
             {
                 var colliders = Physics.OverlapSphere(transform.position, radiusCheck, enemyLayer);
-
                 foreach (var col in colliders)
                 {
-                    var distance = Vector3.Distance(transform.position, col.transform.position);
+                    closestEnemyToShoot = col.gameObject;
 
+                    if(closestEnemyToShoot.GetComponent<SoldierHurtBox>().IsDeath)
+                    {
+                        _closestDistance = Mathf.Infinity;
+                    }
+
+                    var distance = Vector3.Distance(transform.position, col.transform.position);
                     if (distance < _closestDistance)
                     {
                         _closestDistance = distance;
                         closestEnemyToShoot = col.gameObject;
                     }
+
                 }
             }
         }
 
+
         private void InputPC(InputAction.CallbackContext context)
         {
-            if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
-            CheckEnemy();
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+                CheckEnemy();
         }
 
         private void InputGamepad(InputAction.CallbackContext context)
@@ -79,15 +82,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                 if (collider.Length > 0)
                 {
                     closestEnemyToShoot = collider[0].gameObject;
-                    StartAttacking();
                     _isBastetAttacking = true;
-                }
-
-                if (collider.Length > 1)
-                {
-                    closestEnemyToShoot = collider[0].gameObject;
                     StartAttacking();
-                    _isBastetAttacking = true;
                 }
             }
 
