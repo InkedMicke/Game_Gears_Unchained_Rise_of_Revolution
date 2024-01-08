@@ -7,12 +7,19 @@ public class GearAbility : MonoBehaviour
 {
     private AbilityCanvasController _abilityController;
 
+    private RectTransform rectTransform;
+    private RectTransform canvasRect;
+
     [SerializeField] private Image imageToChange;
     [SerializeField] private Image imageSlider;
 
     private Color orginalColor;
 
     private Vector3 worldPosition;
+
+    private Vector2 minPosition;
+    private Vector2 maxPosition;
+
 
     [SerializeField] private Camera cameraAbility;
 
@@ -30,18 +37,27 @@ public class GearAbility : MonoBehaviour
     {
         orginalColor = imageToChange.color;
         _abilityController = container.GetComponent<AbilityCanvasController>();
+
+        canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
     }
 
     private void Update()
     {
+
         if (_isShowingDescription)
         {
+
             var mouseVector = Mouse.current.position.ReadValue();
             worldPosition = cameraAbility.ScreenToWorldPoint(mouseVector);
             worldPosition.z = descriptionObj.transform.position.z;
 
-            descriptionObj.transform.position = worldPosition;
 
+            Vector2 clampedPosition = new Vector2(
+            Mathf.Clamp(worldPosition.x, -300f, 122f),
+            Mathf.Clamp(worldPosition.y, 236, 415f)
+    );
+
+            descriptionObj.transform.position = clampedPosition;
         }
     }
 
@@ -90,8 +106,18 @@ public class GearAbility : MonoBehaviour
 
     private IEnumerator ShowDescription()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSecondsRealtime(1f);
+
         descriptionObj.SetActive(true);
+
+        rectTransform = descriptionObj.transform.GetChild(0).GetComponent<RectTransform>();
+
+        // Calcula los límites de la pantalla (canvas)
+        Vector2 minCanvasPos = canvasRect.rect.min;
+        Vector2 maxCanvasPos = canvasRect.rect.max;
+
+        minPosition = minCanvasPos;
+        maxPosition = maxCanvasPos;
         _isShowingDescription = true;
         while (_isMouseInside)
         {
