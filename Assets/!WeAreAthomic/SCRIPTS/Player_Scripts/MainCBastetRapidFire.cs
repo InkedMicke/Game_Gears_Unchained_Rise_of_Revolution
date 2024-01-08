@@ -101,7 +101,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             _bastetController.HideScanner();
             _bastetController.PosRightHand();
             _bastetController.StartMoveToBastetPos();
-            _bastetController.StartShootEnemy();
+            _bastetController.StartShootEnemy(maxShoots);
         }
 
         private void OnDrawGizmos()

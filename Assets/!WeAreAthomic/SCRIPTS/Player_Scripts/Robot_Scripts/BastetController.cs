@@ -185,12 +185,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             }
         }
 
-        public void StartShootEnemy()
+        public void StartShootEnemy(int maxShoots)
         {
-            StartCoroutine(ShootEnemy());
+            StartCoroutine(ShootEnemy(maxShoots));
         }
 
-        private IEnumerator ShootEnemy()
+        private IEnumerator ShootEnemy(int maxShoots)
         {
             var currentShoots = new int();
             while (true)
@@ -206,7 +206,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                 Debug.DrawRay(transform.position, difference * 10, Color.red, 2f);
                 bulletObj.GetComponent<Rigidbody>().AddForce(transform.forward * 50f, ForceMode.Impulse);
                 currentShoots++;
-                if (currentShoots > 25)
+                if (currentShoots > maxShoots)
                 {
                     _mainCBastet.DisableBastetAttacking();
                     StartCoroutine(MoveToPlayer());
@@ -237,7 +237,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         {
             yield return new WaitForSeconds(0.1f);
 
-            StartCoroutine(ShootEnemy());
+            //StartCoroutine(ShootEnemy());
         }
 
         public void PosRightHand()
