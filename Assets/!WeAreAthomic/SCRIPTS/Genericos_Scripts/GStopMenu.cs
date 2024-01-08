@@ -71,18 +71,18 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                     }
                     else
                     {
-                        if (_mainCInputSwitcher.isUsingMouse)
-                        {
-                            EventSystem.current.SetSelectedGameObject(null);
-                        }
-
-                        if (_mainCInputSwitcher.isUsingGamepad)
-                        {
-                            EventSystem.current.SetSelectedGameObject(firstButton);
-                        }
                         stopMenuContainer.SetActive(true);
                         tutKeys.SetActive(false);
                         playerInterface.SetActive(false);
+                        if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+                        {
+                            EventSystem.current.SetSelectedGameObject(firstButton);
+                            firstButton.GetComponent<C_UIMaterial_Changer>().OnPointerEnter();
+                        }
+                        else
+                        {
+                            EventSystem.current.SetSelectedGameObject(null);
+                        }
                         GameManagerSingleton.Instance.CursorMode(true);
                         GameManagerSingleton.Instance.PauseGame(true);
                         GameManagerSingleton.Instance.FreezeTime(true);

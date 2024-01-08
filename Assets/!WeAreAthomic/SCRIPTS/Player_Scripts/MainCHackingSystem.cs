@@ -83,7 +83,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void EndHacking()
         {
-            Debug.Log("hola1");
             hackCanvas.SetActive(false);
             var button = _currentInteract.GetComponent<ButtonInteractable>();
             button.EndHackInvoke();

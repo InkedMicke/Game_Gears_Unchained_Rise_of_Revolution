@@ -20,11 +20,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         protected void Awake()
         {
-            ResetAnimatorComponent();
-        }
-
-        public void ResetAnimatorComponent()
-        {
             _anim = GetComponent<Animator>();
         }
 

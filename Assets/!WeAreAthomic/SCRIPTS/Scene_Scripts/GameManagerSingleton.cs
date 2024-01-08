@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Hedenrag.ExVar;
 using UnityEngine.EventSystems;
-using UnityEditor.Animations;
 
 public enum TypeOfInput
 {
@@ -42,10 +41,6 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public Settings settings;
     public DifficultyLevel _currentDifficulty = DifficultyLevel.historia;
     public TypeOfInput typeOfInput = TypeOfInput.pc;
-
-    public Avatar mattAvatar;
-
-    public AnimatorController mattController;
 
     public List<GameObject> gameObjectsList;
     public List<GameObject> closestGameObjectsList;
