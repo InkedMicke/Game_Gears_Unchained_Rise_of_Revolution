@@ -83,6 +83,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             if (canHack)
             {
                 seActivanCuandoTerminaElHack.Invoke();
+                canHack = false;
                 isActive = false;
             }
         }

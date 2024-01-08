@@ -130,7 +130,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             if (!triggerElevator.GetComponent<TriggerElevator>().IsActivated)
             {
                 Instantiate(movableFloorPivot, _playerObj.transform.position - Vector3.right * 1.4f, Quaternion.identity);
-                _playerObj.GetComponent<CharacterController>().enabled = false;
                 _mainCMovement.SetFollowTrajectory(true);
                 _triggerElevator.SetIsActivated(false);
             }
