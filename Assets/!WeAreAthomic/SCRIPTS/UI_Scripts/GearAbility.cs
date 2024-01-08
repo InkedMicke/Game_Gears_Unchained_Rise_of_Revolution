@@ -12,6 +12,10 @@ public class GearAbility : MonoBehaviour
 
     private Color orginalColor;
 
+    private Vector3 worldPosition;
+
+    [SerializeField] private Camera cameraAbility;
+
     [SerializeField] private GameObject container;
     [SerializeField] private GameObject descriptionObj;
 
@@ -32,8 +36,12 @@ public class GearAbility : MonoBehaviour
     {
         if (_isShowingDescription)
         {
-            var mouseVector = Mouse.current.delta.ReadValue();
-            descriptionObj.transform.position = new Vector3(mouseVector.x, mouseVector.y, descriptionObj.transform.position.z);
+            var mouseVector = Mouse.current.position.ReadValue();
+            worldPosition = cameraAbility.ScreenToWorldPoint(mouseVector);
+            worldPosition.z = descriptionObj.transform.position.z;
+
+            descriptionObj.transform.position = worldPosition;
+
         }
     }
 
