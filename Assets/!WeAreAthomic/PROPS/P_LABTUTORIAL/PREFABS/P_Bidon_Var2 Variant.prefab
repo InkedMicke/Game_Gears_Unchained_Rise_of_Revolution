@@ -78,6 +78,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 10ef6b52d022a424f91168b070003d73,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 10ef6b52d022a424f91168b070003d73,
         type: 3}
       propertyPath: m_Name
@@ -100,7 +105,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10ef6b52d022a424f91168b070003d73,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 741373137933904174}
+      addedObject: {fileID: 2926875922388954846}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10ef6b52d022a424f91168b070003d73,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 96428713332223341}
   m_SourcePrefab: {fileID: 100100000, guid: 10ef6b52d022a424f91168b070003d73, type: 3}
 --- !u!1 &7785212029257714948 stripped
 GameObject:
@@ -108,8 +117,8 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6974889201263980629}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &741373137933904174
-BoxCollider:
+--- !u!64 &2926875922388954846
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -126,6 +135,32 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.1999999, y: 1.617646, z: 1.1999999}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6812515606044062696, guid: 10ef6b52d022a424f91168b070003d73, type: 3}
+--- !u!205 &96428713332223341
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7785212029257714948}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.054901086
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8577771141398965457}
+  m_Enabled: 1
+--- !u!23 &8577771141398965457 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 10ef6b52d022a424f91168b070003d73,
+    type: 3}
+  m_PrefabInstance: {fileID: 6974889201263980629}
+  m_PrefabAsset: {fileID: 0}
