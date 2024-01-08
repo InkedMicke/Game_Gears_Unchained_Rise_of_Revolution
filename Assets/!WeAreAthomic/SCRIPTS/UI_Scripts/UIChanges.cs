@@ -6,7 +6,8 @@ public class UIChanges : MonoBehaviour
 {
 
     [Header("General")]
-    [SerializeField] private List<GameObject> panels;
+    public List<GameObject> panelsSelectors;
+    public List<GameObject> panels;
     //[Header("Audio")]
     [Header("Graphics")]
     [SerializeField] private OptionsScreen optScreen;

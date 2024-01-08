@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class GamePadController : MonoBehaviour
 {
-    private PlayerInputActions _playerInputActions;
     private MainCInputSwitcher _mainCInputSwitcher;
 
     private Scene _currentScene;
@@ -17,7 +16,7 @@ public class GamePadController : MonoBehaviour
     private bool _isActive;
     public bool IsGamepadActive;
 
-    private int _currentTab;
+
 
     [SerializeField] private Color selectedColor;
     [SerializeField] private Color defaultColor;
@@ -29,11 +28,7 @@ public class GamePadController : MonoBehaviour
     {
         _mainCInputSwitcher = GetComponent<MainCInputSwitcher>();
 
-        _playerInputActions = new PlayerInputActions();
-        _playerInputActions.Enable();
-        _playerInputActions.UI.Navigate.performed += HideCursorIfVisible;
-        _playerInputActions.UI.ReTab.performed += ReTab;
-        _playerInputActions.UI.AvTab.performed += AvTab;
+
 
         _currentScene = SceneManager.GetActiveScene();
 
@@ -90,29 +85,7 @@ public class GamePadController : MonoBehaviour
         }
     }
 
-    private void ReTab(InputAction.CallbackContext context)
-    {
-        if (GameManagerSingleton.Instance.IsSettingsMenuEnabled && !(_currentTab >= tabsSettings.Count - 1))
-        {
-            SetImageColorOfCurrentTab(_currentTab, Color.white);
-            panelsSettings[_currentTab].SetActive(false);
-            _currentTab++;
-            SetImageColorOfCurrentTab(_currentTab, Color.red);
-            panelsSettings[_currentTab].SetActive(true);
-        }
-    }
 
-    private void AvTab(InputAction.CallbackContext context)
-    {
-        if (GameManagerSingleton.Instance.IsSettingsMenuEnabled && !(_currentTab <= 0))
-        {
-            SetImageColorOfCurrentTab(_currentTab, Color.white);
-            panelsSettings[_currentTab].SetActive(false);
-            _currentTab--;
-            SetImageColorOfCurrentTab(_currentTab, Color.red);
-            panelsSettings[_currentTab].SetActive(true);
-        }
-    }
 
     private void HideCursorIfVisible(InputAction.CallbackContext context)
     {

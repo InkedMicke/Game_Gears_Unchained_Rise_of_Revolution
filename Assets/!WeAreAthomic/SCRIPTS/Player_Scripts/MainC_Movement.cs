@@ -284,7 +284,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void MoveGamepad()
         {
-            _moveVectorGamepad = _playerInputActions.PlayerPC.MovementGamepad.ReadValue<Vector2>();
+            _moveVectorGamepad = _playerInputActions.PlayerGamepad.MovementGamepad.ReadValue<Vector2>();
 
             _movement = new Vector3(_moveVectorGamepad.x, 0.0f, _moveVectorGamepad.y).normalized;
 

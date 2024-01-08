@@ -120,7 +120,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             transform.parent.position = GameManagerSingleton.Instance.currentCheckpoint;
             cameraBase.transform.position = GameManagerSingleton.Instance.currentCheckpoint;
-            _mainCAnim.ResetAnimatorComponent();
             _mainCAnim.AnimEnabled(true);
             _cc.enabled = true;
         }
