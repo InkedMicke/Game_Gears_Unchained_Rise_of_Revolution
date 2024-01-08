@@ -338,11 +338,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             return direction;
         }
 
-        public void StartFollowTrajectory()
-        {
-            StartCoroutine(FollowTrajectoryCoroutine());
-        }
-
         public void SetFollowTrajectory(bool condition)
         {
             _isFollowingTrajectory = condition;
@@ -370,39 +365,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     EnableMovement();
                     _isFollowingTrajectory = false;
+                    Debug.Log(_canMove);
                 }
             }
-        }
-
-        private IEnumerator FollowTrajectoryCoroutine()
-        {
-            _isFollowingTrajectory = true;
-            puntosTrayectoria =_trajectory.CalcularPuntosTrayectoria();
-            indexPoint = 1;
-
-            while(true)
-            {
-                var difference = puntosTrayectoria[indexPoint] - transform.position;
-                var moveDir = 25f * Time.deltaTime * difference.normalized;
-                _cc.Move(moveDir);
-                Debug.DrawRay(transform.position, puntosTrayectoria[indexPoint].normalized * 5);
-                if (Vector3.Distance(transform.position, puntosTrayectoria[indexPoint]) < 0.1f)
-                {
-                    indexPoint++;
-                }
-
-                if (IsGrounded())
-                {
-                    break;
-                }
-                yield return new WaitForEndOfFrame();
-            }
-
         }
 
         private void StartDashPC(InputAction.CallbackContext context)
         {
-            if(Time.time > _dashTotalCooldown && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            if(CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
             {
                 StartCoroutine(Dash());
             }
@@ -410,7 +380,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         
         private void StartDashGamepad(InputAction.CallbackContext context)
         {
-            if(&& GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+            if(CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
             {
                 StartCoroutine(Dash());
             }
@@ -661,11 +631,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if(_isFollowingTrajectory)
             {
                 return false;
-            }
-
-            if()
-            {
-
             }
 
             return true;
