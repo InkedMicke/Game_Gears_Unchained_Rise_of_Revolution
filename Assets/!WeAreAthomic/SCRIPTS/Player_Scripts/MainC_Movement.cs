@@ -349,6 +349,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if(_isFollowingTrajectory)
             {
                 indexPoint = 2;
+                DisableMovement();
                 puntosTrayectoria = _trajectory.CalcularPuntosTrayectoria();
             }
         }
@@ -359,8 +360,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (_isFollowingTrajectory)
             {
                 var difference = puntosTrayectoria[indexPoint] - transform.position;
-                var moveDir = 25f * Time.deltaTime * difference.normalized;
-                //_cc.Move(moveDir);
                 transform.position = Vector3.MoveTowards(transform.position, puntosTrayectoria[indexPoint], 20f * Time.deltaTime);
                 if (Vector3.Distance(transform.position, puntosTrayectoria[indexPoint]) < 0.1f)
                 {
@@ -369,7 +368,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                 if (IsGrounded())
                 {
-                    _cc.enabled = true; 
+                    EnableMovement();
                     _isFollowingTrajectory = false;
                 }
             }
@@ -411,7 +410,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         
         private void StartDashGamepad(InputAction.CallbackContext context)
         {
-            if(Time.time > _dashTotalCooldown && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+            if(&& GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
             {
                 StartCoroutine(Dash());
             }
@@ -651,6 +650,27 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(checkGrounded.position, .1f);
         }
+
+        private bool CanDash()
+        {
+            if(Time.time < _dashTotalCooldown)
+            {
+                return false;
+            }
+
+            if(_isFollowingTrajectory)
+            {
+                return false;
+            }
+
+            if()
+            {
+
+            }
+
+            return true;
+        }
+
 
         public bool IsGrounded()
         {
