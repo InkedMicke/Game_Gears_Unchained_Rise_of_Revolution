@@ -136,7 +136,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.PlayerPC.Running.canceled += RunOff;
             _playerInputActions.PlayerPC.Crouch.performed += StartEndCrouch;
             _playerInputActions.PlayerPC.Jump.performed += StartJumpPC;
-            _playerInputActions.PlayerPC.Dash.performed += StartDashPC;
             _playerInputActions.PlayerGamepad.Running.performed += RunOn;
             _playerInputActions.PlayerGamepad.Running.canceled += RunOff;
             _playerInputActions.PlayerGamepad.Crouch.performed += StartEndCrouch;
@@ -151,7 +150,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.PlayerPC.Running.canceled -= RunOff;
             _playerInputActions.PlayerPC.Crouch.performed -= StartEndCrouch;
             _playerInputActions.PlayerPC.Jump.performed -= StartJumpPC;
-            _playerInputActions.PlayerPC.Dash.performed += StartDashPC;
             _playerInputActions.PlayerGamepad.Running.performed -= RunOn;
             _playerInputActions.PlayerGamepad.Running.canceled -= RunOff;
             _playerInputActions.PlayerGamepad.Crouch.performed -= StartEndCrouch;
