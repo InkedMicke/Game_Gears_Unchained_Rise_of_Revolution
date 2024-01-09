@@ -22,12 +22,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCHealthManager _mainCHealth;
         private Rigidbody _rb;
         private GTrajectory _trajectory;
-        private G_MeshTrail _gTrail;
         private MainCSounds _mainCSounds;
 
         private Scene _currentScene;
 
-        [SerializeField] private AnimationCurve dashSpeedCurve;
+        public AnimationCurve dashSpeedCurve;
 
         [SerializeField] private LayerMask playerBulletLayer;
 
@@ -41,7 +40,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private Vector2 _moveVectorKeyboard;
         private Vector2 _moveVectorGamepad;
-        private Vector2 _lastKeyPressed;
 
         private Vector3 _moveDir;
         private Vector3 _movement;
@@ -51,7 +49,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [System.NonSerialized] public bool IsCrouch;
         [System.NonSerialized] public bool IsJumping;
         [System.NonSerialized] public bool IsFalling;
-        [System.NonSerialized] public bool IsDashing;
+        [System.NonSerialized] public bool IsFollowingTrajectory;
         private bool _isRunningKeyboard;
         private bool _isRunningGamepad;
         private bool _isCrouchWalking;
@@ -64,8 +62,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool isMoveWhileAimingAPressed;
         private bool isMoveWhileAimingDPressed;
         private bool _isPushOnAir;
-        private bool _isFollowingTrajectory;
-        private bool _isFirstKeyPressed;
 
         private int indexPoint = 2;
 
@@ -82,11 +78,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float pushJumpForce = 10f;
         [SerializeField] private float pushMaxHeight = 5f;
         [SerializeField] private float pushJumpDuration = 2f;
-        [SerializeField] private float dashSpeed = 20f;
-        [SerializeField] private float dashCooldown = 2f;
-        [SerializeField] private float _dashTime = .10f;
-        [SerializeField] private float timeToDash = .4f;
-        [SerializeField] private float dashPcTimeThreshold = 0.5f;
         public float turnSmoothTime = 0.1f;
         private float _moveSpeed;
         private float _turnSmoothVelocityGamepad;
@@ -94,8 +85,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _timeGraceJumpPeriod;
         private float _moveAimingX;
         private float _moveAimingY;
-        private float _dashTotalCooldown;
-        private float _totalTimeToDash;
+
 
         private void Awake()
         {
@@ -109,7 +99,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _playerInputActions = new PlayerInputActions();
             _mainCHealth = GetComponentInChildren<MainCHealthManager>();
-            _gTrail = GetComponent<G_MeshTrail>();
             _mainCSounds = GetComponent<MainCSounds>();
             _currentScene = SceneManager.GetActiveScene();
             if (_currentScene.name == "S2_LABTUTORIAL" || _currentScene.name == "TESTING")
@@ -140,7 +129,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.PlayerGamepad.Running.canceled += RunOff;
             _playerInputActions.PlayerGamepad.Crouch.performed += StartEndCrouch;
             _playerInputActions.PlayerGamepad.Jump.performed += StartJumpGamepad;
-            _playerInputActions.PlayerGamepad.Dash.performed += StartDashGamepad;
         }
 
         private void OnDisable()
@@ -154,7 +142,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.PlayerGamepad.Running.canceled -= RunOff;
             _playerInputActions.PlayerGamepad.Crouch.performed -= StartEndCrouch;
             _playerInputActions.PlayerGamepad.Jump.performed -= StartJumpGamepad;
-            _playerInputActions.PlayerGamepad.Dash.performed -= StartDashGamepad;
         }
 
         private void Update()
@@ -210,11 +197,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void ApplyGravity()
         {
-            if (IsJumping || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_railGrindSystem.IsOnRail() && !_isFollowingTrajectory)
+            if (IsJumping || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_railGrindSystem.IsOnRail() && !IsFollowingTrajectory)
             {
                 _velocity += transform.up.normalized * (gravity * Time.deltaTime);
                 _velocity.z = 0f;
                 _cc.Move(_velocity * Time.deltaTime);
+            }
+
+            if(IsJumping && IsGrounded())
+            {
+                IsJumping = false;
             }
         }
 
@@ -348,8 +340,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void SetFollowTrajectory(bool condition)
         {
-            _isFollowingTrajectory = condition;
-            if (_isFollowingTrajectory)
+            IsFollowingTrajectory = condition;
+            if (IsFollowingTrajectory)
             {
                 indexPoint = 2;
                 DisableMovement();
@@ -360,7 +352,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void FollowTrajectory()
         {
 
-            if (_isFollowingTrajectory)
+            if (IsFollowingTrajectory)
             {
                 var difference = puntosTrayectoria[indexPoint] - transform.position;
                 transform.position = Vector3.MoveTowards(transform.position, puntosTrayectoria[indexPoint], 20f * Time.deltaTime);
@@ -372,83 +364,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (IsGrounded())
                 {
                     EnableMovement();
-                    _isFollowingTrajectory = false;
+                    IsFollowingTrajectory = false;
                     Debug.Log(_canMove);
                 }
             }
-        }
-
-        private void StartDashPC(InputAction.CallbackContext context)
-        {
-            if (CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
-            {
-                var x = _playerInputActions.PlayerPC.Dash.ReadValue<Vector2>();
-
-                if (x.magnitude == 1 && !_isFirstKeyPressed)
-                {
-                    _totalTimeToDash = Time.time + timeToDash;
-                    _lastKeyPressed = x;
-                    _isFirstKeyPressed = true;
-                }
-                if (Time.time < _totalTimeToDash)
-                {
-                    if (_isFirstKeyPressed)
-                    {
-                        if (x == _lastKeyPressed)
-                        {
-                            _totalTimeToDash = Time.time + dashCooldown;
-                            StartCoroutine(Dash());
-                            _isFirstKeyPressed = false;
-                        }
-                        _lastKeyPressed = Vector2.zero;
-                    }
-                }
-            }
-        }
-
-        private void StartDashGamepad(InputAction.CallbackContext context)
-        {
-            if (CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
-            {
-                StartCoroutine(Dash());
-            }
-        }
-
-        public void StopDash()
-        {
-            StopCoroutine(Dash());
-            _mainCLayers.DisableSlideLayer();
-            IsDashing = false;
-        }
-
-        private IEnumerator Dash()
-        {
-            IsDashing = true;
-            _mainCSounds.PlayJumpSound();
-            _mainCLayers.EnableSlideLayer();
-            _mainCAnimator.TriggerDash();
-            DisableMovement();
-            _dashTotalCooldown = Time.time + dashCooldown;
-            yield return new WaitForSeconds(0.1f);
-            var startTime = Time.time;
-            while (Time.time < startTime + _dashTime)
-            {
-                _gTrail.StartTrail();
-
-                float curveTime = (Time.time - startTime) / _dashTime;
-                float speedMultiplier = dashSpeedCurve.Evaluate(curveTime);
-
-                _cc.Move(orientation.forward * dashSpeed * speedMultiplier * Time.deltaTime);
-                yield return new WaitForEndOfFrame();
-            }
-
-            EnableMovement();
-        }
-        private void EndDash()
-        {
-            _mainCLayers.DisableSlideLayer();
-            IsDashing = false;
-        }
+        } 
 
 
         private void RunOn(InputAction.CallbackContext context)
@@ -662,7 +582,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void OnDrawGizmos()
         {
-            if (_isFollowingTrajectory)
+            if (IsFollowingTrajectory)
             {
                 foreach (var t in puntosTrayectoria)
                 {
@@ -674,40 +594,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             Gizmos.DrawWireSphere(checkGrounded.position, .1f);
         }
 
-        private bool CanDash()
-        {
-            if (Time.time < _dashTotalCooldown)
-            {
-                return false;
-            }
 
-            if (_isFollowingTrajectory)
-            {
-                return false;
-            }
-
-            if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
-            {
-                return false;
-            }
-
-            if (GameManagerSingleton.Instance.IsStopMenuEnabled)
-            {
-                return false;
-            }
-
-            if (GameManagerSingleton.Instance.IsSettingsMenuEnabled)
-            {
-                return false;
-            }
-
-            if (Time.time < _dashTotalCooldown)
-            {
-                return false;
-            }
-
-            return true;
-        }
 
         private bool CanJump()
         {

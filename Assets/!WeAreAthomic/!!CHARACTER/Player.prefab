@@ -472,16 +472,11 @@ MonoBehaviour:
   timeNextJump: 0.5
   jumpImpulse: 3
   jumpImpulseOnRail: 5
-  gravity: -20
+  gravity: -9.8
   aimSpeed: 8
   pushJumpForce: 10
   pushMaxHeight: 5
   pushJumpDuration: 2
-  dashSpeed: 25
-  dashCooldown: 1
-  _dashTime: 0.2
-  timeToDash: 0.4
-  dashPcTimeThreshold: 0.5
   turnSmoothTime: 0.05
 --- !u!114 &7418738073728035398
 MonoBehaviour:
@@ -583,6 +578,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c334bf780446134fb1dd560e7c06cb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashSpeed: 20
+  dashCooldown: 2
+  _dashTime: 0.1
+  dashPcTimeThreshold: 0.5
 --- !u!114 &1770476364814114069
 MonoBehaviour:
   m_ObjectHideFlags: 0

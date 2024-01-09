@@ -18,6 +18,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private WrenchHitBox _wrenchHitBox;
         private MainCPistol _mainCPistol;
         private MainCPlayerInterface _mainCInterface;
+        private MainCDash _mainCDash;
 
         [SerializeField] private PlayerDamageData abilityAttackDmgData;
 
@@ -78,6 +79,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCPistol = GetComponent<MainCPistol>();
             _wrenchHitBox = weaponObj.GetComponent<WrenchHitBox>();
             _mainCInterface = GetComponent<MainCPlayerInterface>();
+            _mainCDash = GetComponent<MainCDash>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -210,7 +212,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
-                    _mainCMovement.StopDash();
+                    _mainCDash.StopDash();
                     _mainCMovement.EnableMovement();
                     if (_mainCTutorial.IsOnTutorial && !_attackTutorial)
                     {
