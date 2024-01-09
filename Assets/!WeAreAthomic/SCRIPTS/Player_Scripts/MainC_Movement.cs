@@ -23,6 +23,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Rigidbody _rb;
         private GTrajectory _trajectory;
         private MainCSounds _mainCSounds;
+        private MainCDash _mainCDash;
 
         private Scene _currentScene;
 
@@ -100,6 +101,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions = new PlayerInputActions();
             _mainCHealth = GetComponentInChildren<MainCHealthManager>();
             _mainCSounds = GetComponent<MainCSounds>();
+            _mainCDash = GetComponent<MainCDash>();
+
             _currentScene = SceneManager.GetActiveScene();
             if (_currentScene.name == "S2_LABTUTORIAL" || _currentScene.name == "TESTING")
             {
@@ -156,7 +159,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void FixedUpdate()
         {
-            if (_canMove && !GameManagerSingleton.Instance.IsGodModeEnabled && !_railGrindSystem.CanJumpOnRail && !_mainCHacking.isHackingAnim && !_mainCAttack.IsFinalAttacking && !_mainCHealth.IsDeath && !_railGrindSystem.IsSliding)
+            if (CanMove())
             {
                 if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
                 {
@@ -618,6 +621,60 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
+            return true;
+        }
+
+        private bool CanMove()
+        {
+            if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsStopMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+            {
+                return false;
+            }
+
+            if(GameManagerSingleton.Instance.IsGodModeEnabled)
+            {
+                return false;
+            }
+
+            if(_mainCHacking.isHackingAnim)
+            {
+                return false;
+            }
+
+            if(_mainCAttack.IsFinalAttacking)
+            {
+                return false;
+            }
+
+            if(_mainCHealth.IsDeath)
+            {
+                return false;
+            }
+
+            if(_railGrindSystem.IsSliding)
+            {
+                return false;
+            }
+
+            if(!_canMove)
+            {
+                return false;
+            }
+
+            if(_mainCDash.IsDashing)
+            {
+                return false;
+            }
             return true;
         }
 

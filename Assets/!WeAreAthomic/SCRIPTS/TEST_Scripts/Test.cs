@@ -34,8 +34,7 @@ namespace _WeAreAthomic.SCRIPTS.TEST
 
         private void Update()
         {
-            Vector3 newRotation = new Vector3(0f, cameraTr.eulerAngles.y, cameraTr.eulerAngles.z);
-            transform.rotation = Quaternion.Euler(newRotation);
+ 
         }
 
 
