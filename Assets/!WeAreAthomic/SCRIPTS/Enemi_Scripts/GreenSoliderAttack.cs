@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.Universal;
 using Random = UnityEngine.Random;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
@@ -105,7 +106,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         {
             while (!_soldierHurtBox.IsDeath)
             {
-                var currentPlayerPos = _playerTr.position;
+                var currentPlayerPos = _playerTr.transform.position;
 
                 // Calcular la dirección hacia el objetivo
                 Vector3 targetDirection = currentPlayerPos - transform.position;
@@ -133,20 +134,20 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             if (_currentDecal == null)
             {
                 _currentDecal = Instantiate(decalGroupPrefab, transform.position, Quaternion.identity);
+                
             }
 
             var desiredPos = new Vector3(_playerTr.position.x, transform.position.y, _playerTr.position.z);
             _currentDecal.transform.LookAt(desiredPos);
-            var decalGroup = _currentDecal.transform.GetChild(0).transform;
-            var decal = decalGroup.GetChild(0).transform;
-            endDecalTr = decal.GetChild(0).transform;
+            _currentDecal.transform.Rotate(0, desiredPos.y, 0);
 
+            endDecalTr = _currentDecal.transform.GetChild(1);
 
-            while (decalGroup.transform.localScale.z < 6)
+            var decal = _currentDecal.transform.GetChild(0).GetComponent<DecalProjector>();
+
+            while (decal.uvBias.y > 0)
             {
-                var decalScale = decalGroup.transform.localScale;
-                decalScale = new Vector3(decalScale.x, decalScale.y, decalScale.z + speed);
-                decalGroup.transform.localScale = decalScale;
+                decal.uvBias -= new Vector2(0, Time.deltaTime * 2);
                 yield return new WaitForSeconds(.01f);
             }
             _shootCoroutine = StartCoroutine(ShootCoroutine());
