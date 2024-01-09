@@ -85,6 +85,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float dashSpeed = 20f;
         [SerializeField] private float dashCooldown = 2f;
         [SerializeField] private float _dashTime = .10f;
+        [SerializeField] private float timeToDash = .4f;
         [SerializeField] private float dashPcTimeThreshold = 0.5f;
         public float turnSmoothTime = 0.1f;
         private float _moveSpeed;
@@ -94,6 +95,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _moveAimingX;
         private float _moveAimingY;
         private float _dashTotalCooldown;
+        private float _totalTimeToDash;
 
         private void Awake()
         {
@@ -384,19 +386,23 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 var x = _playerInputActions.PlayerPC.Dash.ReadValue<Vector2>();
 
-                if(x.magnitude == 1 && !_isFirstKeyPressed)
+                if (x.magnitude == 1 && !_isFirstKeyPressed)
                 {
+                    _totalTimeToDash = Time.time + timeToDash;
                     _lastKeyPressed = x;
                     _isFirstKeyPressed = true;
                 }
-
-                if (_isFirstKeyPressed)
+                if (Time.time < _totalTimeToDash)
                 {
-                    if (x == _lastKeyPressed)
+                    if (_isFirstKeyPressed)
                     {
-                        StartCoroutine(Dash());
+                        if (x == _lastKeyPressed)
+                        {
+                            _totalTimeToDash = Time.time + dashCooldown;
+                            StartCoroutine(Dash());
+                            _isFirstKeyPressed = false;
+                        }
                         _lastKeyPressed = Vector2.zero;
-                        _isFirstKeyPressed = false;
                     }
                 }
             }
@@ -537,7 +543,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (CanJump())
             {
-
+                IsJumping = true;
+                _velocity.y += Mathf.Sqrt(jumpImpulse * -3.0f * -9.8f); ;
             }
         }
 
@@ -692,6 +699,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             if (GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+            {
+                return false;
+            }
+
+            if (Time.time < _dashTotalCooldown)
             {
                 return false;
             }
