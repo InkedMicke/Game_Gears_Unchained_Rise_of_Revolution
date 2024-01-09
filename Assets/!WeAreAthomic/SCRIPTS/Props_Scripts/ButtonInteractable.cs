@@ -7,8 +7,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {
     public enum TypeOfHacked
     {
-        botonPuerta,
-        botonActivaAlgo,
+        prop,
         soldier
     }
 
@@ -84,10 +83,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             if (canHack)
             {
                 seActivanCuandoTerminaElHack.Invoke();
-                if (typeOfHacked == TypeOfHacked.botonPuerta)
-                {
-                    canHack = false;
-                }
+                canHack = false;
                 isActive = false;
             }
         }
