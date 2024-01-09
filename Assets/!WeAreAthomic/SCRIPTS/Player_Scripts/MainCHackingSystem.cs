@@ -66,7 +66,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
                 }
 
-                if (typeOfHacked == TypeOfHacked.prop)
+                if (typeOfHacked == TypeOfHacked.botonActivaAlgo || typeOfHacked == TypeOfHacked.botonPuerta)
                 {
                     FixPosition();
                     EnableHackAnim();
