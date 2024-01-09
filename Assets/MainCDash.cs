@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using static UnityEngine.GraphicsBuffer;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -21,11 +22,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private Vector3 _directionDash;
 
-        private Vector2 _lastKeyPressed;
-        private Vector2 _dashVector;
+        [SerializeField] private Transform cameraRotation;
 
         [System.NonSerialized] public bool IsDashing;
-        private bool _isFirstKeyPressed;
 
         [SerializeField] private float dashSpeed = 20f;
         [SerializeField] private float dashCooldown = 2f;
@@ -61,7 +60,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.W) 
                     {
-                        _directionDash = transform.forward;
+                        _directionDash = cameraRotation.forward;
                         StartCoroutine(Dash());
                     }
                     else
@@ -75,7 +74,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.S)
                     {
-                        _directionDash = -transform.forward;
+                        _directionDash = -cameraRotation.forward;
                         StartCoroutine(Dash());
                     }
                     else
@@ -89,7 +88,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.A)
                     {
-                        _directionDash = -transform.right;
+                        _directionDash = -cameraRotation.right;
                         StartCoroutine(Dash());
                     }
                     else
@@ -103,7 +102,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.D)
                     {
-                        _directionDash = transform.right;
+                        _directionDash = cameraRotation.right;
                         StartCoroutine(Dash());
                     }
                     else
@@ -138,8 +137,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnim.TriggerDash();
             _mainCMove.DisableMovement();
             _dashTotalCooldown = Time.time + dashCooldown;
-            yield return new WaitForSeconds(_dashTime);
+            yield return new WaitForSeconds(.1f);
             var startTime = Time.time;
+
             while (Time.time < startTime + _dashTime)
             {
                 _gTrail.StartTrail();
@@ -155,7 +155,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         }
 
         private void EndDash()
-        {
+        {                                                                                        
             _mainCLayers.DisableSlideLayer();
             IsDashing = false;
         }
