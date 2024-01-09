@@ -46,6 +46,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _agent = GetComponent<NavMeshAgent>();
             _soldierAnim = GetComponent<SoldierAnimator>();
             _greenMove = GetComponent<GreenSoliderMovement>();
+            _soldierHurtBox = GetComponentInChildren<SoldierHurtBox>();
         }
 
         public void StartDecal()
@@ -104,7 +105,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         {
             while (!_soldierHurtBox.IsDeath)
             {
-                var currentPlayerPos = _playerTr.transform.position;
+                var currentPlayerPos = _playerTr.position;
 
                 // Calcular la dirección hacia el objetivo
                 Vector3 targetDirection = currentPlayerPos - transform.position;

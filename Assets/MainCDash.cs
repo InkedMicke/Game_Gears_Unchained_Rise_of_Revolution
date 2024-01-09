@@ -2,6 +2,7 @@ using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
@@ -16,7 +17,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCAnimatorController _mainCAnim;
         private G_MeshTrail _gTrail;
 
+        private Key _lastKey;
+
+        private Vector3 _directionDash;
+
         private Vector2 _lastKeyPressed;
+        private Vector2 _dashVector;
 
         [System.NonSerialized] public bool IsDashing;
         private bool _isFirstKeyPressed;
@@ -42,26 +48,69 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.PlayerGamepad.Dash.performed += StartDashGamepad;
         }
 
+        private void Update()
+        {
+
+        }
+
         private void StartDashPC(InputAction.CallbackContext context)
         {
             if (CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
             {
-                var x = _playerInputActions.PlayerPC.Dash.ReadValue<Vector2>();
-
-                if (!_isFirstKeyPressed && (x.x == 1f && x.y == 0f) || (x.x == 0f && x.y == 1f))
+                if(Keyboard.current.wKey.wasPressedThisFrame)
                 {
-                    _lastKeyPressed = x;
-                    _isFirstKeyPressed = true;
-                }
-
-                if(_isFirstKeyPressed)
-                {
-                    if(x == _lastKeyPressed)
+                    if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.W) 
                     {
+                        _directionDash = transform.forward;
                         StartCoroutine(Dash());
                     }
-                    _isFirstKeyPressed = false;
-                    _lastKeyPressed = Vector2.zero;
+                    else
+                    {
+                        _totalTimeToDash = Time.time;
+                        _lastKey = Key.W;
+                    }
+                }
+
+                else if (Keyboard.current.sKey.wasPressedThisFrame)
+                {
+                    if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.S)
+                    {
+                        _directionDash = -transform.forward;
+                        StartCoroutine(Dash());
+                    }
+                    else
+                    {
+                        _totalTimeToDash = Time.time;
+                        _lastKey = Key.S;
+                    }
+                }                
+                
+                else if (Keyboard.current.aKey.wasPressedThisFrame)
+                {
+                    if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.A)
+                    {
+                        _directionDash = -transform.right;
+                        StartCoroutine(Dash());
+                    }
+                    else
+                    {
+                        _totalTimeToDash = Time.time;
+                        _lastKey = Key.A;
+                    }
+                }                
+                
+                else if (Keyboard.current.dKey.wasPressedThisFrame)
+                {
+                    if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.D)
+                    {
+                        _directionDash = transform.right;
+                        StartCoroutine(Dash());
+                    }
+                    else
+                    {
+                        _totalTimeToDash = Time.time;
+                        _lastKey = Key.D;
+                    }
                 }
             }
         }
@@ -89,7 +138,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnim.TriggerDash();
             _mainCMove.DisableMovement();
             _dashTotalCooldown = Time.time + dashCooldown;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(_dashTime);
             var startTime = Time.time;
             while (Time.time < startTime + _dashTime)
             {
@@ -98,7 +147,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 float curveTime = (Time.time - startTime) / _dashTime;
                 float speedMultiplier = _mainCMove.dashSpeedCurve.Evaluate(curveTime);
 
-                _cc.Move(transform.forward * dashSpeed * speedMultiplier * Time.deltaTime);
+                _cc.Move(_directionDash.normalized * dashSpeed * speedMultiplier * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
             }
 
