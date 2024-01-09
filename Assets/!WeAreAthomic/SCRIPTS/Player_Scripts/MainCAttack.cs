@@ -206,7 +206,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Attack()
         {
-            if (_typeOfAttack == TypeOfAttack.NormalAttack && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            if (_typeOfAttack == TypeOfAttack.NormalAttack)
             {
                 if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
@@ -457,6 +457,21 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
+            if(GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            {
+                return false;
+            }
+
+            if(GameManagerSingleton.Instance.IsStopMenuEnabled)
+            {
+                return false;
+            }
+
+            if(GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -478,6 +493,21 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             if(_mainCPistol.IsAiming)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsStopMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsSettingsMenuEnabled)
             {
                 return false;
             }

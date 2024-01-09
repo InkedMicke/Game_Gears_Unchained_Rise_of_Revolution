@@ -2,6 +2,7 @@ using _WeAreAthomic.SCRIPTS.Debug_Scripts;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
@@ -40,6 +41,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private Vector2 _moveVectorKeyboard;
         private Vector2 _moveVectorGamepad;
+        private Vector2 _lastKeyPressed;
 
         private Vector3 _moveDir;
         private Vector3 _movement;
@@ -63,6 +65,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool isMoveWhileAimingDPressed;
         private bool _isPushOnAir;
         private bool _isFollowingTrajectory;
+        private bool _isFirstKeyPressed;
 
         private int indexPoint = 2;
 
@@ -82,6 +85,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float dashSpeed = 20f;
         [SerializeField] private float dashCooldown = 2f;
         [SerializeField] private float _dashTime = .10f;
+        [SerializeField] private float dashPcTimeThreshold = 0.5f;
         public float turnSmoothTime = 0.1f;
         private float _moveSpeed;
         private float _turnSmoothVelocityGamepad;
@@ -106,7 +110,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _gTrail = GetComponent<G_MeshTrail>();
             _mainCSounds = GetComponent<MainCSounds>();
             _currentScene = SceneManager.GetActiveScene();
-            if(_currentScene.name == "S2_LABTUTORIAL" || _currentScene.name ==  "TESTING")
+            if (_currentScene.name == "S2_LABTUTORIAL" || _currentScene.name == "TESTING")
             {
                 _trajectory = GetComponent<GTrajectory>();
             }
@@ -129,24 +133,28 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.PlayerPC.Running.performed += RunOn;
             _playerInputActions.PlayerPC.Running.canceled += RunOff;
             _playerInputActions.PlayerPC.Crouch.performed += StartEndCrouch;
-            _playerInputActions.PlayerPC.Jump.performed += StartDashPC;
+            _playerInputActions.PlayerPC.Jump.performed += StartJumpPC;
+            _playerInputActions.PlayerPC.Dash.performed += StartDashPC;
             _playerInputActions.PlayerGamepad.Running.performed += RunOn;
             _playerInputActions.PlayerGamepad.Running.canceled += RunOff;
             _playerInputActions.PlayerGamepad.Crouch.performed += StartEndCrouch;
-            _playerInputActions.PlayerGamepad.Jump.performed += StartDashGamepad;
+            _playerInputActions.PlayerGamepad.Jump.performed += StartJumpGamepad;
+            _playerInputActions.PlayerGamepad.Dash.performed += StartDashGamepad;
         }
 
-        private void OnDisable() 
+        private void OnDisable()
         {
             _playerInputActions.Disable();
             _playerInputActions.PlayerPC.Running.performed -= RunOn;
             _playerInputActions.PlayerPC.Running.canceled -= RunOff;
             _playerInputActions.PlayerPC.Crouch.performed -= StartEndCrouch;
-            _playerInputActions.PlayerPC.Jump.performed -= StartDashPC;
+            _playerInputActions.PlayerPC.Jump.performed -= StartJumpPC;
+            _playerInputActions.PlayerPC.Dash.performed += StartDashPC;
             _playerInputActions.PlayerGamepad.Running.performed -= RunOn;
             _playerInputActions.PlayerGamepad.Running.canceled -= RunOff;
             _playerInputActions.PlayerGamepad.Crouch.performed -= StartEndCrouch;
-            _playerInputActions.PlayerGamepad.Jump.performed -= StartDashGamepad;
+            _playerInputActions.PlayerGamepad.Jump.performed -= StartJumpGamepad;
+            _playerInputActions.PlayerGamepad.Dash.performed -= StartDashGamepad;
         }
 
         private void Update()
@@ -185,7 +193,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCAnimator.SetJumping(IsJumping);
                 }
 
-                if (IsFalling && IsGrounded() ||IsFalling && _railGrindSystem.IsOnRail())
+                if (IsFalling && IsGrounded() || IsFalling && _railGrindSystem.IsOnRail())
                 {
                     IsFalling = false;
                     IsJumping = false;
@@ -231,10 +239,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
             }
-        
 
-        MoveWhileAiming();
-            
+
+            MoveWhileAiming();
+
 
             //arreglar cuando mantienes la W se suma y resta a la vez el moveSpeed
             if (_moveVectorKeyboard.magnitude > 0.1f && !_isRunningKeyboard)
@@ -291,7 +299,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             var moveSpeed = _isRunningGamepad ? runSpeed : walkSpeed;
 
             var desiredSpeed = _movement.magnitude * moveSpeed / 2 * 2.0f;
-        
+
 
             //_cc.Move(_movement * Time.deltaTime);
 
@@ -341,7 +349,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void SetFollowTrajectory(bool condition)
         {
             _isFollowingTrajectory = condition;
-            if(_isFollowingTrajectory)
+            if (_isFollowingTrajectory)
             {
                 indexPoint = 2;
                 DisableMovement();
@@ -372,15 +380,31 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void StartDashPC(InputAction.CallbackContext context)
         {
-            if(CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            if (CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
             {
-                StartCoroutine(Dash());
+                var x = _playerInputActions.PlayerPC.Dash.ReadValue<Vector2>();
+
+                if(x.magnitude == 1 && !_isFirstKeyPressed)
+                {
+                    _lastKeyPressed = x;
+                    _isFirstKeyPressed = true;
+                }
+
+                if (_isFirstKeyPressed)
+                {
+                    if (x == _lastKeyPressed)
+                    {
+                        StartCoroutine(Dash());
+                        _lastKeyPressed = Vector2.zero;
+                        _isFirstKeyPressed = false;
+                    }
+                }
             }
-        }        
-        
+        }
+
         private void StartDashGamepad(InputAction.CallbackContext context)
         {
-            if(CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+            if (CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
             {
                 StartCoroutine(Dash());
             }
@@ -421,7 +445,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCLayers.DisableSlideLayer();
             IsDashing = false;
         }
-    
+
 
         private void RunOn(InputAction.CallbackContext context)
         {
@@ -481,7 +505,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 _isCrouchWalking = true;
                 _mainCAnimator.SetCrouchWalking(_isCrouchWalking);
-                
+
             }
             else
             {
@@ -490,6 +514,30 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _isCrouchWalking = false;
                     _mainCAnimator.SetCrouchWalking(_isCrouchWalking);
                 }
+            }
+        }
+
+        private void StartJumpPC(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            {
+                Jump();
+            }
+        }
+
+        private void StartJumpGamepad(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+            {
+                Jump();
+            }
+        }
+
+        private void Jump()
+        {
+            if (CanJump())
+            {
+
             }
         }
 
@@ -508,11 +556,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void MoveWhileAiming()
         {
-            if(_moveVectorKeyboard.x > 0.1f)
+            if (_moveVectorKeyboard.x > 0.1f)
             {
                 isMoveWhileAimingAPressed = true;
                 _moveAimingX += aimSpeed * Time.deltaTime;
-                if(_moveAimingX > 1)
+                if (_moveAimingX > 1)
                 {
                     _moveAimingX = 1;
                 }
@@ -609,9 +657,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void OnDrawGizmos()
         {
-            if(_isFollowingTrajectory)
+            if (_isFollowingTrajectory)
             {
-                foreach(var t in puntosTrayectoria)
+                foreach (var t in puntosTrayectoria)
                 {
                     Gizmos.DrawWireSphere(t, 0.1f);
                 }
@@ -623,12 +671,52 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private bool CanDash()
         {
-            if(Time.time < _dashTotalCooldown)
+            if (Time.time < _dashTotalCooldown)
             {
                 return false;
             }
 
-            if(_isFollowingTrajectory)
+            if (_isFollowingTrajectory)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsStopMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CanJump()
+        {
+            if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsStopMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+            {
+                return false;
+            }
+
+            if (!IsGrounded())
             {
                 return false;
             }

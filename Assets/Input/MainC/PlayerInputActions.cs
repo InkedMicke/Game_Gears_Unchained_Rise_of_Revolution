@@ -179,6 +179,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Value"",
+                    ""id"": ""8ee64b1d-2b3e-4be1-bc70-c6575a351528"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -379,6 +388,61 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""BastetAimAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""c4f574c1-f65e-4e82-b36a-d731cc4eae04"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""af0d6c1b-accd-4e51-afb6-a7fd28dd25d5"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""364043f6-af4d-4610-a6f7-6c299bed26c9"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""d5c4ec9d-770d-4ef7-860d-41104452df50"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""8294f3f1-8a30-4b4c-837d-aa775510d20a"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -538,6 +602,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""c450276f-98ee-4d19-bfd3-f7f9e55ef7ee"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -665,7 +738,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""cad18391-f0c0-43be-b5da-8bb2c9cd8236"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -725,6 +798,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""InvokeAbility"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bcd1950a-af9e-48b0-93cb-c07be7192082"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -957,6 +1041,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerPC_BastetAimAttack = m_PlayerPC.FindAction("BastetAimAttack", throwIfNotFound: true);
         m_PlayerPC_ChangeAbility = m_PlayerPC.FindAction("ChangeAbility", throwIfNotFound: true);
         m_PlayerPC_InvokeAbility = m_PlayerPC.FindAction("InvokeAbility", throwIfNotFound: true);
+        m_PlayerPC_Dash = m_PlayerPC.FindAction("Dash", throwIfNotFound: true);
         // PlayerGamepad
         m_PlayerGamepad = asset.FindActionMap("PlayerGamepad", throwIfNotFound: true);
         m_PlayerGamepad_MovementKeyboard = m_PlayerGamepad.FindAction("MovementKeyboard", throwIfNotFound: true);
@@ -976,6 +1061,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerGamepad_BastetAimAttack = m_PlayerGamepad.FindAction("BastetAimAttack", throwIfNotFound: true);
         m_PlayerGamepad_ChargeAbility = m_PlayerGamepad.FindAction("ChargeAbility", throwIfNotFound: true);
         m_PlayerGamepad_InvokeAbility = m_PlayerGamepad.FindAction("InvokeAbility", throwIfNotFound: true);
+        m_PlayerGamepad_Dash = m_PlayerGamepad.FindAction("Dash", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
@@ -1063,6 +1149,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerPC_BastetAimAttack;
     private readonly InputAction m_PlayerPC_ChangeAbility;
     private readonly InputAction m_PlayerPC_InvokeAbility;
+    private readonly InputAction m_PlayerPC_Dash;
     public struct PlayerPCActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1084,6 +1171,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @BastetAimAttack => m_Wrapper.m_PlayerPC_BastetAimAttack;
         public InputAction @ChangeAbility => m_Wrapper.m_PlayerPC_ChangeAbility;
         public InputAction @InvokeAbility => m_Wrapper.m_PlayerPC_InvokeAbility;
+        public InputAction @Dash => m_Wrapper.m_PlayerPC_Dash;
         public InputActionMap Get() { return m_Wrapper.m_PlayerPC; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1144,6 +1232,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @InvokeAbility.started += instance.OnInvokeAbility;
             @InvokeAbility.performed += instance.OnInvokeAbility;
             @InvokeAbility.canceled += instance.OnInvokeAbility;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
         }
 
         private void UnregisterCallbacks(IPlayerPCActions instance)
@@ -1199,6 +1290,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @InvokeAbility.started -= instance.OnInvokeAbility;
             @InvokeAbility.performed -= instance.OnInvokeAbility;
             @InvokeAbility.canceled -= instance.OnInvokeAbility;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
         }
 
         public void RemoveCallbacks(IPlayerPCActions instance)
@@ -1237,6 +1331,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerGamepad_BastetAimAttack;
     private readonly InputAction m_PlayerGamepad_ChargeAbility;
     private readonly InputAction m_PlayerGamepad_InvokeAbility;
+    private readonly InputAction m_PlayerGamepad_Dash;
     public struct PlayerGamepadActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1258,6 +1353,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @BastetAimAttack => m_Wrapper.m_PlayerGamepad_BastetAimAttack;
         public InputAction @ChargeAbility => m_Wrapper.m_PlayerGamepad_ChargeAbility;
         public InputAction @InvokeAbility => m_Wrapper.m_PlayerGamepad_InvokeAbility;
+        public InputAction @Dash => m_Wrapper.m_PlayerGamepad_Dash;
         public InputActionMap Get() { return m_Wrapper.m_PlayerGamepad; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1318,6 +1414,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @InvokeAbility.started += instance.OnInvokeAbility;
             @InvokeAbility.performed += instance.OnInvokeAbility;
             @InvokeAbility.canceled += instance.OnInvokeAbility;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
         }
 
         private void UnregisterCallbacks(IPlayerGamepadActions instance)
@@ -1373,6 +1472,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @InvokeAbility.started -= instance.OnInvokeAbility;
             @InvokeAbility.performed -= instance.OnInvokeAbility;
             @InvokeAbility.canceled -= instance.OnInvokeAbility;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
         }
 
         public void RemoveCallbacks(IPlayerGamepadActions instance)
@@ -1552,6 +1654,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnBastetAimAttack(InputAction.CallbackContext context);
         void OnChangeAbility(InputAction.CallbackContext context);
         void OnInvokeAbility(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
     }
     public interface IPlayerGamepadActions
     {
@@ -1572,6 +1675,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnBastetAimAttack(InputAction.CallbackContext context);
         void OnChargeAbility(InputAction.CallbackContext context);
         void OnInvokeAbility(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {

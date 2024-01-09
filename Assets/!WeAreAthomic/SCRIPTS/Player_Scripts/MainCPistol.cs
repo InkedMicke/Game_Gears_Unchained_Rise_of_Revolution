@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts;
@@ -40,26 +39,20 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject shootParticles;
         [SerializeField] private GameObject bigBullet;
         [SerializeField] private GameObject crosshair;
-        private GameObject _currentParticle;
 
         [SerializeField] private Transform camAimPosTr;
         [SerializeField] private Transform middlePos;
         [SerializeField] private Transform orientation;
         [SerializeField] private Transform lookAtAim;
         [SerializeField] private Transform cameraFollow;
-        private Transform _closestTransform = null;
 
         [SerializeField] private LayerMask enemyHurtBox;
 
         [System.NonSerialized] public bool IsAiming;
         [System.NonSerialized] public bool IsAutoTargeting;
-        private bool _isAnimEnabled;
-        private bool _isLeftMouseDown;
-        private bool _isRightMouseDown;
-        private bool _isShooting;
-        private bool _isChargingShoot;
         private bool _isRecoveringShoot;
         private bool _isWaitingForRecoveringShoot;
+        private bool _isShooting;
 
         [SerializeField] private float sphereDectorSize = 5f;
         [SerializeField] private float cameraTransitionSpeed = 5f;
@@ -85,11 +78,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
             _playerInputActions.PlayerPC.BastetAimAttack.performed += LeftMouseDown;
-            _playerInputActions.PlayerPC.BastetAimAttack.canceled += LeftMouseUp;
             _playerInputActions.PlayerPC.SecondaryAttack.performed += RightMouseDown;
             _playerInputActions.PlayerPC.SecondaryAttack.canceled += RightMouseUp;
             _playerInputActions.PlayerGamepad.BastetAimAttack.performed += LeftGamepadDown;
-            _playerInputActions.PlayerGamepad.BastetAimAttack.canceled += LeftGamepadUp;
             _playerInputActions.PlayerGamepad.SecondaryAttack.performed += RightGamepadDown;
             _playerInputActions.PlayerGamepad.SecondaryAttack.canceled += RightGamepadUp;
 
@@ -100,23 +91,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 StartRecoveringEnergy(5f);
             }
-        }
-
-        private protected void Update()
-        {
-
-            if (_mainCMovement.IsGrounded())
-            {
-                _typeOfAim = TypeOfAim.GroundAim;
-            }
-
-            if (_mainCRailGrind.IsOnRail())
-            {
-                _typeOfAim = TypeOfAim.RailAim;
-            }
-
-            Aim();
-
         }
 
         private void RightMouseDown(InputAction.CallbackContext context)
@@ -137,12 +111,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 LeftControlDown();
         }
 
-        private void LeftMouseUp(InputAction.CallbackContext context)
-        {
-            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
-                LeftControlUp();
-        }
-
         private void RightGamepadDown(InputAction.CallbackContext context)
         {
             if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
@@ -161,21 +129,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 LeftControlDown();
         }
 
-        private void LeftGamepadUp(InputAction.CallbackContext context)
-        {
-            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
-                LeftControlUp();
-        }
-
-        private void LeftControlUp()
-        {
-            _isLeftMouseDown = false;
-        }
-
         private void LeftControlDown()
         {
-            _isLeftMouseDown = true;
-            if (GameManagerSingleton.Instance.bastetEnergy >= 20 && Time.time > _totalCooldown && GameManagerSingleton.Instance.HasUnlockedBastetAttack && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            if (CanShoot())
             {
                 Shoot();
             }
@@ -183,20 +139,21 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void RightControlUp()
         {
-            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack && !GameManagerSingleton.Instance.IsSettingsMenuEnabled && !GameManagerSingleton.Instance.IsStopMenuEnabled && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            if (IsAiming)
             {
                 crosshair.SetActive(false);
                 _camFollower.cameraFollow = cameraFollow;
                 _bastetController.StopMoveToBastetPos();
                 _bastetController.InvokeMoveToPlayer();
             }
-            _isRightMouseDown = false;
+
         }
 
         private void RightControlDown()
         {
-            if (GameManagerSingleton.Instance.HasUnlockedBastetAttack && !GameManagerSingleton.Instance.IsSettingsMenuEnabled && !GameManagerSingleton.Instance.IsStopMenuEnabled && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            if (CanAim())
             {
+                IsAiming = true;
                 crosshair.SetActive(true);
                 _camFollower.cameraFollow = camAimPosTr;
                 _bastetController.HideScanner();
@@ -204,7 +161,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _bastetController.PosRightHand();
                 _bastetController.StartMoveToBastetPos();
             }
-            _isRightMouseDown = true;
+
         }
 
         private IEnumerator RecoverEnergy(float waitTime)
@@ -234,28 +191,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 yield return new WaitForSeconds(.1f);
 
             }
-        }
-
-
-
-        private void Aim()
-        {
-            switch (_typeOfAim)
-            {
-                case TypeOfAim.GroundAim:
-                    AimingOnGround();
-                    break;
-                case TypeOfAim.RailAim:
-                    AimingOnRail();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private void AimingOnGround()
-        {
-            AimingOnRail();
         }
 
         public void StartRecoveringEnergy(float waitTimeEnergy)
@@ -320,28 +255,64 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _isShooting = false;
         }
 
-        private void AimingOnRail()
+        private bool CanAim()
         {
-            if (_isRightMouseDown)
+            if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
             {
-                if (!_isAnimEnabled)
-                {
-                    _mainCAnim.SetAimOnRail(true);
-                    _isAnimEnabled = true;
-                    IsAiming = true;
-                }
-
+                return false;
             }
-            else
+
+            if (GameManagerSingleton.Instance.IsStopMenuEnabled)
             {
-                if (_isAnimEnabled)
-                {
-                    _mainCAnim.SetAimOnRail(false);
-                    _isAnimEnabled = false;
-                    IsAiming = false;
-                }
-
+                return false;
             }
+
+            if (GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+            {
+                return false;
+            }
+
+            if (!GameManagerSingleton.Instance.HasUnlockedBastetAttack)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CanShoot()
+        {
+            if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsStopMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+            {
+                return false;
+            }
+
+            if(GameManagerSingleton.Instance.bastetEnergy < 20)
+            {
+                return false;
+            }
+
+            if(!GameManagerSingleton.Instance.HasUnlockedBastetAttack)
+            {
+                return false;
+            }
+
+            if(Time.time < _totalCooldown)
+            {
+                return false;
+            }
+
+            return true;
         }
 
     }

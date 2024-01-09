@@ -7,24 +7,27 @@ public class GearAbility : MonoBehaviour
 {
     private AbilityCanvasController _abilityController;
 
-    private RectTransform rectTransform;
+    private MeshRenderer _meshRenderer;
+
     private RectTransform canvasRect;
 
     [SerializeField] private Image imageToChange;
     [SerializeField] private Image imageSlider;
 
+    [SerializeField] private Material selectedMat;
+    private Material _originalMat;
+
     private Color orginalColor;
 
     private Vector3 worldPosition;
-
-    private Vector2 minPosition;
-    private Vector2 maxPosition;
 
 
     [SerializeField] private Camera cameraAbility;
 
     [SerializeField] private GameObject container;
     [SerializeField] private GameObject descriptionObj;
+
+    [SerializeField] private Transform middlePos;
 
     private bool _isMouseDown;
     private bool _isMouseInside;
@@ -35,7 +38,9 @@ public class GearAbility : MonoBehaviour
 
     private void Awake()
     {
+        _meshRenderer = GetComponent<MeshRenderer>();
         orginalColor = imageToChange.color;
+        _originalMat = _meshRenderer.material;
         _abilityController = container.GetComponent<AbilityCanvasController>();
 
         canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
@@ -46,11 +51,17 @@ public class GearAbility : MonoBehaviour
 
         if (_isShowingDescription)
         {
-
-            var mouseVector = Mouse.current.position.ReadValue();
-            worldPosition = cameraAbility.ScreenToWorldPoint(mouseVector);
-            worldPosition.z = descriptionObj.transform.position.z;
-
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            {
+                var mouseVector = Mouse.current.position.ReadValue();
+                worldPosition = cameraAbility.ScreenToWorldPoint(mouseVector);
+                worldPosition.z = descriptionObj.transform.position.z;
+            }
+            else
+            {
+                worldPosition = middlePos.position;
+                worldPosition.z = descriptionObj.transform.position.z;
+            }
 
             Vector2 clampedPosition = new Vector2(
             Mathf.Clamp(worldPosition.x, -300f, 122f),
@@ -65,6 +76,7 @@ public class GearAbility : MonoBehaviour
     {
         _isMouseInside = true;
         imageToChange.color = Color.black;
+        _meshRenderer.material = selectedMat;
         StartCoroutine(ShowDescription());
     }
 
@@ -72,6 +84,7 @@ public class GearAbility : MonoBehaviour
     {
         _isMouseInside = false;
         imageToChange.color = orginalColor;
+        _meshRenderer.material = _originalMat;
     }
 
     public void PointerDown()
@@ -109,15 +122,6 @@ public class GearAbility : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
 
         descriptionObj.SetActive(true);
-
-        rectTransform = descriptionObj.transform.GetChild(0).GetComponent<RectTransform>();
-
-        // Calcula los límites de la pantalla (canvas)
-        Vector2 minCanvasPos = canvasRect.rect.min;
-        Vector2 maxCanvasPos = canvasRect.rect.max;
-
-        minPosition = minCanvasPos;
-        maxPosition = maxCanvasPos;
         _isShowingDescription = true;
         while (_isMouseInside)
         {
