@@ -7,7 +7,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {
     public enum TypeOfHacked
     {
-        prop,
+        botonPuerta,
+        botonCamara,
         soldier
     }
 
@@ -52,7 +53,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         private void ShowCircle()
         {
-            if (Vector3.Distance(transform.position, _playerTr.position) < 10 && !_isShowingButton && !_mainCHacking.IsHacking)
+            if (Vector3.Distance(transform.position, _playerTr.position) < 10 && !_isShowingButton && !_mainCHacking.IsHacking && canHack)
             {
                 circleObj.SetActive(true);
             }
@@ -83,14 +84,18 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             if (canHack)
             {
                 seActivanCuandoTerminaElHack.Invoke();
-                canHack = false;
+                eButtonObj.SetActive(false);
+                if (typeOfHacked == TypeOfHacked.botonPuerta)
+                {
+                    canHack = false;
+                }
                 isActive = false;
             }
         }
 
         public void ShowButton()
         {
-            if (!_mainCHacking.IsHacking) 
+            if (!_mainCHacking.IsHacking && canHack) 
             {
                 if(typeOfHacked == TypeOfHacked.soldier)
                 {

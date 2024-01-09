@@ -50,7 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void StartHacking(float timeHack, TypeOfHacked typeOfHacked)
         {
-            if (!IsHacking)
+            if (!IsHacking && !GotCahed)
             {
                 _timeToHack = timeHack;
 
@@ -66,7 +66,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
                 }
 
-                if (typeOfHacked == TypeOfHacked.prop)
+                if (typeOfHacked == TypeOfHacked.botonCamara || typeOfHacked == TypeOfHacked.botonPuerta)
                 {
                     FixPosition();
                     EnableHackAnim();

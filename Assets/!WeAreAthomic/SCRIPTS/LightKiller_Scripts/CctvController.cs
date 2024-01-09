@@ -35,6 +35,7 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
 
         [SerializeField] private List<Transform> objectsToLookAt;
         public UnityEvent[] seActivanCuandoSeEnciendeLaCamara;
+        public UnityEvent[] seActivaEncuentraUnObstaculoMientrasFocuseaAlPlayer;
 
         private void Awake()
         {
@@ -124,6 +125,10 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
                     {
                         _lKiller.WhiteLight();
                         _mainCHacking.SetGotCahed(false);
+                        foreach (var t in seActivaEncuentraUnObstaculoMientrasFocuseaAlPlayer)
+                        {
+                            t.Invoke();
+                        }
                     }
                 }
             }

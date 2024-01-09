@@ -1,6 +1,7 @@
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -60,7 +61,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.W) 
                     {
-                        _directionDash = cameraRotation.forward;
+                        _directionDash = cameraRotation.forward * 2;
                         StartCoroutine(Dash());
                     }
                     else
@@ -74,7 +75,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.S)
                     {
-                        _directionDash = -cameraRotation.forward;
+                        _directionDash = -cameraRotation.forward * 2;
                         StartCoroutine(Dash());
                     }
                     else
@@ -88,7 +89,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.A)
                     {
-                        _directionDash = -cameraRotation.right;
+                        _directionDash = -cameraRotation.right * 2;
                         StartCoroutine(Dash());
                     }
                     else
@@ -102,7 +103,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.D)
                     {
-                        _directionDash = cameraRotation.right;
+                        _directionDash = cameraRotation.right * 2;
                         StartCoroutine(Dash());
                     }
                     else
@@ -139,6 +140,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _dashTotalCooldown = Time.time + dashCooldown;
             yield return new WaitForSeconds(.1f);
             var startTime = Time.time;
+
+            var desiredPos = cameraRotation.position + _directionDash.normalized * 2;
+            desiredPos.y = transform.position.y;
+
+            transform.LookAt(desiredPos);
 
             while (Time.time < startTime + _dashTime)
             {

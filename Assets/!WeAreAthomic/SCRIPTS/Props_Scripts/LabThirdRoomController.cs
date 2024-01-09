@@ -129,6 +129,12 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             yield return new WaitForSeconds(1.6f);
             if (!triggerElevator.GetComponent<TriggerElevator>().IsActivated)
             {
+                while(!_mainCMovement.IsGrounded())
+                {
+                    yield return new WaitForEndOfFrame();
+                }
+
+                _playerObj.GetComponent<CharacterController>().enabled = false;
                 Instantiate(movableFloorPivot, _playerObj.transform.position - Vector3.right * 1.4f, Quaternion.identity);
                 _mainCMovement.SetFollowTrajectory(true);
                 _triggerElevator.SetIsActivated(false);

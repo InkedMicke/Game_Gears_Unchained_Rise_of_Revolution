@@ -236,7 +236,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
 
-            MoveWhileAiming();
 
 
             //arreglar cuando mantienes la W se suma y resta a la vez el moveSpeed
@@ -367,8 +366,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (IsGrounded())
                 {
                     EnableMovement();
+                    _cc.enabled = true;
                     IsFollowingTrajectory = false;
-                    Debug.Log(_canMove);
                 }
             }
         } 
@@ -479,97 +478,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             else
             {
                 return ray.GetPoint(2f);
-            }
-        }
-
-        private void MoveWhileAiming()
-        {
-            if (_moveVectorKeyboard.x > 0.1f)
-            {
-                isMoveWhileAimingAPressed = true;
-                _moveAimingX += aimSpeed * Time.deltaTime;
-                if (_moveAimingX > 1)
-                {
-                    _moveAimingX = 1;
-                }
-            }
-            else
-            {
-                if (isMoveWhileAimingAPressed == true)
-                {
-                    _moveAimingX -= aimSpeed * Time.deltaTime;
-                    if (_moveAimingX <= 0)
-                    {
-                        _moveAimingX = 0;
-                        isMoveWhileAimingAPressed = false;
-                    }
-                }
-            }
-
-            if (_moveVectorKeyboard.x < -0.1f)
-            {
-                isMoveWhileAimingDPressed = true;
-                _moveAimingX -= aimSpeed * Time.deltaTime;
-                if (_moveAimingX < -1)
-                {
-                    _moveAimingX = -1;
-                }
-            }
-            else
-            {
-                if (isMoveWhileAimingDPressed == true)
-                {
-                    _moveAimingX += aimSpeed * Time.deltaTime;
-                    if (_moveAimingX >= 0)
-                    {
-                        _moveAimingX = 0;
-                        isMoveWhileAimingDPressed = false;
-                    }
-                }
-            }
-
-            if (_moveVectorKeyboard.y > 0.1f)
-            {
-                isMoveWhileAimingWPressed = true;
-                _moveAimingY += aimSpeed * Time.deltaTime;
-                if (_moveAimingY > 1)
-                {
-                    _moveAimingY = 1;
-                }
-            }
-            else
-            {
-                if (isMoveWhileAimingWPressed == true)
-                {
-                    _moveAimingY -= aimSpeed * Time.deltaTime;
-                    if (_moveAimingY <= 0)
-                    {
-                        _moveAimingY = 0;
-                        isMoveWhileAimingWPressed = false;
-                    }
-                }
-            }
-
-            if (_moveVectorKeyboard.y < -0.1f)
-            {
-                isMoveWhileAimingSPressed = true;
-                _moveAimingY -= aimSpeed * Time.deltaTime;
-                if (_moveAimingY < -1)
-                {
-                    _moveAimingY = -1;
-                }
-            }
-            else
-            {
-                if (isMoveWhileAimingSPressed == true)
-                {
-                    _moveAimingY += aimSpeed * Time.deltaTime;
-                    if (_moveAimingY >= 0)
-                    {
-                        _moveAimingY = 0;
-                        isMoveWhileAimingSPressed = false;
-                    }
-                }
             }
         }
 
