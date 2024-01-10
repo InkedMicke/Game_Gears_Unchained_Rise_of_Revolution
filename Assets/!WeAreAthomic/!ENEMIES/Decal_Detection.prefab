@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2266501946435452283}
+  - component: {fileID: 6305494706775913606}
   - component: {fileID: 750355886195511974}
   m_Layer: 0
   m_Name: Decal_Detection
@@ -32,6 +33,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
+--- !u!114 &6305494706775913606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5124221671212838927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab74c8fb88613d24bae4bec55da9adca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionDecal: {fileID: 5124221671212838927}
+  neutralMat: {fileID: 2100000, guid: 1cfad81fe35600d41a3aa14f8519759f, type: 2}
+  warningMat: {fileID: 2100000, guid: 5bce0b0a050fd5847925e6da4f6d26d6, type: 2}
+  catchMat: {fileID: 2100000, guid: 755ca6d0a82cb0e4095fd6bb85fc0e37, type: 2}
 --- !u!114 &750355886195511974
 MonoBehaviour:
   m_ObjectHideFlags: 0

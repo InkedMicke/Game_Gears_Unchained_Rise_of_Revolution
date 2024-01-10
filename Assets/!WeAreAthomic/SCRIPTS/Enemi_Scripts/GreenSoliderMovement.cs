@@ -7,6 +7,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 {
     public class GreenSoliderMovement : EnemyAI
     {
+        private C_MaterialChangeOnDetection _materialChangeOnDetection;
         private GreenSoliderAttack _soldierAttack;
         private SoldierAnimator _soldierAnim;
         private SoldierHurtBox _soldierHurtbox;
@@ -32,6 +33,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         private void Awake()
         {
+            _materialChangeOnDetection = GetComponentInChildren<C_MaterialChangeOnDetection>();
             _agent = GetComponent<NavMeshAgent>();
             _soldierAttack = GetComponent<GreenSoliderAttack>();
             _soldierAnim = GetComponent<SoldierAnimator>();
@@ -119,6 +121,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         {
             if(IsChasingPlayer)
             {
+                _materialChangeOnDetection.CatchDecal();
                 _agent.SetDestination(_playerTr.position);
                 _soldierAnim.SetWalking(true);
                 var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
@@ -132,6 +135,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
                     _isPatrolling = false;
                 }
             }
+          
         }
 
 

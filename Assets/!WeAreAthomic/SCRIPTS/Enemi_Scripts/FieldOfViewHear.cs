@@ -50,6 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
                     {
 
                         canSeePlayer = true;
+                        
                     }
                     else
                         canSeePlayer = false;
