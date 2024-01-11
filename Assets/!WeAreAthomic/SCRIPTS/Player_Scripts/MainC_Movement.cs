@@ -14,7 +14,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCLayers _mainCLayers;
         private MainCAttack _mainCAttack;
         private MainCPistol _mainCPistol;
-        private MainCRailGrindSystem _railGrindSystem;
+        private MainCRailGrindSystem _mainCRail;
         private MainCHackingSystem _mainCHacking;
         private MainCAnimatorController _mainCAnimator;
         private CharacterController _cc;
@@ -95,7 +95,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCPistol = GetComponent<MainCPistol>();
             _cc = GetComponent<CharacterController>();
             _godMode = GetComponent<Godmode>();
-            _railGrindSystem = GetComponent<MainCRailGrindSystem>();
+            _mainCRail = GetComponent<MainCRailGrindSystem>();
             _mainCHacking = GetComponent<MainCHackingSystem>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _playerInputActions = new PlayerInputActions();
@@ -175,7 +175,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (!GameManagerSingleton.Instance.IsGodModeEnabled)
             {
-                if (!IsGrounded() && _velocity.y < 0 && !_railGrindSystem.IsOnRail() || !_railGrindSystem.IsOnRail() && _velocity.y < 0 && !IsGrounded())
+                if (!IsGrounded() && _velocity.y < 0 && !_mainCRail.IsOnRail() || !_mainCRail.IsOnRail() && _velocity.y < 0 && !IsGrounded())
                 {
                     IsFalling = true;
                     IsJumping = false;
@@ -183,7 +183,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCAnimator.SetJumping(IsJumping);
                 }
 
-                if (IsFalling && IsGrounded() || IsFalling && _railGrindSystem.IsOnRail())
+                if (IsFalling && IsGrounded() || IsFalling && _mainCRail.IsOnRail())
                 {
                     IsFalling = false;
                     IsJumping = false;
@@ -200,16 +200,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void ApplyGravity()
         {
-            if (IsJumping || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_railGrindSystem.IsOnRail() && !IsFollowingTrajectory)
+            if (IsJumping || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsOnRail() && !IsFollowingTrajectory)
             {
                 _velocity += transform.up.normalized * (gravity * Time.deltaTime);
                 _velocity.z = 0f;
                 _cc.Move(_velocity * Time.deltaTime);
             }
 
-            if(IsJumping && IsGrounded())
+            if(IsJumping && IsGrounded() || IsFalling && IsGrounded())
             {
                 IsJumping = false;
+                _mainCAnimator.SetGrounded(true);
             }
         }
 
@@ -464,7 +465,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (CanJump())
             {
                 IsJumping = true;
-                _velocity.y += Mathf.Sqrt(jumpImpulse * -3.0f * -9.8f); ;
+                _mainCAnimator.SetJumping(true);
+                _velocity.y = jumpImpulse;
+                _timeGraceJumpPeriod = Time.time + timeNextJump;
             }
         }
 
@@ -529,6 +532,21 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
+            if(IsJumping)
+            {
+                return false;
+            }
+
+            if(Time.time < _timeGraceJumpPeriod)
+            {
+                return false;
+            }
+
+            if (_mainCRail.IsOnRail())
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -569,7 +587,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
-            if(_railGrindSystem.IsSliding)
+            if(_mainCRail.IsSliding)
             {
                 return false;
             }
@@ -583,6 +601,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 return false;
             }
+
+            if (_mainCRail.IsOnRail())
+            {
+                return false;
+            }
+
             return true;
         }
 

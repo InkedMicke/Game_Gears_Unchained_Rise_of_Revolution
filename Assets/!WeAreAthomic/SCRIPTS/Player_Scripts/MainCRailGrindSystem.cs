@@ -27,10 +27,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Collider[] _railCols;
 
         [SerializeField] private GameObject spaceTutCanvas;
+        [SerializeField] private GameObject railSparks;
         private GameObject _currentPipe;
         private GameObject _currentRail;
 
-        [SerializeField] private Transform groundCheck;
+        [SerializeField] private Transform railCheck;
 
         [SerializeField] private LayerMask railLayer;
         [SerializeField] private LayerMask obstacleLayer;
@@ -83,7 +84,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _currentScene = SceneManager.GetActiveScene();
             if (IsOnRail() && !_isJumping)
             {
-                _railCols = Physics.OverlapSphere(groundCheck.position, .3f, railLayer);
+                _railCols = Physics.OverlapSphere(railCheck.position, .3f, railLayer);
                 StartSliding();
                 if (!_isCanvasJump && ThereIsObstacle())
                 {
@@ -258,6 +259,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             _mainCAnimator.SetSliding(true);
             _isJumping = false;
+            railSparks.SetActive(true);
             FixPosition(.1f);
             _canSlide = true;
         }
@@ -266,7 +268,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (ThereIsObstacle() && !_isJumping)
             {
-                var ray = new Ray(groundCheck.position, groundCheck.transform.forward);
+                var ray = new Ray(railCheck.position, railCheck.transform.forward);
                 if (Physics.Raycast(ray, out var hit, 4f, obstacleLayer))
                 {
                     _currentPipe = hit.collider.gameObject;
@@ -283,6 +285,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                         _canSlide = false;
                         FixPositionFrontPipe();
                         _isJumping = true;
+                        railSparks.SetActive(false);
                         _anim.applyRootMotion = true;
                         _anim.SetTrigger(string.Format("jumpRail"));
                         _mainCSounds.PlayJumpSound();
@@ -329,12 +332,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public bool IsOnRail()
         {
-            return Physics.CheckSphere(groundCheck.position, .1f, railLayer);
+            return Physics.CheckSphere(railCheck.position, .1f, railLayer);
         }
 
         private bool ThereIsObstacle()
         {
-            var ray = new Ray(groundCheck.position, groundCheck.transform.forward);
+            var ray = new Ray(railCheck.position, railCheck.transform.forward);
             return Physics.Raycast(ray, 2f, obstacleLayer);
         }
     }

@@ -307,7 +307,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 var enemyPos = other.gameObject.transform.position;
                 var direction = enemyPos - transform.position;
                 direction.y = 0f;
-                _cc.Move(direction * 0.2f);
+                _cc.Move(direction * 0.25f);
             }
         }
 
@@ -444,7 +444,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
-            if (!(Time.time > timeGraceAttackPeriod))
+            if (Time.time < timeGraceAttackPeriod)
             {
                 return false;
             }
