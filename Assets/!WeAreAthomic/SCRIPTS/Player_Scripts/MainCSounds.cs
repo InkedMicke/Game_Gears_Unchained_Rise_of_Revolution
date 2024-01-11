@@ -9,6 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
     public class MainCSounds : MonoBehaviour
     {
         private MainCMovement _mainCMove;
+        private MainCRailGrindSystem _mainCRail;
 
         private Scene _currentScene;
 
@@ -67,6 +68,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void Awake()
         {
             _mainCMove = GetComponent<MainCMovement>();
+            _mainCRail = GetComponent<MainCRailGrindSystem>();
         }
 
         private void Start()
@@ -334,7 +336,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         }
         public void PlayStepsIndoorsSound()
         {
-            if (_mainCMove.IsGrounded())
+            if (_mainCMove.IsGrounded() && !_mainCRail.IsSliding)
             {
                 var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
 
