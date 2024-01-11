@@ -38,6 +38,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Vector3 _lastPosition;
 
         [System.NonSerialized] public bool IsOnTutorial;
+        [System.NonSerialized] public bool S;
         public bool FirstTimeAbility;
         private bool _isRoom1;
         private bool _isRoom2;

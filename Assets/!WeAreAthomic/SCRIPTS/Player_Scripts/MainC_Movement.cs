@@ -369,7 +369,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     EnableMovement();
                     _cc.enabled = true;
-                    Debug.Log("hola1");
                     IsFollowingTrajectory = false;
                 }
             }

@@ -104,12 +104,34 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 StartCoroutine(MoveDownToZero());
                 _isWave3 = false;
                 _mainCAttack.SetHasUnlockedAbilityAttack(true);
-                _mainCAttack.ShowWeapon();
+                _mainCAttack.SetIsSheathed(false);
                 _mainCAttack.EnableCanAttack();
                 _mainCTutorial.movedDerImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
                 _mainCTutorial.movedIzqImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
                 _mainCSounds.PlayTutorialSound(9, "pc");
             }
+        }
+
+        public void SkipTutorialLab()
+        {
+            foreach (var obj in firstReds)
+            {
+                obj.SetActive(false);
+            }
+
+            foreach (var obj in secondReds)
+            {
+                obj.SetActive(false);
+            }
+
+            foreach (var obj in thirdReds)
+            {
+                obj.SetActive(false);
+            }
+
+            _mainCAttack.ShowWeapon();
+            _mainCAttack.EnableCanAttack();
+            seActivaCuandoLasOleadasTerminan.Invoke();
         }
 
         private void Freeze()
@@ -198,6 +220,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                         _triggerElevator.SetIsActivated(false);
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
+                        _mainCAttack.SetIsSheathed(false);
                         _mainCTutorial.AttackImage();
                         _dummiesCollider.UndoChild(wave2);
                         temp.y = 0f;
@@ -216,6 +239,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                         _mainCAttack.SetHasUnlockedAbilityAttack(false);
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
+                        _mainCAttack.SetIsSheathed(false);
                         _mainCSounds.PlayTutorialSound(8, "pc");
                         _mainCTutorial.movedDerImage.SetActive(true);
                         _mainCTutorial.movedIzqImage.SetActive(true);

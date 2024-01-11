@@ -1,4 +1,5 @@
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
@@ -9,9 +10,12 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
         private PlayerInputActions _playerInputActions;
         private MainCMovement _mainCMove;
         private MainCTutorialChecker _mainCTutorial;
+        [SerializeField] private LabThirdRoomController _labController;
 
         [SerializeField] private GameObject godModeContainer;
         private GameObject _cameraObj;
+
+        [SerializeField] private Transform tpSkippedTutorial;
 
         private bool _isSpeedingUp;
         private bool _isSpeedingDown;
@@ -94,10 +98,17 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
 
         public void SkipTutorial()
         {
-            GameManagerSingleton.Instance.SetSkippedTutorial(true);
-            GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
-            _mainCTutorial.HideAllTutorialImages();
-            _mainCTutorial.StopAllTutorialCoroutine();
+            if (!GameManagerSingleton.Instance.SkippedTutorial)
+            {
+                GameManagerSingleton.Instance.SetSkippedTutorial(true);
+                GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
+                _mainCTutorial.HideAllTutorialImages();
+                _mainCTutorial.StopAllTutorialCoroutine();
+                _cc.enabled = false;
+                transform.position = tpSkippedTutorial.position;
+                _cc.enabled = true;
+                _labController.SkipTutorialLab();
+            }
         }
 
         private void ShiftUp(InputAction.CallbackContext context)

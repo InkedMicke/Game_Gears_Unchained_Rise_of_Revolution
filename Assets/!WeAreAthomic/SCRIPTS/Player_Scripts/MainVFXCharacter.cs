@@ -1,9 +1,12 @@
+using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MainVFXCharacter : MonoBehaviour
 {
+    private MainCMovement _mainCMove;
+
     [Header("Steps")]
     [SerializeField] private GameObject vfxStep;
 
@@ -25,7 +28,10 @@ public class MainVFXCharacter : MonoBehaviour
     [Header("Chispas")]
     [SerializeField] private GameObject chispasVFX;
 
-
+    private void Awake()
+    {
+        _mainCMove = GetComponent<MainCMovement>();
+    }
 
 
 
@@ -35,11 +41,17 @@ public class MainVFXCharacter : MonoBehaviour
 
     public void ActivateRightStep()
     {
-        Instantiate(vfxStep, rightFoot.position, Quaternion.identity);
+        if (_mainCMove.IsGrounded())
+        {
+            Instantiate(vfxStep, rightFoot.position, Quaternion.identity);
+        }
     }
     public void ActivateLeftStep()
     {
-        Instantiate(vfxStep, leftFoot.position, Quaternion.identity);
+        if (_mainCMove.IsGrounded())
+        {
+            Instantiate(vfxStep, leftFoot.position, Quaternion.identity);
+        }
     }
     public void ActivateSlash1()
     {

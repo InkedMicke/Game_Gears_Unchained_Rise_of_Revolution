@@ -145,6 +145,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _camFollower.cameraFollow = cameraFollow;
                 _bastetController.StopMoveToBastetPos();
                 _bastetController.InvokeMoveToPlayer();
+                IsAiming = false;
             }
 
         }
