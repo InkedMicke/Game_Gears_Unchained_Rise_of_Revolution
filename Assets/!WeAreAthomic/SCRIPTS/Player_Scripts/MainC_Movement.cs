@@ -121,6 +121,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             GameManagerSingleton.Instance.PauseGame(false);
             GameManagerSingleton.Instance.SetIsSettingsMenuEnabled(false);
             GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
+
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void OnEnable()

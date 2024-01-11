@@ -96,10 +96,8 @@ public class UIChanges : MonoBehaviour
         // Actualizar variables temporales
         _temporalTypeInput = GameManagerSingleton.Instance.typeOfInput;
         _temporalIntTypeInput = optControls.inputDropdown.value;
-        _temporalSensivityX = (int)optControls.sensivityXSlider.value * GameManagerSingleton.Instance.maxSensivity / 100;
-        _temporalSensivityY = (int)optControls.sensivityYSlider.value * GameManagerSingleton.Instance.maxSensivity / 100;
-        _temporalSliderSensivityX = (int)optControls.sensivityXSlider.value;
-        _temporalSliderSensivityY = (int)optControls.sensivityYSlider.value;
+        _temporalSensivityX = (int)optControls.sensivityXSlider.value;
+        _temporalSensivityY = (int)optControls.sensivityYSlider.value;
 
 
         // Aplicar cambios
