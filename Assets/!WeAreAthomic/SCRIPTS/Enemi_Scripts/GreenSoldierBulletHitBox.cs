@@ -10,9 +10,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         [SerializeField] private GameObject hitChispas;
         private void OnTriggerEnter(Collider other)
         {
-            
             Instantiate(hitChispas,transform.position,Quaternion.identity);
-
             if (other.TryGetComponent(out IDamageable damageable))
             {
                 damageable.Damage(damage);
@@ -21,8 +19,5 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
            
             Destroy(gameObject);
         }
-
-        
-        
     }
 }

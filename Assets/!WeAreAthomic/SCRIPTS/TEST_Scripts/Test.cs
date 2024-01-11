@@ -11,6 +11,10 @@ namespace _WeAreAthomic.SCRIPTS.TEST
     {
         private PlayerInputActions _playerInputActions;
         private MainCHealthManager _mainCHealth;
+        private MainCMovement _mainCMove;
+        private CharacterController _cc;
+
+        [SerializeField] private GameObject movableFloorPivot;
 
         [SerializeField] private Transform cameraTr;
 
@@ -21,20 +25,18 @@ namespace _WeAreAthomic.SCRIPTS.TEST
         private void Awake()
         {
             _mainCHealth = GetComponentInChildren<MainCHealthManager>();
+            _mainCMove = GetComponent<MainCMovement>();
+            _cc = GetComponent<CharacterController>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
             //_playerInputActions.Player.Test.performed += ToggleTime;
             //_playerInputActions.Player.Test.performed += Die;
+            _playerInputActions.PlayerPC.Test.performed += TestPC;
 
-            
 
 
-        }
 
-        private void Update()
-        {
- 
         }
 
 
@@ -55,5 +57,22 @@ namespace _WeAreAthomic.SCRIPTS.TEST
             Debug.Log(text);
         }
 
+        private void TestPC(InputAction.CallbackContext context)
+        {
+            StartCoroutine(PushWait());
+        }
+
+        private IEnumerator PushWait()
+        {
+            while (!_mainCMove.IsGrounded())
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            _cc.enabled = false;
+            Instantiate(movableFloorPivot, transform.position - Vector3.right * 1.4f, Quaternion.identity);
+            _mainCMove.SetFollowTrajectory(true);
+        }
     }
 }
+

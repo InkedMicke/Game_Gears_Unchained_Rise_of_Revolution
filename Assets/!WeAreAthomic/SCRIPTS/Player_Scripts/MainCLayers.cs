@@ -15,6 +15,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _sphereAttackLayerMultiplier;
         private float _slideLayerMultiplier;
         private float _hackLayerMultiplier;
+        private float _jumpLayerMultiplier;
 
         [System.NonSerialized] public bool isAttackLayerActive;
         [System.NonSerialized] public bool isFinalAttackLayerActive;
@@ -38,6 +39,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Slide")), _slideLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Hack")), _hackLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("AbilityAttack")), _abilityAttackLayerMultiplier);
+            _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Jump")), _jumpLayerMultiplier);
         }
 
         private void EvaluateLayers()
@@ -147,6 +149,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void DisableHackLayer()
         {
             StartCoroutine(nameof(DisableHackCoroutine));
+        }        
+        
+        public void EnableJumpLayer()
+        {
+            StartCoroutine(nameof(EnableJumpCoroutine));
+        }
+
+        public void DisableJumpLayer()
+        {
+            StartCoroutine(nameof(DisableJumpCoroutine));
         }
 
         private IEnumerator EnableAttackCoroutine()
@@ -394,6 +406,42 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (_hackLayerMultiplier <= 0f)
                 {
                     _hackLayerMultiplier = 0f;
+                    canDisableLayer = false;
+                }
+
+                yield return new WaitForSeconds(0.01f);
+            }
+        }        
+        
+        private IEnumerator EnableJumpCoroutine()
+        {
+            var canEnableLayer = true;
+
+            while (canEnableLayer)
+            {
+                _jumpLayerMultiplier += 24 * Time.unscaledDeltaTime;
+
+                if (_jumpLayerMultiplier >= 1f)
+                {
+                    _jumpLayerMultiplier = 1f;
+                    canEnableLayer = false;
+                }
+
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
+        private IEnumerator DisableJumpCoroutine()
+        {
+            var canDisableLayer = true;
+
+            while (canDisableLayer)
+            {
+                _jumpLayerMultiplier -= 24 * Time.unscaledDeltaTime;
+
+                if (_jumpLayerMultiplier <= 0f)
+                {
+                    _jumpLayerMultiplier = 0f;
                     canDisableLayer = false;
                 }
 

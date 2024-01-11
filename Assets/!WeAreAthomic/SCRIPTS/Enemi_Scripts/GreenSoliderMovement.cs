@@ -99,7 +99,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         private void CheckIfPlayerHeared()
         {
-            if(_fovHear.canSeePlayer && !IsChasingPlayer && !_soldierAttack.IsAttacking && !_mainCMove.IsCrouch)
+            if((_fovHear.canSeePlayer && !IsChasingPlayer && !_soldierAttack.IsAttacking && !_mainCMove.IsCrouch) || (_fovHear.canSeePlayer && _mainCMove.IsJumping))
             {
                 IsChasingPlayer = true;
                 AgentValuesToChase();

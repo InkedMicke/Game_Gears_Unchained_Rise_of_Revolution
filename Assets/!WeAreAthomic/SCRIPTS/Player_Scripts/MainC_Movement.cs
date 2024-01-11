@@ -191,9 +191,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCAnimator.SetFalling(IsFalling);
                     _mainCAnimator.SetJumping(IsJumping);
                     _mainCAnimator.SetGrounded(true);
-                    if (IsCrouch)
-                    {
-                    }
+                    _mainCLayers.DisableJumpLayer();
                     _timeGraceJumpPeriod = Time.time + timeNextJump;
                 }
             }
@@ -328,16 +326,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (Physics.Raycast(checkGrounded.position, Vector3.down, out hit, .5f))
             {
                 // Calcular la dirección de la rampa proyectando la normal en el plano horizontal
-                Vector3 rampDirection = Vector3.ProjectOnPlane(hit.normal, Vector3.up).normalized;
+                Vector3 rampRightDirection = Vector3.Cross(hit.normal, Vector3.up).normalized;
 
-                var verticalSlopeAngle = Vector3.Angle(rampDirection, Vector3.up);
+                Vector3 rampForwardDir = Vector3.Cross(rampRightDirection, Vector3.up);
 
-                // Modificar la dirección de movimiento según el ángulo de la rampa
-                if (verticalSlopeAngle > 10)
-                {
-                    Debug.DrawRay(hit.point, direction.normalized * 100f, Color.magenta, 2f);
-                    direction = Vector3.ProjectOnPlane(direction, hit.normal).normalized;
-                }
+                //direction = rampForwardDir * 
             }
             return direction;
         }
@@ -369,6 +362,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     EnableMovement();
                     _cc.enabled = true;
+                    Debug.Log("hola1");
                     IsFollowingTrajectory = false;
                 }
             }
@@ -463,11 +457,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        private void Jump()
+        public void Jump()
         {
             if (CanJump())
             {
                 IsJumping = true;
+                _mainCLayers.EnableJumpLayer();
                 _mainCAnimator.SetJumping(true);
                 _velocity.y = jumpImpulse;
                 _timeGraceJumpPeriod = Time.time + timeNextJump;
