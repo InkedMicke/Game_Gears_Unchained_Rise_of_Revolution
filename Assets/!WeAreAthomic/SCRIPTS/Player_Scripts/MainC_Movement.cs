@@ -46,6 +46,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Vector3 _movement;
         private Vector3 _velocity;
         private Vector3[] puntosTrayectoria;
+        private Vector3 moveDir;
 
         [System.NonSerialized] public bool IsCrouch;
         [System.NonSerialized] public bool IsJumping;
@@ -191,7 +192,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCAnimator.SetFalling(IsFalling);
                     _mainCAnimator.SetJumping(IsJumping);
                     _mainCAnimator.SetGrounded(true);
-                    _mainCLayers.DisableJumpLayer();
+                    if(_moveDir.magnitude > 0 || _moveDir.magnitude > 0)
+                    {
+                        _mainCLayers.DisableJumpLayer();
+                    }
                     _timeGraceJumpPeriod = Time.time + timeNextJump;
                 }
             }
@@ -307,7 +311,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 turnSmoothTime);
 
 
-            var moveDir = orientation.forward * (Time.deltaTime * interpolatedSpeed * direction.magnitude);
+            moveDir = orientation.forward * (Time.deltaTime * interpolatedSpeed * direction.magnitude);
 
             _cc.Move(moveDir);
 
@@ -462,10 +466,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (CanJump())
             {
                 IsJumping = true;
+                _mainCAnimator.SetGrounded(true);
                 _mainCLayers.EnableJumpLayer();
                 _mainCAnimator.SetJumping(true);
                 _velocity.y = jumpImpulse;
                 _timeGraceJumpPeriod = Time.time + timeNextJump;
+            }
+        }
+
+        public void EndJump()
+        {
+            if (!IsJumping)
+            {
+                _mainCLayers.DisableJumpLayer();
             }
         }
 
