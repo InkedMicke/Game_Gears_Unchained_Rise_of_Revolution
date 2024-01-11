@@ -219,7 +219,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _isWaitingForRecoveringShoot = false;
                 _isRecoveringShoot = false;
                 _isShooting = true;
-                //shootSoundClip.Play();
+                shootSoundClip.Play();
                 var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
                 Vector3 targetPoint;
                 Transform t = null;
