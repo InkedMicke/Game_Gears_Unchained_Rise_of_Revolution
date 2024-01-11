@@ -266,7 +266,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Jump()
         {
-            if (ThereIsObstacle() && !_isJumping)
+            if (ThereIsObstacle() && !_isJumping && IsSliding)
             {
                 var ray = new Ray(railCheck.position, railCheck.transform.forward);
                 if (Physics.Raycast(ray, out var hit, 4f, obstacleLayer))

@@ -86,6 +86,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _timeGraceJumpPeriod;
         private float _moveAimingX;
         private float _moveAimingY;
+        private float _currentWalkSpeed;
 
 
         private void Awake()
@@ -115,7 +116,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
 
             _canMove = true;
-
+            _currentWalkSpeed = walkSpeed;
             GameManagerSingleton.Instance.PauseGame(false);
             GameManagerSingleton.Instance.SetIsSettingsMenuEnabled(false);
             GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
@@ -242,17 +243,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             //arreglar cuando mantienes la W se suma y resta a la vez el moveSpeed
             if (_moveVectorKeyboard.magnitude > 0.1f && !_isRunningKeyboard)
             {
-                if (_moveSpeed < walkSpeed)
+                if (_moveSpeed < _currentWalkSpeed)
                 {
                     _moveSpeed += Time.deltaTime * 24;
 
-                    if ((Mathf.Abs(_moveSpeed - walkSpeed)) < 0.3f)
+                    if ((Mathf.Abs(_moveSpeed - _currentWalkSpeed)) < 0.3f)
                     {
-                        _moveSpeed = walkSpeed;
+                        _moveSpeed = _currentWalkSpeed;
                     }
                 }
 
-                if (_moveSpeed > walkSpeed)
+                if (_moveSpeed > _currentWalkSpeed)
                 {
                     _moveSpeed -= Time.deltaTime * 18;
                 }
@@ -291,7 +292,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             _movement = new Vector3(_moveVectorGamepad.x, 0.0f, _moveVectorGamepad.y).normalized;
 
-            var moveSpeed = _isRunningGamepad ? runSpeed : walkSpeed;
+            var moveSpeed = _isRunningGamepad ? runSpeed : _currentWalkSpeed;
 
             var desiredSpeed = _movement.magnitude * moveSpeed / 2 * 2.0f;
 
@@ -432,6 +433,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 _isCrouchWalking = true;
                 _mainCAnimator.SetCrouchWalking(_isCrouchWalking);
+                _currentWalkSpeed = crouchSpeed;
 
             }
             else
@@ -440,6 +442,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     _isCrouchWalking = false;
                     _mainCAnimator.SetCrouchWalking(_isCrouchWalking);
+                    _currentWalkSpeed = walkSpeed;
                 }
             }
         }
