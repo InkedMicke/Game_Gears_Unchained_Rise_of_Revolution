@@ -11,6 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private GreenSoliderAttack _greenAttack;
         private SoldierAgent _soldierAgent;
         private SoldierHurtBox _soldierHurtbox;
+        private GDestroyObject _destroyObject;
 
        [SerializeField] private C_DisolveEnemi _disolveEnemi;
 
@@ -30,6 +31,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _greenAttack = GetComponentInParent<GreenSoliderAttack>();
             _soldierAgent = GetComponentInParent<SoldierAgent>();
             _soldierHurtbox = GetComponent<SoldierHurtBox>();
+            _destroyObject = GetComponentInParent<GDestroyObject>();
 
             currentHealth = maxHealth;
             SetMaxhealthSlider(maxHealth);
@@ -68,6 +70,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _greenMove.DisableMovement();
             botonSoldier.SetActive(false);
             _disolveEnemi.StartDisolving();
+            _destroyObject.DestroyThisObject(7f);
             _greenAttack.DestroyDecal();
         }
 
