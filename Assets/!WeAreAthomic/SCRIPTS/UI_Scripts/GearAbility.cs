@@ -28,6 +28,10 @@ public class GearAbility : MonoBehaviour
     [SerializeField] private GameObject descriptionObj;
 
     [SerializeField] private Transform middlePos;
+    [SerializeField] private Transform topPos;
+    [SerializeField] private Transform leftPos;
+    [SerializeField] private Transform rightPos;
+    [SerializeField] private Transform bottomPos;
 
     private bool _isMouseDown;
     private bool _isMouseInside;
@@ -56,6 +60,7 @@ public class GearAbility : MonoBehaviour
                 var mouseVector = Mouse.current.position.ReadValue();
                 worldPosition = cameraAbility.ScreenToWorldPoint(mouseVector);
                 worldPosition.z = descriptionObj.transform.position.z;
+                Debug.Log(worldPosition);
             }
             else
             {
@@ -63,9 +68,10 @@ public class GearAbility : MonoBehaviour
                 worldPosition.z = descriptionObj.transform.position.z;
             }
 
-            Vector2 clampedPosition = new Vector2(
-            Mathf.Clamp(worldPosition.x, -300f, 122f),
-            Mathf.Clamp(worldPosition.y, 236, 415f)
+            Vector3 clampedPosition = new (
+            Mathf.Clamp(worldPosition.x, leftPos.position.x, rightPos.position.x),
+            Mathf.Clamp(worldPosition.y, bottomPos.position.y, topPos.position.y),
+            worldPosition.z
     );
 
             descriptionObj.transform.position = clampedPosition;
