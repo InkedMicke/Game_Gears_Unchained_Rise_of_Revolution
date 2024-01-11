@@ -8,6 +8,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCSounds : MonoBehaviour
     {
+        private MainCMovement _mainCMove;
+
         private Scene _currentScene;
 
         [SerializeField] private GameObject soundComponentObj;
@@ -61,6 +63,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float howFightVolume;
 
         private bool isPaused;
+
+        private void Awake()
+        {
+            _mainCMove = GetComponent<MainCMovement>();
+        }
 
         private void Start()
         {
@@ -327,16 +334,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         }
         public void PlayStepsIndoorsSound()
         {
-            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
-
-            var randomNumber = Random.Range(0, stepClipsIndoors.Count);
-
-            if (currentAudioSource != null)//Hay que hacer aqui un IF estamos en suelo interior o suelo exterior
+            if (_mainCMove.IsGrounded())
             {
-                currentAudioSource.outputAudioMixerGroup = sfxMixer;
-                currentAudioSource.clip = stepClipsIndoors[randomNumber];
-                currentAudioSource.volume = stepClipsIndoorsVolume;
-                currentAudioSource.Play();
+                var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+
+                var randomNumber = Random.Range(0, stepClipsIndoors.Count);
+
+                if (currentAudioSource != null)//Hay que hacer aqui un IF estamos en suelo interior o suelo exterior
+                {
+                    currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                    currentAudioSource.clip = stepClipsIndoors[randomNumber];
+                    currentAudioSource.volume = stepClipsIndoorsVolume;
+                    currentAudioSource.Play();
+                }
             }
         }
     }
