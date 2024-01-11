@@ -22,13 +22,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             Destroy(gameObject);
         }
 
-        private void OnCollisionEnter(Collision collision)
-        {
-            Instantiate(hitChispas, transform.position, Quaternion.identity);
-
-
-            Destroy(gameObject);
-        }
-
+        
+        
     }
 }
