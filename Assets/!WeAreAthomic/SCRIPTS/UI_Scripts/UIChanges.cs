@@ -98,6 +98,8 @@ public class UIChanges : MonoBehaviour
         _temporalIntTypeInput = optControls.inputDropdown.value;
         _temporalSensivityX = (int)optControls.sensivityXSlider.value;
         _temporalSensivityY = (int)optControls.sensivityYSlider.value;
+        _temporalSliderSensivityX = (int)optControls.sensivityXSlider.value;
+        _temporalSliderSensivityY = (int)optControls.sensivityYSlider.value;
 
 
         // Aplicar cambios
