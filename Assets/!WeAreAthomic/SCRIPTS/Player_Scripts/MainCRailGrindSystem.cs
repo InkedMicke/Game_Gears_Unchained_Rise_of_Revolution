@@ -56,7 +56,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         [SerializeField] private float railSpeed = .1f;
         [SerializeField] private float rotationSpeed = 5f;
-        
+
         public List<Transform> directionsList = new List<Transform>();
 
 
@@ -103,7 +103,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _childActual = 0;
                 }
             }
-            
+
             if (_mainCMove.IsGrounded())
             {
                 if (CanJumpOnRail)
@@ -117,7 +117,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void InputPC(InputAction.CallbackContext context)
         {
-            if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
             {
                 Jump();
             }
@@ -168,42 +168,21 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (_railCols.Length > 0)
             {
-                if (_currentScene.name == sewerScene)
+                var padre1 = _railCols[0].transform;
+                var padre2 = padre1.parent;
+                var padre3 = padre2.parent;
+                var padre4 = padre3.parent;
+
+                var railContainer = padre4.GetChild(padre4.childCount - 1);
+
+                var allChildren = railContainer.GetComponentsInChildren<Transform>();
+                Debug.Log(railContainer);
+
+                foreach (var child in allChildren)
                 {
-                    var padre1 = _railCols[0].transform;
-                    var padre2 = padre1.parent;
-                    var padre3 = padre2.parent;
-                    var padre4 = padre3.parent;
-
-                    var railContainer = padre4.GetChild(padre4.childCount - 1);
-
-                    var allChildren = railContainer.GetComponentsInChildren<Transform>();
-                    Debug.Log(railContainer);
-
-                    foreach (var child in allChildren)
+                    if (child.CompareTag("RailTransform"))
                     {
-                        if (child.CompareTag("RailTransform"))
-                        {
-                            directionsList.Add(child);
-                        }
-                    }
-                }
-
-                if (_currentScene.name == labScene)
-                {
-                    var padre1 = _railCols[0].transform.parent;
-                    var padre2 = padre1.parent;
-
-                    var railContainer = padre2.GetChild(padre2.childCount - 1);
-
-                    var allChildren = railContainer.GetComponentsInChildren<Transform>();
-
-                    foreach (var child in allChildren)
-                    {
-                        if (child.CompareTag("RailTransform"))
-                        {
-                            directionsList.Add(child);
-                        }
+                        directionsList.Add(child);
                     }
                 }
 
@@ -278,7 +257,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                         spaceTutCanvas.SetActive(false);
                         _isFirstJump = false;
                     }
-                    
+
                     if (Vector3.Distance(hit.collider.gameObject.transform.position, transform.position) > 1.5f)
                     {
                         _mainCAnimator.SetSliding(false);
@@ -319,7 +298,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             transform.position = desiredPos;
         }
-        
+
         private void SortList()
         {
             directionsList.Sort((a, b) =>
