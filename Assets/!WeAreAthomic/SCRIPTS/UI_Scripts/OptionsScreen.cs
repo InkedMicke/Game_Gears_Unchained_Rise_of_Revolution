@@ -85,6 +85,8 @@ public class OptionsScreen : MonoBehaviour
 
         resDropdown.ClearOptions();
         resDropdown.AddOptions(resString);
+        SetFullscreenValue();
+
 
         resDropdown.SetValueWithoutNotify(GetValueFromVector2Int(resolutions[resolutions.Count - 1]));
 

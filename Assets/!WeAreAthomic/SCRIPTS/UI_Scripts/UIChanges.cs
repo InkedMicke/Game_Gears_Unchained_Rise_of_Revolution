@@ -33,6 +33,7 @@ public class UIChanges : MonoBehaviour
         _temporalSensivityX = GameManagerSingleton.Instance.sensivityX;
         _temporalSensivityY = GameManagerSingleton.Instance.sensivityY;
         _temporalSliderBrightness = GameManagerSingleton.Instance.brightness;
+        _temporalScreenMode = GameManagerSingleton.Instance.IsFullscreen;
 
         optControls.sensivityXSlider.value = _temporalSensivityX;
         optControls.sensivityYSlider.value = _temporalSensivityY;
@@ -81,9 +82,11 @@ public class UIChanges : MonoBehaviour
         _temporalIntQuality = optScreen.qualityDropdown.value;
         _temporalSliderBrightness = optScreen.brightnessSlider.value;
 
+
         // Aplicar cambios
         optScreen.ChangeResolution(_temporalRes, _temporalScreenMode);
         optScreen.SetQualityLevelDropdown(_temporalIntQuality);
+        GameManagerSingleton.Instance.IsFullscreen = _temporalScreenMode;
     }
 
     public void SaveChangesLanguage()
@@ -115,6 +118,7 @@ public class UIChanges : MonoBehaviour
         GameManagerSingleton.Instance.sensivityX = _temporalSensivityX;
         GameManagerSingleton.Instance.sensivityY = _temporalSensivityY;
         GameManagerSingleton.Instance.brightness = optScreen.brightnessSlider.value;
+        GameManagerSingleton.Instance.IsFullscreen = _temporalScreenMode;
         optScreen.SetBrightness(GameManagerSingleton.Instance.brightness);
 
         // Aplicar cambios a la UI
