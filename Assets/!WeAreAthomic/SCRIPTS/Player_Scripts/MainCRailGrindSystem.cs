@@ -160,7 +160,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private IEnumerator FixPosition(float value)
         {
             yield return new WaitForSeconds(value);
-            var desiredPos = new Vector3(directionsList[_childActual].position.x, transform.position.y, transform.position.z);
+            var desiredPos = new Vector3(transform.position.x, transform.position.y, directionsList[_childActual].position.z);
             transform.position = desiredPos;
         }
 
@@ -201,7 +201,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
                 }
 
-                FixPosition(0);
+                StartCoroutine(FixPosition(0));
 
                 _canSlide = true;
 
@@ -239,7 +239,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator.SetSliding(true);
             _isJumping = false;
             railSparks.SetActive(true);
-            FixPosition(.1f);
+            StartCoroutine(FixPosition(.1f));
             _canSlide = true;
         }
 
