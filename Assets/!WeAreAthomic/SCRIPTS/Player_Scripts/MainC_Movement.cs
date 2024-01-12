@@ -468,6 +468,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (CanJump())
             {
+                _mainCSounds.PlayJumpSound();
                 IsJumping = true;
                 _mainCAnimator.SetGrounded(true);
                 _mainCLayers.EnableJumpLayer();

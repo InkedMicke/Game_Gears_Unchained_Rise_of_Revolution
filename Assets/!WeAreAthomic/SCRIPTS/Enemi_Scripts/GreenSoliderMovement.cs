@@ -21,6 +21,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         [SerializeField] private GWaypoints waypoints;
 
         [SerializeField] private GameObject botonPuerta;
+        [SerializeField] private GameObject exclamacion;
 
         private Transform currentWaypoint;
         private Transform _playerTr => GameObject.FindGameObjectWithTag("Player").transform;
@@ -93,7 +94,12 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
                 _isPatrolling = false;
                 botonPuerta.SetActive(false);
                 _mainCHacking.StopHack();
-                
+
+                exclamacion.SetActive(true);
+                exclamacion.GetComponent<Animator>().SetTrigger("IsCatch");
+
+
+
             }
         }
 
@@ -106,6 +112,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
                 _isPatrolling = false;
                 botonPuerta.SetActive(false);
                 _mainCHacking.StopHack();
+
+                exclamacion.SetActive(true);
+                exclamacion.GetComponent<Animator>().SetTrigger("IsCatch");
             }
         }
 
@@ -154,5 +163,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _agent.speed = 0;
             _agent.isStopped = true;
         }
+
+        public void AnimExclamacionFinish()
+        {
+        exclamacion.SetActive(false);
+        }
+
     }
 }
