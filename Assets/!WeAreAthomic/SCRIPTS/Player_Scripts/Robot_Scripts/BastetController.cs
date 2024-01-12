@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
@@ -13,9 +14,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         private CharacterController _cc;
         private MainCBastetRapidFire _mainCBastet;
         private MainCPistol _mainCPistol;
+        private MainCRailGrindSystem _mainCRail;
 
         private Coroutine _shootCoroutine;
         private Coroutine _bastetPosCoroutine;
+
+        private Scene _currentScene;
 
         [SerializeField] private LayerMask enemyHurtBoxLayer;
 
@@ -45,6 +49,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             _cc = GetComponent<CharacterController>();
             _mainCBastet = playerObj.GetComponent<MainCBastetRapidFire>();
             _mainCPistol = playerObj.GetComponent<MainCPistol>();
+            _mainCRail = playerObj.GetComponent<MainCRailGrindSystem>();
         }
 
         private void Update()
@@ -59,7 +64,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                 if (Vector3.Distance(transform.position, correctPos) > 0.1f)
                 {
                     //_cc.Move(moveDir);
-                    transform.position = Vector3.MoveTowards(transform.position, correctPos, bastetMoveSpeed * Time.deltaTime);
+                    _currentScene = SceneManager.GetActiveScene();
+                    transform.position = Vector3.MoveTowards(transform.position, correctPos, (_mainCRail.IsSliding ? bastetMoveSpeed * 3 : bastetMoveSpeed) * Time.deltaTime);
                 }
 
                 if (_mainCPistol.IsAiming)

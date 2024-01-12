@@ -84,4 +84,11 @@ public class MainVFXCharacter : MonoBehaviour
         vfxSpeedLines.SetActive(active);
     }
 
+    public void SetRailEffects(bool on)
+    {
+
+        vfxSparks.SetActive(on);
+        vfxSpeedLines.SetActive(on);
+    }
+
 }

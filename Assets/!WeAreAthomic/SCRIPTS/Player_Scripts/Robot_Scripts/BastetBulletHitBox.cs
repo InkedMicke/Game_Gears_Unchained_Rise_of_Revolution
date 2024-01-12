@@ -5,6 +5,7 @@ using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 public class BastetBulletHitBox : MonoBehaviour
 {
     public PlayerDamageData damageData;
+    [SerializeField] private GameObject hitChispas;
 
     private void Start()
     {
@@ -13,6 +14,7 @@ public class BastetBulletHitBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Instantiate(hitChispas, transform.position, Quaternion.identity);
         if (other.TryGetComponent(out IDamageable damageable))
         {
             if (damageData != null)
@@ -30,9 +32,6 @@ public class BastetBulletHitBox : MonoBehaviour
                 }
             }
         }
-
-
-
 
         Destroy(gameObject);
     }

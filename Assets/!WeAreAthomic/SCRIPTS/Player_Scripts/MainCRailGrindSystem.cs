@@ -32,6 +32,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private GameObject _currentRail;
 
         [SerializeField] private Transform railCheck;
+        [SerializeField] private Transform orientation;
 
         [SerializeField] private LayerMask railLayer;
         [SerializeField] private LayerMask obstacleLayer;
@@ -141,11 +142,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 CanJumpOnRail = true;
                 GetRailGameObject();
                 GetAllTransforms();
+                Debug.Log("hola1");
                 _mainCAnimator.SetGrounded(true);
                 _mainCAnimator.SetFalling(false);
                 _mainCAnimator.SetJumping(false);
                 _mainVFXCharacter.ToggleRail();
             }
+        }
+
+        public void SetCanSlide(bool canSlide)
+        {
+            _canSlide = canSlide;
         }
 
         private void GetRailGameObject()
@@ -160,7 +167,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private IEnumerator FixPosition(float value)
         {
             yield return new WaitForSeconds(value);
-            var desiredPos = new Vector3(transform.position.x, transform.position.y, directionsList[_childActual].position.z);
+            var desiredPos = new Vector3(orientation.position.x, transform.position.y, directionsList[_childActual].position.z);
             transform.position = desiredPos;
         }
 
@@ -202,7 +209,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 }
 
                 StartCoroutine(FixPosition(0));
-
                 _canSlide = true;
 
                 _mainCAnimator.SetSliding(true);
@@ -218,10 +224,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _currentDestination = directionsList[_childActual].position;
                 _posOnAirTarget = new Vector3(directionsList[_childActual].position.x, transform.position.y,
                     directionsList[_childActual].position.z);
-                if (!_mainCPistol.IsAiming)
-                {
                     RotateToNextDirectionList();
-                }
+
 
                 MoveToNextDirectionList();
                 if (Vector3.Distance(transform.position, _posOnAirTarget) < 0.5f)
@@ -239,7 +243,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnimator.SetSliding(true);
             _isJumping = false;
             railSparks.SetActive(true);
-            StartCoroutine(FixPosition(.1f));
+            //StartCoroutine(FixPosition(0f));
             _canSlide = true;
         }
 
