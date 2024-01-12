@@ -22,6 +22,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         [SerializeField] private GameObject healthSliderObj;
         [SerializeField] private GameObject botonSoldier;
 
+        [SerializeField] private GameObject decalAtackDir;
+        [SerializeField] private GameObject decalPatrol;
+
         public float maxHealth = 100f;
         public float currentHealth = 0f;
 
@@ -63,6 +66,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         private void Death()
         {
+            decalAtackDir.SetActive(false);
+            decalPatrol.SetActive(false);
             mesh.SetActive(false);
             _soldierAgent.StopTotallyAgent();
             healthSliderObj.SetActive(false);
@@ -70,8 +75,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _greenMove.DisableMovement();
             botonSoldier.SetActive(false);
             _disolveEnemi.StartDisolving();
-            _destroyObject.DestroyThisObject(7f);
-            _greenAttack.DestroyDecal();
+            _destroyObject.DestroyThisObject(10f);
+           
         }
 
         public void SetMaxhealthSlider(float maxHealth)
