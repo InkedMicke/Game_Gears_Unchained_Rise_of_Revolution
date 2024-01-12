@@ -401,16 +401,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                 if (IsCrouch)
                 {
-                    DisableMovement();
                     InvokeDisableAllLayers();
                     _mainCLayers.EnableCrouchLayer();
-                    Invoke(nameof(EnableMovement), 0.5f);
+                    if((_moveVectorKeyboard.magnitude > 0.1f || _moveVectorGamepad.magnitude > 0.1f))
+                    {
+                        _isCrouchWalking = true;
+                        _mainCAnimator.SetCrouchWalking(_isCrouchWalking);
+                    }
                 }
                 else
                 {
-                    DisableMovement();
                     Invoke(nameof(InvokeDisableCrouchLayer), 0.5f);
-                    Invoke(nameof(EnableMovement), 0.5f);
                 }
             }
         }
