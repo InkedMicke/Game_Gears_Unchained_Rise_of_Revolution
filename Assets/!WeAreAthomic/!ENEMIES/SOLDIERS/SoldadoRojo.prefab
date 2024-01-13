@@ -161,10 +161,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4790905211562971815}
-  - component: {fileID: 6751121438588578715}
   - component: {fileID: 3703994341950143804}
-  - component: {fileID: 7730352689891949153}
-  - component: {fileID: 781794855474848299}
+  - component: {fileID: 6751121438588578715}
+  - component: {fileID: 2952263328396502082}
   - component: {fileID: 2243072282387716024}
   - component: {fileID: 1809280739626564602}
   - component: {fileID: 6831292185713616727}
@@ -188,15 +187,36 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4203399548983749608}
-  - {fileID: 1544342992050865679}
   - {fileID: 191053268052836085}
-  - {fileID: 8303700382837460814}
   - {fileID: 2891939099876301379}
+  - {fileID: 1544342992050865679}
+  - {fileID: 8303700382837460814}
   - {fileID: 7176755803912479378}
   - {fileID: 1049984294134339771}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &3703994341950143804
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8414676083931559048}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 76ce5392553f1ba429ad2cde5c60f663, type: 3}
+  m_Controller: {fileID: 9100000, guid: c384941139c25234682171745473ecc3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!195 &6751121438588578715
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -219,28 +239,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!95 &3703994341950143804
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8414676083931559048}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 76ce5392553f1ba429ad2cde5c60f663, type: 3}
-  m_Controller: {fileID: 9100000, guid: c384941139c25234682171745473ecc3, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7730352689891949153
+--- !u!114 &2952263328396502082
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -249,61 +248,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 8414676083931559048}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c9234f6c8d3f794394fc7b94acca848, type: 3}
+  m_Script: {fileID: 11500000, guid: 10538f6474aa563458e819e2ae09fad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _typeOfEnemy: 2
+  waypoints: {fileID: 0}
+  botonPuerta: {fileID: 0}
+  exclamacion: {fileID: 0}
+  useWaypoint: 0
+  patrolSpeed: 0
+  chaseSpeed: 0
+  stoppingDistance: 3
   moveToDecalCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  bullet: {fileID: 3870155545384615628, guid: 0b579e343ccd0464499461d298987ce6, type: 3}
-  decalGroupPrefab: {fileID: 2144513413979249121, guid: 048ef0c52208bc542bc70ac4e67313b7,
-    type: 3}
+  bullet: {fileID: 0}
+  decalAttack: {fileID: 0}
   muzzle1: {fileID: 0}
-  checkRadius: 4
+  checkRadius: 5
   speedShooting: 1.5
-  spreadAngle: 0.5
+  spreadAngle: 2
   shootAngle: 0.6
   maxTimeToStopShooting: 2.5
   rotationSpeed: 5
   totalColdown: 0
---- !u!114 &781794855474848299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8414676083931559048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35337b4a35fcea44b826d1a2100f6160, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chaseSpeed: 2.5
-  patrolSpeed: 3
-  waypoints: {fileID: 0}
-  botonPuerta: {fileID: 0}
-  useWaypoint: 0
 --- !u!114 &2243072282387716024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,7 +355,7 @@ PrefabInstance:
     - target: {fileID: 2266501946435452283, guid: d55a364349be68c479f770234efaa286,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 1.94
       objectReference: {fileID: 0}
     - target: {fileID: 2266501946435452283, guid: d55a364349be68c479f770234efaa286,
         type: 3}
@@ -1279,7 +1250,7 @@ PrefabInstance:
     - target: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.01
+      value: 1.58
       objectReference: {fileID: 0}
     - target: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
         type: 3}

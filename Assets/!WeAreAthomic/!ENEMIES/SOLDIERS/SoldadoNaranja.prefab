@@ -9852,8 +9852,7 @@ GameObject:
   - component: {fileID: 3928551472870597726}
   - component: {fileID: 8782966382090269764}
   - component: {fileID: 6168764290675049543}
-  - component: {fileID: 5620067220501022542}
-  - component: {fileID: 8505816023204714710}
+  - component: {fileID: 6591636785425717798}
   - component: {fileID: 9205781819914684017}
   - component: {fileID: 5823326996568411933}
   - component: {fileID: 5815111187616568650}
@@ -9931,7 +9930,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5620067220501022542
+--- !u!114 &6591636785425717798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9940,61 +9939,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 3241077336018984013}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c9234f6c8d3f794394fc7b94acca848, type: 3}
+  m_Script: {fileID: 11500000, guid: 10538f6474aa563458e819e2ae09fad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _typeOfEnemy: 1
+  waypoints: {fileID: 0}
+  botonPuerta: {fileID: 0}
+  exclamacion: {fileID: 0}
+  useWaypoint: 0
+  patrolSpeed: 0
+  chaseSpeed: 0
+  stoppingDistance: 3
   moveToDecalCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  bullet: {fileID: 3870155545384615628, guid: 0b579e343ccd0464499461d298987ce6, type: 3}
-  decalGroupPrefab: {fileID: 2144513413979249121, guid: 048ef0c52208bc542bc70ac4e67313b7,
-    type: 3}
+  bullet: {fileID: 0}
+  decalAttack: {fileID: 0}
   muzzle1: {fileID: 0}
-  checkRadius: 4
+  checkRadius: 5
   speedShooting: 1.5
-  spreadAngle: 0.5
+  spreadAngle: 2
   shootAngle: 0.6
   maxTimeToStopShooting: 2.5
   rotationSpeed: 5
   totalColdown: 0
---- !u!114 &8505816023204714710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3241077336018984013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35337b4a35fcea44b826d1a2100f6160, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chaseSpeed: 2.5
-  patrolSpeed: 1
-  waypoints: {fileID: 0}
-  botonPuerta: {fileID: 0}
-  useWaypoint: 0
 --- !u!114 &9205781819914684017
 MonoBehaviour:
   m_ObjectHideFlags: 0
