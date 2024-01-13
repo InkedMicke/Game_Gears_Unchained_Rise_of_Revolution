@@ -15,6 +15,15 @@ public enum Language
     en
 }
 
+public enum CurrentAbility
+{
+    None,
+    RapidFire,
+    ThreeSixtyAttack,
+    Protection,
+    Heal
+}
+
 public class GameManagerSingleton : SingletonScriptableObject<GameManagerSingleton>, ICallOnAll
 {
     public enum DifficultyLevel
@@ -41,6 +50,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public Settings settings;
     public DifficultyLevel _currentDifficulty = DifficultyLevel.historia;
     public TypeOfInput typeOfInput = TypeOfInput.pc;
+    public CurrentAbility currentAbility = CurrentAbility.None;
 
     public List<GameObject> gameObjectsList;
     public List<GameObject> closestGameObjectsList;
@@ -60,6 +70,10 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public bool SkippedTutorial;
     public bool IsFullscreen;
     public bool _toggledTotally;
+    public bool IsProtectionAnilityUnlocked;
+    public bool IsRapidFireUnlocked;
+    public bool Is360AttackUnlocked;
+    public bool IsNanoHealthUnlocked;
 
     public int maxSensivity;
     public int sensivityX;

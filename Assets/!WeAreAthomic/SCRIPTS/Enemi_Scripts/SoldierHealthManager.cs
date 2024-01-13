@@ -7,11 +7,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 {
     public class SoldierHealthManager : MonoBehaviour, IDamageable
     {
-        private GreenSoliderMovement _greenMove;
         private GreenSoliderAttack _greenAttack;
-        private SoldierAgent _soldierAgent;
         private SoldierHurtBox _soldierHurtbox;
         private GDestroyObject _destroyObject;
+        private Enemy _enemy;
 
        [SerializeField] private C_DisolveEnemi _disolveEnemi;
 
@@ -30,11 +29,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         private void Awake()
         {
-            _greenMove = GetComponentInParent<GreenSoliderMovement>();
             _greenAttack = GetComponentInParent<GreenSoliderAttack>();
-            _soldierAgent = GetComponentInParent<SoldierAgent>();
             _soldierHurtbox = GetComponent<SoldierHurtBox>();
             _destroyObject = GetComponentInParent<GDestroyObject>();
+            _enemy = GetComponentInParent<Enemy>();
 
             currentHealth = maxHealth;
             SetMaxhealthSlider(maxHealth);
@@ -48,7 +46,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             CheckForDeath();
             if (!_soldierHurtbox.IsDeath)
             {
-                _greenMove.SetChasePlayer(true);
+                _enemy.StartChasingPlayer();
             }
         }
 
@@ -69,10 +67,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             decalAtackDir.SetActive(false);
             decalPatrol.SetActive(false);
             mesh.SetActive(false);
-            _soldierAgent.StopTotallyAgent();
+            //_soldierAgent.StopTotallyAgent();
             healthSliderObj.SetActive(false);
             soldierWithoutBones.SetActive(true);
-            _greenMove.DisableMovement();
+            //_greenMove.DisableMovement();
             botonSoldier.SetActive(false);
             _disolveEnemi.StartDisolving();
             _destroyObject.DestroyThisObject(10f);

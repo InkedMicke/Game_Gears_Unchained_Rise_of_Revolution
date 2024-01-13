@@ -5,6 +5,8 @@ public class AbilityCanvasController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI m_gearCount;
 
+    public CurrentAbility currentAbility;
+
     private void Awake()
     {
         m_gearCount.text = GameManagerSingleton.Instance.gearsItem.ToString();

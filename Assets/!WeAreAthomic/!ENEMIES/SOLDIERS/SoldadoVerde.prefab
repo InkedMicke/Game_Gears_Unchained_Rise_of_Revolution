@@ -154,12 +154,10 @@ GameObject:
   - component: {fileID: 6335478140936921992}
   - component: {fileID: 7864609738589064973}
   - component: {fileID: 719572451470864634}
-  - component: {fileID: 6460584741221924923}
-  - component: {fileID: 8698530833825578607}
+  - component: {fileID: 1939534113983746735}
   - component: {fileID: 5738154880865817068}
   - component: {fileID: 7960632178198509863}
   - component: {fileID: 5829422827742403961}
-  - component: {fileID: 5498398354827162633}
   - component: {fileID: 5632661560983212616}
   m_Layer: 0
   m_Name: SoldadoVerde
@@ -233,7 +231,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6460584741221924923
+--- !u!114 &1939534113983746735
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,62 +240,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 7970255392764161239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c9234f6c8d3f794394fc7b94acca848, type: 3}
+  m_Script: {fileID: 11500000, guid: 10538f6474aa563458e819e2ae09fad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveToDecalCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  bullet: {fileID: 3870155545384615628, guid: 0b579e343ccd0464499461d298987ce6, type: 3}
-  decalGroupPrefab: {fileID: 4721113850997877724, guid: e573b466d2c757f4cae220697f5f227f,
-    type: 3}
-  muzzle1: {fileID: 6153274476758399260}
-  checkRadius: 4
-  speedShooting: 1.5
-  spreadAngle: 0.5
-  shootAngle: 0.6
-  maxTimeToStopShooting: 2.5
-  rotationSpeed: 5
-  totalColdown: 0
---- !u!114 &8698530833825578607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7970255392764161239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35337b4a35fcea44b826d1a2100f6160, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chaseSpeed: 2.5
-  patrolSpeed: 1
+  _typeOfEnemy: 0
   waypoints: {fileID: 0}
   botonPuerta: {fileID: 5492920286782665025}
   exclamacion: {fileID: 1991894467237527699}
   useWaypoint: 0
+  patrolSpeed: 2
+  chaseSpeed: 3
+  stoppingDistance: 3
+  moveToDecalCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  bullet: {fileID: 3870155545384615628, guid: 0b579e343ccd0464499461d298987ce6, type: 3}
+  decalAttack: {fileID: 2891871576593612105}
+  muzzle1: {fileID: 6153274476758399260}
+  checkRadius: 5
+  speedShooting: 1.5
+  spreadAngle: 2
+  shootAngle: 0.6
+  maxTimeToStopShooting: 2.5
+  rotationSpeed: 5
+  totalColdown: 0
 --- !u!114 &5738154880865817068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,18 +326,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2049
   canSeePlayer: 0
---- !u!114 &5498398354827162633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7970255392764161239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ac5256204ff8a34fbcd24ea2c8f47be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5632661560983212616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5260,6 +5217,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Decal_AtackDirection_PIVOT
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721113850997877724, guid: e573b466d2c757f4cae220697f5f227f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
