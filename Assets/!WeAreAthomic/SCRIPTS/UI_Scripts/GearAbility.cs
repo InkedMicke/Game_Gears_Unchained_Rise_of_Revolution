@@ -7,12 +7,17 @@ public class GearAbility : MonoBehaviour
 {
     private AbilityCanvasController _abilityController;
 
+    [SerializeField] private CurrentAbility currentAbility;
+
     private MeshRenderer _meshRenderer;
 
     private RectTransform canvasRect;
 
     [SerializeField] private Image imageToChange;
     [SerializeField] private Image imageSlider;
+    [SerializeField] private Image imageOfSelectedAbility;
+
+    [SerializeField] private Sprite imageOfAbility;
 
     [SerializeField] private Material selectedMat;
     private Material _originalMat;
@@ -26,6 +31,7 @@ public class GearAbility : MonoBehaviour
 
     [SerializeField] private GameObject container;
     [SerializeField] private GameObject descriptionObj;
+    [SerializeField] private GameObject blockObj;
 
     [SerializeField] private Transform middlePos;
     [SerializeField] private Transform topPos;
@@ -100,6 +106,11 @@ public class GearAbility : MonoBehaviour
             _isMouseDown = true;
             StartCoroutine(CircleSlider());
         }
+        if(_isUnlocked)
+        {
+            _abilityController.currentAbility = currentAbility;
+            imageOfSelectedAbility.sprite = imageOfAbility;
+        }
     }
 
     public void PointerUp()
@@ -118,6 +129,7 @@ public class GearAbility : MonoBehaviour
 
         imageSlider.fillAmount = 1;
         _isUnlocked = true;
+        blockObj.SetActive(false);
         _abilityController.SetGearsCount(GameManagerSingleton.Instance.gearsItem - cost);
         imageSlider.fillAmount = 0;
 

@@ -99,7 +99,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             {
                 if(typeOfHacked == TypeOfHacked.soldier)
                 {
-                    if (transform.parent.GetComponent<GreenSoliderMovement>().IsChasingPlayer)
+                    if (transform.parent.GetComponent<Enemy>().IsChasingPlayer)
                     {
 
                     }
