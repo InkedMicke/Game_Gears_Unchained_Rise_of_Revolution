@@ -234,7 +234,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _canNextAttack = false;
                 }
 
-                if (CanAttack() && !_isSheathed)
+                if (CanAttack() && !_isSheathed && !_mainCPistol.IsAiming)
                 {
                     if (_mainCTutorial.IsOnTutorial && !_sheathTutorial)
                     {

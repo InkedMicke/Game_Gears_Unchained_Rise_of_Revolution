@@ -74,7 +74,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.2
+  m_Time: 0.01
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -156,8 +156,7 @@ GameObject:
   - component: {fileID: 8693359904551909973}
   - component: {fileID: 706539203697697304}
   - component: {fileID: 6869388411292329633}
-  - component: {fileID: 2252974061220364465}
-  - component: {fileID: 216377566721995791}
+  - component: {fileID: 6608898606433792853}
   m_Layer: 17
   m_Name: Bullet_Bastet
   m_TagString: Untagged
@@ -173,7 +172,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3870155545384615628}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1020342, y: 1.7483032, z: 5.926302}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.57574, y: 0.57574, z: 0.57574}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -233,7 +232,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &2252974061220364465
+--- !u!114 &6608898606433792853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,25 +241,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3870155545384615628}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04ca09d2338939f4e9b82e86ce1687df, type: 3}
+  m_Script: {fileID: 11500000, guid: e31175c3e9b27c14f8a513979e4553ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletForce: 30
---- !u!114 &216377566721995791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3870155545384615628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1622862d4acda7c4797c6c170ed12b77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageData: {fileID: 11400000, guid: 5c9299014d918a54b824bf5499c6882f, type: 2}
-  hitChispas: {fileID: 1916586554266901641, guid: 603725daff613724ca5fe742afddf107,
-    type: 3}
+  bulletForce: 0
 --- !u!1 &4194299445002911999
 GameObject:
   m_ObjectHideFlags: 0

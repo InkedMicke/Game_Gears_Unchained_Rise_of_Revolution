@@ -18,12 +18,7 @@ public class GBullet : MonoBehaviour
 
     [NonSerialized]public Optional<Transform> target;
 
-    private void Awake()
-    {
-        _rb = GetComponent<Rigidbody>();
 
-        //_rb.AddForce(transform.forward * bulletForce, ForceMode.Impulse);
-    }
 
     private void Update()
     {

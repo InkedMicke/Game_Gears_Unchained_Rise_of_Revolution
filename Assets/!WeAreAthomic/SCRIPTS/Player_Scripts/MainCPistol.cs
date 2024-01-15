@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts;
 using System.Collections;
 using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts;
+using _WeAreAthomic.SCRIPTS.Enemi_Scripts;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -37,7 +38,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject cameraBaseObj;
         [SerializeField] private GameObject bastetObj;
         [SerializeField] private GameObject shootParticles;
-        [SerializeField] private GameObject bigBullet;
+        [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private GameObject crosshair;
 
         [SerializeField] private Transform camAimPosTr;
@@ -52,7 +53,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [System.NonSerialized] public bool IsAutoTargeting;
         private bool _isRecoveringShoot;
         private bool _isWaitingForRecoveringShoot;
-        private bool _isShooting;
 
         [SerializeField] private float sphereDectorSize = 5f;
         [SerializeField] private float cameraTransitionSpeed = 5f;
@@ -61,6 +61,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float bulletSize = 3f;
         [SerializeField] private float energySpend = 20f;
         [SerializeField] private float shootCooldown = 1f;
+        [SerializeField] private float shootDistance = 10f;
         private float _closestDistance = Mathf.Infinity;
         private float _totalCooldown;
 
@@ -219,23 +220,36 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 }
                 _isWaitingForRecoveringShoot = false;
                 _isRecoveringShoot = false;
-                _isShooting = true;
                 shootSoundClip.Play();
                 var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-                Vector3 targetPoint;
-                Transform t = null;
-                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, enemyHurtBox))
+
+                if (Physics.Raycast(ray, out RaycastHit hit, shootDistance))
                 {
-                    targetPoint = hit.point;
+                    var bullet = Instantiate(bulletPrefab, bastetObj.transform.position, Quaternion.identity);
+                    bullet.transform.LookAt(hit.point);
+                    bullet.GetComponent<Bullet>().bulletForce = bulletSpeed;
+                    Vector3 direction = bastetObj.transform.position - hit.collider.transform.position;
+                    var distance = direction.magnitude;
+                    var timeToDestroy = distance / (bulletSpeed * direction.normalized.magnitude);
+                    Destroy(bullet, timeToDestroy);
 
-                    t = hit.transform;
-
+                    if (hit.collider.TryGetComponent(out SoldierHurtBox hurtbox))
+                    {
+                        hurtbox.Damage(GameManagerSingleton.Instance.GetDamage(_pistolAttackData, hit.collider.gameObject));
+                    }
                 }
                 else
                 {
-                    targetPoint = ray.GetPoint(75f);
+                    var bullet = Instantiate(bulletPrefab, bastetObj.transform.position, Quaternion.identity);
+                    bullet.transform.LookAt(ray.GetPoint(shootDistance));
+                    bullet.GetComponent<Bullet>().bulletForce = bulletSpeed;
+                    Vector3 direction = bastetObj.transform.position - ray.GetPoint(shootDistance);
+                    var distance = direction.magnitude;
+                    var timeToDestroy = distance / (bulletSpeed * direction.normalized.magnitude);
+                    Destroy(bullet, timeToDestroy);
                 }
-                _bastetController.Shoot(targetPoint, t, bigBullet, bulletSize, bulletSpeed, _pistolAttackData);
+
+
                 _totalCooldown = Time.time + shootCooldown;
                 if (!GameManagerSingleton.Instance.IsUnlimitedEnergy)
                 {
@@ -251,9 +265,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        public void DisableShooting()
+        private void OnDrawGizmos()
         {
-            _isShooting = false;
+            Debug.DrawRay(transform.position, transform.forward * shootDistance, Color.red);
         }
 
         private bool CanAim()
