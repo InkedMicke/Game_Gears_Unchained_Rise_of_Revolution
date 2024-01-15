@@ -9,7 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         [Range(0, 360)] public float angle;
 
         public GameObject playerRef;
-
+        public Color radiusColor;
 
         public LayerMask targetMask;
         public LayerMask obstructionMask;

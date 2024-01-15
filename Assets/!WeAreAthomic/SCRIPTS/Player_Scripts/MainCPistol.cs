@@ -4,6 +4,7 @@ using _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts;
 using System.Collections;
 using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts;
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts;
+using DG.Tweening;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -40,6 +41,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject shootParticles;
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private GameObject crosshair;
+        [SerializeField] private GameObject hitChispasPrefab;
+        [SerializeField] private GameObject destroyBulletChispasPrefab;
 
         [SerializeField] private Transform camAimPosTr;
         [SerializeField] private Transform middlePos;
@@ -47,7 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private Transform lookAtAim;
         [SerializeField] private Transform cameraFollow;
 
-        [SerializeField] private LayerMask enemyHurtBox;
+        [SerializeField] private LayerMask rayLayers;
 
         [System.NonSerialized] public bool IsAiming;
         [System.NonSerialized] public bool IsAutoTargeting;
@@ -222,16 +225,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _isRecoveringShoot = false;
                 shootSoundClip.Play();
                 var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-
-                if (Physics.Raycast(ray, out RaycastHit hit, shootDistance))
+                _mainCamera.DOShakePosition(.1f, .1f, 5, 60f);
+                if (Physics.Raycast(ray, out RaycastHit hit, shootDistance, rayLayers))
                 {
                     var bullet = Instantiate(bulletPrefab, bastetObj.transform.position, Quaternion.identity);
                     bullet.transform.LookAt(hit.point);
                     bullet.GetComponent<Bullet>().bulletForce = bulletSpeed;
+                    bullet.transform.localScale = Vector3.one * bulletSize;
                     Vector3 direction = bastetObj.transform.position - hit.collider.transform.position;
                     var distance = direction.magnitude;
                     var timeToDestroy = distance / (bulletSpeed * direction.normalized.magnitude);
                     Destroy(bullet, timeToDestroy);
+                    Instantiate(hitChispasPrefab, hit.point, Quaternion.identity);
 
                     if (hit.collider.TryGetComponent(out SoldierHurtBox hurtbox))
                     {
@@ -243,10 +248,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     var bullet = Instantiate(bulletPrefab, bastetObj.transform.position, Quaternion.identity);
                     bullet.transform.LookAt(ray.GetPoint(shootDistance));
                     bullet.GetComponent<Bullet>().bulletForce = bulletSpeed;
+                    bullet.transform.localScale = Vector3.one * bulletSize;
                     Vector3 direction = bastetObj.transform.position - ray.GetPoint(shootDistance);
                     var distance = direction.magnitude;
                     var timeToDestroy = distance / (bulletSpeed * direction.normalized.magnitude);
                     Destroy(bullet, timeToDestroy);
+
+                    Instantiate(destroyBulletChispasPrefab, ray.GetPoint(shootDistance), Quaternion.identity);
                 }
 
 

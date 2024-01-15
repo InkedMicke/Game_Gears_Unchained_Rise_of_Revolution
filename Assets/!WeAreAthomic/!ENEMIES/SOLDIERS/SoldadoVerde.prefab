@@ -44,8 +44,6 @@ GameObject:
   - component: {fileID: 719572451470864634}
   - component: {fileID: 1939534113983746735}
   - component: {fileID: 5738154880865817068}
-  - component: {fileID: 7960632178198509863}
-  - component: {fileID: 5829422827742403961}
   - component: {fileID: 5632661560983212616}
   m_Layer: 0
   m_Name: SoldadoVerde
@@ -73,7 +71,7 @@ Transform:
   - {fileID: 6300919513793147432}
   - {fileID: 5307147061799431835}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7864609738589064973
 Animator:
@@ -133,6 +131,12 @@ MonoBehaviour:
   _typeOfEnemy: 0
   _typeOfBehaviour: 0
   waypoints: {fileID: 0}
+  targetFovLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  obstacleFovLayer:
+    serializedVersion: 2
+    m_Bits: 2049
   botonPuerta: {fileID: 5492920286782665025}
   exclamacion: {fileID: 1991894467237527699}
   patrolSpeed: 2
@@ -169,50 +173,6 @@ MonoBehaviour:
   walkingAnimString: isWalking
   backWalkingAnimString: isBackWalking
   shootAnimString: shoot
---- !u!114 &7960632178198509863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7970255392764161239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1536e2992d223b14e862ee53d4d415f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 6.9
-  angle: 90
-  playerRef: {fileID: 0}
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 256
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 2049
-  canSeePlayer: 0
---- !u!114 &5829422827742403961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7970255392764161239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 224a0cbbb0cb72343b3b8ffc85d143eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 5.7
-  angle: 360
-  playerRef: {fileID: 0}
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 256
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 2049
-  canSeePlayer: 0
 --- !u!114 &5632661560983212616
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -644,6 +644,7 @@ MonoBehaviour:
     type: 2}
   lowRangeMaterial: {fileID: 2100000, guid: 4ec66d75a6209ac49b66bb608ec54340, type: 2}
   maxRangeMaterial: {fileID: 2100000, guid: 512108664ab3af04a8a9467b3da89b57, type: 2}
+  cameraBase: {fileID: 0}
   weaponObj: {fileID: 7172491612928227611}
   scannerPrefab: {fileID: 3284020276801195756, guid: a1373a72e4cc90749bc639650dc1e347,
     type: 3}
@@ -688,19 +689,23 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3870155545384615628, guid: 6668df61b445054438534e36b8999fea,
     type: 3}
   crosshair: {fileID: 0}
+  hitChispasPrefab: {fileID: 1916586554266901641, guid: 603725daff613724ca5fe742afddf107,
+    type: 3}
+  destroyBulletChispasPrefab: {fileID: 1916586554266901641, guid: 5b934306e4125104ebc703f949e29fab,
+    type: 3}
   camAimPosTr: {fileID: 2753448327355556005}
   middlePos: {fileID: 6624492165851561840}
   orientation: {fileID: 7832683807876494435}
   lookAtAim: {fileID: 0}
   cameraFollow: {fileID: 374111497678485027}
-  enemyHurtBox:
+  rayLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 10817
   sphereDectorSize: 3
   cameraTransitionSpeed: 100
   shootingHoldTime: 5
-  bulletSpeed: 60
-  bulletSize: 1
+  bulletSpeed: 90
+  bulletSize: 1.2
   energySpend: 10
   shootCooldown: 0.4
   shootDistance: 15

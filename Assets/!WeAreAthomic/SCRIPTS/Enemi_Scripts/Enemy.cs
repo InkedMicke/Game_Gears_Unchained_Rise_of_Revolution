@@ -1,6 +1,7 @@
 using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,7 +17,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         protected NavMeshAgent _agent;
         private FieldOfView _fov;
-        private FieldOfViewHear _fovHear;
+        private FieldOfView _fovHearNear;
+        private FieldOfView _fovHearFar;
         protected SoldierAnimator _soldierAnim;
         protected SoldierHurtBox _soldierHurtBox;
         protected SoldierAttack _soldierAttack;
@@ -29,6 +31,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         [SerializeField] private TypeOfBehaviour _typeOfBehaviour;
 
         [SerializeField] private GWaypoints waypoints;
+
+        [SerializeField] private LayerMask targetFovLayer;
+        [SerializeField] private LayerMask obstacleFovLayer;
 
         [SerializeField] private GameObject botonPuerta;
         [SerializeField] private GameObject exclamacion;
@@ -49,8 +54,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         protected virtual void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
-            _fov = GetComponent<FieldOfView>();
-            _fovHear = GetComponent<FieldOfViewHear>();
             _soldierAnim = GetComponent<SoldierAnimator>();
             _soldierAttack = GetComponent<SoldierAttack>();
             _soldierHurtBox = GetComponentInChildren<SoldierHurtBox>();
@@ -68,8 +71,28 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             if (_typeOfBehaviour == TypeOfBehaviour.Patrol)
             {
                 StartPatrol();
-
             }
+
+            // Configuracion de Fields Of Views
+
+            _fov = transform.AddComponent<FieldOfView>();
+            _fov.radius = 6.96f;
+            _fov.angle = 90;
+            _fov.targetMask = targetFovLayer;
+            _fov.obstructionMask = obstacleFovLayer;
+            _fov.radiusColor = Color.white;
+
+            _fovHearNear = transform.AddComponent<FieldOfView>();
+            _fovHearNear.radius = 6.96f;
+            _fovHearNear.angle = 360;
+            _fovHearNear.targetMask = targetFovLayer;
+            _fovHearNear.radiusColor = Color.white;
+
+            _fovHearFar = transform.AddComponent<FieldOfView>();
+            _fovHearFar.radius = 10f;
+            _fovHearFar.angle = 360;
+            _fovHearFar.targetMask = targetFovLayer;
+            _fovHearFar.radiusColor = Color.green;
         }
 
         protected virtual void Update()
@@ -125,7 +148,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         private void CheckIfPlayerHeared()
         {
-            if ((_fovHear.canSeePlayer && !IsChasingPlayer && !IsAttacking && !_mainCMove.IsCrouch) || (_fovHear.canSeePlayer && _mainCMove.IsJumping))
+            if ((_fovHearNear.canSeePlayer && !IsChasingPlayer && !IsAttacking && !_mainCMove.IsCrouch) || (_fovHearNear.canSeePlayer && _mainCMove.IsJumping))
             {
                 ChangingValuesToChase();
             }
@@ -175,9 +198,16 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _exclamationAnim.SetTrigger("IsCatch");
         }
 
+
+
         protected virtual void StartDecalToAttack()
         {
 
+        }
+
+        public void DisableMovement()
+        {
+            _agent.isStopped = true;
         }
     }
 }

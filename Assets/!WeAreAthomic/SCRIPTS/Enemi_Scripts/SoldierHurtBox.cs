@@ -67,14 +67,13 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             decalAtackDir.SetActive(false);
             decalPatrol.SetActive(false);
             mesh.SetActive(false);
-            //_soldierAgent.StopTotallyAgent();
+            _enemy.DisableMovement();
             healthSliderObj.SetActive(false);
             soldierWithoutBones.SetActive(true);
             //_greenMove.DisableMovement();
             botonSoldier.SetActive(false);
             _disolveEnemi.StartDisolving();
             _destroyObject.DestroyThisObject(10f);
-
         }
 
         public void SetDeath(bool isDeath)

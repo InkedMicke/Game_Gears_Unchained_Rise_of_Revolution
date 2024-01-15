@@ -289,17 +289,57 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
                 {
                     return damageData.easyDifficult.greenDamage;
                 }
+
+                if (other.gameObject.name == "RedHurtBox")
+                {
+                    return damageData.easyDifficult.greenDamage;
+                }
+
+                if (other.gameObject.name == "OrangeHurtBox")
+                {
+                    return damageData.easyDifficult.greenDamage;
+                }
+
                 break;
 
             case DifficultyLevel.desafio:
+                if (other.gameObject.name == "DummieHurtBox")
+                {
+                    return damageData.normalDifficult.dummieDamage;
+                }
+
                 if (other.gameObject.name == "GreenHurtBox")
+                {
+                    return damageData.normalDifficult.greenDamage;
+                }                
+                
+                if (other.gameObject.name == "RedHurtBox")
+                {
+                    return damageData.normalDifficult.greenDamage;
+                }               
+                
+                if (other.gameObject.name == "OrangeHurtBox")
                 {
                     return damageData.normalDifficult.greenDamage;
                 }
                 break;
 
             case DifficultyLevel.maestro:
+                if (other.gameObject.name == "DummieHurtBox")
+                {
+                    return damageData.hardDifficult.dummieDamage;
+                }
                 if (other.gameObject.name == "GreenHurtBox")
+                {
+                    return damageData.hardDifficult.greenDamage;
+                }
+
+                if (other.gameObject.name == "RedHurtBox")
+                {
+                    return damageData.hardDifficult.greenDamage;
+                }
+
+                if (other.gameObject.name == "OrangeHurtBox")
                 {
                     return damageData.hardDifficult.greenDamage;
                 }
