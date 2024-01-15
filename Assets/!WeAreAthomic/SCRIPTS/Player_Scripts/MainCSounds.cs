@@ -62,6 +62,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private AudioClip howFight;
         [Range(0, 1)]
         [SerializeField] private float howFightVolume;
+        [SerializeField] private AudioClip abilityAtackClip;
+        [Range(0, 1)]
+        [SerializeField] private float abilityAtackVolume;
 
         private bool isPaused;
 
@@ -217,7 +220,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 currentAudioSource.Play();
             }
         }
-        
+        public void PlayChargedAttackSound()
+        {
+            
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = abilityAtackClip;
+                currentAudioSource.volume = abilityAtackVolume;
+                currentAudioSource.Play();
+            }
+        }
         public void PlayHackInProcessSound()
         {
             var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
