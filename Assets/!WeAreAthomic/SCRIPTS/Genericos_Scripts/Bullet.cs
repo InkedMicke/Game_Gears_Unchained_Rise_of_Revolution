@@ -12,7 +12,6 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        Debug.Log(bulletForce);
         rb.AddForce(transform.forward * bulletForce, ForceMode.Impulse);
     }
 }

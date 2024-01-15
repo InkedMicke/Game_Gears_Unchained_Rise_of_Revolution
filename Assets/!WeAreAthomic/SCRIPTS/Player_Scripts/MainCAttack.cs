@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -24,6 +25,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         [SerializeField] private Material lowRangeMaterial;
         [SerializeField] private Material maxRangeMaterial;
+
+        [SerializeField] private Camera cameraBase;
 
         public GameObject weaponObj;
         [SerializeField] private GameObject scannerPrefab;
@@ -314,6 +317,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void ApplyAbilityDamage()
         {
             scannerInst.GetComponent<ScannerHitBox>().ApplyDamage(abilityAttackDmgData);
+            cameraBase.DOShakePosition( .5f, .5f, 20, 40f);
         }
 
         public void DestroyScanner()
@@ -330,7 +334,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 direction.y = 0f;
                 if (direction.magnitude > 1f)
                 {
-                    _cc.Move(direction.normalized * 20f * Time.deltaTime);
+                    _cc.Move(20f * Time.deltaTime * direction.normalized);
                 }
                 else
                 {

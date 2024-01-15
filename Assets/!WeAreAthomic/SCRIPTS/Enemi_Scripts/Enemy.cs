@@ -26,6 +26,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private Animator _exclamationAnim;
 
         public GameManagerSingleton.TypeOfEnemy _typeOfEnemy;
+        [SerializeField] private TypeOfBehaviour _typeOfBehaviour;
 
         [SerializeField] private GWaypoints waypoints;
 
@@ -38,7 +39,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         [System.NonSerialized] public bool IsChasingPlayer;
         [System.NonSerialized] public bool IsAttacking;
-        [SerializeField] private bool useWaypoint;
         private bool _isPatrolling;
         private bool _isWaitingForPatrol;
 
@@ -65,9 +65,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _mainCHack = _playerObj.GetComponent<MainCHackingSystem>();
             _mainCMove = _playerObj.GetComponent<MainCMovement>();
 
-            if (useWaypoint)
+            if (_typeOfBehaviour == TypeOfBehaviour.Patrol)
             {
                 StartPatrol();
+
             }
         }
 
