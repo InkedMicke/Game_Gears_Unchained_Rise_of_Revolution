@@ -139,9 +139,11 @@ MonoBehaviour:
     m_Bits: 2049
   botonPuerta: {fileID: 5492920286782665025}
   exclamacion: {fileID: 1991894467237527699}
+  decalDetection: {fileID: 1282991345319535599}
   patrolSpeed: 2
   chaseSpeed: 3
   stoppingDistance: 3
+  timeToGetCached: 1
   moveToDecalCurve:
     serializedVersion: 2
     m_Curve: []
@@ -436,9 +438,54 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2783928929744059968, guid: efaedc6625acc0b4ea60a335535fe799,
         type: 3}
+      propertyPath: soldier
+      value: 
+      objectReference: {fileID: 7970255392764161239}
+    - target: {fileID: 2783928929744059968, guid: efaedc6625acc0b4ea60a335535fe799,
+        type: 3}
+      propertyPath: typeOfHacked
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2783928929744059968, guid: efaedc6625acc0b4ea60a335535fe799,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2783928929744059968, guid: efaedc6625acc0b4ea60a335535fe799,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2783928929744059968, guid: efaedc6625acc0b4ea60a335535fe799,
+        type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3710949005130519278}
+      objectReference: {fileID: 1895518675992872253}
+    - target: {fileID: 2783928929744059968, guid: efaedc6625acc0b4ea60a335535fe799,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2783928929744059968, guid: efaedc6625acc0b4ea60a335535fe799,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 2783928929744059968, guid: efaedc6625acc0b4ea60a335535fe799,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: _WeAreAthomic.SCRIPTS.Enemi_Scripts.SoldierHurtBox, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2783928929744059968, guid: efaedc6625acc0b4ea60a335535fe799,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2783928929744059968, guid: efaedc6625acc0b4ea60a335535fe799,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3478458912044719079, guid: efaedc6625acc0b4ea60a335535fe799,
         type: 3}
       propertyPath: m_Name

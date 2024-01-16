@@ -9951,9 +9951,11 @@ MonoBehaviour:
     m_Bits: 2049
   botonPuerta: {fileID: 7606970052691180770}
   exclamacion: {fileID: 8867658732008228216}
+  decalDetection: {fileID: 5116446470641881253}
   patrolSpeed: 1
   chaseSpeed: 2
   stoppingDistance: 3
+  timeToGetCached: 1.5
 --- !u!114 &9205781819914684017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40427,23 +40429,53 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
         type: 3}
+      propertyPath: soldier
+      value: 
+      objectReference: {fileID: 3241077336018984013}
+    - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
+        type: 3}
       propertyPath: timeToHack
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
         type: 3}
       propertyPath: typeOfHacked
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
+        type: 3}
+      propertyPath: seActivanCuandoLeDasAlBoton.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
+        type: 3}
+      propertyPath: seActivanCuandoLeDasAlBoton.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
+        type: 3}
+      propertyPath: seActivanCuandoLeDasAlBoton.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6241946655334881996}
+    - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
+        type: 3}
+      propertyPath: seActivanCuandoLeDasAlBoton.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
+        type: 3}
+      propertyPath: seActivanCuandoLeDasAlBoton.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Damage
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
         type: 3}
@@ -40457,13 +40489,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
         type: 3}
+      propertyPath: seActivanCuandoLeDasAlBoton.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: _WeAreAthomic.SCRIPTS.Enemi_Scripts.SoldierHurtBox, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
+        type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: _WeAreAthomic.SCRIPTS.Enemi_Scripts.SoldierHealthManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
         type: 3}
+      propertyPath: seActivanCuandoLeDasAlBoton.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
+        type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
+        type: 3}
+      propertyPath: seActivanCuandoLeDasAlBoton.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
         type: 3}

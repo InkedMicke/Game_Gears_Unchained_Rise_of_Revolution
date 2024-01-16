@@ -10,7 +10,6 @@ public class GreenSoldier : Enemy
     private Coroutine _shootCoroutine;
     private Coroutine _decalCoroutine;
 
-
     [SerializeField] private AnimationCurve moveToDecalCurve;
 
     [SerializeField] private GameObject bullet;

@@ -16,7 +16,10 @@ public class Interactor : MonoBehaviour
 
     public LayerMask interactableLayer;
 
+    private Transform playerTr => GameObject.FindGameObjectWithTag("Player").transform;
+
     [SerializeField] private float interactRange = 5f;
+    [SerializeField] private float interactRangeSoldier = 2f;
 
     [System.NonSerialized] public bool isSeeing;
 
@@ -38,11 +41,23 @@ public class Interactor : MonoBehaviour
         var r = new Ray(transform.position, transform.forward);
         if (Physics.Raycast(r, out var hitInfo, interactRange, interactableLayer))
         {
-
+ 
             if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable _))
             {
-                _button = hitInfo.collider.gameObject.GetComponent<ButtonInteractable>();
-                _button.ShowButton();
+                _button = hitInfo.collider.GetComponent<ButtonInteractable>();
+
+                if (_button.typeOfHacked == TypeOfHacked.soldier)
+                {
+                    if(Vector3.Distance(playerTr.position, _button.transform.position) < 3)
+                    {
+                        _button.ShowButton();
+                    }
+                }
+                else
+                {
+                    _button.ShowButton();
+                }
+                
             }
 
 
@@ -79,7 +94,20 @@ public class Interactor : MonoBehaviour
         {
             if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
             {
-                interactObj.Interact();
+                _button = hitInfo.collider.GetComponent<ButtonInteractable>();
+
+                if (_button.typeOfHacked == TypeOfHacked.soldier)
+                {
+                    if (Vector3.Distance(playerTr.position, _button.transform.position) < 2)
+                    {
+                        interactObj.Interact();
+                    }
+                }
+                else
+                {
+                    interactObj.Interact();
+                }
+
             }
         }
     }

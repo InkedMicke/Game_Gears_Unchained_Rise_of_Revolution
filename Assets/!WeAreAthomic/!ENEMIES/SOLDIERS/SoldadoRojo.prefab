@@ -260,9 +260,11 @@ MonoBehaviour:
     m_Bits: 2049
   botonPuerta: {fileID: 2330858735235845949}
   exclamacion: {fileID: 703065073694245331}
+  decalDetection: {fileID: 6267485460590106063}
   patrolSpeed: 2.5
   chaseSpeed: 3.5
   stoppingDistance: 3
+  timeToGetCached: 1.5
 --- !u!114 &2243072282387716024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1515,7 +1517,7 @@ PrefabInstance:
     - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
         type: 3}
       propertyPath: typeOfHacked
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
         type: 3}
@@ -1529,6 +1531,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
         type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8679091505065630149}
+    - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
+        type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -1540,7 +1547,7 @@ PrefabInstance:
     - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: _WeAreAthomic.SCRIPTS.Enemi_Scripts.SoldierHealthManager, Assembly-CSharp
+      value: _WeAreAthomic.SCRIPTS.Enemi_Scripts.SoldierHurtBox, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 03f5aef9cb0d5534c8d04a180e710ff7,
         type: 3}

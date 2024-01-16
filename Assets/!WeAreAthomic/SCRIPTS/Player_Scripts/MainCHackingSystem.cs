@@ -28,6 +28,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public bool isHackingAnim;
         public bool IsHacking;
         public bool GotCahed;
+        private bool _isHackingSoldier;
 
         private float _timeToHack;
         private float _actualTime;
@@ -46,6 +47,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             UpdateUI();
             RobotPos();
+
+            if(_isHackingSoldier)
+            {
+                Debug.Log("hola1");
+                if(Vector3.Distance(transform.position, _currentInteract.transform.position) > 6)
+                {
+                    Debug.Log("hola2");
+                    _isHackingSoldier = false;
+                    EndHacking();
+                }
+            }
         }
 
         public void StartHacking(float timeHack, TypeOfHacked typeOfHacked)
@@ -76,6 +88,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     SpawnRobot();
                     EndAnimHack();
+                    _isHackingSoldier = true;
                 }
 
             }

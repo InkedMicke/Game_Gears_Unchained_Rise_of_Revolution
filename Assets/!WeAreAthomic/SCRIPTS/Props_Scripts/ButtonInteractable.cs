@@ -16,8 +16,9 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
     {
         private MainCHackingSystem _mainCHacking;
 
-        [SerializeField] private TypeOfHacked typeOfHacked;
+        public TypeOfHacked typeOfHacked;
 
+        [SerializeField] private GameObject soldier;
         [SerializeField] private GameObject eButtonObj;
         [SerializeField] private GameObject eastButtonObj;
         [SerializeField] private GameObject circleObj;
@@ -99,7 +100,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             {
                 if(typeOfHacked == TypeOfHacked.soldier)
                 {
-                    if (transform.parent.GetComponent<Enemy>().IsChasingPlayer)
+                    if (soldier.GetComponent<Enemy>().IsChasingPlayer)
                     {
 
                     }

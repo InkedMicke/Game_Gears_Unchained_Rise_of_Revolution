@@ -37,19 +37,28 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         [SerializeField] private GameObject botonPuerta;
         [SerializeField] private GameObject exclamacion;
+        [SerializeField] private GameObject decalDetection;
         private GameObject _playerObj;
 
         private Transform currentWaypoint;
         private Transform _playerTr;
 
+        private Vector3 _startPosSearchingPlayer;
+
         [System.NonSerialized] public bool IsChasingPlayer;
         [System.NonSerialized] public bool IsAttacking;
         private bool _isPatrolling;
         private bool _isWaitingForPatrol;
+        private bool _playerHeared;
+        private bool _isOnWarning;
+
+        private int _searchingPlayerTimes;
 
         [SerializeField] private float patrolSpeed;
         [SerializeField] private float chaseSpeed;
         [SerializeField] private float stoppingDistance = 3;
+        [SerializeField] private float timeToGetCached = 1.5f;
+        private float _totalTimeCached;
 
         protected virtual void Awake()
         {
@@ -57,7 +66,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _soldierAnim = GetComponent<SoldierAnimator>();
             _soldierAttack = GetComponent<SoldierAttack>();
             _soldierHurtBox = GetComponentInChildren<SoldierHurtBox>();
-            _materialChangeOnDetection = GetComponentInChildren<C_MaterialChangeOnDetection>();
+            _materialChangeOnDetection = decalDetection.GetComponent<C_MaterialChangeOnDetection>();
             _exclamationAnim = exclamacion.GetComponent<Animator>();
         }
 
@@ -100,7 +109,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             if (!_soldierHurtBox.IsDeath)
             {
                 CheckIfPlayerIsInSight();
-                CheckIfPlayerHeared();
+                CheckIfPlayerHearedNear();
+                CheckIfPlayerHearedFar();
                 FollowPath();
                 ChasePlayer();
             }
@@ -140,18 +150,105 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         public void CheckIfPlayerIsInSight()
         {
-            if (_fov.canSeePlayer && !IsChasingPlayer && !IsAttacking)
+            if (!IsChasingPlayer && !IsAttacking)
             {
-                ChangingValuesToChase();
+
+                if (_fov.canSeePlayer && !IsChasingPlayer)
+                {
+                    _materialChangeOnDetection.WarningDecal();
+                    _totalTimeCached += Time.deltaTime;
+                    _isOnWarning = true;
+                    if (_totalTimeCached > timeToGetCached)
+                    {
+                        ChangingValuesToChase();
+                        _isOnWarning = false;
+                    }
+                }
+                else
+                {
+                    if (!_isOnWarning)
+                    {
+                        _materialChangeOnDetection.PatrolDecal();
+                        _totalTimeCached = 0;
+                    }
+                }
             }
         }
 
-        private void CheckIfPlayerHeared()
+        private void CheckIfPlayerHearedNear()
         {
             if ((_fovHearNear.canSeePlayer && !IsChasingPlayer && !IsAttacking && !_mainCMove.IsCrouch) || (_fovHearNear.canSeePlayer && _mainCMove.IsJumping))
             {
-                ChangingValuesToChase();
+                //_playerHeared = true;
+                //_materialChangeOnDetection.WarningDecal();
+                //GoToPlayerPosition();
+
+
+                //ChangingValuesToChase();
             }
+
+        }
+
+        private void CheckIfPlayerHearedFar()
+        {
+            if ((_fovHearFar.canSeePlayer && !IsChasingPlayer && !IsAttacking && !_mainCMove.IsCrouch) || (_fovHearFar.canSeePlayer && _mainCMove.IsJumping && !IsChasingPlayer && !IsAttacking))
+            {
+                if(!_isOnWarning)
+                {
+                    _isOnWarning = true;
+                    _materialChangeOnDetection.WarningDecal();
+                    GoToPlayerPosition();
+                }
+
+                //ChangingValuesToChase();
+            }
+        }
+
+        private void GoToPlayerPosition()
+        {
+            _soldierAnim.SetWalking(true);
+            _agent.SetDestination(_playerTr.position);
+            StartCoroutine(RandomPosition());
+        }
+
+        /// <summary>
+        /// After going to the player pos, we do a search-player stuff, getting a random pos on a sphere around the last pos
+        /// </summary>
+        private IEnumerator RandomPosition()
+        {
+            while(!IsChasingPlayer && _isOnWarning)
+            {
+                if (_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending)
+                {
+                    _soldierAnim.SetWalking(false);
+                    _startPosSearchingPlayer = transform.position;
+                    break;
+                }
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            while (_searchingPlayerTimes < 3)
+            {
+                if (_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending)
+                {
+                    _soldierAnim.SetWalking(false);
+                    Vector3 offsetAleatorio = Random.insideUnitSphere * 10f;
+                    Debug.Log(_searchingPlayerTimes);
+                    Vector3 posicionAleatoria = _startPosSearchingPlayer + offsetAleatorio;
+                    _soldierAnim.SetWalking(true);
+                    _agent.SetDestination(posicionAleatoria);
+
+                    _searchingPlayerTimes++;
+                }
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            _searchingPlayerTimes = 0;
+
+            StartPatrol();
+
         }
 
         public void ChasePlayer()
@@ -212,4 +309,4 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
     }
 }
 
-    
+
