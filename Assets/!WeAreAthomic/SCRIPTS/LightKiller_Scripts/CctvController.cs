@@ -12,12 +12,14 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
         private LightKiller _lKiller;
         private MainCMovement _mainCMovement;
         private MainCHackingSystem _mainCHacking;
+        
 
         private AudioSource _cameraAudio;
 
         [SerializeField] private GameObject lKillerObj;
         [SerializeField] private GameObject transforms;
         private GameObject _playerObj;
+        private GameObject _volumeCatch;
 
         private Transform _lightKillerTr;
 
@@ -45,8 +47,17 @@ namespace _WeAreAthomic.SCRIPTS.LightKiller
             _mainCMovement = _playerObj.GetComponent<MainCMovement>();
             _mainCHacking = _playerObj.GetComponent<MainCHackingSystem>();
             _cameraAudio = GetComponent<AudioSource>();
-        }
 
+            _volumeCatch = _playerObj.transform.GetChild(_playerObj.transform.childCount - 2).gameObject;
+        }
+        public void ActivateVolume()
+        {
+            _volumeCatch.SetActive(true);
+        }
+        public void DesactivateVolume()
+        {
+            _volumeCatch.SetActive(false);
+        }
         private void Start()
         {
             var transformsArray = transforms.GetComponentsInChildren<Transform>();

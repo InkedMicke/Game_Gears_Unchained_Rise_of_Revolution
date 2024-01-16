@@ -79,6 +79,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public int sensivityX;
     public int sensivityY;
     public int gearsItem;
+    public int generatorsDestroyed;
 
     public float currentHealth = 100f;
     public float bastetEnergy = 100f;
@@ -95,6 +96,10 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
 
         IsGamePaused = false;
 
+    }
+    public void GeneratorsDestroyed()
+    {
+        generatorsDestroyed += 1; 
     }
 
     public void AddGameObject(GameObject gameObject)

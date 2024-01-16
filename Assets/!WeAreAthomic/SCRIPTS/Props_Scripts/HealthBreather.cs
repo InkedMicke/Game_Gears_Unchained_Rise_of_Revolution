@@ -11,6 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
 
         [SerializeField] private GameObject hurtbox;
         [SerializeField] private GameObject particleEffects;
+        private GameObject _volumeHealing;
         private GameObject _playerObj;
 
         [SerializeField] private bool enableBreather;
@@ -24,8 +25,9 @@ namespace _WeAreAthomic.SCRIPTS.Props
         {
             _playerObj = GameObject.FindGameObjectWithTag(string.Format("Player"));
             _mainHealth = _playerObj.GetComponentInChildren<MainCHealthManager>();
+            _volumeHealing = _playerObj.transform.GetChild(_playerObj.transform.childCount - 1).gameObject;
 
-            if(!enableBreather)
+            if (!enableBreather)
             {
                 DisableBreather();
             }
@@ -36,12 +38,14 @@ namespace _WeAreAthomic.SCRIPTS.Props
             if (enableBreather)
             {
                 StartCoroutine(nameof(HealCoroutine));
+                _volumeHealing.SetActive(true);
             }
         }
 
         public void EndHeal()
         {
             StopCoroutine(nameof(HealCoroutine));
+            _volumeHealing.SetActive(false);
         }
 
         public void EnableBreather()

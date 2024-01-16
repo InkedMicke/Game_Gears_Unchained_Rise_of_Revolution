@@ -11,7 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
         private MainCMovement _mainCMove;
         private MainCTutorialChecker _mainCTutorial;
         private MainCRailGrindSystem _mainCRail;
-        private MainVFXCharacter _mainVFXCharacter;
+        private MainCVFX _mainVFXCharacter;
         [SerializeField] private LabThirdRoomController _labController;
 
         [SerializeField] private GameObject godModeContainer;
@@ -30,7 +30,7 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
             _mainCMove = GetComponent<MainCMovement>();
             _mainCTutorial = GetComponent<MainCTutorialChecker>();
             _mainCRail = GetComponent<MainCRailGrindSystem>();
-            _mainVFXCharacter = GetComponent<MainVFXCharacter>();
+            _mainVFXCharacter = GetComponent<MainCVFX>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();

@@ -20,6 +20,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCPistol _mainCPistol;
         private MainCPlayerInterface _mainCInterface;
         private MainCDash _mainCDash;
+        private MainCVFX _mainCVfx;
 
         [SerializeField] private PlayerDamageData abilityAttackDmgData;
 
@@ -83,6 +84,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _wrenchHitBox = weaponObj.GetComponent<WrenchHitBox>();
             _mainCInterface = GetComponent<MainCPlayerInterface>();
             _mainCDash = GetComponent<MainCDash>();
+            _mainCVfx = GetComponent<MainCVFX>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -317,6 +319,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void ApplyAbilityDamage()
         {
             scannerInst.GetComponent<ScannerHitBox>().ApplyDamage(abilityAttackDmgData);
+            _mainCVfx.ActivateSlash4();
+            InstanciateExplosion();
             cameraBase.DOShakePosition( .5f, .5f, 20, 40f);
         }
 
@@ -380,6 +384,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if(IsChargingAttack)
             {
                 _mainCPistol.StartRecoveringEnergy(5f);
+                DestroyScanner();
             }
             _mainCAnimator.SetRootMotion(false);
             IsAttacking = false;
