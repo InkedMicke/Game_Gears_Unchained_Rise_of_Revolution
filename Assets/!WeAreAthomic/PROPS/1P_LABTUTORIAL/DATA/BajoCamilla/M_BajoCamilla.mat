@@ -8,21 +8,19 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_BajoCamilla
-  m_Shader: {fileID: -6465566751694194690, guid: 2c3c6a46626419c4f8bbdeab2ec2afbd,
-    type: 3}
+  m_Shader: {fileID: 4800000, guid: 8d2bb70cbf9db8d4da26e15b26e74248, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _HAFTONESHAPES_DOT
-  m_InvalidKeywords:
   - _EMISSION
-  - _HALFTONESHAPE_DOT
-  - _STEPVIARAMPTEXTURE_ON
+  - _SPECULAR_COLOR
+  m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -154,6 +152,7 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
+    - _BlendOp: 0
     - _BrushLowerCut: 0
     - _BrushSize: 0.8
     - _BumpScale: 1
@@ -206,6 +205,7 @@ Material:
     - _HatchingRotation: 0
     - _HatchingSmoothness: 0.1
     - _Metallic: 0
+    - _Mode: 0
     - _NoiseScale: 1
     - _NoiseStrength: 0.1
     - _OcclusionStrength: 1
@@ -226,6 +226,7 @@ Material:
     - _RimStep: 0.65
     - _RimStepSmooth: 0.4
     - _SPECULARHIGHTLIGHTS: 0
+    - _SampleGI: 0
     - _ShadowPatternSize: 0.3
     - _ShadowStep: 0.5
     - _ShadowStepSmooth: 0.04
@@ -242,7 +243,7 @@ Material:
     - _SpecSource: 0
     - _SpecularClipStrength: 0
     - _SpecularFalloff: 0.5
-    - _SpecularHighlights: 1
+    - _SpecularHighlights: 0
     - _SpecularSize: 0.25
     - _SpecularStep: 0.6
     - _SpecularStepSmooth: 0.05
@@ -254,6 +255,7 @@ Material:
     - _StepViaRampTexture: 1
     - _Surface: 0
     - _USERAMPCOLOR: 0
+    - _UVSec: 0
     - _UseClipPattern: 0
     - _UseNormalMap: 0
     - _UseRampColor: 0
@@ -262,7 +264,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0.17665556, g: 0.5597465, b: 1.4980394, a: 1}
+    - _EmissionColor: {r: 0.3533111, g: 1.1194928, b: 2.9960783, a: 1}
     - _FaceFrontDirection: {r: 0, g: 0, b: 1, a: 0}
     - _FaceRightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _HairSpecColor: {r: 0, g: 0, b: 0, a: 1}
@@ -276,7 +278,7 @@ Material:
     - _OutlineDistancFade: {r: -25, g: 50, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _SpecColor: {r: 0.19999993, g: 0.19999993, b: 0.19999993, a: 0.5}
     - _SpecularColor: {r: 0, g: 0, b: 0, a: 0}
     - _SpherizeNormalOrigin: {r: 0, g: 0, b: 0, a: 0}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
