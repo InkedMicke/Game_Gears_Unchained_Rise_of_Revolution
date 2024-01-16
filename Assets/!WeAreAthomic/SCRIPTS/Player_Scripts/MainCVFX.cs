@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainVFXCharacter : MonoBehaviour
+public class MainCVFX : MonoBehaviour
 {
     private MainCMovement _mainCMove;
 
@@ -33,11 +33,10 @@ public class MainVFXCharacter : MonoBehaviour
         _mainCMove = GetComponent<MainCMovement>();
     }
 
+    public void Testing()
+    {
 
-
-
-
-
+    }
 
     public void ActivateRightStep()
     {
