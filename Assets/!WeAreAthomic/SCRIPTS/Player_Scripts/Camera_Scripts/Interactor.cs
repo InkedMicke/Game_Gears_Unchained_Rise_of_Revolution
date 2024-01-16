@@ -48,7 +48,7 @@ public class Interactor : MonoBehaviour
 
                 if (_button.typeOfHacked == TypeOfHacked.soldier)
                 {
-                    if(Vector3.Distance(playerTr.position, _button.transform.position) < 3)
+                    if(Vector3.Distance(playerTr.position, _button.transform.position) < interactRangeSoldier)
                     {
                         _button.ShowButton();
                     }
@@ -98,7 +98,7 @@ public class Interactor : MonoBehaviour
 
                 if (_button.typeOfHacked == TypeOfHacked.soldier)
                 {
-                    if (Vector3.Distance(playerTr.position, _button.transform.position) < 2)
+                    if (Vector3.Distance(playerTr.position, _button.transform.position) < interactRangeSoldier)
                     {
                         interactObj.Interact();
                     }
