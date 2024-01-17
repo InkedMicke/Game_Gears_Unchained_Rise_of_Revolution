@@ -48,10 +48,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.PlayerGamepad.Dash.performed += StartDashGamepad;
         }
 
-        private void Update()
-        {
-
-        }
+        
 
         private void StartDashPC(InputAction.CallbackContext context)
         {
