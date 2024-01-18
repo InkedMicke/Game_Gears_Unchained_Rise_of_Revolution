@@ -31,6 +31,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         [SerializeField] private LayerMask playerBulletLayer;
 
+        [SerializeField] private CapsuleCollider _hurtBoxCC;
+
         [SerializeField] private GameObject cameraBaseObj;
         private GameObject _cameraObj;
 
@@ -395,6 +397,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (Time.time > _timeGraceCrouchPeriod)
             {
                 IsCrouch = !IsCrouch;
+                ToggleCCSize();
                 _mainCAnimator.SetCrouch(IsCrouch);
                 _timeGraceCrouchPeriod = Time.time + timeNextCrouch;
 
@@ -412,6 +415,39 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     Invoke(nameof(InvokeDisableCrouchLayer), 0.5f);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Cambia el tamaño de la capsula del Character Controller
+        /// </summary>
+        private void ToggleCCSize()
+        {
+            if (IsCrouch)
+            {
+                //Character Controller
+                var crouchPosCc = _cc.center;
+                crouchPosCc.y = .75f;
+                _cc.center = crouchPosCc;
+                _cc.height = 1.48f;
+                //HurtBox
+                var crouchPosCC = _hurtBoxCC.center;
+                crouchPosCC.y = .73f;
+                _hurtBoxCC.center = crouchPosCC;
+                _hurtBoxCC.height = 1.43f;
+            }
+            else
+            {
+                //Character Controller
+                var originalPosCc = _cc.center;
+                originalPosCc.y = .87f;
+                _cc.center = originalPosCc;
+                _cc.height = 1.69f;
+                //HurtBox
+                var originalPosCC = _hurtBoxCC.center;
+                originalPosCC.y = .91f;
+                _hurtBoxCC.center = originalPosCC;
+                _hurtBoxCC.height = 1.79f;
             }
         }
 

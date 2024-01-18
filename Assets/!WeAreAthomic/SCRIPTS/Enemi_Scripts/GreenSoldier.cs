@@ -22,7 +22,8 @@ public class GreenSoldier : Enemy
 
     [System.NonSerialized] public bool IsShooting;
     private bool _hasEndedShootAnim;
-    private bool _waitForDisableShoot;
+
+    private int _currentShoots;
 
     [SerializeField] private float checkRadius = 5f;
     [SerializeField] private float speedShooting = 1.5f;
@@ -30,7 +31,6 @@ public class GreenSoldier : Enemy
     [SerializeField] private float shootAngle = .6f;
     [SerializeField] private float maxTimeToStopShooting = 2.5f;
     [SerializeField] private float rotationSpeed = 5f;
-    private float _timeToStopShooting;
     public float totalColdown;
 
     protected override void Awake()
@@ -46,12 +46,6 @@ public class GreenSoldier : Enemy
         StartCoroutine(TurnToPlayer());
     }
 
-    protected override void Update()
-    {
-        TimerToDisableShoot();
-        base.Update();
-    }
-
     private IEnumerator ShootCoroutine()
     {
         IsShooting = true;
@@ -60,7 +54,7 @@ public class GreenSoldier : Enemy
             _hasEndedShootAnim = false;
             _soldierAnim.ShootTrigger();
             _soldierAnim.SetAnimatorSpeed(speedShooting);
-
+            _currentShoots++;
             while (!_hasEndedShootAnim)
             {
                 yield return new WaitForEndOfFrame();
@@ -76,7 +70,7 @@ public class GreenSoldier : Enemy
             {
                 var desiredPos = new Vector3(
                     endDecalTr.position.x + Random.Range(-spreadAngle, spreadAngle),
-                    (muzzle1.position.y - shootAngle) + Random.Range(-spreadAngle, spreadAngle),
+                    muzzle1.position.y + Random.Range(-1f, .5f) + Random.Range(-spreadAngle, spreadAngle),
                     endDecalTr.position.z + Random.Range(-spreadAngle, spreadAngle)
                     );
                 var bulletObj = Instantiate(bullet, muzzle1.position, transform.rotation);
@@ -132,7 +126,7 @@ public class GreenSoldier : Enemy
                 decal.uvBias -= new Vector2(0, Time.deltaTime * 4);
                 yield return new WaitForSeconds(.01f);
             }
-
+            decal.uvBias = new(decal.uvBias.x, 0);
             _shootCoroutine = StartCoroutine(ShootCoroutine());
         }
         else
@@ -151,17 +145,7 @@ public class GreenSoldier : Enemy
 
     }
 
-    /// <summary>
-    /// Destroy decal if exists
-    /// </summary>
-    public void DestroyDecal()
-    {
-        if (_currentDecal != null)
-        {
-            Destroy(_currentDecal);
-        }
-    }
-
+    // Comprueba si el personaje ha salido del decal para continuar o no atacando
     private bool CheckForDisableShoot()
     {
 
@@ -181,34 +165,24 @@ public class GreenSoldier : Enemy
         return false;
     }
 
-    private void TimerToDisableShoot()
-    {
-        if (_waitForDisableShoot)
-        {
-            _timeToStopShooting -= Time.deltaTime;
-            if (_timeToStopShooting <= 0f)
-            {
-                _decalCoroutine = StartCoroutine(DecalSize(false));
-                IsAttacking = false;
-                IsShooting = false;
-                StartChasingPlayer();
-                _waitForDisableShoot = false;
-            }
-        }
-    }
-
+    // Esta funcion se llama cuando animacion de ataque finaliza, Si el player ha salido del decal
+    // y el soldado ha disparado X veces, entonces deja de disparar
+    // Si no ha salido del decal reiniciamos los disparos actuales y sigue disparando
     public void EndShootAnim()
     {
         _hasEndedShootAnim = true;
         if (CheckForDisableShoot())
         {
-            if (!_waitForDisableShoot)
+            if (_currentShoots == 3)
             {
-                _timeToStopShooting = maxTimeToStopShooting;
+                _decalCoroutine = StartCoroutine(DecalSize(false));
+                IsAttacking = false;
+                IsShooting = false;
+                StartChasingPlayer();
+                _currentShoots = 0;
             }
-            _waitForDisableShoot = true;
         }
         else
-            _waitForDisableShoot = false;
+            _currentShoots = 0;
     }
 }

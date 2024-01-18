@@ -100,7 +100,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             {
                 if(typeOfHacked == TypeOfHacked.soldier)
                 {
-                    if (soldier.GetComponent<Enemy>().IsChasingPlayer)
+                    if (soldier != null && soldier.GetComponent<Enemy>().IsChasingPlayer)
                     {
 
                     }

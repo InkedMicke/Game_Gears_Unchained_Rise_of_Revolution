@@ -297,12 +297,12 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
 
                 if (other.gameObject.name == "RedHurtBox")
                 {
-                    return damageData.easyDifficult.greenDamage;
+                    return damageData.easyDifficult.redDamage;
                 }
 
                 if (other.gameObject.name == "OrangeHurtBox")
                 {
-                    return damageData.easyDifficult.greenDamage;
+                    return damageData.easyDifficult.orangeDamage;
                 }
 
                 break;
@@ -320,12 +320,12 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
                 
                 if (other.gameObject.name == "RedHurtBox")
                 {
-                    return damageData.normalDifficult.greenDamage;
+                    return damageData.normalDifficult.redDamage;
                 }               
                 
                 if (other.gameObject.name == "OrangeHurtBox")
                 {
-                    return damageData.normalDifficult.greenDamage;
+                    return damageData.normalDifficult.orangeDamage;
                 }
                 break;
 
@@ -341,12 +341,12 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
 
                 if (other.gameObject.name == "RedHurtBox")
                 {
-                    return damageData.hardDifficult.greenDamage;
+                    return damageData.hardDifficult.redDamage;
                 }
 
                 if (other.gameObject.name == "OrangeHurtBox")
                 {
-                    return damageData.hardDifficult.greenDamage;
+                    return damageData.hardDifficult.orangeDamage;
                 }
                 break;
         }

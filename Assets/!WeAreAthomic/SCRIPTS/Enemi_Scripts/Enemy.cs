@@ -29,7 +29,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private Animator _exclamationAnim;
 
         public GameManagerSingleton.TypeOfEnemy _typeOfEnemy;
-        public TypeOfBehaviour _typeOfBehaviour;
+        public TypeOfBehaviour typeOfBehaviour;
 
         [SerializeField] private GWaypoints waypoints;
 
@@ -71,16 +71,22 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _exclamationAnim = exclamacion.GetComponent<Animator>();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             _playerObj = GameObject.FindGameObjectWithTag("Player");
             _playerTr = _playerObj.transform;
             _mainCHack = _playerObj.GetComponent<MainCHackingSystem>();
             _mainCMove = _playerObj.GetComponent<MainCMovement>();
 
-            if (_typeOfBehaviour == TypeOfBehaviour.Patrol)
+            if (typeOfBehaviour == TypeOfBehaviour.Patrol)
             {
                 StartPatrol();
+            }       
+            
+            if (typeOfBehaviour == TypeOfBehaviour.Fighter)
+            {
+                decalDetection.SetActive(false);
+                StartChasingPlayer();
             }
 
             // Configuracion de Fields Of Views
@@ -246,8 +252,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             }
 
             _searchingPlayerTimes = 0;
-
-            StartPatrol();
+            if (typeOfBehaviour == TypeOfBehaviour.Patrol)
+            {
+                StartPatrol();
+            }
 
         }
 
