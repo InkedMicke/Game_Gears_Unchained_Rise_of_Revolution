@@ -28,7 +28,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private Animator _exclamationAnim;
 
         public GameManagerSingleton.TypeOfEnemy _typeOfEnemy;
-        [SerializeField] private TypeOfBehaviour _typeOfBehaviour;
+        public TypeOfBehaviour _typeOfBehaviour;
 
         [SerializeField] private GWaypoints waypoints;
 
@@ -233,8 +233,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
                 if (_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending)
                 {
                     _soldierAnim.SetWalking(false);
-                    Vector3 offsetAleatorio = Random.insideUnitSphere * 10f;
-                    Debug.Log(_searchingPlayerTimes);
+                    Vector3 offsetAleatorio = Random.insideUnitSphere * 5f;
                     Vector3 posicionAleatoria = _startPosSearchingPlayer + offsetAleatorio;
                     _soldierAnim.SetWalking(true);
                     _agent.SetDestination(posicionAleatoria);
