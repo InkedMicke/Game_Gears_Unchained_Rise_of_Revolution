@@ -358,7 +358,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if (IsFollowingTrajectory)
             {
-                var difference = puntosTrayectoria[indexPoint] - transform.position;
                 transform.position = Vector3.MoveTowards(transform.position, puntosTrayectoria[indexPoint], 20f * Time.deltaTime);
                 if (Vector3.Distance(transform.position, puntosTrayectoria[indexPoint]) < 0.1f)
                 {
