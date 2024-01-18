@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4583807143370167660}
   - component: {fileID: 5213956409819251721}
   - component: {fileID: 4784657382035065463}
+  - component: {fileID: 5728195307840780324}
+  - component: {fileID: 7714111842695939755}
   m_Layer: 5
   m_Name: Slider_Prefab
   m_TagString: Untagged
@@ -63,10 +65,10 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 1}
-    m_HighlightedColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
-    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_HighlightedColor: {r: 1, g: 0.46619305, b: 0, a: 1}
+    m_PressedColor: {r: 1, g: 0.4918583, b: 0, a: 1}
+    m_SelectedColor: {r: 1, g: 0.51344156, b: 0, a: 1}
+    m_DisabledColor: {r: 0.14901961, g: 0.14901961, b: 0.14901961, a: 0.5019608}
     m_ColorMultiplier: 5
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -108,11 +110,67 @@ MonoBehaviour:
   - eventID: 13
     callback:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 5728195307840780324}
+          m_TargetAssemblyTypeName: G_ButtonDoScale, Assembly-CSharp
+          m_MethodName: SetObjScale
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   - eventID: 14
     callback:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 7714111842695939755}
+          m_TargetAssemblyTypeName: G_ButtonDoScale, Assembly-CSharp
+          m_MethodName: SetObjScale
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &5728195307840780324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78211489785040187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc7cea09f3c5634cbfafe908cdf7cf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {x: 2.804895, y: 2.804895, z: 2.804895}
+  time: 0.5
+  easing: 30
+  timeScaleIndependent: 1
+--- !u!114 &7714111842695939755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78211489785040187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc7cea09f3c5634cbfafe908cdf7cf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {x: 3, y: 3, z: 3}
+  time: 0.5
+  easing: 29
+  timeScaleIndependent: 1
 --- !u!1 &196027395499306277
 GameObject:
   m_ObjectHideFlags: 0
