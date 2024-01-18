@@ -28,6 +28,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         [SerializeField] private GameObject spaceTutCanvas;
         [SerializeField] private GameObject railSparks;
+        [SerializeField] private GameObject splineFollower;
         private GameObject _currentPipe;
         private GameObject _currentRail;
 
@@ -43,7 +44,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private string labScene;
         [SerializeField] private string sewerScene;
 
-        [System.NonSerialized] public bool IsSliding;
+        private  bool IsSliding;
         [System.NonSerialized] public bool CanJumpOnRail;
         private bool _canSlide;
         private bool _canBoost;

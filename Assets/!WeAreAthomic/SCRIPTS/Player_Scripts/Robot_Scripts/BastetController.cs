@@ -14,7 +14,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         private CharacterController _cc;
         private MainCBastetRapidFire _mainCBastet;
         private MainCPistol _mainCPistol;
-        private MainCRailGrindSystem _mainCRail;
+        private MainCRail _mainCRail;
 
         private Coroutine _shootCoroutine;
         private Coroutine _bastetPosCoroutine;
@@ -49,7 +49,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             _cc = GetComponent<CharacterController>();
             _mainCBastet = playerObj.GetComponent<MainCBastetRapidFire>();
             _mainCPistol = playerObj.GetComponent<MainCPistol>();
-            _mainCRail = playerObj.GetComponent<MainCRailGrindSystem>();
+            _mainCRail = playerObj.GetComponent<MainCRail>();
         }
 
         private void Update()

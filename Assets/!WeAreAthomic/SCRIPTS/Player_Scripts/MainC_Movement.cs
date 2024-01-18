@@ -14,7 +14,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCLayers _mainCLayers;
         private MainCAttack _mainCAttack;
         private MainCPistol _mainCPistol;
-        private MainCRailGrindSystem _mainCRail;
+        private MainCRail _mainCRail;
         private MainCHackingSystem _mainCHacking;
         private MainCAnimatorController _mainCAnimator;
         private CharacterController _cc;
@@ -99,7 +99,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCPistol = GetComponent<MainCPistol>();
             _cc = GetComponent<CharacterController>();
             _godMode = GetComponent<Godmode>();
-            _mainCRail = GetComponent<MainCRailGrindSystem>();
+            _mainCRail = GetComponent<MainCRail>();
             _mainCHacking = GetComponent<MainCHackingSystem>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _playerInputActions = new PlayerInputActions();
@@ -208,11 +208,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void ApplyGravity()
         {
-            if (IsJumping || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsOnRail() && !IsFollowingTrajectory)
+            if (IsJumping || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsSliding && !IsFollowingTrajectory)
             {
                 _velocity += transform.up.normalized * (gravity * Time.deltaTime);
                 _velocity.z = 0f;
                 _cc.Move(_velocity * Time.deltaTime);
+                Debug.Log("hola1");
             }
 
             if(IsJumping && IsGrounded() || IsFalling && IsGrounded())
@@ -501,7 +502,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void Jump()
         {
-            if (CanJump())
+            if (CanJumpGround() || CanJumpRail())
             {
                 _mainCSounds.PlayJumpSound();
                 IsJumping = true;
@@ -560,7 +561,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
 
 
-        private bool CanJump()
+        private bool CanJumpGround()
         {
             if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
             {
@@ -593,6 +594,41 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             if (_mainCRail.IsOnRail())
+            {
+                return false;
+            }
+
+            return true;
+        }        
+        
+        private bool CanJumpRail()
+        {
+            if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsStopMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+            {
+                return false;
+            }
+
+            if (!_mainCRail.IsOnRail())
+            {
+                return false;
+            }
+
+            if(IsJumping)
+            {
+                return false;
+            }
+
+            if(Time.time < _timeGraceJumpPeriod)
             {
                 return false;
             }

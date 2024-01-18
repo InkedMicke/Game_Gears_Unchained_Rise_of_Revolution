@@ -11,6 +11,8 @@ public class C_SpawnerEnemies : MonoBehaviour
     private int _maxEnemies = 20;
     
     private int currentWave;
+    [SerializeField] private GameObject barrier;
+
     public List<GameObject> _currentEnemiesObj = new ();
     [SerializeField]private List<GameObject>  _wave1;
     [SerializeField] private List<GameObject> _wave2;
@@ -70,6 +72,20 @@ public class C_SpawnerEnemies : MonoBehaviour
             {
                 yield return new WaitForEndOfFrame();
             }
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        StartCoroutine(MoveBarrierDown());
+    }
+
+    private IEnumerator MoveBarrierDown()
+    {
+        var startPos = barrier.transform.position;
+        while (barrier.transform.position.y < startPos.y - 10f)
+        {
+            var actualPos = new Vector3(barrier.transform.position.x, barrier.transform.position.y - 0.005f, barrier.transform.position.z);
+            barrier.transform.position = actualPos;
 
             yield return new WaitForEndOfFrame();
         }

@@ -9,7 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
     public class MainCSounds : MonoBehaviour
     {
         private MainCMovement _mainCMove;
-        private MainCRailGrindSystem _mainCRail;
+        private MainCRail _mainCRail;
 
         private Scene _currentScene;
 
@@ -71,7 +71,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void Awake()
         {
             _mainCMove = GetComponent<MainCMovement>();
-            _mainCRail = GetComponent<MainCRailGrindSystem>();
+            _mainCRail = GetComponent<MainCRail>();
         }
 
         private void Start()

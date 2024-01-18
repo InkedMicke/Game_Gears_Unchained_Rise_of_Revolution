@@ -524,8 +524,8 @@ GameObject:
   - component: {fileID: 140604387887192313}
   - component: {fileID: 4016571259077727948}
   - component: {fileID: 1770476364814114069}
-  - component: {fileID: 7303905856277349926}
   - component: {fileID: 7714023328541333105}
+  - component: {fileID: 3765694853032444327}
   - component: {fileID: 8156547131111017134}
   - component: {fileID: 6156758546523602922}
   - component: {fileID: 4237099692295455833}
@@ -642,6 +642,7 @@ MonoBehaviour:
   hack: hack
   aimOnRail: railAiming
   dash: dash
+  hit: hit
 --- !u!114 &294128395308933352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -833,34 +834,6 @@ MonoBehaviour:
   currentShoots: 0
   radiusCheck: 10
   attackCooldown: 10
---- !u!114 &7303905856277349926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5821918579687998185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04a867dc8957360439e813df1e2f1ed5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spaceTutCanvas: {fileID: 0}
-  railSparks: {fileID: 36490328453938669}
-  railCheck: {fileID: 2633980742278052695}
-  orientation: {fileID: 7832683807876494435}
-  railLayer:
-    serializedVersion: 2
-    m_Bits: 8192
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 2048
-  labScene: S2_LABTUTORIAL
-  sewerScene: S4_SEWERS_UNDERTHECITY
-  _childActual: 0
-  railSpeed: 8
-  rotationSpeed: 30
-  directionsList: []
 --- !u!114 &7714023328541333105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -881,6 +854,24 @@ MonoBehaviour:
   isHackingAnim: 0
   IsHacking: 0
   GotCahed: 0
+--- !u!114 &3765694853032444327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821918579687998185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fb1de45e1e659b48abe447822968eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  railLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  splineFollower: {fileID: 0}
+  PP: {fileID: 0}
+  railCheck: {fileID: 2633980742278052695}
 --- !u!114 &8156547131111017134
 MonoBehaviour:
   m_ObjectHideFlags: 0
