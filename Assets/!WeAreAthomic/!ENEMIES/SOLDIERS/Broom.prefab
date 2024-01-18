@@ -252,11 +252,19 @@ MonoBehaviour:
   _typeOfEnemy: 3
   _typeOfBehaviour: 1
   waypoints: {fileID: 0}
+  targetFovLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  obstacleFovLayer:
+    serializedVersion: 2
+    m_Bits: 0
   botonPuerta: {fileID: 0}
   exclamacion: {fileID: 0}
+  decalDetection: {fileID: 0}
   patrolSpeed: 0
   chaseSpeed: 0
   stoppingDistance: 3
+  timeToGetCached: 1.5
   moveToDecalCurve:
     serializedVersion: 2
     m_Curve: []
@@ -303,6 +311,7 @@ MonoBehaviour:
   radius: 0
   angle: 0
   playerRef: {fileID: 0}
+  radiusColor: {r: 0, g: 0, b: 0, a: 0}
   targetMask:
     serializedVersion: 2
     m_Bits: 0
@@ -340,6 +349,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1324396818841126415}
     m_Modifications:
+    - target: {fileID: 1186586961441787425, guid: efaedc6625acc0b4ea60a335535fe799,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 24f24a6559283d847a54edb4b1e35811,
+        type: 3}
     - target: {fileID: 1739491834619861376, guid: efaedc6625acc0b4ea60a335535fe799,
         type: 3}
       propertyPath: m_Color.b
@@ -383,7 +398,7 @@ PrefabInstance:
     - target: {fileID: 2977774045712525306, guid: efaedc6625acc0b4ea60a335535fe799,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.028645992
+      value: -39.6
       objectReference: {fileID: 0}
     - target: {fileID: 2977774045712525306, guid: efaedc6625acc0b4ea60a335535fe799,
         type: 3}
