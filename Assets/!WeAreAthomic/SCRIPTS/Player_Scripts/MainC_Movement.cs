@@ -208,9 +208,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void ApplyGravity()
         {
-            if (IsJumping || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsSliding && !IsFollowingTrajectory)
+            if (IsJumping || IsFalling || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsSliding && !IsFollowingTrajectory)
             {
-                _velocity += transform.up.normalized * (gravity * Time.deltaTime);
+                _velocity += Vector3.up.normalized * (gravity * Time.deltaTime);
                 _velocity.z = 0f;
                 _cc.Move(_velocity * Time.deltaTime);
                 Debug.Log("hola1");
