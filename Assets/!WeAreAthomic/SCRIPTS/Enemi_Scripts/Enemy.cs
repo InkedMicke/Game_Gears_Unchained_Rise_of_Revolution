@@ -4,16 +4,17 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+public enum TypeOfBehaviour
+{
+    Patrol,
+    Fighter
+}
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 {
     public class Enemy : MonoBehaviour
     {
-        private enum TypeOfBehaviour
-        {
-            Patrol,
-            Fighter
-        }
+        
 
         protected NavMeshAgent _agent;
         private FieldOfView _fov;
