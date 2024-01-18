@@ -13,6 +13,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCAttack _mainCAttack;
         private MainCPlayerInterface _mainCInterface;
         private MainCAnimatorController _mainCAnim;
+        private MainCLayers _mainCLayers;
 
         [SerializeField] private Slider healthSlider;
 
@@ -35,6 +36,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCInterface = GetComponentInParent<MainCPlayerInterface>();
             _mainCAttack = GetComponentInParent<MainCAttack>();
             _mainCAnim = GetComponentInParent<MainCAnimatorController>();
+            _mainCLayers = GetComponentInParent<MainCLayers>();
         }
 
         private void Start()
@@ -59,6 +61,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 GameManagerSingleton.Instance.currentHealth = currentHealth;
                 _mainSounds.RemoveAllSounds();
                 _mainSounds.PlayHurtSound();
+                _mainCAnim.TriggerHit();
+                _mainCLayers.EnableHitLayer();
                 SetHealthSlider();
                 CheckDeath();
             }
