@@ -27,6 +27,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         [SerializeField] private ParticleSystem sparksHit;
 
         [SerializeField] private bool useKnockback = true;
+        private bool isDeath;
         
         [SerializeField] private float pushForce = 5f;
     
@@ -51,9 +52,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         public void TakeDamage(float value)
         {
             _gHealthManager.currentHealth -= value;
+            _gHealthManager.SetSlider(_gHealthManager.currentHealth);
             _anim.SetTrigger(string.Format("isHurt"));
             sparksHit.Play();
-            if (!_soldierHurtbox.IsDeath)
+            if (!isDeath)
             {
                 if (useKnockback && _mainCAttack.attackCount != 2)
                 {
@@ -75,7 +77,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         {
             if (_gHealthManager.currentHealth <= 0)
             {
-                _soldierHurtbox.SetDeath(true);
+                isDeath = true;
                 _anim.SetBool(string.Format("isDeath"), true);
                 _cC.enabled = false;
                 _dummieController.DisableCharacterController();

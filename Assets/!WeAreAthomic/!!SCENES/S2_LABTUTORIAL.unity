@@ -126,6 +126,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &5763343 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4224639829566737900, guid: ffffc1760f21ed248a2899863bbcf9fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5222077474484771271}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &11628262 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3756627498706019384, guid: ffffc1760f21ed248a2899863bbcf9fd,
@@ -318,6 +324,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711525652634326546, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: objetivo
+      value: 
+      objectReference: {fileID: 5763343}
+    - target: {fileID: 3711525652634326546, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: seeTrajectory
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4277791799129827319, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
@@ -861,6 +877,12 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8732805075205020712, guid: ffffc1760f21ed248a2899863bbcf9fd,
     type: 3}
   m_PrefabInstance: {fileID: 5222077474484771271}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1758919918 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3194122893979918927, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+    type: 3}
+  m_PrefabInstance: {fileID: 529688008}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1792414304
 GameObject:
@@ -5228,37 +5250,7 @@ PrefabInstance:
         type: 3}
       propertyPath: leftTutorial
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5687641958000464397, guid: ffffc1760f21ed248a2899863bbcf9fd,
-        type: 3}
-      propertyPath: seActivaCuandoLasOleadasTerminan.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5687641958000464397, guid: ffffc1760f21ed248a2899863bbcf9fd,
-        type: 3}
-      propertyPath: seActivaCuandoLasOleadasTerminan.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5687641958000464397, guid: ffffc1760f21ed248a2899863bbcf9fd,
-        type: 3}
-      propertyPath: seActivaCuandoLasOleadasTerminan.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1792414306}
-    - target: {fileID: 5687641958000464397, guid: ffffc1760f21ed248a2899863bbcf9fd,
-        type: 3}
-      propertyPath: seActivaCuandoLasOleadasTerminan.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: LoadSceneAsync
-      objectReference: {fileID: 0}
-    - target: {fileID: 5687641958000464397, guid: ffffc1760f21ed248a2899863bbcf9fd,
-        type: 3}
-      propertyPath: seActivaCuandoLasOleadasTerminan.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: Hedenrag.SceneLoader.SceneLoaderMultipleAsync, SceneLoaderAssembly
-      objectReference: {fileID: 0}
-    - target: {fileID: 5687641958000464397, guid: ffffc1760f21ed248a2899863bbcf9fd,
-        type: 3}
-      propertyPath: seActivaCuandoLasOleadasTerminan.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
-      value: 1
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1758919918}
     - target: {fileID: 5710525839641085332, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -6182,7 +6174,7 @@ PrefabInstance:
     - target: {fileID: 7324312331698553837, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7332279157927442444, guid: ffffc1760f21ed248a2899863bbcf9fd,
         type: 3}
