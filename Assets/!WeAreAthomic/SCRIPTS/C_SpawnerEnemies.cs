@@ -89,6 +89,8 @@ public class C_SpawnerEnemies : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
+
+        Destroy(barrier.gameObject);
     }
 
     private bool CanNextWave()
