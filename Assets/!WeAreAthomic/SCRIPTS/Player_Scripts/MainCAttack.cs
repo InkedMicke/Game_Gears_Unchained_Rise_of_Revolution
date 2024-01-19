@@ -321,6 +321,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             scannerInst.GetComponent<ScannerHitBox>().ApplyDamage(abilityAttackDmgData);
             _mainCVfx.ActivateSlash4();
             InstanciateExplosion();
+            _mainCSounds.PlayChargedAttackSound();
             cameraBase.DOShakePosition( .5f, .5f, 20, 40f);
         }
 
