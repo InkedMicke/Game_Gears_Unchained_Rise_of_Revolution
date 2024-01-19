@@ -516,7 +516,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3953601784478877334}
   - component: {fileID: 4355429804995384829}
-  - component: {fileID: 6828104176914486275}
   - component: {fileID: 2700445464397738688}
   - component: {fileID: 8736006538644211507}
   - component: {fileID: 294128395308933352}
@@ -594,29 +593,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &6828104176914486275
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5821918579687998185}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.26
-  m_Height: 1.67
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.84, z: 0}
 --- !u!143 &2700445464397738688
 CharacterController:
   m_ObjectHideFlags: 0
@@ -719,7 +695,7 @@ MonoBehaviour:
   timeNextCrouch: 0.5
   timeNextJump: 0.3
   jumpImpulse: 5
-  jumpImpulseOnRail: 5
+  jumpImpulseOnRail: 8
   gravity: -9.8
   aimSpeed: 8
   pushJumpForce: 10
@@ -896,6 +872,7 @@ MonoBehaviour:
   splineFollower: {fileID: 0}
   PP: {fileID: 0}
   railCheck: {fileID: 2633980742278052695}
+  railSpeed: 5
 --- !u!114 &8156547131111017134
 MonoBehaviour:
   m_ObjectHideFlags: 0

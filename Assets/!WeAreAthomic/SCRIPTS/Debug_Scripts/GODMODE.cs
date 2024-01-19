@@ -10,7 +10,7 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
         private PlayerInputActions _playerInputActions;
         private MainCMovement _mainCMove;
         private MainCTutorialChecker _mainCTutorial;
-        private MainCRailGrindSystem _mainCRail;
+        private MainCRail _mainCRail;
         private MainCVFX _mainVFXCharacter;
         [SerializeField] private LabThirdRoomController _labController;
 
@@ -29,7 +29,7 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
             _cc = GetComponent<CharacterController>();
             _mainCMove = GetComponent<MainCMovement>();
             _mainCTutorial = GetComponent<MainCTutorialChecker>();
-            _mainCRail = GetComponent<MainCRailGrindSystem>();
+            _mainCRail = GetComponent<MainCRail>();
             _mainVFXCharacter = GetComponent<MainCVFX>();
 
             _playerInputActions = new PlayerInputActions();
@@ -79,7 +79,6 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
 
 
                 var moveDir = _cameraObj.transform.forward * (Time.deltaTime * 5f * direction.magnitude * _moveSpeed);
-                _mainCRail.SetCanSlide(false);
                 _mainVFXCharacter.SetRailEffects(false);
                 _cc.enabled = true;
                 _cc.Move(moveDir);

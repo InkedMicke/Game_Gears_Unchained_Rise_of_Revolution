@@ -210,12 +210,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (IsJumping || IsFalling || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsSliding && !IsFollowingTrajectory)
             {
-                _velocity += Vector3.up.normalized * (gravity * Time.deltaTime);
+                _velocity += transform.up.normalized * (gravity * Time.deltaTime);
                 _velocity.z = 0f;
                 _cc.Move(_velocity * Time.deltaTime);
             }
 
-            if(IsJumping && IsGrounded() || IsFalling && IsGrounded())
+            if(IsJumping && IsGrounded() || IsFalling && IsGrounded() || IsFalling && _mainCRail.IsOnRail())
             {
                 IsJumping = false;
                 _mainCAnimator.SetGrounded(true);
@@ -501,11 +501,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void Jump()
         {
-            if (CanJumpGround() || CanJumpRail())
+            if (CanJumpGround())
             {
                 _mainCSounds.PlayJumpSound();
                 IsJumping = true;
-                _mainCAnimator.SetGrounded(true);
+                _mainCAnimator.SetGrounded(false);
                 _mainCLayers.EnableJumpLayer();
                 _mainCAnimator.SetJumping(true);
                 _velocity.y = jumpImpulse;
@@ -542,6 +542,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void DisableMovement()
         {
             _canMove = false;
+        }
+
+        public void SetJumping(bool isJumping)
+        {
+            IsJumping = isJumping;
         }
 
         private void OnDrawGizmos()
@@ -599,41 +604,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             return true;
         }        
-        
-        private bool CanJumpRail()
-        {
-            if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
-            {
-                return false;
-            }
-
-            if (GameManagerSingleton.Instance.IsStopMenuEnabled)
-            {
-                return false;
-            }
-
-            if (GameManagerSingleton.Instance.IsSettingsMenuEnabled)
-            {
-                return false;
-            }
-
-            if (!_mainCRail.IsOnRail())
-            {
-                return false;
-            }
-
-            if(IsJumping)
-            {
-                return false;
-            }
-
-            if(Time.time < _timeGraceJumpPeriod)
-            {
-                return false;
-            }
-
-            return true;
-        }
+       
 
         private bool CanMove()
         {
