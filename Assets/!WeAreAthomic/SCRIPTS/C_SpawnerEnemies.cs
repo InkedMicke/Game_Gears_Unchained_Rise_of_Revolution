@@ -8,6 +8,7 @@ public class C_SpawnerEnemies : MonoBehaviour
  
 
     [SerializeField] private Transform[] pointToSpawn;
+    [SerializeField] private int numberOfWaves;
     private int _maxEnemies = 20;
     
     private int currentWave;
@@ -53,7 +54,7 @@ public class C_SpawnerEnemies : MonoBehaviour
     }
     IEnumerator SpawnWaves()
     {
-        while (currentWave < 6)
+        while (currentWave < numberOfWaves)
         {
 
             var random = Random.Range(0, _wavesList.Count);
