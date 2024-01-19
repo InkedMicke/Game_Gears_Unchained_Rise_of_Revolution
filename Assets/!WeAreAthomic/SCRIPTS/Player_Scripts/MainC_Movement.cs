@@ -213,7 +213,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _velocity += Vector3.up.normalized * (gravity * Time.deltaTime);
                 _velocity.z = 0f;
                 _cc.Move(_velocity * Time.deltaTime);
-                Debug.Log("hola1");
             }
 
             if(IsJumping && IsGrounded() || IsFalling && IsGrounded())

@@ -7,7 +7,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
     public class MainCDash : MonoBehaviour
     {
         private CharacterController _cc;
-        private Rigidbody _rb;
         private PlayerInputActions _playerInputActions;
         private MainCMovement _mainCMove;
         private MainCLayers _mainCLayers;
@@ -27,9 +26,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float dashSpeed = 20f;
         [SerializeField] private float dashCooldown = 2f;
         [SerializeField] private float _dashTime = .10f;
-        [SerializeField] private float dashPcTimeThreshold = 0.5f;
         private float _dashTotalCooldown;
-        private float _totalTimeToDash;
         private void Awake()
         {
             _cc = GetComponent<CharacterController>();
@@ -38,7 +35,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnim = GetComponent<MainCAnimatorController>();
             _mainCSounds = GetComponent<MainCSounds>();
             _gTrail = GetComponent<G_MeshTrail>();
-            _rb = GetComponent<Rigidbody>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -52,7 +48,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
             {
-                Dash();
+                StartCoroutine(Dash());
             }
         }
 
@@ -60,17 +56,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
             {
-                Dash();
+                StartCoroutine(Dash());
             }
         }
 
         public void StopDash()
         {
             _mainCLayers.DisableSlideLayer();
+            StopCoroutine(Dash());
             IsDashing = false;
         }
 
-        private void Dash()
+        private IEnumerator Dash()
         {
             IsDashing = true;
             _mainCSounds.PlayJumpSound();
@@ -78,8 +75,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnim.TriggerDash();
             _mainCMove.DisableMovement();
             _dashTotalCooldown = Time.time + dashCooldown;
-            //yield return new WaitForSeconds(.1f);
-            //var startTime = Time.time;
+            yield return new WaitForSeconds(.1f);
+            var startTime = Time.time;
             var _moveInput = _playerInputActions.PlayerPC.MovementKeyboard.ReadValue<Vector2>();
 
             Vector3 cameraForward = cameraTr.forward;
@@ -98,19 +95,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
  
             transform.LookAt(desiredPos);
 
-            _cc.enabled = false;
-            _rb.isKinematic = false;
-            _rb.AddForce(dashSpeed * Time.deltaTime * transform.forward.normalized, ForceMode.Force);
-/*            while (Time.time < startTime + _dashTime)
+            while (Time.time < startTime + _dashTime)
             {
                 _gTrail.StartTrail();
 
                 float curveTime = (Time.time - startTime) / _dashTime;
                 float speedMultiplier = _mainCMove.dashSpeedCurve.Evaluate(curveTime);
-                
-                _cc.Move( * speedMultiplier * Time.deltaTime);
+
+                _cc.Move(_directionDash.normalized * dashSpeed * speedMultiplier * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
-            }*/
+            }
 
             _mainCMove.EnableMovement();
         }
@@ -119,8 +113,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {                                                                                        
             _mainCLayers.DisableSlideLayer();
             IsDashing = false;
-            _cc.enabled = true;
-            _rb.isKinematic = true;
         }
 
         private bool CanDash()
@@ -151,6 +143,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             if (Time.time < _dashTotalCooldown)
+            {
+                return false;
+            }
+
+            if(IsDashing)
             {
                 return false;
             }
