@@ -45,29 +45,29 @@ public class CharacterControllerV2 : MonoBehaviour
         float vVel = Vector3.Dot(_rb.velocity, _groundDetect.GroundNormal);
 
         Vector2 currentVel2d = Get2dOrientation(Vector3.ProjectOnPlane(_rb.velocity, _groundDetect.GroundNormal), _groundDetect.GroundNormal);
-        
+
 
         currentVel2d = _playerCustomMovment.Movment(currentVel2d, input);
 
 
-        Debug.DrawRay(transform.position + transform.up*0.8f, new Vector3(currentVel2d.x,0f,currentVel2d.y), Color.green);
+        Debug.DrawRay(transform.position + transform.up * 0.8f, new Vector3(currentVel2d.x, 0f, currentVel2d.y), Color.green);
         Vector3 outputHorizontal = MutiplyByPlane(currentVel2d, _groundDetect.GroundNormal);
-        Debug.DrawRay(transform.position + transform.up*0.8f, outputHorizontal, Color.blue);
+        Debug.DrawRay(transform.position + transform.up * 0.8f, outputHorizontal, Color.blue);
         _rb.velocity = outputHorizontal + (_groundDetect.GroundNormal * vVel);
     }
 
-    
+
     Vector2 CameraOritentedMovment(Vector2 input)
     {
         Transform cameraTransform = Camera.main.transform;
         Vector3 camRight = cameraTransform.right;
         Vector3 camForward = cameraTransform.forward;
 
-        camForward = input.y* Vector3.ProjectOnPlane(camForward, Vector3.up).normalized;
+        camForward = input.y * Vector3.ProjectOnPlane(camForward, Vector3.up).normalized;
         camRight = input.x * Vector3.ProjectOnPlane(camRight, Vector3.up).normalized;
 
-        Vector3 camForwardAxis =  Vector3.ProjectOnPlane(Vector3.forward, _groundDetect.GroundNormal).normalized;
-        Vector3 camRightAxis =  Vector3.ProjectOnPlane(Vector3.right, _groundDetect.GroundNormal).normalized;
+        Vector3 camForwardAxis = Vector3.ProjectOnPlane(Vector3.forward, _groundDetect.GroundNormal).normalized;
+        Vector3 camRightAxis = Vector3.ProjectOnPlane(Vector3.right, _groundDetect.GroundNormal).normalized;
 
         Vector2 output;
 
@@ -90,8 +90,8 @@ public class CharacterControllerV2 : MonoBehaviour
         // get the forward direction translated to the xz plane
         Vector3 inputDir = Vector3.Cross(right, Vector3.up).normalized;
         //add the magnitude back to make it as long as at the start
-        Vector2 output = new Vector2(inputDir.x , inputDir.z).normalized * value.magnitude;
-        
+        Vector2 output = new Vector2(inputDir.x, inputDir.z).normalized * value.magnitude;
+
         return output;
     }
 

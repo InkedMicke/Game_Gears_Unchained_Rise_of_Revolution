@@ -21,7 +21,7 @@ public class PlayerGravity : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ApplyGravity();
+        //ApplyGravity();
     }
 
     void ApplyGravity()

@@ -1,17 +1,13 @@
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using static UnityEngine.GraphicsBuffer;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCDash : MonoBehaviour
     {
         private CharacterController _cc;
+        private Rigidbody _rb;
         private PlayerInputActions _playerInputActions;
         private MainCMovement _mainCMove;
         private MainCLayers _mainCLayers;
@@ -23,6 +19,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private Vector3 _directionDash;
 
+        [SerializeField] private Transform cameraTr;
         [SerializeField] private Transform cameraRotation;
 
         [System.NonSerialized] public bool IsDashing;
@@ -41,6 +38,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnim = GetComponent<MainCAnimatorController>();
             _mainCSounds = GetComponent<MainCSounds>();
             _gTrail = GetComponent<G_MeshTrail>();
+            _rb = GetComponent<Rigidbody>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -54,61 +52,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
             {
-                if(Keyboard.current.wKey.wasPressedThisFrame)
-                {
-                    if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.W) 
-                    {
-                        _directionDash = cameraRotation.forward * 2;
-                        StartCoroutine(Dash());
-                    }
-                    else
-                    {
-                        _totalTimeToDash = Time.time;
-                        _lastKey = Key.W;
-                    }
-                }
-
-                else if (Keyboard.current.sKey.wasPressedThisFrame)
-                {
-                    if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.S)
-                    {
-                        _directionDash = -cameraRotation.forward * 2;
-                        StartCoroutine(Dash());
-                    }
-                    else
-                    {
-                        _totalTimeToDash = Time.time;
-                        _lastKey = Key.S;
-                    }
-                }                
-                
-                else if (Keyboard.current.aKey.wasPressedThisFrame)
-                {
-                    if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.A)
-                    {
-                        _directionDash = -cameraRotation.right * 2;
-                        StartCoroutine(Dash());
-                    }
-                    else
-                    {
-                        _totalTimeToDash = Time.time;
-                        _lastKey = Key.A;
-                    }
-                }                
-                
-                else if (Keyboard.current.dKey.wasPressedThisFrame)
-                {
-                    if (Time.time - _totalTimeToDash < dashPcTimeThreshold && _lastKey == Key.D)
-                    {
-                        _directionDash = cameraRotation.right * 2;
-                        StartCoroutine(Dash());
-                    }
-                    else
-                    {
-                        _totalTimeToDash = Time.time;
-                        _lastKey = Key.D;
-                    }
-                }
+                Dash();
             }
         }
 
@@ -116,18 +60,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
             {
-                StartCoroutine(Dash());
+                Dash();
             }
         }
 
         public void StopDash()
         {
-            StopCoroutine(Dash());
             _mainCLayers.DisableSlideLayer();
             IsDashing = false;
         }
 
-        private IEnumerator Dash()
+        private void Dash()
         {
             IsDashing = true;
             _mainCSounds.PlayJumpSound();
@@ -135,24 +78,39 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAnim.TriggerDash();
             _mainCMove.DisableMovement();
             _dashTotalCooldown = Time.time + dashCooldown;
-            yield return new WaitForSeconds(.1f);
-            var startTime = Time.time;
+            //yield return new WaitForSeconds(.1f);
+            //var startTime = Time.time;
+            var _moveInput = _playerInputActions.PlayerPC.MovementKeyboard.ReadValue<Vector2>();
 
+            Vector3 cameraForward = cameraTr.forward;
+            Vector3 cameraRight = cameraTr.right;
+            cameraForward.y = 0f;
+            cameraRight.y = 0f;
+
+            cameraForward.Normalize();
+            cameraRight.Normalize();
+
+            Vector3 moveDirection = cameraForward * _moveInput.y + cameraRight * _moveInput.x;
+
+            _directionDash = new(moveDirection.x, transform.position.y, moveDirection.z);
             var desiredPos = cameraRotation.position + _directionDash.normalized * 2;
             desiredPos.y = transform.position.y;
-
+ 
             transform.LookAt(desiredPos);
 
-            while (Time.time < startTime + _dashTime)
+            _cc.enabled = false;
+            _rb.isKinematic = false;
+            _rb.AddForce(dashSpeed * Time.deltaTime * transform.forward.normalized, ForceMode.Force);
+/*            while (Time.time < startTime + _dashTime)
             {
                 _gTrail.StartTrail();
 
                 float curveTime = (Time.time - startTime) / _dashTime;
                 float speedMultiplier = _mainCMove.dashSpeedCurve.Evaluate(curveTime);
-
-                _cc.Move(_directionDash.normalized * dashSpeed * speedMultiplier * Time.deltaTime);
+                
+                _cc.Move( * speedMultiplier * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
-            }
+            }*/
 
             _mainCMove.EnableMovement();
         }
@@ -161,6 +119,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {                                                                                        
             _mainCLayers.DisableSlideLayer();
             IsDashing = false;
+            _cc.enabled = true;
+            _rb.isKinematic = true;
         }
 
         private bool CanDash()

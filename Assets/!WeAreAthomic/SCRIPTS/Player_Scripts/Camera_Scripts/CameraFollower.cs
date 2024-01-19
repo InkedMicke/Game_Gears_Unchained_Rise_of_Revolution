@@ -26,6 +26,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 
         private void Awake()
         {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void Start()
