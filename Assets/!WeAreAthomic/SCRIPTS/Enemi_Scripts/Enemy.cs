@@ -38,6 +38,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         [SerializeField] private GameObject botonPuerta;
         [SerializeField] private GameObject exclamacion;
+        [SerializeField] private GameObject interrogacion;
+
         [SerializeField] private GameObject decalDetection;
         private GameObject _playerObj;
 

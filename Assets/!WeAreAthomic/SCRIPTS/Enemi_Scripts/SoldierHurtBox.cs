@@ -73,7 +73,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             //_greenMove.DisableMovement();
             botonSoldier.SetActive(false);
             _disolveEnemi.StartDisolving();
-            _destroyObject.DestroyThisObject(10f);
+            _destroyObject.DestroyThisObject(3f);
         }
 
         public void SetDeath(bool isDeath)

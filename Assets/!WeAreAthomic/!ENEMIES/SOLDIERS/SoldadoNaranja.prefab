@@ -103,7 +103,7 @@ MonoBehaviour:
   soldierWithoutBones: {fileID: 2354834905792715630}
   healthSliderObj: {fileID: 2008828739798454535}
   botonSoldier: {fileID: 7606970052691180770}
-  decalAtackDir: {fileID: 6510401233769242781}
+  decalAtackDir: {fileID: 0}
   decalPatrol: {fileID: 5116446470641881253}
   IsDeath: 0
   maxHealth: 100
@@ -170,7 +170,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -5032,7 +5032,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1934593625008246212}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1.28}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -5061,9 +5061,9 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -9874,12 +9874,11 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1642133490791264307}
+  - {fileID: 2873395756055394612}
   - {fileID: 7475714329995903652}
   - {fileID: 3163177796248224212}
-  - {fileID: 2873395756055394612}
   - {fileID: 4248326969732971665}
   - {fileID: 5793185224741482579}
-  - {fileID: 2668724071260893180}
   - {fileID: 2263510721093623249}
   - {fileID: 4726308314487099026}
   m_Father: {fileID: 0}
@@ -9951,11 +9950,16 @@ MonoBehaviour:
     m_Bits: 2049
   botonPuerta: {fileID: 7606970052691180770}
   exclamacion: {fileID: 8867658732008228216}
+  interrogacion: {fileID: 2699314655384611210}
   decalDetection: {fileID: 5116446470641881253}
   patrolSpeed: 1
   chaseSpeed: 2
   stoppingDistance: 3
   timeToGetCached: 1.5
+  groundSplashEffect: {fileID: 5823954174377461218}
+  decalArea: {fileID: 4681578498658497895}
+  maxDecalRange: 0
+  velocityDecalGrow: 0
 --- !u!114 &9205781819914684017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10021,7 +10025,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -14907,7 +14911,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -19793,7 +19797,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -24679,7 +24683,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -29565,7 +29569,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -34451,7 +34455,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -39996,96 +40000,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!1001 &2007852702216948545
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 3928551472870597726}
-    m_Modifications:
-    - target: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4721113850997877724, guid: e573b466d2c757f4cae220697f5f227f,
-        type: 3}
-      propertyPath: m_Name
-      value: Decal_AtackDirection_PIVOT
-      objectReference: {fileID: 0}
-    - target: {fileID: 4721113850997877724, guid: e573b466d2c757f4cae220697f5f227f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e573b466d2c757f4cae220697f5f227f, type: 3}
---- !u!4 &2668724071260893180 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
-    type: 3}
-  m_PrefabInstance: {fileID: 2007852702216948545}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6510401233769242781 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4721113850997877724, guid: e573b466d2c757f4cae220697f5f227f,
-    type: 3}
-  m_PrefabInstance: {fileID: 2007852702216948545}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2282848391748027059
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40191,12 +40105,22 @@ PrefabInstance:
     - target: {fileID: 4899275389653565529, guid: f5c7462b4925a174fa6c0f42dce83169,
         type: 3}
       propertyPath: m_Size.x
-      value: 10
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4899275389653565529, guid: f5c7462b4925a174fa6c0f42dce83169,
         type: 3}
       propertyPath: m_Size.y
-      value: 10
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899275389653565529, guid: f5c7462b4925a174fa6c0f42dce83169,
+        type: 3}
+      propertyPath: m_FadeScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899275389653565529, guid: f5c7462b4925a174fa6c0f42dce83169,
+        type: 3}
+      propertyPath: m_FadeFactor
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7115661140631639062, guid: f5c7462b4925a174fa6c0f42dce83169,
         type: 3}
@@ -40206,7 +40130,7 @@ PrefabInstance:
     - target: {fileID: 7115661140631639062, guid: f5c7462b4925a174fa6c0f42dce83169,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8224172741339828514, guid: f5c7462b4925a174fa6c0f42dce83169,
         type: 3}
@@ -40216,7 +40140,7 @@ PrefabInstance:
     - target: {fileID: 8224172741339828514, guid: f5c7462b4925a174fa6c0f42dce83169,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.06
+      value: -0.005
       objectReference: {fileID: 0}
     - target: {fileID: 8224172741339828514, guid: f5c7462b4925a174fa6c0f42dce83169,
         type: 3}
@@ -40226,7 +40150,7 @@ PrefabInstance:
     - target: {fileID: 8224172741339828514, guid: f5c7462b4925a174fa6c0f42dce83169,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.08
+      value: 0.015
       objectReference: {fileID: 0}
     - target: {fileID: 8224172741339828514, guid: f5c7462b4925a174fa6c0f42dce83169,
         type: 3}
@@ -40268,6 +40192,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5c7462b4925a174fa6c0f42dce83169, type: 3}
+--- !u!1 &4681578498658497895 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7115661140631639062, guid: f5c7462b4925a174fa6c0f42dce83169,
+    type: 3}
+  m_PrefabInstance: {fileID: 2470126317044179313}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5793185224741482579 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8224172741339828514, guid: f5c7462b4925a174fa6c0f42dce83169,
@@ -40701,6 +40631,12 @@ PrefabInstance:
 --- !u!1 &2008828739798454535 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3478458912044719079, guid: efaedc6625acc0b4ea60a335535fe799,
+    type: 3}
+  m_PrefabInstance: {fileID: 3144986895079951072}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2699314655384611210 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1067591206206923626, guid: efaedc6625acc0b4ea60a335535fe799,
     type: 3}
   m_PrefabInstance: {fileID: 3144986895079951072}
   m_PrefabAsset: {fileID: 0}
@@ -41478,7 +41414,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -41691,7 +41627,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -41886,7 +41822,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -41925,7 +41861,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -41958,7 +41894,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -42003,7 +41939,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -42102,7 +42038,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -42135,7 +42071,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -42223,7 +42159,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -42310,7 +42246,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -42415,7 +42351,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -42448,7 +42384,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -42487,7 +42423,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -42634,7 +42570,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -42727,7 +42663,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -42868,7 +42804,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -42901,7 +42837,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -42940,7 +42876,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -43045,7 +42981,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -43084,7 +43020,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -43279,7 +43215,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -43372,7 +43308,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -43465,7 +43401,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -43498,7 +43434,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -43531,7 +43467,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -43618,7 +43554,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -44005,7 +43941,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -44038,7 +43974,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65792
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
