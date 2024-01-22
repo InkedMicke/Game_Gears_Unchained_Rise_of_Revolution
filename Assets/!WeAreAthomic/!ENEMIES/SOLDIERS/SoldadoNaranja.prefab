@@ -9842,6 +9842,7 @@ GameObject:
   - component: {fileID: 7306749797782969996}
   - component: {fileID: 9205781819914684017}
   - component: {fileID: 6428628457112412791}
+  - component: {fileID: 1823015500786976364}
   m_Layer: 0
   m_Name: SoldadoNaranja
   m_TagString: Untagged
@@ -9943,7 +9944,8 @@ MonoBehaviour:
   patrolSpeed: 1
   chaseSpeed: 2
   stoppingDistance: 3
-  timeToGetCached: 1.5
+  timeToGetCached: 0.5
+  indicator: {fileID: 7041975937589469480}
   groundSplashEffect: {fileID: 5823954174377461218}
   decalArea: {fileID: 4681578498658497895}
   maxDecalRange: 0
@@ -9975,6 +9977,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a9c9c17e4fa4446b7e5275b50c8eab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1823015500786976364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3241077336018984013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab74c8fb88613d24bae4bec55da9adca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionDecal: {fileID: 4681578498658497895}
+  neutralMat: {fileID: 2100000, guid: a8bf5d949dba59d4f8eaf3732af37c2c, type: 2}
+  warningMat: {fileID: 2100000, guid: a8bf5d949dba59d4f8eaf3732af37c2c, type: 2}
+  catchMat: {fileID: 2100000, guid: 5b098196262fd054dbdd5aeca07832a0, type: 2}
 --- !u!1 &4909802896285775959
 GameObject:
   m_ObjectHideFlags: 0
@@ -40114,6 +40132,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4899275389653565529, guid: f5c7462b4925a174fa6c0f42dce83169,
         type: 3}
+      propertyPath: m_Size.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899275389653565529, guid: f5c7462b4925a174fa6c0f42dce83169,
+        type: 3}
+      propertyPath: m_Offset.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899275389653565529, guid: f5c7462b4925a174fa6c0f42dce83169,
+        type: 3}
       propertyPath: m_FadeScale
       value: 1
       objectReference: {fileID: 0}
@@ -40145,7 +40173,7 @@ PrefabInstance:
     - target: {fileID: 8224172741339828514, guid: f5c7462b4925a174fa6c0f42dce83169,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.654
+      value: 0.578
       objectReference: {fileID: 0}
     - target: {fileID: 8224172741339828514, guid: f5c7462b4925a174fa6c0f42dce83169,
         type: 3}
@@ -40204,6 +40232,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2470126317044179313}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7041975937589469480 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4899275389653565529, guid: f5c7462b4925a174fa6c0f42dce83169,
+    type: 3}
+  m_PrefabInstance: {fileID: 2470126317044179313}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4681578498658497895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2651756588369017211
 PrefabInstance:
   m_ObjectHideFlags: 0

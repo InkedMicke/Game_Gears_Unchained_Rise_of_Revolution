@@ -44,13 +44,13 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
         private GameObject _playerObj;
 
         private Transform currentWaypoint;
-        private Transform _playerTr;
+        protected Transform _playerTr;
 
         private Vector3 _startPosSearchingPlayer;
 
         [System.NonSerialized] public bool IsChasingPlayer;
         [System.NonSerialized] public bool IsAttacking;
-        private bool _isPatrolling;
+        protected bool isPatrolling;
         private bool _isWaitingForPatrol;
         private bool _playerHeared;
         private bool _isOnWarning;
@@ -128,7 +128,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         private void StartPatrol()
         {
-            _isPatrolling = true;
+            isPatrolling = true;
             currentWaypoint = waypoints.GetNextWaypoint(currentWaypoint);
             _agent.SetDestination(currentWaypoint.position);
             _soldierAnim.SetWalking(true);
@@ -139,7 +139,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
 
         private void FollowPath()
         {
-            if (_isPatrolling)
+            if (isPatrolling)
             {
                 if (Vector3.Distance(transform.position, currentWaypoint.position) < 0.5f && !_isWaitingForPatrol)
                 {
@@ -238,8 +238,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
                 yield return new WaitForEndOfFrame();
             }
 
-            while (_searchingPlayerTimes < 3)
+            while (_searchingPlayerTimes < 4)
             {
+                _soldierAnim.SetWalking(false);
+                var random = Random.Range(1f, 2f);
+                yield return new WaitForSeconds(random);
                 if (_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending)
                 {
                     _soldierAnim.SetWalking(false);
@@ -269,16 +272,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
                 _materialChangeOnDetection.CatchDecal();
                 _agent.SetDestination(_playerTr.position);
                 _soldierAnim.SetWalking(true);
-                var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
-
-                if (distanceToPlayer < 5f && !IsAttacking && !_soldierHurtBox.IsDeath)
-                {
-                    _agent.isStopped = true;
-                    _soldierAnim.SetWalking(false);
-                    StartDecalToAttack();
-                    IsChasingPlayer = false;
-                    _isPatrolling = false;
-                }
             }
 
         }
@@ -300,17 +293,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             _agent.isStopped = false;
             botonPuerta.SetActive(false);
             AgentValuesToChase();
-            _isPatrolling = false;
+            isPatrolling = false;
             _mainCHack.StopHack();
             exclamacion.SetActive(true);
             _exclamationAnim.SetTrigger("IsCatch");
-        }
-
-
-
-        protected virtual void StartDecalToAttack()
-        {
-
         }
 
         public void DisableMovement()
