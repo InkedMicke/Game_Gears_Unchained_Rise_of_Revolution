@@ -5,7 +5,7 @@ using System.Collections;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
-    public class MainCHealthManager : MonoBehaviour, IDamageable
+    public class MainCHealthManager : HurtBox
     {
         private CharacterController _cc;
         private MainCRagdoll _mainCRagdoll;
@@ -21,12 +21,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject cameraBase;
 
         [SerializeField] private float timeToGameover = 1.5f;
+        public float maxHealth = 100;
+        public float currentHealth;
 
         public bool IsDeath;
         public bool CanReceiveDamage = true;
-
-        public float currentHealth = 50f;
-        public float maxHealth = 100f;
 
         private void Awake()
         {
@@ -43,6 +42,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             SetMaxHealthSlider();
             SetHealthSlider();
+            currentHealth = maxHealth;
         }
 
         private void Update()
@@ -53,7 +53,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        public void Damage(float damage)
+        public override void Damage(float damage)
         {
             if (!IsDeath && CanReceiveDamage)
             {

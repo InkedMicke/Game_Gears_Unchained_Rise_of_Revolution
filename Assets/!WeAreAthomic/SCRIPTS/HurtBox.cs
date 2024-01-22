@@ -1,7 +1,10 @@
+using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 using UnityEngine;
 
-public class HurtBox : MonoBehaviour
+public class HurtBox : MonoBehaviour, IDamageable
 {
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -12,4 +15,10 @@ public class HurtBox : MonoBehaviour
     {
 
     }
+
+    public virtual void Damage(float damage)
+    {
+
+    }
+
 }
