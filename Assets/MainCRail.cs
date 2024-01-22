@@ -25,6 +25,7 @@ public class MainCRail : MonoBehaviour
     private float _splineLength;
     private float _distancePercentage;
     private float _timeGraceJumpPeriod;
+    private float _currentRailSpeed;
 
     private void Awake()
     {
@@ -43,19 +44,24 @@ public class MainCRail : MonoBehaviour
 
         if(IsSliding)
         {
+            _currentRailSpeed = _mainCMove.IsJumping ? railSpeed / 2 : railSpeed;
+        }
+
+        if(IsSliding)
+        {
             var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
             Debug.DrawRay(currentPosition, Vector3.up * 20, Color.yellow);
         }
 
         if(IsSliding && !_mainCMove.IsJumping)
         {
-            _distancePercentage += railSpeed * Time.deltaTime / _splineLength;
+            _distancePercentage += _currentRailSpeed * Time.deltaTime / _splineLength;
 
             var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
             //transform.position = Vector3.MoveTowards(transform.position ,currentPosition, railSpeed * Time.deltaTime);
             var posVector = new Vector3(currentPosition.x, currentPosition.y, currentPosition.z);
             var difference = posVector - transform.position;
-            _cc.Move(railSpeed * Time.deltaTime * difference.normalized);
+            _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
             
 
             if(_distancePercentage > 1f)
@@ -69,12 +75,12 @@ public class MainCRail : MonoBehaviour
         }
         else if(IsSliding && _mainCMove.IsJumping)
         {
-            _distancePercentage += railSpeed * Time.deltaTime / _splineLength;
+            _distancePercentage += _currentRailSpeed * Time.deltaTime / _splineLength;
             var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
             var posVector = new Vector3(currentPosition.x, transform.position.y, currentPosition.z);
             //transform.position = Vector3.MoveTowards(transform.position, currentPosition, railSpeed * Time.deltaTime);
             var difference = posVector - transform.position;
-            _cc.Move(railSpeed * Time.deltaTime * difference.normalized);
+            _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
         }
     }
 
