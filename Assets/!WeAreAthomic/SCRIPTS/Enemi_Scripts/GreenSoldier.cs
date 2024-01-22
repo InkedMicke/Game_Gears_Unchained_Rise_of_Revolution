@@ -18,7 +18,6 @@ public class GreenSoldier : Enemy
 
     [SerializeField] private Transform muzzle1;
     private Transform endDecalTr;
-    private Transform _playerTr => GameObject.FindGameObjectWithTag("Player").transform;
 
     [System.NonSerialized] public bool IsShooting;
     private bool _hasEndedShootAnim;
@@ -39,7 +38,32 @@ public class GreenSoldier : Enemy
         base.Awake();
     }
 
-    protected override void StartDecalToAttack()
+    protected override void Update()
+    {
+        var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
+
+        if (distanceToPlayer < 6f && !IsAttacking && !_soldierHurtBox.IsDeath && IsChasingPlayer)
+        {
+            _agent.isStopped = true;
+            _soldierAnim.SetWalking(false);
+            StartDecalToAttack();
+            IsChasingPlayer = false;
+            isPatrolling = false;
+        }
+        
+/*        if(IsChasingPlayer && !IsAttacking)
+        {
+            if(distanceToPlayer < 2f)
+            {
+                _soldierAnim.SetBackWalking(true);
+                IsChasingPlayer = false;
+            }
+        }*/
+
+        base.Update();
+    }
+
+    private void StartDecalToAttack()
     {
         _agent.isStopped = true;
         IsAttacking = true;
