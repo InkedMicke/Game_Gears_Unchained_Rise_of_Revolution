@@ -89,6 +89,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             {
                 decalDetection.SetActive(false);
                 StartChasingPlayer();
+                Destroy(botonPuerta);
             }
 
             // Configuracion de Fields Of Views
