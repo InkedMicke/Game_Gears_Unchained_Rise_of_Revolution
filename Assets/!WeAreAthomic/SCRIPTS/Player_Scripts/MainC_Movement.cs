@@ -1,8 +1,6 @@
 using _WeAreAthomic.SCRIPTS.Debug_Scripts;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
@@ -211,6 +209,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (IsJumping || IsFalling || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsSliding && !IsFollowingTrajectory)
             {
                 _velocity += transform.up.normalized * (gravity * Time.deltaTime);
+                _velocity.x = 0f;
                 _velocity.z = 0f;
                 _cc.Move(_velocity * Time.deltaTime);
             }
@@ -511,6 +510,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _velocity.y = jumpImpulse;
                 _timeGraceJumpPeriod = Time.time + timeNextJump;
             }
+
+            if(CanJumpRail())
+            {
+                _mainCSounds.PlayJumpSound();
+                IsJumping = true;
+                _mainCAnimator.SetGrounded(false);
+                _mainCLayers.EnableJumpLayer();
+                _mainCAnimator.SetJumping(true);
+                _velocity.y = jumpImpulseOnRail;
+                _timeGraceJumpPeriod = Time.time + timeNextJump;
+            }
         }
 
         public void EndJump()
@@ -659,6 +669,41 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             if (_mainCRail.IsOnRail())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CanJumpRail()
+        {
+            if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsStopMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+            {
+                return false;
+            }
+
+            if (!_mainCRail.IsOnRail())
+            {
+                return false;
+            }
+
+            if (IsJumping)
+            {
+                return false;
+            }
+
+            if (Time.time < _timeGraceJumpPeriod)
             {
                 return false;
             }
