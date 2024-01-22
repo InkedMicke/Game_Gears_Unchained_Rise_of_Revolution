@@ -102,7 +102,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 float curveTime = (Time.time - startTime) / _dashTime;
                 float speedMultiplier = _mainCMove.dashSpeedCurve.Evaluate(curveTime);
 
-                _cc.Move(_directionDash.normalized * dashSpeed * speedMultiplier * Time.deltaTime);
+                _cc.Move(dashSpeed * speedMultiplier * Time.deltaTime * moveDirection.normalized);
                 yield return new WaitForEndOfFrame();
             }
 
