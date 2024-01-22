@@ -49,7 +49,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
                 _enemy.StartChasingPlayer();
             }
         }
-
+            
         private void CheckForDeath()
         {
             if (currentHealth <= 0)
@@ -74,6 +74,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
             botonSoldier.SetActive(false);
             _disolveEnemi.StartDisolving();
             _destroyObject.DestroyThisObject(3f);
+            Debug.Log("hola3");
         }
 
         public void SetDeath(bool isDeath)
