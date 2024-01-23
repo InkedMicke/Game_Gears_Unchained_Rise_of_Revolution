@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
-using Unity.VisualScripting;
-using Random = UnityEngine.Random;
 
-namespace _WeAreAthomic.SCRIPTS.LightKiller
+namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {
     public class CctvController : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEditor;
 using UnityEngine;
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts;
+using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 
 [CustomEditor(typeof(FieldOfView))]
 public class FieldOfViewEditor : Editor

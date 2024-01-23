@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering.Universal;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts
+namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 {
     public class C_MaterialChangeOnDetection : MonoBehaviour
     {

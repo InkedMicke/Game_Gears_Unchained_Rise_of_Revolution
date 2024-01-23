@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 using System.Collections;
+using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -11,7 +11,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCRagdoll _mainCRagdoll;
         private MainCSounds _mainSounds;
         private MainCAttack _mainCAttack;
-        private MainCPlayerInterface _mainCInterface;
         private MainCAnimatorController _mainCAnim;
         private MainCLayers _mainCLayers;
 
@@ -32,7 +31,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _cc = GetComponentInParent<CharacterController>();
             _mainCRagdoll = GetComponentInParent<MainCRagdoll>();
             _mainSounds = GetComponentInParent<MainCSounds>();
-            _mainCInterface = GetComponentInParent<MainCPlayerInterface>();
             _mainCAttack = GetComponentInParent<MainCAttack>();
             _mainCAnim = GetComponentInParent<MainCAnimatorController>();
             _mainCLayers = GetComponentInParent<MainCLayers>();
@@ -40,9 +38,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Start()
         {
+            currentHealth = maxHealth;
             SetMaxHealthSlider();
             SetHealthSlider();
-            currentHealth = maxHealth;
         }
 
         private void Update()
@@ -142,13 +140,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             yield return new WaitForSeconds(2f);
 
             CanReceiveDamage = true;
-        }
-
-        private IEnumerator waitTest()
-        {
-            yield return new WaitForSeconds(1f);
-            Debug.Log("hola2");
-
         }
 
         public void SetHealthSlider()

@@ -1,4 +1,4 @@
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts;
+using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

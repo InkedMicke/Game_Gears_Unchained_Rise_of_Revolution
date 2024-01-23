@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.LightKiller
+namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {
     public class LightKiller : MonoBehaviour
     {

@@ -1292,7 +1292,6 @@ GameObject:
   - component: {fileID: 274469294349971052}
   - component: {fileID: 2456772534812874143}
   - component: {fileID: 4075169371180973161}
-  - component: {fileID: 245050976983308764}
   - component: {fileID: 5869859861386743886}
   m_Layer: 8
   m_Name: HurtBox
@@ -1366,43 +1365,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &245050976983308764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8120096420099604491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6427950e11069249a35b8c9d1a377b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionDetection:
-  - enabled: 1
-    detectionLayer:
-      serializedVersion: 2
-      m_Bits: 2048
-    detectionTag: Pipe
-    detectionType: 0
-    eventsToActivate:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7621926829757928742}
-          m_TargetAssemblyTypeName: MainCRagdoll, Assembly-CSharp
-          m_MethodName: SetEnabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-    additionalInfo: 
-  useTargetScript: 0
-  targetScript: {fileID: 0}
 --- !u!114 &5869859861386743886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1419,10 +1381,10 @@ MonoBehaviour:
   gameOverCanvas: {fileID: 0}
   cameraBase: {fileID: 0}
   timeToGameover: 2
+  maxHealth: 100
+  currentHealth: 50
   IsDeath: 0
   CanReceiveDamage: 1
-  currentHealth: 50
-  maxHealth: 100
 --- !u!1 &8715082805456505761
 GameObject:
   m_ObjectHideFlags: 0
