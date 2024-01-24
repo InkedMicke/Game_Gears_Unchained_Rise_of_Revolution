@@ -4,6 +4,8 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.Universal;
+
 public enum TypeOfBehaviour
 {
     Patrol,
@@ -29,6 +31,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         public TypeOfBehaviour typeOfBehaviour;
 
         [SerializeField] private GWaypoints waypoints;
+
+        [SerializeField] protected DecalProjector indicator;
 
         [SerializeField] private LayerMask targetFovLayer;
         [SerializeField] private LayerMask obstacleFovLayer;

@@ -10,8 +10,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
     {
         private C_MaterialChangeOnDetection _materialChange;
 
-        [SerializeField] private DecalProjector indicator;
-
         [SerializeField] private ParticleSystem groundSplashEffect;
 
         [SerializeField] private GameObject decalArea;

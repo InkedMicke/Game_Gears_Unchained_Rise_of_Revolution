@@ -1,7 +1,6 @@
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
 {
@@ -52,16 +51,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
                 IsChasingPlayer = false;
                 isPatrolling = false;
             }
-
-            /*        if(IsChasingPlayer && !IsAttacking)
-                    {
-                        if(distanceToPlayer < 2f)
-                        {
-                            _soldierAnim.SetBackWalking(true);
-                            IsChasingPlayer = false;
-                        }
-                    }*/
-
             base.Update();
         }
 
@@ -139,42 +128,35 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
         {
             yield return new WaitForSeconds(.2f);
 
-            endDecalTr = decalAttack.transform.GetChild(1);
-
-            var decal = decalAttack.transform.GetChild(0).GetComponent<DecalProjector>();
-
             if (greaterOrSmaller)
             {
-                decal.uvBias = new(decal.uvBias.x, 1);
+                indicator.uvBias = new(indicator.uvBias.x, 1);
 
-                while (decal.uvBias.y > 0)
+                while (indicator.uvBias.y > 0)
                 {
-                    decal.uvBias -= new Vector2(0, Time.deltaTime * 4);
+                    indicator.uvBias -= new Vector2(0, Time.deltaTime * 4);
                     yield return new WaitForSeconds(.01f);
                 }
-                decal.uvBias = new(decal.uvBias.x, 0);
+                indicator.uvBias = new(indicator.uvBias.x, 0);
                 _shootCoroutine = StartCoroutine(ShootCoroutine());
             }
             else
             {
-                decal.uvBias = new(decal.uvBias.x, 0);
+                indicator.uvBias = new(indicator.uvBias.x, 0);
 
-                while (decal.uvBias.y < 1)
+                while (indicator.uvBias.y < 1)
                 {
-                    decal.uvBias += new Vector2(0, Time.deltaTime * 8);
+                    indicator.uvBias += new Vector2(0, Time.deltaTime * 8);
                     yield return new WaitForSeconds(.01f);
                 }
 
-                decal.uvBias = new(decal.uvBias.x, 1);
+                indicator.uvBias = new(indicator.uvBias.x, 1);
             }
-
-
         }
 
         // Comprueba si el personaje ha salido del decal para continuar o no atacando
         private bool CheckForDisableShoot()
         {
-
             _decalHurtBox = decalAttack.GetComponentInChildren<GreenDecalHurtBox>();
 
             if (_decalHurtBox.HasPlayerLeft)
@@ -186,8 +168,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
             {
                 return true;
             }
-
-
             return false;
         }
 
