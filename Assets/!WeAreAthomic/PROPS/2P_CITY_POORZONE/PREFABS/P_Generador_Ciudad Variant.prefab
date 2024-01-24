@@ -537,6 +537,7 @@ GameObject:
   - component: {fileID: 4269808452087449859}
   - component: {fileID: 4131013197818636731}
   - component: {fileID: 6376352965327854940}
+  - component: {fileID: 7153875712061720456}
   m_Layer: 0
   m_Name: animLOD2
   m_TagString: Untagged
@@ -609,6 +610,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7153875712061720456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5402281271051598873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b97187b2d9de144b247ee082ccc0cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {x: 360, y: 0, z: 0}
+  loop: 1
+  WantToRotateStart: 0
+  loopType: 0
+  duration: 4
+  rotateMode: 1
+  ease: 1
 --- !u!1 &6127050405196728315
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,6 +756,7 @@ GameObject:
   - component: {fileID: 1984392367405365638}
   - component: {fileID: 1845592869826287934}
   - component: {fileID: 8698079596801912281}
+  - component: {fileID: 5804513992041002111}
   m_Layer: 0
   m_Name: animLOD1
   m_TagString: Untagged
@@ -808,6 +829,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5804513992041002111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7651704017983491228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b97187b2d9de144b247ee082ccc0cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {x: 360, y: 0, z: 0}
+  loop: 1
+  WantToRotateStart: 0
+  loopType: 0
+  duration: 4
+  rotateMode: 1
+  ease: 1
 --- !u!1 &8489062730462492542
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,7 +942,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: fd261821b67699942be3acd26876f426,
         type: 3}
       propertyPath: m_RootOrder
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fd261821b67699942be3acd26876f426,
         type: 3}
@@ -1113,6 +1153,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6282584701360516155}
+    - targetCorrespondingSourceObject: {fileID: 8104946465264786362, guid: fd261821b67699942be3acd26876f426,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 961089179913199806}
   m_SourcePrefab: {fileID: 100100000, guid: fd261821b67699942be3acd26876f426, type: 3}
 --- !u!4 &1694108268199795462 stripped
 Transform:
@@ -1177,7 +1221,7 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.21766037
+  - screenRelativeHeight: 0.0901672
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 8284094236478424594}
@@ -1275,6 +1319,31 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 1155198610361859309}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6949787452018976599 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8104946465264786362, guid: fd261821b67699942be3acd26876f426,
+    type: 3}
+  m_PrefabInstance: {fileID: 1155198610361859309}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &961089179913199806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6949787452018976599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b97187b2d9de144b247ee082ccc0cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {x: 360, y: 0, z: 0}
+  loop: 1
+  WantToRotateStart: 0
+  loopType: 0
+  duration: 4
+  rotateMode: 1
+  ease: 1
 --- !u!23 &8284094236478424594 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 7133443230519851775, guid: fd261821b67699942be3acd26876f426,
