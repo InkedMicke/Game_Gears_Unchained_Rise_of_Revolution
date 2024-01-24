@@ -73,6 +73,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_LataAboyada
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c3ffacd344033f04792c478a0ea388cb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c3ffacd344033f04792c478a0ea388cb,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -157,6 +167,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Lata (3) Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3d41f3f8f1b3cd44e9b61e9aac756b6b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3d41f3f8f1b3cd44e9b61e9aac756b6b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -173,7 +193,21 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: -6789422358930786228}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3d41f3f8f1b3cd44e9b61e9aac756b6b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8813528415217458446}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3d41f3f8f1b3cd44e9b61e9aac756b6b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2838425951663084602}
   m_SourcePrefab: {fileID: 100100000, guid: 3d41f3f8f1b3cd44e9b61e9aac756b6b, type: 3}
+--- !u!23 &857453995944626228 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 3d41f3f8f1b3cd44e9b61e9aac756b6b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2028832582642586800}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1217860507930421729 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3d41f3f8f1b3cd44e9b61e9aac756b6b,
@@ -188,9 +222,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217860507930421729}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 0.2
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.01
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -230,6 +264,63 @@ CapsuleCollider:
   m_Height: 0.17128502
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8813528415217458446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217860507930421729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e05e52d61013e429a9355ceac26907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionDetection:
+  - enabled: 1
+    detectionLayer:
+      serializedVersion: 2
+      m_Bits: 65536
+    detectionType: 0
+    eventsToActivate:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 857453995944626228}
+          m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    additionalInfo: 
+  useTargetScript: 0
+  targetScript: {fileID: 0}
+--- !u!65 &2838425951663084602
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217860507930421729}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.083247215, y: 0.16928521, z: 0.083247215}
+  m_Center: {x: 0, y: -0.0000000037252903, z: 0}
 --- !u!4 &1994361266769703771 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3d41f3f8f1b3cd44e9b61e9aac756b6b,

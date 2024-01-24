@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8674347640050522144
 Transform:
@@ -30,9 +30,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 888668238451982084}
-  - {fileID: 4765363908923790798}
+  - {fileID: 5020176884770796070}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!205 &9167993006026030074
 LODGroup:
@@ -51,7 +51,7 @@ LODGroup:
   - screenRelativeHeight: 0.13908236
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 4765363908923790799}
+    - renderer: {fileID: 6188065305185225033}
   - screenRelativeHeight: 0.017695729
     fadeTransitionWidth: 0
     renderers:
@@ -124,6 +124,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P_AireAcondicionado_LOD1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 925135e2573fab14fa44b252df2330c3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -210,18 +215,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_AireAcondicionado
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 05f2056080f427048beadbb2fd89dfa6,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05f2056080f427048beadbb2fd89dfa6, type: 3}
---- !u!4 &4765363908923790798 stripped
+--- !u!4 &5020176884770796070 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 05f2056080f427048beadbb2fd89dfa6,
     type: 3}
   m_PrefabInstance: {fileID: 4765363908923790797}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &4765363908923790799 stripped
+--- !u!23 &6188065305185225033 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 05f2056080f427048beadbb2fd89dfa6,
     type: 3}
