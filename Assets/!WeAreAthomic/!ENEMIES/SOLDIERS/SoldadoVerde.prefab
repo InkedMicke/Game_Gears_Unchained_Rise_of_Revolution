@@ -71,7 +71,7 @@ Transform:
   - {fileID: 6300919513793147432}
   - {fileID: 5307147061799431835}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7864609738589064973
 Animator:
@@ -131,6 +131,7 @@ MonoBehaviour:
   _typeOfEnemy: 0
   typeOfBehaviour: 0
   waypoints: {fileID: 0}
+  indicator: {fileID: 1460873061688562638}
   targetFovLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -144,7 +145,6 @@ MonoBehaviour:
   patrolSpeed: 2
   chaseSpeed: 3
   stoppingDistance: 3
-  timeToGetCached: 0.5
   moveToDecalCurve:
     serializedVersion: 2
     m_Curve: []
@@ -154,9 +154,10 @@ MonoBehaviour:
   bullet: {fileID: 3870155545384615628, guid: 0b579e343ccd0464499461d298987ce6, type: 3}
   decalAttack: {fileID: 2891871576593612105}
   muzzle1: {fileID: 6153274476758399260}
+  endDecalTr: {fileID: 5590384665883752613}
   checkRadius: 5
   speedShooting: 1.5
-  spreadAngle: 2
+  spreadAngle: 5
   shootAngle: 0.6
   maxTimeToStopShooting: 2.5
   rotationSpeed: 5
@@ -176,6 +177,7 @@ MonoBehaviour:
   walkingAnimString: isWalking
   backWalkingAnimString: isBackWalking
   shootAnimString: shoot
+  redCount: redCount
 --- !u!114 &5632661560983212616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +202,6 @@ GameObject:
   - component: {fileID: 6395735996969651420}
   - component: {fileID: 1342642170455199101}
   - component: {fileID: 1895518675992872253}
-  - component: {fileID: 3710949005130519278}
   m_Layer: 9
   m_Name: GreenHurtBox
   m_TagString: Untagged
@@ -296,18 +297,6 @@ MonoBehaviour:
   IsDeath: 0
   maxHealth: 100
   currentHealth: 0
---- !u!114 &3710949005130519278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8202827297792976926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c456195e3df0a6540b9f6ec5af422b92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &223731726165519463
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5038,9 +5027,27 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e573b466d2c757f4cae220697f5f227f, type: 3}
+--- !u!114 &1460873061688562638 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9071139871789991259, guid: e573b466d2c757f4cae220697f5f227f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7612554414708922005}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2891871576593612105 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4721113850997877724, guid: e573b466d2c757f4cae220697f5f227f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7612554414708922005}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5590384665883752613 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2607637872374984240, guid: e573b466d2c757f4cae220697f5f227f,
     type: 3}
   m_PrefabInstance: {fileID: 7612554414708922005}
   m_PrefabAsset: {fileID: 0}

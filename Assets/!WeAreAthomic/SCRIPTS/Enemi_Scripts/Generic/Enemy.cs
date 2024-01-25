@@ -177,10 +177,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
                 }
                 else
                 {
-                    if (!_isOnWarning)
+                    if (!_isOnWarning && !IsAttacking)
                     {
                         _materialChangeOnDetection.PatrolDecal();
                         _totalTimeCached = 0;
+                        Debug.Log("hola4");
                     }
                 }
             }
@@ -288,7 +289,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _agent.stoppingDistance = stoppingDistance;
         }
 
-        private void ChangingValuesToChase()
+        public void ChangingValuesToChase()
         {
             IsChasingPlayer = true;
             _agent.isStopped = false;

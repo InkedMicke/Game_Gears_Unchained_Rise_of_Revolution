@@ -18,7 +18,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
         private GameObject _currentDecal;
 
         [SerializeField] private Transform muzzle1;
-        private Transform endDecalTr;
+        [SerializeField] private Transform endDecalTr;
 
         [System.NonSerialized] public bool IsShooting;
         private bool _hasEndedShootAnim;
@@ -85,7 +85,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
                 {
                     var desiredPos = new Vector3(
                         endDecalTr.position.x + Random.Range(-spreadAngle, spreadAngle),
-                        muzzle1.position.y + Random.Range(-1f, .5f) + Random.Range(-spreadAngle, spreadAngle),
+                        muzzle1.position.y + Random.Range(-1f, 0f) + Random.Range(-spreadAngle, spreadAngle),
                         endDecalTr.position.z + Random.Range(-spreadAngle, spreadAngle)
                         );
                     var bulletObj = Instantiate(bullet, muzzle1.position, transform.rotation);
