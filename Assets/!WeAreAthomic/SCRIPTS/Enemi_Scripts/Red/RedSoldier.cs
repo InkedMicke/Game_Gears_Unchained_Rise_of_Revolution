@@ -1,5 +1,6 @@
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using DG.Tweening;
+using DG.Tweening.Core;
 using System.Collections;
 using UnityEngine;
 
@@ -7,19 +8,26 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 {
     public class RedSoldier : Enemy
     {
+        G_MeshTrail _trail;
         [SerializeField] private ParticleSystem _particlesTornadoDash;
+
+        private Tween _dashTween;
 
         [SerializeField] private Ease dashEase;
 
+        [SerializeField] private Transform indiciatorPivot;
         [SerializeField] private Transform endTrDecal;
 
         private Vector3 indicatorStartPos;
+
+        private bool _isDashing;
 
         [SerializeField] private float rotationSpeed = 5f;
         [SerializeField] private float dashDuracion = 5f;
 
         protected override void Awake()
         {
+            _trail = GetComponent<G_MeshTrail>();
             base.Awake();
         }
 
@@ -41,6 +49,17 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
                 IsChasingPlayer = false;
                 isPatrolling = false;
             }
+
+            if(_isDashing)
+            {
+                if (Physics.Raycast(transform.position, transform.forward, 1f))
+                {
+                    _dashTween.Kill();
+                    EndDash();
+                    Debug.Log("hola1");
+                }
+            }
+
             base.Update();
         }
 
@@ -67,7 +86,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
                 // Si estamos casi mirando al objetivo, detener la rotaci?n
-                if (Quaternion.Angle(transform.rotation, targetRotation) < 6f)
+                if (Quaternion.Angle(transform.rotation, targetRotation) < 2f)
                 {
                     StartCoroutine(DecalSizer(true));
                     yield break;
@@ -92,6 +111,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
                 }
                 indicator.uvBias = new(indicator.uvBias.x, 0);
                 _soldierAnim.SetRedCount(1);
+                _particlesTornadoDash.Play();
             }
             else
             {
@@ -107,24 +127,33 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
             }
         }
 
+        private void OnDrawGizmos()
+        {
+            Debug.DrawRay(transform.position, transform.forward * 1f, Color.gray);
+        }
+
         public void StartDash()
         {
             //StartCoroutine(DashForward());
             _agent.enabled = false;
             var desiredEndPos = new Vector3(endTrDecal.position.x, transform.position.y, endTrDecal.position.z);
-            transform.DOMove(desiredEndPos, dashDuracion).SetEase(dashEase).OnComplete(() => _soldierAnim.SetRedCount(3));
+            _dashTween = transform.DOMove(desiredEndPos, dashDuracion).SetEase(dashEase).OnComplete(() => _soldierAnim.SetRedCount(3));
             _soldierAnim.SetRedCount(2);
             indicator.gameObject.transform.SetParent(transform.parent);
+            _trail.EnableTrail();
+            _isDashing = true;
         }
 
         public void EndDash()
         {
-            StartCoroutine(DecalSizer(false));
-            indicator.gameObject.transform.SetParent(transform);
+            indicator.uvBias = new(0, 1);
+            indicator.gameObject.transform.SetParent(indiciatorPivot.transform);
             indicator.transform.localPosition = indicatorStartPos;
             _soldierAnim.SetRedCount(0);
             _agent.enabled = true;
-            ChasePlayer();
+            IsAttacking = false;
+            _isDashing = false;
+            ChangingValuesToChase();
         }
   
     }

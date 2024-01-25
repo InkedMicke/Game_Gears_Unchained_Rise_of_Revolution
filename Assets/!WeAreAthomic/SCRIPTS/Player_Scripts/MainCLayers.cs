@@ -165,12 +165,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         
         public void EnableHitLayer()
         {
-            StartCoroutine(nameof(EnableJumpCoroutine));
+            StartCoroutine(nameof(EnableHitCoroutine));
         }
 
         public void DisableHitLayer()
         {
-            StartCoroutine(nameof(DisableJumpCoroutine));
+            StartCoroutine(nameof(EnableHitCoroutine));
         }
 
         private IEnumerator EnableAttackCoroutine()
