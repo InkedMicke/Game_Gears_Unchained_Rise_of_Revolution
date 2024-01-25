@@ -18,7 +18,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private CharacterController _cc;
         private Godmode _godMode;
         private MainCHealthManager _mainCHealth;
-        private Rigidbody _rb;
         private GTrajectory _trajectory;
         private MainCSounds _mainCSounds;
         private MainCDash _mainCDash;

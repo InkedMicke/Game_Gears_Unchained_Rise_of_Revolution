@@ -26,6 +26,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _anim.SetBool(backWalkingAnimString, condition);
         }
 
+        public void SetAnimRootMotion(bool condition)
+        {
+            _anim.applyRootMotion = condition;
+        }
+
         public void ShootTrigger()
         {
             _anim.SetTrigger(shootAnimString);

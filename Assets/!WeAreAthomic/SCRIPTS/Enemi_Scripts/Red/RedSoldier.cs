@@ -19,6 +19,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 
         [SerializeField] private Ease dashEase;
 
+        [SerializeField] private LayerMask layersToStopDashing;
+
         [SerializeField] private Transform indiciatorPivot;
         [SerializeField] private Transform endTrDecal;
 
@@ -52,15 +54,15 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
                 StartDecalToAttack();
                 IsChasingPlayer = false;
                 isPatrolling = false;
+                isOnWarning = false;
             }
 
             if(_isDashing)
             {
-                if (Physics.Raycast(transform.position, transform.forward, 1f))
+                if (Physics.Raycast(transform.position, transform.forward, 1f, layersToStopDashing))
                 {
                     _dashTween.Kill();
                     EndDash();
-                    Debug.Log("hola1");
                 }
             }
 
@@ -78,16 +80,24 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
         {
             while (!_soldierHurtBox.IsDeath)
             {
-                var currentPlayerPos = _playerTr.transform.position;
-
-                // Calcular la direcci?n hacia el objetivo
-                Vector3 targetDirection = currentPlayerPos - transform.position;
+                var distanceToPlayer = _playerTr.position - transform.position;
+                distanceToPlayer.y = 0f;
+                if (distanceToPlayer.magnitude > 9f)
+                {
+                    ChangingValuesToChase();
+                    IsAttacking = false;
+                    break;
+                }
 
                 // Calcular la rotaci?n hacia el objetivo
-                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+                Quaternion targetRotation = Quaternion.LookRotation(distanceToPlayer);
+
+                var actualSpeed = rotationSpeed * Mathf.Pow(9 / distanceToPlayer.magnitude, 2);
+
+                actualSpeed = Mathf.Clamp(actualSpeed, 0f, 10);
 
                 // Rotar suavemente hacia el objetivo
-                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, actualSpeed * Time.deltaTime);
 
                 // Si estamos casi mirando al objetivo, detener la rotaci?n
                 if (Quaternion.Angle(transform.rotation, targetRotation) < 2f)
@@ -110,7 +120,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 
                 while (indicator.uvBias.y > 0)
                 {
-                    indicator.uvBias -= new Vector2(0, Time.deltaTime * 4);
+                    indicator.uvBias -= new Vector2(0, Time.deltaTime * 8);
                     yield return new WaitForSeconds(.01f);
                 }
                 indicator.uvBias = new(indicator.uvBias.x, 0);
@@ -141,6 +151,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
             //StartCoroutine(DashForward());
             _agent.enabled = false;
             _attackHitBox.ClearList();
+            _soldierAnim.SetAnimRootMotion(true);
             var desiredEndPos = new Vector3(endTrDecal.position.x, transform.position.y, endTrDecal.position.z);
             _dashTween = transform.DOMove(desiredEndPos, dashDuracion).SetEase(dashEase).OnComplete(() => _soldierAnim.SetRedCount(3));
             _soldierAnim.SetRedCount(2);
@@ -159,6 +170,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
             IsAttacking = false;
             _isDashing = false;
             ChangingValuesToChase();
+            _soldierAnim.SetAnimRootMotion(false);
         }
   
     }
