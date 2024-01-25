@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
@@ -8,6 +10,8 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 
         [SerializeField] protected EnemyDamageData damageData;
 
+        [NonSerialized] protected List<Collider> colList = new();
+
         private void OnTriggerEnter(Collider collision)
         {
             GotEnterCollision(collision);
@@ -17,8 +21,21 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
         {
             if (collision.TryGetComponent(out HurtBox hurtbox))
             {
+                foreach (var collider in colList)
+                {
+                    if (collider == collision)
+                    {
+                        return;
+                    }
+                }
                 hurtbox.Damage(GameManagerSingleton.Instance.GetEnemyDamage(damageData));
+                colList.Add(collision);
             }
+        }
+
+        public void ClearList()
+        {
+            colList.Clear();
         }
     }
 }

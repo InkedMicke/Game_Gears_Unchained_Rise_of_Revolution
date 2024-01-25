@@ -129,12 +129,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void OnEnable()
         {
             _playerInputActions.Enable();
-            _playerInputActions.PlayerPC.Running.performed += RunOn;
-            _playerInputActions.PlayerPC.Running.canceled += RunOff;
+            _playerInputActions.PlayerPC.Running.performed += RunToggle;
             _playerInputActions.PlayerPC.Crouch.performed += StartEndCrouch;
             _playerInputActions.PlayerPC.Jump.performed += StartJumpPC;
-            _playerInputActions.PlayerGamepad.Running.performed += RunOn;
-            _playerInputActions.PlayerGamepad.Running.canceled += RunOff;
+            _playerInputActions.PlayerGamepad.Running.performed += RunToggle;
             _playerInputActions.PlayerGamepad.Crouch.performed += StartEndCrouch;
             _playerInputActions.PlayerGamepad.Jump.performed += StartJumpGamepad;
         }
@@ -142,12 +140,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void OnDisable()
         {
             _playerInputActions.Disable();
-            _playerInputActions.PlayerPC.Running.performed -= RunOn;
-            _playerInputActions.PlayerPC.Running.canceled -= RunOff;
+            _playerInputActions.PlayerPC.Running.performed -= RunToggle;
             _playerInputActions.PlayerPC.Crouch.performed -= StartEndCrouch;
             _playerInputActions.PlayerPC.Jump.performed -= StartJumpPC;
-            _playerInputActions.PlayerGamepad.Running.performed -= RunOn;
-            _playerInputActions.PlayerGamepad.Running.canceled -= RunOff;
+            _playerInputActions.PlayerGamepad.Running.performed -= RunToggle;
             _playerInputActions.PlayerGamepad.Crouch.performed -= StartEndCrouch;
             _playerInputActions.PlayerGamepad.Jump.performed -= StartJumpGamepad;
         }
@@ -375,19 +371,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         } 
 
 
-        private void RunOn(InputAction.CallbackContext context)
+        private void RunToggle(InputAction.CallbackContext context)
         {
             if (!IsCrouch)
             {
-                _isRunningKeyboard = true;
+                _isRunningKeyboard = !_isRunningKeyboard;
 
                 _isRunningGamepad = !_isRunningGamepad;
             }
-        }
-
-        private void RunOff(InputAction.CallbackContext context)
-        {
-            _isRunningKeyboard = false;
         }
 
         private void StartEndCrouch(InputAction.CallbackContext context)

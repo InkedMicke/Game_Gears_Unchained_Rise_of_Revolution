@@ -10,6 +10,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
     public class RedSoldier : Enemy
     {
         G_MeshTrail _trail;
+
+        [SerializeField] private RedAttackHitBox _attackHitBox;
+
         [SerializeField] private ParticleSystem _particlesTornadoDash;
 
         private Tween _dashTween;
@@ -137,6 +140,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
         {
             //StartCoroutine(DashForward());
             _agent.enabled = false;
+            _attackHitBox.ClearList();
             var desiredEndPos = new Vector3(endTrDecal.position.x, transform.position.y, endTrDecal.position.z);
             _dashTween = transform.DOMove(desiredEndPos, dashDuracion).SetEase(dashEase).OnComplete(() => _soldierAnim.SetRedCount(3));
             _soldierAnim.SetRedCount(2);
