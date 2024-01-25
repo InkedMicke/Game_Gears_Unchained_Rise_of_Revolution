@@ -1,4 +1,5 @@
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
+using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using DG.Tweening;
 using DG.Tweening.Core;
 using System.Collections;

@@ -177,11 +177,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
                 }
                 else
                 {
-                    if (!_isOnWarning && !IsAttacking)
+                    if (!_isOnWarning)
                     {
                         _materialChangeOnDetection.PatrolDecal();
                         _totalTimeCached = 0;
-                        Debug.Log("hola4");
                     }
                 }
             }

@@ -16,7 +16,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
                 damageable.Damage(damage);
                 
             }
-           Debug.Log(other.gameObject.name);
             Destroy(gameObject);
         }
     }
