@@ -241,11 +241,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                     if (hit.collider.TryGetComponent(out SoldierHurtBox hurtbox))
                     {
-                        hurtbox.Damage(GameManagerSingleton.Instance.GetDamage(_pistolAttackData, hit.collider.gameObject));
+                        hurtbox.Damage(GameManagerSingleton.Instance.GetPlayerDamage(_pistolAttackData, hit.collider.gameObject));
                     }
                     else if(hit.collider.TryGetComponent(out DummieHurtBox dummieHurtbox))
                     {
-                        dummieHurtbox.Damage(GameManagerSingleton.Instance.GetDamage(_pistolAttackData, hit.collider.gameObject));
+                        dummieHurtbox.Damage(GameManagerSingleton.Instance.GetPlayerDamage(_pistolAttackData, hit.collider.gameObject));
                     }
 
                 }

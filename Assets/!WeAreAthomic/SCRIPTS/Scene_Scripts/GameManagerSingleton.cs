@@ -281,26 +281,26 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         IsGodModeEnabled = !IsGodModeEnabled;
     }
 
-    public float GetDamage(PlayerDamageData damageData, GameObject other)
+    public float GetPlayerDamage(PlayerDamageData damageData, GameObject other)
     {
         switch (_currentDifficulty)
         {
             case DifficultyLevel.historia:
-                if (other.gameObject.name == "DummieHurtBox")
+                if (other.name == "DummieHurtBox")
                 {
                     return damageData.easyDifficult.dummieDamage;
                 }
-                if (other.gameObject.name == "GreenHurtBox")
+                if (other.name == "GreenHurtBox")
                 {
                     return damageData.easyDifficult.greenDamage;
                 }
 
-                if (other.gameObject.name == "RedHurtBox")
+                if (other.name == "RedHurtBox")
                 {
                     return damageData.easyDifficult.redDamage;
                 }
 
-                if (other.gameObject.name == "OrangeHurtBox")
+                if (other.name == "OrangeHurtBox")
                 {
                     return damageData.easyDifficult.orangeDamage;
                 }
@@ -308,43 +308,43 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
                 break;
 
             case DifficultyLevel.desafio:
-                if (other.gameObject.name == "DummieHurtBox")
+                if (other.name == "DummieHurtBox")
                 {
                     return damageData.normalDifficult.dummieDamage;
                 }
 
-                if (other.gameObject.name == "GreenHurtBox")
+                if (other.name == "GreenHurtBox")
                 {
                     return damageData.normalDifficult.greenDamage;
                 }                
                 
-                if (other.gameObject.name == "RedHurtBox")
+                if (other.name == "RedHurtBox")
                 {
                     return damageData.normalDifficult.redDamage;
                 }               
                 
-                if (other.gameObject.name == "OrangeHurtBox")
+                if (other.name == "OrangeHurtBox")
                 {
                     return damageData.normalDifficult.orangeDamage;
                 }
                 break;
 
             case DifficultyLevel.maestro:
-                if (other.gameObject.name == "DummieHurtBox")
+                if (other.name == "DummieHurtBox")
                 {
                     return damageData.hardDifficult.dummieDamage;
                 }
-                if (other.gameObject.name == "GreenHurtBox")
+                if (other.name == "GreenHurtBox")
                 {
                     return damageData.hardDifficult.greenDamage;
                 }
 
-                if (other.gameObject.name == "RedHurtBox")
+                if (other.name == "RedHurtBox")
                 {
                     return damageData.hardDifficult.redDamage;
                 }
 
-                if (other.gameObject.name == "OrangeHurtBox")
+                if (other.name == "OrangeHurtBox")
                 {
                     return damageData.hardDifficult.orangeDamage;
                 }

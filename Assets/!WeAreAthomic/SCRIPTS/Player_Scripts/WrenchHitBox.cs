@@ -25,7 +25,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (wrenchDamageData != null)
                 {
-                    damageable.Damage(GameManagerSingleton.Instance.GetDamage(wrenchDamageData, other.gameObject));
+                    damageable.Damage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, other.gameObject));
                     colliderList.Add(other);
                 }
 

@@ -46,8 +46,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
             while (indicator.size.x < 9)
             {
                 var sizeIndiciator = indicator.size;
-                sizeIndiciator.x += .053f;
-                sizeIndiciator.y += .053f;
+                sizeIndiciator.x += .03f;
+                sizeIndiciator.y += .03f;
                 indicator.size = sizeIndiciator;
                 yield return new WaitForEndOfFrame();
             }

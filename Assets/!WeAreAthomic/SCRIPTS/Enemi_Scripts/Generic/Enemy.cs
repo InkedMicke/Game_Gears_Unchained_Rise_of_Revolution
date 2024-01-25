@@ -304,6 +304,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         {
             _agent.isStopped = true;
         }
+
+        public float GetEnemyDamage(EnemyDamageData enemyData, GameObject other)
+        {
+            return 0;
+        }
     }
 }
 
