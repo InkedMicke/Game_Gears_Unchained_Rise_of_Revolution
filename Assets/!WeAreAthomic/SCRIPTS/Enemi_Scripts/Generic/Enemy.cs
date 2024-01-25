@@ -52,9 +52,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         [System.NonSerialized] public bool IsChasingPlayer;
         [System.NonSerialized] public bool IsAttacking;
         protected bool isPatrolling;
+        protected bool isOnWarning;
         private bool _isWaitingForPatrol;
         private bool _playerHeared;
-        private bool _isOnWarning;
+        
+        
 
         private int _searchingPlayerTimes;
 
@@ -156,33 +158,43 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             var random = Random.Range(1.5f, 3f);
             yield return new WaitForSeconds(random);
             _isWaitingForPatrol = false;
-            StartPatrol();
+            if (!isOnWarning && !IsAttacking)
+            {
+                StartPatrol();
+            }
         }
 
         public void CheckIfPlayerIsInSight()
         {
             if (!IsChasingPlayer && !IsAttacking)
             {
-
-                if (_fov.canSeePlayer && !IsChasingPlayer)
+                if (_fov.canSeePlayer)
                 {
-                    _materialChangeOnDetection.WarningDecal();
-                    _totalTimeCached += Time.deltaTime;
-                    _isOnWarning = true;
-                    if (_totalTimeCached > timeToGetCached)
+                    if(!isOnWarning)
                     {
-                        ChangingValuesToChase();
-                        _isOnWarning = false;
+                        _materialChangeOnDetection.WarningDecal();
+                        isOnWarning = true;
                     }
+                    CheckWarning();
+
                 }
                 else
                 {
-                    if (!_isOnWarning)
+                    if (isOnWarning)
                     {
-                        _materialChangeOnDetection.PatrolDecal();
                         _totalTimeCached = 0;
                     }
                 }
+            }
+        }
+
+        private void CheckWarning()
+        {
+            _totalTimeCached += Time.deltaTime;
+
+            if (_totalTimeCached > timeToGetCached)
+            {
+                ChangingValuesToChase();
             }
         }
 
@@ -204,9 +216,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         {
             if ((_fovHearFar.canSeePlayer && !IsChasingPlayer && !IsAttacking && !_mainCMove.IsCrouch) || (_fovHearFar.canSeePlayer && _mainCMove.IsJumping && !IsChasingPlayer && !IsAttacking))
             {
-                if (!_isOnWarning)
+                if (!isOnWarning && IsAttacking)
                 {
-                    _isOnWarning = true;
+                    isOnWarning = true;
                     _materialChangeOnDetection.WarningDecal();
                     GoToPlayerPosition();
                 }
@@ -227,7 +239,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         /// </summary>
         private IEnumerator RandomPosition()
         {
-            while (!IsChasingPlayer && _isOnWarning)
+            while (!IsChasingPlayer && isOnWarning)
             {
                 if (_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending)
                 {
@@ -239,29 +251,31 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
                 yield return new WaitForEndOfFrame();
             }
 
-            while (_searchingPlayerTimes < 4 && !IsAttacking)
+            while (_searchingPlayerTimes < 4 && !IsAttacking && isOnWarning)
             {
                 _soldierAnim.SetWalking(false);
                 var random = Random.Range(1f, 2f);
                 yield return new WaitForSeconds(random);
-                if (_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending)
-                {
-                    _soldierAnim.SetWalking(false);
-                    Vector3 offsetAleatorio = Random.insideUnitSphere * 5f;
-                    Vector3 posicionAleatoria = _startPosSearchingPlayer + offsetAleatorio;
-                    _soldierAnim.SetWalking(true);
-                    _agent.SetDestination(posicionAleatoria);
+                _soldierAnim.SetWalking(true);
+                Vector3 offsetAleatorio = Random.insideUnitSphere * 5f;
+                Vector3 posicionAleatoria = _startPosSearchingPlayer + offsetAleatorio;
+                _agent.SetDestination(posicionAleatoria);
 
-                    _searchingPlayerTimes++;
+                while (!(_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending))
+                {
+                    yield return new WaitForEndOfFrame();
                 }
 
+
+                _searchingPlayerTimes++;
                 yield return new WaitForEndOfFrame();
             }
 
             _searchingPlayerTimes = 0;
-            if (typeOfBehaviour == TypeOfBehaviour.Patrol)
+            if (typeOfBehaviour == TypeOfBehaviour.Patrol && !IsAttacking && isOnWarning)
             {
                 StartPatrol();
+                isOnWarning = false;
             }
 
         }

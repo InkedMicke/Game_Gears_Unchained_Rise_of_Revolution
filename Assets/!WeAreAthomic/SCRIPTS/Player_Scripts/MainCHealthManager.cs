@@ -53,8 +53,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public override void Damage(float damage)
         {
+            Debug.Log(IsDeath);
+            Debug.Log(CanReceiveDamage);
             if (!IsDeath && CanReceiveDamage)
             {
+                Debug.Log("hola3");
                 currentHealth -= damage;
                 GameManagerSingleton.Instance.currentHealth = currentHealth;
                 _mainSounds.RemoveAllSounds();
@@ -137,7 +140,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private IEnumerator InvencibilityTime()
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
 
             CanReceiveDamage = true;
         }
