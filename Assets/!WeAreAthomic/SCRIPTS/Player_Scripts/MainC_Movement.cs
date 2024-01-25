@@ -190,7 +190,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCAnimator.SetFalling(IsFalling);
                     _mainCAnimator.SetJumping(IsJumping);
                     _mainCAnimator.SetGrounded(true);
-                    if(_moveDir.magnitude > 0 || _moveDir.magnitude > 0)
+                    if (_moveDir.magnitude > 0 || _moveDir.magnitude > 0)
                     {
                         _mainCLayers.DisableJumpLayer();
                     }
@@ -209,7 +209,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _cc.Move(_velocity * Time.deltaTime);
             }
 
-            if(IsJumping && IsGrounded() || IsFalling && IsGrounded() || IsFalling && _mainCRail.IsOnRail())
+            if (IsJumping && IsGrounded() || IsFalling && IsGrounded() || IsFalling && _mainCRail.IsOnRail())
             {
                 IsJumping = false;
                 _mainCAnimator.SetGrounded(true);
@@ -367,17 +367,24 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     IsFollowingTrajectory = false;
                 }
             }
-        } 
+        }
 
 
         private void RunToggle(InputAction.CallbackContext context)
         {
-            if (!IsCrouch)
-            {
-                _isRunningKeyboard = !_isRunningKeyboard;
 
-                _isRunningGamepad = !_isRunningGamepad;
+            if(IsCrouch)
+            {
+                _mainCLayers.DisableCrouchLayer();
+                IsCrouch = false;
+                ToggleCCSize();
+                _mainCAnimator.SetCrouch(IsCrouch);
             }
+
+            _isRunningKeyboard = !_isRunningKeyboard;
+
+            _isRunningGamepad = !_isRunningGamepad;
+
         }
 
         private void StartEndCrouch(InputAction.CallbackContext context)
@@ -394,7 +401,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     InvokeDisableAllLayers();
                     _mainCLayers.EnableCrouchLayer();
-                    if((_moveVectorKeyboard.magnitude > 0.1f || _moveVectorGamepad.magnitude > 0.1f))
+                    if ((_moveVectorKeyboard.magnitude > 0.1f || _moveVectorGamepad.magnitude > 0.1f))
                     {
                         _isCrouchWalking = true;
                         _mainCAnimator.SetCrouchWalking(_isCrouchWalking);
@@ -459,6 +466,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _isCrouchWalking = true;
                 _mainCAnimator.SetCrouchWalking(_isCrouchWalking);
                 _currentWalkSpeed = crouchSpeed;
+                if (_isRunningKeyboard || _isRunningGamepad)
+                {
+                    _isRunningKeyboard = !_isRunningKeyboard;
+                    _isRunningGamepad = !_isRunningGamepad;
+                }
 
             }
             else
@@ -501,7 +513,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _timeGraceJumpPeriod = Time.time + timeNextJump;
             }
 
-            if(CanJumpRail())
+            if (CanJumpRail())
             {
                 _mainCSounds.PlayJumpSound();
                 IsJumping = true;
@@ -587,12 +599,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
-            if(IsJumping)
+            if (IsJumping)
             {
                 return false;
             }
 
-            if(Time.time < _timeGraceJumpPeriod)
+            if (Time.time < _timeGraceJumpPeriod)
             {
                 return false;
             }
@@ -603,8 +615,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             return true;
-        }        
-       
+        }
+
 
         private bool CanMove()
         {
@@ -623,37 +635,37 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
-            if(GameManagerSingleton.Instance.IsGodModeEnabled)
+            if (GameManagerSingleton.Instance.IsGodModeEnabled)
             {
                 return false;
             }
 
-            if(_mainCHacking.isHackingAnim)
+            if (_mainCHacking.isHackingAnim)
             {
                 return false;
             }
 
-            if(_mainCAttack.IsFinalAttacking)
+            if (_mainCAttack.IsFinalAttacking)
             {
                 return false;
             }
 
-            if(_mainCHealth.IsDeath)
+            if (_mainCHealth.IsDeath)
             {
                 return false;
             }
 
-            if(_mainCRail.IsSliding)
+            if (_mainCRail.IsSliding)
             {
                 return false;
             }
 
-            if(!_canMove)
+            if (!_canMove)
             {
                 return false;
             }
 
-            if(_mainCDash.IsDashing)
+            if (_mainCDash.IsDashing)
             {
                 return false;
             }

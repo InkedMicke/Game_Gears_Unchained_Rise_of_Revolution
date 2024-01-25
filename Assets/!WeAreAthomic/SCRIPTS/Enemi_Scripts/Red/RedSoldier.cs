@@ -54,7 +54,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
                 StartDecalToAttack();
                 IsChasingPlayer = false;
                 isPatrolling = false;
-                isOnWarning = false;
+                IsOnWarning = false;
             }
 
             if(_isDashing)
@@ -92,9 +92,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
                 // Calcular la rotaci?n hacia el objetivo
                 Quaternion targetRotation = Quaternion.LookRotation(distanceToPlayer);
 
-                var actualSpeed = rotationSpeed * Mathf.Pow(9 / distanceToPlayer.magnitude, 2);
+                var actualSpeed = rotationSpeed * Mathf.Pow(15 / distanceToPlayer.magnitude, 2);
 
-                actualSpeed = Mathf.Clamp(actualSpeed, 0f, 10);
+                actualSpeed = Mathf.Clamp(actualSpeed, 0f, 25f);
 
                 // Rotar suavemente hacia el objetivo
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, actualSpeed * Time.deltaTime);

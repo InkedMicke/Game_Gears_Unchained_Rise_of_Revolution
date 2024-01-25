@@ -1,5 +1,6 @@
 using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -30,6 +31,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         public GameManagerSingleton.TypeOfEnemy _typeOfEnemy;
         public TypeOfBehaviour typeOfBehaviour;
 
+        [SerializeField] protected ButtonInteractable _buttonInt;
+
         [SerializeField] private GWaypoints waypoints;
 
         [SerializeField] protected DecalProjector indicator;
@@ -51,12 +54,13 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         [System.NonSerialized] public bool IsChasingPlayer;
         [System.NonSerialized] public bool IsAttacking;
+        [System.NonSerialized] public bool IsOnWarning;
         protected bool isPatrolling;
-        protected bool isOnWarning;
+        
         private bool _isWaitingForPatrol;
         private bool _playerHeared;
-        
-        
+
+
 
         private int _searchingPlayerTimes;
 
@@ -158,7 +162,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             var random = Random.Range(1.5f, 3f);
             yield return new WaitForSeconds(random);
             _isWaitingForPatrol = false;
-            if (!isOnWarning && !IsAttacking)
+            if (!IsOnWarning && !IsAttacking)
             {
                 StartPatrol();
             }
@@ -170,19 +174,23 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             {
                 if (_fov.canSeePlayer)
                 {
-                    if(!isOnWarning)
+                    if (!IsOnWarning)
                     {
                         _materialChangeOnDetection.WarningDecal();
-                        isOnWarning = true;
+                        IsOnWarning = true;
                     }
                     CheckWarning();
 
                 }
                 else
                 {
-                    if (isOnWarning)
+                    if (!IsOnWarning)
                     {
                         _totalTimeCached = 0;
+                        if (!IsAttacking)
+                        {
+                            _materialChangeOnDetection.PatrolDecal();
+                        }
                     }
                 }
             }
@@ -202,12 +210,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         {
             if ((_fovHearNear.canSeePlayer && !IsChasingPlayer && !IsAttacking && !_mainCMove.IsCrouch) || (_fovHearNear.canSeePlayer && _mainCMove.IsJumping))
             {
-                //_playerHeared = true;
-                //_materialChangeOnDetection.WarningDecal();
-                //GoToPlayerPosition();
-
-
-                //ChangingValuesToChase();
+                if (!IsChasingPlayer && !IsAttacking)
+                {
+                    ChangingValuesToChase();
+                }
             }
 
         }
@@ -216,9 +222,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         {
             if ((_fovHearFar.canSeePlayer && !IsChasingPlayer && !IsAttacking && !_mainCMove.IsCrouch) || (_fovHearFar.canSeePlayer && _mainCMove.IsJumping && !IsChasingPlayer && !IsAttacking))
             {
-                if (!isOnWarning && IsAttacking)
+                if (!IsOnWarning && !IsAttacking)
                 {
-                    isOnWarning = true;
+                    IsOnWarning = true;
                     _materialChangeOnDetection.WarningDecal();
                     GoToPlayerPosition();
                 }
@@ -229,6 +235,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         private void GoToPlayerPosition()
         {
+            _buttonInt.DisableCanHack();
             _soldierAnim.SetWalking(true);
             _agent.SetDestination(_playerTr.position);
             StartCoroutine(RandomPosition());
@@ -239,11 +246,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         /// </summary>
         private IEnumerator RandomPosition()
         {
-            while (!IsChasingPlayer && isOnWarning)
+            while (!IsChasingPlayer && IsOnWarning)
             {
                 if (_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending)
                 {
-                    _soldierAnim.SetWalking(false);
                     _startPosSearchingPlayer = transform.position;
                     break;
                 }
@@ -251,7 +257,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
                 yield return new WaitForEndOfFrame();
             }
 
-            while (_searchingPlayerTimes < 4 && !IsAttacking && isOnWarning)
+            while (_searchingPlayerTimes < 4 && !IsAttacking && IsOnWarning)
             {
                 _soldierAnim.SetWalking(false);
                 var random = Random.Range(1f, 2f);
@@ -261,7 +267,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
                 Vector3 posicionAleatoria = _startPosSearchingPlayer + offsetAleatorio;
                 _agent.SetDestination(posicionAleatoria);
 
-                while (!(_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending))
+                while (!(_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending) && !IsAttacking)
                 {
                     yield return new WaitForEndOfFrame();
                 }
@@ -272,10 +278,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             }
 
             _searchingPlayerTimes = 0;
-            if (typeOfBehaviour == TypeOfBehaviour.Patrol && !IsAttacking && isOnWarning)
+            if (typeOfBehaviour == TypeOfBehaviour.Patrol && !IsAttacking && IsOnWarning)
             {
                 StartPatrol();
-                isOnWarning = false;
+                _buttonInt.EnableCanHack();
+                IsOnWarning = false;
             }
 
         }
@@ -305,6 +312,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         public void ChangingValuesToChase()
         {
             IsChasingPlayer = true;
+            _buttonInt.DisableCanHack();
             _agent.isStopped = false;
             botonPuerta.SetActive(false);
             AgentValuesToChase();

@@ -15,6 +15,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
     public class ButtonInteractable : MonoBehaviour, IInteractable
     {
         private MainCHackingSystem _mainCHacking;
+        private Enemy _enemy;
 
         public TypeOfHacked typeOfHacked;
 
@@ -44,6 +45,11 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _playerTr = _playerObj.transform;
             _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
             _mainCHacking = _playerObj.GetComponent<MainCHackingSystem>();
+
+            if(typeOfHacked == TypeOfHacked.soldier)
+            {
+                _enemy = soldier.GetComponent<Enemy>();
+            }
         }
 
         // Update is called once per frame
@@ -98,41 +104,17 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         {
             if (!_mainCHacking.IsHacking && canHack) 
             {
-                if(typeOfHacked == TypeOfHacked.soldier)
+                _isShowingButton = true;
+                switch (GameManagerSingleton.Instance.typeOfInput)
                 {
-                    if (soldier != null && soldier.GetComponent<Enemy>().IsChasingPlayer)
-                    {
-
-                    }
-                    else
-                    {
-                        _isShowingButton = true;
-                        switch (GameManagerSingleton.Instance.typeOfInput)
-                        {
-                            case TypeOfInput.pc:
-                                eButtonObj.SetActive(true);
-                                break;
-                            case TypeOfInput.gamepad:
-                                eastButtonObj.SetActive(true);
-                                break;
-                        }
+                    case TypeOfInput.pc:
                         eButtonObj.SetActive(true);
-                    }
+                        break;
+                    case TypeOfInput.gamepad:
+                        eastButtonObj.SetActive(true);
+                        break;
                 }
-                else
-                {
-                    _isShowingButton = true;
-                    switch (GameManagerSingleton.Instance.typeOfInput)
-                    {
-                        case TypeOfInput.pc:
-                            eButtonObj.SetActive(true);
-                            break;
-                        case TypeOfInput.gamepad:
-                            eastButtonObj.SetActive(true);
-                            break;
-                    }
-                    eButtonObj.SetActive(true);
-                }
+                eButtonObj.SetActive(true);
             }
         }
 
@@ -157,6 +139,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 seActivanCuandoEstasHackenadoYSeCancela.Invoke();
                 isActive = false;
             }
+            HideButton();
         }
 
     }

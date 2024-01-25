@@ -14,8 +14,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
 
         [SerializeField] private GameObject decalArea;
 
+        private bool _canGrowth;
+
         [SerializeField] private float maxDecalRange;
         [SerializeField] private float velocityDecalGrow;
+        private float _passedTime = 0f;
 
         protected override void Awake()
         {
@@ -31,27 +34,52 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
             {
                 _agent.isStopped = true;
                 _soldierAnim.SetWalking(false);
-                StartCoroutine(GrowAttackIndicator());
+                //StartCoroutine(GrowAttackIndicator());
+                GrowAttackIndicator();
                 IsChasingPlayer = false;
                 isPatrolling = false;
                 IsAttacking = true;
             }
+
+            if(_canGrowth)
+            {
+                _passedTime += Time.deltaTime;
+
+                if (_passedTime >= .01f)
+                {
+                    // Calcular la tasa de crecimiento
+                    float growthRate = Mathf.Pow(9 / .1f, 1f / (1.9f / .01f)) - 1f;
+
+                    if(indicator.size.x >= 9)
+                    {
+                        _canGrowth = false;
+                        _materialChange.CatchDecal();
+                    }
+
+                    // Incrementar el tamaño de la esfera
+                    var sizeIndiciator = indicator.size;
+                    sizeIndiciator.x *= 1 + growthRate;
+                    sizeIndiciator.y *= 1 + growthRate;
+                    indicator.size = sizeIndiciator;
+
+                    // Reiniciar el temporizador
+                    _passedTime = 0f;
+                }
+            }
+
             base.Update();
         }
 
-        private IEnumerator GrowAttackIndicator()
+        private void GrowAttackIndicator()
         {
             _materialChange.WarningDecal();
             _soldierAnim.ShootTrigger();
-            while (indicator.size.x < 9)
-            {
-                var sizeIndiciator = indicator.size;
-                sizeIndiciator.x += .03f;
-                sizeIndiciator.y += .03f;
-                indicator.size = sizeIndiciator;
-                yield return new WaitForEndOfFrame();
-            }
-            _materialChange.CatchDecal();
+            _canGrowth = true;
+        }
+
+        public void PlayHitEffect()
+        {
+            groundSplashEffect.Play();
         }
     }
 }
