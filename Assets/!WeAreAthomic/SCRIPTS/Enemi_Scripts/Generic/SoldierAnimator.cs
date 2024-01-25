@@ -9,6 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         [SerializeField] private string walkingAnimString = "isWalking";
         [SerializeField] private string backWalkingAnimString = "isBackWalking";
         [SerializeField] private string shootAnimString = "shoot";
+        [SerializeField] private string redCount = "redCount";
 
         private void Awake()
         {
@@ -33,6 +34,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         public void SetAnimatorSpeed(float speed)
         {
             _anim.speed = speed;
+        }
+
+        public void SetRedCount(int redcount)
+        {
+            _anim.SetInteger(redCount, redcount);
         }
     }
 }

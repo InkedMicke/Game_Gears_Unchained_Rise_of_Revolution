@@ -13,6 +13,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 
         [SerializeField] private Transform endTrDecal;
 
+        private Vector3 indicatorStartPos;
+
         [SerializeField] private float rotationSpeed = 5f;
         [SerializeField] private float dashDuracion = 5f;
 
@@ -23,6 +25,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 
         protected override void Start()
         {
+            indicatorStartPos = indicator.transform.localPosition;
             base.Start();
         }
 
@@ -30,7 +33,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
         {
             var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
 
-            if (distanceToPlayer < 6f && !IsAttacking && !_soldierHurtBox.IsDeath && IsChasingPlayer)
+            if (distanceToPlayer < 9f && !IsAttacking && !_soldierHurtBox.IsDeath && IsChasingPlayer)
             {
                 _agent.isStopped = true;
                 _soldierAnim.SetWalking(false);
@@ -88,7 +91,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
                     yield return new WaitForSeconds(.01f);
                 }
                 indicator.uvBias = new(indicator.uvBias.x, 0);
-                _soldierAnim.ShootTrigger();
+                _soldierAnim.SetRedCount(1);
             }
             else
             {
@@ -96,7 +99,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 
                 while (indicator.uvBias.y < 1)
                 {
-                    indicator.uvBias += new Vector2(0, Time.deltaTime * 8);
+                    indicator.uvBias += new Vector2(0, Time.deltaTime * 16);
                     yield return new WaitForSeconds(.01f);
                 }
 
@@ -107,10 +110,22 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
         public void StartDash()
         {
             //StartCoroutine(DashForward());
+            _agent.enabled = false;
             var desiredEndPos = new Vector3(endTrDecal.position.x, transform.position.y, endTrDecal.position.z);
-            transform.DOMove(desiredEndPos, dashDuracion).SetEase(dashEase);
+            transform.DOMove(desiredEndPos, dashDuracion).SetEase(dashEase).OnComplete(() => _soldierAnim.SetRedCount(3));
+            _soldierAnim.SetRedCount(2);
+            indicator.gameObject.transform.SetParent(transform.parent);
         }
 
+        public void EndDash()
+        {
+            StartCoroutine(DecalSizer(false));
+            indicator.gameObject.transform.SetParent(transform);
+            indicator.transform.localPosition = indicatorStartPos;
+            _soldierAnim.SetRedCount(0);
+            _agent.enabled = true;
+            ChasePlayer();
+        }
   
     }
 

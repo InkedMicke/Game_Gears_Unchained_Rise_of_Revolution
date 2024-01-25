@@ -239,7 +239,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
                 yield return new WaitForEndOfFrame();
             }
 
-            while (_searchingPlayerTimes < 4)
+            while (_searchingPlayerTimes < 4 && !IsAttacking)
             {
                 _soldierAnim.SetWalking(false);
                 var random = Random.Range(1f, 2f);
