@@ -104,6 +104,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         generatorsDestroyed += 1; 
     }
 
+
     public void AddGameObject(GameObject gameObject)
     {
         gameObjectsList.Add(gameObject);
@@ -211,6 +212,11 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     {
         IsAbilityMenuEnabled = condition;
     }    
+
+    public void AddGearItem(int value)
+    {
+        gearsItem += value;
+    }
 
     public void SetEventSystemSelectedObj(GameObject obj)
     {
