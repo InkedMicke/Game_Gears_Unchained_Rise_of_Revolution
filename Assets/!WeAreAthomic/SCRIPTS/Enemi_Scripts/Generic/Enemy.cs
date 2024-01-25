@@ -83,8 +83,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             if (typeOfBehaviour == TypeOfBehaviour.Patrol)
             {
                 StartPatrol();
-            }       
-            
+            }
+
             if (typeOfBehaviour == TypeOfBehaviour.Fighter)
             {
                 decalDetection.SetActive(false);
@@ -204,7 +204,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         {
             if ((_fovHearFar.canSeePlayer && !IsChasingPlayer && !IsAttacking && !_mainCMove.IsCrouch) || (_fovHearFar.canSeePlayer && _mainCMove.IsJumping && !IsChasingPlayer && !IsAttacking))
             {
-                if(!_isOnWarning)
+                if (!_isOnWarning)
                 {
                     _isOnWarning = true;
                     _materialChangeOnDetection.WarningDecal();
@@ -227,7 +227,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         /// </summary>
         private IEnumerator RandomPosition()
         {
-            while(!IsChasingPlayer && _isOnWarning)
+            while (!IsChasingPlayer && _isOnWarning)
             {
                 if (_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending)
                 {
@@ -303,11 +303,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         public void DisableMovement()
         {
             _agent.isStopped = true;
-        }
-
-        public float GetEnemyDamage(EnemyDamageData enemyData, GameObject other)
-        {
-            return 0;
         }
     }
 }

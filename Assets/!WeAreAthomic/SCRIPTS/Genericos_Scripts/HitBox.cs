@@ -6,6 +6,8 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
     {
         [SerializeField] protected int damage;
 
+        [SerializeField] protected EnemyDamageData damageData;
+
         private void OnTriggerEnter(Collider collision)
         {
             GotEnterCollision(collision);
@@ -15,7 +17,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
         {
             if (collision.TryGetComponent(out HurtBox hurtbox))
             {
-                hurtbox.Damage(damage);
+                hurtbox.Damage(GameManagerSingleton.Instance.GetEnemyDamage(damageData));
             }
         }
     }

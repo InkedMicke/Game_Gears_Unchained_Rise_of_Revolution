@@ -24,14 +24,16 @@ public enum CurrentAbility
     Heal
 }
 
+public enum DifficultyLevel
+{
+    historia,
+    desafio,
+    maestro
+}
+
 public class GameManagerSingleton : SingletonScriptableObject<GameManagerSingleton>, ICallOnAll
 {
-    public enum DifficultyLevel
-    {
-        historia,
-        desafio,
-        maestro
-    }
+
 
     public enum Settings
     {
@@ -349,6 +351,21 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
                     return damageData.hardDifficult.orangeDamage;
                 }
                 break;
+        }
+
+        return 0;
+    }
+
+    public float GetEnemyDamage(EnemyDamageData enemyData)
+    {
+        switch (GameManagerSingleton.Instance._currentDifficulty)
+        {
+            case DifficultyLevel.historia:
+                return enemyData.easyDifficult.playerDamage;
+            case DifficultyLevel.desafio:
+                return enemyData.normalDifficult.playerDamage;
+            case DifficultyLevel.maestro:
+                return enemyData.hardDifficult.playerDamage;
         }
 
         return 0;
