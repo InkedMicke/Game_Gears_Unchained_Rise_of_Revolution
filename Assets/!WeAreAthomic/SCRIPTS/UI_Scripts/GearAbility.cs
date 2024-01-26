@@ -66,7 +66,7 @@ public class GearAbility : MonoBehaviour
                 var mouseVector = Mouse.current.position.ReadValue();
                 worldPosition = cameraAbility.ScreenToWorldPoint(mouseVector);
                 worldPosition.z = descriptionObj.transform.position.z;
-                Debug.Log(worldPosition);
+                //Debug.Log(worldPosition);
             }
             else
             {
@@ -109,6 +109,7 @@ public class GearAbility : MonoBehaviour
         if(_isUnlocked)
         {
             _abilityController.currentAbility = currentAbility;
+            Debug.Log("hola1");
             imageOfSelectedAbility.sprite = imageOfAbility;
         }
     }
