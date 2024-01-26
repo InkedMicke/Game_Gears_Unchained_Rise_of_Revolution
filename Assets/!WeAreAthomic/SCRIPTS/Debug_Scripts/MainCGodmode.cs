@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
 {
-    public class Godmode : MonoBehaviour
+    public class MainCGodmode : MonoBehaviour
     {
         private CharacterController _cc;
         private PlayerInputActions _playerInputActions;

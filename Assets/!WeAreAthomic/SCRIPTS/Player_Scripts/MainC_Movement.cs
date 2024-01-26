@@ -16,7 +16,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCHackingSystem _mainCHacking;
         private MainCAnimatorController _mainCAnimator;
         private CharacterController _cc;
-        private Godmode _godMode;
+        private MainCGodmode _godMode;
         private MainCHealthManager _mainCHealth;
         private GTrajectory _trajectory;
         private MainCSounds _mainCSounds;
@@ -95,7 +95,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAttack = GetComponent<MainCAttack>();
             _mainCPistol = GetComponent<MainCPistol>();
             _cc = GetComponent<CharacterController>();
-            _godMode = GetComponent<Godmode>();
+            _godMode = GetComponent<MainCGodmode>();
             _mainCRail = GetComponent<MainCRail>();
             _mainCHacking = GetComponent<MainCHackingSystem>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
@@ -120,9 +120,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             GameManagerSingleton.Instance.PauseGame(false);
             GameManagerSingleton.Instance.SetIsSettingsMenuEnabled(false);
             GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
-
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void OnEnable()

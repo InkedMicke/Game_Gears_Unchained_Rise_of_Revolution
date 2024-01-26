@@ -64,13 +64,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
 
         private void InputPC(InputAction.CallbackContext context)
         {
-            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc && GameManagerSingleton.Instance.currentAbility == CurrentAbility.RapidFire)
                 CheckEnemy();
         }
 
         private void InputGamepad(InputAction.CallbackContext context)
         {
-            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad && GameManagerSingleton.Instance.currentAbility == CurrentAbility.RapidFire)
                 CheckEnemy();
         }
 

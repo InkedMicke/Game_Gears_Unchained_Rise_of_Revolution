@@ -16,8 +16,7 @@ public class GearAbility : MonoBehaviour
     [SerializeField] private Image imageToChange;
     [SerializeField] private Image imageSlider;
     [SerializeField] private Image imageOfSelectedAbility;
-
-    [SerializeField] private Sprite imageOfAbility;
+    [SerializeField] private Image imageOfSelectedAbilityEmpty;
 
     [SerializeField] private Material selectedMat;
     private Material _originalMat;
@@ -87,7 +86,7 @@ public class GearAbility : MonoBehaviour
     public void PointerEnter()
     {
         _isMouseInside = true;
-        imageToChange.color = Color.black;
+        imageToChange.color = Color.grey;
         _meshRenderer.material = selectedMat;
         StartCoroutine(ShowDescription());
     }
@@ -108,9 +107,10 @@ public class GearAbility : MonoBehaviour
         }
         if(_isUnlocked)
         {
-            _abilityController.currentAbility = currentAbility;
             Debug.Log("hola1");
-            imageOfSelectedAbility.sprite = imageOfAbility;
+            _abilityController.currentAbility = currentAbility;
+            imageOfSelectedAbilityEmpty.sprite = imageOfSelectedAbility.sprite;
+            imageOfSelectedAbilityEmpty.color = Color.white;
         }
     }
 
@@ -130,10 +130,11 @@ public class GearAbility : MonoBehaviour
 
         imageSlider.fillAmount = 1;
         _isUnlocked = true;
-        blockObj.SetActive(false);
+        imageToChange.sprite = imageOfSelectedAbility.sprite;
+        imageToChange.transform.localScale = Vector3.one;
         _abilityController.SetGearsCount(GameManagerSingleton.Instance.gearsItem - cost);
         imageSlider.fillAmount = 0;
-
+        descriptionObj.SetActive(false);
     }
 
     private IEnumerator ShowDescription()

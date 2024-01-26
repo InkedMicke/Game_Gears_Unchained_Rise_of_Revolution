@@ -399,6 +399,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8bef6891-561c-47b5-a0bb-178137473226"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeAbility"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -542,7 +553,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ChargeAbility"",
+                    ""name"": ""ChangeAbility"",
                     ""type"": ""Button"",
                     ""id"": ""0c10ba25-ece0-4dd7-ac64-363270195b9a"",
                     ""expectedControlType"": ""Button"",
@@ -731,7 +742,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ChargeAbility"",
+                    ""action"": ""ChangeAbility"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1015,7 +1026,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerGamepad_Escape = m_PlayerGamepad.FindAction("Escape", throwIfNotFound: true);
         m_PlayerGamepad_BastetAttack = m_PlayerGamepad.FindAction("BastetAttack", throwIfNotFound: true);
         m_PlayerGamepad_BastetAimAttack = m_PlayerGamepad.FindAction("BastetAimAttack", throwIfNotFound: true);
-        m_PlayerGamepad_ChargeAbility = m_PlayerGamepad.FindAction("ChargeAbility", throwIfNotFound: true);
+        m_PlayerGamepad_ChangeAbility = m_PlayerGamepad.FindAction("ChangeAbility", throwIfNotFound: true);
         m_PlayerGamepad_InvokeAbility = m_PlayerGamepad.FindAction("InvokeAbility", throwIfNotFound: true);
         m_PlayerGamepad_Dash = m_PlayerGamepad.FindAction("Dash", throwIfNotFound: true);
         // Camera
@@ -1285,7 +1296,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerGamepad_Escape;
     private readonly InputAction m_PlayerGamepad_BastetAttack;
     private readonly InputAction m_PlayerGamepad_BastetAimAttack;
-    private readonly InputAction m_PlayerGamepad_ChargeAbility;
+    private readonly InputAction m_PlayerGamepad_ChangeAbility;
     private readonly InputAction m_PlayerGamepad_InvokeAbility;
     private readonly InputAction m_PlayerGamepad_Dash;
     public struct PlayerGamepadActions
@@ -1307,7 +1318,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Escape => m_Wrapper.m_PlayerGamepad_Escape;
         public InputAction @BastetAttack => m_Wrapper.m_PlayerGamepad_BastetAttack;
         public InputAction @BastetAimAttack => m_Wrapper.m_PlayerGamepad_BastetAimAttack;
-        public InputAction @ChargeAbility => m_Wrapper.m_PlayerGamepad_ChargeAbility;
+        public InputAction @ChangeAbility => m_Wrapper.m_PlayerGamepad_ChangeAbility;
         public InputAction @InvokeAbility => m_Wrapper.m_PlayerGamepad_InvokeAbility;
         public InputAction @Dash => m_Wrapper.m_PlayerGamepad_Dash;
         public InputActionMap Get() { return m_Wrapper.m_PlayerGamepad; }
@@ -1364,9 +1375,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @BastetAimAttack.started += instance.OnBastetAimAttack;
             @BastetAimAttack.performed += instance.OnBastetAimAttack;
             @BastetAimAttack.canceled += instance.OnBastetAimAttack;
-            @ChargeAbility.started += instance.OnChargeAbility;
-            @ChargeAbility.performed += instance.OnChargeAbility;
-            @ChargeAbility.canceled += instance.OnChargeAbility;
+            @ChangeAbility.started += instance.OnChangeAbility;
+            @ChangeAbility.performed += instance.OnChangeAbility;
+            @ChangeAbility.canceled += instance.OnChangeAbility;
             @InvokeAbility.started += instance.OnInvokeAbility;
             @InvokeAbility.performed += instance.OnInvokeAbility;
             @InvokeAbility.canceled += instance.OnInvokeAbility;
@@ -1422,9 +1433,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @BastetAimAttack.started -= instance.OnBastetAimAttack;
             @BastetAimAttack.performed -= instance.OnBastetAimAttack;
             @BastetAimAttack.canceled -= instance.OnBastetAimAttack;
-            @ChargeAbility.started -= instance.OnChargeAbility;
-            @ChargeAbility.performed -= instance.OnChargeAbility;
-            @ChargeAbility.canceled -= instance.OnChargeAbility;
+            @ChangeAbility.started -= instance.OnChangeAbility;
+            @ChangeAbility.performed -= instance.OnChangeAbility;
+            @ChangeAbility.canceled -= instance.OnChangeAbility;
             @InvokeAbility.started -= instance.OnInvokeAbility;
             @InvokeAbility.performed -= instance.OnInvokeAbility;
             @InvokeAbility.canceled -= instance.OnInvokeAbility;
@@ -1629,7 +1640,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnEscape(InputAction.CallbackContext context);
         void OnBastetAttack(InputAction.CallbackContext context);
         void OnBastetAimAttack(InputAction.CallbackContext context);
-        void OnChargeAbility(InputAction.CallbackContext context);
+        void OnChangeAbility(InputAction.CallbackContext context);
         void OnInvokeAbility(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
     }

@@ -523,9 +523,11 @@ GameObject:
   - component: {fileID: 4792467031579069366}
   - component: {fileID: 140604387887192313}
   - component: {fileID: 4016571259077727948}
-  - component: {fileID: 1770476364814114069}
   - component: {fileID: 7714023328541333105}
   - component: {fileID: 3765694853032444327}
+  - component: {fileID: 7417020760943733625}
+  - component: {fileID: 1770476364814114069}
+  - component: {fileID: 3764668422024457106}
   - component: {fileID: 8156547131111017134}
   - component: {fileID: 6156758546523602922}
   - component: {fileID: 4237099692295455833}
@@ -813,27 +815,6 @@ MonoBehaviour:
   dashSpeed: 40
   dashCooldown: 0.7
   _dashTime: 0.1
---- !u!114 &1770476364814114069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5821918579687998185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d726fc6fc813e7f45aa7a5e7f51f694f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  bastetObj: {fileID: 0}
-  closestEnemyToShoot: {fileID: 0}
-  maxShoots: 15
-  currentShoots: 0
-  radiusCheck: 10
-  attackCooldown: 10
 --- !u!114 &7714023328541333105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -874,6 +855,56 @@ MonoBehaviour:
   railCheck: {fileID: 2633980742278052695}
   railSpeed: 10
   jumpCooldown: 1
+--- !u!114 &7417020760943733625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821918579687998185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e0b8bfac0b3abe41861f5b95113446b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  genericImage: {fileID: 0}
+  rafagaImage: {fileID: 0}
+  rafaga360Image: {fileID: 0}
+  protectionImage: {fileID: 0}
+  healImage: {fileID: 0}
+--- !u!114 &1770476364814114069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821918579687998185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d726fc6fc813e7f45aa7a5e7f51f694f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  bastetObj: {fileID: 0}
+  closestEnemyToShoot: {fileID: 0}
+  maxShoots: 15
+  currentShoots: 0
+  radiusCheck: 10
+  attackCooldown: 10
+--- !u!114 &3764668422024457106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821918579687998185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c254bde78fd0674687f3cb9cebc7cb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8156547131111017134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -996,7 +1027,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5821918579687998185}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de6f951c982800a448f8d78ac363238f, type: 3}
+  m_Script: {fileID: 11500000, guid: c214ef26654f3e44f990c20508282d11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _labController: {fileID: 0}

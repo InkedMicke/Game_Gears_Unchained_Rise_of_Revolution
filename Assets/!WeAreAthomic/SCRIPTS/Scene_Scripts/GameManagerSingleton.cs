@@ -31,6 +31,14 @@ public enum DifficultyLevel
     maestro
 }
 
+[System.Serializable]
+public struct AbilitiesStruct
+{
+    public int value;
+    public CurrentAbility currentAbility;
+    public Sprite sprite;
+}
+
 public class GameManagerSingleton : SingletonScriptableObject<GameManagerSingleton>, ICallOnAll
 {
 
@@ -56,6 +64,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
 
     public List<GameObject> gameObjectsList;
     public List<GameObject> closestGameObjectsList;
+    public List<AbilitiesStruct> abiltiesList = new();
     public GameObject gamepadController;
     
     public Vector3 currentCheckpoint;
