@@ -23,13 +23,15 @@ Material:
   m_Name: M_Pared_Palacio_MIDLE
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 2100000, guid: 6c54dd05d5437e34eb32b1e3944953b2, type: 2}
-  m_ModifiedSerializedProperties: 0
+  m_ModifiedSerializedProperties: 4
   m_ValidKeywords:
+  - _ENVIRONMENTREFLECTIONS_OFF
   - _NORMALMAP
   - _OCCLUSIONMAP
+  - _SPECULARHIGHLIGHTS_OFF
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap:
@@ -40,6 +42,8 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _EnvironmentReflections: 0
+    - _SpecularHighlights: 0
     m_Colors: []
   m_BuildTextureStacks: []
