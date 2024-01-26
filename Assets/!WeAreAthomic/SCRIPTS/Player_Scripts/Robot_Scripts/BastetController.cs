@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         [SerializeField] private LayerMask enemyHurtBoxLayer;
 
         [SerializeField] private GameObject playerObj;
-        [SerializeField] private GameObject playerRightArm;
+        public GameObject playerRightArm;
         [SerializeField] private GameObject scannerObj;
         [SerializeField] private GameObject bullet;
         [SerializeField] private GameObject cameraObj;
@@ -197,21 +198,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             StartCoroutine(ShootEnemy(maxShoots));
         }
 
-        public void GoToDesiredPos(Action onFinishedAction, Vector3 posToGo, float moveSpeed)
+        public void GoToDesiredPos(Action onFinishedAction, Vector3 posToGo, float duration, Ease ease)
         {
-            StartCoroutine(GoToPos(onFinishedAction, posToGo, moveSpeed));
-        }
-
-        private IEnumerator GoToPos(Action onFinishedAction, Vector3 posToGo, float moveSpeed)
-        {
-            var difference = posToGo - transform.position;
-            while (Vector3.Distance(transform.position, posToGo) > 0.1f)
-            {
-                _cc.Move(moveSpeed * Time.deltaTime * difference.normalized);
-                yield return new WaitForEndOfFrame(); 
-            }
-
-            onFinishedAction();
+            transform.DOMove(posToGo, duration).SetEase(ease).OnComplete(() => onFinishedAction());
         }
 
         private IEnumerator ShootEnemy(int maxShoots)
@@ -227,7 +216,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                 bulletObj.transform.LookAt(lookAtFixed);
                 transform.LookAt(lookAtFixed);
                 var difference = lookAtFixed - transform.position;
-                Debug.DrawRay(transform.position, difference * 10, Color.red, 2f);
                 bulletObj.GetComponent<Rigidbody>().AddForce(transform.forward * 50f, ForceMode.Impulse);
                 currentShoots++;
                 if (currentShoots > maxShoots)

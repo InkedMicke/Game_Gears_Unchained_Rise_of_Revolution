@@ -156,7 +156,6 @@ GameObject:
   - component: {fileID: 8693359904551909973}
   - component: {fileID: 706539203697697304}
   - component: {fileID: 6869388411292329633}
-  - component: {fileID: 6608898606433792853}
   - component: {fileID: 2951550213817900509}
   m_Layer: 17
   m_Name: Bullet_Bastet
@@ -233,19 +232,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &6608898606433792853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3870155545384615628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e31175c3e9b27c14f8a513979e4553ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletForce: 0
 --- !u!114 &2951550213817900509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,8 +244,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1622862d4acda7c4797c6c170ed12b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletForce: 0
   damageData: {fileID: 0}
-  hitChispas: {fileID: 0}
+  hitChispas: {fileID: 1916586554266901641, guid: 603725daff613724ca5fe742afddf107,
+    type: 3}
+  useHitBox: 0
 --- !u!1 &4194299445002911999
 GameObject:
   m_ObjectHideFlags: 0

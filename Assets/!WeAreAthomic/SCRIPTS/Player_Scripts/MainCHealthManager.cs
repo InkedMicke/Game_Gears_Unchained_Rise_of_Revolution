@@ -57,7 +57,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             Debug.Log(CanReceiveDamage);
             if (!IsDeath && CanReceiveDamage)
             {
-                Debug.Log("hola3");
                 currentHealth -= damage;
                 GameManagerSingleton.Instance.currentHealth = currentHealth;
                 _mainSounds.RemoveAllSounds();
@@ -143,6 +142,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             yield return new WaitForSeconds(1f);
 
             CanReceiveDamage = true;
+        }
+
+        public void SetCanReceiveDamage(bool canReceiveDamage)
+        {
+            CanReceiveDamage = canReceiveDamage;
         }
 
         public void SetHealthSlider()

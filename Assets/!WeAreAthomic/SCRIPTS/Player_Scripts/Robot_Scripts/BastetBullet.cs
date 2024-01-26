@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 
-public class BastetBullet : MonoBehaviour
+public class BastetBullet : Bullet
 {
     public PlayerDamageData damageData;
     [SerializeField] private GameObject hitChispas;
