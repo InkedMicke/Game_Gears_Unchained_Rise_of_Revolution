@@ -248,6 +248,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         {
             while (!IsChasingPlayer && IsOnWarning)
             {
+                if (IsAttacking)
+                {
+                    break;
+                }
                 if (_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending)
                 {
                     _startPosSearchingPlayer = transform.position;
@@ -257,8 +261,12 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
                 yield return new WaitForEndOfFrame();
             }
 
-            while (_searchingPlayerTimes < 4 && !IsAttacking && IsOnWarning)
+            while (_searchingPlayerTimes < 4 && IsOnWarning)
             {
+                if (IsAttacking)
+                {
+                    break;
+                }
                 _soldierAnim.SetWalking(false);
                 var random = Random.Range(1f, 2f);
                 yield return new WaitForSeconds(random);
@@ -267,8 +275,12 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
                 Vector3 posicionAleatoria = _startPosSearchingPlayer + offsetAleatorio;
                 _agent.SetDestination(posicionAleatoria);
 
-                while (!(_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending) && !IsAttacking)
+                while (!(_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending))
                 {
+                    if(IsAttacking)
+                    {
+                        break;
+                    }
                     yield return new WaitForEndOfFrame();
                 }
 
