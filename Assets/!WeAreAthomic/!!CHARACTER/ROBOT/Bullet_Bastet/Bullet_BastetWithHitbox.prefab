@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 6608898606433792853}
   - component: {fileID: 2951550213817900509}
   m_Layer: 17
-  m_Name: Bullet_Bastet
+  m_Name: Bullet_BastetWithHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -258,8 +258,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1622862d4acda7c4797c6c170ed12b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageData: {fileID: 0}
-  hitChispas: {fileID: 0}
+  damageData: {fileID: 11400000, guid: 428922bc477c45e498ba9050568c0df4, type: 2}
+  hitChispas: {fileID: 5991678360541835482, guid: 624911b7a0c7d2c4d9c1a0227df9c902,
+    type: 3}
+  useHitBox: 1
 --- !u!1 &4194299445002911999
 GameObject:
   m_ObjectHideFlags: 0

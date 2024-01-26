@@ -8,11 +8,15 @@ using UnityEngine.Windows;
 public class MainC360Attack : MonoBehaviour
 {
     PlayerInputActions _playerInputActions;
+    private BastetController _bastet;
 
-    private GameObject bulletPrefab;
+    [SerializeField] private GameObject bastetObj;
+    [SerializeField] private GameObject bulletPrefab;
 
     private void Awake()
     {
+        _bastet = bastetObj.GetComponent<BastetController>();
+
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Enable();
         _playerInputActions.PlayerPC.BastetAttack.performed += InputPC;
@@ -23,7 +27,7 @@ public class MainC360Attack : MonoBehaviour
     {
         if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc && GameManagerSingleton.Instance.currentAbility == CurrentAbility.ThreeSixtyAttack)
         {
-
+            StartAttacking();
         }
             
     }
@@ -32,8 +36,13 @@ public class MainC360Attack : MonoBehaviour
     {
         if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad && GameManagerSingleton.Instance.currentAbility == CurrentAbility.ThreeSixtyAttack)
         {
-
+            StartAttacking();
         }
             
+    }
+
+    private void StartAttacking()
+    {
+        _bastet.GoToDesiredPos();
     }
 }

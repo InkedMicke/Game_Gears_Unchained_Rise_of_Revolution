@@ -12,7 +12,7 @@ public interface IInteractAttack
 public class GBullet : MonoBehaviour
 {
     private Rigidbody _rb;
-    private BastetBulletHitBox _bulletHurtBox;
+    private BastetBullet _bulletHurtBox;
 
     public float bulletForce = 50f;
 

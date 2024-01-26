@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
@@ -194,6 +195,23 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         public void StartShootEnemy(int maxShoots)
         {
             StartCoroutine(ShootEnemy(maxShoots));
+        }
+
+        public void GoToDesiredPos(Action onFinishedAction, Vector3 posToGo, float moveSpeed)
+        {
+            StartCoroutine(GoToPos(onFinishedAction, posToGo, moveSpeed));
+        }
+
+        private IEnumerator GoToPos(Action onFinishedAction, Vector3 posToGo, float moveSpeed)
+        {
+            var difference = posToGo - transform.position;
+            while (Vector3.Distance(transform.position, posToGo) > 0.1f)
+            {
+                _cc.Move(moveSpeed * Time.deltaTime * difference.normalized);
+                yield return new WaitForEndOfFrame(); 
+            }
+
+            onFinishedAction();
         }
 
         private IEnumerator ShootEnemy(int maxShoots)
