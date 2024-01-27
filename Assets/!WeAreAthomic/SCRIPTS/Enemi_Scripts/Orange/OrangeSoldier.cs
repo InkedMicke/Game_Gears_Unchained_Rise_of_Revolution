@@ -1,14 +1,14 @@
 using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
 {
     public class OrangeSoldier : Enemy
     {
         private C_MaterialChangeOnDetection _materialChange;
+
+        [SerializeField] private HitBox[] _hitBoxes;
 
         [SerializeField] private ParticleSystem groundSplashEffect;
 
@@ -48,7 +48,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
                 if (_passedTime >= .01f)
                 {
                     // Calcular la tasa de crecimiento
-                    float growthRate = Mathf.Pow(9 / .1f, 1f / (1.9f / .01f)) - 1f;
+                    float growthRate = .03f;
 
                     if(indicator.size.x >= 9)
                     {
@@ -74,12 +74,30 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
         {
             _materialChange.WarningDecal();
             _soldierAnim.ShootTrigger();
-            _canGrowth = true;
+            foreach(var x in _hitBoxes)
+            {
+                x.ClearList();
+            }
         }
 
         public void PlayHitEffect()
         {
             groundSplashEffect.Play();
+        }
+
+        public void EndAttack()
+        {
+            var sizeIndiciator = indicator.size;
+            sizeIndiciator.x = 0.1f;
+            sizeIndiciator.y = 0.1f;
+            indicator.size = sizeIndiciator;
+            IsAttacking = false;
+            ChangingValuesToChase();
+        }
+
+        public void StartGrowth()
+        {
+            _canGrowth = true;
         }
     }
 }

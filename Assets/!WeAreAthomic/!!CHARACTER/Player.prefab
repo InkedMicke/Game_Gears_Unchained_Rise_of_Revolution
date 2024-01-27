@@ -528,6 +528,7 @@ GameObject:
   - component: {fileID: 7417020760943733625}
   - component: {fileID: 1770476364814114069}
   - component: {fileID: 3764668422024457106}
+  - component: {fileID: 1582181801326735337}
   - component: {fileID: 8156547131111017134}
   - component: {fileID: 6156758546523602922}
   - component: {fileID: 4237099692295455833}
@@ -538,7 +539,6 @@ GameObject:
   - component: {fileID: 8265303273977001949}
   - component: {fileID: 2060323058226009461}
   - component: {fileID: 977941721710959647}
-  - component: {fileID: 1582181801326735337}
   m_Layer: 16
   m_Name: Player
   m_TagString: Player
@@ -911,6 +911,27 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3870155545384615628, guid: ccde1e37232933c4a8708c392b8a3cfd,
     type: 3}
   rafagas: 5
+--- !u!114 &1582181801326735337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821918579687998185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93d68e563c7ed074ebc0dfb5da2808f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainCHealth: {fileID: 5869859861386743886}
+  _mattSkinned: {fileID: 2402805393333922494}
+  protectionMaterials:
+  - {fileID: 2100000, guid: 8f9b1b13a09bdcb41a01523c52afa7d2, type: 2}
+  - {fileID: 2100000, guid: 36d6a0b252c4ff040982b0b44f3201c4, type: 2}
+  - {fileID: 2100000, guid: 3668c6a0c4bf23f48ad642166cfcb89b, type: 2}
+  - {fileID: 2100000, guid: 0b82e43a88eb4774295ba1645bb98274, type: 2}
+  - {fileID: 2100000, guid: 0960f507df40faa4ea033d24d5327f61, type: 2}
+  protectionDuration: 3
 --- !u!114 &8156547131111017134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1194,27 +1215,6 @@ MonoBehaviour:
   vfxSpeedLines: {fileID: 3399135060996146196}
   chispasVFX: {fileID: 5991678360541835482, guid: 624911b7a0c7d2c4d9c1a0227df9c902,
     type: 3}
---- !u!114 &1582181801326735337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5821918579687998185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93d68e563c7ed074ebc0dfb5da2808f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mainCHealth: {fileID: 5869859861386743886}
-  _mattSkinned: {fileID: 2402805393333922494}
-  protectionMaterials:
-  - {fileID: 2100000, guid: 8f9b1b13a09bdcb41a01523c52afa7d2, type: 2}
-  - {fileID: 2100000, guid: 36d6a0b252c4ff040982b0b44f3201c4, type: 2}
-  - {fileID: 2100000, guid: 3668c6a0c4bf23f48ad642166cfcb89b, type: 2}
-  - {fileID: 2100000, guid: 0b82e43a88eb4774295ba1645bb98274, type: 2}
-  - {fileID: 2100000, guid: 0960f507df40faa4ea033d24d5327f61, type: 2}
-  protectionDuration: 3
 --- !u!1 &6386136891931232913
 GameObject:
   m_ObjectHideFlags: 0
@@ -2283,7 +2283,7 @@ PrefabInstance:
     - target: {fileID: 1332789935442608498, guid: 3f50f72433c502940a09e9ba10f49496,
         type: 3}
       propertyPath: m_Materials.Array.size
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1332789935442608498, guid: 3f50f72433c502940a09e9ba10f49496,
         type: 3}

@@ -53,8 +53,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public override void Damage(float damage)
         {
-            Debug.Log(IsDeath);
-            Debug.Log(CanReceiveDamage);
             if (!IsDeath && CanReceiveDamage)
             {
                 currentHealth -= damage;
