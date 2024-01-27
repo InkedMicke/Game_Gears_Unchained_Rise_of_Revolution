@@ -14,6 +14,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCSwitchWeapon _mainSwitchWeapon;
         private MainCSounds _mainCSounds;
         private MainCAnimatorController _mainCAnim;
+        private MainCAttack _mainCAttack;
 
         private Coroutine _hackCoroutine;
 
@@ -41,6 +42,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainSwitchWeapon = GetComponent<MainCSwitchWeapon>();
             _mainCSounds = GetComponent<MainCSounds>();
             _mainCAnim = GetComponent<MainCAnimatorController>();
+            _mainCAttack = GetComponent<MainCAttack>();
         }
 
         private void Update()
@@ -50,10 +52,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if(_isHackingSoldier)
             {
-                Debug.Log("hola1");
                 if(Vector3.Distance(transform.position, _currentInteract.transform.position) > 6)
                 {
-                    Debug.Log("hola2");
                     _isHackingSoldier = false;
                     EndHacking();
                 }
@@ -82,7 +82,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     FixPosition();
                     EnableHackAnim();
-                    DisableWeapon();
+                    _mainCAttack.HideWeapon();
+                    _mainCAttack.SetIsSheathed(false);
                 }
                 else
                 {
@@ -199,16 +200,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
                 }
             }
-        }
-
-        private void DisableWeapon()
-        {
-            wrenchObj.SetActive(false);
-        }
-
-        private void EnableWeapon()
-        {
-            wrenchObj.SetActive(true);
         }
 
         public void EndAnimHack()
