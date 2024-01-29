@@ -10,6 +10,7 @@ public class MainCRail : MonoBehaviour
     private MainCAnimatorController _mainCAnim;
     private MainCMovement _mainCMove;
     private CharacterController _cc;
+    private MainCVFX _mainCVFX;
 
     [SerializeField] private LayerMask railLayer;
 
@@ -32,6 +33,7 @@ public class MainCRail : MonoBehaviour
         _mainCAnim = GetComponent<MainCAnimatorController>();
         _mainCMove = GetComponent<MainCMovement>();
         _cc = GetComponent<CharacterController>();
+        _mainCVFX = GetComponent<MainCVFX>();
     }
 
 
@@ -66,6 +68,8 @@ public class MainCRail : MonoBehaviour
 
             if(_distancePercentage > 1f)
             {
+                _mainCVFX.ToggleSpeedRail();
+                _mainCVFX.ToggleSparks();
                 _distancePercentage = 0f;
             }
 
@@ -90,6 +94,9 @@ public class MainCRail : MonoBehaviour
         _splineLength = _splineContainer.CalculateLength();
         IsSliding = true;
         _mainCAnim.SetMoveSpeed(0);
+        _mainCVFX.ToggleSpeedRail();
+       
+
     }
 
     private void OnDrawGizmos()

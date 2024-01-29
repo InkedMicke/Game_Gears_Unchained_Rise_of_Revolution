@@ -243,9 +243,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     {
                         hurtbox.Damage(GameManagerSingleton.Instance.GetPlayerDamage(_pistolAttackData, hit.collider.gameObject));
                     }
-                    else if(hit.collider.TryGetComponent(out DummieHurtBox dummieHurtbox))
+                    else if (hit.collider.TryGetComponent(out DummieHurtBox dummieHurtbox))
                     {
                         dummieHurtbox.Damage(GameManagerSingleton.Instance.GetPlayerDamage(_pistolAttackData, hit.collider.gameObject));
+                    }
+                    else if (hit.collider.TryGetComponent(out IInteractAttack wallSewers)) 
+                    {
+                        wallSewers.InteractAttack();
                     }
 
                 }

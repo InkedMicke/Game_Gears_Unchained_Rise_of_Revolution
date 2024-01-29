@@ -147,7 +147,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCAnimator.SetGrounded(true);
                 _mainCAnimator.SetFalling(false);
                 _mainCAnimator.SetJumping(false);
-                _mainVFXCharacter.ToggleRail();
+                
             }
         }
 
