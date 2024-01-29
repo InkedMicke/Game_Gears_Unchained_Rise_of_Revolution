@@ -96,4 +96,13 @@ public class MainCVFX : MonoBehaviour
         vfxSpeedLines.SetActive(on);
     }
 
+    public void SetActiveSparks(bool on)
+    {
+        vfxSparks.SetActive(on);
+    }
+
+    public void SetActiveSpeedlines(bool on)
+    {
+        vfxSpeedLines.SetActive(on);
+    }
 }
