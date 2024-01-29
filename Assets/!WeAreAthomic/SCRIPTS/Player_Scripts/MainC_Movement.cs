@@ -216,7 +216,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if (IsFalling && _mainCRail.IsOnRail())
             {
-                _mainCVFX.ToggleSparks();
+                _mainCVFX.SetActiveSparks(true);
             }
         }
 
@@ -526,8 +526,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCAnimator.SetJumping(true);
                 _velocity.y = jumpImpulseOnRail;
                 _timeGraceJumpPeriod = Time.time + timeNextJump;
-               
-                _mainCVFX.ToggleSparks();
+
+                _mainCVFX.SetActiveSparks(false);
             }
         }
 

@@ -46,7 +46,7 @@ public class MainCRail : MonoBehaviour
 
         if(IsSliding)
         {
-            _currentRailSpeed = _mainCMove.IsJumping ? railSpeed / 1.3f : railSpeed;
+            _currentRailSpeed = _mainCMove.IsJumping ? railSpeed / 1.5f : railSpeed;
         }
 
         if(IsSliding)
@@ -68,8 +68,6 @@ public class MainCRail : MonoBehaviour
 
             if(_distancePercentage > 1f)
             {
-                _mainCVFX.ToggleSpeedRail();
-                _mainCVFX.ToggleSparks();
                 _distancePercentage = 0f;
             }
 
@@ -94,7 +92,7 @@ public class MainCRail : MonoBehaviour
         _splineLength = _splineContainer.CalculateLength();
         IsSliding = true;
         _mainCAnim.SetMoveSpeed(0);
-        _mainCVFX.ToggleSpeedRail();
+        _mainCVFX.SetRailEffects(true);
        
 
     }
