@@ -44,7 +44,7 @@ public class MainCRail : MonoBehaviour
 
         if(IsSliding)
         {
-            _currentRailSpeed = _mainCMove.IsJumping ? railSpeed / 2 : railSpeed;
+            _currentRailSpeed = _mainCMove.IsJumping ? railSpeed / 1.3f : railSpeed;
         }
 
         if(IsSliding)
@@ -53,7 +53,7 @@ public class MainCRail : MonoBehaviour
             Debug.DrawRay(currentPosition, Vector3.up * 20, Color.yellow);
         }
 
-        if(IsSliding && !_mainCMove.IsJumping)
+        if(IsSliding && !_mainCMove.IsJumping && !_mainCMove.IsFalling)
         {
             _distancePercentage += _currentRailSpeed * Time.deltaTime / _splineLength;
 
@@ -73,13 +73,14 @@ public class MainCRail : MonoBehaviour
             var direction = nextPosition - currentPosition;
             transform.rotation = Quaternion.LookRotation(direction, transform.up);
         }
-        else if(IsSliding && _mainCMove.IsJumping)
+        else if(IsSliding && _mainCMove.IsJumping || IsSliding && _mainCMove.IsFalling)
         {
             _distancePercentage += _currentRailSpeed * Time.deltaTime / _splineLength;
             var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
             var posVector = new Vector3(currentPosition.x, transform.position.y, currentPosition.z);
             //transform.position = Vector3.MoveTowards(transform.position, currentPosition, railSpeed * Time.deltaTime);
             var difference = posVector - transform.position;
+            Debug.Log("hola1");
             _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
         }
     }
