@@ -99,7 +99,6 @@ public class C_SpawnerEnemies : MonoBehaviour
         for (int i = _currentEnemiesObj.Count - 1; i >= 0; i--)
         {
             var soldado = _currentEnemiesObj[i];
-            Debug.Log(soldado.name);
 
             if (soldado.GetComponentInChildren<SoldierHurtBox>().IsDeath)
             {

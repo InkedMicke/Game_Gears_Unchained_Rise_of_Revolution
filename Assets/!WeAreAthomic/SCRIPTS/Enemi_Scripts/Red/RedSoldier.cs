@@ -34,12 +34,13 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
         protected override void Awake()
         {
             _trail = GetComponent<G_MeshTrail>();
+            indicatorStartPos = indicator.transform.localPosition;
             base.Awake();
         }
 
         protected override void Start()
         {
-            indicatorStartPos = indicator.transform.localPosition;
+            
             base.Start();
         }
 

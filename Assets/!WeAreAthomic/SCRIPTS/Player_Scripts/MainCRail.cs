@@ -80,7 +80,6 @@ public class MainCRail : MonoBehaviour
             var posVector = new Vector3(currentPosition.x, transform.position.y, currentPosition.z);
             //transform.position = Vector3.MoveTowards(transform.position, currentPosition, railSpeed * Time.deltaTime);
             var difference = posVector - transform.position;
-            Debug.Log("hola1");
             _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
         }
     }
