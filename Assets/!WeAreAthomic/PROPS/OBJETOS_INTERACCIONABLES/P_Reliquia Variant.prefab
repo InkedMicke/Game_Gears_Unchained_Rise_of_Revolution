@@ -241,6 +241,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8538143496432617364}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b732237761a418247af0aa1dceee3940,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3631311090502551204}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b732237761a418247af0aa1dceee3940,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5215343046864610031}
   m_SourcePrefab: {fileID: 100100000, guid: b732237761a418247af0aa1dceee3940, type: 3}
 --- !u!4 &1236631105735066690 stripped
 Transform:
@@ -294,6 +302,68 @@ MonoBehaviour:
   duration: 10
   rotateMode: 3
   ease: 1
+--- !u!114 &3631311090502551204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901281952778542840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2e6ff969f35d9419b570f8d56023bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {x: 0, y: 0.3, z: 0}
+  duration: 2
+  ease: 4
+  playOnStart: 1
+  playOnComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5215343046864610031}
+        m_TargetAssemblyTypeName: GTweenDoMove, Assembly-CSharp
+        m_MethodName: Move
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5215343046864610031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901281952778542840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2e6ff969f35d9419b570f8d56023bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {x: 0, y: -0.3, z: 0}
+  duration: 2
+  ease: 4
+  playOnStart: 0
+  playOnComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3631311090502551204}
+        m_TargetAssemblyTypeName: GTweenDoMove, Assembly-CSharp
+        m_MethodName: Move
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &3777545833611610081
 PrefabInstance:
   m_ObjectHideFlags: 0
