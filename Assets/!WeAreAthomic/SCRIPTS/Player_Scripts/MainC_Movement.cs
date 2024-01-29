@@ -21,6 +21,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private GTrajectory _trajectory;
         private MainCSounds _mainCSounds;
         private MainCDash _mainCDash;
+        private MainCVFX _mainCVFX;
 
         private Scene _currentScene;
 
@@ -103,6 +104,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCHealth = GetComponentInChildren<MainCHealthManager>();
             _mainCSounds = GetComponent<MainCSounds>();
             _mainCDash = GetComponent<MainCDash>();
+            _mainCVFX = GetComponent<MainCVFX>();
 
             _currentScene = SceneManager.GetActiveScene();
             if (_currentScene.name == "S2_LABTUTORIAL" || _currentScene.name == "TESTING")
@@ -210,6 +212,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 IsJumping = false;
                 _mainCAnimator.SetGrounded(true);
+            }
+
+            if (IsFalling && _mainCRail.IsOnRail())
+            {
+                _mainCVFX.ToggleSparks();
             }
         }
 
@@ -519,6 +526,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCAnimator.SetJumping(true);
                 _velocity.y = jumpImpulseOnRail;
                 _timeGraceJumpPeriod = Time.time + timeNextJump;
+               
+                _mainCVFX.ToggleSparks();
             }
         }
 

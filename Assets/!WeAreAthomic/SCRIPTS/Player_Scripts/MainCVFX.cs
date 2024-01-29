@@ -72,14 +72,20 @@ public class MainCVFX : MonoBehaviour
         chispas.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
         Destroy(chispas, 1f);
     }
-
-    public void ToggleRail()
+    public void ToggleSparks()
     {
-        var  active = new bool();
+        var active = new bool();
 
         active = !active;
 
         vfxSparks.SetActive(active);
+    }
+    public void ToggleSpeedRail()
+    {
+        var  active = new bool();
+
+        active = !active;
+        
         vfxSpeedLines.SetActive(active);
     }
 
