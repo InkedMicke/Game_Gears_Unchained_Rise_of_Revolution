@@ -18,7 +18,6 @@ public class BastetBullet : Bullet
     {
         if (useHitBox)
         {
-            Debug.Log(other.name);
             Instantiate(hitChispas, transform.position, Quaternion.identity);
             if (other.TryGetComponent(out IDamageable damageable))
             {

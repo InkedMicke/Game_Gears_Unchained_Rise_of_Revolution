@@ -149,7 +149,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 crosshair.SetActive(false);
                 _camFollower.cameraFollow = cameraFollow;
                 _bastetController.StopMoveToBastetPos();
-                _bastetController.InvokeMoveToPlayer();
+                _bastetController.GoToDesiredPos(() => bastetObj.SetActive(false), _bastetController.playerRightArm.transform.position, 2f, Ease.Linear);
                 IsAiming = false;
             }
 
@@ -229,14 +229,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCamera.DOShakePosition(.1f, .1f, 5, 60f);
                 if (Physics.Raycast(ray, out RaycastHit hit, shootDistance, rayLayers))
                 {
-                    var bullet = Instantiate(bulletPrefab, bastetObj.transform.position, Quaternion.identity);
-                    bullet.transform.LookAt(hit.point);
-                    bullet.GetComponent<Bullet>().bulletForce = bulletSpeed;
-                    bullet.transform.localScale = Vector3.one * bulletSize;
                     Vector3 direction = bastetObj.transform.position - hit.collider.transform.position;
                     var distance = direction.magnitude;
                     var timeToDestroy = distance / (bulletSpeed * direction.normalized.magnitude);
-                    Destroy(bullet, timeToDestroy);
+                    _bastetController.Shoot(bulletPrefab, bulletSpeed, hit.point, Vector3.one * bulletSize, true,timeToDestroy);
                     Instantiate(hitChispasPrefab, hit.point, Quaternion.identity);
 
                     if (hit.collider.TryGetComponent(out SoldierHurtBox hurtbox))
@@ -255,14 +251,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 }
                 else
                 {
-                    var bullet = Instantiate(bulletPrefab, bastetObj.transform.position, Quaternion.identity);
-                    bullet.transform.LookAt(ray.GetPoint(shootDistance));
-                    bullet.GetComponent<Bullet>().bulletForce = bulletSpeed;
-                    bullet.transform.localScale = Vector3.one * bulletSize;
                     Vector3 direction = bastetObj.transform.position - ray.GetPoint(shootDistance);
                     var distance = direction.magnitude;
                     var timeToDestroy = distance / (bulletSpeed * direction.normalized.magnitude);
-                    Destroy(bullet, timeToDestroy);
+                    _bastetController.Shoot(bulletPrefab, bulletSpeed, ray.GetPoint(shootDistance), Vector3.one * bulletSize, true, timeToDestroy);
 
                     Instantiate(destroyBulletChispasPrefab, ray.GetPoint(shootDistance), Quaternion.identity);
                 }
