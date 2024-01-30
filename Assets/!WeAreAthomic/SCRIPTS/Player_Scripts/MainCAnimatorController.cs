@@ -19,6 +19,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private string dash = "dash";
         [SerializeField] private string hit = "hit";    
         [SerializeField] private string shield = "shield";    
+        [SerializeField] private string heal = "heal";    
 
         protected void Awake()
         {
@@ -93,6 +94,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void TriggerShield() 
         {
             _anim.SetTrigger(shield);
+        }
+        public void TriggerHeal()
+        {
+            _anim.SetTrigger(heal);
         }
 
         public void SetRootMotion(bool condition)

@@ -18,6 +18,7 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
     [SerializeField] private Material forcefieldMaterials;
 
     private bool _isProtectionEnabled;
+    private bool _isHealEnabled;
 
     [SerializeField] private float protectionDuration = 3f;
 
@@ -72,6 +73,18 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
             _mainCVFX.ActivateShieldGlow();
         }
     }
+    private void StartAnimHeal()
+    {
+        if (!_isHealEnabled)
+        {
+            _isHealEnabled = true;
+            _mainCLayers.EnableHackLayer();
+            _mainCAnimatorController.TriggerHeal();
+            _mainCMovement.DisableMovement();
+            _mainCVFX.ActivateHealGlow();
+        }
+        _isHealEnabled = false;
+    }
 
     private IEnumerator Protection()
     {
@@ -100,7 +113,10 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
 
     private void Heal()
     {
+        
+        StartAnimHeal();
         _mainCHealth.GetHealth(_mainCHealth.maxHealth - _mainCHealth.currentHealth);
+        
     }
     public void EndAnimProtection()
     {

@@ -30,6 +30,9 @@ public class MainCVFX : MonoBehaviour
 
     [Header("Shield")]
     [SerializeField] private ParticleSystem shieldVFX;
+
+    [Header("Heal")]
+    [SerializeField] private ParticleSystem healVFX;
     private void Awake()
     {
         _mainCMove = GetComponent<MainCMovement>();
@@ -65,8 +68,8 @@ public class MainCVFX : MonoBehaviour
     public void ActivateSlash3()
     {
         slash3.Play();
-    }    
-    
+    }
+
     public void ActivateSlash4()
     {
         slash4.Play();
@@ -78,6 +81,11 @@ public class MainCVFX : MonoBehaviour
     public void ActivateShieldGlow()
     {
         shieldVFX.Play();
+    }
+
+    public void ActivateHealGlow()
+    {
+        healVFX.Play();
     }
     
     public void ToggleSparks()
