@@ -10,7 +10,8 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
         LAB,
         POOR,
         SEWERS,
-        SETHS
+        SETHS,
+        SURVIVE
     }
 
     public class GLoadScene : MonoBehaviour
@@ -38,6 +39,9 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                 case Scenes.SETHS:
                     SceneManager.LoadScene("S5_SETHS_PALACE", sceneMode);
                     break;
+                case Scenes.SURVIVE:
+                    SceneManager.LoadScene("S6_SURVIVALMODE", sceneMode);
+                    break;
             }
         }
         
@@ -59,6 +63,9 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                     break;
                 case Scenes.SETHS:
                     SceneManager.LoadScene("S5_SETHS_PALACE");
+                    break;
+                case Scenes.SURVIVE:
+                    SceneManager.LoadScene("S6_SURVIVALMODE");
                     break;
             }
         }
