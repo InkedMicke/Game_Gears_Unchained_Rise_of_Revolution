@@ -28,7 +28,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
         [SerializeField] private ParticleSystem sparksHit;
 
         [SerializeField] private bool useKnockback = true;
-        private bool isDeath;
+        public bool isDeath;
         
         [SerializeField] private float pushForce = 5f;
     

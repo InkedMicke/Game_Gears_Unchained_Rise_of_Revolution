@@ -65,7 +65,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
 
                 if (Vector3.Distance(transform.position, correctPos) > 0.1f)
                 {
-                    //_cc.Move(moveDir);
                     _currentScene = SceneManager.GetActiveScene();
                     transform.position = Vector3.MoveTowards(transform.position, correctPos, (_mainCRail.IsSliding ? bastetMoveSpeed * 3 : bastetMoveSpeed) * Time.deltaTime);
                 }
@@ -85,11 +84,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             }
         }
 
-        public void InvokeMoveToPlayer()
-        {
-            StartCoroutine(nameof(MoveToPlayer));
-        }
-
         public void StartMoveToBastetPos()
         {
             _moveToBastetPos = true;
@@ -99,133 +93,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         {
             _moveToBastetPos = false;
         }
-
-        public void StartMovetoPlayer()
-        {
-            StartCoroutine(MoveToPlayer());
-        }
-
-        private IEnumerator MoveToPlayer()
-        {
-            _cc.enabled = true;
-            HideScanner();
-            while (true)
-            {
-                var direction = playerRightArm.transform.position - transform.position;
-                _cc.Move(direction.normalized * moveSpeed * Time.deltaTime);
-                transform.LookAt(playerRightArm.transform);
-
-                if (Vector3.Distance(playerRightArm.transform.position, transform.position) < 0.3f)
-                {
-                    gameObject.SetActive(false);
-                    break;
-                }
-
-                yield return new WaitForSeconds(0.01f);
-            }
-        }
-
-        private IEnumerator NegativeRotationX()
-        {
-            var enable = true;
-
-            while (enable)
-            {
-                var eulerAngles = transform.eulerAngles;
-                transform.rotation = Quaternion.Euler(eulerAngles.x -= rotateSpeed, eulerAngles.y, eulerAngles.z);
-                negative = true;
-                if (transform.localRotation.x >= 0.2f)
-                {
-                    enable = false; ;
-                    StartCoroutine(nameof(WaitRotation));
-                }
-
-                yield return new WaitForSeconds(0.01f);
-            }
-        }
-
-        private IEnumerator PositiveRotationX()
-        {
-            var enable = true;
-
-            while (enable)
-            {
-                var eulerAngles = transform.eulerAngles;
-                transform.rotation = Quaternion.Euler(eulerAngles.x += rotateSpeed, eulerAngles.y, eulerAngles.z);
-                positive = true;
-                if (transform.localRotation.x >= 0.2f)
-                {
-                    enable = false;
-                    StartCoroutine(nameof(WaitRotation));
-                }
-
-                yield return new WaitForSeconds(0.01f);
-            }
-        }
-
-        private IEnumerator WaitRotation()
-        {
-            var enable = true;
-            var time = 0.1f;
-
-            while (enable)
-            {
-                time -= Time.deltaTime;
-
-                if (time <= 0f)
-                {
-                    if (positive)
-                    {
-                        enable = false;
-                        positive = false;
-                        StartCoroutine(nameof(NegativeRotationX));
-                    }
-
-                    else if (negative)
-                    {
-                        enable = false;
-                        negative = false;
-                        StartCoroutine(nameof(PositiveRotationX));
-                    }
-                }
-
-                yield return new WaitForSeconds(0.01f);
-            }
-        }
-
-        public void StartShootEnemy(int maxShoots)
-        {
-            StartCoroutine(ShootEnemy(maxShoots));
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="onFinishedAction">funcion que se va ejecutar si "callOnFinish" es verdadera</param>
+        /// <param name="posToGo">Target del movimiento</param>
+        /// <param name="duration">Duracion del movimiento</param>
+        /// <param name="ease"></param>
         public void GoToDesiredPos(Action onFinishedAction, Vector3 posToGo, float duration, Ease ease)
         {
             transform.DOMove(posToGo, duration).SetEase(ease).OnComplete(() => onFinishedAction());
-        }
-
-        private IEnumerator ShootEnemy(int maxShoots)
-        {
-            var currentShoots = new int();
-            while (true)
-            {
-                var randomMuzzle = Random.Range(0, muzzles.Count);
-                var bulletObj = Instantiate(bullet, muzzles[randomMuzzle].position, Quaternion.identity);
-                _savedClosestEnemy = _mainCBastet.closestEnemyToShoot;
-                var enemyPos = _mainCBastet.closestEnemyToShoot != null ? _mainCBastet.closestEnemyToShoot.transform.position : _savedClosestEnemy.transform.position;
-                var lookAtFixed = new Vector3(enemyPos.x, enemyPos.y + .1f, enemyPos.z);
-                bulletObj.transform.LookAt(lookAtFixed);
-                transform.LookAt(lookAtFixed);
-                var difference = lookAtFixed - transform.position;
-                bulletObj.GetComponent<Rigidbody>().AddForce(transform.forward * 50f, ForceMode.Impulse);
-                currentShoots++;
-                if (currentShoots > maxShoots)
-                {
-                    _mainCBastet.DisableBastetAttacking();
-                    StartCoroutine(MoveToPlayer());
-                    break;
-                }
-                yield return new WaitForSeconds(Random.Range(.1f, .3f));
-            }
         }
 
         private IEnumerator WaitForShoot()
@@ -235,11 +112,21 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             //StartCoroutine(ShootEnemy());
         }
 
+        public void Shoot(GameObject bulletPrefab, float bulletForce, Vector3 posToLook, Vector3 bulletSize, bool ifDestroyInTime,float timeToDestroy)
+        {
+            var randomMuzzle = Random.Range(0, muzzles.Count);
+            var bullet = Instantiate(bulletPrefab, muzzles[randomMuzzle].position, Quaternion.identity);
+            bullet.transform.LookAt(posToLook);
+            bullet.GetComponent<Bullet>().bulletForce = bulletForce;
+            if (ifDestroyInTime)
+            {
+                Destroy(bullet, timeToDestroy);
+            }
+        }
+
         public void PosRightHand()
         {
-            _cc.enabled = false;
             transform.position = playerRightArm.transform.position;
-            _cc.enabled = true;
         }
 
         public void HideScanner()

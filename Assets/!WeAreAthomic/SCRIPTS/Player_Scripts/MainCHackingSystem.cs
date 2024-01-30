@@ -3,6 +3,7 @@ using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts;
 using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -100,7 +101,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             hackCanvas.SetActive(false);
             var button = _currentInteract.GetComponent<ButtonInteractable>();
             button.EndHackInvoke();
-            _bastetController.InvokeMoveToPlayer();
+            _bastetController.GoToDesiredPos(() => robotObj.SetActive(false), _bastetController.playerRightArm.transform.position, 2f, Ease.Linear);
             _mainCSounds.StopHackInProcessSound();
             IsHacking = false;
         }
@@ -123,7 +124,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void SpawnRobot()
         {
             robotObj.SetActive(true);
-            robotObj.GetComponent<CharacterController>().enabled = false;;
             _bastetController.ShowScanner();
             IsHacking = true;
         }
@@ -187,7 +187,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCSounds.StopHackInProcessSound();
                 _cc.enabled = true;
                 _mainCLayers.DisableHackLayer();
-                _bastetController.InvokeMoveToPlayer();
+                _bastetController.GoToDesiredPos(() => robotObj.SetActive(false), _bastetController.playerRightArm.transform.position, 2f, Ease.Linear);
                 _mainCSounds.PlayCannotHackSound();
 
                 var interactables = FindObjectsOfType<ButtonInteractable>();
