@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class GearAbility : MonoBehaviour
 {
@@ -16,7 +17,9 @@ public class GearAbility : MonoBehaviour
     [SerializeField] private Image imageToChange;
     [SerializeField] private Image imageSlider;
     [SerializeField] private Image imageOfSelectedAbility;
-    [SerializeField] private Image imageOfSelectedAbilityEmpty;
+    [SerializeField] private Image imageOfSelectedAbilityEmpty; 
+    [SerializeField] private VideoClip videoToShow; 
+
 
     [SerializeField] private Material selectedMat;
     private Material _originalMat;
