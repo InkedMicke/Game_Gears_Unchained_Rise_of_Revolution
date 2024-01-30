@@ -841,6 +841,12 @@ Transform:
   m_Father: {fileID: 730847595}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &288461586 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7932257541033202348, guid: 727e3a0bc05420d428f78b0d5787160c,
+    type: 3}
+  m_PrefabInstance: {fileID: 556209593}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &293061957 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5112329605736429077, guid: 727e3a0bc05420d428f78b0d5787160c,
@@ -2221,6 +2227,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 4.6
       objectReference: {fileID: 0}
+    - target: {fileID: 2452103270273800182, guid: 727e3a0bc05420d428f78b0d5787160c,
+        type: 3}
+      propertyPath: m_Name
+      value: Button Sobrevive
+      objectReference: {fileID: 0}
     - target: {fileID: 2563001872563159232, guid: 727e3a0bc05420d428f78b0d5787160c,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3558,6 +3569,46 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5657473238756802796, guid: 727e3a0bc05420d428f78b0d5787160c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5657473238756802796, guid: 727e3a0bc05420d428f78b0d5787160c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5657473238756802796, guid: 727e3a0bc05420d428f78b0d5787160c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 288461586}
+    - target: {fileID: 5657473238756802796, guid: 727e3a0bc05420d428f78b0d5787160c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1099529770}
+    - target: {fileID: 5657473238756802796, guid: 727e3a0bc05420d428f78b0d5787160c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: LoadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 5657473238756802796, guid: 727e3a0bc05420d428f78b0d5787160c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: _WeAreAthomic.SCRIPTS.Genericos_Scripts.GLoadScene, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5657473238756802796, guid: 727e3a0bc05420d428f78b0d5787160c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5657473238756802796, guid: 727e3a0bc05420d428f78b0d5787160c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5762950020140572361, guid: 727e3a0bc05420d428f78b0d5787160c,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3891,7 +3942,7 @@ PrefabInstance:
     - target: {fileID: 6978185261518288747, guid: 727e3a0bc05420d428f78b0d5787160c,
         type: 3}
       propertyPath: m_text
-      value: CREDITOS
+      value: SOBREVIVE
       objectReference: {fileID: 0}
     - target: {fileID: 6978185261518288747, guid: 727e3a0bc05420d428f78b0d5787160c,
         type: 3}
@@ -4483,6 +4534,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1099529764}
+    - targetCorrespondingSourceObject: {fileID: 2452103270273800182, guid: 727e3a0bc05420d428f78b0d5787160c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1099529770}
     - targetCorrespondingSourceObject: {fileID: 653817671141814198, guid: 727e3a0bc05420d428f78b0d5787160c,
         type: 3}
       insertIndex: -1
@@ -5773,6 +5828,19 @@ MonoBehaviour:
   time: 0.5
   easing: 20
   timeScaleIndependent: 1
+--- !u!114 &1099529770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099529759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb101789fa044642a5f70b42d5a4c0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: 5
 --- !u!1 &1146899849
 GameObject:
   m_ObjectHideFlags: 0
@@ -12351,7 +12419,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CREDITS
+  m_text: SURVIVE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f83db1164af27a841aa55189f2a82b86, type: 2}
   m_sharedMaterial: {fileID: -5592514773993622969, guid: fe129390af88b40faa85c89db6820ea6,
