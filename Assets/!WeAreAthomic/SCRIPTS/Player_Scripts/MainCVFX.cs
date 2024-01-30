@@ -28,6 +28,8 @@ public class MainCVFX : MonoBehaviour
     [Header("Chispas")]
     [SerializeField] private GameObject chispasVFX;
 
+    [Header("Shield")]
+    [SerializeField] private ParticleSystem shieldVFX;
     private void Awake()
     {
         _mainCMove = GetComponent<MainCMovement>();
@@ -72,6 +74,12 @@ public class MainCVFX : MonoBehaviour
         chispas.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
         Destroy(chispas, 1f);
     }
+
+    public void ActivateShieldGlow()
+    {
+        shieldVFX.Play();
+    }
+    
     public void ToggleSparks()
     {
         var active = new bool();

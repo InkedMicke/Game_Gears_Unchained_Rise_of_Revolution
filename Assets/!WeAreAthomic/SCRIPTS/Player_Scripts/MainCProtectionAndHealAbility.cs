@@ -5,13 +5,17 @@ using UnityEngine.InputSystem;
 
 public class MainCProtectionAndHealAbility : MonoBehaviour
 {
+    private MainCVFX _mainCVFX;
+    private MainCLayers _mainCLayers;
+    private MainCAnimatorController _mainCAnimatorController;
+    private MainCMovement _mainCMovement;
     private PlayerInputActions _playerInputActions;
     [SerializeField] private MainCHealthManager _mainCHealth;
 
     [SerializeField] private SkinnedMeshRenderer _mattSkinned;
 
     private Material[] originalMaterials;
-    [SerializeField] private Material[] protectionMaterials;
+    [SerializeField] private Material forcefieldMaterials;
 
     private bool _isProtectionEnabled;
 
@@ -25,13 +29,17 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
         _playerInputActions.Enable();
         _playerInputActions.PlayerPC.BastetAttack.performed += InputPC;
         _playerInputActions.PlayerGamepad.BastetAttack.performed += InputGamepad;
+        _mainCLayers = GetComponent<MainCLayers>();
+        _mainCAnimatorController = GetComponent<MainCAnimatorController>();
+        _mainCMovement = GetComponent<MainCMovement>();
+        _mainCVFX = GetComponent<MainCVFX>();
     }
 
     private void InputPC(InputAction.CallbackContext context)
     {
         if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc && GameManagerSingleton.Instance.currentAbility == CurrentAbility.Protection)
         {
-            StartProtection();
+            StartAnimProtection();
         }        
         
         if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc && GameManagerSingleton.Instance.currentAbility == CurrentAbility.Heal)
@@ -45,7 +53,7 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
     {
         if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad && GameManagerSingleton.Instance.currentAbility == CurrentAbility.Protection)
         {
-            StartProtection();
+            StartAnimProtection();
         }
 
         if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad && GameManagerSingleton.Instance.currentAbility == CurrentAbility.Heal)
@@ -54,27 +62,54 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
         }
     }
 
-    private void StartProtection()
+    private void StartAnimProtection()
     {
         if (!_isProtectionEnabled)
         {
-            StartCoroutine(Protection());
+            _mainCLayers.EnableHackLayer();
+            _mainCAnimatorController.TriggerShield();
+            _mainCMovement.DisableMovement();
+            _mainCVFX.ActivateShieldGlow();
         }
     }
 
     private IEnumerator Protection()
     {
+       
+
+
         _mainCHealth.SetCanReceiveDamage(false);
         _isProtectionEnabled = true;
-        _mattSkinned.materials = protectionMaterials;
+
+        var newMat = new Material[_mattSkinned.materials.Length];
+
+
+        for (int i = 0; i < newMat.Length; i++)
+        {
+            newMat[i] = forcefieldMaterials;
+        }
+        _mattSkinned.materials = newMat;
+
         yield return new WaitForSeconds(protectionDuration);
         _mainCHealth.SetCanReceiveDamage(true);
         _isProtectionEnabled = false;
         _mattSkinned.materials = originalMaterials;
+   
+
     }
 
     private void Heal()
     {
         _mainCHealth.GetHealth(_mainCHealth.maxHealth - _mainCHealth.currentHealth);
+    }
+    public void EndAnimProtection()
+    {
+        _mainCLayers.DisableHackLayer();
+        _mainCMovement.EnableMovement();
+    }
+    public void StartProtectionAbility()
+    {
+        StartCoroutine(Protection());
+
     }
 }

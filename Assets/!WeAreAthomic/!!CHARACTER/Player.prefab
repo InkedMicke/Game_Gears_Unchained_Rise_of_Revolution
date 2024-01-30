@@ -646,6 +646,7 @@ MonoBehaviour:
   aimOnRail: railAiming
   dash: dash
   hit: hit
+  shield: shield
 --- !u!114 &294128395308933352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -925,13 +926,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainCHealth: {fileID: 5869859861386743886}
   _mattSkinned: {fileID: 2402805393333922494}
-  protectionMaterials:
-  - {fileID: 2100000, guid: 8f9b1b13a09bdcb41a01523c52afa7d2, type: 2}
-  - {fileID: 2100000, guid: 36d6a0b252c4ff040982b0b44f3201c4, type: 2}
-  - {fileID: 2100000, guid: 3668c6a0c4bf23f48ad642166cfcb89b, type: 2}
-  - {fileID: 2100000, guid: 0b82e43a88eb4774295ba1645bb98274, type: 2}
-  - {fileID: 2100000, guid: 0960f507df40faa4ea033d24d5327f61, type: 2}
-  protectionDuration: 3
+  forcefieldMaterials: {fileID: 0}
+  protectionDuration: 5
 --- !u!114 &8156547131111017134
 MonoBehaviour:
   m_ObjectHideFlags: 0
