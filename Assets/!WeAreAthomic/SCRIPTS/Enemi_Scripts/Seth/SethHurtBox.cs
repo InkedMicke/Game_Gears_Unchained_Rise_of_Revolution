@@ -1,18 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
+using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class SethHurtBox : MonoBehaviour
+public class SethHurtBox : HurtBox
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Slider healthSlider;
+
+    private bool IsDeath;
+    private bool _canReceiveDamage;
+
+    [SerializeField] private float maxHealth;
+    public float currentHealth;
+
+    private void Awake()
     {
-        
+        currentHealth = maxHealth;
+        healthSlider.maxValue = maxHealth;
+        healthSlider.value = currentHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Damage(float damage)
     {
-        
+        if (_canReceiveDamage)
+        {
+            currentHealth -= damage;
+            healthSlider.value = currentHealth;
+            CheckForDeath();
+        }
+        base.Damage(damage);
+    }
+
+    private void CheckForDeath()
+    {
+        if(currentHealth <= 0)
+        {
+            IsDeath = true;
+        }
     }
 }

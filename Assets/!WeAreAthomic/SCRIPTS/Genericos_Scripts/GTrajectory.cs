@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GTrajectory : MonoBehaviour
 {
-    public Transform objetivo;
+    public Transform origin;
+    [SerializeField] private Transform objetivo;
 
     [SerializeField] private bool seeTrajectory;
 
@@ -25,18 +24,18 @@ public class GTrajectory : MonoBehaviour
 
     public Vector3[] CalcularPuntosTrayectoria()
     {
-        Vector3 direccion = (objetivo.position - transform.position);
+        Vector3 direccion = (objetivo.position - origin.transform.position);
         float distancia = direccion.magnitude;
         float tiempoVuelo = distancia / velocidad;
 
         // Calcular la altura máxima usando la fórmula del movimiento parabólico
-        float alturaMaximaPredicha = transform.position.y + direccion.y;
+        float alturaMaximaPredicha = origin.transform.position.y + direccion.y;
 
         // Ajustar la altura máxima si es menor que la altura máxima especificada
         alturaMaximaPredicha = Mathf.Max(alturaMaximaPredicha, alturaMaximaFactor);
 
         // Calcular la velocidad vertical inicial para llegar a la altura máxima
-        float velocidadVerticalInicial = (alturaMaximaPredicha - transform.position.y) / (tiempoVuelo / 2f) + 0.5f * Mathf.Abs(Physics.gravity.y) * tiempoVuelo / 2f;
+        float velocidadVerticalInicial = (alturaMaximaPredicha - origin.transform.position.y) / (tiempoVuelo / 2f) + 0.5f * Mathf.Abs(Physics.gravity.y) * tiempoVuelo / 2f;
 
         // Calcular la velocidad horizontal inicial
         float velocidadHorizontalInicial = distancia / (tiempoVuelo / 2f);
@@ -73,7 +72,7 @@ public class GTrajectory : MonoBehaviour
     Vector3 CalcularPosicionEnTiempo(Vector3 velocidadInicial, float tiempo)
     {
         // Calcular la posición en el tiempo especificado utilizando la ecuación de movimiento parabólico
-        Vector3 posicion = transform.position + velocidadInicial * tiempo +
+        Vector3 posicion = origin.transform.position + velocidadInicial * tiempo +
                            0.5f * Physics.gravity * tiempo * tiempo;
 
         return posicion;

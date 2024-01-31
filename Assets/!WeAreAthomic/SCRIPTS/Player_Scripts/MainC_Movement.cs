@@ -1,4 +1,5 @@
 using _WeAreAthomic.SCRIPTS.Debug_Scripts;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -18,12 +19,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private CharacterController _cc;
         private MainCGodmode _godMode;
         private MainCHealthManager _mainCHealth;
-        private GTrajectory _trajectory;
+        [NonSerialized] public GTrajectory Trajectory;
         private MainCSounds _mainCSounds;
         private MainCDash _mainCDash;
         private MainCVFX _mainCVFX;
-
-        private Scene _currentScene;
 
         public AnimationCurve dashSpeedCurve;
 
@@ -105,12 +104,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCSounds = GetComponent<MainCSounds>();
             _mainCDash = GetComponent<MainCDash>();
             _mainCVFX = GetComponent<MainCVFX>();
-
-            _currentScene = SceneManager.GetActiveScene();
-            if (_currentScene.name == "S2_LABTUTORIAL" || _currentScene.name == "TESTING")
-            {
-                _trajectory = GetComponent<GTrajectory>();
-            }
         }
 
         private void Start()
@@ -349,7 +342,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 indexPoint = 2;
                 DisableMovement();
-                puntosTrayectoria = _trajectory.CalcularPuntosTrayectoria();
+                puntosTrayectoria = Trajectory.CalcularPuntosTrayectoria();
             }
         }
 

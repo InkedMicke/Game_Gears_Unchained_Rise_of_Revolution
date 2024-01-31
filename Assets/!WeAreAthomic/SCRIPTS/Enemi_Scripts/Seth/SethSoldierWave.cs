@@ -29,9 +29,9 @@ public class SethSoldierWave : MonoBehaviour
         {
             foreach (var x in soldiersWave1)
             {
-                spawnedSoldiers.Add(x);
                 var soldier = Instantiate(x, spawnPos.position, Quaternion.identity);
                 SoldierToFight(soldier);
+                spawnedSoldiers.Add(soldier);
                 yield return new WaitForSeconds(0.5f);
             }
         }
@@ -40,9 +40,9 @@ public class SethSoldierWave : MonoBehaviour
         {
             foreach (var x in soldiersWave2)
             {
-                spawnedSoldiers.Add(x);
                 var soldier = Instantiate(x, spawnPos.position, Quaternion.identity);
                 SoldierToFight(soldier);
+                spawnedSoldiers.Add(soldier);
                 yield return new WaitForSeconds(0.5f);
             }
         }
@@ -51,9 +51,9 @@ public class SethSoldierWave : MonoBehaviour
         {
             foreach (var x in soldiersWave3)
             {
-                spawnedSoldiers.Add(x);
                 var soldier = Instantiate(x, spawnPos.position, Quaternion.identity);
                 SoldierToFight(soldier);
+                spawnedSoldiers.Add(soldier);
                 yield return new WaitForSeconds(0.5f);
             }
         }

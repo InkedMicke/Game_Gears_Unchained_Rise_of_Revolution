@@ -1,4 +1,6 @@
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
+using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
@@ -6,8 +8,14 @@ public class Seth : MonoBehaviour
 {
     private SethSoldierWave _sethWave;
     private SethLaser _sethLaser;
+    private GTrajectory _gTrajectory;
+    private MainCMovement _mainCMove;
+
+    private GameObject _playerObj;
 
     [SerializeField] private Transform barrier;
+
+    [SerializeField] private float timeToHitSeth;
 
     private Vector3 barrierInitalPos;
 
@@ -17,16 +25,22 @@ public class Seth : MonoBehaviour
     {
         _sethWave = GetComponent<SethSoldierWave>();
         _sethLaser = GetComponent<SethLaser>();
+        _gTrajectory = GetComponent<GTrajectory>();
+
+        _playerObj = GameObject.FindGameObjectWithTag("Player");
+        _gTrajectory.origin = _playerObj.transform;
+        _mainCMove = _playerObj.GetComponent<MainCMovement>();
     }
 
     private void Start()
     {
-        barrier.position = barrierInitalPos;
+        barrierInitalPos = barrier.position;
     }
 
     public void StartWaves()
     {
         StartCoroutine(WaveController());
+        barrier.transform.DOMoveY(barrierInitalPos.y + 5f, 1f).SetEase(Ease.Linear);
     }
 
     public IEnumerator WaveController()
@@ -45,7 +59,17 @@ public class Seth : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
 
-            if(WaveCount == 2)
+            yield return new WaitForSeconds(1f);
+
+            barrier.transform.DOMoveY(barrierInitalPos.y, 1f).SetEase(Ease.Linear);
+
+            yield return new WaitForSeconds(timeToHitSeth);
+
+            _mainCMove.Trajectory = _gTrajectory;
+            _playerObj.GetComponent<CharacterController>().enabled = false;
+            _mainCMove.SetFollowTrajectory(true);
+
+            if (WaveCount == 2)
             {
                 //Ataque del ojo 
             }
@@ -56,32 +80,23 @@ public class Seth : MonoBehaviour
 
     private bool IsCurrentWaveDead()
     {
-        foreach(var x in _sethWave.spawnedSoldiers)
+        for (int i = _sethWave.spawnedSoldiers.Count - 1; i >= 0; i--)
         {
-            if(x.GetComponentInChildren<SoldierHurtBox>().IsDeath)
+            var soldado = _sethWave.spawnedSoldiers[i];
+
+            if (soldado.GetComponentInChildren<SoldierHurtBox>().IsDeath)
             {
-                _sethWave.spawnedSoldiers.Remove(x);
+                _sethWave.spawnedSoldiers.RemoveAt(i);
             }
         }
-
-        return true;
-    }
-
-    private IEnumerator MoveBarrier(string UpOrDown)
-    {
-        if(UpOrDown == "Up")
+        if (_sethWave.spawnedSoldiers.Count == 0)
         {
-            while(barrier.position.y < barrierInitalPos.y + 6f)
-            {
-                barrier.position += barrier.up * 4f;
-            }
-        }
-        else if(UpOrDown == "Down")
-        {
-
+            return true;
         }
 
-        yield return null;
+        return false;
+
+
     }
 
     
