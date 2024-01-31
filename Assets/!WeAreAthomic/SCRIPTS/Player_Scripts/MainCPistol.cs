@@ -19,7 +19,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private MainCAttack _mainCAttack;
         private MainCMovement _mainCMovement;
-        private MainCRailGrindSystem _mainCRailGrind;
         private CameraFollower _camFollower;
         private MainCAnimatorController _mainCAnim;
         private PlayerInputActions _playerInputActions;
@@ -74,7 +73,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             _mainCAttack = GetComponent<MainCAttack>();
             _mainCMovement = GetComponent<MainCMovement>();
-            _mainCRailGrind = GetComponent<MainCRailGrindSystem>();
             _mainCAnim = GetComponent<MainCAnimatorController>();
             _camFollower = cameraBaseObj.GetComponent<CameraFollower>();
             _bastetController = bastetObj.GetComponent<BastetController>();
@@ -95,6 +93,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (GameManagerSingleton.Instance.bastetEnergy < 100 && !_isRecoveringShoot && !_isWaitingForRecoveringShoot)
             {
                 StartRecoveringEnergy(5f);
+            }
+        }
+
+        private void Update()
+        {
+            if (IsAiming)
+            {
+                var leftPos = transform.position + Vector3.left;
+                var correctPos = new Vector3(leftPos.x, leftPos.y + 1.5f, leftPos.z);
+                _bastetController.GoToDesiredPos(null, correctPos, .8f, Ease.Linear);
             }
         }
 
@@ -146,11 +154,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (IsAiming)
             {
+                IsAiming = false;
                 crosshair.SetActive(false);
                 _camFollower.cameraFollow = cameraFollow;
-                _bastetController.StopMoveToBastetPos();
-                _bastetController.GoToDesiredPos(() => bastetObj.SetActive(false), _bastetController.playerRightArm.transform.position, 2f, Ease.Linear);
-                IsAiming = false;
+                _bastetController.GoToDesiredPos(() => bastetObj.SetActive(false), _bastetController.playerRightArm.transform.position, .1f, Ease.Linear);
             }
 
         }
@@ -160,12 +167,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (CanAim())
             {
                 IsAiming = true;
+                _bastetController.KillGoToDesiredPos();
                 crosshair.SetActive(true);
                 _camFollower.cameraFollow = camAimPosTr;
                 _bastetController.HideScanner();
                 bastetObj.SetActive(true);
                 _bastetController.PosRightHand();
-                _bastetController.StartMoveToBastetPos();
             }
 
         }
@@ -232,7 +239,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     Vector3 direction = bastetObj.transform.position - hit.collider.transform.position;
                     var distance = direction.magnitude;
                     var timeToDestroy = distance / (bulletSpeed * direction.normalized.magnitude);
-                    _bastetController.Shoot(bulletPrefab, bulletSpeed, hit.point, Vector3.one * bulletSize, true,timeToDestroy);
+                    _bastetController.Shoot(bulletPrefab, bulletSpeed, hit.point, Vector3.one * bulletSize, true, timeToDestroy, _pistolAttackData);
                     Instantiate(hitChispasPrefab, hit.point, Quaternion.identity);
 
                     if (hit.collider.TryGetComponent(out SoldierHurtBox hurtbox))
@@ -243,7 +250,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     {
                         dummieHurtbox.Damage(GameManagerSingleton.Instance.GetPlayerDamage(_pistolAttackData, hit.collider.gameObject));
                     }
-                    else if (hit.collider.TryGetComponent(out IInteractAttack wallSewers)) 
+                    else if (hit.collider.TryGetComponent(out IInteractAttack wallSewers))
                     {
                         wallSewers.InteractAttack();
                     }
@@ -254,7 +261,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     Vector3 direction = bastetObj.transform.position - ray.GetPoint(shootDistance);
                     var distance = direction.magnitude;
                     var timeToDestroy = distance / (bulletSpeed * direction.normalized.magnitude);
-                    _bastetController.Shoot(bulletPrefab, bulletSpeed, ray.GetPoint(shootDistance), Vector3.one * bulletSize, true, timeToDestroy);
+                    _bastetController.Shoot(bulletPrefab, bulletSpeed, ray.GetPoint(shootDistance), Vector3.one * bulletSize, true, timeToDestroy, _pistolAttackData);
 
                     Instantiate(destroyBulletChispasPrefab, ray.GetPoint(shootDistance), Quaternion.identity);
                 }
@@ -322,17 +329,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
-            if(GameManagerSingleton.Instance.bastetEnergy < 20)
+            if (GameManagerSingleton.Instance.bastetEnergy < 20)
             {
                 return false;
             }
 
-            if(!GameManagerSingleton.Instance.HasUnlockedBastetAttack)
+            if (!GameManagerSingleton.Instance.HasUnlockedBastetAttack)
             {
                 return false;
             }
 
-            if(Time.time < _totalCooldown)
+            if (Time.time < _totalCooldown)
             {
                 return false;
             }

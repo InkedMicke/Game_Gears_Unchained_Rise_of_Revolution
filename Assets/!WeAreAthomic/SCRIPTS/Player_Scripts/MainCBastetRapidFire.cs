@@ -13,6 +13,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         private PlayerInputActions _playerInputActions;
         private BastetController _bastetController;
 
+        [SerializeField] private PlayerDamageData _playerDamageData;
+
         [SerializeField] private LayerMask enemyLayer;
 
         [SerializeField] private GameObject bastetObj;
@@ -65,7 +67,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             var colliderCount = Physics.OverlapSphereNonAlloc(transform.position, radiusCheck, colliders, enemyLayer);
             if (!_isBastetAttacking && Time.time > _totalCooldown && colliderCount > 0)
             {
-
                 bastetObj.SetActive(true);
                 _bastetController.HideScanner();
                 _bastetController.PosRightHand();
@@ -83,31 +84,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                 var colliders = Physics.OverlapSphere(transform.position, radiusCheck, enemyLayer);
                 if(colliders.Length == 1)
                 {
-                    _bastetController.Shoot(bulletPrefab , bulletForce, colliders[0].transform.position, bulletPrefab.transform.localScale, false, 10);
+                    _bastetController.Shoot(bulletPrefab , bulletForce, colliders[0].transform.position, bulletPrefab.transform.localScale, false, 10, _playerDamageData);
                 }
                 else
                 {
-                    foreach (var col in colliders)
-                    {
-                        closestEnemyToShoot = col.gameObject;
-                        if (closestEnemyToShoot.TryGetComponent(out SoldierHurtBox _))
-                        {
-                            _closestDistance = Mathf.Infinity;
-                        }
-                        else if (closestEnemyToShoot.TryGetComponent(out DummieHurtBox _))
-                        {
-                            _closestDistance = Mathf.Infinity;
-                        }
-
-                        var distance = Vector3.Distance(transform.position, col.transform.position);
-                        if (distance < _closestDistance)
-                        {
-                            _closestDistance = distance;
-                            closestEnemyToShoot = col.gameObject;
-                        }
-                    }
-
-                    _bastetController.Shoot(bulletPrefab, bulletForce, closestEnemyToShoot.transform.position, bulletPrefab.transform.localScale, false, 10);
+                    _bastetController.Shoot(bulletPrefab, bulletForce, FindNearestEnemy().position, bulletPrefab.transform.localScale, false, 10, _playerDamageData);
                 }
 
                 yield return new WaitForSeconds(shootTime);
@@ -118,11 +99,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
 
         private IEnumerator MoveWithPlayer()
         {
-            while(_isBastetAttacking)
+            while(true)
             {
                 var leftPos = transform.position + Vector3.left;
                 var correctPos = new Vector3(leftPos.x, leftPos.y + 1.5f, leftPos.z);
-                _bastetController.GoToDesiredPos(null, correctPos, 1f, Ease.Linear);
+                _bastetController.GoToDesiredPos(null, correctPos, .5f, Ease.Linear);
                 yield return new WaitForEndOfFrame();
             }
         }
@@ -136,6 +117,44 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         public void SetCurrentShoots(int value)
         {
             currentShoots = value;
+        }
+
+        private Transform FindNearestEnemy()
+        {
+            var colliders = Physics.OverlapSphere(transform.position, radiusCheck, enemyLayer);
+            Transform enemigoMasCercano = null;
+            var distanciaMasCercana = Mathf.Infinity;
+            var posicionActual = transform.position;
+            bool canContinue = false;
+
+            foreach (Collider enemigo in colliders)
+            {
+                if (enemigo.TryGetComponent(out SoldierHurtBox soldierHurtBox))
+                {
+                    canContinue = true;
+                    if (soldierHurtBox.IsDeath)
+                    {
+                        continue;
+                    }
+                }
+                else if (!canContinue && enemigo.TryGetComponent(out DummieHurtBox dummieHurtBox))
+                {
+                    if (dummieHurtBox.isDeath)
+                    {
+                        continue;
+                    }
+                }
+
+                float distanciaEnemigo = Vector3.Distance(posicionActual, enemigo.transform.position);
+
+                if (distanciaEnemigo < distanciaMasCercana)
+                {
+                    distanciaMasCercana = distanciaEnemigo;
+                    enemigoMasCercano = enemigo.transform;
+                }
+            }
+
+            return enemigoMasCercano;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
         {
             var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
 
-            if (distanceToPlayer < 6f && !IsAttacking && !_soldierHurtBox.IsDeath && IsChasingPlayer && !IsAttacking)
+            if (distanceToPlayer < 4.5f && !IsAttacking && !_soldierHurtBox.IsDeath && IsChasingPlayer && !IsAttacking)
             {
                 _agent.isStopped = true;
                 _soldierAnim.SetWalking(false);

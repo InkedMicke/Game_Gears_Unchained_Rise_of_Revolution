@@ -647,6 +647,7 @@ MonoBehaviour:
   dash: dash
   hit: hit
   shield: shield
+  heal: heal
 --- !u!114 &294128395308933352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -886,15 +887,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d726fc6fc813e7f45aa7a5e7f51f694f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerDamageData: {fileID: 11400000, guid: fab4bad085c53964f8954b7a787d32a8, type: 2}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   bastetObj: {fileID: 0}
+  bulletPrefab: {fileID: 3870155545384615628, guid: f2266fe0ce1fc194a9025367887f872e,
+    type: 3}
   closestEnemyToShoot: {fileID: 0}
-  maxShoots: 15
+  maxShoots: 151
   currentShoots: 0
   radiusCheck: 10
   attackCooldown: 10
+  shootTime: 0.2
+  bulletForce: 20
 --- !u!114 &3764668422024457106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1211,6 +1217,8 @@ MonoBehaviour:
   vfxSpeedLines: {fileID: 3399135060996146196}
   chispasVFX: {fileID: 5991678360541835482, guid: 624911b7a0c7d2c4d9c1a0227df9c902,
     type: 3}
+  shieldVFX: {fileID: 0}
+  healVFX: {fileID: 0}
 --- !u!1 &6386136891931232913
 GameObject:
   m_ObjectHideFlags: 0
