@@ -75,6 +75,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float jumpImpulse = 5f;
         [SerializeField] private float jumpImpulseOnRail = 5f;
         [SerializeField] private float gravity = -9.8f;
+       
         [SerializeField] private float aimSpeed;
         [SerializeField] private float pushJumpForce = 10f;
         [SerializeField] private float pushMaxHeight = 5f;
@@ -201,7 +202,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (IsJumping || IsFalling || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsSliding && !IsFollowingTrajectory)
             {
-                _velocity += transform.up.normalized * (gravity * Time.deltaTime);
+                _velocity += transform.up.normalized * ( gravity * Time.deltaTime);
                 _velocity.x = 0f;
                 _velocity.z = 0f;
                 _cc.Move(_velocity * Time.deltaTime);
@@ -398,7 +399,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 IsCrouch = !IsCrouch;
                 ToggleCCSize();
 
-                if (_mainCRail.IsOnRail())
+                if (_mainCRail.IsSliding)
                 {
                     _mainCAnimator.SetSlidingCrouch(IsCrouch);
                 }
@@ -527,6 +528,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if (CanJumpRail())
             {
+                if (IsCrouch)
+                {
+                    _mainCAnimator.SetSlidingCrouch(false);
+                    IsCrouch = false;
+                  
+                }
                 _mainCSounds.PlayJumpSound();
                 IsJumping = true;
                 _mainCAnimator.SetGrounded(false);
