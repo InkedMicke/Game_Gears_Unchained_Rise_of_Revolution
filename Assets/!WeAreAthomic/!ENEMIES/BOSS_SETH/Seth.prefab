@@ -76,7 +76,7 @@ Transform:
   - {fileID: 2493974549460497716}
   - {fileID: 3239074708252690746}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4886917446779040844
 Animator:
@@ -141,13 +141,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28512cbee7545e4fb3ea422ebe6970c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eyePrefab: {fileID: 9179761617465459789, guid: a3c0140f3b3ef714f8e136d6bdae225a,
+  eyePrefab: {fileID: 9179761617465459789, guid: f6181309bb232e94298209074f7c99b9,
     type: 3}
-  eyeWaypoints: {fileID: 0}
+  eyeWaypointsContainer: {fileID: 0}
   eyeOriginalPos: {fileID: 4238040104191257764}
-  targets: []
+  eyeSize: 50
   speed: 4
-  ease: 1
+  rotateSpeed: 2
+  ease: 4
 --- !u!114 &2629982199394613704
 MonoBehaviour:
   m_ObjectHideFlags: 0

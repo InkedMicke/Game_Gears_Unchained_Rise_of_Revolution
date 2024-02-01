@@ -164,7 +164,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 4f))
             {
                 Vector3 groundNormal = hit.normal;
-                Debug.Log(groundNormal);
                 // Usa groundNormal para obtener la inclinación del suelo
             }
         }
