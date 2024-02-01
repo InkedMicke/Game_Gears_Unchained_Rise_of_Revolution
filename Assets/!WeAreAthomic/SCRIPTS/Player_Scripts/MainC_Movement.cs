@@ -160,6 +160,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 else
                     MoveGamepad();
             }
+
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 4f))
+            {
+                Vector3 groundNormal = hit.normal;
+                Debug.Log(groundNormal);
+                // Usa groundNormal para obtener la inclinación del suelo
+            }
         }
 
 
@@ -572,6 +579,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(checkGrounded.position, .1f);
+
+            Debug.DrawRay(transform.position, Vector3.down * 5f, Color.magenta);
         }
 
 

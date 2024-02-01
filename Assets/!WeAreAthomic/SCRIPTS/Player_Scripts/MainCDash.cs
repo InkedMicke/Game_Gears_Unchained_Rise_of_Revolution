@@ -11,6 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCMovement _mainCMove;
         private MainCLayers _mainCLayers;
         private MainCSounds _mainCSounds;
+        [SerializeField] private MainCHealthManager _mainCHealthManager;
         private MainCAnimatorController _mainCAnim;
         private G_MeshTrail _gTrail;
 
@@ -74,6 +75,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCLayers.EnableSlideLayer();
             _mainCAnim.TriggerDash();
             _mainCMove.DisableMovement();
+            _mainCHealthManager.SetCanReceiveDamage(false);
             _dashTotalCooldown = Time.time + dashCooldown;
             yield return new WaitForSeconds(.1f);
             var startTime = Time.time;
@@ -105,7 +107,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _cc.Move(dashSpeed * speedMultiplier * Time.deltaTime * moveDirection.normalized);
                 yield return new WaitForEndOfFrame();
             }
-
+            _mainCHealthManager.SetCanReceiveDamage(true);
             _mainCMove.EnableMovement();
         }
 
