@@ -14,6 +14,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private string isJumping = "isJumping";
         [SerializeField] private string isGrounded = "isGrounded";
         [SerializeField] private string isSliding = "isSliding";
+        [SerializeField] private string isCrouchSliding = "isCrouchSliding";
         [SerializeField] private string hack = "hack";
         [SerializeField] private string aimOnRail = "railAiming";
         [SerializeField] private string dash = "dash";
@@ -70,7 +71,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             _anim.SetBool(isSliding, condition);
         }
-
+        public void SetSlidingCrouch(bool condition)
+        {
+            _anim.SetBool(isCrouchSliding, condition);
+        }
         public void SetAimOnRail(bool condition)
         {
             _anim.SetBool(aimOnRail, condition);

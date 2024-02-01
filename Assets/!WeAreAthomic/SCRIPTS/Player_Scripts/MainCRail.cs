@@ -11,6 +11,7 @@ public class MainCRail : MonoBehaviour
     private MainCMovement _mainCMove;
     private CharacterController _cc;
     private MainCVFX _mainCVFX;
+    private MainCLayers _mainClayers;
 
     [SerializeField] private LayerMask railLayer;
 
@@ -34,6 +35,7 @@ public class MainCRail : MonoBehaviour
         _mainCMove = GetComponent<MainCMovement>();
         _cc = GetComponent<CharacterController>();
         _mainCVFX = GetComponent<MainCVFX>();
+        _mainClayers = GetComponent<MainCLayers>();
     }
 
 
@@ -69,6 +71,8 @@ public class MainCRail : MonoBehaviour
             if(_distancePercentage > 1f)
             {
                 _distancePercentage = 0f;
+                _mainCAnim.SetSliding(false);
+                _mainClayers.DisableSlideLayer();
             }
 
             var nextPosition = _splineContainer.EvaluatePosition(_distancePercentage + .001f);
@@ -88,6 +92,8 @@ public class MainCRail : MonoBehaviour
 
     private void StartSlide()
     {
+        _mainClayers.EnableSlideLayer();
+        _mainCAnim.SetSliding(true);
         _splineContainer = splineFollower.GetComponent<SplineContainer>();
         _splineLength = _splineContainer.CalculateLength();
         IsSliding = true;
