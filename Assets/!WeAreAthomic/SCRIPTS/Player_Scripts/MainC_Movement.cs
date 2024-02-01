@@ -393,12 +393,21 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void StartEndCrouch(InputAction.CallbackContext context)
         {
-
+           
             if (Time.time > _timeGraceCrouchPeriod)
             {
                 IsCrouch = !IsCrouch;
                 ToggleCCSize();
-                _mainCAnimator.SetCrouch(IsCrouch);
+
+                if (_mainCRail.IsOnRail())
+                {
+                    _mainCAnimator.SetSlidingCrouch(IsCrouch);
+                }
+                else 
+                {
+                    _mainCAnimator.SetCrouch(IsCrouch);
+                }
+               
                 _timeGraceCrouchPeriod = Time.time + timeNextCrouch;
 
                 if (IsCrouch)
