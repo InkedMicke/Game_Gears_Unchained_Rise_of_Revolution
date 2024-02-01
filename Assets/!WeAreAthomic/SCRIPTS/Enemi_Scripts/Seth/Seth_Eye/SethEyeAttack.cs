@@ -11,13 +11,19 @@ public class SethEyeAttack : MonoBehaviour
 
     [SerializeField] private Transform eyeWaypointsContainer;
     [SerializeField] private Transform eyeOriginalPos;
+    private List<Transform> _currentTarget;
 
-    private int _pathIndex;
+    public int _pathIndex;
 
     [SerializeField] private float eyeSize = 10f;
     [SerializeField] private float speed;
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private Ease ease;
+
+    private void Awake()
+    {
+
+    }
 
     public void StarEyeAttacking()
     {
@@ -29,15 +35,37 @@ public class SethEyeAttack : MonoBehaviour
 
     private IEnumerator EyeAttack()
     {
-        while(_pathIndex <= GetPath().Count)
+        _currentTarget = GetPath();
+
+        while (_pathIndex < GetPath().Count - 1)
         {
-            if(Vector3.Distance(_currentEye.transform.position, GetPointInPath(_pathIndex).position) < 0.1f)
+            if(Vector3.Distance(_currentEye.transform.position, GetPointInPath(_currentTarget, _pathIndex).position) < 0.1f)
             {
                 _pathIndex++;
             }
 
-            _currentEye.transform.position = Vector3.MoveTowards(_currentEye.transform.position, GetPointInPath(_pathIndex).position, speed * Time.deltaTime);
-            var difference = GetPointInPath(_pathIndex).position - _currentEye.transform.position;
+            _currentEye.transform.position = Vector3.MoveTowards(_currentEye.transform.position, GetPointInPath(_currentTarget, _pathIndex).position, speed * Time.deltaTime);
+            var difference = GetPointInPath(_currentTarget,_pathIndex).position - _currentEye.transform.position;
+            var targetRotation = Quaternion.LookRotation(difference);
+            _currentEye.transform.rotation = Quaternion.Slerp(_currentEye.transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    private IEnumerator ReverseEyeAttack()
+    {
+        _currentTarget = GetPath();
+
+        while (_pathIndex < GetPath().Count - 1)
+        {
+            if (Vector3.Distance(_currentEye.transform.position, GetPointInPath(_currentTarget, _pathIndex).position) < 0.1f)
+            {
+                _pathIndex++;
+            }
+
+            _currentEye.transform.position = Vector3.MoveTowards(_currentEye.transform.position, GetPointInPath(_currentTarget, _pathIndex).position, speed * Time.deltaTime);
+            var difference = GetPointInPath(_currentTarget, _pathIndex).position - _currentEye.transform.position;
             var targetRotation = Quaternion.LookRotation(difference);
             _currentEye.transform.rotation = Quaternion.Slerp(_currentEye.transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
 
@@ -60,9 +88,9 @@ public class SethEyeAttack : MonoBehaviour
         return targets;
     }
 
-    private Transform GetPointInPath(int childCount)
+    private Transform GetPointInPath(List<Transform> list ,int childCount)
     {
-        return GetPath()[childCount];
+        return list[childCount];
     }
 }
 
