@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts {
     public class GWaypoints : MonoBehaviour {
         [Range(0f, 2f)][SerializeField] private float waypointsSize = 1f;
+        [SerializeField] private bool closed;
+        [SerializeField] private bool linesBetween;
 
         private void OnDrawGizmos() {
             foreach (Transform t in transform) {
@@ -12,12 +12,19 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts {
                 Gizmos.DrawSphere(t.position, waypointsSize);
             }
 
-            Gizmos.color = Color.yellow;
-            for (int i = 0; i < transform.childCount - 1; i++) {
-                Gizmos.DrawLine(transform.GetChild(i).position, transform.GetChild(i + 1).position);
+            if (linesBetween)
+            {
+                Gizmos.color = Color.yellow;
+                for (int i = 0; i < transform.childCount - 1; i++)
+                {
+                    Gizmos.DrawLine(transform.GetChild(i).position, transform.GetChild(i + 1).position);
+                }
             }
 
-            Gizmos.DrawLine(transform.GetChild(transform.childCount - 1).position, transform.GetChild(0).position);
+            if (closed)
+            {
+                Gizmos.DrawLine(transform.GetChild(transform.childCount - 1).position, transform.GetChild(0).position);
+            }
         }
 
         public Transform GetNextWaypoint(Transform currentWaypoint) {

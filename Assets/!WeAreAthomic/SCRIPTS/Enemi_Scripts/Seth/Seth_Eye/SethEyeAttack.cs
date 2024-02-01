@@ -4,18 +4,37 @@ using UnityEngine;
 
 public class SethEyeAttack : MonoBehaviour
 {
-    [SerializeField] private List<Transform> targets = new();
-    [SerializeField] private List<Transform> targetsCopy;
-    [SerializeField] private Transform eyeTr;
+    [SerializeField] private GameObject eyePrefab;
+    private GameObject _currentEye;
+
+    [SerializeField] private Transform eyeWaypointsContainer;
+    [SerializeField] private Transform eyeOriginalPos;
+    public List<Transform> targets;
+
+    [SerializeField] private float speed;
+    [SerializeField] private Ease ease;
 
     private void Awake()
     {
-        targetsCopy = targets;
+        var childrens = eyeWaypointsContainer.GetComponentsInChildren<Transform>();
+        foreach (var x in childrens)
+        {
+            targets.Add(x);
+        }
+        targets.RemoveAt(0);
     }
-    public void StartEyeAttack()
+
+    public void StarEyeAttacking()
     {
-        var random = Random.Range(0, targetsCopy.Count);
-        targetsCopy.RemoveAt(random - 1);
-        eyeTr.transform.DOMove(eyePos, );
+        _currentEye = Instantiate(eyePrefab);
+        _currentEye.transform.position = eyeOriginalPos.position;
+        _currentEye.transform.localScale = Vector3.one * 9;
+        //_currentEye.transform.DOMove(targets[0].position, speed).SetEase(ease).OnComplete(EyeAttack);
+    }
+
+    private void EyeAttack()
+    {
+
     }
 }
+

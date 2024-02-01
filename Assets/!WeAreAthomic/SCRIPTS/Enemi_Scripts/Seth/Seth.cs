@@ -7,7 +7,7 @@ using UnityEngine;
 public class Seth : MonoBehaviour
 {
     private SethSoldierWave _sethWave;
-    private SethLaser _sethLaser;
+    private SethEyeAttack _sethEyeAttack;
     private GTrajectory _gTrajectory;
     private MainCMovement _mainCMove;
 
@@ -24,8 +24,8 @@ public class Seth : MonoBehaviour
     private void Awake()
     {
         _sethWave = GetComponent<SethSoldierWave>();
-        _sethLaser = GetComponent<SethLaser>();
         _gTrajectory = GetComponent<GTrajectory>();
+        _sethEyeAttack = GetComponent<SethEyeAttack>();
 
         _playerObj = GameObject.FindGameObjectWithTag("Player");
         _gTrajectory.origin = _playerObj.transform;
@@ -35,12 +35,13 @@ public class Seth : MonoBehaviour
     private void Start()
     {
         barrierInitalPos = barrier.position;
+        _sethEyeAttack.StarEyeAttacking();
     }
 
     public void StartWaves()
     {
-        StartCoroutine(WaveController());
-        barrier.transform.DOMoveY(barrierInitalPos.y + 5f, 1f).SetEase(Ease.Linear);
+        //StartCoroutine(WaveController());
+        //barrier.transform.DOMoveY(barrierInitalPos.y + 5f, 1f).SetEase(Ease.Linear);
     }
 
     public IEnumerator WaveController()
