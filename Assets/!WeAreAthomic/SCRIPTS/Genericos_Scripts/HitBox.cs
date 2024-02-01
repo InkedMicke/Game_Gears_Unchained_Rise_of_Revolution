@@ -8,6 +8,8 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
     {
         [SerializeField] protected int damage;
 
+        [SerializeField] private bool useDamageData = true;
+
         [SerializeField] protected EnemyDamageData damageData;
 
         [NonSerialized] protected List<Collider> colList = new();
@@ -28,7 +30,14 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                         return;
                     }
                 }
-                hurtbox.Damage(GameManagerSingleton.Instance.GetEnemyDamage(damageData));
+                if (useDamageData)
+                {
+                    hurtbox.Damage(GameManagerSingleton.Instance.GetEnemyDamage(damageData));
+                }
+                else
+                {
+                    hurtbox.Damage(damage);
+                }
                 colList.Add(collision);
             }
         }

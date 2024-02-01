@@ -24,7 +24,6 @@ public class SethEyeAttack : MonoBehaviour
         _currentEye = Instantiate(eyePrefab);
         _currentEye.transform.position = eyeOriginalPos.position;
         _currentEye.transform.localScale = Vector3.one * eyeSize;
-        EditorApplication.isPaused = true;
         StartCoroutine(EyeAttack());
     }
 

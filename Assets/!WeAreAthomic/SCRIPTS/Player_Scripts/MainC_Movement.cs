@@ -203,8 +203,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (IsJumping || IsFalling || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsSliding && !IsFollowingTrajectory)
             {
                 _velocity += transform.up.normalized * ( gravity * Time.deltaTime);
-                _velocity.x = 0f;
-                _velocity.z = 0f;
                 _cc.Move(_velocity * Time.deltaTime);
             }
 
@@ -522,7 +520,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCAnimator.SetGrounded(false);
                 _mainCLayers.EnableJumpLayer();
                 _mainCAnimator.SetJumping(true);
-                _velocity.y = jumpImpulse;
+                _velocity = transform.up.normalized * jumpImpulse;
                 _timeGraceJumpPeriod = Time.time + timeNextJump;
             }
 
@@ -539,7 +537,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCAnimator.SetGrounded(false);
                 _mainCLayers.EnableJumpLayer();
                 _mainCAnimator.SetJumping(true);
-                _velocity.y = jumpImpulseOnRail;
+                _velocity = transform.up.normalized * jumpImpulseOnRail;
                 _timeGraceJumpPeriod = Time.time + timeNextJump;
 
                 _mainCVFX.SetActiveSparks(false);
