@@ -8,12 +8,16 @@ public class SethEyeAttack : MonoBehaviour
 {
     private SethEye _sethEye;
 
+    private RaycastHit _currentHit;
+
     [SerializeField] private GameObject eyePrefab;
     private GameObject _currentEye;
 
     [SerializeField] private Transform eyeWaypointsContainer;
     [SerializeField] private Transform eyeOriginalPos;
     private List<Transform> _currentTarget;
+
+    private Vector3 _currentBeamEndPos;
 
     public int _pathIndex;
 
@@ -73,29 +77,36 @@ public class SethEyeAttack : MonoBehaviour
         _sethEye.LaserBeam.gameObject.SetActive(true);
         yield return new WaitForSeconds(.5f);
 
-        while (true)
+        if (Physics.Raycast(_currentEye.transform.position, -Vector3.up, out var hit, 10f))
         {
-            if (Physics.Raycast(_currentEye.transform.position, -Vector3.up, out var hit, 10f))
-            {
-                _sethEye.LaserBeam.SetPosition(0, _sethEye.Muzzle.position);
-                _sethEye.LaserBeam.SetPosition(1, hit.point);
-                Debug.Log("hola1");
-            }
+            _currentHit = hit;
+        }
+        Debug.DrawRay(_currentEye.transform.position, -Vector3.up * 5f, Color.magenta, 10f);
+        while (Vector3.Distance(_sethEye.LaserBeam.GetPosition(1), _currentHit.point) > .1f)
+        {
+            _currentBeamEndPos += -Vector3.up.normalized * Time.deltaTime * 2f;
+            _sethEye.LaserBeam.SetPosition(1, _currentEye.transform.position + _currentBeamEndPos);
             yield return new WaitForEndOfFrame();
         }
+
+        StartCoroutine(ReverseEyeAttack());
     }
 
     private IEnumerator ReverseEyeAttack()
     {
         _currentTarget = GetPath();
 
-        while (_pathIndex < GetPath().Count - 1)
+        while (_pathIndex > 0)
         {
             if (Vector3.Distance(_currentEye.transform.position, GetPointInPath(_currentTarget, _pathIndex).position) < 0.1f)
             {
                 _pathIndex--;
             }
-
+            if (Physics.Raycast(_currentEye.transform.position, -Vector3.up, out var hit2, 10f))
+            {
+                _sethEye.LaserBeam.SetPosition(0, _sethEye.Muzzle.position);
+                _sethEye.LaserBeam.SetPosition(1, hit2.point);
+            }
             _currentEye.transform.position = Vector3.MoveTowards(_currentEye.transform.position, GetPointInPath(_currentTarget, _pathIndex).position, speed * Time.deltaTime);
 
             yield return new WaitForEndOfFrame();
