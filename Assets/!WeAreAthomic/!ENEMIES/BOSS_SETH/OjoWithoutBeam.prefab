@@ -9941,7 +9941,7 @@ LineRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_MaskInteraction: 0
-  m_UseWorldSpace: 0
+  m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
 --- !u!65 &4371126588319672993
@@ -9963,8 +9963,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: -0.04, y: -0.04, z: 5.35}
-  m_Center: {x: 0, y: 0, z: 2.68}
+  m_Size: {x: -0.04, y: -0.04, z: 4.98}
+  m_Center: {x: 0, y: 0, z: 2.37}
 --- !u!1 &4218773869742971779
 GameObject:
   m_ObjectHideFlags: 0
@@ -14990,7 +14990,7 @@ Transform:
   m_GameObject: {fileID: 6544241792402416406}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.43326}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1686627819180491432}
@@ -19934,7 +19934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6613042787527406193
 Transform:
   m_ObjectHideFlags: 0
@@ -24867,6 +24867,7 @@ GameObject:
   - component: {fileID: 5630391753438734946}
   - component: {fileID: 4872793991659219456}
   - component: {fileID: 8767034418616779938}
+  - component: {fileID: 7720478374132324023}
   m_Layer: 0
   m_Name: OjoWithoutBeam
   m_TagString: Untagged
@@ -24942,3 +24943,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7720478374132324023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9179761617465459789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c047a5707151471499aec1f1064ab440, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LaserBeam: {fileID: 3298309975092659073}
+  Muzzle: {fileID: 328401770137188597}

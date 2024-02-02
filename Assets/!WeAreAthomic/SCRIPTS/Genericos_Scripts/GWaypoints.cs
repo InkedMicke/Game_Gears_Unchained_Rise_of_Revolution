@@ -5,11 +5,16 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts {
         [Range(0f, 2f)][SerializeField] private float waypointsSize = 1f;
         [SerializeField] private bool closed;
         [SerializeField] private bool linesBetween;
+        [SerializeField] private bool seeSpheres = true;
 
         private void OnDrawGizmos() {
-            foreach (Transform t in transform) {
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawSphere(t.position, waypointsSize);
+            if (seeSpheres)
+            {
+                foreach (Transform t in transform)
+                {
+                    Gizmos.color = Color.yellow;
+                    Gizmos.DrawSphere(t.position, waypointsSize);
+                }
             }
 
             if (linesBetween)

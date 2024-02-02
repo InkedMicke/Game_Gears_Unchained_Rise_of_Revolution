@@ -592,8 +592,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(checkGrounded.position, .1f);
-
-            Debug.DrawRay(transform.position, Vector3.down * 5f, Color.magenta);
         }
 
 
