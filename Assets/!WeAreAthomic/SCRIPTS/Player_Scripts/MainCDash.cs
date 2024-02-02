@@ -49,7 +49,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
             {
-                StartCoroutine(Dash());
+                StartCoroutine(Dash(true));
             }
         }
 
@@ -57,29 +57,38 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (CanDash() && GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
             {
-                StartCoroutine(Dash());
+                StartCoroutine(Dash(true));
             }
+        }
+
+        public void StartDash(bool dashWithEffects)
+        {
+            StopCoroutine(Dash(dashWithEffects));
         }
 
         public void StopDash()
         {
             _mainCLayers.DisableSlideLayer();
-            StopCoroutine(Dash());
+            StopCoroutine(Dash(true));
             IsDashing = false;
         }
 
-        private IEnumerator Dash()
+        private IEnumerator Dash(bool dashWithEffects)
         {
             IsDashing = true;
-            _mainCSounds.PlayJumpSound();
-            _mainCLayers.EnableSlideLayer();
-            _mainCAnim.TriggerDash();
+            if (dashWithEffects)
+            {
+                _mainCSounds.PlayJumpSound();
+                _mainCLayers.EnableSlideLayer();
+                _mainCAnim.TriggerDash();
+            }
             _mainCMove.DisableMovement();
             _mainCHealthManager.SetCanReceiveDamage(false);
             _dashTotalCooldown = Time.time + dashCooldown;
             yield return new WaitForSeconds(.1f);
             var startTime = Time.time;
-            var _moveInput = _playerInputActions.PlayerPC.MovementKeyboard.ReadValue<Vector2>();
+            var _moveInputPC = _playerInputActions.PlayerPC.MovementKeyboard.ReadValue<Vector2>();
+            var _moveInputGamepad = _playerInputActions.PlayerGamepad.MovementGamepad.ReadValue<Vector2>();
 
             Vector3 cameraForward = cameraTr.forward;
             Vector3 cameraRight = cameraTr.right;
@@ -89,17 +98,25 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             cameraForward.Normalize();
             cameraRight.Normalize();
 
-            Vector3 moveDirection = cameraForward * _moveInput.y + cameraRight * _moveInput.x;
+            Vector3 moveDirection = cameraForward * (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc ? _moveInputPC.x : _moveInputGamepad.x) + cameraRight * (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc ? _moveInputPC.x : _moveInputGamepad.x);
 
             _directionDash = new(moveDirection.x, transform.position.y, moveDirection.z);
             var desiredPos = cameraRotation.position + _directionDash.normalized * 2;
             desiredPos.y = transform.position.y;
+
+            if(moveDirection.magnitude < 1)
+            {
+                moveDirection = transform.forward;
+            }
  
             transform.LookAt(desiredPos);
 
             while (Time.time < startTime + _dashTime)
             {
-                _gTrail.StartTrail();
+                if (dashWithEffects)
+                {
+                    _gTrail.StartTrail();
+                }
 
                 float curveTime = (Time.time - startTime) / _dashTime;
                 float speedMultiplier = _mainCMove.dashSpeedCurve.Evaluate(curveTime);

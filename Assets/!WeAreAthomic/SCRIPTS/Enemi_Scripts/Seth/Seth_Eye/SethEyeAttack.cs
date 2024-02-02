@@ -54,8 +54,11 @@ public class SethEyeAttack : MonoBehaviour
 
             _currentEye.transform.position = Vector3.MoveTowards(_currentEye.transform.position, GetPointInPath(_currentTarget, _pathIndex).position, speed * Time.deltaTime);
             var difference = GetPointInPath(_currentTarget,_pathIndex).position - _currentEye.transform.position;
-            var targetRotation = Quaternion.LookRotation(difference);
-            _currentEye.transform.rotation = Quaternion.Slerp(_currentEye.transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+            if (difference.magnitude > 0.001f)
+            {
+                var targetRotation = Quaternion.LookRotation(difference);
+                _currentEye.transform.rotation = Quaternion.Slerp(_currentEye.transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+            }
 
             yield return new WaitForEndOfFrame();
         }

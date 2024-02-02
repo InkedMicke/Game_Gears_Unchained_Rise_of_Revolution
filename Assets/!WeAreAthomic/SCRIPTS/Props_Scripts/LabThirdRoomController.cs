@@ -65,6 +65,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         {
             _initalMovableFloatY = movableFloor.transform.localPosition.y;
             _isWave1 = true;
+            _playerObj.GetComponent<GTrajectory>().origin = _playerObj.transform;
         }
 
         private void Update()
@@ -155,7 +156,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 {
                     yield return new WaitForEndOfFrame();
                 }
-
                 _playerObj.GetComponent<CharacterController>().enabled = false;
                 Instantiate(movableFloorPivot, _playerObj.transform.position - Vector3.right * 1.4f, Quaternion.identity);
                 _mainCMovement.SetFollowTrajectory(true);

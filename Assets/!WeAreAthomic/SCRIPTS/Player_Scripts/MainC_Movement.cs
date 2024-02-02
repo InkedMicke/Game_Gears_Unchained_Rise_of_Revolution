@@ -105,6 +105,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCSounds = GetComponent<MainCSounds>();
             _mainCDash = GetComponent<MainCDash>();
             _mainCVFX = GetComponent<MainCVFX>();
+            Trajectory = GetComponent<GTrajectory>();
         }
 
         private void Start()
@@ -537,7 +538,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCAnimator.SetGrounded(false);
                 _mainCLayers.EnableJumpLayer();
                 _mainCAnimator.SetJumping(true);
-                _velocity = transform.up.normalized * jumpImpulseOnRail;
+                _velocity = transform.up.normalized * (_mainCRail.HigherJumpDueToInclination() ? jumpImpulseOnRail * 2.6f : jumpImpulseOnRail);
                 _timeGraceJumpPeriod = Time.time + timeNextJump;
 
                 _mainCVFX.SetActiveSparks(false);
@@ -593,8 +594,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(checkGrounded.position, .1f);
         }
-
-
 
         private bool CanJumpGround()
         {

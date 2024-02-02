@@ -16,10 +16,12 @@ public class GTrajectory : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (objetivo == null)
+            return;        
+        if (origin == null)
             return;
-
-        CalcularPuntosTrayectoria();
-        DibujarTrayectoria();
+            CalcularPuntosTrayectoria();
+            DibujarTrayectoria();
+        
     }
 
     public Vector3[] CalcularPuntosTrayectoria()

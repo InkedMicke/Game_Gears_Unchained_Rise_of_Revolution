@@ -4,10 +4,9 @@ using UnityEngine.Splines;
 
 public class MainCRail : MonoBehaviour
 {
-    private SplineAnimate _splineAnim;
     private SplineContainer _splineContainer;
-    private PlayerInputActions _inputActions;
     private MainCAnimatorController _mainCAnim;
+    private MainCDash _mainCDash;
     private MainCMovement _mainCMove;
     private CharacterController _cc;
     private MainCVFX _mainCVFX;
@@ -36,6 +35,7 @@ public class MainCRail : MonoBehaviour
         _cc = GetComponent<CharacterController>();
         _mainCVFX = GetComponent<MainCVFX>();
         _mainClayers = GetComponent<MainCLayers>();
+        _mainCDash = GetComponent<MainCDash>();
     }
 
 
@@ -48,7 +48,7 @@ public class MainCRail : MonoBehaviour
 
         if(IsSliding)
         {
-            _currentRailSpeed = _mainCMove.IsJumping ? railSpeed / 1.5f : railSpeed;
+            _currentRailSpeed = _mainCMove.IsJumping ? (HigherJumpDueToInclination() ? railSpeed * 5f : railSpeed / 1.5f) : railSpeed;
         }
 
         if(IsSliding)
@@ -59,7 +59,7 @@ public class MainCRail : MonoBehaviour
 
         if(IsSliding && !_mainCMove.IsJumping && !_mainCMove.IsFalling)
         {
-            _distancePercentage += _currentRailSpeed * Time.deltaTime / _splineLength;
+            _distancePercentage += _currentRailSpeed * Time.deltaTime / _splineLength ;
 
             var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
             //transform.position = Vector3.MoveTowards(transform.position ,currentPosition, railSpeed * Time.deltaTime);
@@ -68,11 +68,14 @@ public class MainCRail : MonoBehaviour
             _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
             
 
-            if(_distancePercentage > 1f)
+            if(_distancePercentage > 1f && IsSliding)
             {
-                _distancePercentage = 0f;
                 _mainCAnim.SetSliding(false);
                 _mainClayers.DisableSlideLayer();
+                _mainCDash.StartDash(false);
+                _mainCVFX.SetActiveSparks(false);
+                _mainCVFX.SetActiveSpeedlines(false);
+                IsSliding = false;
             }
 
             var nextPosition = _splineContainer.EvaluatePosition(_distancePercentage + .001f);
@@ -112,6 +115,24 @@ public class MainCRail : MonoBehaviour
     public bool IsOnRail()
     {
         return Physics.CheckSphere(railCheck.position, .2f, railLayer);
+    }
+
+    public bool HigherJumpDueToInclination()
+    {
+        if (!IsSliding)
+        {
+            return false;
+        }
+
+        var distanceVector = new Vector3(_splineContainer.EvaluatePosition(_distancePercentage).x, _splineContainer.EvaluatePosition(_distancePercentage).y, _splineContainer.EvaluatePosition(_distancePercentage).z);
+        var difference = distanceVector - transform.position;
+        Debug.Log(Vector3.Angle(difference, Vector3.up));
+        if (Vector3.Angle(difference, Vector3.up) > 60)
+        {
+            return false;
+        }
+
+        return true;
     }
 
 
