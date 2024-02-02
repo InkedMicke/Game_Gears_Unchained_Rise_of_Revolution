@@ -102,21 +102,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
             {
-                moveDirection = cameraForward * _moveInputPC.x + cameraRight * _moveInputPC.y;
+                moveDirection = cameraForward * _moveInputPC.y + cameraRight * _moveInputPC.x;
             }
             else
             {
-                moveDirection = cameraForward * _moveInputGamepad.x + cameraRight * _moveInputGamepad.y;
+                moveDirection = cameraForward * _moveInputGamepad.y + cameraRight * _moveInputGamepad.x;
             }
 
             _directionDash = new(moveDirection.x, transform.position.y, moveDirection.z);
             var desiredPos = cameraRotation.position + _directionDash.normalized * 2;
             desiredPos.y = transform.position.y;
-
-            if(moveDirection.magnitude < 1)
-            {
-                moveDirection = transform.forward;
-            }
  
             transform.LookAt(desiredPos);
 
