@@ -98,7 +98,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             cameraForward.Normalize();
             cameraRight.Normalize();
 
-            Vector3 moveDirection = cameraForward * (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc ? _moveInputPC.x : _moveInputGamepad.x) + cameraRight * (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc ? _moveInputPC.x : _moveInputGamepad.x);
+            Vector3 moveDirection;
+
+            if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            {
+                moveDirection = cameraForward * _moveInputPC.x + cameraRight * _moveInputPC.y;
+            }
+            else
+            {
+                moveDirection = cameraForward * _moveInputGamepad.x + cameraRight * _moveInputGamepad.y;
+            }
 
             _directionDash = new(moveDirection.x, transform.position.y, moveDirection.z);
             var desiredPos = cameraRotation.position + _directionDash.normalized * 2;

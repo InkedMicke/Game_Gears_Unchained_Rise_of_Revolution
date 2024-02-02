@@ -46,15 +46,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""MovementGamepad"",
-                    ""type"": ""Value"",
-                    ""id"": ""463e47dc-cd55-4f14-8397-df15044754ec"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Crouch"",
                     ""type"": ""Button"",
                     ""id"": ""e32fd757-ed5e-475c-a735-c363def71f1b"",
@@ -993,7 +984,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerPC = asset.FindActionMap("PlayerPC", throwIfNotFound: true);
         m_PlayerPC_MovementKeyboard = m_PlayerPC.FindAction("MovementKeyboard", throwIfNotFound: true);
         m_PlayerPC_Running = m_PlayerPC.FindAction("Running", throwIfNotFound: true);
-        m_PlayerPC_MovementGamepad = m_PlayerPC.FindAction("MovementGamepad", throwIfNotFound: true);
         m_PlayerPC_Crouch = m_PlayerPC.FindAction("Crouch", throwIfNotFound: true);
         m_PlayerPC_Jump = m_PlayerPC.FindAction("Jump", throwIfNotFound: true);
         m_PlayerPC_Attack = m_PlayerPC.FindAction("Attack", throwIfNotFound: true);
@@ -1101,7 +1091,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IPlayerPCActions> m_PlayerPCActionsCallbackInterfaces = new List<IPlayerPCActions>();
     private readonly InputAction m_PlayerPC_MovementKeyboard;
     private readonly InputAction m_PlayerPC_Running;
-    private readonly InputAction m_PlayerPC_MovementGamepad;
     private readonly InputAction m_PlayerPC_Crouch;
     private readonly InputAction m_PlayerPC_Jump;
     private readonly InputAction m_PlayerPC_Attack;
@@ -1123,7 +1112,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public PlayerPCActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @MovementKeyboard => m_Wrapper.m_PlayerPC_MovementKeyboard;
         public InputAction @Running => m_Wrapper.m_PlayerPC_Running;
-        public InputAction @MovementGamepad => m_Wrapper.m_PlayerPC_MovementGamepad;
         public InputAction @Crouch => m_Wrapper.m_PlayerPC_Crouch;
         public InputAction @Jump => m_Wrapper.m_PlayerPC_Jump;
         public InputAction @Attack => m_Wrapper.m_PlayerPC_Attack;
@@ -1154,9 +1142,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Running.started += instance.OnRunning;
             @Running.performed += instance.OnRunning;
             @Running.canceled += instance.OnRunning;
-            @MovementGamepad.started += instance.OnMovementGamepad;
-            @MovementGamepad.performed += instance.OnMovementGamepad;
-            @MovementGamepad.canceled += instance.OnMovementGamepad;
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
@@ -1212,9 +1197,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Running.started -= instance.OnRunning;
             @Running.performed -= instance.OnRunning;
             @Running.canceled -= instance.OnRunning;
-            @MovementGamepad.started -= instance.OnMovementGamepad;
-            @MovementGamepad.performed -= instance.OnMovementGamepad;
-            @MovementGamepad.canceled -= instance.OnMovementGamepad;
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
@@ -1606,7 +1588,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnMovementKeyboard(InputAction.CallbackContext context);
         void OnRunning(InputAction.CallbackContext context);
-        void OnMovementGamepad(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);

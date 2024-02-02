@@ -36,7 +36,7 @@ public class MainCInputSwitcher : MonoBehaviour
 
     private void UpdateInputValues()
     {
-        vectorGamepad = _playerInputActions.PlayerPC.MovementGamepad.ReadValue<Vector2>();
+        vectorGamepad = _playerInputActions.PlayerGamepad.MovementGamepad.ReadValue<Vector2>();
 
         currentMousePosition = Mouse.current.position.ReadValue();
 
