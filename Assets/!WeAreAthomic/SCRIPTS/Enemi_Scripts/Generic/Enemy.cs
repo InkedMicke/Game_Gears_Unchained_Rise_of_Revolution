@@ -124,11 +124,18 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         {
             if (!_soldierHurtBox.IsDeath)
             {
-                CheckIfPlayerIsInSight();
-                CheckIfPlayerHearedNear();
-                CheckIfPlayerHearedFar();
-                FollowPath();
-                ChasePlayer();
+                if (typeOfBehaviour == TypeOfBehaviour.Patrol)
+                {
+                    CheckIfPlayerIsInSight();
+                    CheckIfPlayerHearedNear();
+                    CheckIfPlayerHeardFar();
+                    FollowPath();
+                    ChasePlayer();
+                }
+                else
+                {
+                    ChasePlayer();
+                }
             }
         }
 
@@ -218,7 +225,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         }
 
-        private void CheckIfPlayerHearedFar()
+        private void CheckIfPlayerHeardFar()
         {
             if ((_fovHearFar.canSeePlayer && !IsChasingPlayer && !IsAttacking && !_mainCMove.IsCrouch) || (_fovHearFar.canSeePlayer && _mainCMove.IsJumping && !IsChasingPlayer && !IsAttacking))
             {
@@ -299,7 +306,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         }
 
-        public void ChasePlayer()
+        private void ChasePlayer()
         {
             if (IsChasingPlayer)
             {
@@ -321,10 +328,14 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _agent.stoppingDistance = stoppingDistance;
         }
 
-        public void ChangingValuesToChase()
+        protected void ChangingValuesToChase()
         {
             IsChasingPlayer = true;
-            _buttonInt.DisableCanHack();
+            if (typeOfBehaviour == TypeOfBehaviour.Patrol)
+            {
+                _buttonInt.DisableCanHack();
+            }
+
             _agent.isStopped = false;
             botonPuerta.SetActive(false);
             AgentValuesToChase();
