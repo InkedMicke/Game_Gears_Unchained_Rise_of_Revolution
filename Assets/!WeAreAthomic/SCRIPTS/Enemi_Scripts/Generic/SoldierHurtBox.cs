@@ -24,6 +24,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         public bool IsDeath;
 
+        public int HurtedTimes;
+
         public float maxHealth = 100f;
         public float currentHealth = 0f;
 
@@ -41,6 +43,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         public void Damage(float damage)
         {
             currentHealth -= damage;
+            HurtedTimes++;
             SetHealthSlider(currentHealth);
             CheckForDeath();
             if (!_soldierHurtbox.IsDeath)
@@ -72,6 +75,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             botonSoldier.SetActive(false);
             _disolveEnemi.StartDisolving();
             _destroyObject.DestroyThisObject(3f);
+        }
+
+        public void EndHurtAnim()
+        {
+
         }
 
         public void SetDeath(bool isDeath)

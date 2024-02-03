@@ -162,12 +162,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 else
                     MoveGamepad();
             }
-
-            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 4f))
-            {
-                Vector3 groundNormal = hit.normal;
-                // Usa groundNormal para obtener la inclinación del suelo
-            }
         }
 
 
@@ -512,7 +506,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        public void Jump()
+        private void Jump()
         {
             if (CanJumpGround())
             {
@@ -556,14 +550,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public Vector3 PositionOnFloorNotGrounded()
         {
             var ray = new Ray(transform.position, -transform.up);
-            if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity))
-            {
-                return hitInfo.point;
-            }
-            else
-            {
-                return ray.GetPoint(2f);
-            }
+            return Physics.Raycast(ray, out var hitInfo, Mathf.Infinity) ? hitInfo.point : ray.GetPoint(2f);
         }
 
         public void EnableMovement()
