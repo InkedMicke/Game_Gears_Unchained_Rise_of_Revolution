@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +5,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCPlayerInterface : MonoBehaviour
     {
+        [SerializeField] private PP m_PP;
+        [SerializeField] private GameObject m_interface;
 
         public float localEnergy;
 
@@ -14,6 +14,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             localEnergy = GameManagerSingleton.Instance.bastetEnergy;
             SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
+            m_PP.AddObjToCurrentUIGameObjectList(m_interface);
         }
 
         [SerializeField] private Slider energySlider;

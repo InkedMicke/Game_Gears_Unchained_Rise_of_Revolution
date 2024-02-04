@@ -18,13 +18,16 @@ public class MainCBastetSpecialAttacks : MonoBehaviour
         _inputActions.Enable();
         _inputActions.PlayerPC.ChangeAbility.performed += NextAttackPC;
         _inputActions.PlayerGamepad.ChangeAbility.performed += NextAttackGamepad;
+
+        ResfreshAbilitiesSprites();
     }
 
     private void NextAttackPC(InputAction.CallbackContext context)
     {
         if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
         {
-            NextAttack();
+            _currentItem = GetIndex();
+            StartCoroutine(NextAttack());
         }
     }
 
@@ -32,24 +35,58 @@ public class MainCBastetSpecialAttacks : MonoBehaviour
     {
         if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
         {
-            NextAttack();
+            _currentItem = GetIndex();
+            StartCoroutine(NextAttack());
         }
     }
 
-    private void NextAttack()
+    private IEnumerator NextAttack()
     {
         if(_currentItem == GameManagerSingleton.Instance.abiltiesList.Count - 1)
         {
             _currentItem = 0;
         }
-        _currentItem++;
-        foreach(var x in GameManagerSingleton.Instance.abiltiesList)
+        
+        while(true)
         {
-            if(x.value == _currentItem)
+            _currentItem++;
+            if(_currentItem > GameManagerSingleton.Instance.abiltiesList.Count - 1)
             {
-                GameManagerSingleton.Instance.currentAbility = x.currentAbility;
+                _currentItem = 0;
+            }
+            if(GameManagerSingleton.Instance.abiltiesList[_currentItem].IsUnlocked)
+            {
+                break;
+            }
+            yield return new WaitForEndOfFrame();
+        }
+
+        genericImage.sprite = GameManagerSingleton.Instance.abiltiesList[_currentItem].sprite;
+        GameManagerSingleton.Instance.currentAbility = GameManagerSingleton.Instance.abiltiesList[_currentItem].currentAbility;
+    }
+
+    public void ResfreshAbilitiesSprites()
+    {
+        foreach (var x in GameManagerSingleton.Instance.abiltiesList)
+        {
+            if (x.currentAbility == GameManagerSingleton.Instance.currentAbility)
+            {
                 genericImage.sprite = x.sprite;
+                _currentItem = x.value;
             }
         }
+    }
+
+    private int GetIndex()
+    {
+        foreach (var x in GameManagerSingleton.Instance.abiltiesList)
+        {
+            if (x.currentAbility == GameManagerSingleton.Instance.currentAbility)
+            {
+                return x.value; 
+            }
+        }
+
+        return 0;
     }
 }

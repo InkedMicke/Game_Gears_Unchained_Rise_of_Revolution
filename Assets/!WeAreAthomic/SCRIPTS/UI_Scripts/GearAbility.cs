@@ -68,7 +68,6 @@ public class GearAbility : MonoBehaviour
                 var mouseVector = Mouse.current.position.ReadValue();
                 worldPosition = cameraAbility.ScreenToWorldPoint(mouseVector);
                 worldPosition.z = descriptionObj.transform.position.z;
-                Debug.Log(worldPosition);
             }
             else
             {
@@ -81,7 +80,6 @@ public class GearAbility : MonoBehaviour
             Mathf.Clamp(worldPosition.y, bottomPos.position.y, topPos.position.y),
             worldPosition.z
     );
-            Debug.Log(bottomPos.position);
 
             descriptionObj.transform.position = clampedPosition;
         }
@@ -111,7 +109,7 @@ public class GearAbility : MonoBehaviour
         }
         if(_isUnlocked)
         {
-            _abilityController.currentAbility = currentAbility;
+            _abilityController.SetCurrentAbility(currentAbility);
             imageOfSelectedAbilityEmpty.sprite = imageOfSelectedAbility.sprite;
             imageOfSelectedAbilityEmpty.color = Color.white;
         }
@@ -138,6 +136,16 @@ public class GearAbility : MonoBehaviour
         _abilityController.SetGearsCount(GameManagerSingleton.Instance.gearsItem - cost);
         imageSlider.fillAmount = 0;
         descriptionObj.SetActive(false);
+        for (int i = 0; i < GameManagerSingleton.Instance.abiltiesList.Count; i++)
+        {
+            var x = GameManagerSingleton.Instance.abiltiesList[i];
+            if (x.currentAbility == currentAbility)
+            {
+                Debug.Log("hola1");
+                x.IsUnlocked = true;
+                break;
+            }
+        }
     }
 
     private IEnumerator ShowDescription()

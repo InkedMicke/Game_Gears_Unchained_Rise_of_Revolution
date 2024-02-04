@@ -12,7 +12,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         private DummiesColliderLab _dummiesCollider;
         private MainCAttack _mainCAttack;
         private MainCSounds _mainCSounds;
-        private GStopMenu _gStopMenu;
+        private MainCStopMenu _gStopMenu;
         private MainCTutorialChecker _mainCTutorial;
         private MainCMovement _mainCMovement;
         private TriggerElevator _triggerElevator;
@@ -56,7 +56,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _mainCAttack = _playerObj.GetComponent<MainCAttack>();
             _mainCSounds = _playerObj.GetComponent<MainCSounds>();
             _mainCTutorial = _playerObj.GetComponent<MainCTutorialChecker>();
-            _gStopMenu = _playerObj.GetComponent<GStopMenu>();
+            _gStopMenu = _playerObj.GetComponent<MainCStopMenu>();
             _mainCMovement = _playerObj.GetComponent<MainCMovement>();
             _triggerElevator = triggerElevator.GetComponent<TriggerElevator>();
         }

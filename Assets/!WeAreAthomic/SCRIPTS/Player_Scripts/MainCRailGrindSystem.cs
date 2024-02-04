@@ -18,7 +18,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCMovement _mainCMove;
         private MainCAnimatorController _mainCAnimator;
         private MainCPistol _mainCPistol;
-        private GStopMenu _gStopMenu;
+        private MainCStopMenu _gStopMenu;
         private MainCVFX _mainVFXCharacter;
         private MainCSounds _mainCSounds;
 
@@ -71,7 +71,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCMove = GetComponent<MainCMovement>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _mainCPistol = GetComponent<MainCPistol>();
-            _gStopMenu = GetComponent<GStopMenu>();
+            _gStopMenu = GetComponent<MainCStopMenu>();
             _mainVFXCharacter = GetComponent<MainCVFX>();
             _mainCSounds = GetComponent<MainCSounds>();
 

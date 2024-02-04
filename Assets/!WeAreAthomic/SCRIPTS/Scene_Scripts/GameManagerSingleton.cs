@@ -32,11 +32,12 @@ public enum DifficultyLevel
 }
 
 [System.Serializable]
-public struct AbilitiesStruct
+public class AbilitiesStruct
 {
     public int value;
     public CurrentAbility currentAbility;
     public Sprite sprite;
+    public bool IsUnlocked;
 }
 
 public class GameManagerSingleton : SingletonScriptableObject<GameManagerSingleton>, ICallOnAll
@@ -81,10 +82,6 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public bool SkippedTutorial;
     public bool IsFullscreen;
     public bool _toggledTotally;
-    public bool IsProtectionAnilityUnlocked;
-    public bool IsRapidFireUnlocked;
-    public bool Is360AttackUnlocked;
-    public bool IsNanoHealthUnlocked;
 
     public int maxSensivity;
     public int sensivityX;

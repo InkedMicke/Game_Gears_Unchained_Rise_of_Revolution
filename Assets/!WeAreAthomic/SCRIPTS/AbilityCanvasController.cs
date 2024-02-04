@@ -4,11 +4,11 @@ using UnityEngine.Video;
 
 public class AbilityCanvasController : MonoBehaviour
 {
+    [SerializeField] private MainCBastetSpecialAttacks m_mainCBastetAttacks;
+
     [SerializeField] private TextMeshProUGUI m_gearCount;
 
     [SerializeField] private VideoPlayer m_videoPlayer;
-
-    public CurrentAbility currentAbility;
 
     private void Awake()
     {
@@ -19,6 +19,12 @@ public class AbilityCanvasController : MonoBehaviour
     {
         m_gearCount.text = value.ToString();
         GameManagerSingleton.Instance.gearsItem = value;
+    }
+
+    public void SetCurrentAbility(CurrentAbility currentAbility)
+    {
+        GameManagerSingleton.Instance.currentAbility = currentAbility;
+        m_mainCBastetAttacks.ResfreshAbilitiesSprites();
     }
 
     public void SetVideoPlayerClip(VideoClip clip)

@@ -1,30 +1,23 @@
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
+namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
-    public class GStopMenu : MonoBehaviour
+    public class MainCStopMenu : MonoBehaviour
     {
+        [SerializeField] private PP m_PP;
         private PlayerInputActions _playerInputActions;
-        private MainCTutorialChecker _mainCTutorial;
         private MainCSounds _mainCSounds;
-        private MainCInputSwitcher _mainCInputSwitcher;
 
         [SerializeField] private GameObject stopMenuContainer;
         [SerializeField] private GameObject firstButton;
-        [SerializeField] private GameObject playerInterface;
-        [SerializeField] private GameObject tutKeys;
 
         private bool _isActive;
 
         private void Awake()
         {
-            _mainCTutorial = GetComponent<MainCTutorialChecker>();
             _mainCSounds = GetComponent<MainCSounds>();
-            _mainCInputSwitcher = GetComponent<MainCInputSwitcher>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -61,8 +54,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                         {
                             GameManagerSingleton.Instance.CursorMode(false);
                         }
-                        tutKeys.SetActive(true);
-                        playerInterface.SetActive(true);
+                        m_PP.SetActiveToCurrentUIGameObjectList(true);
                         GameManagerSingleton.Instance.PauseGame(false);
                         GameManagerSingleton.Instance.FreezeTime(false);
                         GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
@@ -72,8 +64,6 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                     else
                     {
                         stopMenuContainer.SetActive(true);
-                        tutKeys.SetActive(false);
-                        playerInterface.SetActive(false);
                         if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
                         {
                             EventSystem.current.SetSelectedGameObject(firstButton);
@@ -83,6 +73,7 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
                         {
                             EventSystem.current.SetSelectedGameObject(null);
                         }
+                        m_PP.SetActiveToCurrentUIGameObjectList(false);
                         GameManagerSingleton.Instance.CursorMode(true);
                         GameManagerSingleton.Instance.PauseGame(true);
                         GameManagerSingleton.Instance.FreezeTime(true);

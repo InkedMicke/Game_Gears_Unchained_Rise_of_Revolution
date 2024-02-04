@@ -532,9 +532,9 @@ GameObject:
   - component: {fileID: 3764668422024457106}
   - component: {fileID: 1582181801326735337}
   - component: {fileID: 8156547131111017134}
+  - component: {fileID: 6703656047097277810}
   - component: {fileID: 6156758546523602922}
   - component: {fileID: 4237099692295455833}
-  - component: {fileID: 6959285264927564952}
   - component: {fileID: 1264889315038609929}
   - component: {fileID: 7621926829757928742}
   - component: {fileID: 8560368454650083858}
@@ -875,10 +875,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   genericImage: {fileID: 0}
-  rafagaImage: {fileID: 0}
-  rafaga360Image: {fileID: 0}
-  protectionImage: {fileID: 0}
-  healImage: {fileID: 0}
 --- !u!114 &1770476364814114069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1051,6 +1047,23 @@ MonoBehaviour:
   howFightVolume: 0.5
   abilityAtackClip: {fileID: 0}
   abilityAtackVolume: 0
+--- !u!114 &6703656047097277810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821918579687998185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e460d50e9795d904397c8749d3769565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PP: {fileID: 0}
+  stopMenuContainer: {fileID: 0}
+  firstButton: {fileID: 0}
+  playerInterface: {fileID: 0}
+  tutKeys: {fileID: 0}
 --- !u!114 &6156758546523602922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1078,6 +1091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6ad59cff9462e74690c8ea24cdec0e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_PP: {fileID: 0}
   breatherObj: {fileID: 0}
   botonPosaMano: {fileID: 0}
   goHereMove: {fileID: 0}
@@ -1092,22 +1106,6 @@ MonoBehaviour:
   movedIzqImage: {fileID: 0}
   movedDerImage: {fileID: 0}
   FirstTimeAbility: 0
---- !u!114 &6959285264927564952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5821918579687998185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41866f4a10fc0e048b2979111cb565f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stopMenuContainer: {fileID: 0}
-  firstButton: {fileID: 0}
-  playerInterface: {fileID: 0}
-  tutKeys: {fileID: 0}
 --- !u!114 &1264889315038609929
 MonoBehaviour:
   m_ObjectHideFlags: 0
