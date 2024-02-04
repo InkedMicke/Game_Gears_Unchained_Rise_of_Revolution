@@ -68,7 +68,7 @@ public class GearAbility : MonoBehaviour
                 var mouseVector = Mouse.current.position.ReadValue();
                 worldPosition = cameraAbility.ScreenToWorldPoint(mouseVector);
                 worldPosition.z = descriptionObj.transform.position.z;
-                //Debug.Log(worldPosition);
+                Debug.Log(worldPosition);
             }
             else
             {
@@ -81,6 +81,7 @@ public class GearAbility : MonoBehaviour
             Mathf.Clamp(worldPosition.y, bottomPos.position.y, topPos.position.y),
             worldPosition.z
     );
+            Debug.Log(bottomPos.position);
 
             descriptionObj.transform.position = clampedPosition;
         }
@@ -110,7 +111,6 @@ public class GearAbility : MonoBehaviour
         }
         if(_isUnlocked)
         {
-            Debug.Log("hola1");
             _abilityController.currentAbility = currentAbility;
             imageOfSelectedAbilityEmpty.sprite = imageOfSelectedAbility.sprite;
             imageOfSelectedAbilityEmpty.color = Color.white;
@@ -144,6 +144,7 @@ public class GearAbility : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(1f);
 
+        _abilityController.SetVideoPlayerClip(videoToShow);
         descriptionObj.SetActive(true);
         _isShowingDescription = true;
         while (_isMouseInside)

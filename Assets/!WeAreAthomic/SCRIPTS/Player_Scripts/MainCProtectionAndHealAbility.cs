@@ -40,40 +40,70 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
     {
         if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc && GameManagerSingleton.Instance.currentAbility == CurrentAbility.Protection)
         {
-            StartAnimProtection();
+            StartProtection();
         }        
         
         if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc && GameManagerSingleton.Instance.currentAbility == CurrentAbility.Heal)
         {
-            Heal();
+            StartHeal();
         }
-        var x = _mattSkinned.materials;
     }
 
     private void InputGamepad(InputAction.CallbackContext context)
     {
         if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad && GameManagerSingleton.Instance.currentAbility == CurrentAbility.Protection)
         {
-            StartAnimProtection();
+            StartProtection();
         }
 
         if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad && GameManagerSingleton.Instance.currentAbility == CurrentAbility.Heal)
         {
-            Heal();
+            StartHeal();
         }
     }
 
-    private void StartAnimProtection()
+    private void StartProtection()
     {
         if (!_isProtectionEnabled)
         {
+            _isProtectionEnabled = true;
             _mainCLayers.EnableHackLayer();
             _mainCAnimatorController.TriggerShield();
             _mainCMovement.DisableMovement();
-            _mainCVFX.ActivateShieldGlow();
         }
     }
-    private void StartAnimHeal()
+
+    private IEnumerator Protection()
+    {
+        _mainCHealth.SetCanReceiveDamage(false);
+        yield return new WaitForSeconds(protectionDuration);
+        _mainCHealth.SetCanReceiveDamage(true);
+        _isProtectionEnabled = false;
+        _mattSkinned.materials = originalMaterials;
+    }
+
+    public void ProtectionEffects()
+    {
+        var newMat = new Material[_mattSkinned.materials.Length];
+
+        for (int i = 0; i < newMat.Length; i++)
+        {
+            newMat[i] = forcefieldMaterials;
+        }
+
+        _mattSkinned.materials = newMat;
+        _mainCVFX.ActivateShieldGlow();
+
+        StartCoroutine(Protection());
+    }
+
+    public void EndAnimProtection()
+    {
+        _mainCLayers.DisableHackLayer();
+        _mainCMovement.EnableMovement();
+    }
+
+    private void StartHeal()
     {
         if (!_isHealEnabled)
         {
@@ -81,51 +111,19 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
             _mainCLayers.EnableHackLayer();
             _mainCAnimatorController.TriggerHeal();
             _mainCMovement.DisableMovement();
-            _mainCVFX.ActivateHealGlow();
-        }
-        _isHealEnabled = false;
+        }        
     }
 
-    private IEnumerator Protection()
+    public void HealEffects()
     {
-       
-
-
-        _mainCHealth.SetCanReceiveDamage(false);
-        _isProtectionEnabled = true;
-
-        var newMat = new Material[_mattSkinned.materials.Length];
-
-
-        for (int i = 0; i < newMat.Length; i++)
-        {
-            newMat[i] = forcefieldMaterials;
-        }
-        _mattSkinned.materials = newMat;
-
-        yield return new WaitForSeconds(protectionDuration);
-        _mainCHealth.SetCanReceiveDamage(true);
-        _isProtectionEnabled = false;
-        _mattSkinned.materials = originalMaterials;
-   
-
-    }
-
-    private void Heal()
-    {
-        
-        StartAnimHeal();
+        _mainCVFX.ActivateHealGlow();
         _mainCHealth.GetHealth(_mainCHealth.maxHealth - _mainCHealth.currentHealth);
-        
     }
-    public void EndAnimProtection()
+
+    public void EndAnimHeal()
     {
         _mainCLayers.DisableHackLayer();
         _mainCMovement.EnableMovement();
-    }
-    public void StartProtectionAbility()
-    {
-        StartCoroutine(Protection());
-
+        _isHealEnabled = false;
     }
 }

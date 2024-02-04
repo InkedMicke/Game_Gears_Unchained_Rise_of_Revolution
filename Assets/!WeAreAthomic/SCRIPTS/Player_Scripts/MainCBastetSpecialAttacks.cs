@@ -9,10 +9,6 @@ public class MainCBastetSpecialAttacks : MonoBehaviour
     private PlayerInputActions _inputActions;
 
     [SerializeField] private Image genericImage;
-    [SerializeField] private Image rafagaImage;
-    [SerializeField] private Image rafaga360Image;
-    [SerializeField] private Image protectionImage;
-    [SerializeField] private Image healImage;
 
     private int _currentItem;
 
