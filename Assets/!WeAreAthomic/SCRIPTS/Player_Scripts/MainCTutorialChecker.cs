@@ -66,7 +66,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 FirstTimeAbility = true;
                 goHereMove.SetActive(true);
                 wasdImage.SetActive(true);
-                m_PP.AddObjToCurrentUIGameObjectList(goHereMove);
                 m_PP.AddObjToCurrentUIGameObjectList(wasdImage);
                 _checkHealthCoroutine = StartCoroutine(CheckHealth());
                 _checkHackCoroutine = StartCoroutine(CheckHacking());
@@ -96,9 +95,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCSounds.RemoveAllSounds();
                     _mainCSounds.PlayExpressionSound();
                     goHerePosaManoMove.SetActive(true);
-                    m_PP.AddObjToCurrentUIGameObjectList(goHerePosaManoMove);
                     goHereBreather.SetActive(false);
-                    m_PP.RemoveObjToCurrentUIGameObjectList(goHereBreather);
                     respiraderoImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
                     m_PP.RemoveObjToCurrentUIGameObjectList(respiraderoImage);
                     break;
@@ -162,18 +159,15 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             respiraderoImage.SetActive(true);
             m_PP.AddObjToCurrentUIGameObjectList(respiraderoImage);
             goHereBreather.SetActive(true);
-            m_PP.AddObjToCurrentUIGameObjectList(goHereBreather);
         }
 
         public void PlayTutorialTwo()
         {
             goHereBreather.SetActive(false);
-            m_PP.RemoveObjToCurrentUIGameObjectList(goHereBreather);
             _mainCSounds.PlayTutorialSound(2, "pc");
             var buttonInt = botonPosaMano.GetComponent<ButtonInteractable>();
             buttonInt.EnableCanHack();
             goHerePosaMano.SetActive(true);
-            m_PP.AddObjToCurrentUIGameObjectList(goHerePosaMano);
         }
 
         private void PlayTutorialThird()

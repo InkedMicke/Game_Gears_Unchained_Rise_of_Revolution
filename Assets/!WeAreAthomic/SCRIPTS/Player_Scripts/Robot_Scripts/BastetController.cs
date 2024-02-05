@@ -70,6 +70,23 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             _goToPosTween = transform.DOMove(posToGo, duration).SetEase(ease).OnComplete(() => onFinishedAction());
         }
 
+        public void GoToRightHandPosUntilReachedPos(Action onFinishedAction, float speed, float distanceMagnitude)
+        {
+            StartCoroutine(RightHandUntilReachedPos(onFinishedAction, speed, distanceMagnitude));
+        }
+
+        private IEnumerator RightHandUntilReachedPos(Action onFinishedAction,float speed, float distanceMagnitude)
+        {
+            while(Vector3.Distance(transform.position, playerRightArm.transform.position) < distanceMagnitude)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, playerRightArm.transform.position, speed);
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            onFinishedAction();
+        }
+
         public void KillGoToDesiredPos()
         {
             _goToPosTween.Kill();

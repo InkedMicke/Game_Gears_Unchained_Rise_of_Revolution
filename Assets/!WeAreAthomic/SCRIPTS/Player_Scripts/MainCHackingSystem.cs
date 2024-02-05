@@ -9,6 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCHackingSystem : MonoBehaviour
     {
+        [SerializeField] private PP m_PP;
         private MainCLayers _mainCLayers;
         private CharacterController _cc;
         private BastetController _bastetController;
@@ -99,9 +100,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void EndHacking()
         {
             hackCanvas.SetActive(false);
+            m_PP.RemoveObjToCurrentUIGameObjectList(hackCanvas);
             var button = _currentInteract.GetComponent<ButtonInteractable>();
             button.EndHackInvoke();
-            _bastetController.GoToDesiredPos(() => robotObj.SetActive(false), _bastetController.playerRightArm.transform.position, 2f, Ease.Linear);
+            _bastetController.GoToRightHandPosUntilReachedPos(() => robotObj.SetActive(false), 20f, .1f);
             _mainCSounds.StopHackInProcessSound();
             IsHacking = false;
         }
@@ -184,10 +186,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 IsHacking = false;
                 isHackingAnim = false;
                 hackCanvas.SetActive(false);
+                m_PP.RemoveObjToCurrentUIGameObjectList(hackCanvas);
                 _mainCSounds.StopHackInProcessSound();
                 _cc.enabled = true;
                 _mainCLayers.DisableHackLayer();
-                _bastetController.GoToDesiredPos(() => robotObj.SetActive(false), _bastetController.playerRightArm.transform.position, 2f, Ease.Linear);
+                _bastetController.GoToRightHandPosUntilReachedPos(() => robotObj.SetActive(false), 20f, .1f);
                 _mainCSounds.PlayCannotHackSound();
 
                 var interactables = FindObjectsOfType<ButtonInteractable>();
@@ -210,6 +213,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 isHackingAnim = false;
                 _hackCoroutine = StartCoroutine(Hack(_timeToHack));
                 hackCanvas.SetActive(true);
+                m_PP.AddObjToCurrentUIGameObjectList(hackCanvas);
                 hackSlider.minValue = Time.time;
                 hackSlider.maxValue = Time.time + _timeToHack;
                 _cc.enabled = true;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PP : MonoBehaviour
 {
-    private List<GameObject> lst_CurrentUIGameObjects = new();
+    public List<GameObject> lst_CurrentUIGameObjects = new();
 
     public void AddObjToCurrentUIGameObjectList(GameObject obj)
     {
