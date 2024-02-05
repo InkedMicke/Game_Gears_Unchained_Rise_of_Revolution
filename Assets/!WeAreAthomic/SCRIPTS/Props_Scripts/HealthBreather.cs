@@ -6,11 +6,22 @@ namespace _WeAreAthomic.SCRIPTS.Props
 {
     public class HealthBreather : MonoBehaviour
     {
+        private enum TypeOfBreather
+        {
+            Health,
+            Energy
+        }
+
         MainCHealthManager _mainHealth;
-        
+        MainCPlayerInterface _mainCPlayer;
+
+        [SerializeField] TypeOfBreather _typeOfBreather;
 
         [SerializeField] private GameObject hurtbox;
         [SerializeField] private GameObject particleEffects;
+        [SerializeField] private int energyFill;
+
+
         private GameObject _volumeHealing;
         private GameObject _playerObj;
 
@@ -25,6 +36,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
         {
             _playerObj = GameObject.FindGameObjectWithTag(string.Format("Player"));
             _mainHealth = _playerObj.GetComponentInChildren<MainCHealthManager>();
+            _mainCPlayer = _playerObj.GetComponent<MainCPlayerInterface>();
             _volumeHealing = _playerObj.transform.GetChild(_playerObj.transform.childCount - 1).gameObject;
 
             if (!enableBreather)
@@ -37,9 +49,21 @@ namespace _WeAreAthomic.SCRIPTS.Props
         {
             if (enableBreather)
             {
+                switch (_typeOfBreather)
+                {
+                    case TypeOfBreather.Health:
+                        StartCoroutine(nameof(HealCoroutine));
+                        _volumeHealing.SetActive(true);
+                        break;
+
+                    case TypeOfBreather.Energy:
+                        break;
+                }
+
                 StartCoroutine(nameof(HealCoroutine));
                 _volumeHealing.SetActive(true);
             }
+
         }
 
         public void EndHeal()
@@ -73,6 +97,25 @@ namespace _WeAreAthomic.SCRIPTS.Props
                 if (_mainHealth.currentHealth < _mainHealth.maxHealth)
                 {
                     _mainHealth.GetHealth(healthAmount);
+                }
+                else
+                {
+                    enable = false;
+                }
+
+                yield return new WaitForSeconds(healthPerTime);
+            }
+        }
+        private IEnumerator EnergiCoroutine()
+        {
+            var enable = true;
+            healthSound.Play();
+
+            while (enable)
+            {
+                if (_mainCPlayer.localEnergy < _mainCPlayer.maxEnergy)
+                {
+                    _mainCPlayer.ChargeEnergy(energyFill);
                 }
                 else
                 {

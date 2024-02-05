@@ -9,6 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject m_interface;
 
         public float localEnergy;
+        public float maxEnergy = 100;
 
         private void Awake()
         {
@@ -18,11 +19,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         }
 
         [SerializeField] private Slider energySlider;
-
+       
 
         public void SetEnergySlider(float value)
         {
             energySlider.value = value;
+        }
+        public void ChargeEnergy(int energy)
+        {
+            localEnergy += energy;
+            GameManagerSingleton.Instance.bastetEnergy = localEnergy;
+            SetEnergySlider(localEnergy);
         }
     }
 }
