@@ -77,7 +77,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
 
         private IEnumerator RightHandUntilReachedPos(Action onFinishedAction,float speed, float distanceMagnitude)
         {
-            while(Vector3.Distance(transform.position, playerRightArm.transform.position) < distanceMagnitude)
+            while(Vector3.Distance(transform.position, playerRightArm.transform.position) > distanceMagnitude)
             {
                 transform.position = Vector3.MoveTowards(transform.position, playerRightArm.transform.position, speed);
 
