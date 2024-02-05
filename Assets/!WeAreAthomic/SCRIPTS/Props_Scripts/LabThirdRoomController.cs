@@ -156,6 +156,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 {
                     yield return new WaitForEndOfFrame();
                 }
+                _mainCMovement.DisableMovement();
                 _playerObj.GetComponent<CharacterController>().enabled = false;
                 Instantiate(movableFloorPivot, _playerObj.transform.position - Vector3.right * 1.4f, Quaternion.identity);
                 _mainCMovement.SetFollowTrajectory(true);

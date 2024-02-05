@@ -122,18 +122,18 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 }
 
                 var playerPos = _playerObj.transform.position;
-                var desiredPos = new Vector3(playerPos.x, playerPos.y + 1f, playerPos.z);
+                var desiredPos = new Vector3(playerPos.x, _mainCMovement.IsCrouch ? playerPos.y + 1.5f :playerPos.y + 2f, playerPos.z);
                 var direction = desiredPos - transform.position;
 
                 var raycastLength = direction.magnitude;
-
                 var ray = new Ray(transform.position, direction.normalized);
+                Debug.DrawRay(transform.position, direction.normalized * raycastLength);
                 if (Physics.Raycast(ray, raycastLength, obstructionLayer))
                 {
                     if (_lKiller.IsFocusingPlayer)
                     {
                         _lKiller.WhiteLight();
-                        _mainCHacking.SetGotCahed(false);
+                        _mainCHacking.SetGotCached(false);
                         foreach (var t in seActivaEncuentraUnObstaculoMientrasFocuseaAlPlayer)
                         {
                             t.Invoke();

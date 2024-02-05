@@ -26,11 +26,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject hackCanvas;
         [SerializeField] private GameObject robotObj;
         private GameObject _currentInteract;
-        private GameObject _currentWeapon;
 
         public bool isHackingAnim;
         public bool IsHacking;
-        public bool GotCahed;
+        public bool GotCached;
         private bool _isHackingSoldier;
 
         private float _timeToHack;
@@ -64,7 +63,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void StartHacking(float timeHack, TypeOfHacked typeOfHacked)
         {
-            if (!IsHacking && !GotCahed)
+            if (!IsHacking && !GotCached)
             {
                 _timeToHack = timeHack;
 
@@ -173,9 +172,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        public void SetGotCahed(bool gotCahed)
+        public void SetGotCached(bool gotCahed)
         {
-            GotCahed = gotCahed;
+            GotCached = gotCahed;
         }
 
         public void StopHack()

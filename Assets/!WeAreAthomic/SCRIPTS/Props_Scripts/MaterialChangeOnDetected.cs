@@ -32,7 +32,7 @@ public class MaterialChangeOnDetected : MonoBehaviour
     {
         if(ifCached && !ifCannotHack)
         {
-            if(_mainCHacking.GotCahed)
+            if(_mainCHacking.GotCached)
             {
                 m_MeshRenderer.material = catchMat;
             }
@@ -45,7 +45,7 @@ public class MaterialChangeOnDetected : MonoBehaviour
         if (ifCannotHack)
         {
             
-            if(_mainCHacking.GotCahed)
+            if(_mainCHacking.GotCached)
             {
                 m_MeshRenderer.material = catchMat;
             }

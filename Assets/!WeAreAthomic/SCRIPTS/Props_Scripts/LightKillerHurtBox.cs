@@ -42,6 +42,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             }
 
             seEjecutaCuandoDetectaAlPlayer.Invoke();
+            _mainCHack.SetGotCached(true);
             if (_mainCHack.IsHacking || _mainCHack.isHackingAnim)
             {
                 _mainCHack.StopHack();

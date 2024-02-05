@@ -341,7 +341,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (IsFollowingTrajectory)
             {
                 indexPoint = 2;
-                DisableMovement();
                 puntosTrayectoria = Trajectory.CalcularPuntosTrayectoria();
             }
         }

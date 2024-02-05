@@ -60,7 +60,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         private void ShowCircle()
         {
-            if (Vector3.Distance(transform.position, _playerTr.position) < 10 && !_isShowingButton && !_mainCHacking.IsHacking && canHack)
+            if (Vector3.Distance(transform.position, _playerTr.position) < 10 && !_isShowingButton && !_mainCHacking.IsHacking && canHack && !_mainCHacking.GotCached)
             {
                 circleObj.SetActive(true);
             }
@@ -102,7 +102,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         public void ShowButton()
         {
-            if (!_mainCHacking.IsHacking && canHack) 
+            if (!_mainCHacking.IsHacking && canHack && !_mainCHacking.GotCached) 
             {
                 _isShowingButton = true;
                 switch (GameManagerSingleton.Instance.typeOfInput)
