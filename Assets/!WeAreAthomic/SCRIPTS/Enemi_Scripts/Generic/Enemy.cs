@@ -308,7 +308,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         private void ChasePlayer()
         {
-            if (IsChasingPlayer)
+            if (IsChasingPlayer && !IsAttacking)
             {
                 _materialChangeOnDetection.CatchDecal();
                 _agent.SetDestination(_playerTr.position);

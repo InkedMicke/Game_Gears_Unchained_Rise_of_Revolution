@@ -31,6 +31,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
         [SerializeField] private float shootAngle = .6f;
         [SerializeField] private float maxTimeToStopShooting = 2.5f;
         [SerializeField] private float rotationSpeed = 5f;
+        [SerializeField] private int waitForNextAttack = 2;
         public float totalColdown;
 
         protected override void Awake()
@@ -182,14 +183,21 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
                 if (_currentShoots == 3)
                 {
                     _decalCoroutine = StartCoroutine(DecalSize(false));
-                    IsAttacking = false;
+                    
                     IsShooting = false;
-                    StartChasingPlayer();
+                   
                     _currentShoots = 0;
                 }
             }
             else
                 _currentShoots = 0;
+        }
+        IEnumerator WaitUntilNextAttack()
+        {
+
+            yield return new WaitForSeconds(waitForNextAttack);
+            IsAttacking = false;
+            StartChasingPlayer();
         }
     }
 }

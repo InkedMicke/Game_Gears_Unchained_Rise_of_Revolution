@@ -30,6 +30,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 
         [SerializeField] private float rotationSpeed = 5f;
         [SerializeField] private float dashDuracion = 5f;
+        [SerializeField] private int waitForNextAttack ;
 
         protected override void Awake()
         {
@@ -168,12 +169,19 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
             indicator.transform.localPosition = indicatorStartPos;
             _soldierAnim.SetRedCount(0);
             _agent.enabled = true;
-            IsAttacking = false;
+           
             _isDashing = false;
-            ChangingValuesToChase();
+           
             _soldierAnim.SetAnimRootMotion(false);
         }
-  
+        IEnumerator WaitUntilNextAttack()
+        {
+
+            yield return new WaitForSeconds(waitForNextAttack);
+            IsAttacking = false;
+            ChangingValuesToChase();
+        }
+
     }
 
     

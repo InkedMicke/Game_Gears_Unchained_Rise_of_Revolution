@@ -21,6 +21,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCPlayerInterface _mainCInterface;
         private MainCDash _mainCDash;
         private MainCVFX _mainCVfx;
+        private G_MeshTrail _mainG;
 
         [SerializeField] private PlayerDamageData abilityAttackDmgData;
 
@@ -60,7 +61,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public int attackCount;
 
         [SerializeField] private float timeNextAttack = 0.5f;
-        [SerializeField] private float nearEnemieToGoFloat = 2.5f;
+        [SerializeField] private float nearEnemieToGoFloat = .25f;
         [SerializeField] private float rotationNearEnemie = 8f;
         [SerializeField] private float hideWeaponTimer = 8f;
         [SerializeField] private float scannerSizeSpeed = .1f;
@@ -85,6 +86,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCInterface = GetComponent<MainCPlayerInterface>();
             _mainCDash = GetComponent<MainCDash>();
             _mainCVfx = GetComponent<MainCVFX>();
+            _mainG = GetComponent<G_MeshTrail>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -306,14 +308,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void MoveToEnemy(Collider other)
         {
-            if (!_wrenchHitBox.GotHit && attackCount != 2)
+            if (!_wrenchHitBox.GotHit )
             {
+                _mainG.EnableTrail();
                 _wrenchHitBox.SetGotHit(true);
                 var enemyPos = other.gameObject.transform.position;
                 var direction = enemyPos - transform.position;
                 direction.y = 0f;
-                _cc.Move(direction * 0.25f);
+                _cc.Move(direction * nearEnemieToGoFloat);
+               
+
+
             }
+
         }
 
         public void ApplyAbilityDamage()

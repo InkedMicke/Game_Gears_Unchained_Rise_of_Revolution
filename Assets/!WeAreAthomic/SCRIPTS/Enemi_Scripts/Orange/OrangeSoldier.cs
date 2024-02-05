@@ -1,6 +1,7 @@
 using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using UnityEngine;
+using System.Collections;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
 {
@@ -18,6 +19,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
 
         [SerializeField] private float maxDecalRange;
         [SerializeField] private float velocityDecalGrow;
+        [SerializeField] private int waitForNextAttack;
         private float _passedTime = 0f;
 
         protected override void Awake()
@@ -48,9 +50,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
                 if (_passedTime >= .01f)
                 {
                     // Calcular la tasa de crecimiento
-                    float growthRate = .03f;
+                    float growthRate = .08f;
 
-                    if(indicator.size.x >= 9)
+                    if(indicator.size.x >= 7)
                     {
                         _canGrowth = false;
                         _materialChange.CatchDecal();
@@ -91,13 +93,21 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
             sizeIndiciator.x = 0.1f;
             sizeIndiciator.y = 0.1f;
             indicator.size = sizeIndiciator;
-            IsAttacking = false;
-            ChangingValuesToChase();
+            StartCoroutine(WaitUntilNextAttack());
+
+            
         }
 
         public void StartGrowth()
         {
             _canGrowth = true;
+        }
+        IEnumerator WaitUntilNextAttack()
+        {
+            
+            yield return new WaitForSeconds(waitForNextAttack);
+            IsAttacking = false;
+            ChangingValuesToChase();
         }
     }
 }

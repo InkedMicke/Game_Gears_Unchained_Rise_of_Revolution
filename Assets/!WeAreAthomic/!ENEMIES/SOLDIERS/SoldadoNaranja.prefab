@@ -105,6 +105,7 @@ MonoBehaviour:
   decalAtackDir: {fileID: 4681578498658497895}
   decalPatrol: {fileID: 5116446470641881253}
   IsDeath: 0
+  HurtedTimes: 0
   maxHealth: 100
   currentHealth: 0
 --- !u!1 &1868825288773207463
@@ -5041,7 +5042,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1934593625008246212}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 4
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -9855,7 +9856,7 @@ Transform:
   m_GameObject: {fileID: 2140232508423189539}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.78787, y: 0.78787, z: 0.78787}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1642133490791264307}
@@ -9880,7 +9881,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 2.96
+  m_Radius: 2.73
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &942958690331257641
 MonoBehaviour:
@@ -9895,6 +9896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 40
+  useDamageData: 1
   damageData: {fileID: 11400000, guid: 5195624146ea96441835fa9dd48bdad5, type: 2}
 --- !u!1 &3241077336018984013
 GameObject:
@@ -10020,6 +10022,7 @@ MonoBehaviour:
   decalArea: {fileID: 4681578498658497895}
   maxDecalRange: 0
   velocityDecalGrow: 0
+  waitForNextAttack: 2
 --- !u!114 &9205781819914684017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34535,7 +34538,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8759137351536858826}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 3
   simulationSpeed: 1.5
   stopAction: 0
   cullingMode: 0
@@ -39591,6 +39594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 20
+  useDamageData: 1
   damageData: {fileID: 11400000, guid: 0a089c0fa9e32c945b6a1b6317291923, type: 2}
 --- !u!4 &889722269949896730 stripped
 Transform:

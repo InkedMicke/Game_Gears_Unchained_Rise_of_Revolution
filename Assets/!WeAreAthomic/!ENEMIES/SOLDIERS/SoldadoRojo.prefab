@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 50
+  useDamageData: 1
   damageData: {fileID: 11400000, guid: 9a81b68b9ec0f974db00b1480bace575, type: 2}
 --- !u!1 &7152724352651507618
 GameObject:
@@ -205,6 +206,7 @@ MonoBehaviour:
   decalAtackDir: {fileID: 4145104291470681074}
   decalPatrol: {fileID: 6267485460590106063}
   IsDeath: 0
+  HurtedTimes: 0
   maxHealth: 100
   currentHealth: 0
 --- !u!1 &8414676083931559048
@@ -248,7 +250,7 @@ Transform:
   - {fileID: 1049984294134339771}
   - {fileID: 5104548078687366291}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3703994341950143804
 Animator:
@@ -333,6 +335,7 @@ MonoBehaviour:
   endTrDecal: {fileID: 6643560110783014430}
   rotationSpeed: 5
   dashDuracion: 0.5
+  waitForNextAttack: 1
 --- !u!114 &2243072282387716024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,7 +373,7 @@ MonoBehaviour:
   shaderVarRate: 0.1
   shaderVarRefreshRate: 0.05
   skinnedMeshRenderers:
-  - {fileID: 294728265330989493}
+  - {fileID: 0}
 --- !u!114 &7014005959330117288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1007,12 +1010,6 @@ PrefabInstance:
       addedObject: {fileID: 5117302528167240854}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76ce5392553f1ba429ad2cde5c60f663, type: 3}
---- !u!137 &294728265330989493 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -5059559812487326282, guid: 76ce5392553f1ba429ad2cde5c60f663,
-    type: 3}
-  m_PrefabInstance: {fileID: 4458494241480100867}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2624028659230454731 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 76ce5392553f1ba429ad2cde5c60f663,
