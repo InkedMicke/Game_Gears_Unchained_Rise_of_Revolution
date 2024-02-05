@@ -2,13 +2,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 
+
+
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 {
     public class SoldierHurtBox : MonoBehaviour, IDamageable
     {
+        private C_EnemiSounds _cEnemiSounds;
         private SoldierHurtBox _soldierHurtbox;
         private GDestroyObject _destroyObject;
         private Enemy _enemy;
+
+        
 
         [SerializeField] private C_DisolveEnemi _disolveEnemi;
 
@@ -31,6 +36,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         private void Awake()
         {
+            _cEnemiSounds = GetComponent<C_EnemiSounds>();
             _soldierHurtbox = GetComponent<SoldierHurtBox>();
             _destroyObject = GetComponentInParent<GDestroyObject>();
             _enemy = GetComponentInParent<Enemy>();
@@ -42,6 +48,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         public void Damage(float damage)
         {
+            _cEnemiSounds.PlayHitEnemiSound();
             currentHealth -= damage;
             HurtedTimes++;
             SetHealthSlider(currentHealth);

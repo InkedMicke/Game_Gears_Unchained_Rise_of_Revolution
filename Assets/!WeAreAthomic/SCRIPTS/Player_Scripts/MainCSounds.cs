@@ -51,6 +51,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [Range(0, 1)]
         [SerializeField] private float stepClipsOutdoorsVolume;
         [SerializeField] private List<AudioClip> callBastetClips;
+        [Range(0, 1)] 
+        [SerializeField] private float enemiHitsVolume;
+        [SerializeField] private List<AudioClip> enemiHitsClips;
         [Range(0, 1)]
         [SerializeField] private float callBasteVolume;
         [SerializeField] private AudioClip hackInProcess;
@@ -204,6 +207,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 currentAudioSource.volume = expressionVolume;
                 currentAudioSource.Play();
                 CurrentExpressionClip = currentAudioSource.clip;
+            }
+        }
+        public void PlayHitEnemiSound()
+        {
+            var randomNumber = Random.Range(0, enemiHitsClips.Count);
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = enemiHitsClips[randomNumber];
+                currentAudioSource.volume = enemiHitsVolume;
+                currentAudioSource.Play();
+                
             }
         }
 
