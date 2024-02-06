@@ -7,6 +7,7 @@ public class GVideos : MonoBehaviour
 {
     [SerializeField] private GLoadScene sceneLoader;
 
+
     [SerializeField] private VideoPlayer videoPlayer;
 
     [SerializeField] private List<VideoClip> videos;
@@ -35,7 +36,8 @@ public class GVideos : MonoBehaviour
         }
         else
         {
-            if(loadSceneOnFinish)
+           
+            if (loadSceneOnFinish)
             {
                 sceneLoader.sceneToLoad = sceneToLoad;
                 sceneLoader.LoadScene();

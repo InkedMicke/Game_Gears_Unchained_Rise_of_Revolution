@@ -11,7 +11,7 @@ namespace Hedenrag
     {
         public class SceneLoaderMultipleAsync : MonoBehaviour
         {
-            [SerializeField] LoadSceneAsyncAsset loadSceneAsyncAsset;
+            public LoadSceneAsyncAsset loadSceneAsyncAsset;
 
             public void LoadSceneAsync(Action onFinishAction)
             {
