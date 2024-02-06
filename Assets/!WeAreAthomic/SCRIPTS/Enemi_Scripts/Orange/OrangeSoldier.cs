@@ -102,12 +102,5 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
         {
             _canGrowth = true;
         }
-        IEnumerator WaitUntilNextAttack()
-        {
-            
-            yield return new WaitForSeconds(waitForNextAttack);
-            IsAttacking = false;
-            ChangingValuesToChase();
-        }
     }
 }

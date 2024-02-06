@@ -349,6 +349,14 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         {
             _agent.isStopped = true;
         }
+
+        protected IEnumerator WaitUntilNextAttack()
+        {
+
+            yield return new WaitForSeconds(waitForNextAttack);
+            IsAttacking = false;
+            StartChasingPlayer();
+        }
     }
 }
 

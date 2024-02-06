@@ -143,11 +143,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
             }
         }
 
-        private void OnDrawGizmos()
-        {
-            Debug.DrawRay(transform.position, transform.forward * 1f, Color.gray);
-        }
-
         public void StartDash()
         {
             //StartCoroutine(DashForward());
@@ -174,14 +169,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
            
             _soldierAnim.SetAnimRootMotion(false);
         }
-        IEnumerator WaitUntilNextAttack()
-        {
-
-            yield return new WaitForSeconds(waitForNextAttack);
-            IsAttacking = false;
-            ChangingValuesToChase();
-        }
-
     }
 
     

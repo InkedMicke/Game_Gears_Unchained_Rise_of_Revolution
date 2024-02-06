@@ -192,12 +192,5 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
             else
                 _currentShoots = 0;
         }
-        IEnumerator WaitUntilNextAttack()
-        {
-
-            yield return new WaitForSeconds(waitForNextAttack);
-            IsAttacking = false;
-            StartChasingPlayer();
-        }
     }
 }
