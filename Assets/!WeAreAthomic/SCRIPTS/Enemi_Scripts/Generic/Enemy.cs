@@ -69,6 +69,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         [SerializeField] private float stoppingDistance = 3;
         private float timeToGetCached = .4f;
         private float _totalTimeCached;
+       [SerializeField] private float waitForNextAttack;
 
         protected virtual void Awake()
         {
