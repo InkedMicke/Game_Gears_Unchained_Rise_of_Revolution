@@ -11,6 +11,7 @@ public class SceneLoaderStart : MonoBehaviour
     [SerializeField] private GameObject player;
     private int currentSceneIndex;
     [SerializeField] private float timeToLoad;
+    private Scene currentSceneLoaded;
     
 
     // Start is called before the first frame update
@@ -29,14 +30,14 @@ public class SceneLoaderStart : MonoBehaviour
     IEnumerator LoadingScenes()
     {
         yield return new WaitForSeconds(timeToLoad);
-
         while (currentSceneIndex < loadSceneAsyncAssets.Count )
         {
-
+            
             _sceneLoaderMultipleAsync.loadSceneAsyncAsset = loadSceneAsyncAssets[currentSceneIndex];
             _sceneLoaderMultipleAsync.LoadSceneAsync();
             currentSceneIndex++;
             yield return new WaitForSeconds(timeToLoad);
+
         }
     
     }
