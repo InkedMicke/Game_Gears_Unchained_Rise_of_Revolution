@@ -27,6 +27,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         private MainCHackingSystem _mainCHack;
         private MainCMovement _mainCMove;
         private Animator _exclamationAnim;
+        protected EnemyBrain _enemyBrain;
 
         public GameManagerSingleton.TypeOfEnemy _typeOfEnemy;
         public TypeOfBehaviour typeOfBehaviour;
@@ -55,6 +56,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         [System.NonSerialized] public bool IsChasingPlayer;
         [System.NonSerialized] public bool IsAttacking;
         [System.NonSerialized] public bool IsOnWarning;
+        [System.NonSerialized] public bool CanAttack;
         protected bool isPatrolling;
         
         private bool _isWaitingForPatrol;
@@ -86,6 +88,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _playerTr = _playerObj.transform;
             _mainCHack = _playerObj.GetComponent<MainCHackingSystem>();
             _mainCMove = _playerObj.GetComponent<MainCMovement>();
+
+            var enemyBrainObject = GameObject.FindGameObjectWithTag("EnemyBrain");
+            _enemyBrain = enemyBrainObject.GetComponent<EnemyBrain>();
 
             if (typeOfBehaviour == TypeOfBehaviour.Patrol)
             {

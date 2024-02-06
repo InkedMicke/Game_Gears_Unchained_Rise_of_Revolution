@@ -383,7 +383,7 @@ GameObject:
   - component: {fileID: 7014005959330117288}
   m_Layer: 0
   m_Name: SoldadoRojo
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -408,7 +408,7 @@ Transform:
   - {fileID: 5104548078687366291}
   - {fileID: 1250174698251242938}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3703994341950143804
 Animator:
@@ -483,6 +483,7 @@ MonoBehaviour:
   patrolSpeed: 2.5
   chaseSpeed: 3.5
   stoppingDistance: 3
+  waitForNextAttack: 1
   _attackHitBox: {fileID: 6336317294953810179}
   _particlesTornadoDash: {fileID: 2586615513335207575}
   dashEase: 12
@@ -493,7 +494,6 @@ MonoBehaviour:
   endTrDecal: {fileID: 6643560110783014430}
   rotationSpeed: 5
   dashDuracion: 0.5
-  waitForNextAttack: 1
 --- !u!114 &2243072282387716024
 MonoBehaviour:
   m_ObjectHideFlags: 0

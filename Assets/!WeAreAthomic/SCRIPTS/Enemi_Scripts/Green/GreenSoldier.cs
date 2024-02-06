@@ -45,11 +45,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
 
             if (distanceToPlayer < 6f && !IsAttacking && !_soldierHurtBox.IsDeath && IsChasingPlayer)
             {
-                _agent.isStopped = true;
-                _soldierAnim.SetWalking(false);
-                StartDecalToAttack();
-                IsChasingPlayer = false;
-                isPatrolling = false;
+                CanAttack = true;
+            }
+            else
+            {
+                CanAttack = false;
             }
             base.Update();
         }
