@@ -35,8 +35,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     damageable.Damage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, other.gameObject));
                     colliderList.Add(other);
                 }
-
-                _mainCAttack.MoveToEnemy(other);
             }
         }
 
