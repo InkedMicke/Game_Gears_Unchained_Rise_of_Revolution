@@ -315,7 +315,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 var enemyPos = other.gameObject.transform.position;
                 var direction = enemyPos - transform.position;
                 direction.y = 0f;
-                _cc.Move(direction * nearEnemieToGoFloat);
+                _cc.Move(direction * .7f);
                
 
 

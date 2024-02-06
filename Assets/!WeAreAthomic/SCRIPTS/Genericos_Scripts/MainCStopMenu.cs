@@ -19,7 +19,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Awake()
         {
-            //_mainCSounds = GetComponent<MainCSounds>();
+            _mainCSounds = GetComponent<MainCSounds>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -75,7 +75,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                         m_PP.SetActiveToCurrentUIGameObjectList(false);
                         GameManagerSingleton.Instance.CursorMode(true);
                         GameManagerSingleton.Instance.PauseGame(true);
-                        StartCoroutine(WaitForFreeze());
+                        //StartCoroutine(WaitForFreeze());
                         GameManagerSingleton.Instance.SetIsStopMenuEnabled(true);
                         _mainCSounds.PauseCurrentSounds();
                     }
