@@ -2,6 +2,7 @@ using Hedenrag.SceneLoader;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneLoaderStart : MonoBehaviour
 {
@@ -10,13 +11,16 @@ public class SceneLoaderStart : MonoBehaviour
     [SerializeField] private GameObject player;
     private int currentSceneIndex;
     [SerializeField] private float timeToLoad;
+    
 
     // Start is called before the first frame update
     private void Awake()
     {
         _sceneLoaderMultipleAsync = GetComponent<SceneLoaderMultipleAsync>();   
     }
-    void Start()
+  
+    
+    public void StartLoadingScenes()
     {
         player.SetActive(true);
         StartCoroutine(LoadingScenes());
@@ -24,6 +28,8 @@ public class SceneLoaderStart : MonoBehaviour
 
     IEnumerator LoadingScenes()
     {
+        yield return new WaitForSeconds(timeToLoad);
+
         while (currentSceneIndex < loadSceneAsyncAssets.Count )
         {
 

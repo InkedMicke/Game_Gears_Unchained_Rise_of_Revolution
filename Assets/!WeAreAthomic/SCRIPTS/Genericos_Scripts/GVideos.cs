@@ -1,10 +1,13 @@
 using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Video;
 
 public class GVideos : MonoBehaviour
 {
+    [SerializeField]SceneLoaderStart sceneLoaderStart;
+
     [SerializeField] private GLoadScene sceneLoader;
 
 
@@ -16,10 +19,13 @@ public class GVideos : MonoBehaviour
 
     [SerializeField] private Scenes sceneToLoad;
 
+    [SerializeField] UnityEvent OnFinish;
+
     private int _currentVideo;
 
     private void Start()
     {
+        sceneLoaderStart.StartLoadingScenes();
         videoPlayer.clip = videos[_currentVideo];
         videoPlayer.Play();
         _currentVideo++;
@@ -36,12 +42,8 @@ public class GVideos : MonoBehaviour
         }
         else
         {
-           
-            if (loadSceneOnFinish)
-            {
-                sceneLoader.sceneToLoad = sceneToLoad;
-                sceneLoader.LoadScene();
-            }
+
+            OnFinish.Invoke();
         }
     }
 

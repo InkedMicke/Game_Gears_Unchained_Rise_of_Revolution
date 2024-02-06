@@ -70,11 +70,6 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
             }
         }
 
-        public void LoadSceneWSeconds()
-        {
-            sceneLoader = GetComponent<C_SceneLoaderWSeconds>();
-            sceneLoader.LoadSceneWaitForSeconds("S1_1_EscenaIntro", 5.0f);
-        }
 
      
     }
