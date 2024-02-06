@@ -390,6 +390,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 IsCrouch = !IsCrouch;
                 ToggleCCSize();
+                if(!IsCrouch)
+                {
+                    _mainCAnimator.SetCrouchWalking(false);
+                    _isCrouchWalking = false;
+                    _currentWalkSpeed = walkSpeed;
+                    Debug.Log("hola1");
+                    Invoke(nameof(InvokeDisableCrouchLayer), 0.1f);
+                }
 
                 if (_mainCRail.IsSliding)
                 {

@@ -471,11 +471,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
-            if (!_mainCMovement.IsGrounded())
-            {
-                return false;
-            }
-
             if(GameManagerSingleton.Instance.IsAbilityMenuEnabled)
             {
                 return false;

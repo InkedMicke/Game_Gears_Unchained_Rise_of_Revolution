@@ -30,7 +30,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 
         [SerializeField] private float rotationSpeed = 5f;
         [SerializeField] private float dashDuracion = 5f;
-        [SerializeField] private int waitForNextAttack ;
 
         protected override void Awake()
         {

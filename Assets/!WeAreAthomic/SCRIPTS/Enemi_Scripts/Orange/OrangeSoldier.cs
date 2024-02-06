@@ -19,7 +19,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
 
         [SerializeField] private float maxDecalRange;
         [SerializeField] private float velocityDecalGrow;
-        [SerializeField] private int waitForNextAttack;
         private float _passedTime = 0f;
 
         protected override void Awake()

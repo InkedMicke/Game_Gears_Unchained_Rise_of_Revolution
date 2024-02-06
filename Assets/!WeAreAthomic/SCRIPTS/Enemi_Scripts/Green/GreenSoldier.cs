@@ -31,7 +31,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
         [SerializeField] private float shootAngle = .6f;
         [SerializeField] private float maxTimeToStopShooting = 2.5f;
         [SerializeField] private float rotationSpeed = 5f;
-        [SerializeField] private int waitForNextAttack = 2;
         public float totalColdown;
 
         protected override void Awake()
