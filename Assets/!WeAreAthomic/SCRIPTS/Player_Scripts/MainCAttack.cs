@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -61,7 +62,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public int attackCount;
 
         [SerializeField] private float timeNextAttack = 0.5f;
-        [SerializeField] private float nearEnemieToGoFloat = .25f;
+        [SerializeField] private float nearEnemieToGoRadius = 2f;
+        [SerializeField] private float nearEnemieToGoAngle = 60f;
         [SerializeField] private float rotationNearEnemie = 8f;
         [SerializeField] private float hideWeaponTimer = 8f;
         [SerializeField] private float scannerSizeSpeed = .1f;
@@ -219,6 +221,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
+                    MoveToEnemy();
                     _mainCDash.StopDash();
                     _mainCMovement.EnableMovement();
                     if (_mainCTutorial.IsOnTutorial && !_attackTutorial)
@@ -306,21 +309,23 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        public void MoveToEnemy(Collider other)
+        public void MoveToEnemy()
         {
-            if (!_wrenchHitBox.GotHit )
+            var currentEnemy = GetEnemyToMove();
+            if (currentEnemy != null)
             {
-                _mainG.EnableTrail();
-                _wrenchHitBox.SetGotHit(true);
-                var enemyPos = other.gameObject.transform.position;
-                var direction = enemyPos - transform.position;
-                direction.y = 0f;
-                _cc.Move(direction * .7f);
-               
+                if (CheckIfEnemyToMoveIsOnAngleView(currentEnemy))
+                {
+                    _mainG.EnableTrail();
+                    _wrenchHitBox.SetGotHit(true);
+                    var direction = currentEnemy.transform.position - transform.position;
+                    direction.y = 0f;
+                    _cc.Move(direction * .7f);
 
 
+
+                }
             }
-
         }
 
         public void ApplyAbilityDamage()
@@ -361,6 +366,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (_canNextAttack && IsAttacking)
             {
+                MoveToEnemy();
                 _mainCSounds.PlayAttackSound();
                 _mainCSounds.PlayEffordSound();
                 if (attackCount == 2)
@@ -454,6 +460,45 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCSounds.PlayTutorialSound(5, "pc");
         }
 
+        private Collider GetEnemyToMove()
+        {
+            var colliders = Physics.OverlapSphere(transform.position, nearEnemieToGoRadius, enemyHurtBox);
+            if(colliders.Length == 0)
+            {
+                return null;
+            }
+            Collider enemigoMasCercano = null;
+            var distanciaMasCercana = Mathf.Infinity;
+            var posicionActual = transform.position;
+
+            foreach(var x in colliders)
+            {
+                float distanciaEnemigo = Vector3.Distance(posicionActual, x.transform.position);
+
+                if (distanciaEnemigo < distanciaMasCercana)
+                {
+                    distanciaMasCercana = distanciaEnemigo;
+                    enemigoMasCercano = x;
+                }
+            }
+
+            return enemigoMasCercano;
+
+
+        }
+
+        private bool CheckIfEnemyToMoveIsOnAngleView(Collider col)
+        {
+            var directionEnemy = col.transform.position - transform.position;
+            var angle = Vector3.Angle(transform.forward, directionEnemy);
+            if (angle < nearEnemieToGoAngle)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private bool CanAttack()
         {
             if (IsAttacking)
@@ -532,6 +577,26 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             Instantiate(explosionEffect, explosionEffectPosition.position, Quaternion.identity);
 
+        }
+
+        private void OnDrawGizmos()
+        {
+            Handles.color = Color.white;
+            Handles.DrawWireArc(transform.position, Vector3.up, Vector3.forward, 360, nearEnemieToGoRadius);
+
+            Vector3 viewAngle01 = DirectionFromAngle(transform.eulerAngles.y, -nearEnemieToGoAngle / 2);
+            Vector3 viewAngle02 = DirectionFromAngle(transform.eulerAngles.y, nearEnemieToGoAngle / 2);
+
+            Handles.color = Color.yellow;
+            Handles.DrawLine(transform.position, transform.position + viewAngle01 * nearEnemieToGoRadius);
+            Handles.DrawLine(transform.position, transform.position + viewAngle02 * nearEnemieToGoRadius);
+        }
+
+        private Vector3 DirectionFromAngle(float eulerY, float angleInDegrees)
+        {
+            angleInDegrees += eulerY;
+
+            return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
         }
     }
     

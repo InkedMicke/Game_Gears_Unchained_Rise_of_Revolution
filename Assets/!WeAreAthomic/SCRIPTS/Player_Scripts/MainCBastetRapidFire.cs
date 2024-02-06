@@ -108,12 +108,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             }
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(transform.position, radiusCheck);
-        }
-
         public void SetCurrentShoots(int value)
         {
             currentShoots = value;
