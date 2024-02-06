@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 5632661560983212616}
   m_Layer: 0
   m_Name: SoldadoVerde
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +72,7 @@ Transform:
   - {fileID: 5307147061799431835}
   - {fileID: 2209460868538222193}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7864609738589064973
 Animator:
@@ -147,6 +147,7 @@ MonoBehaviour:
   patrolSpeed: 2
   chaseSpeed: 3
   stoppingDistance: 3
+  waitForNextAttack: 2
   moveToDecalCurve:
     serializedVersion: 2
     m_Curve: []
@@ -163,7 +164,6 @@ MonoBehaviour:
   shootAngle: 0.6
   maxTimeToStopShooting: 2.5
   rotationSpeed: 5
-  waitForNextAttack: 2
   totalColdown: 0
 --- !u!114 &5738154880865817068
 MonoBehaviour:

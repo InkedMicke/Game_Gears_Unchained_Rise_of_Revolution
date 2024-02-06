@@ -33,13 +33,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
 
             if (distanceToPlayer < 4.5f && !IsAttacking && !_soldierHurtBox.IsDeath && IsChasingPlayer && !IsAttacking)
             {
-                _agent.isStopped = true;
-                _soldierAnim.SetWalking(false);
-                //StartCoroutine(GrowAttackIndicator());
-                GrowAttackIndicator();
-                IsChasingPlayer = false;
-                isPatrolling = false;
-                IsAttacking = true;
+                CanAttack = true;
+            }
+            else
+            {
+                CanAttack = false;
             }
 
             if(_canGrowth)

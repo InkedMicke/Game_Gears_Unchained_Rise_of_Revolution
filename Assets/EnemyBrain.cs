@@ -16,4 +16,22 @@ public class EnemyBrain : MonoBehaviour
             enemies.Add(currentEnemie);
         }
     }
+
+    public void LetEnemyAttack(Enemy enemy)
+    {
+
+    }
+
+    private bool CheckIfAnEnemyIsAttacking()
+    {
+        foreach(var x in enemies)
+        {
+            if(x.IsAttacking)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

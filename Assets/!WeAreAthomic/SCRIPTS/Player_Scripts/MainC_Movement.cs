@@ -395,7 +395,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCAnimator.SetCrouchWalking(false);
                     _isCrouchWalking = false;
                     _currentWalkSpeed = walkSpeed;
-                    Debug.Log("hola1");
                     Invoke(nameof(InvokeDisableCrouchLayer), 0.1f);
                 }
 
