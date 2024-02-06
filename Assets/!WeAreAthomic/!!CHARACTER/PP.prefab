@@ -11164,6 +11164,11 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3890717661597144945, guid: 1026949209e8f824f94a170fc6d1dc81,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 3.25
+      objectReference: {fileID: 0}
     - target: {fileID: 3959394818616618200, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -11647,6 +11652,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Delegates.Array.data[3].callback.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426911848431449884, guid: 1026949209e8f824f94a170fc6d1dc81,
+        type: 3}
+      propertyPath: m_Convex
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4448840159392465062, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
@@ -12154,6 +12164,11 @@ PrefabInstance:
     - target: {fileID: 4915304857471601894, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
       propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915489607299288461, guid: 1026949209e8f824f94a170fc6d1dc81,
+        type: 3}
+      propertyPath: m_Convex
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4982477593933397080, guid: 1026949209e8f824f94a170fc6d1dc81,
@@ -13531,7 +13546,7 @@ PrefabInstance:
     - target: {fileID: 6294943929362437782, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6332314073000897158, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
@@ -14603,6 +14618,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362525599289798996, guid: 1026949209e8f824f94a170fc6d1dc81,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4556735504796727164, guid: 6720708e38812054880f901866137db1,
+        type: 3}
+    - target: {fileID: 7362525599289798996, guid: 1026949209e8f824f94a170fc6d1dc81,
+        type: 3}
+      propertyPath: m_Convex
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7425514779954356871, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
@@ -16759,6 +16785,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 3
       addedObject: {fileID: 6694941790327046408}
+    - targetCorrespondingSourceObject: {fileID: 613949064783259015, guid: 1026949209e8f824f94a170fc6d1dc81,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6948047211099792727}
     - targetCorrespondingSourceObject: {fileID: 371049838796047101, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
       insertIndex: 3
@@ -17088,6 +17118,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!64 &6948047211099792727
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540856718509736966}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3742418645415677047, guid: 6720708e38812054880f901866137db1, type: 3}
 --- !u!114 &1651640695154861444 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 796248832857998341, guid: 1026949209e8f824f94a170fc6d1dc81,

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Hedenrag.ExVar;
 using UnityEngine.EventSystems;
+using NaughtyAttributes;
 
 public enum TypeOfInput
 {
@@ -272,7 +273,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         CursorMode(true);
         FreezeTime(true);
     }
-
+    [Button]
     public void ToggleTotallyWindow()
     {
         _toggledTotally = !_toggledTotally;

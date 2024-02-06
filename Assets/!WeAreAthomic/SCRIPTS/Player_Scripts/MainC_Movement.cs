@@ -390,7 +390,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 IsCrouch = !IsCrouch;
                 ToggleCCSize();
-                if(!IsCrouch)
+                if(!IsCrouch && _isCrouchWalking)
                 {
                     _mainCAnimator.SetCrouchWalking(false);
                     _isCrouchWalking = false;

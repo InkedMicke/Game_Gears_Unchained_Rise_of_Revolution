@@ -1,3 +1,5 @@
+using NaughtyAttributes;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -17,7 +19,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Awake()
         {
-            _mainCSounds = GetComponent<MainCSounds>();
+            //_mainCSounds = GetComponent<MainCSounds>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -41,6 +43,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
+        [Button]
         private void ToggleMenu()
         {
             if (!GameManagerSingleton.Instance.IsGameOverEnabled && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
@@ -59,31 +62,32 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                         GameManagerSingleton.Instance.FreezeTime(false);
                         GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
                         _mainCSounds.UnPauseCurrentSounds();
-                        _isActive = false;
                     }
                     else
                     {
                         stopMenuContainer.SetActive(true);
-                        if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+                        if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
                         {
                             EventSystem.current.SetSelectedGameObject(firstButton);
                             firstButton.GetComponent<C_UIMaterial_Changer>().OnPointerEnter();
                         }
-                        else
-                        {
-                            EventSystem.current.SetSelectedGameObject(null);
-                        }
+
                         m_PP.SetActiveToCurrentUIGameObjectList(false);
                         GameManagerSingleton.Instance.CursorMode(true);
                         GameManagerSingleton.Instance.PauseGame(true);
-                        GameManagerSingleton.Instance.FreezeTime(true);
+                        StartCoroutine(WaitForFreeze());
                         GameManagerSingleton.Instance.SetIsStopMenuEnabled(true);
                         _mainCSounds.PauseCurrentSounds();
-                        _isActive = true;
                     }
                 }
             }
 
+        }
+
+        private IEnumerator WaitForFreeze()
+        {
+            yield return new WaitForSeconds(.2f);
+            GameManagerSingleton.Instance.FreezeTime(true);
         }
 
         public void ToggleMenuCallable(bool condition)
