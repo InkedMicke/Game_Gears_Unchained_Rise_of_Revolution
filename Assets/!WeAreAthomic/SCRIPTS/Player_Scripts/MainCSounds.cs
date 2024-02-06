@@ -51,7 +51,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [Range(0, 1)]
         [SerializeField] private float stepClipsOutdoorsVolume;
         [SerializeField] private List<AudioClip> callBastetClips;
-        [Range(0, 1)]
+        [Range(0, 1)] 
+
         [SerializeField] private float callBasteVolume;
         [SerializeField] private AudioClip hackInProcess;
         [Range(0, 1)]
@@ -206,6 +207,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 CurrentExpressionClip = currentAudioSource.clip;
             }
         }
+  
 
 
         public void PlayAttackSound()
