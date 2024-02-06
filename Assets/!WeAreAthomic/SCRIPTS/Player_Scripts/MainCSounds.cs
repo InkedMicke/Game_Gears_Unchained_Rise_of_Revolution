@@ -77,13 +77,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Start()
         {
+       
+        }
+
+        public void StartTutorialSound()
+        {
             _currentScene = SceneManager.GetActiveScene();
             if (_currentScene.name == "S2_LABTUTORIAL")
             {
                 PlayTutorialSound(0, "pc");
             }
         }
-
+        
         public void StopAttackSound()
         {
             //attackAudioSource.Stop();
