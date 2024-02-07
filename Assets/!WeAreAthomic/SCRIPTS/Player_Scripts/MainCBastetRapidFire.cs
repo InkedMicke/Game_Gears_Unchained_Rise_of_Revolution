@@ -10,6 +10,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
 {
     public class MainCBastetRapidFire : MonoBehaviour
     {
+        private MainCSounds _mainCSounds;
         private PlayerInputActions _playerInputActions;
         private BastetController _bastetController;
 
@@ -41,6 +42,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             _playerInputActions.Enable();
             _playerInputActions.PlayerPC.BastetAttack.performed += InputPC;
             _playerInputActions.PlayerGamepad.BastetAttack.performed += InputGamepad;
+            _mainCSounds = GetComponent<MainCSounds>();
         }
 
         private void InputPC(InputAction.CallbackContext context)
@@ -67,6 +69,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             var colliderCount = Physics.OverlapSphereNonAlloc(transform.position, radiusCheck, colliders, enemyLayer);
             if (!_isBastetAttacking && Time.time > _totalCooldown && colliderCount > 0)
             {
+                _mainCSounds.PlayBastetCall();
                 bastetObj.SetActive(true);
                 _bastetController.HideScanner();
                 _bastetController.PosRightHand();

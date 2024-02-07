@@ -132,9 +132,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         IEnumerator HitDesactivate()
         {
+            yield return new WaitForSeconds(.5f);
             hitFrame.SetActive(false);
             sliderHealthImage.color = Color.white;
-            yield return new WaitForSeconds(.5f); 
+            
         }
 
         private IEnumerator WaitForGameOver()

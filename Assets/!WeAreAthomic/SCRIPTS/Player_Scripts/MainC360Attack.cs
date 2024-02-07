@@ -1,3 +1,4 @@
+using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts;
 using DG.Tweening;
 using System.Collections;
@@ -5,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class MainC360Attack : MonoBehaviour
 {
+    private MainCSounds _mainCSounds;
     PlayerInputActions _playerInputActions;
     private BastetController _bastet;
 
@@ -26,6 +28,7 @@ public class MainC360Attack : MonoBehaviour
         _playerInputActions.Enable();
         _playerInputActions.PlayerPC.BastetAttack.performed += InputPC;
         _playerInputActions.PlayerGamepad.BastetAttack.performed += InputGamepad;
+        _mainCSounds = GetComponent<MainCSounds>();
     }
 
     private void InputPC(InputAction.CallbackContext context)
@@ -48,6 +51,7 @@ public class MainC360Attack : MonoBehaviour
 
     private void StartAttacking()
     {
+        _mainCSounds.PlayBastetCall();
         bastetObj.SetActive(true);
         _bastet.HideScanner();
         var desiredPos = transform.position + transform.forward * 2 + transform.up * 1.5f;
