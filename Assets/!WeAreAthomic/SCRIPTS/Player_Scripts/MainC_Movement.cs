@@ -33,7 +33,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private GameObject _cameraObj;
 
         public Transform orientation;
-        public Transform checkGrounded;
+        [SerializeField] private Transform checkGrounded;
 
         public LayerMask groundLayer;
 
@@ -45,6 +45,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Vector3 _velocity;
         private Vector3[] puntosTrayectoria;
         private Vector3 moveDir;
+        private Vector3 _currentGroundNormal;
+        private Vector3 _localPosGroundCheckOriginal;
+        private Vector3 _localPosGroundCheckChanged;
 
         [NonSerialized] public bool IsCrouch;
         [NonSerialized] public bool IsJumping;
@@ -62,6 +65,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool isMoveWhileAimingAPressed;
         private bool isMoveWhileAimingDPressed;
         private bool _isPushOnAir;
+        private bool _gotGroundHitRay;
 
         private int indexPoint = 2;
 
@@ -113,6 +117,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             _canMove = true;
             _currentWalkSpeed = walkSpeed;
+            _localPosGroundCheckOriginal = checkGrounded.localPosition;
+            _localPosGroundCheckChanged = _localPosGroundCheckOriginal + (-Vector3.up.normalized * 2f);
             GameManagerSingleton.Instance.PauseGame(false);
             GameManagerSingleton.Instance.SetIsSettingsMenuEnabled(false);
             GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
@@ -143,8 +149,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void Update()
         {
             AnimatorController();
-
-
             CrouchWalking();
             ApplyGravity();
             FollowTrajectory();
@@ -161,6 +165,42 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 else
                     MoveGamepad();
             }
+
+            var ray = new Ray(checkGrounded.position, -Vector3.up.normalized);
+            if(Physics.Raycast(ray, out var hit, 2f, groundLayer))
+            {
+                _currentGroundNormal = hit.normal;
+                Debug.Log(hit.collider.name);
+                Debug.DrawRay(hit.point, hit.normal.normalized * 5f, Color.blue);
+                _gotGroundHitRay = true;
+            }
+            else
+            {
+                _gotGroundHitRay = false;
+            }
+
+            if (_gotGroundHitRay)
+            {
+                
+                Debug.Log(Vector3.Angle(Vector3.up, _currentGroundNormal));
+                if (Vector3.Angle(Vector3.up, _currentGroundNormal) > 10f)
+                {
+                    checkGrounded.localPosition = _localPosGroundCheckChanged;
+                    Debug.Log("hola2");
+                }
+                else
+                {
+                    Debug.Log("hola3");
+                    checkGrounded.localPosition = _localPosGroundCheckOriginal;
+                }
+            }
+            else
+            {
+                checkGrounded.localPosition = _localPosGroundCheckOriginal;
+            }
+
+
+
         }
 
 
