@@ -7,6 +7,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
     public class GreenSoldier : Enemy
     {
         private GreenDecalHurtBox _decalHurtBox;
+        
 
         private Coroutine _shootCoroutine;
         private Coroutine _decalCoroutine;
@@ -19,6 +20,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
 
         [SerializeField] private Transform muzzle1;
         [SerializeField] private Transform endDecalTr;
+        [SerializeField] private ParticleSystem chargeParticles;
 
         [System.NonSerialized] public bool IsShooting;
         private bool _hasEndedShootAnim;
@@ -62,23 +64,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
             _agent.isStopped = true;
             IsAttacking = true;
             StartCoroutine(TurnToPlayer());
+            _soldierAnim.SetGreenCount(1);
         }
 
-        private IEnumerator ShootCoroutine()
-        {
-            IsShooting = true;
-            while (IsShooting && !_soldierHurtBox.IsDeath)
-            {
-                _hasEndedShootAnim = false;
-                _soldierAnim.ShootTrigger();
-                _soldierAnim.SetAnimatorSpeed(speedShooting);
-                _currentShoots++;
-                while (!_hasEndedShootAnim)
-                {
-                    yield return new WaitForEndOfFrame();
-                }
-            }
-        }
 
         public void SpawnBullet()
         {
@@ -141,7 +129,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
                     yield return new WaitForSeconds(.01f);
                 }
                 indicator.uvBias = new(indicator.uvBias.x, 0);
-                _shootCoroutine = StartCoroutine(ShootCoroutine());
+               
+                _soldierAnim.SetGreenCount(2);
             }
             else
             {
@@ -179,20 +168,32 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
         // Si no ha salido del decal reiniciamos los disparos actuales y sigue disparando
         public void EndShootAnim()
         {
+            _soldierAnim.SetGreenCount(0);
             _hasEndedShootAnim = true;
+            chargeParticles.Stop();
+
             if (CheckForDisableShoot())
             {
-                if (_currentShoots == 3)
-                {
-                    _decalCoroutine = StartCoroutine(DecalSize(false));
-                    
-                    IsShooting = false;
-                   
-                    _currentShoots = 0;
-                }
+                _soldierAnim.SetWalking(true);
+                ChangingValuesToChase();
+             
+                _decalCoroutine = StartCoroutine(DecalSize(false));
+                IsShooting = false;
+                IsAttacking = false;
             }
             else
-                _currentShoots = 0;
+            {
+                _soldierAnim.SetGreenCount(1);
+            }
+            
+        }
+        public void ChargeParticlesSpawn()
+        {
+            chargeParticles.Play();
+        }    
+        public void NextAttack()
+        {
+            _soldierAnim.SetGreenCount(2);
         }
     }
 }
