@@ -6,6 +6,7 @@ using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts;
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie;
 using DG.Tweening;
+using UnityEngine.Events;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -67,6 +68,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _totalCooldown;
 
         [SerializeField] private AudioSource shootSoundClip;
+        [SerializeField] private UnityEvent OnShoot;
         private void Awake()
         {
             _mainCAttack = GetComponent<MainCAttack>();
@@ -230,6 +232,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _isWaitingForRecoveringShoot = false;
                 _isRecoveringShoot = false;
                 shootSoundClip.Play();
+                OnShoot.Invoke();
                 var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
                 _mainCamera.DOShakePosition(.1f, .1f, 5, 60f);
                 if (Physics.Raycast(ray, out RaycastHit hit, shootDistance, rayLayers))

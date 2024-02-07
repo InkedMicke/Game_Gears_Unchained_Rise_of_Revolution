@@ -18,6 +18,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         [SerializeField] private GameObject gameOverCanvas;
         [SerializeField] private GameObject cameraBase;
+        [SerializeField] private GameObject hitFrame;
+        [SerializeField] private Image sliderHealthImage;
 
         [SerializeField] private float timeToGameover = 1.5f;
         public float maxHealth = 100;
@@ -54,6 +56,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (!IsDeath && CanReceiveDamage)
             {
+                hitFrame.SetActive(true);
+                sliderHealthImage.color = Color.red;
                 currentHealth -= damage;
                 GameManagerSingleton.Instance.currentHealth = currentHealth;
                 _mainSounds.RemoveAllSounds();
@@ -62,6 +66,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCLayers.EnableHitLayer();
                 SetHealthSlider();
                 CheckDeath();
+                StartCoroutine(HitDesactivate());
             }
 
         }
@@ -123,6 +128,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             cameraBase.transform.position = GameManagerSingleton.Instance.currentCheckpoint;
             _mainCAnim.AnimEnabled(true);
             _cc.enabled = true;
+        }
+
+        IEnumerator HitDesactivate()
+        {
+            hitFrame.SetActive(false);
+            sliderHealthImage.color = Color.white;
+            yield return new WaitForSeconds(.5f); 
         }
 
         private IEnumerator WaitForGameOver()

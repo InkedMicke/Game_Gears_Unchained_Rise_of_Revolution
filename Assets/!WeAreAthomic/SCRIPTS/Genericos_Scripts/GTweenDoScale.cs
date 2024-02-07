@@ -1,6 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 public class GTweenDoScale : MonoBehaviour
 {
@@ -8,12 +8,15 @@ public class GTweenDoScale : MonoBehaviour
     [SerializeField] float time = 1f;
     [SerializeField] Ease easing;
     [SerializeField] bool timeScaleIndependent = true ;
+
+    [SerializeField] UnityEvent OnFinish;
    
     public void SetObjScale()
     {
         
         transform.DOKill();
-        transform.DOScale(target, time).SetEase(easing).SetUpdate(timeScaleIndependent);
+        transform.DOScale(target, time).SetEase(easing).SetUpdate(timeScaleIndependent).OnComplete(()=>OnFinish.Invoke());
+      
     }
   
 
