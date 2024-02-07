@@ -50,11 +50,15 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 
             if (distanceToPlayer < 9f && !IsAttacking && !_soldierHurtBox.IsDeath && IsChasingPlayer)
             {
-                CanAttack = true;
-            }
-            else
-            {
-                CanAttack = false;
+                if (!IsAttacking)
+                {
+                    _agent.isStopped = true;
+                    _soldierAnim.SetWalking(false);
+                    StartDecalToAttack();
+                    IsChasingPlayer = false;
+                    isPatrolling = false;
+                    IsOnWarning = false;
+                }
             }
 
             if(_isDashing)

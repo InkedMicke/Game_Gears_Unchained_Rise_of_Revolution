@@ -58,7 +58,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         [System.NonSerialized] public bool IsOnWarning;
         [System.NonSerialized] public bool CanAttack;
         protected bool isPatrolling;
-        
+
         private bool _isWaitingForPatrol;
         private bool _playerHeared;
 
@@ -71,7 +71,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         [SerializeField] private float stoppingDistance = 3;
         private float timeToGetCached = .4f;
         private float _totalTimeCached;
-       [SerializeField] private float waitForNextAttack;
+        [SerializeField] private float waitForNextAttack;
 
         protected virtual void Awake()
         {
@@ -290,7 +290,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
                 while (!(_agent.remainingDistance <= _agent.stoppingDistance && !_agent.pathPending))
                 {
-                    if(IsAttacking)
+                    if (IsAttacking)
                     {
                         break;
                     }
@@ -362,6 +362,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             yield return new WaitForSeconds(waitForNextAttack);
             IsAttacking = false;
             StartChasingPlayer();
+        }
+
+        public void SetIsAttacking(bool isAttacking)
+        {
+            IsAttacking = isAttacking;
         }
     }
 }

@@ -8,7 +8,7 @@ public class EnemyBrain : MonoBehaviour
 
     public void RefreshEnemiesList()
     {
-        var enemyObjects = GameObject.FindGameObjectsWithTag("Enemies");
+        var enemyObjects = GameObject.FindGameObjectsWithTag("Enemy");
 
         foreach (var x in enemyObjects)
         {
@@ -17,12 +17,7 @@ public class EnemyBrain : MonoBehaviour
         }
     }
 
-    public void LetEnemyAttack(Enemy enemy)
-    {
-
-    }
-
-    private bool CheckIfAnEnemyIsAttacking()
+    public bool CheckIfAnEnemyIsAttacking()
     {
         foreach(var x in enemies)
         {
