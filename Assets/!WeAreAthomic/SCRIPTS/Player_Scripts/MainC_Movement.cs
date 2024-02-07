@@ -512,7 +512,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Jump()
         {
-            Debug.Log(CanJumpGround());
             if (CanJumpGround() && (IsGrounded() || IsOnSlope()))
             {
                 _mainCSounds.PlayJumpSound();
@@ -590,8 +589,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(groundCheck.position, .1f);
-
-            Debug.DrawRay(transform.position, Vector3.down * .08f);
         }
 
         private bool IsOnSlope()
@@ -629,7 +626,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if (Time.time < _timeGraceJumpPeriod)
             {
-                Debug.Log("hola2");
                 return false;
             }
 
