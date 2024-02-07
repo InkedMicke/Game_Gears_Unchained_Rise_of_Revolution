@@ -12,16 +12,18 @@ public class CheckIfEnoughMejoras : MonoBehaviour
         {
             if (ability.IsUnlocked)
             {
+                Debug.Log("hola2");
                 continue;
             }
-            if (ability.priceToBuy <= GameManagerSingleton.Instance.gearsItem)
+            if (GameManagerSingleton.Instance.gearsItem >= ability.priceToBuy)
             {
-               
+                Debug.Log("hola3");
                 auraToActivate.SetActive(true);
                 break;
             }
             else
             {
+                Debug.Log("hola4");
                 auraToActivate.SetActive(false);
             }
         }
