@@ -13,6 +13,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         private MainCSounds _mainCSounds;
         private PlayerInputActions _playerInputActions;
         private BastetController _bastetController;
+        private MainCPlayerInterface _mainCPlayerInterface;
+        private MainCPistol _mainCPistol;
 
         [SerializeField] private PlayerDamageData _playerDamageData;
 
@@ -43,6 +45,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             _playerInputActions.PlayerPC.BastetAttack.performed += InputPC;
             _playerInputActions.PlayerGamepad.BastetAttack.performed += InputGamepad;
             _mainCSounds = GetComponent<MainCSounds>();
+            _mainCPlayerInterface = GetComponent<MainCPlayerInterface>();
+            _mainCPistol = GetComponent<MainCPistol>();
         }
 
         private void InputPC(InputAction.CallbackContext context)
@@ -80,23 +84,28 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         private IEnumerator Attack()
         {
             StartCoroutine(MoveWithPlayer());
-            while (currentShoots < maxShoots)
+            while (currentShoots < maxShoots && GameManagerSingleton.Instance.bastetEnergy >= 1 )
             {
                 currentShoots++;
+               
 
                 var colliders = Physics.OverlapSphere(transform.position, radiusCheck, enemyLayer);
                 if(colliders.Length == 1)
                 {
-                    _bastetController.Shoot(bulletPrefab , bulletForce, colliders[0].transform.position, bulletPrefab.transform.localScale, false, 10, _playerDamageData);
+                    _bastetController.Shoot(bulletPrefab , bulletForce, colliders[0].transform.position + Vector3.up * .3f, bulletPrefab.transform.localScale, false, 10, _playerDamageData);
                 }
                 else
                 {
-                    _bastetController.Shoot(bulletPrefab, bulletForce, FindNearestEnemy().position, bulletPrefab.transform.localScale, false, 10, _playerDamageData);
+                    _bastetController.Shoot(bulletPrefab, bulletForce, FindNearestEnemy().position + Vector3.up * .3f, bulletPrefab.transform.localScale, false, 10, _playerDamageData);
                 }
-
+                _mainCPlayerInterface.BastetAbylitiesConsume(1);
                 yield return new WaitForSeconds(shootTime);
+                
             }
             _isBastetAttacking = false;
+            _mainCPistol.StartRecoveringEnergy(.1f);
+
+
 
         }
 

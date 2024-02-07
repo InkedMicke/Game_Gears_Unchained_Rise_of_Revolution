@@ -168,7 +168,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
             _agent.enabled = true;
            
             _isDashing = false;
-           
+            IsAttacking = false;
             _soldierAnim.SetAnimRootMotion(false);
         }
     }

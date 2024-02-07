@@ -579,8 +579,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
+
             Handles.color = Color.white;
             Handles.DrawWireArc(transform.position, Vector3.up, Vector3.forward, 360, nearEnemieToGoRadius);
 
@@ -591,6 +593,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             Handles.DrawLine(transform.position, transform.position + viewAngle01 * nearEnemieToGoRadius);
             Handles.DrawLine(transform.position, transform.position + viewAngle02 * nearEnemieToGoRadius);
         }
+#endif
 
         private Vector3 DirectionFromAngle(float eulerY, float angleInDegrees)
         {

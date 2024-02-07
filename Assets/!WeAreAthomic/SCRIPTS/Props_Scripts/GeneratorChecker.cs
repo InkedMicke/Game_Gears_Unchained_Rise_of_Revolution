@@ -17,7 +17,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         IEnumerator CheckAllDestroyed()
         {
-            if (GameManagerSingleton.Instance.generatorsDestroyed == 3)
+            if (GameManagerSingleton.Instance.generatorsDestroyed >= 3)
             {
                 _collider.enabled = true;
             }
