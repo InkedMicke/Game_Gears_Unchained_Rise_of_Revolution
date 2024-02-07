@@ -20,8 +20,8 @@ namespace _WeAreAthomic.SCRIPTS.Props
         }
         protected override void GotEnterCollision(Collider col)
         {
-            _pp.CheckIfYouHaveEnoughToBuy();
             _unityEvent.Invoke();
+            _pp.CheckIfYouHaveEnoughToBuy();
             base.GotEnterCollision(col);
            
         }
