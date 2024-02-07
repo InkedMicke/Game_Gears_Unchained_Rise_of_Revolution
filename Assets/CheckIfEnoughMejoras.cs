@@ -16,7 +16,7 @@ public class CheckIfEnoughMejoras : MonoBehaviour
             }
             if (ability.priceToBuy <= GameManagerSingleton.Instance.gearsItem)
             {
-                Debug.Log("Socorro");
+               
                 auraToActivate.SetActive(true);
                 break;
             }
