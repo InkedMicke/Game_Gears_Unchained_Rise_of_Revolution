@@ -25,6 +25,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public AnimationCurve dashSpeedCurve;
 
+        private RaycastHit _slopeHit;
+
         [SerializeField] private LayerMask playerBulletLayer;
 
         [SerializeField] private CapsuleCollider _hurtBoxCC;
@@ -33,7 +35,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private GameObject _cameraObj;
 
         public Transform orientation;
-        [SerializeField] private Transform checkGrounded;
+        [SerializeField] private Transform groundCheck;
 
         public LayerMask groundLayer;
 
@@ -44,7 +46,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Vector3 _movement;
         private Vector3 _velocity;
         private Vector3[] puntosTrayectoria;
-        private Vector3 moveDir;
         private Vector3 _currentGroundNormal;
         private Vector3 _localPosGroundCheckOriginal;
         private Vector3 _localPosGroundCheckChanged;
@@ -78,11 +79,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float jumpImpulse = 5f;
         [SerializeField] private float jumpImpulseOnRail = 5f;
         [SerializeField] private float gravity = -9.8f;
-       
+
         [SerializeField] private float aimSpeed;
         [SerializeField] private float pushJumpForce = 10f;
         [SerializeField] private float pushMaxHeight = 5f;
         [SerializeField] private float pushJumpDuration = 2f;
+        [SerializeField] private float maxSlopeAngle = 40f;
         public float turnSmoothTime = 0.1f;
         private float _moveSpeed;
         private float _turnSmoothVelocityGamepad;
@@ -117,8 +119,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             _canMove = true;
             _currentWalkSpeed = walkSpeed;
-            _localPosGroundCheckOriginal = checkGrounded.localPosition;
-            _localPosGroundCheckChanged = _localPosGroundCheckOriginal + (-Vector3.up.normalized * 2f);
+            _localPosGroundCheckOriginal = groundCheck.localPosition;
+            var desiredPos = _localPosGroundCheckOriginal;
+            desiredPos.y -= 0.03f;
+            _localPosGroundCheckChanged = desiredPos;
             GameManagerSingleton.Instance.PauseGame(false);
             GameManagerSingleton.Instance.SetIsSettingsMenuEnabled(false);
             GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
@@ -166,41 +170,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     MoveGamepad();
             }
 
-            var ray = new Ray(checkGrounded.position, -Vector3.up.normalized);
-            if(Physics.Raycast(ray, out var hit, 2f, groundLayer))
-            {
-                _currentGroundNormal = hit.normal;
-                Debug.Log(hit.collider.name);
-                Debug.DrawRay(hit.point, hit.normal.normalized * 5f, Color.blue);
-                _gotGroundHitRay = true;
-            }
-            else
-            {
-                _gotGroundHitRay = false;
-            }
-
-            if (_gotGroundHitRay)
-            {
-                
-                Debug.Log(Vector3.Angle(Vector3.up, _currentGroundNormal));
-                if (Vector3.Angle(Vector3.up, _currentGroundNormal) > 10f)
-                {
-                    checkGrounded.localPosition = _localPosGroundCheckChanged;
-                    Debug.Log("hola2");
-                }
-                else
-                {
-                    Debug.Log("hola3");
-                    checkGrounded.localPosition = _localPosGroundCheckOriginal;
-                }
-            }
-            else
-            {
-                checkGrounded.localPosition = _localPosGroundCheckOriginal;
-            }
-
-
-
         }
 
 
@@ -216,7 +185,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCAnimator.SetJumping(IsJumping);
                 }
 
-                if (IsFalling && IsGrounded() || IsFalling && _mainCRail.IsOnRail())
+                if (IsFalling && IsGrounded() || IsFalling && _mainCRail.IsOnRail() || IsFalling && IsOnSlope())
                 {
                     IsFalling = false;
                     IsJumping = false;
@@ -236,7 +205,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (IsJumping || IsFalling || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsSliding && !IsFollowingTrajectory)
             {
-                _velocity += transform.up.normalized * ( gravity * Time.deltaTime);
+                _velocity += transform.up.normalized * (gravity * Time.deltaTime);
                 _cc.Move(_velocity * Time.deltaTime);
             }
 
@@ -263,11 +232,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             _moveDir = orientation.forward * (Time.deltaTime * _moveSpeed * direction.magnitude);
 
+            if (IsOnSlope())
+            {
+                _cc.Move(GetSlopeMoveDirection() * (Time.deltaTime * _moveSpeed));
+            }
+            else
+            {
+                _cc.Move(_moveDir);
+            }
             _mainCAnimator.SetMoveSpeed(_moveSpeed);
 
             ApplyGravity();
 
-            _cc.Move(_moveDir);
+            
 
             if (_moveVectorKeyboard.magnitude > 0.1f)
             {
@@ -346,32 +323,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 turnSmoothTime);
 
 
-            moveDir = orientation.forward * (Time.deltaTime * interpolatedSpeed * direction.magnitude);
+            _moveDir = orientation.forward * (Time.deltaTime * interpolatedSpeed * direction.magnitude);
 
-            _cc.Move(moveDir);
+            _cc.Move(_moveDir);
 
             if (_moveVectorGamepad.magnitude > 0.1)
             {
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
             }
-        }
-
-        private Vector3 CalculateMovementDirection(Vector2 inputDirection)
-        {
-            var direction = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
-
-            // Detectar la inclinación de la superficie usando Raycast
-            RaycastHit hit;
-            if (Physics.Raycast(checkGrounded.position, Vector3.down, out hit, .5f))
-            {
-                // Calcular la dirección de la rampa proyectando la normal en el plano horizontal
-                Vector3 rampRightDirection = Vector3.Cross(hit.normal, Vector3.up).normalized;
-
-                Vector3 rampForwardDir = Vector3.Cross(rampRightDirection, Vector3.up);
-
-                //direction = rampForwardDir * 
-            }
-            return direction;
         }
 
         public void SetFollowTrajectory(bool condition)
@@ -408,7 +367,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void RunToggle(InputAction.CallbackContext context)
         {
 
-            if(IsCrouch)
+            if (IsCrouch)
             {
                 _mainCLayers.DisableCrouchLayer();
                 IsCrouch = false;
@@ -424,12 +383,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void StartEndCrouch(InputAction.CallbackContext context)
         {
-           
+
             if (Time.time > _timeGraceCrouchPeriod)
             {
                 IsCrouch = !IsCrouch;
                 ToggleCCSize();
-                if(!IsCrouch && _isCrouchWalking)
+                if (!IsCrouch && _isCrouchWalking)
                 {
                     _mainCAnimator.SetCrouchWalking(false);
                     _isCrouchWalking = false;
@@ -441,11 +400,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     _mainCAnimator.SetSlidingCrouch(IsCrouch);
                 }
-                else 
+                else
                 {
                     _mainCAnimator.SetCrouch(IsCrouch);
                 }
-               
+
                 _timeGraceCrouchPeriod = Time.time + timeNextCrouch;
 
                 if (IsCrouch)
@@ -553,7 +512,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Jump()
         {
-            if (CanJumpGround())
+            Debug.Log(CanJumpGround());
+            if (CanJumpGround() && (IsGrounded() || IsOnSlope()))
             {
                 _mainCSounds.PlayJumpSound();
                 IsJumping = true;
@@ -570,7 +530,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     _mainCAnimator.SetSlidingCrouch(false);
                     IsCrouch = false;
-                  
+
                 }
                 _mainCSounds.PlayJumpSound();
                 IsJumping = true;
@@ -596,6 +556,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             var ray = new Ray(transform.position, -transform.up);
             return Physics.Raycast(ray, out var hitInfo, Mathf.Infinity) ? hitInfo.point : ray.GetPoint(2f);
+        }
+
+        private Vector3 GetSlopeMoveDirection()
+        {
+            return Vector3.ProjectOnPlane(_moveDir, _slopeHit.normal).normalized;
         }
 
         public void EnableMovement()
@@ -624,7 +589,20 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(checkGrounded.position, .1f);
+            Gizmos.DrawWireSphere(groundCheck.position, .1f);
+
+            Debug.DrawRay(transform.position, Vector3.down * .08f);
+        }
+
+        private bool IsOnSlope()
+        {
+            if(Physics.Raycast(transform.position, Vector3.down, out _slopeHit, .08f))
+            {
+                var angle = Vector3.Angle(Vector3.up, _slopeHit.normal);
+                return angle < maxSlopeAngle && angle != 0;
+            }
+
+            return false;
         }
 
         private bool CanJumpGround()
@@ -644,11 +622,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
-            if (!IsGrounded())
-            {
-                return false;
-            }
-
             if (IsJumping)
             {
                 return false;
@@ -656,6 +629,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if (Time.time < _timeGraceJumpPeriod)
             {
+                Debug.Log("hola2");
                 return false;
             }
 
@@ -763,10 +737,26 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             return true;
         }
 
-
         public bool IsGrounded()
         {
-            return Physics.CheckSphere(checkGrounded.position, .1f, groundLayer);
+            var ground = Physics.CheckSphere(groundCheck.position, .1f, groundLayer);
+            if (ground)
+            {
+                return true;
+            }
+            else
+            {
+                var ray = new Ray(transform.position, Vector3.down);
+                var gotHit = Physics.Raycast(ray, 0.05f, groundLayer);
+                if(gotHit)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
     }
 }
