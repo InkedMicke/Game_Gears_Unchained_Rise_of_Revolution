@@ -36,6 +36,7 @@ public enum DifficultyLevel
 public class AbilitiesStruct
 {
     public int value;
+    public int priceToBuy;
     public CurrentAbility currentAbility;
     public Sprite sprite;
     public bool IsUnlocked;

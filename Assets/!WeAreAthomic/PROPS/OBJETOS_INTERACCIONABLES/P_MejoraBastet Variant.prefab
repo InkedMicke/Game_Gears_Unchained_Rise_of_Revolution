@@ -212,7 +212,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 4a676f2dd086da54495db2edb5db31f8,
         type: 3}
       propertyPath: m_RootOrder
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4a676f2dd086da54495db2edb5db31f8,
         type: 3}
@@ -293,11 +293,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4a676f2dd086da54495db2edb5db31f8,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8474000848312246610}
+      addedObject: {fileID: 742161466171838253}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4a676f2dd086da54495db2edb5db31f8,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 742161466171838253}
+      addedObject: {fileID: 8224476567261619761}
   m_SourcePrefab: {fileID: 100100000, guid: 4a676f2dd086da54495db2edb5db31f8, type: 3}
 --- !u!4 &8330119618749760350 stripped
 Transform:
@@ -351,54 +351,6 @@ MonoBehaviour:
   duration: 10
   rotateMode: 3
   ease: 1
---- !u!114 &8474000848312246610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8705835229755464164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77e05e52d61013e429a9355ceac26907, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionDetection:
-  - enabled: 1
-    detectionLayer:
-      serializedVersion: 2
-      m_Bits: 256
-    detectionType: 0
-    eventsToActivate:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11400000, guid: 9a55ca7bcafd462418845ea959ab9c54, type: 2}
-          m_TargetAssemblyTypeName: GameManagerSingleton, Assembly-CSharp
-          m_MethodName: AddGearItem
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 1
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 742161466171838253}
-          m_TargetAssemblyTypeName: GDestroyObject, Assembly-CSharp
-          m_MethodName: DestroyThisObject
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    additionalInfo: 
-  useTargetScript: 0
-  targetScript: {fileID: 0}
 --- !u!114 &742161466171838253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,3 +363,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a9c9c17e4fa4446b7e5275b50c8eab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8224476567261619761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8705835229755464164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52cad22057f24594c8e3fc393ee4c573, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 9a55ca7bcafd462418845ea959ab9c54, type: 2}
+        m_TargetAssemblyTypeName: GameManagerSingleton, Assembly-CSharp
+        m_MethodName: AddGearItem
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 742161466171838253}
+        m_TargetAssemblyTypeName: GDestroyObject, Assembly-CSharp
+        m_MethodName: DestroyThisObject
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

@@ -38,8 +38,8 @@ namespace _WeAreAthomic.SCRIPTS.Props
             _playerObj = GameObject.FindGameObjectWithTag(string.Format("Player"));
             _mainHealth = _playerObj.GetComponentInChildren<MainCHealthManager>();
             _mainCPlayer = _playerObj.GetComponent<MainCPlayerInterface>();
-            _volumeHealing = _playerObj.transform.GetChild(_playerObj.transform.childCount ).gameObject;
-            _volumeRecharging = _playerObj.transform.GetChild(_playerObj.transform.childCount - 1).gameObject;
+            _volumeHealing = _playerObj.transform.GetChild(_playerObj.transform.childCount-1 ).gameObject;
+            _volumeRecharging = _playerObj.transform.GetChild(_playerObj.transform.childCount - 2).gameObject;
 
             if (!enableBreather)
             {

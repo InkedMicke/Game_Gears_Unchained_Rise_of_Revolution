@@ -46,7 +46,7 @@ public class GearAbility : MonoBehaviour
     private bool _isUnlocked;
     private bool _isShowingDescription;
 
-    [SerializeField] private int cost = 2;
+    private int cost ;
 
     private void Awake()
     {
@@ -56,6 +56,14 @@ public class GearAbility : MonoBehaviour
         _abilityController = container.GetComponent<AbilityCanvasController>();
 
         canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
+
+        foreach (var ability in GameManagerSingleton.Instance.abiltiesList)
+        {
+            if (currentAbility == ability.currentAbility)
+            {
+                cost = ability.priceToBuy;
+            }
+        }
     }
 
     private void Update()
