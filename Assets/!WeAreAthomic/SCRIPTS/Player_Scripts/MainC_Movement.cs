@@ -2,7 +2,6 @@ using _WeAreAthomic.SCRIPTS.Debug_Scripts;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -47,10 +46,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Vector3[] puntosTrayectoria;
         private Vector3 moveDir;
 
-        [System.NonSerialized] public bool IsCrouch;
-        [System.NonSerialized] public bool IsJumping;
-        [System.NonSerialized] public bool IsFalling;
-        [System.NonSerialized] public bool IsFollowingTrajectory;
+        [NonSerialized] public bool IsCrouch;
+        [NonSerialized] public bool IsJumping;
+        [NonSerialized] public bool IsFalling;
+        [NonSerialized] public bool IsFollowingTrajectory;
         private bool _isRunningKeyboard;
         private bool _isRunningGamepad;
         private bool _isCrouchWalking;
@@ -217,7 +216,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             _moveVectorKeyboard = _playerInputActions.PlayerPC.MovementKeyboard.ReadValue<Vector2>();
 
-            var direction = CalculateMovementDirection(_moveVectorKeyboard);
+            var direction = new Vector3(_moveVectorKeyboard.x, 0f, _moveVectorKeyboard.y).normalized;
 
             var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
             var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityKeyboard, turnSmoothTime);

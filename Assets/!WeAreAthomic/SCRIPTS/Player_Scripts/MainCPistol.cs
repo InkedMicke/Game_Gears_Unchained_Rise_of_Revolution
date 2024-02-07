@@ -25,13 +25,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private BastetController _bastetController;
         private MainCPlayerInterface _mainCInterface;
 
-        private TypeOfAim _typeOfAim;
-
         private Camera _mainCamera;
 
         private Coroutine _recoverEnergyCoroutine;
 
-        private ParticleSystem _ps;
 
         [SerializeField] private PlayerDamageData _pistolAttackData;
 
@@ -65,6 +62,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float energySpend = 20f;
         [SerializeField] private float shootCooldown = 1f;
         [SerializeField] private float shootDistance = 10f;
+        [SerializeField] private float bastetToAimPosSpeed = .4f;
         private float _closestDistance = Mathf.Infinity;
         private float _totalCooldown;
 
@@ -102,7 +100,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 var leftPos = transform.position + Vector3.left;
                 var correctPos = new Vector3(leftPos.x, leftPos.y + 1.5f, leftPos.z);
-                _bastetController.GoToDesiredPos(null, correctPos, .8f, Ease.Linear);
+                _bastetController.GoToDesiredPosMoveTowardsWithoutUpdate(correctPos, bastetToAimPosSpeed);
             }
         }
 
@@ -157,7 +155,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 IsAiming = false;
                 crosshair.SetActive(false);
                 _camFollower.cameraFollow = cameraFollow;
-                _bastetController.GoToDesiredPos(() => bastetObj.SetActive(false), _bastetController.playerRightArm.transform.position, .1f, Ease.Linear);
+                _bastetController.GoToRightHandPosUntilReachedPos(true, () => bastetObj.SetActive(false), .5f, .1f);
             }
 
         }

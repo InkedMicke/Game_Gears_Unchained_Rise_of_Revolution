@@ -2,9 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
@@ -70,12 +68,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
             _goToPosTween = transform.DOMove(posToGo, duration).SetEase(ease).OnComplete(() => onFinishedAction());
         }
 
-        public void GoToRightHandPosUntilReachedPos(Action onFinishedAction, float speed, float distanceMagnitude)
+        public void GoToRightHandPosUntilReachedPos(bool callFunctionOnComplete, Action onFinishedAction, float speed, float distanceMagnitude)
         {
-            StartCoroutine(RightHandUntilReachedPos(onFinishedAction, speed, distanceMagnitude));
+            StartCoroutine(RightHandUntilReachedPos(callFunctionOnComplete, onFinishedAction, speed, distanceMagnitude));
         }
 
-        private IEnumerator RightHandUntilReachedPos(Action onFinishedAction,float speed, float distanceMagnitude)
+        private IEnumerator RightHandUntilReachedPos(bool callFunctionOnComplete, Action onFinishedAction,float speed, float distanceMagnitude)
         {
             while(Vector3.Distance(transform.position, playerRightArm.transform.position) > distanceMagnitude)
             {
@@ -83,9 +81,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
 
                 yield return new WaitForEndOfFrame();
             }
-
-            onFinishedAction();
+            if (callFunctionOnComplete)
+            {
+                onFinishedAction();
+            }
         }
+
+        public void GoToDesiredPosMoveTowardsWithoutUpdate(Vector3 posToGo, float speed)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, posToGo, speed);
+        }        
 
         public void KillGoToDesiredPos()
         {

@@ -102,7 +102,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             m_PP.RemoveObjToCurrentUIGameObjectList(hackCanvas);
             var button = _currentInteract.GetComponent<ButtonInteractable>();
             button.EndHackInvoke();
-            _bastetController.GoToRightHandPosUntilReachedPos(() => robotObj.SetActive(false), .6f, .1f);
+            _bastetController.GoToRightHandPosUntilReachedPos(true, () => robotObj.SetActive(false), .6f, .1f);
             _mainCSounds.StopHackInProcessSound();
             IsHacking = false;
         }
@@ -190,7 +190,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _cc.enabled = true;
                 _mainCLayers.DisableHackLayer();
                 _bastetController.HideScanner();
-                _bastetController.GoToRightHandPosUntilReachedPos(() => robotObj.SetActive(false), .6f, .1f);
+                _bastetController.GoToRightHandPosUntilReachedPos(true, () => robotObj.SetActive(false), .6f, .1f);
                 _mainCSounds.PlayCannotHackSound();
 
                 var interactables = FindObjectsOfType<ButtonInteractable>();
