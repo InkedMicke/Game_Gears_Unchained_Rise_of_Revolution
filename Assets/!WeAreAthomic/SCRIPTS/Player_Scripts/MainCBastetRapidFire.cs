@@ -92,11 +92,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                 var colliders = Physics.OverlapSphere(transform.position, radiusCheck, enemyLayer);
                 if(colliders.Length == 1)
                 {
-                    _bastetController.Shoot(bulletPrefab , bulletForce, colliders[0].transform.position, bulletPrefab.transform.localScale, false, 10, _playerDamageData);
+                    _bastetController.Shoot(bulletPrefab , bulletForce, colliders[0].transform.position + Vector3.up * .3f, bulletPrefab.transform.localScale, false, 10, _playerDamageData);
                 }
                 else
                 {
-                    _bastetController.Shoot(bulletPrefab, bulletForce, FindNearestEnemy().position, bulletPrefab.transform.localScale, false, 10, _playerDamageData);
+                    _bastetController.Shoot(bulletPrefab, bulletForce, FindNearestEnemy().position + Vector3.up * .3f, bulletPrefab.transform.localScale, false, 10, _playerDamageData);
                 }
                 _mainCPlayerInterface.BastetAbylitiesConsume(1);
                 yield return new WaitForSeconds(shootTime);
