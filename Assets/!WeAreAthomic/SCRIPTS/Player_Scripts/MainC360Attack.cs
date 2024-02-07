@@ -9,6 +9,8 @@ public class MainC360Attack : MonoBehaviour
     private MainCSounds _mainCSounds;
     PlayerInputActions _playerInputActions;
     private BastetController _bastet;
+    private MainCPlayerInterface _mainCPlayerInterface;
+    private MainCPistol _mainCPistol;
 
     private Tween _rotateTween;
 
@@ -29,6 +31,8 @@ public class MainC360Attack : MonoBehaviour
         _playerInputActions.PlayerPC.BastetAttack.performed += InputPC;
         _playerInputActions.PlayerGamepad.BastetAttack.performed += InputGamepad;
         _mainCSounds = GetComponent<MainCSounds>();
+        _mainCPlayerInterface = GetComponent<MainCPlayerInterface>();
+        _mainCPistol = GetComponent<MainCPistol>();
     }
 
     private void InputPC(InputAction.CallbackContext context)
@@ -90,12 +94,14 @@ public class MainC360Attack : MonoBehaviour
                 // Aplica la velocidad a la bala
                 bullet.GetComponent<Rigidbody>().velocity = direccion * 5f;
             }
+            _mainCPlayerInterface.BastetAbylitiesConsume(1);
             _currentRafaga++;
             yield return new WaitForSeconds(.5f);
         }
         _currentRafaga = 0;
         _rotateTween.Kill();
         _bastet.GoToDesiredPos(EndAttack, _bastet.playerRightArm.transform.position, 1f, Ease.Linear);
+        _mainCPistol.StartRecoveringEnergy(.1f);
 
     }
 

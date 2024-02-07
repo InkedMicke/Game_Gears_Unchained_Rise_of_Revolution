@@ -5,11 +5,14 @@ using UnityEngine.InputSystem;
 
 public class MainCProtectionAndHealAbility : MonoBehaviour
 {
+    private MainCSounds _mainCSounds;
     private MainCVFX _mainCVFX;
     private MainCLayers _mainCLayers;
     private MainCAnimatorController _mainCAnimatorController;
     private MainCMovement _mainCMovement;
     private PlayerInputActions _playerInputActions;
+    private MainCPlayerInterface _mainCPlayerInterface;
+    private MainCPistol _mainCPistol;
     [SerializeField] private MainCHealthManager _mainCHealth;
 
     [SerializeField] private SkinnedMeshRenderer _mattSkinned;
@@ -34,6 +37,9 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
         _mainCAnimatorController = GetComponent<MainCAnimatorController>();
         _mainCMovement = GetComponent<MainCMovement>();
         _mainCVFX = GetComponent<MainCVFX>();
+        _mainCSounds = GetComponent<MainCSounds>();
+        _mainCPlayerInterface = GetComponent<MainCPlayerInterface>();
+        _mainCPistol = GetComponent<MainCPistol>();
     }
 
     private void InputPC(InputAction.CallbackContext context)
@@ -66,6 +72,7 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
     {
         if (!_isProtectionEnabled)
         {
+            _mainCSounds.PlayBastetCall();
             _isProtectionEnabled = true;
             _mainCLayers.EnableHackLayer();
             _mainCAnimatorController.TriggerShield();
@@ -75,6 +82,7 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
 
     private IEnumerator Protection()
     {
+        _mainCPlayerInterface.BastetAbylitiesConsume(50);
         _mainCHealth.SetCanReceiveDamage(false);
         yield return new WaitForSeconds(protectionDuration);
         _mainCHealth.SetCanReceiveDamage(true);
@@ -101,12 +109,14 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
     {
         _mainCLayers.DisableHackLayer();
         _mainCMovement.EnableMovement();
+        _mainCPistol.StartRecoveringEnergy(.1f);
     }
 
     private void StartHeal()
     {
         if (!_isHealEnabled)
         {
+            _mainCSounds.PlayBastetCall();
             _isHealEnabled = true;
             _mainCLayers.EnableHackLayer();
             _mainCAnimatorController.TriggerHeal();
@@ -117,6 +127,7 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
     public void HealEffects()
     {
         _mainCVFX.ActivateHealGlow();
+        _mainCPlayerInterface.BastetAbylitiesConsume(50);
         _mainCHealth.GetHealth(_mainCHealth.maxHealth - _mainCHealth.currentHealth);
     }
 
@@ -125,5 +136,6 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
         _mainCLayers.DisableHackLayer();
         _mainCMovement.EnableMovement();
         _isHealEnabled = false;
+        _mainCPistol.StartRecoveringEnergy(.1f);
     }
 }

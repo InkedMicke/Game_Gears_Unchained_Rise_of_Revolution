@@ -1,20 +1,20 @@
-using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class C_SceneLoaderWSeconds : MonoBehaviour
 {
-    [SerializeField] private SceneAsset _scene;
+    [SerializeField] private string sceneName;
+
     // Start is called before the first frame update
-    public void LoadSceneWaitForSeconds( float delayInSeconds)
+    public void LoadSceneWaitForSeconds(float delayInSeconds)
     {
-        StartCoroutine(LoadSceneAfterDelay( delayInSeconds));
+        StartCoroutine(LoadSceneAfterDelay(delayInSeconds));
     }
 
-    private IEnumerator LoadSceneAfterDelay( float delayInSeconds)
+    private IEnumerator LoadSceneAfterDelay(float delayInSeconds)
     {
         yield return new WaitForSeconds(delayInSeconds);
-        SceneManager.LoadScene(_scene.name, LoadSceneMode.Single);
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 }

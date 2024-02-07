@@ -39,7 +39,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
             _mainHealth = _playerObj.GetComponentInChildren<MainCHealthManager>();
             _mainCPlayer = _playerObj.GetComponent<MainCPlayerInterface>();
             _volumeHealing = _playerObj.transform.GetChild(_playerObj.transform.childCount-1 ).gameObject;
-            _volumeRecharging = _playerObj.transform.GetChild(_playerObj.transform.childCount - 2).gameObject;
+            _volumeRecharging = _playerObj.transform.GetChild(_playerObj.transform.childCount - 3).gameObject;
 
             if (!enableBreather)
             {
@@ -71,8 +71,13 @@ namespace _WeAreAthomic.SCRIPTS.Props
 
         public void EndHeal()
         {
-            StopCoroutine(nameof(HealCoroutine));
+            StopCoroutine(HealCoroutine());
             _volumeHealing.SetActive(false);
+        }
+        public void EndRecharge()
+        {
+            StopCoroutine(EnergiCoroutine());
+            _volumeRecharging.SetActive(false);
         }
 
         public void EnableBreather()

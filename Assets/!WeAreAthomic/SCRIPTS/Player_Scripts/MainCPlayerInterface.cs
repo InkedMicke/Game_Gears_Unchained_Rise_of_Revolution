@@ -31,5 +31,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             GameManagerSingleton.Instance.bastetEnergy = localEnergy;
             SetEnergySlider(localEnergy);
         }
+
+        public void BastetAbylitiesConsume(int consumeAbility)
+        {
+            
+                localEnergy -= consumeAbility;
+                GameManagerSingleton.Instance.bastetEnergy = localEnergy;
+                SetEnergySlider(localEnergy);
+
+        }
     }
 }
