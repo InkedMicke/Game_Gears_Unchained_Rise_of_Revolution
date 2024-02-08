@@ -82,7 +82,7 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
 
     private IEnumerator Protection()
     {
-        _mainCPlayerInterface.BastetAbylitiesConsume(50);
+        _mainCPlayerInterface.TakeEnergy(50);
         _mainCHealth.SetCanReceiveDamage(false);
         yield return new WaitForSeconds(protectionDuration);
         _mainCHealth.SetCanReceiveDamage(true);
@@ -127,7 +127,7 @@ public class MainCProtectionAndHealAbility : MonoBehaviour
     public void HealEffects()
     {
         _mainCVFX.ActivateHealGlow();
-        _mainCPlayerInterface.BastetAbylitiesConsume(50);
+        _mainCPlayerInterface.TakeEnergy(50);
         _mainCHealth.GetHealth(_mainCHealth.maxHealth - _mainCHealth.currentHealth);
     }
 

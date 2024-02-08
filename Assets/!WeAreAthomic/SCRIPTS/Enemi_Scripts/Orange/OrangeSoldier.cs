@@ -96,8 +96,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
             sizeIndiciator.y = 0.1f;
             indicator.size = sizeIndiciator;
             StartCoroutine(WaitUntilNextAttack());
-
-            
         }
 
         public void StartGrowth()

@@ -128,7 +128,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
                     yield return new WaitForSeconds(.01f);
                 }
                 indicator.uvBias = new(indicator.uvBias.x, 0);
-                yield return new WaitForSeconds(4.8f);
+                yield return new WaitForSeconds(1.3f);
                 _soldierAnim.SetGreenCount(2);
             }
             else
@@ -173,9 +173,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
 
             if (CheckForDisableShoot())
             {
-                _soldierAnim.SetWalking(true);
-                ChangingValuesToChase();
-             
+                StartCoroutine(WaitUntilNextAttack());
                 _decalCoroutine = StartCoroutine(DecalSize(false));
                 IsShooting = false;
                 IsAttacking = false;

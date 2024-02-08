@@ -75,7 +75,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 
         private void StartDecalToAttack()
         {
-            _agent.isStopped = true;
             IsAttacking = true;
             StartCoroutine(TurnToPlayer());
         }
@@ -152,8 +151,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
             _attackHitBox.ClearList();
             _soldierAnim.SetAnimRootMotion(true);
             var desiredEndPos = new Vector3(endTrDecal.position.x, transform.position.y, endTrDecal.position.z);
-            _dashTween = transform.DOMove(desiredEndPos, dashDuracion).SetEase(dashEase).OnComplete(() => _soldierAnim.SetRedCount(3));
             _soldierAnim.SetRedCount(2);
+            _dashTween = transform.DOMove(desiredEndPos, dashDuracion).SetEase(dashEase).OnComplete(() => _soldierAnim.SetRedCount(3));
             indicator.gameObject.transform.SetParent(transform.parent);
             _trail.EnableTrail();
             _isDashing = true;
@@ -166,10 +165,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
             indicator.transform.localPosition = indicatorStartPos;
             _soldierAnim.SetRedCount(0);
             _agent.enabled = true;
-           
             _isDashing = false;
             IsAttacking = false;
             _soldierAnim.SetAnimRootMotion(false);
+            StartCoroutine(WaitUntilNextAttack());
         }
     }
 

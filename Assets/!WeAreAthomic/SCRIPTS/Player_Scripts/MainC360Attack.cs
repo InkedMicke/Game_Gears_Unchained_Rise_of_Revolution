@@ -94,7 +94,7 @@ public class MainC360Attack : MonoBehaviour
                 // Aplica la velocidad a la bala
                 bullet.GetComponent<Rigidbody>().velocity = direccion * 5f;
             }
-            _mainCPlayerInterface.BastetAbylitiesConsume(1);
+            _mainCPlayerInterface.TakeEnergy(1);
             _currentRafaga++;
             yield return new WaitForSeconds(.5f);
         }
