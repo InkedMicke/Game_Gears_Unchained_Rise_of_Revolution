@@ -59,6 +59,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [Range(0, 1)]
         [SerializeField] private float railVolume;
 
+        [SerializeField] private AudioClip openMenuClip;
+        [Range(0, 1)]
+        [SerializeField] private float openMenuVolume;
+
         [SerializeField] private AudioClip hackInProcess;
         [Range(0, 1)]
         [SerializeField] private float hackInProcessVolume;
@@ -382,6 +386,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     Destroy(audioSour);
                 }
+            }
+        }
+        public void PlayOpenMenuSound()
+        {
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = openMenuClip;
+                currentAudioSource.volume = openMenuVolume;
+             
+                currentAudioSource.Play();
             }
         }
         public void PlayJumpSound()

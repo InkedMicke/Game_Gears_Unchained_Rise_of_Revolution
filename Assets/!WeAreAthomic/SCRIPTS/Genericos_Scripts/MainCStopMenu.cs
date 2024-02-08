@@ -1,6 +1,8 @@
 using NaughtyAttributes;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
@@ -17,6 +19,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject firstButton;
 
         private bool _isActive;
+        [SerializeField] private AudioMixerGroup sfxMixer;
+        [SerializeField] private GameObject soundComponentObj;
+        [SerializeField] private AudioClip openMenuClip;
+        [Range(0, 1)]
+        [SerializeField] private float openMenuVolume;
+
+        [SerializeField] private UnityEvent setTriggerAnim;
 
         private void Awake()
         {
@@ -32,6 +41,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
             {
+               
                 ToggleMenu();
             }
         }
@@ -40,6 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
             {
+               
                 ToggleMenu();
             }
         }
@@ -67,6 +78,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
                     else
                     {
+                        PlayOpenMenuSound();
+                        setTriggerAnim.Invoke();
                         stopMenuContainer.SetActive(true);
                         if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
                         {
@@ -103,6 +116,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (_isActive)
             {
+                
                 stopMenuContainer.SetActive(true);
                 GameManagerSingleton.Instance.CursorMode(false);
                 GameManagerSingleton.Instance.PauseGame(false);
@@ -117,6 +131,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _isActive = true;
             }
 
+        }
+          public void PlayOpenMenuSound()
+        {
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = openMenuClip;
+                currentAudioSource.volume = openMenuVolume;
+             
+                currentAudioSource.Play();
+            }
         }
     }
 }
