@@ -84,6 +84,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public bool SkippedTutorial;
     public bool IsFullscreen;
     public bool _toggledTotally;
+    public bool IsLoadingStartVideos;
 
     public int maxSensivity;
     public int sensivityX;
@@ -219,7 +220,12 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public void SetIsAbilityMenuTutorial(bool condition)
     {
         IsAbilityMenuEnabled = condition;
-    }    
+    }
+    
+    public void SetIsLoadingStartVideos(bool isLoadingVideos)
+    {
+        IsLoadingStartVideos = isLoadingVideos;
+    }
 
     public void AddGearItem(int value)
     {

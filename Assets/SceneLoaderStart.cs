@@ -1,4 +1,5 @@
 using Hedenrag.SceneLoader;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +8,10 @@ using UnityEngine.SceneManagement;
 public class SceneLoaderStart : MonoBehaviour
 {
     SceneLoaderMultipleAsync _sceneLoaderMultipleAsync;
-     [SerializeField] private List<LoadSceneAsyncAsset> loadSceneAsyncAssets = new List<LoadSceneAsyncAsset>();
+     [SerializeField] public List<LoadSceneAsyncAsset> loadSceneAsyncAssets = new ();
     [SerializeField] private GameObject player;
-    private int currentSceneIndex;
-    [SerializeField] private float timeToLoad;
-    private Scene currentSceneLoaded;
+    [NonSerialized] public int currentSceneIndex;
+    [SerializeField] public float timeToLoad;
     
 
     // Start is called before the first frame update
@@ -32,13 +32,27 @@ public class SceneLoaderStart : MonoBehaviour
         yield return new WaitForSeconds(timeToLoad);
         while (currentSceneIndex < loadSceneAsyncAssets.Count )
         {
-            
             _sceneLoaderMultipleAsync.loadSceneAsyncAsset = loadSceneAsyncAssets[currentSceneIndex];
             _sceneLoaderMultipleAsync.LoadSceneAsync();
             currentSceneIndex++;
             yield return new WaitForSeconds(timeToLoad);
 
         }
-    
+        GameManagerSingleton.Instance.SetIsLoadingStartVideos(false);
+    }
+
+    public void StartCheckingLoadedScenes(Action onFinishedAction)
+    {
+        StartCoroutine(CheckScenesLoad(onFinishedAction));
+    }
+
+    private IEnumerator CheckScenesLoad(Action onFinishedAction)
+    {
+        while(currentSceneIndex < loadSceneAsyncAssets.Count)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        onFinishedAction();
     }
 }

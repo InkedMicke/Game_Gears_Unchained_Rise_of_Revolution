@@ -39,10 +39,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void InputPC(InputAction.CallbackContext context)
         {
-            if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
             {
-               
+
                 ToggleMenu();
+                ToggleCursorOnVideoStart();
             }
         }
 
@@ -50,51 +51,64 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
             {
-               
+
                 ToggleMenu();
+            }
+        }
+
+        private void ToggleCursorOnVideoStart()
+        {
+            if(GameManagerSingleton.Instance.IsLoadingStartVideos)
+            {
+                if(_isActive)
+                {
+                    GameManagerSingleton.Instance.CursorMode(false);
+                }
+                else
+                {
+                    GameManagerSingleton.Instance.CursorMode(true);
+                }
             }
         }
 
         [Button]
         private void ToggleMenu()
         {
-            if (!GameManagerSingleton.Instance.IsGameOverEnabled && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            if (CanToggleMenu())
             {
-                if (!GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+                if (GameManagerSingleton.Instance.IsStopMenuEnabled)
                 {
-                    if (GameManagerSingleton.Instance.IsStopMenuEnabled)
+                    m_CheckIfEnoughMejoras.CheckIfYouHaveEnoughToBuy();
+                    stopMenuContainer.SetActive(false);
+                    if (!GameManagerSingleton.Instance.thereIsCanvasBelow)
                     {
-                        m_CheckIfEnoughMejoras.CheckIfYouHaveEnoughToBuy();
-                        stopMenuContainer.SetActive(false);
-                        if (!GameManagerSingleton.Instance.thereIsCanvasBelow)
-                        {
-                            GameManagerSingleton.Instance.CursorMode(false);
-                        }
-                        m_PP.SetActiveToCurrentUIGameObjectList(true);
-                        GameManagerSingleton.Instance.PauseGame(false);
-                        GameManagerSingleton.Instance.FreezeTime(false);
-                        GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
-                        _mainCSounds.UnPauseCurrentSounds();
+                        GameManagerSingleton.Instance.CursorMode(false);
                     }
-                    else
-                    {
-                        PlayOpenMenuSound();
-                        setTriggerAnim.Invoke();
-                        stopMenuContainer.SetActive(true);
-                        if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
-                        {
-                            EventSystem.current.SetSelectedGameObject(firstButton);
-                            firstButton.GetComponent<C_UIMaterial_Changer>().OnPointerEnter();
-                        }
-
-                        m_PP.SetActiveToCurrentUIGameObjectList(false);
-                        GameManagerSingleton.Instance.CursorMode(true);
-                        GameManagerSingleton.Instance.PauseGame(true);
-                        //StartCoroutine(WaitForFreeze());
-                        GameManagerSingleton.Instance.SetIsStopMenuEnabled(true);
-                        _mainCSounds.PauseCurrentSounds();
-                    }
+                    m_PP.SetActiveToCurrentUIGameObjectList(true);
+                    GameManagerSingleton.Instance.PauseGame(false);
+                    GameManagerSingleton.Instance.FreezeTime(false);
+                    GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
+                    _mainCSounds.UnPauseCurrentSounds();
                 }
+                else
+                {
+                    PlayOpenMenuSound();
+                    setTriggerAnim.Invoke();
+                    stopMenuContainer.SetActive(true);
+                    if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+                    {
+                        EventSystem.current.SetSelectedGameObject(firstButton);
+                        firstButton.GetComponent<C_UIMaterial_Changer>().OnPointerEnter();
+                    }
+
+                    m_PP.SetActiveToCurrentUIGameObjectList(false);
+                    GameManagerSingleton.Instance.CursorMode(true);
+                    GameManagerSingleton.Instance.PauseGame(true);
+                    //StartCoroutine(WaitForFreeze());
+                    GameManagerSingleton.Instance.SetIsStopMenuEnabled(true);
+                    _mainCSounds.PauseCurrentSounds();
+                }
+
             }
 
         }
@@ -116,7 +130,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (_isActive)
             {
-                
+
                 stopMenuContainer.SetActive(true);
                 GameManagerSingleton.Instance.CursorMode(false);
                 GameManagerSingleton.Instance.PauseGame(false);
@@ -132,7 +146,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
         }
-          public void PlayOpenMenuSound()
+        public void PlayOpenMenuSound()
         {
             var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
 
@@ -141,9 +155,34 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 currentAudioSource.outputAudioMixerGroup = sfxMixer;
                 currentAudioSource.clip = openMenuClip;
                 currentAudioSource.volume = openMenuVolume;
-             
+
                 currentAudioSource.Play();
             }
+        }
+
+        private bool CanToggleMenu()
+        {
+            if (GameManagerSingleton.Instance.IsGameOverEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+            {
+                return false;
+            }
+
+            if(GameManagerSingleton.Instance.IsLoadingStartVideos)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

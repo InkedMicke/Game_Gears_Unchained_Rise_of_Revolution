@@ -1,12 +1,13 @@
 using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
+using Hedenrag.SceneLoader;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Video;
 
-public class GVideos : MonoBehaviour
+public class VideoManagerStart : MonoBehaviour
 {
-    [SerializeField]SceneLoaderStart sceneLoaderStart;
+    [SerializeField] SceneLoaderStart sceneLoaderStart;
 
     [SerializeField] private GLoadScene sceneLoader;
 
@@ -14,6 +15,8 @@ public class GVideos : MonoBehaviour
     [SerializeField] private VideoPlayer videoPlayer;
 
     [SerializeField] private List<VideoClip> videos;
+
+    [SerializeField] private GameObject loadingScreen;
 
     [SerializeField] private bool loadSceneOnFinish;
 
@@ -26,6 +29,7 @@ public class GVideos : MonoBehaviour
     private void Start()
     {
         sceneLoaderStart.StartLoadingScenes();
+        GameManagerSingleton.Instance.SetIsLoadingStartVideos(true);
         videoPlayer.clip = videos[_currentVideo];
         videoPlayer.Play();
         _currentVideo++;
@@ -42,9 +46,21 @@ public class GVideos : MonoBehaviour
         }
         else
         {
-
-            OnFinish.Invoke();
-
+            if (sceneLoaderStart.currentSceneIndex == sceneLoaderStart.loadSceneAsyncAssets.Count)
+            {
+                OnFinish.Invoke();
+            }
+            else
+            {
+                //Cargar pantalla de Carga
+                sceneLoaderStart.timeToLoad = 1.5f;
+                loadingScreen.SetActive(true);
+                sceneLoaderStart.StartCheckingLoadedScenes(() =>
+                {
+                    loadingScreen.SetActive(false);
+                    OnFinish.Invoke();
+                });
+            }
         }
     }
 
