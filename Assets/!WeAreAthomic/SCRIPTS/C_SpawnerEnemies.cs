@@ -13,6 +13,7 @@ public class C_SpawnerEnemies : MonoBehaviour
     
     private int currentWave;
     [SerializeField] private GameObject barrier;
+    [SerializeField] private GameObject goHere;
 
     public List<GameObject> _currentEnemiesObj = new ();
     [SerializeField]private List<GameObject>  _wave1;
@@ -92,6 +93,7 @@ public class C_SpawnerEnemies : MonoBehaviour
         }
 
         Destroy(barrier.gameObject);
+        goHere.SetActive(true);
     }
 
     private bool CanNextWave()
