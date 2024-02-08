@@ -9905,7 +9905,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: cfff9d6d8643a3146bcc378203c0fdfe,
         type: 3}
       propertyPath: m_RootOrder
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cfff9d6d8643a3146bcc378203c0fdfe,
         type: 3}
@@ -10032,6 +10032,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4460628353619078548}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cfff9d6d8643a3146bcc378203c0fdfe,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8077313371159450767}
     - targetCorrespondingSourceObject: {fileID: 953921955552101857, guid: cfff9d6d8643a3146bcc378203c0fdfe,
         type: 3}
       insertIndex: -1
@@ -10092,10 +10096,11 @@ MonoBehaviour:
   _typeOfBreather: 1
   hurtbox: {fileID: 7031738207051682547}
   particleEffects: {fileID: 1909707010660207347}
-  energyFill: 1
   enableBreather: 1
   healthAmount: 0.5
   healthPerTime: 0.01
+  energyAmount: 0.5
+  energyPerTime: 0.01
   healthSound: {fileID: 4460628353619078548}
 --- !u!82 &4460628353619078548
 AudioSource:
@@ -10194,3 +10199,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8077313371159450767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4559734742569819991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e725d4b2c32c16f4ab4a25ebbbaad02c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
