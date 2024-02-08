@@ -98,7 +98,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
                 {
                     _bastetController.Shoot(bulletPrefab, bulletForce, FindNearestEnemy().position + Vector3.up * .3f, bulletPrefab.transform.localScale, false, 10, _playerDamageData);
                 }
-                _mainCPlayerInterface.BastetAbylitiesConsume(1);
+                _mainCPlayerInterface.TakeEnergy(1);
                 yield return new WaitForSeconds(shootTime);
                 
             }

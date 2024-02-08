@@ -271,8 +271,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _totalCooldown = Time.time + shootCooldown;
                 if (!GameManagerSingleton.Instance.IsUnlimitedEnergy)
                 {
-                    GameManagerSingleton.Instance.TakeEnergy(energySpend);
+                    _mainCInterface.TakeEnergy(energySpend);
                     _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
+                    
                 }
 
                 if (GameManagerSingleton.Instance.bastetEnergy < 100 && !_isRecoveringShoot && !_isWaitingForRecoveringShoot)

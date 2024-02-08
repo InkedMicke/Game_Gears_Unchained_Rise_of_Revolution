@@ -19,7 +19,6 @@ namespace _WeAreAthomic.SCRIPTS.Props
 
         [SerializeField] private GameObject hurtbox;
         [SerializeField] private GameObject particleEffects;
-        [SerializeField] private int energyFill;
 
 
         private GameObject _volumeHealing;
@@ -30,6 +29,9 @@ namespace _WeAreAthomic.SCRIPTS.Props
 
         [SerializeField] private float healthAmount = 4f;
         [SerializeField] private float healthPerTime = .1f;
+
+        [SerializeField] private float energyAmount = 0.5f;
+        [SerializeField] private float energyPerTime = 0.01f;
 
         [SerializeField] private AudioSource healthSound;
 
@@ -116,21 +118,20 @@ namespace _WeAreAthomic.SCRIPTS.Props
         }
         private IEnumerator EnergiCoroutine()
         {
-            var enable = true;
             healthSound.Play();
 
-            while (enable)
+            while (true)
             {
                 if (_mainCPlayer.localEnergy < _mainCPlayer.maxEnergy)
                 {
-                    _mainCPlayer.ChargeEnergy(energyFill);
+                    _mainCPlayer.ChargeEnergy(energyAmount);
                 }
                 else
                 {
-                    enable = false;
+                    break;
                 }
 
-                yield return new WaitForSeconds(healthPerTime);
+                yield return new WaitForSeconds(energyPerTime);
             }
         }
     }

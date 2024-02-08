@@ -19,25 +19,25 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         }
 
         [SerializeField] private Slider energySlider;
-       
+
 
         public void SetEnergySlider(float value)
         {
             energySlider.value = value;
         }
-        public void ChargeEnergy(int energy)
+        public void ChargeEnergy(float energy)
         {
+            Debug.Log("hola2");
             localEnergy += energy;
             GameManagerSingleton.Instance.bastetEnergy = localEnergy;
             SetEnergySlider(localEnergy);
         }
 
-        public void BastetAbylitiesConsume(int consumeAbility)
+        public void TakeEnergy(float energy)
         {
-            
-                localEnergy -= consumeAbility;
-                GameManagerSingleton.Instance.bastetEnergy = localEnergy;
-                SetEnergySlider(localEnergy);
+            localEnergy -= energy;
+            GameManagerSingleton.Instance.bastetEnergy = localEnergy;
+            SetEnergySlider(localEnergy);
 
         }
     }
