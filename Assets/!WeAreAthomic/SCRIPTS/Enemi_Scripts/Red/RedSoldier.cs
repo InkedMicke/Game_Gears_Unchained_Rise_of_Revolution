@@ -4,6 +4,7 @@ using DG.Tweening;
 using DG.Tweening.Core;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 {
@@ -14,6 +15,12 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
         [SerializeField] private RedAttackHitBox _attackHitBox;
 
         [SerializeField] private ParticleSystem _particlesTornadoDash;
+        [SerializeField] private AudioClip dashAudio;
+        [Range(0, 1)]
+        [SerializeField] private float dashVolume;
+
+        [SerializeField] private GameObject soundComponentObj;
+        [SerializeField] private AudioMixerGroup sfxMixer;
 
         private Tween _dashTween;
 
@@ -156,6 +163,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
             indicator.gameObject.transform.SetParent(transform.parent);
             _trail.EnableTrail();
             _isDashing = true;
+            PlayDashSound();
         }
 
         public void EndDash()
@@ -169,6 +177,19 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
             IsAttacking = false;
             _soldierAnim.SetAnimRootMotion(false);
             StartCoroutine(WaitUntilNextAttack());
+        }
+        public void PlayDashSound()
+        {
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = dashAudio;
+                currentAudioSource.volume = dashVolume;
+
+                currentAudioSource.Play();
+            }
         }
     }
 
