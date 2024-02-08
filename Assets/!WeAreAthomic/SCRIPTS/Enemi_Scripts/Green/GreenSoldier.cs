@@ -1,6 +1,7 @@
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
 {
@@ -17,6 +18,12 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
         [SerializeField] private GameObject bullet;
         [SerializeField] private GameObject decalAttack;
         private GameObject _currentDecal;
+        [SerializeField] private AudioClip bulletAudio;
+        [Range(0, 1)]
+        [SerializeField] private float bulletVolume;
+
+        [SerializeField] private GameObject soundComponentObj;
+        [SerializeField] private AudioMixerGroup sfxMixer;
 
         [SerializeField] private Transform muzzle1;
         [SerializeField] private Transform endDecalTr;
@@ -78,6 +85,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
                         endDecalTr.position.z + Random.Range(-spreadAngle, spreadAngle)
                         );
                     var bulletObj = Instantiate(bullet, muzzle1.position, transform.rotation);
+                    PlayBulletSound();
                     bulletObj.transform.LookAt(desiredPos);
                     var dir = desiredPos - bulletObj.transform.position;
 
@@ -85,6 +93,19 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
                 }
             }
 
+        }
+        public void PlayBulletSound()
+        {
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = bulletAudio;
+                currentAudioSource.volume = bulletVolume;
+
+                currentAudioSource.Play();
+            }
         }
 
         private IEnumerator TurnToPlayer()

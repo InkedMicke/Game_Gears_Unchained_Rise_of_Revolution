@@ -5034,6 +5034,7 @@ GameObject:
   - component: {fileID: 4726308314487099026}
   - component: {fileID: 5823954174377461218}
   - component: {fileID: 7401334903811032644}
+  - component: {fileID: 6978458474559982063}
   m_Layer: 0
   m_Name: GroundEffect_Soldier_VFX
   m_TagString: Untagged
@@ -9858,6 +9859,103 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!82 &6978458474559982063
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934593625008246212}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 6890449587846211683, guid: 07abd6e1c0d917d4bb88c185293090dd,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: eb095ef90217d714ebfc09d90d2a3170, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 0.6
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2140232508423189539
 GameObject:
   m_ObjectHideFlags: 0
@@ -9961,13 +10059,13 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 4726308314487099026}
   - {fileID: 1642133490791264307}
   - {fileID: 2873395756055394612}
   - {fileID: 7475714329995903652}
   - {fileID: 3163177796248224212}
   - {fileID: 5793185224741482579}
   - {fileID: 2263510721093623249}
-  - {fileID: 4726308314487099026}
   - {fileID: 6832374702158676903}
   m_Father: {fileID: 0}
   m_RootOrder: -1
@@ -10050,6 +10148,11 @@ MonoBehaviour:
   - {fileID: 761014946467895291}
   - {fileID: 942958690331257641}
   groundSplashEffect: {fileID: 5823954174377461218}
+  groundSplashAudio: {fileID: 8300000, guid: eb095ef90217d714ebfc09d90d2a3170, type: 3}
+  groundSplashVolume: 0.5
+  soundComponentObj: {fileID: 5756795255145844710}
+  sfxMixer: {fileID: 6890449587846211683, guid: 07abd6e1c0d917d4bb88c185293090dd,
+    type: 2}
   decalArea: {fileID: 4681578498658497895}
   maxDecalRange: 0
   velocityDecalGrow: 0
@@ -10069,6 +10172,7 @@ MonoBehaviour:
   backWalkingAnimString: isBackWalking
   shootAnimString: shoot
   redCount: redCount
+  greenCount: ShootCount
 --- !u!114 &1823015500786976364
 MonoBehaviour:
   m_ObjectHideFlags: 0

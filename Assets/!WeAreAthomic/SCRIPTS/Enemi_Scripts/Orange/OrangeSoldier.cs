@@ -2,6 +2,7 @@ using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Audio;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
 {
@@ -12,6 +13,12 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
         [SerializeField] private HitBox[] _hitBoxes;
 
         [SerializeField] private ParticleSystem groundSplashEffect;
+        [SerializeField] private AudioClip groundSplashAudio;
+        [Range(0, 1)]
+        [SerializeField] private float groundSplashVolume;
+
+        [SerializeField] private GameObject soundComponentObj;
+        [SerializeField] private AudioMixerGroup sfxMixer;
 
         [SerializeField] private GameObject decalArea;
 
@@ -87,6 +94,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
         public void PlayHitEffect()
         {
             groundSplashEffect.Play();
+            PlaySplashSound();
         }
 
         public void EndAttack()
@@ -101,6 +109,19 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
         public void StartGrowth()
         {
             _canGrowth = true;
+        }
+        public void PlaySplashSound()
+        {
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = groundSplashAudio;
+                currentAudioSource.volume = groundSplashVolume;
+                
+                currentAudioSource.Play();
+            }
         }
     }
 }
