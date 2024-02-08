@@ -807,12 +807,13 @@ MonoBehaviour:
   timeNextCrouch: 0.5
   timeNextJump: 0.3
   jumpImpulse: 6
-  jumpImpulseOnRail: 8
+  jumpImpulseOnRail: 4.5
   gravity: -9.8
   aimSpeed: 8
   pushJumpForce: 10
   pushMaxHeight: 5
   pushJumpDuration: 2
+  maxSlopeAngle: 40
   turnSmoothTime: 0.05
 --- !u!114 &7418738073728035398
 MonoBehaviour:
@@ -984,6 +985,7 @@ MonoBehaviour:
   railCheck: {fileID: 2633980742278052695}
   railSpeed: 15
   jumpCooldown: 1
+  railClip: {fileID: 0}
 --- !u!114 &7417020760943733625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1161,10 +1163,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c0db11289318383458628e57136a3fb7, type: 3}
   - {fileID: 8300000, guid: eecce41de82063f4583f405db0fa03c0, type: 3}
   callBasteVolume: 0.5
+  railClip: {fileID: 8300000, guid: 6a07838c14fe1f84a9141621a31b14fa, type: 3}
+  railVolume: 0.1
   hackInProcess: {fileID: 8300000, guid: 1db1809132fa24649b702638c59b7cfd, type: 3}
-  hackInProcessVolume: 0.01
+  hackInProcessVolume: 0.05
   cannotHack: {fileID: 8300000, guid: 7e320e868c3b35a49bfdc9edaa3801f0, type: 3}
-  cannotHackVolume: 0.02
+  cannotHackVolume: 0.05
   howFight: {fileID: 8300000, guid: a84e748eb901d2d42a488df4f5295d48, type: 3}
   howFightVolume: 0.5
   abilityAtackClip: {fileID: 0}
@@ -1182,6 +1186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PP: {fileID: 0}
+  m_CheckIfEnoughMejoras: {fileID: 0}
   stopMenuContainer: {fileID: 0}
   firstButton: {fileID: 0}
 --- !u!114 &6156758546523602922

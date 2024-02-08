@@ -11,6 +11,7 @@ public class MainCRail : MonoBehaviour
     private CharacterController _cc;
     private MainCVFX _mainCVFX;
     private MainCLayers _mainClayers;
+    private MainCSounds _mainCSounds;
 
     [SerializeField] private LayerMask railLayer;
 
@@ -28,6 +29,8 @@ public class MainCRail : MonoBehaviour
     private float _timeGraceJumpPeriod;
     private float _currentRailSpeed;
 
+    [SerializeField] private AudioSource railClip;
+
     private void Awake()
     {
         _mainCAnim = GetComponent<MainCAnimatorController>();
@@ -36,18 +39,23 @@ public class MainCRail : MonoBehaviour
         _mainCVFX = GetComponent<MainCVFX>();
         _mainClayers = GetComponent<MainCLayers>();
         _mainCDash = GetComponent<MainCDash>();
-    }
+        _mainCSounds = GetComponent<MainCSounds>();
+
+}
 
 
-    private void Update()
+private void Update()
     {
         if(IsOnRail() && !IsSliding)
         {
+           
             StartSlide();
+
         }
 
         if(IsSliding)
         {
+            
             _currentRailSpeed = _mainCMove.IsJumping ? (HigherJumpDueToInclination() ? railSpeed * 5f : railSpeed / 1.5f) : railSpeed;
         }
 
@@ -59,6 +67,7 @@ public class MainCRail : MonoBehaviour
 
         if(IsSliding && !_mainCMove.IsJumping && !_mainCMove.IsFalling)
         {
+            _mainCSounds.PlayRailSound();
             _distancePercentage += _currentRailSpeed * Time.deltaTime / _splineLength ;
 
             var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
@@ -68,7 +77,8 @@ public class MainCRail : MonoBehaviour
             _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
             
 
-            if(_distancePercentage > 1f && IsSliding)
+
+            if (_distancePercentage > 1f && IsSliding)
             {
                 _mainCAnim.SetSliding(false);
                 _mainClayers.DisableSlideLayer();
@@ -76,6 +86,8 @@ public class MainCRail : MonoBehaviour
                 _mainCVFX.SetActiveSparks(false);
                 _mainCVFX.SetActiveSpeedlines(false);
                 IsSliding = false;
+                
+               
             }
 
             var nextPosition = _splineContainer.EvaluatePosition(_distancePercentage + .001f);
@@ -90,6 +102,7 @@ public class MainCRail : MonoBehaviour
             //transform.position = Vector3.MoveTowards(transform.position, currentPosition, railSpeed * Time.deltaTime);
             var difference = posVector - transform.position;
             _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
+            _mainCSounds.RemoveRailSounds();
         }
     }
 
@@ -102,7 +115,9 @@ public class MainCRail : MonoBehaviour
         IsSliding = true;
         _mainCAnim.SetMoveSpeed(0);
         _mainCVFX.SetRailEffects(true);
-       
+        //_mainCSounds.PlayRailSound();
+
+
 
     }
 

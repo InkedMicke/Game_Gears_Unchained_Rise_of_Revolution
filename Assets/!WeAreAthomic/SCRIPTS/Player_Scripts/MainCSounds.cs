@@ -55,6 +55,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [Range(0, 1)] 
         [SerializeField] private float callBasteVolume;
 
+        [SerializeField] private AudioClip railClip;
+        [Range(0, 1)]
+        [SerializeField] private float railVolume;
+
         [SerializeField] private AudioClip hackInProcess;
         [Range(0, 1)]
         [SerializeField] private float hackInProcessVolume;
@@ -354,6 +358,30 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 currentAudioSource.clip = dieClips[randomNumber];
                 currentAudioSource.volume = dieVolume;
                 currentAudioSource.Play();
+            }
+        }
+        public void PlayRailSound()
+        {
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = railClip;
+                currentAudioSource.volume = railVolume;
+                currentAudioSource.loop = true;
+                currentAudioSource.Play();
+            }
+        }
+        public void RemoveRailSounds()
+        {
+            var audiosInSoundComponent = soundComponentObj.GetComponents<AudioSource>();
+            foreach (var audioSour in audiosInSoundComponent)
+            {
+                if (audioSour.clip == railClip)
+                {
+                    Destroy(audioSour);
+                }
             }
         }
         public void PlayJumpSound()

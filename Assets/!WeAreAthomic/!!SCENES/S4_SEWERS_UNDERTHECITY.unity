@@ -559,7 +559,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28510001}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 284.14, y: 270.98, z: -1287.2084}
+  m_LocalPosition: {x: 280.68, y: 270.98, z: -1287.2084}
   m_LocalScale: {x: 1, y: 22.89604, z: 29.25008}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -597,6 +597,19 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: DoorIsOpen
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 68368011}
+          m_TargetAssemblyTypeName: _WeAreAthomic.SCRIPTS.Props_Scripts.Checkpoint,
+            Assembly-CSharp
+          m_MethodName: SetCheckpoint
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 68368010}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
     additionalInfo: 
@@ -664,6 +677,24 @@ Transform:
   m_Father: {fileID: 1803284439}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &68368010 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 928718764961420804, guid: 4a1d8678f121e70479e822df95211c95,
+    type: 3}
+  m_PrefabInstance: {fileID: 5049371929325166159}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &68368011 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8020141017979766981, guid: 4a1d8678f121e70479e822df95211c95,
+    type: 3}
+  m_PrefabInstance: {fileID: 5049371929325166159}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e725d4b2c32c16f4ab4a25ebbbaad02c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &71713424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46797,18 +46828,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4981343290038141223, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
-      propertyPath: jumpImpulse
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4981343290038141223, guid: 9d2ebbd4a4922de43ae8c77510eda865,
-        type: 3}
       propertyPath: gravityOnRail
       value: -9.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4981343290038141223, guid: 9d2ebbd4a4922de43ae8c77510eda865,
-        type: 3}
-      propertyPath: jumpImpulseOnRail
-      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 5307704884930436608, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
@@ -49338,6 +49359,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_InnerSpotAngle
       value: 72.83976
+      objectReference: {fileID: 0}
+    - target: {fileID: 928718764961420804, guid: 4a1d8678f121e70479e822df95211c95,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -16.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 928718764961420804, guid: 4a1d8678f121e70479e822df95211c95,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.2
       objectReference: {fileID: 0}
     - target: {fileID: 1151432180729631680, guid: 4a1d8678f121e70479e822df95211c95,
         type: 3}
