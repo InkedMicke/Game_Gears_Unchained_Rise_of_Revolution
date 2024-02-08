@@ -102,6 +102,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             m_PP.RemoveObjToCurrentUIGameObjectList(hackCanvas);
             var button = _currentInteract.GetComponent<ButtonInteractable>();
             button.EndHackInvoke();
+            _bastetController.HideScanner();
             _bastetController.GoToRightHandPosUntilReachedPos(true, () => robotObj.SetActive(false), .6f, .1f);
             _mainCSounds.StopHackInProcessSound();
             IsHacking = false;
