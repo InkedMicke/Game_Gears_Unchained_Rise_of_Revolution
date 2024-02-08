@@ -9,6 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
     public class MainCStopMenu : MonoBehaviour
     {
         [SerializeField] private PP m_PP;
+        [SerializeField] private CheckIfEnoughMejoras m_CheckIfEnoughMejoras;
         private PlayerInputActions _playerInputActions;
         private MainCSounds _mainCSounds;
 
@@ -52,6 +53,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     if (GameManagerSingleton.Instance.IsStopMenuEnabled)
                     {
+                        m_CheckIfEnoughMejoras.CheckIfYouHaveEnoughToBuy();
                         stopMenuContainer.SetActive(false);
                         if (!GameManagerSingleton.Instance.thereIsCanvasBelow)
                         {

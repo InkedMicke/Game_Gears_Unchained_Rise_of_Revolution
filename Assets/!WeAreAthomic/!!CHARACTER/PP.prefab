@@ -3714,7 +3714,7 @@ Transform:
   - {fileID: 8198585771958467074}
   - {fileID: 21932386667365500}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1112706042549004022
 MonoBehaviour:
@@ -17956,10 +17956,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
+      - m_Target: {fileID: 1600877776090984544}
+        m_TargetAssemblyTypeName: PP, Assembly-CSharp
+        m_MethodName: SetActiveToCurrentUIGameObjectList
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 696123190823901393}
+        m_TargetAssemblyTypeName: CheckIfEnoughMejoras, Assembly-CSharp
+        m_MethodName: CheckIfYouHaveEnoughToBuy
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -20525,6 +20537,11 @@ PrefabInstance:
       propertyPath: stopMenuContainer
       value: 
       objectReference: {fileID: 5384955266359670551}
+    - target: {fileID: 6703656047097277810, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
+      propertyPath: m_CheckIfEnoughMejoras
+      value: 
+      objectReference: {fileID: 696123190823901393}
     - target: {fileID: 6959285264927564952, guid: fefbaa6b55d08b34ba68dddc4393a15b,
         type: 3}
       propertyPath: tutKeys
