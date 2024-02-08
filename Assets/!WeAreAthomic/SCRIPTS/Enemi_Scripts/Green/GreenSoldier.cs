@@ -61,10 +61,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
 
         private void StartDecalToAttack()
         {
-            _agent.isStopped = true;
             IsAttacking = true;
             StartCoroutine(TurnToPlayer());
-            _soldierAnim.SetGreenCount(1);
         }
 
 
@@ -107,6 +105,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
                 // Si estamos casi mirando al objetivo, detener la rotaci�n
                 if (Quaternion.Angle(transform.rotation, targetRotation) < 6f)
                 {
+                    _soldierAnim.SetGreenCount(1);
                     _decalCoroutine = StartCoroutine(DecalSize(true));
                     yield break;
                 }
@@ -129,7 +128,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
                     yield return new WaitForSeconds(.01f);
                 }
                 indicator.uvBias = new(indicator.uvBias.x, 0);
-               
+                yield return new WaitForSeconds(4.8f);
                 _soldierAnim.SetGreenCount(2);
             }
             else
