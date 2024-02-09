@@ -3,14 +3,16 @@ using Hedenrag.SceneLoader;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.Video;
 
 public class VideoManagerStart : MonoBehaviour
 {
+    private PlayerInputActions _inputActions;
+
     [SerializeField] SceneLoaderStart sceneLoaderStart;
 
     [SerializeField] private GLoadScene sceneLoader;
-
 
     [SerializeField] private VideoPlayer videoPlayer;
 
@@ -26,6 +28,14 @@ public class VideoManagerStart : MonoBehaviour
 
     private int _currentVideo;
 
+    private void Awake()
+    {
+        _inputActions = new PlayerInputActions();
+        _inputActions.Enable();
+        _inputActions.PlayerPC.SkipVideoStart.performed += InputPC;
+        _inputActions.PlayerGamepad.SkipVideoStart.performed += InputGamepad;
+    }
+
     private void Start()
     {
         sceneLoaderStart.StartLoadingScenes();
@@ -34,6 +44,22 @@ public class VideoManagerStart : MonoBehaviour
         videoPlayer.Play();
         _currentVideo++;
         videoPlayer.loopPointReached += EndReached;
+    }
+
+    private void InputPC(InputAction.CallbackContext x)
+    {
+        if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+        {
+            NextVideo();
+        }
+    }    
+    
+    private void InputGamepad(InputAction.CallbackContext x)
+    {
+        if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+        {
+            NextVideo();
+        }
     }
 
     public void NextVideo()

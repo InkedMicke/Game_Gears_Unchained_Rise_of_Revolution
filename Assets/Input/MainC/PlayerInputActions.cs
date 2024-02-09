@@ -179,6 +179,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SkipVideoStart"",
+                    ""type"": ""Button"",
+                    ""id"": ""fc2f6603-4f73-47bd-8b57-f7a14f7cfe0f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -401,6 +410,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""ChangeAbility"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec4df997-bbc2-44b1-b895-0f0a3d0f582b"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkipVideoStart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -565,6 +585,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Dash"",
                     ""type"": ""Button"",
                     ""id"": ""c450276f-98ee-4d19-bfd3-f7f9e55ef7ee"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkipVideoStart"",
+                    ""type"": ""Button"",
+                    ""id"": ""71db88c0-acc3-4609-ae33-5edbd1a276ee"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -767,6 +796,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7d26ef9-2456-45ec-8656-abb9b5cd0d71"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkipVideoStart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -999,6 +1039,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerPC_ChangeAbility = m_PlayerPC.FindAction("ChangeAbility", throwIfNotFound: true);
         m_PlayerPC_InvokeAbility = m_PlayerPC.FindAction("InvokeAbility", throwIfNotFound: true);
         m_PlayerPC_Dash = m_PlayerPC.FindAction("Dash", throwIfNotFound: true);
+        m_PlayerPC_SkipVideoStart = m_PlayerPC.FindAction("SkipVideoStart", throwIfNotFound: true);
         // PlayerGamepad
         m_PlayerGamepad = asset.FindActionMap("PlayerGamepad", throwIfNotFound: true);
         m_PlayerGamepad_MovementKeyboard = m_PlayerGamepad.FindAction("MovementKeyboard", throwIfNotFound: true);
@@ -1019,6 +1060,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerGamepad_ChangeAbility = m_PlayerGamepad.FindAction("ChangeAbility", throwIfNotFound: true);
         m_PlayerGamepad_InvokeAbility = m_PlayerGamepad.FindAction("InvokeAbility", throwIfNotFound: true);
         m_PlayerGamepad_Dash = m_PlayerGamepad.FindAction("Dash", throwIfNotFound: true);
+        m_PlayerGamepad_SkipVideoStart = m_PlayerGamepad.FindAction("SkipVideoStart", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
@@ -1106,6 +1148,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerPC_ChangeAbility;
     private readonly InputAction m_PlayerPC_InvokeAbility;
     private readonly InputAction m_PlayerPC_Dash;
+    private readonly InputAction m_PlayerPC_SkipVideoStart;
     public struct PlayerPCActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1127,6 +1170,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @ChangeAbility => m_Wrapper.m_PlayerPC_ChangeAbility;
         public InputAction @InvokeAbility => m_Wrapper.m_PlayerPC_InvokeAbility;
         public InputAction @Dash => m_Wrapper.m_PlayerPC_Dash;
+        public InputAction @SkipVideoStart => m_Wrapper.m_PlayerPC_SkipVideoStart;
         public InputActionMap Get() { return m_Wrapper.m_PlayerPC; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1187,6 +1231,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @SkipVideoStart.started += instance.OnSkipVideoStart;
+            @SkipVideoStart.performed += instance.OnSkipVideoStart;
+            @SkipVideoStart.canceled += instance.OnSkipVideoStart;
         }
 
         private void UnregisterCallbacks(IPlayerPCActions instance)
@@ -1242,6 +1289,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @SkipVideoStart.started -= instance.OnSkipVideoStart;
+            @SkipVideoStart.performed -= instance.OnSkipVideoStart;
+            @SkipVideoStart.canceled -= instance.OnSkipVideoStart;
         }
 
         public void RemoveCallbacks(IPlayerPCActions instance)
@@ -1281,6 +1331,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerGamepad_ChangeAbility;
     private readonly InputAction m_PlayerGamepad_InvokeAbility;
     private readonly InputAction m_PlayerGamepad_Dash;
+    private readonly InputAction m_PlayerGamepad_SkipVideoStart;
     public struct PlayerGamepadActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1303,6 +1354,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @ChangeAbility => m_Wrapper.m_PlayerGamepad_ChangeAbility;
         public InputAction @InvokeAbility => m_Wrapper.m_PlayerGamepad_InvokeAbility;
         public InputAction @Dash => m_Wrapper.m_PlayerGamepad_Dash;
+        public InputAction @SkipVideoStart => m_Wrapper.m_PlayerGamepad_SkipVideoStart;
         public InputActionMap Get() { return m_Wrapper.m_PlayerGamepad; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1366,6 +1418,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @SkipVideoStart.started += instance.OnSkipVideoStart;
+            @SkipVideoStart.performed += instance.OnSkipVideoStart;
+            @SkipVideoStart.canceled += instance.OnSkipVideoStart;
         }
 
         private void UnregisterCallbacks(IPlayerGamepadActions instance)
@@ -1424,6 +1479,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @SkipVideoStart.started -= instance.OnSkipVideoStart;
+            @SkipVideoStart.performed -= instance.OnSkipVideoStart;
+            @SkipVideoStart.canceled -= instance.OnSkipVideoStart;
         }
 
         public void RemoveCallbacks(IPlayerGamepadActions instance)
@@ -1603,6 +1661,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnChangeAbility(InputAction.CallbackContext context);
         void OnInvokeAbility(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnSkipVideoStart(InputAction.CallbackContext context);
     }
     public interface IPlayerGamepadActions
     {
@@ -1624,6 +1683,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnChangeAbility(InputAction.CallbackContext context);
         void OnInvokeAbility(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnSkipVideoStart(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {
