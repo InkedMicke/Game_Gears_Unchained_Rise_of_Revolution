@@ -29,7 +29,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         private Animator _exclamationAnim;
         protected EnemyBrain _enemyBrain;
 
-        public GameManagerSingleton.TypeOfEnemy _typeOfEnemy;
+        public TypeOfEnemy _typeOfEnemy;
         public TypeOfBehaviour typeOfBehaviour;
 
         [SerializeField] protected ButtonInteractable _buttonInt;

@@ -3,6 +3,7 @@ using UnityEngine;
 using Hedenrag.ExVar;
 using UnityEngine.EventSystems;
 using NaughtyAttributes;
+using Unity.VisualScripting;
 
 public enum TypeOfInput
 {
@@ -41,6 +42,13 @@ public class AbilitiesStruct
     public Sprite sprite;
     public bool IsUnlocked;
 }
+public enum TypeOfEnemy
+{
+    GreenSoldier,
+    OrangeSoldier,
+    RedSoldier,
+    BlueSoldier
+}
 
 public class GameManagerSingleton : SingletonScriptableObject<GameManagerSingleton>, ICallOnAll
 {
@@ -52,13 +60,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         SensivityY
     }
 
-    public enum TypeOfEnemy
-    {
-        GreenSoldier,
-        OrangeSoldier,
-        RedSoldier,
-        BlueSoldier
-    }
+ 
 
     public Settings settings;
     public DifficultyLevel _currentDifficulty = DifficultyLevel.historia;
@@ -69,7 +71,12 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public List<GameObject> closestGameObjectsList;
     public List<AbilitiesStruct> abiltiesList = new();
     public GameObject gamepadController;
-    
+    [SerializeField] private GameObject greenSoldierPrefab;
+    [SerializeField] private GameObject orangeSoldierPrefab;
+    [SerializeField] private GameObject redSoldierPrefab;
+    [SerializeField] private GameObject blueSoldierPrefab;
+
+
     public Vector3 currentCheckpoint;
 
     public bool IsGamePaused;
@@ -403,5 +410,17 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         }
     }
 
+    public GameObject TypeOfEnemyToPrefab(TypeOfEnemy enemy)
+    { 
+
+    switch(enemy)
+        { 
+        case TypeOfEnemy.GreenSoldier: return greenSoldierPrefab;
+        case TypeOfEnemy.OrangeSoldier: return orangeSoldierPrefab;
+        case TypeOfEnemy.RedSoldier: return redSoldierPrefab;
+        case TypeOfEnemy.BlueSoldier: return blueSoldierPrefab;
+        }
+        return new GameObject();
+    }
 
 }

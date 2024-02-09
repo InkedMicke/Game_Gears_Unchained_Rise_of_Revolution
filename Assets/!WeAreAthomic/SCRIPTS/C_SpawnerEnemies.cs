@@ -5,8 +5,15 @@ using UnityEngine;
 
 public class C_SpawnerEnemies : MonoBehaviour
 {
- 
+    enum TypeOfSpawner
+        {
+        SpawnerBarrier,
+        SpawnerCamera
+        }
 
+    
+
+    [SerializeField] private TypeOfSpawner typeOfSpawner;
     [SerializeField] private Transform[] pointToSpawn;
     [SerializeField] private int numberOfWaves;
     private int _maxEnemies = 20;
@@ -16,19 +23,21 @@ public class C_SpawnerEnemies : MonoBehaviour
     [SerializeField] private GameObject goHere;
 
     public List<GameObject> _currentEnemiesObj = new ();
-    [SerializeField]private List<GameObject>  _wave1;
-    [SerializeField] private List<GameObject> _wave2;
-    [SerializeField] private List<GameObject> _wave3;
-    [SerializeField] private List<GameObject> _wave4;
-    [SerializeField] private List<GameObject> _wave5;
-    [SerializeField] private List<GameObject> _wave6;
-    private List<List<GameObject>> _wavesList;
+    [SerializeField]private List<TypeOfEnemy> _wave1;
+    [SerializeField] private List<TypeOfEnemy> _wave2;
+    [SerializeField] private List<TypeOfEnemy> _wave3;
+    [SerializeField] private List<TypeOfEnemy> _wave4;
+    [SerializeField] private List<TypeOfEnemy> _wave5;
+    [SerializeField] private List<TypeOfEnemy> _wave6;
+
+    private List<List<TypeOfEnemy>> _wavesList;
+   
 
     private Enemy _enemy;
     private void Start()
     {
         // Inicializar _wavesList antes de agregar elementos
-        _wavesList = new List<List<GameObject>>
+        _wavesList = new List<List<TypeOfEnemy>>
         {
             //2 verdes / 1 naranja / 1 rojo
             // 1 verde / 2 naranjas/ 1 rojo
@@ -48,6 +57,8 @@ public class C_SpawnerEnemies : MonoBehaviour
 
     }
 
+    
+
     public void StartSpawning()
     {
         StartCoroutine(SpawnWaves());
@@ -55,6 +66,9 @@ public class C_SpawnerEnemies : MonoBehaviour
     }
     IEnumerator SpawnWaves()
     {
+       
+
+            
         while (currentWave < numberOfWaves)
         {
 
@@ -63,22 +77,28 @@ public class C_SpawnerEnemies : MonoBehaviour
             foreach (var obj in _wavesList[random])
             {
                 var randomPos = Random.Range(0, pointToSpawn.Length);
-                var soldado = Instantiate(obj, pointToSpawn[randomPos].position, Quaternion.identity);
+                var soldado = Instantiate(GameManagerSingleton.Instance.TypeOfEnemyToPrefab(obj), pointToSpawn[randomPos].position, Quaternion.identity);
                 soldado.GetComponent<Enemy>().typeOfBehaviour = TypeOfBehaviour.Fighter;
                _currentEnemiesObj.Add(soldado);
             }
 
-            currentWave++;
-
-            while (!CanNextWave())
+            if (typeOfSpawner == TypeOfSpawner.SpawnerBarrier)
             {
-                yield return new WaitForEndOfFrame();
-            }
+                currentWave++;
 
-            yield return new WaitForEndOfFrame();
+                while (!CanNextWave())
+                {
+                    yield return new WaitForEndOfFrame();
+                }
+
+                yield return new WaitForEndOfFrame();
+
+                StartCoroutine(MoveBarrierDown());
+            }
+               
         }
 
-        StartCoroutine(MoveBarrierDown());
+        
     }
 
     private IEnumerator MoveBarrierDown()
