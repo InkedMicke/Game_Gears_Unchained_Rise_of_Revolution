@@ -58,9 +58,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private AudioClip railClip;
         [Range(0, 1)]
         [SerializeField] private float railVolume;
-
-      
-
         [SerializeField] private AudioClip hackInProcess;
         [Range(0, 1)]
         [SerializeField] private float hackInProcessVolume;
@@ -73,6 +70,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private AudioClip abilityAtackClip;
         [Range(0, 1)]
         [SerializeField] private float abilityAtackVolume;
+        [SerializeField] private AudioClip openMenuClip;
+        [Range(0, 1)]
+        [SerializeField] private float openMenuVolume;
 
         private bool isPaused;
 
@@ -292,6 +292,20 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 currentAudioSource.outputAudioMixerGroup = sfxMixer;
                 currentAudioSource.clip = howFight;
                 currentAudioSource.volume = howFightVolume;
+                currentAudioSource.Play();
+            }
+        }
+
+        public void PlayOpenMenuSound()
+        {
+            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
+
+            if (currentAudioSource != null)
+            {
+                currentAudioSource.outputAudioMixerGroup = sfxMixer;
+                currentAudioSource.clip = openMenuClip;
+                currentAudioSource.volume = openMenuVolume;
+
                 currentAudioSource.Play();
             }
         }
