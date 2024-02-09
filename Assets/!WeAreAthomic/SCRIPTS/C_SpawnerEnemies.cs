@@ -82,6 +82,7 @@ public class C_SpawnerEnemies : MonoBehaviour
                _currentEnemiesObj.Add(soldado);
             }
 
+
             if (typeOfSpawner == TypeOfSpawner.SpawnerBarrier)
             {
                 currentWave++;
@@ -95,7 +96,8 @@ public class C_SpawnerEnemies : MonoBehaviour
 
                 StartCoroutine(MoveBarrierDown());
             }
-               
+
+            yield return new WaitForEndOfFrame();
         }
 
         
