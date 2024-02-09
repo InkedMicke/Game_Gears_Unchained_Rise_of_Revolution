@@ -433,9 +433,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 //Character Controller
                 var crouchPosCc = _cc.center;
-                crouchPosCc.y = .75f;
+                crouchPosCc.y = .63f;
                 _cc.center = crouchPosCc;
-                _cc.height = 1.48f;
+                _cc.height = 1.24f;
                 //HurtBox
                 var crouchPosCC = _hurtBoxCC.center;
                 crouchPosCC.y = .73f;

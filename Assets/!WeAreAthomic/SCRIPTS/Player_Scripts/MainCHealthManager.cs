@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
+using NaughtyAttributes;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -11,8 +12,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCRagdoll _mainCRagdoll;
         private MainCSounds _mainSounds;
         private MainCAttack _mainCAttack;
+        private MainCMovement _mainCMove;
         private MainCAnimatorController _mainCAnim;
         private MainCLayers _mainCLayers;
+
+        private Coroutine _hitCoroutine;
 
         [SerializeField] private Slider healthSlider;
 
@@ -27,6 +31,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public bool IsDeath;
         public bool CanReceiveDamage = true;
+        private bool gotHit;
 
         private void Awake()
         {
@@ -36,6 +41,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAttack = GetComponentInParent<MainCAttack>();
             _mainCAnim = GetComponentInParent<MainCAnimatorController>();
             _mainCLayers = GetComponentInParent<MainCLayers>();
+            _mainCMove = GetComponentInParent<MainCMovement>();
         }
 
         private void Start()
@@ -67,6 +73,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 SetHealthSlider();
                 CheckDeath();
                 StartCoroutine(HitDesactivate());
+                if (gotHit)
+                {
+                    StopCoroutine(_hitCoroutine);
+                }
+                _hitCoroutine = StartCoroutine(WaitForDisableHit());
             }
 
         }
@@ -145,6 +156,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             gameOverCanvas.SetActive(true);
             GameManagerSingleton.Instance.SetIsGameOverMenuEnabled(true);
             GameManagerSingleton.Instance.OpenTotallyWindow();
+        }
+
+        private IEnumerator WaitForDisableHit()
+        {
+            gotHit = true;
+            _mainCMove.DisableMovement();
+            _mainCAttack.DisableCanAttack();
+            yield return new WaitForSeconds(.2f);
+            _mainCMove.EnableMovement();
+            _mainCAttack.EnableCanAttack();
+            gotHit = false;
+
         }
 
         private IEnumerator InvencibilityTime()
