@@ -61,14 +61,12 @@ public class C_SpawnerEnemies : MonoBehaviour
 
     public void StartSpawning()
     {
+        currentWave = 0;
         StartCoroutine(SpawnWaves());
 
     }
     IEnumerator SpawnWaves()
     {
-       
-
-            
         while (currentWave < numberOfWaves)
         {
 
@@ -82,11 +80,10 @@ public class C_SpawnerEnemies : MonoBehaviour
                _currentEnemiesObj.Add(soldado);
             }
 
+            currentWave++;
 
             if (typeOfSpawner == TypeOfSpawner.SpawnerBarrier)
             {
-                currentWave++;
-
                 while (!CanNextWave())
                 {
                     yield return new WaitForEndOfFrame();

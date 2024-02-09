@@ -13,6 +13,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
         private Vector3 dollyDir;
         [SerializeField] private Vector3 dollyDirAdjusted;
         [SerializeField] private float distance;
+        [SerializeField] private float radius;
+        [SerializeField] private float cameraDistance;
         [SerializeField] private LayerMask colLayers;
 
         // Use this for initialization
@@ -27,17 +29,27 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
         void Update()
         {
 
-            var desiredCameraPos = transform.parent.TransformPoint(dollyDir * maxDistance);
-            if (Physics.Linecast(transform.parent.position, desiredCameraPos, out var hit, colLayers))
+            /*            var desiredCameraPos = transform.parent.TransformPoint(dollyDir * maxDistance);
+                        if (Physics.Linecast(transform.parent.position, desiredCameraPos, out var hit, colLayers))
+                        {
+                            distance = Mathf.Clamp((hit.distance * 0.87f), minDistance, maxDistance);
+                        }
+                        else
+                        {
+                            distance = maxDistance;
+                        }
+
+                        transform.localPosition = Vector3.Lerp(transform.localPosition, dollyDir * distance, Time.deltaTime * smooth);*/
+/*
+            var ray = new Ray(transform.position, -transform.forward);
+            if(Physics.SphereCast(ray, radius, out var hit, cameraDistance))
             {
-                distance = Mathf.Clamp((hit.distance * 0.87f), minDistance, maxDistance);
+                transform.localPosition = Vector3.back * hit.distance;
             }
             else
             {
-                distance = maxDistance;
-            }
-
-            transform.localPosition = Vector3.Lerp(transform.localPosition, dollyDir * distance, Time.deltaTime * smooth);
+                transform.localPosition = Vector3.back * cameraDistance;
+            }*/
         }
     }
 }
