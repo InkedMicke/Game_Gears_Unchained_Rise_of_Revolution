@@ -2,9 +2,9 @@ using System.Collections;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Props
+namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {
-    public class HealthBreather : MonoBehaviour
+    public class Breather : MonoBehaviour
     {
         private enum TypeOfBreather
         {
@@ -26,6 +26,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
         private GameObject _playerObj;
 
         [SerializeField] private bool enableBreather;
+        private bool _isHealing;
 
         [SerializeField] private float healthAmount = 4f;
         [SerializeField] private float healthPerTime = .1f;
@@ -40,7 +41,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
             _playerObj = GameObject.FindGameObjectWithTag(string.Format("Player"));
             _mainHealth = _playerObj.GetComponentInChildren<MainCHealthManager>();
             _mainCPlayer = _playerObj.GetComponent<MainCPlayerInterface>();
-            _volumeHealing = _playerObj.transform.GetChild(_playerObj.transform.childCount-1 ).gameObject;
+            _volumeHealing = _playerObj.transform.GetChild(_playerObj.transform.childCount - 1).gameObject;
             _volumeRecharging = _playerObj.transform.GetChild(_playerObj.transform.childCount - 3).gameObject;
 
             if (!enableBreather)
@@ -53,6 +54,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
         {
             if (enableBreather)
             {
+                _isHealing = true;
                 switch (_typeOfBreather)
                 {
                     case TypeOfBreather.Health:
@@ -66,20 +68,26 @@ namespace _WeAreAthomic.SCRIPTS.Props
                         break;
                 }
 
-               
+
             }
 
         }
 
         public void EndHeal()
         {
-            StopCoroutine(HealCoroutine());
-            _volumeHealing.SetActive(false);
-        }
-        public void EndRecharge()
-        {
-            StopCoroutine(EnergiCoroutine());
-            _volumeRecharging.SetActive(false);
+            _isHealing = false;
+            switch (_typeOfBreather)
+            {
+
+                case TypeOfBreather.Health:
+                StopCoroutine(HealCoroutine());
+                _volumeHealing.SetActive(false);
+                break;
+            case TypeOfBreather.Energy:
+                StopCoroutine(EnergiCoroutine());
+                _volumeRecharging.SetActive(false);
+                break;
+            }
         }
 
         public void EnableBreather()
@@ -99,19 +107,11 @@ namespace _WeAreAthomic.SCRIPTS.Props
 
         private IEnumerator HealCoroutine()
         {
-            var enable = true;
             healthSound.Play();
 
-            while (enable)
+            while (_isHealing)
             {
-                if (_mainHealth.currentHealth < _mainHealth.maxHealth)
-                {
-                    _mainHealth.GetHealth(healthAmount);
-                }
-                else
-                {
-                    enable = false;
-                }
+                _mainHealth.GetHealth(healthAmount);
 
                 yield return new WaitForSeconds(healthPerTime);
             }
@@ -120,16 +120,10 @@ namespace _WeAreAthomic.SCRIPTS.Props
         {
             healthSound.Play();
 
-            while (true)
+            while (_isHealing)
             {
-                if (_mainCPlayer.localEnergy < _mainCPlayer.maxEnergy)
-                {
-                    _mainCPlayer.ChargeEnergy(energyAmount);
-                }
-                else
-                {
-                    break;
-                }
+                Debug.Log("hola1");
+                _mainCPlayer.ChargeEnergy(energyAmount);
 
                 yield return new WaitForSeconds(energyPerTime);
             }

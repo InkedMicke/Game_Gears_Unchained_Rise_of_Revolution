@@ -154,7 +154,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             _mainCSounds.RemoveAllSounds();
             _mainCSounds.PlayTutorialSound(1, "pc");
-            var healthBreather = breatherObj.GetComponent<HealthBreather>();
+            var healthBreather = breatherObj.GetComponent<Breather>();
             healthBreather.EnableBreather();
             respiraderoImage.SetActive(true);
             m_PP.AddObjToCurrentUIGameObjectList(respiraderoImage);

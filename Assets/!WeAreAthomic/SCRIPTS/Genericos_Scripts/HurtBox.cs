@@ -10,9 +10,14 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
             GotEnterCollision(other);
         }
 
-        private void OnTriggerExit(Collider other)
+        private void OnTriggerStay(Collider other)
         {
             GotStayCollision(other);
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            GotExitCollision(other);
         }
 
         protected virtual void GotEnterCollision(Collider col)
@@ -21,6 +26,11 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
         }        
         
         protected virtual void GotStayCollision(Collider col)
+        {
+
+        }        
+        
+        protected virtual void GotExitCollision(Collider col)
         {
 
         }

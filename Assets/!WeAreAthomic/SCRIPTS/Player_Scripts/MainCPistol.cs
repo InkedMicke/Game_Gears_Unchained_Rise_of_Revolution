@@ -54,6 +54,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [System.NonSerialized] public bool IsAutoTargeting;
         private bool _isRecoveringShoot;
         private bool _isWaitingForRecoveringShoot;
+        private bool _isShooting;
 
         [SerializeField] private float sphereDectorSize = 5f;
         [SerializeField] private float cameraTransitionSpeed = 5f;
@@ -185,19 +186,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _isRecoveringShoot = true;
             _isWaitingForRecoveringShoot = false;
 
-            while (true)
+            while (_isRecoveringShoot && !_isShooting)
             {
-                if (!_isRecoveringShoot)
-                {
-                    break;
-                }
-                GameManagerSingleton.Instance.bastetEnergy += 1f;
-                _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
+                Debug.Log("hola1");
+                _mainCInterface.ChargeEnergy(1);
                 _mainCAttack.SetRunOutEnergy(false);
                 if (GameManagerSingleton.Instance.bastetEnergy > 100f)
                 {
                     GameManagerSingleton.Instance.bastetEnergy = 100f;
                     _isRecoveringShoot = false;
+                }
+                if(_isShooting)
+                {
                     break;
                 }
 
@@ -225,10 +225,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (IsAiming)
             {
-                if (_isRecoveringShoot)
+                if(_isWaitingForRecoveringShoot)
                 {
-                    StopRecoveringEnergy();
+                    StopCoroutine(_recoverEnergyCoroutine);
                 }
+                _isShooting = true;
                 _isWaitingForRecoveringShoot = false;
                 _isRecoveringShoot = false;
                 shootSoundClip.Play();
@@ -275,12 +276,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
                     
                 }
-
+                _isShooting = false;
                 if (GameManagerSingleton.Instance.bastetEnergy < 100 && !_isRecoveringShoot && !_isWaitingForRecoveringShoot)
                 {
                     StartRecoveringEnergy(5f);
                     _isWaitingForRecoveringShoot = true;
                 }
+
+                
             }
         }
 

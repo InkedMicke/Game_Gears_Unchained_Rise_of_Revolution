@@ -89,6 +89,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void GetHealth(float health)
         {
             currentHealth += health;
+            if(currentHealth >= maxHealth) 
+            {
+                currentHealth = maxHealth;
+            }
             GameManagerSingleton.Instance.currentHealth = currentHealth;
             SetHealthSlider();
         }

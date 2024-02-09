@@ -27,8 +27,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         }
         public void ChargeEnergy(float energy)
         {
-            Debug.Log("hola2");
             localEnergy += energy;
+            if(localEnergy > maxEnergy)
+            {
+                localEnergy = maxEnergy;
+            }
             GameManagerSingleton.Instance.bastetEnergy = localEnergy;
             SetEnergySlider(localEnergy);
         }
