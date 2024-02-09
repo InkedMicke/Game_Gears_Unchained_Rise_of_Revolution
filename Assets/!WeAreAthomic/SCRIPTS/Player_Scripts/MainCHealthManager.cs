@@ -126,6 +126,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 _mainCVFX.SetRailEffects(false);
                 _mainCRail.SetIsSliding(false);
+                _mainCLayers.DisableSlideLayer();
             }
             _mainCRagdoll.SetEnabled(false);
             CanReceiveDamage = false;

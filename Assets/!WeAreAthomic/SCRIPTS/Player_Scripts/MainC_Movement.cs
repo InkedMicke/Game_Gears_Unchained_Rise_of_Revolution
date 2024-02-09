@@ -536,7 +536,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCAnimator.SetGrounded(false);
                 _mainCLayers.EnableJumpLayer();
                 _mainCAnimator.SetJumping(true);
-                _velocity = transform.up.normalized * (_mainCRail.HigherJumpDueToInclination() ? jumpImpulseOnRail * 2.6f : jumpImpulseOnRail);
+                _velocity = transform.up.normalized * (_mainCRail.HigherJumpDueToInclination() ? jumpImpulseOnRail * 2.45f : jumpImpulseOnRail);
                 _timeGraceJumpPeriod = Time.time + timeNextJump;
 
                 _mainCVFX.SetActiveSparks(false);

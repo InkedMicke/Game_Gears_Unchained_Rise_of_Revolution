@@ -22,6 +22,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCPlayerInterface _mainCInterface;
         private MainCDash _mainCDash;
         private MainCVFX _mainCVfx;
+        private MainCRail _mainCRail;
         private G_MeshTrail _mainG;
 
         [SerializeField] private PlayerDamageData abilityAttackDmgData;
@@ -89,6 +90,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCDash = GetComponent<MainCDash>();
             _mainCVfx = GetComponent<MainCVFX>();
             _mainG = GetComponent<G_MeshTrail>();
+            _mainCRail = GetComponent<MainCRail>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -222,7 +224,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
                     MoveToEnemy();
-                    _mainCDash.StopDash();
+                    if(!_mainCRail.IsSliding)
+                    {
+                        _mainCDash.StopDash();
+                    }
+                    
                     _mainCMovement.EnableMovement();
                     if (_mainCTutorial.IsOnTutorial && !_attackTutorial)
                     {

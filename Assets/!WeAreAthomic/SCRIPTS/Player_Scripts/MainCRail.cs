@@ -56,7 +56,7 @@ private void Update()
         if(IsSliding)
         {
             
-            _currentRailSpeed = _mainCMove.IsJumping ? (HigherJumpDueToInclination() ? railSpeed * 5f : railSpeed / 1.5f) : railSpeed;
+            _currentRailSpeed = _mainCMove.IsJumping ? railSpeed / 1.5f : railSpeed;
         }
 
         if(IsSliding)
@@ -108,6 +108,7 @@ private void Update()
 
     private void StartSlide()
     {
+        _distancePercentage = 0;
         _mainClayers.EnableSlideLayer();
         _mainCAnim.SetSliding(true);
         _splineContainer = splineFollower.GetComponent<SplineContainer>();
@@ -143,7 +144,6 @@ private void Update()
 
         var distanceVector = new Vector3(_splineContainer.EvaluatePosition(_distancePercentage).x, _splineContainer.EvaluatePosition(_distancePercentage).y, _splineContainer.EvaluatePosition(_distancePercentage).z);
         var difference = distanceVector - transform.position;
-        Debug.Log(Vector3.Angle(difference, Vector3.up));
         if (Vector3.Angle(difference, Vector3.up) > 60)
         {
             return false;

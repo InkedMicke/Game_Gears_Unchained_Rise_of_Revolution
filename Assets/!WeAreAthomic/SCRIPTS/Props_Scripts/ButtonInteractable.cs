@@ -102,8 +102,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         public void ShowButton()
         {
-            Debug.Log(_mainCHacking.GotCached);
-            Debug.Log(_mainCHacking.IsHacking);
             if (!_mainCHacking.IsHacking && canHack && !_mainCHacking.GotCached) 
             {
                 _isShowingButton = true;
