@@ -137,21 +137,23 @@ public class GearAbility : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        imageSlider.fillAmount = 1;
-        _isUnlocked = true;
-        imageToChange.sprite = imageOfSelectedAbility.sprite;
-        imageToChange.transform.localScale = Vector3.one;
-        _abilityController.SetGearsCount(GameManagerSingleton.Instance.gearsItem - cost);
-        imageSlider.fillAmount = 0;
-        descriptionObj.SetActive(false);
-        for (int i = 0; i < GameManagerSingleton.Instance.abiltiesList.Count; i++)
+        if (_isMouseDown)
         {
-            var x = GameManagerSingleton.Instance.abiltiesList[i];
-            if (x.currentAbility == currentAbility)
+            imageSlider.fillAmount = 1;
+            _isUnlocked = true;
+            imageToChange.sprite = imageOfSelectedAbility.sprite;
+            imageToChange.transform.localScale = Vector3.one;
+            _abilityController.SetGearsCount(GameManagerSingleton.Instance.gearsItem - cost);
+            imageSlider.fillAmount = 0;
+            descriptionObj.SetActive(false);
+            for (int i = 0; i < GameManagerSingleton.Instance.abiltiesList.Count; i++)
             {
-                Debug.Log("hola1");
-                x.IsUnlocked = true;
-                break;
+                var x = GameManagerSingleton.Instance.abiltiesList[i];
+                if (x.currentAbility == currentAbility)
+                {
+                    x.IsUnlocked = true;
+                    break;
+                }
             }
         }
     }
