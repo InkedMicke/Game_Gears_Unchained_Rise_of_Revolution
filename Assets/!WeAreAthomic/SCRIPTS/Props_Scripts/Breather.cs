@@ -122,7 +122,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
             while (_isHealing)
             {
-                Debug.Log("hola1");
                 _mainCPlayer.ChargeEnergy(energyAmount);
 
                 yield return new WaitForSeconds(energyPerTime);
