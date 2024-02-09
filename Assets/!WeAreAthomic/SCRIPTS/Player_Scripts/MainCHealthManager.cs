@@ -15,6 +15,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCMovement _mainCMove;
         private MainCAnimatorController _mainCAnim;
         private MainCLayers _mainCLayers;
+        private MainCRail _mainCRail;
+        private MainCVFX _mainCVFX;
 
         private Coroutine _hitCoroutine;
 
@@ -41,7 +43,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAttack = GetComponentInParent<MainCAttack>();
             _mainCAnim = GetComponentInParent<MainCAnimatorController>();
             _mainCLayers = GetComponentInParent<MainCLayers>();
+            _mainCRail = GetComponentInParent<MainCRail>();
             _mainCMove = GetComponentInParent<MainCMovement>();
+            _mainCVFX = GetComponentInParent<MainCVFX>();
         }
 
         private void Start()
@@ -114,6 +118,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void Revive()
         {
+            if(_mainCRail.IsSliding)
+            {
+                _mainCVFX.SetRailEffects(false);
+                _mainCRail.SetIsSliding(false);
+            }
             _mainCRagdoll.SetEnabled(false);
             CanReceiveDamage = false;
             currentHealth = 100;

@@ -14390,7 +14390,7 @@ PrefabInstance:
     - target: {fileID: 6294943929362437782, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6332314073000897158, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
@@ -18884,6 +18884,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a98125502f715b4b83cfb77b434e436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &6196349308973572917 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5195690191603466932, guid: 1026949209e8f824f94a170fc6d1dc81,
+    type: 3}
+  m_PrefabInstance: {fileID: 2154715610034659713}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6657655967425692078 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4720802353365770287, guid: 1026949209e8f824f94a170fc6d1dc81,
@@ -20537,6 +20543,46 @@ PrefabInstance:
       propertyPath: m_CheckIfEnoughMejoras
       value: 
       objectReference: {fileID: 696123190823901393}
+    - target: {fileID: 6703656047097277810, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
+      propertyPath: setTriggerAnim.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6703656047097277810, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
+      propertyPath: setTriggerAnim.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6703656047097277810, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
+      propertyPath: setTriggerAnim.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6196349308973572917}
+    - target: {fileID: 6703656047097277810, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
+      propertyPath: setTriggerAnim.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6703656047097277810, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
+      propertyPath: setTriggerAnim.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 6703656047097277810, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
+      propertyPath: setTriggerAnim.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.Animator, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6703656047097277810, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
+      propertyPath: setTriggerAnim.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Activated
+      objectReference: {fileID: 0}
+    - target: {fileID: 6703656047097277810, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
+      propertyPath: setTriggerAnim.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6959285264927564952, guid: fefbaa6b55d08b34ba68dddc4393a15b,
         type: 3}
       propertyPath: tutKeys

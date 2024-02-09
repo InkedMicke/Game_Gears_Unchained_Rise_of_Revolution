@@ -70,7 +70,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 
             if(_isDashing)
             {
-                if (Physics.Raycast(transform.position, transform.forward, 1f, layersToStopDashing))
+                if (Physics.Raycast(transform.position + Vector3.up * 1.1f, transform.forward, 1f, layersToStopDashing))
                 {
                     _dashTween.Kill();
                     EndDash();

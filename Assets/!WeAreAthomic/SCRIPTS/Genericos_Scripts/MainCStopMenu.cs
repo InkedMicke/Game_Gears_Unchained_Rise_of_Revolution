@@ -19,11 +19,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject firstButton;
 
         private bool _isActive;
-        [SerializeField] private AudioMixerGroup sfxMixer;
-        [SerializeField] private GameObject soundComponentObj;
-        [SerializeField] private AudioClip openMenuClip;
-        [Range(0, 1)]
-        [SerializeField] private float openMenuVolume;
 
         [SerializeField] private UnityEvent setTriggerAnim;
 
@@ -92,7 +87,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 }
                 else
                 {
-                    PlayOpenMenuSound();
+                    _mainCSounds.PlayOpenMenuSound();
                     setTriggerAnim.Invoke();
                     stopMenuContainer.SetActive(true);
                     if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
@@ -104,7 +99,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     m_PP.SetActiveToCurrentUIGameObjectList(false);
                     GameManagerSingleton.Instance.CursorMode(true);
                     GameManagerSingleton.Instance.PauseGame(true);
-                    //StartCoroutine(WaitForFreeze());
+                    GameManagerSingleton.Instance.FreezeTime(true);
                     GameManagerSingleton.Instance.SetIsStopMenuEnabled(true);
                     _mainCSounds.PauseCurrentSounds();
                 }
@@ -115,8 +110,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private IEnumerator WaitForFreeze()
         {
-            yield return new WaitForSeconds(.2f);
-            GameManagerSingleton.Instance.FreezeTime(true);
+            yield return new WaitForSeconds(1f);
+            
         }
 
         public void ToggleMenuCallable(bool condition)
@@ -146,19 +141,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
         }
-        public void PlayOpenMenuSound()
-        {
-            var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
 
-            if (currentAudioSource != null)
-            {
-                currentAudioSource.outputAudioMixerGroup = sfxMixer;
-                currentAudioSource.clip = openMenuClip;
-                currentAudioSource.volume = openMenuVolume;
-
-                currentAudioSource.Play();
-            }
-        }
 
         private bool CanToggleMenu()
         {
