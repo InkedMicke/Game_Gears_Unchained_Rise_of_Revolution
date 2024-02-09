@@ -116,9 +116,6 @@ private void Update()
         _mainCAnim.SetMoveSpeed(0);
         _mainCVFX.SetRailEffects(true);
         //_mainCSounds.PlayRailSound();
-
-
-
     }
 
     private void OnDrawGizmos()
@@ -130,6 +127,11 @@ private void Update()
     public bool IsOnRail()
     {
         return Physics.CheckSphere(railCheck.position, .2f, railLayer);
+    }
+
+    public void SetIsSliding(bool isSliding)
+    {
+        IsSliding = isSliding;
     }
 
     public bool HigherJumpDueToInclination()
