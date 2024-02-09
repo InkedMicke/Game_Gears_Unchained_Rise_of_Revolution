@@ -109,6 +109,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 moveDirection = cameraForward * _moveInputGamepad.y + cameraRight * _moveInputGamepad.x;
             }
 
+            if(moveDirection.magnitude == 0)
+            {
+                moveDirection = transform.forward;
+            }
+
             _directionDash = new(moveDirection.x, transform.position.y, moveDirection.z);
             var desiredPos = cameraRotation.position + _directionDash.normalized * 2;
             desiredPos.y = transform.position.y;

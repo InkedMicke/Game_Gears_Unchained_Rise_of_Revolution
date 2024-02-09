@@ -23,7 +23,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
             distance = localPosition.magnitude;
         }
 
-        // Update is called once per frame
+
         void Update()
         {
 
