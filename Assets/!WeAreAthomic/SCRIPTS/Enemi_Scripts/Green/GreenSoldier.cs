@@ -2,6 +2,7 @@ using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.VFX;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
 {
@@ -27,7 +28,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
 
         [SerializeField] private Transform muzzle1;
         [SerializeField] private Transform endDecalTr;
-        [SerializeField] private ParticleSystem chargeParticles;
+        [SerializeField] private VisualEffect chargeParticles;
 
         [System.NonSerialized] public bool IsShooting;
         private bool _hasEndedShootAnim;
