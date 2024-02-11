@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
-
-
+using UnityEngine.Events;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 {
@@ -12,6 +11,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         private SoldierHurtBox _soldierHurtbox;
         private GDestroyObject _destroyObject;
         private Enemy _enemy;
+        private C_MaterialChanger _materialChanger;
+        private SoldierAnimator _soldierAnimator;
 
         
 
@@ -23,11 +24,14 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         [SerializeField] private GameObject soldierWithoutBones;
         [SerializeField] private GameObject healthSliderObj;
         [SerializeField] private GameObject botonSoldier;
+        [SerializeField] private GameObject _hurtbox;
 
         [SerializeField] private GameObject decalAtackDir;
         [SerializeField] private GameObject decalPatrol;
 
         [SerializeField] private ParticleSystem _particlesHit;
+
+
 
         public bool IsDeath;
 
@@ -42,6 +46,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _soldierHurtbox = GetComponent<SoldierHurtBox>();
             _destroyObject = GetComponentInParent<GDestroyObject>();
             _enemy = GetComponentInParent<Enemy>();
+            _materialChanger = GetComponentInParent<C_MaterialChanger>();
+            _soldierAnimator = GetComponentInParent<SoldierAnimator>();
+         
+
 
             currentHealth = maxHealth;
             SetMaxhealthSlider(maxHealth);
@@ -52,6 +60,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         {
             _cEnemiSounds.PlayHitEnemiSound();
             _particlesHit.Play();
+            _materialChanger.OnEnemiHit();
+            _soldierAnimator.HurtTrigger();
             currentHealth -= damage;
             HurtedTimes++;
             SetHealthSlider(currentHealth);
@@ -87,11 +97,12 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             botonSoldier.SetActive(false);
             _disolveEnemi.StartDisolving();
             _destroyObject.DestroyThisObject(3f);
+            _hurtbox.SetActive(false);
         }
 
         public void EndHurtAnim()
         {
-
+            
         }
 
         public void SetDeath(bool isDeath)

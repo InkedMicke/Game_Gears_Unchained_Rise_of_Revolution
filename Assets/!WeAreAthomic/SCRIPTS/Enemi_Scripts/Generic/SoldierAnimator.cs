@@ -11,6 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         [SerializeField] private string shootAnimString = "shoot";
         [SerializeField] private string redCount = "redCount";
         [SerializeField] private string greenCount = "ShootCount";
+        [SerializeField] private string hurtAnimString = "Hurt";
 
         private void Awake()
         {
@@ -35,6 +36,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         public void ShootTrigger()
         {
             _anim.SetTrigger(shootAnimString);
+        }
+        public void HurtTrigger()
+        {
+            _anim.SetTrigger(hurtAnimString);
         }
 
         public void SetAnimatorSpeed(float speed)

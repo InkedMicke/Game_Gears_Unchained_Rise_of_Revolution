@@ -46,6 +46,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         [SerializeField] private GameObject interrogacion;
 
         [SerializeField] private GameObject decalDetection;
+        
         private GameObject _playerObj;
 
         private Transform currentWaypoint;

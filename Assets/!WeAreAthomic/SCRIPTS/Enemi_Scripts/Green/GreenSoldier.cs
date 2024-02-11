@@ -71,6 +71,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
         {
             IsAttacking = true;
             StartCoroutine(TurnToPlayer());
+            _soldierAnim.SetGreenCount(1);
         }
 
 

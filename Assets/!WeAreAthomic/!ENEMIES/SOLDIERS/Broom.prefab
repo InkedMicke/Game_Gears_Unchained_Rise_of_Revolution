@@ -136,6 +136,7 @@ MonoBehaviour:
   soldierWithoutBones: {fileID: 0}
   healthSliderObj: {fileID: 0}
   botonSoldier: {fileID: 0}
+  _hurtbox: {fileID: 1460842556733869258}
   decalAtackDir: {fileID: 0}
   decalPatrol: {fileID: 0}
   _particlesHit: {fileID: 6188041103777915889}
@@ -312,6 +313,7 @@ GameObject:
   - component: {fileID: 6239895121709647939}
   - component: {fileID: 2460124209403713266}
   - component: {fileID: 1927448688917714355}
+  - component: {fileID: 8771210894527549923}
   m_Layer: 0
   m_Name: Broom
   m_TagString: Untagged
@@ -454,6 +456,21 @@ MonoBehaviour:
   shootAnimString: shoot
   redCount: redCount
   greenCount: ShootCount
+--- !u!114 &8771210894527549923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583118322878526860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f21736af0e39eca46978e13d00694915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  neutralMat: {fileID: 2100000, guid: 1c582e9d76972004b954fda4936cc58f, type: 2}
+  catchMat: {fileID: 2100000, guid: 471ac628697bf494299ca119fef7dd10, type: 2}
+  objectsToChangeMat: []
 --- !u!1001 &54415865834028618
 PrefabInstance:
   m_ObjectHideFlags: 0
