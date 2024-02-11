@@ -9,7 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCAttack _mainCAttack;
 
         [SerializeField] private PlayerDamageData wrenchDamageData;
-
+        [SerializeField] private List<ParticleSystem> _hitParticles;
         public List<Collider> colliderList = new();
 
         public bool GotHit;
@@ -29,11 +29,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     {
                         if(collider == other)
                         {
+                           
                             return;
                         }
                     }
+                    HitParticlesInvoke();
                     damageable.Damage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, other.gameObject));
                     colliderList.Add(other);
+                    
                 }
             }
         }
@@ -56,6 +59,24 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void SpeedDownTime()
         {
             Time.timeScale = 0.1f;
+        }
+        public void HitParticlesInvoke()
+        {
+            if (_hitParticles == null || _hitParticles.Count == 0)
+            {
+                return;
+            }
+            var random = Random.Range(0, _hitParticles.Count);
+
+            var randomParticleSystem = _hitParticles[random];
+
+            if (randomParticleSystem != null)
+            {
+                Debug.Log("Activo");
+                randomParticleSystem.Play();
+            }
+
+
         }
     }
 }

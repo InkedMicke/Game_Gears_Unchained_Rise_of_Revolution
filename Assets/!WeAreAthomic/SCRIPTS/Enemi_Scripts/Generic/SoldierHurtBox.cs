@@ -27,6 +27,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         [SerializeField] private GameObject decalAtackDir;
         [SerializeField] private GameObject decalPatrol;
 
+        [SerializeField] private ParticleSystem _particlesHit;
+
         public bool IsDeath;
 
         public int HurtedTimes;
@@ -49,6 +51,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         public void Damage(float damage)
         {
             _cEnemiSounds.PlayHitEnemiSound();
+            _particlesHit.Play();
             currentHealth -= damage;
             HurtedTimes++;
             SetHealthSlider(currentHealth);
@@ -56,6 +59,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             if (!_soldierHurtbox.IsDeath)
             {
                 _enemy.StartChasingPlayer();
+                
             }
         }
             
@@ -73,6 +77,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         private void Death()
         {
+            
             decalAtackDir.SetActive(false);
             decalPatrol.SetActive(false);
             mesh.SetActive(false);
