@@ -17,6 +17,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCLayers _mainCLayers;
         private MainCRail _mainCRail;
         private MainCVFX _mainCVFX;
+        private MainCHurtedMaterial _mainCHurtMaterial;
 
         private Coroutine _hitCoroutine;
 
@@ -46,6 +47,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCRail = GetComponentInParent<MainCRail>();
             _mainCMove = GetComponentInParent<MainCMovement>();
             _mainCVFX = GetComponentInParent<MainCVFX>();
+            _mainCHurtMaterial = GetComponentInParent<MainCHurtedMaterial>();
         }
 
         private void Start()
@@ -69,6 +71,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 hitFrame.SetActive(true);
                 sliderHealthImage.color = Color.red;
                 currentHealth -= damage;
+                _mainCHurtMaterial.HurtEffects();
                 GameManagerSingleton.Instance.currentHealth = currentHealth;
                 _mainSounds.RemoveAllSounds();
                 _mainSounds.PlayHurtSound();
