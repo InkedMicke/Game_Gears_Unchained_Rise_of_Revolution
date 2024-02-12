@@ -2,6 +2,7 @@ using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class C_SpawnerEnemies : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class C_SpawnerEnemies : MonoBehaviour
     [SerializeField] private List<TypeOfEnemy> _wave6;
 
     private List<List<TypeOfEnemy>> _wavesList;
+
+    [SerializeField] private UnityEvent onFinish;
    
 
     private Enemy _enemy;
@@ -92,6 +95,7 @@ public class C_SpawnerEnemies : MonoBehaviour
                 yield return new WaitForEndOfFrame();
 
                 StartCoroutine(MoveBarrierDown());
+                onFinish.Invoke();
             }
 
             yield return new WaitForEndOfFrame();

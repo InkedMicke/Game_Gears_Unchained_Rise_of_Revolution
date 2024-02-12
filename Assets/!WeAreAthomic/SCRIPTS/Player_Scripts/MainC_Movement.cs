@@ -54,6 +54,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [NonSerialized] public bool IsJumping;
         [NonSerialized] public bool IsFalling;
         [NonSerialized] public bool IsFollowingTrajectory;
+        private bool canApplyGravity = true;
         private bool _isRunningKeyboard;
         private bool _isRunningGamepad;
         private bool _isCrouchWalking;
@@ -93,7 +94,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _moveAimingX;
         private float _moveAimingY;
         private float _currentWalkSpeed;
-
+        
 
         private void Awake()
         {
@@ -205,8 +206,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (IsJumping || IsFalling || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsSliding && !IsFollowingTrajectory)
             {
-                _velocity += transform.up.normalized * (gravity * Time.deltaTime);
-                _cc.Move(_velocity * Time.deltaTime);
+                if(canApplyGravity)
+                {
+                    _velocity += transform.up.normalized * (gravity * Time.deltaTime);
+                    _cc.Move(_velocity * Time.deltaTime);
+                }
+            
             }
 
             if (IsJumping && IsGrounded() || IsFalling && IsGrounded() || IsFalling && _mainCRail.IsOnRail())
@@ -600,6 +605,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             return false;
+        }
+
+        public void SetCanApplyGravity(bool condition)
+        {
+            canApplyGravity = condition;
         }
 
         private bool CanJumpGround()
