@@ -56,7 +56,7 @@ private void Update()
         if(IsSliding)
         {
             
-            _currentRailSpeed = _mainCMove.IsJumping ? railSpeed / 1.5f : railSpeed;
+            _currentRailSpeed = railSpeed;
         }
 
         if(IsSliding)
@@ -65,10 +65,18 @@ private void Update()
             Debug.DrawRay(currentPosition, Vector3.up * 20, Color.yellow);
         }
 
-        if(IsSliding && !_mainCMove.IsJumping && !_mainCMove.IsFalling)
+        if (IsSliding && !_mainCMove.IsJumping && !_mainCMove.IsFalling)
         {
             _mainCSounds.PlayRailSound();
-            _distancePercentage += _currentRailSpeed * Time.deltaTime / _splineLength ;
+
+            // Calcular la distancia recorrida en el mundo del juego
+            float distanceTraveled = _currentRailSpeed * Time.deltaTime;
+
+            // Calcular el nuevo _distancePercentage basado en la distancia recorrida
+            float newDistancePercentage = _distancePercentage + distanceTraveled / _splineLength;
+
+            // Asegurarse de que el nuevo _distancePercentage esté en el rango [0, 1]
+            _distancePercentage = Mathf.Clamp01(newDistancePercentage);
 
             var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
             //transform.position = Vector3.MoveTowards(transform.position ,currentPosition, railSpeed * Time.deltaTime);
@@ -86,8 +94,6 @@ private void Update()
                 _mainCVFX.SetActiveSparks(false);
                 _mainCVFX.SetActiveSpeedlines(false);
                 IsSliding = false;
-                
-               
             }
 
             var nextPosition = _splineContainer.EvaluatePosition(_distancePercentage + .001f);
@@ -122,12 +128,12 @@ private void Update()
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(railCheck.position,.2f);
+        Gizmos.DrawWireSphere(railCheck.position,.1f);
     }
 
     public bool IsOnRail()
     {
-        return Physics.CheckSphere(railCheck.position, .2f, railLayer);
+        return Physics.CheckSphere(railCheck.position, .1f, railLayer);
     }
 
     public void SetIsSliding(bool isSliding)

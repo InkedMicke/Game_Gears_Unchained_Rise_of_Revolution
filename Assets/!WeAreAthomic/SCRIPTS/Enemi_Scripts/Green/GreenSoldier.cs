@@ -51,7 +51,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
 
         protected override void Update()
         {
-            var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
+            var distanceToPlayer = Vector3.Distance(transform.position, PlayerTr.position);
 
             if (distanceToPlayer < 6f && !IsAttacking && !_soldierHurtBox.IsDeath && IsChasingPlayer)
             {
@@ -114,7 +114,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
         {
             while (!_soldierHurtBox.IsDeath)
             {
-                var currentPlayerPos = _playerTr.transform.position;
+                var currentPlayerPos = PlayerTr.transform.position;
 
                 // Calcular la direcci�n hacia el objetivo
                 Vector3 targetDirection = currentPlayerPos - transform.position;
@@ -183,6 +183,14 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
                 return true;
             }
             return false;
+        }
+
+        public override void StopAttackDueToHurt()
+        {
+            StartCoroutine(DecalSize(false));
+            _soldierAnim.SetGreenCount(0);
+            IsAttacking = false;
+            base.StopAttackDueToHurt();
         }
 
         // Esta funcion se llama cuando animacion de ataque finaliza, Si el player ha salido del decal

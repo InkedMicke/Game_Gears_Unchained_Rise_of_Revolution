@@ -72,7 +72,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if (randomParticleSystem != null)
             {
-                Debug.Log("Activo");
                 randomParticleSystem.Play();
             }
 

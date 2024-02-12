@@ -11,6 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         [SerializeField] private string shootAnimString = "shoot";
         [SerializeField] private string redCount = "redCount";
         [SerializeField] private string greenCount = "ShootCount";
+        [SerializeField] private string orangeCount = "orangeCount";
         [SerializeField] private string hurtAnimString = "Hurt";
 
         private void Awake()
@@ -52,9 +53,14 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _anim.SetInteger(redCount, redcount);
         }
 
-        public void SetGreenCount(int greenCounts)
+        public void SetGreenCount(int greenCount)
         {
-            _anim.SetInteger(greenCount, greenCounts);
+            _anim.SetInteger(this.greenCount, greenCount);
+        }        
+        
+        public void SetOrangeCount(int orangeCount)
+        {
+            _anim.SetInteger(this.orangeCount, orangeCount);
         }
     }
 }

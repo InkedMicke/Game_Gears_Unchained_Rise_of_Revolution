@@ -1,6 +1,7 @@
 using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using _WeAreAthomic.SCRIPTS.Props_Scripts;
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -28,6 +29,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         private MainCMovement _mainCMove;
         private Animator _exclamationAnim;
         protected EnemyBrain _enemyBrain;
+        [NonSerialized] public Rigidbody Rb;
 
         public TypeOfEnemy _typeOfEnemy;
         public TypeOfBehaviour typeOfBehaviour;
@@ -50,14 +52,14 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         private GameObject _playerObj;
 
         private Transform currentWaypoint;
-        protected Transform _playerTr;
+        [NonSerialized] public Transform PlayerTr;
 
         private Vector3 _startPosSearchingPlayer;
 
-        [System.NonSerialized] public bool IsChasingPlayer;
-        [System.NonSerialized] public bool IsAttacking;
-        [System.NonSerialized] public bool IsOnWarning;
-        [System.NonSerialized] public bool CanAttack;
+        [NonSerialized] public bool IsChasingPlayer;
+        [NonSerialized] public bool IsAttacking;
+        [NonSerialized] public bool IsOnWarning;
+        [NonSerialized] public bool CanAttack;
         protected bool isPatrolling;
 
         private bool _isWaitingForPatrol;
@@ -79,6 +81,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _agent = GetComponent<NavMeshAgent>();
             _soldierAnim = GetComponent<SoldierAnimator>();
             _soldierHurtBox = GetComponentInChildren<SoldierHurtBox>();
+            Rb = GetComponent<Rigidbody>();
             _materialChangeOnDetection = decalDetection.GetComponent<C_MaterialChangeOnDetection>();
             _exclamationAnim = exclamacion.GetComponent<Animator>();
         }
@@ -86,7 +89,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         protected virtual void Start()
         {
             _playerObj = GameObject.FindGameObjectWithTag("Player");
-            _playerTr = _playerObj.transform;
+            PlayerTr = _playerObj.transform;
             _mainCHack = _playerObj.GetComponent<MainCHackingSystem>();
             _mainCMove = _playerObj.GetComponent<MainCMovement>();
 
@@ -95,7 +98,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
             if (typeOfBehaviour == TypeOfBehaviour.Patrol)
             {
-                StartPatrol();
+                //StartPatrol();
             }
 
             if (typeOfBehaviour == TypeOfBehaviour.Fighter)
@@ -173,7 +176,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         {
             _isWaitingForPatrol = true;
             _soldierAnim.SetWalking(false);
-            var random = Random.Range(1.5f, 3f);
+            var random = UnityEngine.Random.Range(1.5f, 3f);
             yield return new WaitForSeconds(random);
             _isWaitingForPatrol = false;
             if (!IsOnWarning && !IsAttacking)
@@ -251,7 +254,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         {
             _buttonInt.DisableCanHack();
             _soldierAnim.SetWalking(true);
-            _agent.SetDestination(_playerTr.position);
+            _agent.SetDestination(PlayerTr.position);
             StartCoroutine(RandomPosition());
         }
 
@@ -282,10 +285,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
                     break;
                 }
                 _soldierAnim.SetWalking(false);
-                var random = Random.Range(1f, 2f);
+                var random = UnityEngine.Random.Range(1f, 2f);
                 yield return new WaitForSeconds(random);
                 _soldierAnim.SetWalking(true);
-                Vector3 offsetAleatorio = Random.insideUnitSphere * 5f;
+                Vector3 offsetAleatorio = UnityEngine.Random.insideUnitSphere * 5f;
                 Vector3 posicionAleatoria = _startPosSearchingPlayer + offsetAleatorio;
                 _agent.SetDestination(posicionAleatoria);
 
@@ -318,7 +321,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             if (IsChasingPlayer && !IsAttacking)
             {
                 _materialChangeOnDetection.CatchDecal();
-                _agent.SetDestination(_playerTr.position);
+                _agent.SetDestination(PlayerTr.position);
                 _soldierAnim.SetWalking(true);
             }
 
@@ -333,6 +336,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         {
             _agent.speed = chaseSpeed;
             _agent.stoppingDistance = stoppingDistance;
+        }
+
+        public virtual void StopAttackDueToHurt()
+        {
+
         }
 
         protected void ChangingValuesToChase()
@@ -359,7 +367,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         protected IEnumerator WaitUntilNextAttack()
         {
-
             yield return new WaitForSeconds(waitForNextAttack);
             IsAttacking = false;
             StartChasingPlayer();

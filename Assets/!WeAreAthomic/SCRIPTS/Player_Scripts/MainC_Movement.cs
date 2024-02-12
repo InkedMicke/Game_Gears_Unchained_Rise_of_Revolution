@@ -214,7 +214,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             
             }
 
-            if (IsJumping && IsGrounded() || IsFalling && IsGrounded() || IsFalling && _mainCRail.IsOnRail())
+            if (IsJumping && _cc.isGrounded || IsFalling && _cc.isGrounded || IsFalling && _mainCRail.IsOnRail())
             {
                 IsJumping = false;
                 _mainCAnimator.SetGrounded(true);
@@ -541,7 +541,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCAnimator.SetGrounded(false);
                 _mainCLayers.EnableJumpLayer();
                 _mainCAnimator.SetJumping(true);
-                _velocity = transform.up.normalized * (_mainCRail.HigherJumpDueToInclination() ? jumpImpulseOnRail * 2.45f : jumpImpulseOnRail);
+                _velocity = transform.up.normalized * (_mainCRail.HigherJumpDueToInclination() ? jumpImpulseOnRail * 3f : jumpImpulseOnRail);
                 _timeGraceJumpPeriod = Time.time + timeNextJump;
 
                 _mainCVFX.SetActiveSparks(false);
@@ -639,7 +639,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
-            if (_mainCRail.IsOnRail())
+            if (_mainCRail.IsSliding)
             {
                 return false;
             }
@@ -736,6 +736,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             if (Time.time < _timeGraceJumpPeriod)
+            {
+                return false;
+            }
+
+            if(_mainCRail.HigherJumpDueToInclination())
             {
                 return false;
             }

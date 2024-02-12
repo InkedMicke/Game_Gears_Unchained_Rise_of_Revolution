@@ -14,6 +14,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 
         [SerializeField] private RedAttackHitBox _attackHitBox;
 
+        [SerializeField] private BoxCollider _hitboxCol;
+
         [SerializeField] private ParticleSystem _particlesTornadoDash;
         [SerializeField] private AudioClip dashAudio;
         [Range(0, 1)]
@@ -34,6 +36,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
         private Vector3 indicatorStartPos;
 
         private bool _isDashing;
+        private bool _stoppedAttack;
 
         [SerializeField] private float rotationSpeed = 5f;
         [SerializeField] private float dashDuracion = 5f;
@@ -47,28 +50,26 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 
         protected override void Start()
         {
-            
+
             base.Start();
         }
 
         protected override void Update()
         {
-            var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
+            var distanceToPlayer = Vector3.Distance(transform.position, PlayerTr.position);
 
             if (distanceToPlayer < 9f && !IsAttacking && !_soldierHurtBox.IsDeath && IsChasingPlayer)
             {
-                if (!IsAttacking)
-                {
-                    _agent.isStopped = true;
-                    _soldierAnim.SetWalking(false);
-                    StartDecalToAttack();
-                    IsChasingPlayer = false;
-                    isPatrolling = false;
-                    IsOnWarning = false;
-                }
+                _agent.isStopped = true;
+                _soldierAnim.SetWalking(false);
+                StartDecalToAttack();
+                IsChasingPlayer = false;
+                isPatrolling = false;
+                IsOnWarning = false;
+
             }
 
-            if(_isDashing)
+            if (_isDashing)
             {
                 if (Physics.Raycast(transform.position + Vector3.up * 1.1f, transform.forward, 1f, layersToStopDashing))
                 {
@@ -90,7 +91,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
         {
             while (!_soldierHurtBox.IsDeath)
             {
-                var distanceToPlayer = _playerTr.position - transform.position;
+                var distanceToPlayer = PlayerTr.position - transform.position;
                 distanceToPlayer.y = 0f;
                 if (distanceToPlayer.magnitude > 9f)
                 {
@@ -135,6 +136,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
                 }
                 indicator.uvBias = new(indicator.uvBias.x, 0);
                 _soldierAnim.SetRedCount(1);
+                _stoppedAttack = false;
                 _particlesTornadoDash.Play();
             }
             else
@@ -178,6 +180,32 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
             _soldierAnim.SetAnimRootMotion(false);
             StartCoroutine(WaitUntilNextAttack());
         }
+
+        public override void StopAttackDueToHurt()
+        {
+            if (!_isDashing)
+            {
+                _soldierAnim.SetRedCount(0);
+                StartCoroutine(DecalSizer(false));
+                _stoppedAttack = true;
+                StartDecalToAttack();
+            }
+            base.StopAttackDueToHurt();
+        }
+
+        public void EnableHitboxCollision()
+        {
+            if (!_stoppedAttack)
+            {
+                _hitboxCol.enabled = true;
+            }
+        }
+
+        public void DisableHitBoxCollision()
+        {
+            _hitboxCol.enabled = false;
+        }
+
         public void PlayDashSound()
         {
             var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
@@ -193,5 +221,5 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
         }
     }
 
-    
+
 }

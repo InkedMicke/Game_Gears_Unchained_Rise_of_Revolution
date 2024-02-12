@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 using UnityEngine.Events;
+using System.Collections;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 {
@@ -14,9 +15,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         private C_MaterialChanger _materialChanger;
         private SoldierAnimator _soldierAnimator;
 
-        
-
         [SerializeField] private C_DisolveEnemi _disolveEnemi;
+
+        private Coroutine _waitingForHurtedCoroutine;
 
         [SerializeField] private Slider healthSlider;
 
@@ -31,14 +32,14 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         [SerializeField] private ParticleSystem _particlesHit;
 
-
-
         public bool IsDeath;
+        private bool _isWatingForHurtedtimes;
 
         public int HurtedTimes;
 
         public float maxHealth = 100f;
         public float currentHealth = 0f;
+        [SerializeField] private float pushForce = 20f;
 
         private void Awake()
         {
@@ -58,15 +59,21 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         public void Damage(float damage)
         {
+            _enemy.Rb.AddForce(_enemy.PlayerTr.transform.forward * pushForce , ForceMode.Impulse);
+            StartWaitForResetHutedTimes();
+            HurtedTimes++;
             _cEnemiSounds.PlayHitEnemiSound();
             _particlesHit.Play();
             _materialChanger.OnEnemiHit();
-            _soldierAnimator.HurtTrigger();
+            if(HurtedTimes <= 2)
+            {
+                _soldierAnimator.HurtTrigger();
+                _enemy.StopAttackDueToHurt();
+            }
             currentHealth -= damage;
-            HurtedTimes++;
             SetHealthSlider(currentHealth);
             CheckForDeath();
-            if (!_soldierHurtbox.IsDeath)
+            if (!_soldierHurtbox.IsDeath && !_enemy.IsAttacking && !_enemy.IsChasingPlayer)
             {
                 _enemy.StartChasingPlayer();
                 
@@ -103,6 +110,23 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         public void EndHurtAnim()
         {
             
+        }
+
+        private void StartWaitForResetHutedTimes()
+        {
+            if(_isWatingForHurtedtimes)
+            {
+                StopCoroutine(_waitingForHurtedCoroutine);
+            }
+            _waitingForHurtedCoroutine = StartCoroutine(WaitForResetHutedTimes());
+        }
+
+        private IEnumerator WaitForResetHutedTimes()
+        {
+            _isWatingForHurtedtimes = true;
+            yield return new WaitForSeconds(2f);
+            _isWatingForHurtedtimes = false;
+            HurtedTimes = 0;
         }
 
         public void SetDeath(bool isDeath)

@@ -1,7 +1,6 @@
 using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using UnityEngine;
-using System.Collections;
 using UnityEngine.Audio;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
@@ -10,7 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
     {
         private C_MaterialChangeOnDetection _materialChange;
 
-        [SerializeField] private HitBox[] _hitBoxes;
+        [SerializeField] private SphereCollider _hitbox;
 
         [SerializeField] private ParticleSystem groundSplashEffect;
         [SerializeField] private AudioClip groundSplashAudio;
@@ -23,6 +22,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
         [SerializeField] private GameObject decalArea;
 
         private bool _canGrowth;
+        private bool _stoppedAttack;
 
         [SerializeField] private float maxDecalRange;
         [SerializeField] private float velocityDecalGrow;
@@ -36,23 +36,19 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
 
         protected override void Update()
         {
-            var distanceToPlayer = Vector3.Distance(transform.position, _playerTr.position);
+            var distanceToPlayer = Vector3.Distance(transform.position, PlayerTr.position);
 
-            if (distanceToPlayer < 4.5f && !IsAttacking && !_soldierHurtBox.IsDeath && IsChasingPlayer && !IsAttacking)
+            if (distanceToPlayer < 4.5f && !IsAttacking && !_soldierHurtBox.IsDeath && IsChasingPlayer)
             {
-                if (!IsAttacking)
-                {
                     _agent.isStopped = true;
                     _soldierAnim.SetWalking(false);
-                    //StartCoroutine(GrowAttackIndicator());
                     GrowAttackIndicator();
                     IsChasingPlayer = false;
                     isPatrolling = false;
                     IsAttacking = true;
-                }
             }
 
-            if(_canGrowth)
+            if (_canGrowth)
             {
                 _passedTime += Time.deltaTime;
 
@@ -61,7 +57,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
                     // Calcular la tasa de crecimiento
                     float growthRate = .08f;
 
-                    if(indicator.size.x >= 7)
+                    if (indicator.size.x >= 7)
                     {
                         _canGrowth = false;
                         _materialChange.CatchDecal();
@@ -84,32 +80,64 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
         private void GrowAttackIndicator()
         {
             _materialChange.WarningDecal();
-            _soldierAnim.ShootTrigger();
-            foreach(var x in _hitBoxes)
-            {
-                x.ClearList();
-            }
+            _soldierAnim.SetOrangeCount(1);
+            _soldierAnim.SetWalking(false);
+            _stoppedAttack = false;
         }
 
         public void PlayHitEffect()
         {
+            groundSplashEffect.Clear();
             groundSplashEffect.Play();
             PlaySplashSound();
         }
 
         public void EndAttack()
         {
+            _soldierAnim.SetOrangeCount(0);
             var sizeIndiciator = indicator.size;
             sizeIndiciator.x = 0.1f;
             sizeIndiciator.y = 0.1f;
             indicator.size = sizeIndiciator;
-            StartCoroutine(WaitUntilNextAttack());
+            var distanceToPlayer = Vector3.Distance(transform.position, PlayerTr.position);
+            if (distanceToPlayer > 4.5f)
+            {
+                StartCoroutine(WaitUntilNextAttack());
+            }
+            else
+            {
+                Invoke(nameof(GrowAttackIndicator), 1f);
+                
+            }
         }
 
         public void StartGrowth()
         {
             _canGrowth = true;
         }
+
+        public void EnableHitBoxCollision()
+        {
+            if (!_stoppedAttack)
+            {
+                _hitbox.enabled = true;
+            }
+        }
+
+        public void DisableHitBoxCollision()
+        {
+            _hitbox.enabled = false;
+        }
+
+        public override void StopAttackDueToHurt()
+        {
+            _canGrowth = false;
+            _stoppedAttack = true;
+            groundSplashEffect.Clear();
+            EndAttack();
+            base.StopAttackDueToHurt();
+        }
+
         public void PlaySplashSound()
         {
             var currentAudioSource = soundComponentObj.AddComponent(typeof(AudioSource)) as AudioSource;
@@ -119,7 +147,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
                 currentAudioSource.outputAudioMixerGroup = sfxMixer;
                 currentAudioSource.clip = groundSplashAudio;
                 currentAudioSource.volume = groundSplashVolume;
-                
+
                 currentAudioSource.Play();
             }
         }

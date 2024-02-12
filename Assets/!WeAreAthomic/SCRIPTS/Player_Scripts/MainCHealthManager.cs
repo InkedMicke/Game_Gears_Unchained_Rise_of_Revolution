@@ -52,6 +52,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Start()
         {
+            currentHealth = maxHealth;
             SetMaxHealthSlider();
             SetHealthSlider();
         }
@@ -76,7 +77,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainSounds.RemoveAllSounds();
                 _mainSounds.PlayHurtSound();
                 _mainCAnim.TriggerHit();
-                _mainCLayers.EnableHitLayer();
                 SetHealthSlider();
                 CheckDeath();
                 StartCoroutine(HitDesactivate());
