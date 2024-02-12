@@ -98,7 +98,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
             if (typeOfBehaviour == TypeOfBehaviour.Patrol)
             {
-                //StartPatrol();
+               StartPatrol();
             }
 
             if (typeOfBehaviour == TypeOfBehaviour.Fighter)
