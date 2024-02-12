@@ -48,7 +48,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         [SerializeField] private GameObject interrogacion;
 
         [SerializeField] private GameObject decalDetection;
-        
+
         private GameObject _playerObj;
 
         private Transform currentWaypoint;
@@ -75,6 +75,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         private float timeToGetCached = .4f;
         private float _totalTimeCached;
         [SerializeField] private float waitForNextAttack;
+        [SerializeField] private float pushForce = 20f;
+        public float mass;
 
         protected virtual void Awake()
         {
@@ -98,7 +100,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
             if (typeOfBehaviour == TypeOfBehaviour.Patrol)
             {
-               StartPatrol();
+                StartPatrol();
             }
 
             if (typeOfBehaviour == TypeOfBehaviour.Fighter)
@@ -363,6 +365,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         public void DisableMovement()
         {
             _agent.isStopped = true;
+        }
+
+        public virtual void Knockback()
+        {
+            Rb.AddForce(PlayerTr.transform.forward * pushForce, ForceMode.Impulse);
         }
 
         protected IEnumerator WaitUntilNextAttack()

@@ -188,7 +188,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             while (_isRecoveringShoot && !_isShooting)
             {
-                Debug.Log("hola1");
                 _mainCInterface.ChargeEnergy(1);
                 _mainCAttack.SetRunOutEnergy(false);
                 if (GameManagerSingleton.Instance.bastetEnergy > 100f)

@@ -39,7 +39,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         public float maxHealth = 100f;
         public float currentHealth = 0f;
-        [SerializeField] private float pushForce = 20f;
 
         private void Awake()
         {
@@ -59,12 +58,13 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         public void Damage(float damage)
         {
-            _enemy.Rb.AddForce(_enemy.PlayerTr.transform.forward * pushForce , ForceMode.Impulse);
+            _enemy.Knockback();
             StartWaitForResetHutedTimes();
             HurtedTimes++;
             _cEnemiSounds.PlayHitEnemiSound();
             _particlesHit.Play();
             _materialChanger.OnEnemiHit();
+            _enemy.Rb.mass = _enemy.mass;
             if(HurtedTimes <= 2)
             {
                 _soldierAnimator.HurtTrigger();

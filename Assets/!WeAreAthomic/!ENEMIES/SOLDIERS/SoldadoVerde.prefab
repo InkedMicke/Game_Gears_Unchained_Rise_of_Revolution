@@ -177,15 +177,15 @@ Transform:
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 7728636986346427985}
   - {fileID: 8187944273788698538}
+  - {fileID: 7728636986346427985}
   - {fileID: 507766871874570063}
   - {fileID: 7983409125205743803}
   - {fileID: 6300919513793147432}
   - {fileID: 5307147061799431835}
   - {fileID: 2209460868538222193}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7864609738589064973
 Animator:
@@ -288,6 +288,8 @@ MonoBehaviour:
   chaseSpeed: 3
   stoppingDistance: 5
   waitForNextAttack: 2
+  pushForce: 20
+  mass: 50
   moveToDecalCurve:
     serializedVersion: 2
     m_Curve: []
@@ -328,6 +330,7 @@ MonoBehaviour:
   shootAnimString: shoot
   redCount: redCount
   greenCount: ShootCount
+  orangeCount: orangeCount
   hurtAnimString: Hurt
 --- !u!114 &5632661560983212616
 MonoBehaviour:
@@ -496,7 +499,6 @@ MonoBehaviour:
   HurtedTimes: 0
   maxHealth: 100
   currentHealth: 0
-  pushForce: 500
 --- !u!114 &7391637313427836740
 MonoBehaviour:
   m_ObjectHideFlags: 0

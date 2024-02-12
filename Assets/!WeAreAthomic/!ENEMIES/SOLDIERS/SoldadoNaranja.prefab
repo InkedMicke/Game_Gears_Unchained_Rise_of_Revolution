@@ -112,7 +112,6 @@ MonoBehaviour:
   HurtedTimes: 0
   maxHealth: 100
   currentHealth: 0
-  pushForce: 500
 --- !u!114 &3494327656537055583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10065,16 +10064,16 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 2873395756055394612}
   - {fileID: 4726308314487099026}
   - {fileID: 1642133490791264307}
-  - {fileID: 2873395756055394612}
   - {fileID: 7475714329995903652}
   - {fileID: 3163177796248224212}
   - {fileID: 5793185224741482579}
   - {fileID: 2263510721093623249}
   - {fileID: 6832374702158676903}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8782966382090269764
 Animator:
@@ -10177,6 +10176,8 @@ MonoBehaviour:
   chaseSpeed: 2
   stoppingDistance: 3
   waitForNextAttack: 2
+  pushForce: 20
+  mass: 80
   _hitbox: {fileID: 6557447602506952251}
   groundSplashEffect: {fileID: 5823954174377461218}
   groundSplashAudio: {fileID: 8300000, guid: eb095ef90217d714ebfc09d90d2a3170, type: 3}

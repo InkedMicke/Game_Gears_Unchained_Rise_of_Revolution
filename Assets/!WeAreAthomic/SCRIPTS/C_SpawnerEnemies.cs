@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[System.Serializable]
+public class Wave
+{
+    public List<TypeOfEnemy> enemiesInWave;
+}
+
 public class C_SpawnerEnemies : MonoBehaviour
 {
     enum TypeOfSpawner
@@ -24,41 +30,14 @@ public class C_SpawnerEnemies : MonoBehaviour
     [SerializeField] private GameObject goHere;
 
     public List<GameObject> _currentEnemiesObj = new ();
-    [SerializeField]private List<TypeOfEnemy> _wave1;
-    [SerializeField] private List<TypeOfEnemy> _wave2;
-    [SerializeField] private List<TypeOfEnemy> _wave3;
-    [SerializeField] private List<TypeOfEnemy> _wave4;
-    [SerializeField] private List<TypeOfEnemy> _wave5;
-    [SerializeField] private List<TypeOfEnemy> _wave6;
-
-    private List<List<TypeOfEnemy>> _wavesList;
+    public List<Wave> _wavesList;
 
     [SerializeField] private UnityEvent onFinish;
    
 
     private Enemy _enemy;
-    private void Start()
-    {
-        // Inicializar _wavesList antes de agregar elementos
-        _wavesList = new List<List<TypeOfEnemy>>
-        {
-            //2 verdes / 1 naranja / 1 rojo
-            // 1 verde / 2 naranjas/ 1 rojo
-            // 3 rojos / 1 verde
-            // 4 verdes
-            //2 naranjas /1 verde
-            //2 rojos / 1 naranja
-
-            _wave1,
-            _wave2,
-            _wave3,
-            _wave4,
-            _wave5,
-            _wave6
-        };
 
 
-    }
 
     
 
@@ -73,9 +52,10 @@ public class C_SpawnerEnemies : MonoBehaviour
         while (currentWave < numberOfWaves)
         {
 
-            var random = Random.Range(0, _wavesList.Count);
+            var random = Random.Range(0, _wavesList.Count); ;
+            Wave selectedWave = _wavesList[random];
 
-            foreach (var obj in _wavesList[random])
+            foreach (var obj in selectedWave.enemiesInWave)
             {
                 var randomPos = Random.Range(0, pointToSpawn.Length);
                 var soldado = Instantiate(GameManagerSingleton.Instance.TypeOfEnemyToPrefab(obj), pointToSpawn[randomPos].position, Quaternion.identity);
@@ -94,8 +74,8 @@ public class C_SpawnerEnemies : MonoBehaviour
 
                 yield return new WaitForEndOfFrame();
 
-                StartCoroutine(MoveBarrierDown());
-                onFinish.Invoke();
+                //StartCoroutine(MoveBarrierDown());
+                //onFinish.Invoke();
             }
 
             yield return new WaitForEndOfFrame();
@@ -124,8 +104,8 @@ public class C_SpawnerEnemies : MonoBehaviour
         for (int i = _currentEnemiesObj.Count - 1; i >= 0; i--)
         {
             var soldado = _currentEnemiesObj[i];
-
-            if (soldado.GetComponentInChildren<SoldierHurtBox>().IsDeath)
+            var hurtbox = soldado.transform.GetChild(0).GetComponent<SoldierHurtBox>();
+            if (hurtbox.IsDeath)
             {
                 _currentEnemiesObj.RemoveAt(i);
             }
