@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5341545962894270607}
   - component: {fileID: 4854784418271717909}
+  - component: {fileID: 9211340413229532396}
+  - component: {fileID: 41027009035275504}
+  - component: {fileID: 3964508699410067179}
   m_Layer: 0
   m_Name: Spline_Cables
   m_TagString: Untagged
@@ -59,8 +62,170 @@ MonoBehaviour:
       m_Data: []
   m_Splines:
   - m_EditModeType: 1
-    m_Knots: []
-    m_MetaData: []
+    m_Knots:
+    - Position:
+        x: 0.00012207031
+        y: 0
+        z: 0
+      TangentIn:
+        x: 0
+        y: 0
+        z: 0
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0
+      Rotation:
+        value:
+          x: 0
+          y: 0.70710677
+          z: 0
+          w: 0.70710677
+    - Position:
+        x: 0.00012207031
+        y: 0.82699585
+        z: -0.0061035156
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0.08270184
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.08270184
+      Rotation:
+        value:
+          x: 0
+          y: 0.70971125
+          z: 0.7044927
+          w: 0
+    m_MetaData:
+    - Mode: 1
+      Tension: 0.5
+      m_DistanceToInterpolation:
+      - Distance: 0
+        T: 0
+      - Distance: 0.0025974663
+        T: 0.03448276
+      - Distance: 0.01015928
+        T: 0.06896552
+      - Distance: 0.022339568
+        T: 0.10344828
+      - Distance: 0.038792446
+        T: 0.13793103
+      - Distance: 0.05917205
+        T: 0.1724138
+      - Distance: 0.08313249
+        T: 0.20689656
+      - Distance: 0.110327885
+        T: 0.2413793
+      - Distance: 0.14041239
+        T: 0.27586207
+      - Distance: 0.17304009
+        T: 0.31034482
+      - Distance: 0.20786515
+        T: 0.3448276
+      - Distance: 0.24454162
+        T: 0.37931034
+      - Distance: 0.28272375
+        T: 0.41379312
+      - Distance: 0.3220655
+        T: 0.44827586
+      - Distance: 0.3622211
+        T: 0.4827586
+      - Distance: 0.4028447
+        T: 0.51724136
+      - Distance: 0.4435903
+        T: 0.55172414
+      - Distance: 0.48411217
+        T: 0.5862069
+      - Distance: 0.52406424
+        T: 0.62068963
+      - Distance: 0.56310093
+        T: 0.6551724
+      - Distance: 0.6008761
+        T: 0.6896552
+      - Distance: 0.63704383
+        T: 0.7241379
+      - Distance: 0.67125857
+        T: 0.7586207
+      - Distance: 0.7031743
+        T: 0.79310346
+      - Distance: 0.73244494
+        T: 0.82758623
+      - Distance: 0.7587247
+        T: 0.86206895
+      - Distance: 0.7816678
+        T: 0.8965517
+      - Distance: 0.8009285
+        T: 0.9310345
+      - Distance: 0.8161606
+        T: 0.9655172
+      - Distance: 0.82701844
+        T: 1
+    - Mode: 0
+      Tension: 0.5
+      m_DistanceToInterpolation:
+      - Distance: -1
+        T: -1
+      - Distance: 0.007644027
+        T: 0.03448276
+      - Distance: 0.013650146
+        T: 0.06896552
+      - Distance: 0.018139478
+        T: 0.10344828
+      - Distance: 0.021233495
+        T: 0.13793103
+      - Distance: 0.02305344
+        T: 0.1724138
+      - Distance: 0.023720905
+        T: 0.20689656
+      - Distance: 0.024084918
+        T: 0.2413793
+      - Distance: 0.025358932
+        T: 0.27586207
+      - Distance: 0.02742159
+        T: 0.31034482
+      - Distance: 0.030151654
+        T: 0.3448276
+      - Distance: 0.03342765
+        T: 0.37931034
+      - Distance: 0.037128393
+        T: 0.41379312
+      - Distance: 0.041132413
+        T: 0.44827586
+      - Distance: 0.04531847
+        T: 0.4827586
+      - Distance: 0.049565144
+        T: 0.51724136
+      - Distance: 0.0537512
+        T: 0.55172414
+      - Distance: 0.05775522
+        T: 0.5862069
+      - Distance: 0.061455965
+        T: 0.62068963
+      - Distance: 0.06473196
+        T: 0.6551724
+      - Distance: 0.06746197
+        T: 0.6896552
+      - Distance: 0.06952468
+        T: 0.7241379
+      - Distance: 0.070798695
+        T: 0.7586207
+      - Distance: 0.07116265
+        T: 0.79310346
+      - Distance: 0.07182994
+        T: 0.82758623
+      - Distance: 0.07365
+        T: 0.86206895
+      - Distance: 0.07674396
+        T: 0.8965517
+      - Distance: 0.08123341
+        T: 0.9310345
+      - Distance: 0.087239414
+        T: 0.9655172
+      - Distance: 0.0948835
+        T: 1
     m_Closed: 0
     m_IntData:
       m_Data: []
@@ -72,6 +237,77 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
+--- !u!33 &9211340413229532396
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3101205074103589323}
+  m_Mesh: {fileID: 4300000, guid: 20471a8da7ad37445b5756e4ba594fee, type: 2}
+--- !u!23 &41027009035275504
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3101205074103589323}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 837b25d991e64ec49b7281e35b5c091c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3964508699410067179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3101205074103589323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 222dc08d484f16869bdd89edd9d368fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Container: {fileID: 4854784418271717909}
+  m_RebuildOnSplineChange: 0
+  m_RebuildFrequency: 30
+  m_UpdateColliders: 1
+  m_Sides: 4
+  m_SegmentsPerUnit: 4
+  m_Capped: 1
+  m_Radius: 0.1
+  m_Range: {x: 0, y: 1}
 --- !u!1 &4037802375902028038
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,22 +727,27 @@ PrefabInstance:
     - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
         type: 3}
       propertyPath: timeToHack
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
-        type: 3}
-      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
         type: 3}
+      propertyPath: typeOfHacked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
+        type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
         type: 3}
@@ -515,9 +756,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
         type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9091739209909780534}
+    - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
+        type: 3}
+      propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2394638222555916345}
+    - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
+        type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 4037802375902028038}
+      objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -536,27 +787,27 @@ PrefabInstance:
     - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TurnOffCamera
+      value: Play
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: TurnOffCamera
+      value: OnPlayerCatched
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: _WeAreAthomic.SCRIPTS.LightKiller.CctvController, Assembly-CSharp
+      value: UnityEngine.AudioSource, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: _WeAreAthomic.SCRIPTS.LightKiller.CctvController, Assembly-CSharp
+      value: C_MaterialChanger, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
         type: 3}
       propertyPath: seActivanCuandoTerminaElHack.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: _WeAreAthomic.SCRIPTS.LightKiller.CctvController, Assembly-CSharp
+      value: C_MaterialChanger, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7841914987761911187, guid: 6036c12574bf49849a4de577e587cb84,
         type: 3}
