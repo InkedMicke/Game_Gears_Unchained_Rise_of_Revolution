@@ -10,8 +10,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         private LightKiller _lKiller;
         private MainCMovement _mainCMovement;
         private MainCHackingSystem _mainCHacking;
-        
-
+        private MainCCrouch m_mainCCrouch;
+       
         private AudioSource _cameraAudio;
 
         [SerializeField] private GameObject lKillerObj;
@@ -44,6 +44,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _playerObj = GameObject.FindGameObjectWithTag("Player");
             _mainCMovement = _playerObj.GetComponent<MainCMovement>();
             _mainCHacking = _playerObj.GetComponent<MainCHackingSystem>();
+            m_mainCCrouch = _playerObj.GetComponent<MainCCrouch>();
             _cameraAudio = GetComponent<AudioSource>();
 
             _volumeCatch = _playerObj.transform.GetChild(_playerObj.transform.childCount - 2).gameObject;
@@ -122,7 +123,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 }
 
                 var playerPos = _playerObj.transform.position;
-                var desiredPos = new Vector3(playerPos.x, _mainCMovement.IsCrouch ? playerPos.y + 1.5f :playerPos.y + 2f, playerPos.z);
+                var desiredPos = new Vector3(playerPos.x, m_mainCCrouch.IsCrouch ? playerPos.y + 1.5f :playerPos.y + 2f, playerPos.z);
                 var direction = desiredPos - transform.position;
 
                 var raycastLength = direction.magnitude;

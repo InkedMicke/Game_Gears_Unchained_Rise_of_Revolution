@@ -9,9 +9,10 @@ public class MainCRail : MonoBehaviour
     private MainCDash _mainCDash;
     private MainCMovement _mainCMove;
     private CharacterController _cc;
-    private MainCVFX _mainCVFX;
-    private MainCLayers _mainClayers;
-    private MainCSounds _mainCSounds;
+    private MainCVFX m_mainCVFX;
+    private MainCLayers m_mainClayers;
+    private MainCSounds m_mainCSounds;
+    private MainCJump m_mainCJump;
 
     [SerializeField] private LayerMask railLayer;
 
@@ -36,38 +37,38 @@ public class MainCRail : MonoBehaviour
         _mainCAnim = GetComponent<MainCAnimatorController>();
         _mainCMove = GetComponent<MainCMovement>();
         _cc = GetComponent<CharacterController>();
-        _mainCVFX = GetComponent<MainCVFX>();
-        _mainClayers = GetComponent<MainCLayers>();
+        m_mainCVFX = GetComponent<MainCVFX>();
+        m_mainClayers = GetComponent<MainCLayers>();
         _mainCDash = GetComponent<MainCDash>();
-        _mainCSounds = GetComponent<MainCSounds>();
+        m_mainCSounds = GetComponent<MainCSounds>();
+        m_mainCJump = GetComponent<MainCJump>();
+    }
 
-}
 
-
-private void Update()
+    private void Update()
     {
-        if(IsOnRail() && !IsSliding)
+        if (IsOnRail() && !IsSliding)
         {
-           
+
             StartSlide();
 
         }
 
-        if(IsSliding)
+        if (IsSliding)
         {
-            
+
             _currentRailSpeed = railSpeed;
         }
 
-        if(IsSliding)
+        if (IsSliding)
         {
             var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
             Debug.DrawRay(currentPosition, Vector3.up * 20, Color.yellow);
         }
 
-        if (IsSliding && !_mainCMove.IsJumping && !_mainCMove.IsFalling)
+        if (IsSliding && !m_mainCJump.IsJumping && !_mainCMove.IsFalling)
         {
-            _mainCSounds.PlayRailSound();
+            m_mainCSounds.PlayRailSound();
 
             // Calcular la distancia recorrida en el mundo del juego
             float distanceTraveled = _currentRailSpeed * Time.deltaTime;
@@ -83,16 +84,16 @@ private void Update()
             var posVector = new Vector3(currentPosition.x, currentPosition.y, currentPosition.z);
             var difference = posVector - transform.position;
             _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
-            
+
 
 
             if (_distancePercentage > 1f && IsSliding)
             {
                 _mainCAnim.SetSliding(false);
-                _mainClayers.DisableSlideLayer();
+                m_mainClayers.DisableSlideLayer();
                 _mainCDash.StartDash(false);
-                _mainCVFX.SetActiveSparks(false);
-                _mainCVFX.SetActiveSpeedlines(false);
+                m_mainCVFX.SetActiveSparks(false);
+                m_mainCVFX.SetActiveSpeedlines(false);
                 IsSliding = false;
             }
 
@@ -100,7 +101,7 @@ private void Update()
             var direction = nextPosition - currentPosition;
             transform.rotation = Quaternion.LookRotation(direction, transform.up);
         }
-        else if(IsSliding && _mainCMove.IsJumping || IsSliding && _mainCMove.IsFalling)
+        else if (IsSliding && m_mainCJump.IsJumping || IsSliding && _mainCMove.IsFalling)
         {
             _distancePercentage += _currentRailSpeed * Time.deltaTime / _splineLength;
             var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
@@ -108,27 +109,27 @@ private void Update()
             //transform.position = Vector3.MoveTowards(transform.position, currentPosition, railSpeed * Time.deltaTime);
             var difference = posVector - transform.position;
             _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
-            _mainCSounds.RemoveRailSounds();
+            m_mainCSounds.RemoveRailSounds();
         }
     }
 
     private void StartSlide()
     {
         _distancePercentage = 0;
-        _mainClayers.EnableSlideLayer();
+        m_mainClayers.EnableSlideLayer();
         _mainCAnim.SetSliding(true);
         _splineContainer = splineFollower.GetComponent<SplineContainer>();
         _splineLength = _splineContainer.CalculateLength();
         IsSliding = true;
         _mainCAnim.SetMoveSpeed(0);
-        _mainCVFX.SetRailEffects(true);
+        m_mainCVFX.SetRailEffects(true);
         //_mainCSounds.PlayRailSound();
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(railCheck.position,.1f);
+        Gizmos.DrawWireSphere(railCheck.position, .1f);
     }
 
     public bool IsOnRail()

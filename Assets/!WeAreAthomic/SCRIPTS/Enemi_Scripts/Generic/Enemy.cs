@@ -26,7 +26,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         protected SoldierHurtBox _soldierHurtBox;
         private C_MaterialChangeOnDetection _materialChangeOnDetection;
         private MainCHackingSystem _mainCHack;
-        private MainCMovement _mainCMove;
+        private MainCJump _mainCJump;
+        private MainCCrouch _mainCCrouch;
         private Animator _exclamationAnim;
         protected EnemyBrain _enemyBrain;
         [NonSerialized] public Rigidbody Rb;
@@ -93,7 +94,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _playerObj = GameObject.FindGameObjectWithTag("Player");
             PlayerTr = _playerObj.transform;
             _mainCHack = _playerObj.GetComponent<MainCHackingSystem>();
-            _mainCMove = _playerObj.GetComponent<MainCMovement>();
+            _mainCJump = _playerObj.GetComponent<MainCJump>();
+            _mainCCrouch = _playerObj.GetComponent<MainCCrouch>();
 
             var enemyBrainObject = GameObject.FindGameObjectWithTag("EnemyBrain");
             _enemyBrain = enemyBrainObject.GetComponent<EnemyBrain>();
@@ -227,7 +229,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         private void CheckIfPlayerHearedNear()
         {
-            if ((_fovHearNear.canSeePlayer && !IsChasingPlayer && !IsAttacking && !_mainCMove.IsCrouch) || (_fovHearNear.canSeePlayer && _mainCMove.IsJumping))
+            if ((_fovHearNear.canSeePlayer && !IsChasingPlayer && !IsAttacking && !_mainCCrouch.IsCrouch) || (_fovHearNear.canSeePlayer && _mainCJump.IsJumping))
             {
                 if (!IsChasingPlayer && !IsAttacking)
                 {
@@ -239,7 +241,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         private void CheckIfPlayerHeardFar()
         {
-            if ((_fovHearFar.canSeePlayer && !IsChasingPlayer && !IsAttacking && !_mainCMove.IsCrouch) || (_fovHearFar.canSeePlayer && _mainCMove.IsJumping && !IsChasingPlayer && !IsAttacking))
+            if ((_fovHearFar.canSeePlayer && !IsChasingPlayer && !IsAttacking && !_mainCCrouch.IsCrouch) || (_fovHearFar.canSeePlayer && _mainCJump.IsJumping && !IsChasingPlayer && !IsAttacking))
             {
                 if (!IsOnWarning && !IsAttacking)
                 {

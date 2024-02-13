@@ -7,7 +7,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
     public class MainCLayers : MonoBehaviour
     {
         private Animator _anim;
-    
+
         private float _attackLayerMultiplier;
         private float _finalAttackLayerMultiplier;
         private float _abilityAttackLayerMultiplier;
@@ -16,10 +16,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _slideLayerMultiplier;
         private float _hackLayerMultiplier;
         private float _jumpLayerMultiplier;
+        private float _newAttackLayerMultiplier;
 
-        [System.NonSerialized] public bool isAttackLayerActive;
-        [System.NonSerialized] public bool isFinalAttackLayerActive;
-        [System.NonSerialized] public bool isCrouchLayerActive;
+        [NonSerialized] public bool isAttackLayerActive;
+        [NonSerialized] public bool isFinalAttackLayerActive;
+        [NonSerialized] public bool isCrouchLayerActive;
         private void Awake()
         {
             _anim = GetComponentInChildren<Animator>();
@@ -40,17 +41,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Hack")), _hackLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("AbilityAttack")), _abilityAttackLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Jump")), _jumpLayerMultiplier);
+            _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("NewAttack")), _newAttackLayerMultiplier);
         }
 
         private void EvaluateLayers()
         {
-            if(Math.Abs(_attackLayerMultiplier - 1f) < 0.1f)
+            if (Math.Abs(_attackLayerMultiplier - 1f) < 0.1f)
             {
                 isAttackLayerActive = true;
             }
             else
             {
-                if(isAttackLayerActive)
+                if (isAttackLayerActive)
                 {
                     isAttackLayerActive = false;
                 }
@@ -85,12 +87,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             StartCoroutine(nameof(EnableAttackCoroutine));
         }
-    
+
         public void DisableAttackLayer()
         {
             StartCoroutine(nameof(DisableAttackCoroutine));
         }
-        
+
         public void EnableFinalAttackLayer()
         {
             StartCoroutine(nameof(EnableFinalAttackCoroutine));
@@ -99,8 +101,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void DisableFinalAttackLayer()
         {
             StartCoroutine(nameof(DisableFinalAttackCoroutine));
-        }        
-        
+        }
+
         public void EnableAbilityAttackLayer()
         {
             StartCoroutine(nameof(EnableAbilityAttackCoroutine));
@@ -115,17 +117,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             StartCoroutine(nameof(EnableCrouchCoroutine));
         }
-    
+
         public void DisableCrouchLayer()
         {
             StartCoroutine(nameof(DisableCrouchCoroutine));
         }
-    
+
         public void EnableSphereAttackLayer()
         {
             StartCoroutine(nameof(EnableSphereAttackCoroutine));
         }
-    
+
         public void DisableSphereAttackLayer()
         {
             StartCoroutine(nameof(DisableSphereAttackCoroutine));
@@ -149,8 +151,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void DisableHackLayer()
         {
             StartCoroutine(nameof(DisableHackCoroutine));
-        }        
-        
+        }
+
         public void EnableJumpLayer()
         {
             StartCoroutine(nameof(EnableJumpCoroutine));
@@ -159,8 +161,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void DisableJumpLayer()
         {
             StartCoroutine(nameof(DisableJumpCoroutine));
-        }        
-       
+        }
+
+        public void EnableNewAttackLayer()
+        {
+            StartCoroutine(nameof(EnableNewAttackCoroutine));
+        }
+
+        public void DisableNewAttackLayer()
+        {
+            StartCoroutine(nameof(DisableNewAttackCoroutine));
+        }
+
 
         private IEnumerator EnableAttackCoroutine()
         {
@@ -179,7 +191,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 yield return new WaitForSeconds(0.01f);
             }
         }
-    
+
         private IEnumerator DisableAttackCoroutine()
         {
             var canDisableLayer = true;
@@ -233,7 +245,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 yield return new WaitForSeconds(0.01f);
             }
         }
-                
+
         private IEnumerator EnableAbilityAttackCoroutine()
         {
             var canEnableLayer = true;
@@ -287,7 +299,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 yield return new WaitForSeconds(0.01f);
             }
         }
-    
+
         private IEnumerator DisableCrouchCoroutine()
         {
             var canDisableLayer = true;
@@ -305,7 +317,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 yield return new WaitForSeconds(0.01f);
             }
         }
-    
+
         private IEnumerator EnableSphereAttackCoroutine()
         {
             var canEnableLayer = true;
@@ -323,7 +335,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 yield return new WaitForSeconds(0.01f);
             }
         }
-    
+
         private IEnumerator DisableSphereAttackCoroutine()
         {
             var canDisableLayer = true;
@@ -366,7 +378,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             while (canDisableLayer)
             {
-                _slideLayerMultiplier -= 24 * Time.unscaledDeltaTime;
+                _slideLayerMultiplier -= 40 * Time.unscaledDeltaTime;
 
                 if (_slideLayerMultiplier <= 0f)
                 {
@@ -412,8 +424,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                 yield return new WaitForSeconds(0.01f);
             }
-        }        
-        
+        }
+
         private IEnumerator EnableJumpCoroutine()
         {
             var canEnableLayer = true;
@@ -448,7 +460,42 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                 yield return new WaitForSeconds(0.01f);
             }
-        }        
-       
+        }
+        private IEnumerator EnableNewAttackCoroutine()
+        {
+            var canEnableLayer = true;
+
+            while (canEnableLayer)
+            {
+                _newAttackLayerMultiplier += 24 * Time.unscaledDeltaTime;
+
+                if (_newAttackLayerMultiplier >= 1f)
+                {
+                    _newAttackLayerMultiplier = 1f;
+                    canEnableLayer = false;
+                }
+
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
+        private IEnumerator DisableNewAttackCoroutine()
+        {
+            var canDisableLayer = true;
+
+            while (canDisableLayer)
+            {
+                _newAttackLayerMultiplier -= 24 * Time.unscaledDeltaTime;
+
+                if (_newAttackLayerMultiplier <= 0f)
+                {
+                    _newAttackLayerMultiplier = 0f;
+                    canDisableLayer = false;
+                }
+
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
     }
 }

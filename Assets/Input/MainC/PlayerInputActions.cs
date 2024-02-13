@@ -73,7 +73,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SwitchWeapon"",
+                    ""name"": ""FocusEnemy"",
                     ""type"": ""Button"",
                     ""id"": ""b03f3a47-0bca-47e2-9c7c-06c1f28e0a18"",
                     ""expectedControlType"": ""Button"",
@@ -297,7 +297,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""SwitchWeapon"",
+                    ""action"": ""FocusEnemy"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1027,7 +1027,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerPC_Crouch = m_PlayerPC.FindAction("Crouch", throwIfNotFound: true);
         m_PlayerPC_Jump = m_PlayerPC.FindAction("Jump", throwIfNotFound: true);
         m_PlayerPC_Attack = m_PlayerPC.FindAction("Attack", throwIfNotFound: true);
-        m_PlayerPC_SwitchWeapon = m_PlayerPC.FindAction("SwitchWeapon", throwIfNotFound: true);
+        m_PlayerPC_FocusEnemy = m_PlayerPC.FindAction("FocusEnemy", throwIfNotFound: true);
         m_PlayerPC_Interact = m_PlayerPC.FindAction("Interact", throwIfNotFound: true);
         m_PlayerPC_GodMode = m_PlayerPC.FindAction("GodMode", throwIfNotFound: true);
         m_PlayerPC_Slow = m_PlayerPC.FindAction("Slow", throwIfNotFound: true);
@@ -1136,7 +1136,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerPC_Crouch;
     private readonly InputAction m_PlayerPC_Jump;
     private readonly InputAction m_PlayerPC_Attack;
-    private readonly InputAction m_PlayerPC_SwitchWeapon;
+    private readonly InputAction m_PlayerPC_FocusEnemy;
     private readonly InputAction m_PlayerPC_Interact;
     private readonly InputAction m_PlayerPC_GodMode;
     private readonly InputAction m_PlayerPC_Slow;
@@ -1158,7 +1158,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_PlayerPC_Crouch;
         public InputAction @Jump => m_Wrapper.m_PlayerPC_Jump;
         public InputAction @Attack => m_Wrapper.m_PlayerPC_Attack;
-        public InputAction @SwitchWeapon => m_Wrapper.m_PlayerPC_SwitchWeapon;
+        public InputAction @FocusEnemy => m_Wrapper.m_PlayerPC_FocusEnemy;
         public InputAction @Interact => m_Wrapper.m_PlayerPC_Interact;
         public InputAction @GodMode => m_Wrapper.m_PlayerPC_GodMode;
         public InputAction @Slow => m_Wrapper.m_PlayerPC_Slow;
@@ -1195,9 +1195,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
-            @SwitchWeapon.started += instance.OnSwitchWeapon;
-            @SwitchWeapon.performed += instance.OnSwitchWeapon;
-            @SwitchWeapon.canceled += instance.OnSwitchWeapon;
+            @FocusEnemy.started += instance.OnFocusEnemy;
+            @FocusEnemy.performed += instance.OnFocusEnemy;
+            @FocusEnemy.canceled += instance.OnFocusEnemy;
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
@@ -1253,9 +1253,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
-            @SwitchWeapon.started -= instance.OnSwitchWeapon;
-            @SwitchWeapon.performed -= instance.OnSwitchWeapon;
-            @SwitchWeapon.canceled -= instance.OnSwitchWeapon;
+            @FocusEnemy.started -= instance.OnFocusEnemy;
+            @FocusEnemy.performed -= instance.OnFocusEnemy;
+            @FocusEnemy.canceled -= instance.OnFocusEnemy;
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
@@ -1649,7 +1649,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
-        void OnSwitchWeapon(InputAction.CallbackContext context);
+        void OnFocusEnemy(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnGodMode(InputAction.CallbackContext context);
         void OnSlow(InputAction.CallbackContext context);
