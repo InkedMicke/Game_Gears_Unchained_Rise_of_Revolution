@@ -424,12 +424,10 @@ MonoBehaviour:
   barrier: {fileID: 0}
   goHere: {fileID: 0}
   _currentEnemiesObj: []
-  _wave1: 000000000100000000000000
-  _wave2: 020000000000000000000000
-  _wave3: 020000000000000002000000
-  _wave4: 010000000200000000000000
-  _wave5: 010000000000000001000000
-  _wave6: 020000000200000002000000
+  _wavesList: []
+  onFinish:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4170060972796025187
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,7 +470,7 @@ GameObject:
   - component: {fileID: 976467578634547404}
   - component: {fileID: 2158132033220863009}
   - component: {fileID: 724838008337620578}
-  - component: {fileID: 3986146752955969577}
+  - component: {fileID: 5516746321932909471}
   m_Layer: 10
   m_Name: HurtBoxLight
   m_TagString: Untagged
@@ -545,7 +543,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &3986146752955969577
+--- !u!114 &5516746321932909471
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -554,68 +552,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7811270381862430988}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77e05e52d61013e429a9355ceac26907, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f18433375c814e4eb2c2e429a116e62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionDetection:
-  - enabled: 1
-    detectionLayer:
-      serializedVersion: 2
-      m_Bits: 256
-    detectionType: 0
-    eventsToActivate:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 6835868925388490257}
-          m_TargetAssemblyTypeName: LightKiller, Assembly-CSharp
-          m_MethodName: RedLight
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 8646339526130789239, guid: fefbaa6b55d08b34ba68dddc4393a15b,
-            type: 3}
-          m_TargetAssemblyTypeName: _WeAreAthomic.SCRIPTS.Player.MainCHackingSystem,
-            Assembly-CSharp
-          m_MethodName: StopHack
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    additionalInfo: 
-  - enabled: 1
-    detectionLayer:
-      serializedVersion: 2
-      m_Bits: 256
-    detectionType: 2
-    eventsToActivate:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 6835868925388490257}
-          m_TargetAssemblyTypeName: LightKiller, Assembly-CSharp
-          m_MethodName: WhiteLight
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    additionalInfo: 
-  useTargetScript: 0
-  targetScript: {fileID: 0}
+  lightsToTurnRed: []
+  isConntectedToOtherLight: 0
+  seEjecutaCuandoDetectaAlPlayer:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8301025668205715062
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,6 +1041,7 @@ MonoBehaviour:
   obstructionLayer:
     serializedVersion: 2
     m_Bits: 2048
+  IsConnectToOtherCamera: 0
   rotationSpeed: 10
   redLightSpeedWhenChasing: 0.5
   objectsToLookAt: []

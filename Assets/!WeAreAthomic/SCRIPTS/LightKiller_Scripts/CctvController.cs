@@ -26,6 +26,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         public LayerMask groundLayer;
         public LayerMask obstructionLayer;
 
+        public bool IsConnectToOtherCamera;
         private bool _isCameraOff;
 
         private int _currentRotation;

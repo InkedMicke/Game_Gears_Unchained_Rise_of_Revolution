@@ -65983,6 +65983,8 @@ GameObject:
   - component: {fileID: 2104212781}
   - component: {fileID: 2104212783}
   - component: {fileID: 2104212782}
+  - component: {fileID: 2104212784}
+  - component: {fileID: 2104212785}
   m_Layer: 10
   m_Name: TR_CHECKPOINT_SALA02
   m_TagString: Untagged
@@ -65998,7 +66000,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104212780}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.56}
+  m_LocalPosition: {x: 0, y: 0, z: 1.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -66025,7 +66027,32 @@ MonoBehaviour:
     detectionType: 0
     eventsToActivate:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 2104212784}
+          m_TargetAssemblyTypeName: _WeAreAthomic.SCRIPTS.Props_Scripts.Checkpoint,
+            Assembly-CSharp
+          m_MethodName: SetCheckpoint
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1702994101}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2104212785}
+          m_TargetAssemblyTypeName: GDestroyObject, Assembly-CSharp
+          m_MethodName: DestroyThisObject
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     additionalInfo: 
   useTargetScript: 0
   targetScript: {fileID: 0}
@@ -66050,6 +66077,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 16.338867, y: 12.304588, z: 2.192749}
   m_Center: {x: 2.9006348, y: 1.7611046, z: -0.5963745}
+--- !u!114 &2104212784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104212780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e725d4b2c32c16f4ab4a25ebbbaad02c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2104212785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104212780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a9c9c17e4fa4446b7e5275b50c8eab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2104251900
 PrefabInstance:
   m_ObjectHideFlags: 0
