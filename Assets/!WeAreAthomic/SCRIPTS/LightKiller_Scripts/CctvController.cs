@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using System;
+using System.ComponentModel;
 
 namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {
@@ -11,6 +13,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         private MainCMovement _mainCMovement;
         private MainCHackingSystem _mainCHacking;
         private MainCCrouch m_mainCCrouch;
+        [NonSerialized] public GroupCctvController GroupCCtvController;
        
         private AudioSource _cameraAudio;
 
@@ -26,8 +29,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         public LayerMask groundLayer;
         public LayerMask obstructionLayer;
 
-        public bool IsConnectToOtherCamera;
         private bool _isCameraOff;
+        public bool HasGroupCamera;
 
         private int _currentRotation;
 
@@ -47,6 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _mainCHacking = _playerObj.GetComponent<MainCHackingSystem>();
             m_mainCCrouch = _playerObj.GetComponent<MainCCrouch>();
             _cameraAudio = GetComponent<AudioSource>();
+            GroupCCtvController = GetComponentInParent<GroupCctvController>();
 
             _volumeCatch = _playerObj.transform.GetChild(_playerObj.transform.childCount - 2).gameObject;
         }

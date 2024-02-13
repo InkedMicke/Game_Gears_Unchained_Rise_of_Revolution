@@ -9,13 +9,14 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
     {
         private MainCHackingSystem _mainCHack;
         private LightKiller _lightK;
+        [SerializeField] private CctvController ctvController;
 
         /// <summary>
         /// If the bool "isConntectedToOtherLight" was set to true,
         /// will try to turn red the lightKillers inside array
         /// </summary>
         [SerializeField] private GameObject[] lightsToTurnRed;
-        private GameObject _playerObj;
+        private GameObject m_playerObj;
         /// <summary>
         /// Set this bool to true if u want to turn red another light around
         /// </summary>
@@ -25,14 +26,22 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         private void Awake()
         {
-            _playerObj = GameObject.FindGameObjectWithTag("Player");
-            _mainCHack = _playerObj.GetComponent<MainCHackingSystem>();
+            m_playerObj = GameObject.FindGameObjectWithTag("Player");
+            _mainCHack = m_playerObj.GetComponent<MainCHackingSystem>();
 
             _lightK = transform.parent.GetComponent<LightKiller>();
         }
 
-        protected override void GotEnterCollision(Collider col)
+        public override void GotEnterCollision(Collider col = null)
         {
+            if(ctvController.HasGroupCamera)
+            {
+                if(ctvController.GroupCCtvController != null)
+                {
+                    ctvController.GroupCCtvController.SendColToHurtBox();
+                    return;
+                }
+            }
             if (isConntectedToOtherLight)
             {
                 for (int i = 0; i < lightsToTurnRed.Length; i++)

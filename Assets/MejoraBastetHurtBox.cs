@@ -18,7 +18,7 @@ namespace _WeAreAthomic.SCRIPTS.Props
             _playerTr = GameObject.FindGameObjectWithTag("Player").transform;
             _pp = _playerTr.parent.GetComponent<CheckIfEnoughMejoras>();
         }
-        protected override void GotEnterCollision(Collider col)
+        public override void GotEnterCollision(Collider col)
         {
             _unityEvent.Invoke();
             _pp.CheckIfYouHaveEnoughToBuy();

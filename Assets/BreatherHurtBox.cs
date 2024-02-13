@@ -13,14 +13,14 @@ public class BreatherHurtBox : HurtBox
         _breather = GetComponentInParent<Breather>();
     }
 
-    protected override void GotEnterCollision(Collider col)
+    public override void GotEnterCollision(Collider col)
     {
         _breather.StartHeal();
         _healRay.Play();
         base.GotEnterCollision(col);
     }
 
-    protected override void GotExitCollision(Collider col)
+    public override void GotExitCollision(Collider col)
     {
         _breather.EndHeal();
         _healRay.Stop();

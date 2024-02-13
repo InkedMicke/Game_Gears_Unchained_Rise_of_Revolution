@@ -16,7 +16,7 @@ public class RedWallHurtBox : HurtBox, IInteractAttack
         gDestroy.DestroyThisObject(0F);
     }
 
-    protected override void GotEnterCollision(Collider col)
+    public override void GotEnterCollision(Collider col)
     {
         InteractAttack();
         base.GotEnterCollision(col);

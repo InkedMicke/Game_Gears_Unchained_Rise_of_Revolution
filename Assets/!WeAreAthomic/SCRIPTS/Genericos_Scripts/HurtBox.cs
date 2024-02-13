@@ -20,17 +20,17 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
             GotExitCollision(other);
         }
 
-        protected virtual void GotEnterCollision(Collider col)
+        public virtual void GotEnterCollision(Collider col)
         {
 
         }        
         
-        protected virtual void GotStayCollision(Collider col)
+        public virtual void GotStayCollision(Collider col)
         {
 
         }        
         
-        protected virtual void GotExitCollision(Collider col)
+        public virtual void GotExitCollision(Collider col)
         {
 
         }
