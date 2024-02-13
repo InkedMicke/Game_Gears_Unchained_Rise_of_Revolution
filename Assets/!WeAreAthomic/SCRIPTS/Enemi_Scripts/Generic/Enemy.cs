@@ -98,7 +98,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _mainCCrouch = _playerObj.GetComponent<MainCCrouch>();
 
             var enemyBrainObject = GameObject.FindGameObjectWithTag("EnemyBrain");
-            _enemyBrain = enemyBrainObject.GetComponent<EnemyBrain>();
+            //_enemyBrain = enemyBrainObject.GetComponent<EnemyBrain>();
 
             if (typeOfBehaviour == TypeOfBehaviour.Patrol)
             {

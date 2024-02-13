@@ -801,7 +801,6 @@ MonoBehaviour:
   playerBulletLayer:
     serializedVersion: 2
     m_Bits: 131072
-  _hurtBoxCC: {fileID: 2456772534812874143}
   cameraBaseObj: {fileID: 0}
   orientation: {fileID: 7832683807876494435}
   groundCheck: {fileID: 8876326123089069106}
@@ -810,12 +809,7 @@ MonoBehaviour:
     m_Bits: 2112
   walkSpeed: 4
   runSpeed: 7
-  crouchSpeed: 2
-  timeNextCrouch: 0.5
-  timeNextJump: 0.3
-  jumpImpulse: 6
-  jumpImpulseOnRail: 5
-  gravity: -9.8
+  gravity: -1
   aimSpeed: 8
   pushJumpForce: 10
   pushMaxHeight: 5
@@ -834,6 +828,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9682bfc065becbc4781b48a08b2af564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hurtBoxCC: {fileID: 2456772534812874143}
+  crouchSpeed: 2
+  timeNextCrouch: 0.5
 --- !u!114 &1375674147020419813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -846,6 +843,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a7a140598c528247ba431bda9c2388f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpImpulse: 5
+  jumpImpulseOnRail: 5
+  TimeNextJump: 0.5
 --- !u!114 &7418738073728035398
 MonoBehaviour:
   m_ObjectHideFlags: 0

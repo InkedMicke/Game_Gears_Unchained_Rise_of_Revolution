@@ -53,6 +53,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (Time.time > m_timeGraceCrouchPeriod)
             {
                 IsCrouch = !IsCrouch;
+                if(!CanStandUp())
+                {
+                    return;
+                }
                 ToggleCCSize();
                 if (!IsCrouch && _isCrouchWalking)
                 {
@@ -156,6 +160,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void SetIsCrouch(bool isCrouch)
         {
             IsCrouch = isCrouch;
+        }
+
+        private bool CanStandUp()
+        {
+            var ray = new Ray(transform.position + (Vector3.up.normalized * m_cc.height), Vector3.up);
+            if(Physics.Raycast(ray, 2f))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

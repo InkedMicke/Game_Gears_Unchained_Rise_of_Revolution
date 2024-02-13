@@ -30,7 +30,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         public LayerMask obstructionLayer;
 
         private bool _isCameraOff;
-        public bool HasGroupCamera;
+        [NonSerialized] public bool HasGroupCamera;
 
         private int _currentRotation;
 
@@ -180,8 +180,14 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _cameraAudio.Stop();
         }
 
+        public void SetHasGroupCamera(bool hasGroup)
+        {
+            HasGroupCamera = hasGroup;
+        }
+
         public void TurnOnCamera()
         {
+            CancelInvoke(nameof(TurnOnCamera));
             lKillerObj.SetActive(true);
             _lKiller.WhiteLight();
             _isCameraOff = false;

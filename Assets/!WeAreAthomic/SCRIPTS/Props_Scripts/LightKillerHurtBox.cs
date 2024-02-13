@@ -9,7 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
     {
         private MainCHackingSystem _mainCHack;
         private LightKiller _lightK;
-        [SerializeField] private CctvController ctvController;
+        private CctvController ctvController;
 
         /// <summary>
         /// If the bool "isConntectedToOtherLight" was set to true,
@@ -28,6 +28,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         {
             m_playerObj = GameObject.FindGameObjectWithTag("Player");
             _mainCHack = m_playerObj.GetComponent<MainCHackingSystem>();
+            ctvController = transform.parent.parent.GetChild(0).GetComponent<CctvController>();
 
             _lightK = transform.parent.GetComponent<LightKiller>();
         }

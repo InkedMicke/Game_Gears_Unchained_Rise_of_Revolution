@@ -133,8 +133,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
             else
             {
                 // Si no estás enfocando un enemigo, aplica la rotación local normal
-                LocalRotation = Quaternion.Euler(_rotX, _rotY, 0.0f);
-                transform.rotation = Quaternion.Slerp(transform.rotation, LocalRotation, 20f * Time.deltaTime);
+                transform.rotation = LocalRotation;
                 //transform.rotation = LocalRotation;
             }
         }
