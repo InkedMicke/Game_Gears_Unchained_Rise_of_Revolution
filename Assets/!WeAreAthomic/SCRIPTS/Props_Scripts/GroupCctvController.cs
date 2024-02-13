@@ -14,11 +14,11 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         private void Awake()
         {
-            _lightHurt = originalCam.GetComponentInChildren<LightKillerHurtBox>();
+            _lightHurt = transform.GetChild(0).GetChild(2).GetComponent<LightKillerHurtBox>();
 
             foreach (var x in cameraGroup)
             {
-                var cctv = x.GetComponent<CctvController>();
+                var cctv = x.GetComponentInChildren<CctvController>();
                 cctv.SetHasGroupCamera(true);
                 allcctvs.Add(cctv);
             }
