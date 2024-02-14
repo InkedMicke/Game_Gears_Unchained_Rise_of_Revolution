@@ -19,10 +19,10 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         [SerializeField] private GameObject hurtbox;
         [SerializeField] private GameObject particleEffects;
+        [SerializeField] private GameObject volumeToActivate;
 
 
-        private GameObject _volumeHealing;
-        private GameObject _volumeRecharging;
+    
         private GameObject _playerObj;
 
         [SerializeField] private bool enableBreather;
@@ -41,8 +41,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _playerObj = GameObject.FindGameObjectWithTag(string.Format("Player"));
             _mainHealth = _playerObj.GetComponentInChildren<MainCHealthManager>();
             _mainCPlayer = _playerObj.GetComponent<MainCPlayerInterface>();
-            _volumeHealing = _playerObj.transform.GetChild(_playerObj.transform.childCount - 1).gameObject;
-            _volumeRecharging = _playerObj.transform.GetChild(_playerObj.transform.childCount - 3).gameObject;
+           
 
             if (!enableBreather)
             {
@@ -59,12 +58,14 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 {
                     case TypeOfBreather.Health:
                         StartCoroutine(HealCoroutine());
-                        _volumeHealing.SetActive(true);
+                        volumeToActivate.SetActive(true);
+
                         break;
 
                     case TypeOfBreather.Energy:
                         StartCoroutine(EnergiCoroutine());
-                        _volumeRecharging.SetActive(true);
+                        volumeToActivate.SetActive(true);
+
                         break;
                 }
 
@@ -81,12 +82,12 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
                 case TypeOfBreather.Health:
                 StopCoroutine(HealCoroutine());
-                _volumeHealing.SetActive(false);
-                break;
+                    volumeToActivate.SetActive(false);
+                    break;
             case TypeOfBreather.Energy:
                 StopCoroutine(EnergiCoroutine());
-                _volumeRecharging.SetActive(false);
-                break;
+                    volumeToActivate.SetActive(false);
+                    break;
             }
         }
 
@@ -112,6 +113,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             while (_isHealing)
             {
                 _mainHealth.GetHealth(healthAmount);
+                
 
                 yield return new WaitForSeconds(healthPerTime);
             }
@@ -123,6 +125,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             while (_isHealing)
             {
                 _mainCPlayer.ChargeEnergy(energyAmount);
+                
 
                 yield return new WaitForSeconds(energyPerTime);
             }
