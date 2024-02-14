@@ -18,6 +18,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         [SerializeField] private C_DisolveEnemi _disolveEnemi;
 
         private Coroutine _waitingForHurtedCoroutine;
+        private Coroutine _changingMaterialsCoroutine;
 
         [SerializeField] private Slider healthSlider;
 
@@ -34,6 +35,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         public bool IsDeath;
         private bool _isWatingForHurtedtimes;
+        private bool m_changingMaterials;
 
         public int HurtedTimes;
 
@@ -63,8 +65,12 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             HurtedTimes++;
             _cEnemiSounds.PlayHitEnemiSound();
             _particlesHit.Play();
-            _materialChanger.OnEnemiHit();
             _enemy.Rb.mass = _enemy.mass;
+            if(m_changingMaterials)
+            {
+                StopCoroutine(_changingMaterialsCoroutine);
+            }
+            _changingMaterialsCoroutine = StartCoroutine(HurtMaterialChange());
             if(HurtedTimes <= 2)
             {
                 _soldierAnimator.HurtTrigger();
@@ -105,6 +111,26 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _disolveEnemi.StartDisolving();
             _destroyObject.DestroyThisObject(3f);
             _hurtbox.SetActive(false);
+        }
+
+        private IEnumerator HurtMaterialChange()
+        {
+            int index = 0;
+            m_changingMaterials = true;
+            _materialChanger.OnEnemiHit();
+            yield return new WaitForSeconds(0.3f);
+            _materialChanger.OnEnemiNeutral();
+            while (index < 4)
+            {
+                Debug.Log("hola1");
+                _materialChanger.OnEnemiHit();
+                yield return new WaitForSeconds(.1f);
+                _materialChanger.OnEnemiNeutral();
+                yield return new WaitForSeconds(.1f);
+                index++;
+            }
+
+            m_changingMaterials = false;
         }
 
         public void EndHurtAnim()
