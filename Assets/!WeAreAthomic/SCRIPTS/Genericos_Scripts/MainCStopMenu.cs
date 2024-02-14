@@ -58,11 +58,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if(_isActive)
                 {
-                    GameManagerSingleton.Instance.CursorMode(false);
+                    GameManagerSingleton.Instance.ShowCursor(false);
                 }
                 else
                 {
-                    GameManagerSingleton.Instance.CursorMode(true);
+                    GameManagerSingleton.Instance.ShowCursor(true);
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     stopMenuContainer.SetActive(false);
                     if (!GameManagerSingleton.Instance.thereIsCanvasBelow)
                     {
-                        GameManagerSingleton.Instance.CursorMode(false);
+                        GameManagerSingleton.Instance.ShowCursor(false);
                     }
                     m_PP.SetActiveToCurrentUIGameObjectList(true);
                     GameManagerSingleton.Instance.PauseGame(false);
@@ -98,7 +98,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
 
                     m_PP.SetActiveToCurrentUIGameObjectList(false);
-                    GameManagerSingleton.Instance.CursorMode(true);
+                    GameManagerSingleton.Instance.ShowCursor(true);
                     GameManagerSingleton.Instance.PauseGame(true);
                     GameManagerSingleton.Instance.FreezeTime(true);
                     GameManagerSingleton.Instance.SetIsStopMenuEnabled(true);
@@ -128,7 +128,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
 
                 stopMenuContainer.SetActive(true);
-                GameManagerSingleton.Instance.CursorMode(false);
+                GameManagerSingleton.Instance.ShowCursor(false);
                 GameManagerSingleton.Instance.PauseGame(false);
                 GameManagerSingleton.Instance.FreezeTime(false);
                 _isActive = false;
@@ -136,7 +136,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             else
             {
                 stopMenuContainer.SetActive(false);
-                GameManagerSingleton.Instance.CursorMode(true);
+                GameManagerSingleton.Instance.ShowCursor(true);
                 GameManagerSingleton.Instance.PauseGame(true);
                 _isActive = true;
             }
