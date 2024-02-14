@@ -3,7 +3,6 @@ using UnityEngine;
 using Hedenrag.ExVar;
 using UnityEngine.EventSystems;
 using NaughtyAttributes;
-using Unity.VisualScripting;
 
 public enum TypeOfInput
 {
@@ -66,6 +65,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public DifficultyLevel _currentDifficulty = DifficultyLevel.historia;
     public TypeOfInput typeOfInput = TypeOfInput.pc;
     public CurrentAbility currentAbility = CurrentAbility.None;
+    public Language language;
 
     public List<GameObject> gameObjectsList;
     public List<GameObject> closestGameObjectsList;

@@ -1,4 +1,3 @@
-using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,7 +21,11 @@ public class GDialogue : MonoBehaviour
 
     [SerializeField] private float textSpeed = 0.3f;
 
-    [SerializeField] private List<DialogueClass> dialogues;
+    [SerializeField] private List<DialogueClass> dialoguesES;
+
+    [SerializeField] private List<DialogueClass> dialoguesEN;
+
+    private List<DialogueClass> m_genereicDialogue;
 
     private bool _isInDialogue;
 
@@ -33,6 +36,7 @@ public class GDialogue : MonoBehaviour
         _inputActions = new PlayerInputActions();
         _inputActions.Enable();
         _inputActions.PlayerPC.Attack.performed += ControlDownPC;
+        _inputActions.PlayerPC.Jump.performed += ControlDownPC;
     }
 
     private void Start()
@@ -44,14 +48,14 @@ public class GDialogue : MonoBehaviour
     {
         if (!_isInDialogue) return;
 
-        if (textComponent.text == dialogues[index].textArea)
+        if (textComponent.text == m_genereicDialogue[index].textArea)
         {
             NextLine();
         }
         else
         {
             StopAllCoroutines();
-            textComponent.text = dialogues[index].textArea;
+            textComponent.text = m_genereicDialogue[index].textArea;
         }
     }
 
@@ -59,6 +63,21 @@ public class GDialogue : MonoBehaviour
     {
         this.index = index;
         _isInDialogue = true;
+        switch(GameManagerSingleton.Instance.language)
+        {
+            case Language.es:
+                foreach(var x in dialoguesES)
+                {
+                    m_genereicDialogue.Add(x);
+                }
+                break;
+            case Language.en:
+                foreach (var x in dialoguesEN)
+                {
+                    m_genereicDialogue.Add(x);
+                }
+                break;
+        }
         StartCoroutine(TypeLine());
         GameManagerSingleton.Instance.ShowCursor(true);
     }
@@ -70,9 +89,9 @@ public class GDialogue : MonoBehaviour
 
     private IEnumerator TypeLine()
     {
-        while (index < dialogues.Count)
+        while (index < m_genereicDialogue.Count)
         {
-            foreach (char c in dialogues[index].textArea.ToCharArray())
+            foreach (char c in m_genereicDialogue[index].textArea.ToCharArray())
             {
                 textComponent.text += c;
                 yield return new WaitForSeconds(textSpeed);
