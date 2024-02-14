@@ -539,6 +539,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
+            if (GameManagerSingleton.Instance.IsOnDialogue)
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -575,6 +580,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             if (GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+            {
+                return false;
+            }
+
+            if (GameManagerSingleton.Instance.IsOnDialogue)
+            {
+                return false;
+            }            
+            
+            if (GameManagerSingleton.Instance.IsOnDialogue)
             {
                 return false;
             }

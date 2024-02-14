@@ -117,6 +117,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
+            if(GameManagerSingleton.Instance.IsOnDialogue)
+            {
+                return false;
+            }
+
             if (IsJumping)
             {
                 return false;
@@ -131,6 +136,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 return false;
             }
+
 
             return true;
         }

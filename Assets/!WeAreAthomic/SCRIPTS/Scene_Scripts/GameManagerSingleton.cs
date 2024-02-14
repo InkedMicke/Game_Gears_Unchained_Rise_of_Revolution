@@ -59,7 +59,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         SensivityY
     }
 
- 
+
 
     public Settings settings;
     public DifficultyLevel _currentDifficulty = DifficultyLevel.historia;
@@ -92,6 +92,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public bool IsFullscreen;
     public bool _toggledTotally;
     public bool IsLoadingStartVideos;
+    public bool IsOnDialogue;
 
     public int maxSensivity;
     public int sensivityX;
@@ -117,7 +118,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     }
     public void GeneratorsDestroyed()
     {
-        generatorsDestroyed += 1; 
+        generatorsDestroyed += 1;
     }
 
 
@@ -203,8 +204,8 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public void SetIsSettingsMenuEnabled(bool condition)
     {
         IsSettingsMenuEnabled = condition;
-    }    
-    
+    }
+
     public void SetIsGameOverMenuEnabled(bool condition)
     {
         IsGameOverEnabled = condition;
@@ -223,15 +224,20 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public void SetSkippedTutorial(bool condition)
     {
         SkippedTutorial = condition;
-    }    
+    }
     public void SetIsAbilityMenuTutorial(bool condition)
     {
         IsAbilityMenuEnabled = condition;
     }
-    
+
     public void SetIsLoadingStartVideos(bool isLoadingVideos)
     {
         IsLoadingStartVideos = isLoadingVideos;
+    }
+
+    public void SetIsOnDialogue(bool isOnDialogue)
+    {
+        IsOnDialogue = isOnDialogue;
     }
 
     public void AddGearItem(int value)
@@ -345,13 +351,13 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
                 if (other.name == "GreenHurtBox")
                 {
                     return damageData.normalDifficult.greenDamage;
-                }                
-                
+                }
+
                 if (other.name == "RedHurtBox")
                 {
                     return damageData.normalDifficult.redDamage;
-                }               
-                
+                }
+
                 if (other.name == "OrangeHurtBox")
                 {
                     return damageData.normalDifficult.orangeDamage;
@@ -411,14 +417,14 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     }
 
     public GameObject TypeOfEnemyToPrefab(TypeOfEnemy enemy)
-    { 
+    {
 
-    switch(enemy)
-        { 
-        case TypeOfEnemy.GreenSoldier: return greenSoldierPrefab;
-        case TypeOfEnemy.OrangeSoldier: return orangeSoldierPrefab;
-        case TypeOfEnemy.RedSoldier: return redSoldierPrefab;
-        case TypeOfEnemy.BlueSoldier: return blueSoldierPrefab;
+        switch (enemy)
+        {
+            case TypeOfEnemy.GreenSoldier: return greenSoldierPrefab;
+            case TypeOfEnemy.OrangeSoldier: return orangeSoldierPrefab;
+            case TypeOfEnemy.RedSoldier: return redSoldierPrefab;
+            case TypeOfEnemy.BlueSoldier: return blueSoldierPrefab;
         }
         return new GameObject();
     }

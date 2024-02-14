@@ -49,6 +49,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void StartEndCrouch(InputAction.CallbackContext context)
         {
+            if (GameManagerSingleton.Instance.IsOnDialogue)
+            {
+                return;
+            }
 
             if (Time.time > m_timeGraceCrouchPeriod)
             {

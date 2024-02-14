@@ -23,7 +23,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         [SerializeField] private GameObject breatherObj;
         [SerializeField] private GameObject botonPosaMano;
-        [SerializeField] private GameObject goHereMove;
         [SerializeField] private GameObject goHereBreather;
         [SerializeField] private GameObject goHerePosaMano;
         [SerializeField] private GameObject goHerePosaManoMove;
@@ -64,7 +63,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(false);
                 IsOnTutorial = true;
                 FirstTimeAbility = true;
-                goHereMove.SetActive(true);
                 wasdImage.SetActive(true);
                 m_PP.AddObjToCurrentUIGameObjectList(wasdImage);
                 _checkHealthCoroutine = StartCoroutine(CheckHealth());

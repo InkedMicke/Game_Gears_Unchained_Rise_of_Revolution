@@ -50,7 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 
         private protected virtual void Update()
         {
-            if (!GameManagerSingleton.Instance.IsGamePaused)
+            if (!GameManagerSingleton.Instance.IsGamePaused && !GameManagerSingleton.Instance.IsOnDialogue)
             {
                 LookCamera();
             }
@@ -142,6 +142,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(playerTr.position, focusRadius);
+        }
+
+        public void SetCameraFollow(Transform pos)
+        {
+            cameraFollow = pos;
         }
 
         private void LateUpdate()

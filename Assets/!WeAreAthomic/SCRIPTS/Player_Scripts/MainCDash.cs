@@ -170,6 +170,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
+            if (GameManagerSingleton.Instance.IsOnDialogue)
+            {
+                return false;
+            }
+
             if (Time.time < _dashTotalCooldown)
             {
                 return false;

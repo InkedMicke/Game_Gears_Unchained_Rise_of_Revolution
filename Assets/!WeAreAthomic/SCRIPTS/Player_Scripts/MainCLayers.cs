@@ -41,7 +41,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Hack")), _hackLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("AbilityAttack")), _abilityAttackLayerMultiplier);
             _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("Jump")), _jumpLayerMultiplier);
-            _anim.SetLayerWeight(_anim.GetLayerIndex(string.Format("NewAttack")), _newAttackLayerMultiplier);
         }
 
         private void EvaluateLayers()

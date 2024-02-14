@@ -3,14 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 [Serializable]
 public class DialogueClass
 {
     [SerializeField] private string nameOfElement;
     public string title;
+    public Sprite sprite;
     [TextArea] public string textArea;
+    public UnityEvent onStart;
+    public UnityEvent onFinish;
 }
 
 public class GDialogue : MonoBehaviour
@@ -18,6 +23,9 @@ public class GDialogue : MonoBehaviour
     private PlayerInputActions _inputActions;
 
     [SerializeField] private TextMeshProUGUI textComponent;
+    [SerializeField] private TextMeshProUGUI titleComponent;
+
+    [SerializeField] private Image imageToChange;
 
     [SerializeField] private float textSpeed = 0.3f;
 
@@ -25,7 +33,9 @@ public class GDialogue : MonoBehaviour
 
     [SerializeField] private List<DialogueClass> dialoguesEN;
 
-    private List<DialogueClass> m_genereicDialogue;
+    [SerializeField] private UnityEvent onFinishAllDialogues;
+
+    private readonly List<DialogueClass> m_genereicDialogue = new();
 
     private bool _isInDialogue;
 
@@ -42,6 +52,7 @@ public class GDialogue : MonoBehaviour
     private void Start()
     {
         textComponent.text = string.Empty;
+        GameManagerSingleton.Instance.SetIsOnDialogue(false);
     }
 
     private void ControlDownPC(InputAction.CallbackContext x)
@@ -56,6 +67,7 @@ public class GDialogue : MonoBehaviour
         {
             StopAllCoroutines();
             textComponent.text = m_genereicDialogue[index].textArea;
+            m_genereicDialogue[index].onFinish.Invoke();
         }
     }
 
@@ -63,10 +75,11 @@ public class GDialogue : MonoBehaviour
     {
         this.index = index;
         _isInDialogue = true;
-        switch(GameManagerSingleton.Instance.language)
+        GameManagerSingleton.Instance.SetIsOnDialogue(true);
+        switch (GameManagerSingleton.Instance.language)
         {
             case Language.es:
-                foreach(var x in dialoguesES)
+                foreach (var x in dialoguesES)
                 {
                     m_genereicDialogue.Add(x);
                 }
@@ -79,28 +92,47 @@ public class GDialogue : MonoBehaviour
                 break;
         }
         StartCoroutine(TypeLine());
-        GameManagerSingleton.Instance.ShowCursor(true);
     }
 
     private void NextLine()
     {
+        if (index < m_genereicDialogue.Count - 1)
+        {
+            index++;
+            StartCoroutine(TypeLine());
+        }
+        else
+        {
+            m_genereicDialogue[index].onFinish.Invoke();
+            _isInDialogue = false;
+            GameManagerSingleton.Instance.SetIsOnDialogue(false);
+            onFinishAllDialogues.Invoke();
+            gameObject.SetActive(false);
+        }
 
     }
 
     private IEnumerator TypeLine()
     {
-        while (index < m_genereicDialogue.Count)
-        {
-            foreach (char c in m_genereicDialogue[index].textArea.ToCharArray())
-            {
-                textComponent.text += c;
-                yield return new WaitForSeconds(textSpeed);
-            }
 
-            index++;
-            yield return new WaitForEndOfFrame();
+        if (m_genereicDialogue[index].sprite != null)
+        {
+            imageToChange.enabled = true;
+            imageToChange.sprite = m_genereicDialogue[index].sprite;
+        }
+        else
+        {
+            imageToChange.enabled = false;
+        }
+        m_genereicDialogue[index].onStart.Invoke();
+        m_genereicDialogue[index].title = titleComponent.text;
+        textComponent.text = string.Empty;
+        foreach (char c in m_genereicDialogue[index].textArea.ToCharArray())
+        {
+            textComponent.text += c;
+            yield return new WaitForSecondsRealtime(textSpeed);
         }
 
-        _isInDialogue = false;
+        m_genereicDialogue[index].onFinish.Invoke();
     }
 }

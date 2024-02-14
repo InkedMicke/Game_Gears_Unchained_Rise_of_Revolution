@@ -52,7 +52,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Start()
         {
-            currentHealth = maxHealth;
             SetMaxHealthSlider();
             SetHealthSlider();
         }

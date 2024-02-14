@@ -446,6 +446,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
+            if(GameManagerSingleton.Instance.IsOnDialogue)
+            {
+                return false;
+            }
+
             if (_mainCHacking.isHackingAnim)
             {
                 return false;

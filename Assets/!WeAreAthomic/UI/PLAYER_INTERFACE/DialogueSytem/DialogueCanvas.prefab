@@ -399,8 +399,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4.0213, y: -1.4523}
-  m_SizeDelta: {x: -22.2934, y: -16.3086}
+  m_AnchoredPosition: {x: -93.369, y: -1.4523}
+  m_SizeDelta: {x: -217.074, y: -16.309}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8052503076497905839
 CanvasRenderer:
@@ -430,7 +430,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fe129390af88b40faa85c89db6820ea6, type: 2}
   m_sharedMaterial: {fileID: -5592514773993622969, guid: fe129390af88b40faa85c89db6820ea6,
@@ -513,6 +513,7 @@ GameObject:
   - component: {fileID: 2820540132701212916}
   - component: {fileID: 4368500243249929290}
   - component: {fileID: 6939642569200334950}
+  - component: {fileID: 3048250993535943951}
   m_Layer: 5
   m_Name: DialogueCanvas
   m_TagString: Untagged
@@ -534,7 +535,7 @@ RectTransform:
   m_Children:
   - {fileID: 1484027452180853558}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -625,6 +626,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3048250993535943951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4875813587167097390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00f4786a6b5d8ff46b89f9f7f1f4a213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textComponent: {fileID: 2546094942663764763}
+  titleComponent: {fileID: 2634155511244887320}
+  imageToChange: {fileID: 5265096266705563232}
+  textSpeed: 0.3
+  dialoguesES: []
+  dialoguesEN: []
+  onFinishAllDialogues:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5604858555423460905
 GameObject:
   m_ObjectHideFlags: 0

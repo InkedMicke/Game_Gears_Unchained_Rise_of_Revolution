@@ -25,7 +25,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
     
         private GameObject _playerObj;
 
-        [SerializeField] private bool enableBreather;
+        [SerializeField] private bool enabledBreather;
         private bool _isHealing;
 
         [SerializeField] private float healthAmount = 4f;
@@ -43,7 +43,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _mainCPlayer = _playerObj.GetComponent<MainCPlayerInterface>();
            
 
-            if (!enableBreather)
+            if (!enabledBreather)
             {
                 DisableBreather();
             }
@@ -51,7 +51,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         public void StartHeal()
         {
-            if (enableBreather)
+            if (enabledBreather)
             {
                 _isHealing = true;
                 switch (_typeOfBreather)
@@ -93,7 +93,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         public void EnableBreather()
         {
-            enableBreather = true;
+            enabledBreather = true;
             hurtbox.SetActive(true);
             particleEffects.SetActive(true);
             particleEffects.GetComponent<ParticleSystem>().Play();
@@ -101,7 +101,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         public void DisableBreather()
         {
-            enableBreather = false;
+            enabledBreather = false;
             hurtbox.SetActive(false);
             particleEffects.SetActive(false);
         }
