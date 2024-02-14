@@ -91,7 +91,7 @@ public class GamePadController : MonoBehaviour
     {
         if (Cursor.visible)
         {
-            GameManagerSingleton.Instance.CursorMode(false);
+            GameManagerSingleton.Instance.ShowCursor(false);
         }
     }
 

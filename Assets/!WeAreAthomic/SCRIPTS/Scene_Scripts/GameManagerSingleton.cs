@@ -259,7 +259,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     /// If True Cursor Free, If False Cursor Locked
     /// </summary>
     /// <param name="condition"></param>
-    public void CursorMode(bool condition)
+    public void ShowCursor(bool condition)
     {
         if (condition)
         {
@@ -277,14 +277,14 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
     public void CloseTotallyWindow()
     {
         GameState(false);
-        CursorMode(false);
+        ShowCursor(false);
         FreezeTime(false);
     }
 
     public void OpenTotallyWindow()
     {
         GameState(true);
-        CursorMode(true);
+        ShowCursor(true);
         FreezeTime(true);
     }
     [Button]
@@ -294,13 +294,13 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         if (_toggledTotally)
         {
             GameState(!true);
-            CursorMode(true);
+            ShowCursor(true);
             FreezeTime(true);
         }
         else
         {
             GameState(false);
-            CursorMode(false);
+            ShowCursor(false);
             FreezeTime(false);
         }
     }
