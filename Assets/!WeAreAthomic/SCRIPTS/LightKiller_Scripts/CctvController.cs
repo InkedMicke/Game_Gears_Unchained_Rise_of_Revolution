@@ -3,23 +3,36 @@ using UnityEngine;
 using UnityEngine.Events;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using System;
-using System.ComponentModel;
+using _WeAreAthomic.SCRIPTS.PP_Scripts;
 
 namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {
+    public enum TypeOfLightKillerHurtBox
+    {
+        tutorial,
+        normal
+    }
+
     public class CctvController : MonoBehaviour
     {
-        private LightKiller _lKiller;
-        private MainCMovement _mainCMovement;
+        [NonSerialized] public LightKiller _lKiller;
+        [NonSerialized] public MainCMovement MainCMove;
+        [NonSerialized] public MainCAnimatorController MainCAnim;
+        [NonSerialized] public MainCHealthManager MainCHealth;
+
         private MainCHackingSystem _mainCHacking;
         private MainCCrouch m_mainCCrouch;
+
         [NonSerialized] public GroupCctvController GroupCCtvController;
-       
+        [NonSerialized] public PP PP;
+
+        public TypeOfLightKillerHurtBox TypeOfLightHurtBox;
+
         private AudioSource _cameraAudio;
 
         [SerializeField] private GameObject lKillerObj;
         [SerializeField] private GameObject transforms;
-        private GameObject _playerObj;
+        public GameObject _playerObj;
         private GameObject _volumeCatch;
 
         private Transform _lightKillerTr;
@@ -46,11 +59,14 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _lKiller = lKillerObj.GetComponent<LightKiller>();
             _lightKillerTr = lKillerObj.transform;
             _playerObj = GameObject.FindGameObjectWithTag("Player");
-            _mainCMovement = _playerObj.GetComponent<MainCMovement>();
+            MainCMove = _playerObj.GetComponent<MainCMovement>();
             _mainCHacking = _playerObj.GetComponent<MainCHackingSystem>();
             m_mainCCrouch = _playerObj.GetComponent<MainCCrouch>();
+            MainCAnim = _playerObj.GetComponent<MainCAnimatorController>();
+            MainCHealth = _playerObj.GetComponentInChildren<MainCHealthManager>();
             _cameraAudio = GetComponent<AudioSource>();
             GroupCCtvController = GetComponentInParent<GroupCctvController>();
+            PP = _playerObj.transform.parent.GetComponent<PP>();
 
             _volumeCatch = _playerObj.transform.GetChild(_playerObj.transform.childCount - 2).gameObject;
         }
@@ -118,13 +134,13 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         {
             if (_lKiller.IsFocusingPlayer)
             {
-                if (_mainCMovement.IsGrounded())
+                if (MainCMove.IsGrounded())
                 {
                     transform.LookAt(_playerObj.transform.position);
                 }
                 else
                 {
-                    transform.LookAt(_mainCMovement.PositionOnFloorNotGrounded());
+                    transform.LookAt(MainCMove.PositionOnFloorNotGrounded());
                 }
 
                 var playerPos = _playerObj.transform.position;
@@ -198,6 +214,11 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             }
 
         }
-
+#if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            Debug.DrawRay(transform.position + (Vector3.up * 0.15f), transform.forward * 20f, Color.red);
+        }
+#endif
     }
 }

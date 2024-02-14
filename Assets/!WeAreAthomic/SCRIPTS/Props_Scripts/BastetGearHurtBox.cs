@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using UnityEngine.Events;
+using _WeAreAthomic.SCRIPTS.PP_Scripts;
 
 namespace _WeAreAthomic.SCRIPTS.Props
 {
-    public class MejoraBastetHurtBox : HurtBox
+    public class BastetGearHurtBox : HurtBox
     {
         [SerializeField] private UnityEvent _unityEvent;
          private Transform _playerTr;

@@ -162,7 +162,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             IsCrouch = isCrouch;
         }
 
-        private bool CanStandUp()
+        public bool CanStandUp()
         {
             var ray = new Ray(transform.position + (Vector3.up.normalized * m_cc.height), Vector3.up);
             if(Physics.Raycast(ray, 2f))

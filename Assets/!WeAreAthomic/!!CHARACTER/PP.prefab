@@ -2913,7 +2913,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_endValue: 1
-  m_duration: 1.5
+  m_duration: 1
   m_onFinish:
     m_PersistentCalls:
       m_Calls:
@@ -2932,13 +2932,13 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 6172118452462935767}
         m_TargetAssemblyTypeName: GTweenDoFade, Assembly-CSharp
-        m_MethodName: Fade
-        m_Mode: 1
+        m_MethodName: FadeWithDelay
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 1
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -3934,6 +3934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lst_CurrentUIGameObjects: []
+  FadeBlackTutorial: {fileID: 3224050161330330042}
 --- !u!114 &696123190823901393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14399,7 +14400,7 @@ PrefabInstance:
     - target: {fileID: 5949676255334595348, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.size
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5949676255334595348, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
@@ -14409,7 +14410,7 @@ PrefabInstance:
     - target: {fileID: 5949676255334595348, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5949676255334595348, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
@@ -14430,13 +14431,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 1171027241183129985}
+      objectReference: {fileID: 11400000, guid: 9a55ca7bcafd462418845ea959ab9c54,
+        type: 2}
     - target: {fileID: 5949676255334595348, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 11400000, guid: 9a55ca7bcafd462418845ea959ab9c54,
-        type: 2}
+      objectReference: {fileID: 455738620995997801}
     - target: {fileID: 5949676255334595348, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[5].m_Target
@@ -14460,12 +14461,12 @@ PrefabInstance:
     - target: {fileID: 5949676255334595348, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: PosToCheckpoint
+      value: SetIsGameOverMenuEnabled
       objectReference: {fileID: 0}
     - target: {fileID: 5949676255334595348, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
-      value: SetIsGameOverMenuEnabled
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 5949676255334595348, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
@@ -14480,12 +14481,12 @@ PrefabInstance:
     - target: {fileID: 5949676255334595348, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
-      value: _WeAreAthomic.SCRIPTS.Player_Scripts.MainCHealthManager, Assembly-CSharp
+      value: GameManagerSingleton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5949676255334595348, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
-      value: GameManagerSingleton, Assembly-CSharp
+      value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5949676255334595348, guid: 1026949209e8f824f94a170fc6d1dc81,
         type: 3}

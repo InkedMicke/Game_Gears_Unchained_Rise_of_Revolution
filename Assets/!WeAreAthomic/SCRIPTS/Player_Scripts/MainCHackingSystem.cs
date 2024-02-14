@@ -4,6 +4,7 @@ using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using _WeAreAthomic.SCRIPTS.PP_Scripts;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {

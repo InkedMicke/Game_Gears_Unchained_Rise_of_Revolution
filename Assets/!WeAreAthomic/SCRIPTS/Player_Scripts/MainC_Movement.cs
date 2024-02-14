@@ -20,9 +20,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCHealthManager _mainCHealth;
         [NonSerialized] public GTrajectory Trajectory;
         private MainCSounds _mainCSounds;
-        private MainCDash _mainCDash;
-        private MainCVFX _mainCVFX;
-        private MainCJump _mainCJump;
+        private MainCDash m_mainCDash;
+        private MainCVFX m_mainCVFX;
+        private MainCJump m_mainCJump;
         private MainCCrouch m_mainCCrouch;
 
         public AnimationCurve dashSpeedCurve;
@@ -86,10 +86,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions = new PlayerInputActions();
             _mainCHealth = GetComponentInChildren<MainCHealthManager>();
             _mainCSounds = GetComponent<MainCSounds>();
-            _mainCDash = GetComponent<MainCDash>();
-            _mainCVFX = GetComponent<MainCVFX>();
+            m_mainCDash = GetComponent<MainCDash>();
+            m_mainCVFX = GetComponent<MainCVFX>();
             Trajectory = GetComponent<GTrajectory>();
-            _mainCJump = GetComponent<MainCJump>();
+            m_mainCJump = GetComponent<MainCJump>();
             m_mainCCrouch = GetComponent<MainCCrouch>();
         }
 
@@ -151,30 +151,30 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (!IsGrounded() && Velocity.y < 0 && !_mainCRail.IsOnRail() || !_mainCRail.IsOnRail() && Velocity.y < 0 && !IsGrounded())
                 {
                     IsFalling = true;
-                    _mainCJump.SetIsJumping(false);
+                    m_mainCJump.SetIsJumping(false);
                     _mainCAnimator.SetFalling(IsFalling);
-                    _mainCAnimator.SetJumping(_mainCJump.IsJumping);
+                    _mainCAnimator.SetJumping(m_mainCJump.IsJumping);
                 }
 
                 if (IsFalling && IsGrounded() || IsFalling && _mainCRail.IsOnRail() || IsFalling && IsOnSlope())
                 {
                     IsFalling = false;
-                    _mainCJump.SetIsJumping(false);
+                    m_mainCJump.SetIsJumping(false);
                     _mainCAnimator.SetFalling(IsFalling);
-                    _mainCAnimator.SetJumping(_mainCJump.IsJumping);
+                    _mainCAnimator.SetJumping(m_mainCJump.IsJumping);
                     _mainCAnimator.SetGrounded(true);
                     if (_moveDir.magnitude > 0 || _moveDir.magnitude > 0)
                     {
                         _mainCLayers.DisableJumpLayer();
                     }
-                    _mainCJump.TimeGraceJumpPeriod = Time.time + _mainCJump.TimeNextJump;
+                    m_mainCJump.TimeGraceJumpPeriod = Time.time + m_mainCJump.TimeNextJump;
                 }
             }
         }
 
         private void ApplyGravity()
         {
-            if (_mainCJump.IsJumping || IsFalling || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsSliding && !IsFollowingTrajectory)
+            if (m_mainCJump.IsJumping || IsFalling || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsSliding && !IsFollowingTrajectory)
             {
                 if(canApplyGravity)
                 {
@@ -184,15 +184,15 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             
             }
 
-            if (_mainCJump.IsJumping && _cc.isGrounded || IsFalling && _cc.isGrounded || IsFalling && _mainCRail.IsOnRail())
+            if (m_mainCJump.IsJumping && _cc.isGrounded || IsFalling && _cc.isGrounded || IsFalling && _mainCRail.IsOnRail())
             {
-                _mainCJump.SetIsJumping(false);
+                m_mainCJump.SetIsJumping(false);
                 _mainCAnimator.SetGrounded(true);
             }
 
             if (IsFalling && _mainCRail.IsOnRail())
             {
-                _mainCVFX.SetActiveSparks(true);
+                m_mainCVFX.SetActiveSparks(true);
             }
         }
 
@@ -344,15 +344,26 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if (m_mainCCrouch.IsCrouch)
             {
-                _mainCLayers.DisableCrouchLayer();
-                m_mainCCrouch.SetIsCrouch(false);
-                m_mainCCrouch.ToggleCCSize();
-                _mainCAnimator.SetCrouch(m_mainCCrouch.IsCrouch);
+                if (m_mainCCrouch.CanStandUp())
+                {
+                    _mainCLayers.DisableCrouchLayer();
+                    m_mainCCrouch.SetIsCrouch(false);
+                    m_mainCCrouch.ToggleCCSize();
+                    _mainCAnimator.SetCrouch(m_mainCCrouch.IsCrouch);
+
+
+                    IsRunningKeyboard = !IsRunningKeyboard;
+
+                    IsRunningGamepad = !IsRunningGamepad;
+                }
             }
+            else
+            {
 
-            IsRunningKeyboard = !IsRunningKeyboard;
+                IsRunningKeyboard = !IsRunningKeyboard;
 
-            IsRunningGamepad = !IsRunningGamepad;
+                IsRunningGamepad = !IsRunningGamepad;
+            }
 
         }
 
@@ -460,7 +471,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
-            if (_mainCDash.IsDashing)
+            if (m_mainCDash.IsDashing)
             {
                 return false;
             }

@@ -1,5 +1,7 @@
 using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,6 +12,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         private MainCHackingSystem _mainCHack;
         private LightKiller _lightK;
         private CctvController ctvController;
+
+        private TypeOfLightKillerHurtBox TypeOfLightHurtBox => ctvController.TypeOfLightHurtBox;
 
         /// <summary>
         /// If the bool "isConntectedToOtherLight" was set to true,
@@ -22,7 +26,11 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         /// </summary>
         [SerializeField] private bool isConntectedToOtherLight;
 
-        [SerializeField] private UnityEvent seEjecutaCuandoDetectaAlPlayer;
+        private float m_hitCooldown = 1.5f;
+
+        private float m_totalTimeCooldown;
+
+        public UnityEvent seEjecutaCuandoDetectaAlPlayer;
 
         private void Awake()
         {
@@ -35,31 +43,85 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         public override void GotEnterCollision(Collider col = null)
         {
-            if(ctvController.HasGroupCamera)
+            if (Time.time > m_totalTimeCooldown)
             {
-                if(ctvController.GroupCCtvController != null)
-                {
-                    ctvController.GroupCCtvController.SendColToHurtBox();
-                    return;
-                }
-            }
-            if (isConntectedToOtherLight)
-            {
-                for (int i = 0; i < lightsToTurnRed.Length; i++)
-                {
-                    lightsToTurnRed[i].GetComponent<LightKiller>().RedLight();
-                }
-            }
+                m_totalTimeCooldown = Time.time + m_hitCooldown;
+                StartCoroutine(CollisionThings());
 
-            seEjecutaCuandoDetectaAlPlayer.Invoke();
-            _mainCHack.SetGotCached(true);
-            if (_mainCHack.IsHacking || _mainCHack.isHackingAnim)
-            {
-                _mainCHack.StopHack();
             }
-
-            _lightK.RedLight();
             base.GotEnterCollision(col);
+        }
+
+        private IEnumerator CollisionThings()
+        {
+            switch (TypeOfLightHurtBox)
+            {
+                case TypeOfLightKillerHurtBox.tutorial:
+                    if (isConntectedToOtherLight)
+                    {
+                        for (int i = 0; i < lightsToTurnRed.Length; i++)
+                        {
+                            lightsToTurnRed[i].GetComponent<LightKiller>().RedLight();
+                        }
+                    }
+
+                    if (ctvController.GroupCCtvController != null)
+                    {
+                        if (ctvController.HasGroupCamera)
+                        {
+                            _mainCHack.SetGotCached(true);
+                            if (_mainCHack.IsHacking || _mainCHack.isHackingAnim)
+                            {
+                                _mainCHack.StopHack();
+                            }
+
+                            _lightK.RedLight();
+                            yield return new WaitForSeconds(0.1f);
+                            ctvController.MainCMove.DisableMovement();
+                            ctvController.MainCAnim.SetMoveSpeed(0);
+                            ctvController.PP.FadeBlackTutorial.GetComponent<GTweenDoFade>().Fade();
+
+                            yield return new WaitForSeconds(1f);
+                            _lightK.WhiteLight();
+                            yield return new WaitForSeconds(.5f);
+
+                            ctvController.MainCHealth.Revive();
+                            ctvController.GroupCCtvController.SendColToHurtBox();
+                            break;
+                        }
+                    }
+
+                    _mainCHack.SetGotCached(true);
+                    if (_mainCHack.IsHacking || _mainCHack.isHackingAnim)
+                    {
+                        _mainCHack.StopHack();
+                    }
+
+                    _lightK.RedLight();
+                    yield return new WaitForSeconds(0.1f);
+                    ctvController.MainCMove.DisableMovement();
+                    ctvController.MainCAnim.SetMoveSpeed(0);
+                    ctvController.PP.FadeBlackTutorial.GetComponent<GTweenDoFade>().Fade();
+
+                    yield return new WaitForSeconds(1f);
+                    _lightK.WhiteLight();
+                    yield return new WaitForSeconds(.5f);
+
+                    seEjecutaCuandoDetectaAlPlayer.Invoke();
+
+                    break;
+
+                case TypeOfLightKillerHurtBox.normal:
+                    seEjecutaCuandoDetectaAlPlayer.Invoke();
+                    _mainCHack.SetGotCached(true);
+                    if (_mainCHack.IsHacking || _mainCHack.isHackingAnim)
+                    {
+                        _mainCHack.StopHack();
+                    }
+
+                    _lightK.RedLight();
+                    break;
+            }
         }
     }
 }

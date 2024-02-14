@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace _WeAreAthomic.SCRIPTS.Props_Scripts
@@ -10,11 +11,12 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         [SerializeField] private List<GameObject> cameraGroup;
 
-        private List<CctvController> allcctvs;
+        //NonSeralized
+        public List<CctvController> allcctvs = new();
 
         private void Awake()
         {
-            _lightHurt = transform.GetChild(0).GetChild(2).GetComponent<LightKillerHurtBox>();
+            _lightHurt = originalCam.transform.GetChild(0).GetChild(2).GetComponentInChildren<LightKillerHurtBox>();
 
             foreach (var x in cameraGroup)
             {
@@ -26,7 +28,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         public void SendColToHurtBox()
         {
-            _lightHurt.GotEnterCollision();
+            _lightHurt.seEjecutaCuandoDetectaAlPlayer.Invoke();
         }
 
         public void DisableTemporalyAllCamerasInChildren(float time)

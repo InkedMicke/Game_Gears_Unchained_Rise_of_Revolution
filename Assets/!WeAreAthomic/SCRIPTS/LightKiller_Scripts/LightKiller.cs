@@ -22,6 +22,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         public void WhiteLight()
         {
+
             _luz.color = Color.white;
             IsFocusingPlayer = false;
             if (redLightSound.isPlaying)

@@ -125,7 +125,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void Revive()
         {
-            if(_mainCRail.IsSliding)
+            _cc.enabled = false;
+            if (_mainCRail.IsSliding)
             {
                 _mainCVFX.SetRailEffects(false);
                 _mainCRail.SetIsSliding(false);
@@ -140,6 +141,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAttack.SetIsSheathed(false);
             _mainCRagdoll.ResetBody();
             StartCoroutine(InvencibilityTime());
+            PosToCheckpoint();
         }
 
         public void Die()
