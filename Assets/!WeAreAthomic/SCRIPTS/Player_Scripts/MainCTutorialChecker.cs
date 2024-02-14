@@ -59,7 +59,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void Start()
         {
             _currentScene = SceneManager.GetActiveScene();
-            if (_currentScene.name == "S2_LABTUTORIAL")
+            if (_currentScene.name == "S2_LABTUTORIAL" || _currentScene.name == "N2_LAB")
             {
                 GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(false);
                 IsOnTutorial = true;
