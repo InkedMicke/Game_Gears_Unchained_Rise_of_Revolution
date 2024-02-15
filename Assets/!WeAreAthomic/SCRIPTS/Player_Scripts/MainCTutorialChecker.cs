@@ -21,10 +21,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private Scene _currentScene;
 
-        [SerializeField] private GameObject breatherObj;
         [SerializeField] private GameObject botonPosaMano;
         [SerializeField] private GameObject goHereBreather;
-        [SerializeField] private GameObject goHerePosaMano;
         [SerializeField] private GameObject goHerePosaManoMove;
         [SerializeField] private GameObject wasdImage;
         [SerializeField] private GameObject eImage;
@@ -68,6 +66,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _checkHealthCoroutine = StartCoroutine(CheckHealth());
                 _checkHackCoroutine = StartCoroutine(CheckHacking());
                 _mainCAttack.DisableCanAttack();
+                GameManagerSingleton.Instance.SetThereIsCanvasBelow(true);
             }
             else
             {
@@ -111,10 +110,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (_mainCHacking.IsHacking)
                 {
                     _isCheckingHack = false;
-                    _mainCSounds.RemoveAllSounds();
-                    _mainCSounds.PlayExpressionSound();
-                    var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.CurrentExpressionClip.name);
-                    Invoke(nameof(PlayTutorialThird), lengthOfClip);
                     eImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
                     m_PP.RemoveObjToCurrentUIGameObjectList(eImage);
                     break;
@@ -146,31 +141,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             wasdImage.SetActive(false);
             m_PP.RemoveObjToCurrentUIGameObjectList(wasdImage);
             _mainCSounds.RemoveAllTutorialSounds();
-        }
-
-        public void PlayTutorialOne()
-        {
-            _mainCSounds.RemoveAllSounds();
-            _mainCSounds.PlayTutorialSound(1, "pc");
-            var healthBreather = breatherObj.GetComponent<Breather>();
-            healthBreather.EnableBreather();
-            respiraderoImage.SetActive(true);
-            m_PP.AddObjToCurrentUIGameObjectList(respiraderoImage);
-            goHereBreather.SetActive(true);
-        }
-
-        public void PlayTutorialTwo()
-        {
-            goHereBreather.SetActive(false);
-            _mainCSounds.PlayTutorialSound(2, "pc");
-            var buttonInt = botonPosaMano.GetComponent<ButtonInteractable>();
-            buttonInt.EnableCanHack();
-            goHerePosaMano.SetActive(true);
-        }
-
-        private void PlayTutorialThird()
-        {
-            _mainCSounds.PlayTutorialSound(3, "pc");
         }
 
         public void AttackImage()

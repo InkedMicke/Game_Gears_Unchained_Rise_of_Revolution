@@ -19,14 +19,12 @@ namespace _WeAreAthomic.SCRIPTS.TEST
         {
             _mainCHealthManager = GetComponentInChildren<MainCHealthManager>();
 
-            _playerInputActions = new PlayerInputActions();
-            _playerInputActions.Enable();
-            _playerInputActions.PlayerPC.Test.performed += TocheckPoint;
+
         }
 
-        private void TocheckPoint(InputAction.CallbackContext context)
+        public void DebugLog(string message)
         {
-            _mainCHealthManager.Revive();
+            Debug.Log(message);
         }
     }
 }

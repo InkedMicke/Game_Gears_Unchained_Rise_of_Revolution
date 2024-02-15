@@ -1,6 +1,7 @@
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using static UnityEngine.GraphicsBuffer;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
@@ -12,6 +13,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
         protected Quaternion LocalRotation;
 
         [SerializeField] private LayerMask _enemyLayer;
+
+        private SceneLoaderStart m_currentScene;
 
         protected Vector2 controllerVector;
         protected Vector2 mouseVector;
@@ -35,8 +38,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 
         private void Awake()
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -45,6 +46,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 
         private void Start()
         {
+            if(!("N2_LAB" == SceneManager.GetActiveScene().name))
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+
             cameraFollow = GameObject.FindGameObjectWithTag("Camera_Follow").transform;
         }
 

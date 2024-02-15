@@ -105,6 +105,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             GameManagerSingleton.Instance.PauseGame(false);
             GameManagerSingleton.Instance.SetIsSettingsMenuEnabled(false);
             GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
+            GameManagerSingleton.Instance.SetIsOnDialogue(false);
         }
 
         private void OnEnable()

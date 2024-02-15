@@ -8,6 +8,7 @@ public class GEscapeClose : MonoBehaviour
     private PlayerInputActions _playerInputActions;
 
     [SerializeField] private UnityEvent actionsWhenEscape;
+    [SerializeField] private UnityEvent actionsWhenEscapeWithDelay;
 
     private void Awake()
     {
@@ -16,12 +17,16 @@ public class GEscapeClose : MonoBehaviour
 
         _playerInputActions.UI.LeaveUI.performed += EscapeAction;
     }
-    
+
     private void EscapeAction(InputAction.CallbackContext context)
     {
-        if (GameManagerSingleton.Instance.IsGamePaused)
-        {
-            actionsWhenEscape.Invoke();
-        }
+
+        actionsWhenEscape.Invoke();
+        Invoke(nameof(EventWithDelay), .1f);
+    }
+
+    public void EventWithDelay()
+    {
+        actionsWhenEscapeWithDelay.Invoke();
     }
 }

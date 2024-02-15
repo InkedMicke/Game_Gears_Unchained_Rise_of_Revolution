@@ -52,7 +52,6 @@ public class GDialogue : MonoBehaviour
     private void Start()
     {
         textComponent.text = string.Empty;
-        GameManagerSingleton.Instance.SetIsOnDialogue(false);
     }
 
     private void ControlDownPC(InputAction.CallbackContext x)
@@ -125,9 +124,23 @@ public class GDialogue : MonoBehaviour
             imageToChange.enabled = false;
         }
         m_genereicDialogue[index].onStart.Invoke();
-        m_genereicDialogue[index].title = titleComponent.text;
+        titleComponent.text = m_genereicDialogue[index].title;
+
         textComponent.text = string.Empty;
-        foreach (char c in m_genereicDialogue[index].textArea.ToCharArray())
+        var x = m_genereicDialogue[index].textArea.ToCharArray();
+        
+        if(index == 0)
+        {
+            var newArray = new char[x.Length + 1];
+            newArray[0] = x[0];
+            for (int i = 0; i < x.Length; i++)
+            {
+                newArray[i + 1] = x[i];
+            }
+            x  = newArray;
+        }
+
+        foreach (char c in x)
         {
             textComponent.text += c;
             yield return new WaitForSecondsRealtime(textSpeed);
