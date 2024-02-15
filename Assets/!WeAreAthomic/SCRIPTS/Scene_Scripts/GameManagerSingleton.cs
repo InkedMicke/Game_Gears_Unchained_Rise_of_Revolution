@@ -162,6 +162,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
         return closestGameObjectsList[0];
     }
 
+
     /// <summary>
     /// If true game is paused, if not is "unpaused"
     /// </summary>
