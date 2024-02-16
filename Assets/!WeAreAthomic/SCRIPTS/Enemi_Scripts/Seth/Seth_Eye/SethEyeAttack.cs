@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SethEyeAttack : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class SethEyeAttack : MonoBehaviour
     private List<Transform> _currentTarget;
 
     private Vector3 _currentBeamEndPos;
+    private Vector3 _startBeamStartPos;
 
     public int _pathIndex;
 
@@ -78,6 +80,7 @@ public class SethEyeAttack : MonoBehaviour
         _sethEye.LaserBeam.SetPosition(0, _sethEye.Muzzle.position);
         _sethEye.LaserBeam.SetPosition(1, _sethEye.Muzzle.position);
         _sethEye.LaserBeam.gameObject.SetActive(true);
+        _startBeamStartPos = _sethEye.LaserBeam.GetPosition(0);
         yield return new WaitForSeconds(.5f);
 
         if (Physics.Raycast(_currentEye.transform.position, -Vector3.up, out var hit, 10f))
@@ -92,9 +95,11 @@ public class SethEyeAttack : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
+        var middle = Vector3.Lerp(_startBeamStartPos, _currentHit.point, 0.5f);
+        _sethEye.hurtBoxTr.position = middle;
+
         StartCoroutine(ReverseEyeAttack());
     }
-
     private IEnumerator ReverseEyeAttack()
     {
         _currentTarget = GetPath();
