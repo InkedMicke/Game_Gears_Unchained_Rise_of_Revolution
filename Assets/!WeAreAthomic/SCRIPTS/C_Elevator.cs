@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class C_Elevator : MonoBehaviour
 {
@@ -11,27 +13,36 @@ public class C_Elevator : MonoBehaviour
 
     private bool isActive;
 
+    [SerializeField] private UnityEvent OnStart;
+    [SerializeField] private UnityEvent OnFinish;
+    private void Start()
+    {
+       
+    }
 
     private void OnTriggerEnter(Collider other)
     {
        
         if (!isActive)
         {
-            StartCoroutine(ElevatorGoUp());
+            OnStart.Invoke();
+            StartCoroutine(ElevatorGoToPosition());
         }
        
         isActive = false;
        
     }
 
-    IEnumerator ElevatorGoUp()
+    IEnumerator ElevatorGoToPosition()
     {
-        while(transform.position.y < elevatorGoal.position.y)
+        while(Mathf.Abs(Vector3.Distance(transform.position, elevatorGoal.position)) <= 0.01f)
          {
             isActive = true;
-            transform.position = new Vector3(transform.position.x, transform.position.y + velocityElevator, transform.position.z);
+            var diference = elevatorGoal.position - transform.position; 
+            transform.position += diference.normalized * velocityElevator;
 
             yield return new WaitForSeconds(delay);
          }
+        OnFinish.Invoke();
     }
 }
