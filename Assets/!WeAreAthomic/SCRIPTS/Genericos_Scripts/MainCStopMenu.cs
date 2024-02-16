@@ -72,7 +72,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (CanToggleMenu())
             {
-                Debug.Log("hola2");
                 if (GameManagerSingleton.Instance.IsStopMenuEnabled)
                 {
                     m_CheckIfEnoughMejoras.CheckIfYouHaveEnoughToBuy();
