@@ -20,7 +20,7 @@ public class Seth : MonoBehaviour
 
     private Vector3 barrierInitalPos;
 
-    protected int WaveCount;
+    private int WaveCount;
 
     private void Awake()
     {
@@ -40,53 +40,49 @@ public class Seth : MonoBehaviour
 
     public void StartWaves()
     {
-        StartCoroutine(WaveController());
+        StartCoroutine(SpawnEnemies());
         barrier.transform.DOMoveY(barrierInitalPos.y + 5f, .5f).SetEase(Ease.Linear);
     }
 
-/*    private IEnumerator SpawnEnemies()
+    private IEnumerator SpawnEnemies()
     {
+        _sethWave.StartSpawning();
 
-    }*/
-
-    public IEnumerator WaveController()
-    {
-        while (true)
+        while (!IsCurrentWaveDead())
         {
-            WaveCount++;
-            if (WaveCount == 1)
-            {
-                //Spawnear soldados
-                _sethWave.StartSpawning();
-            }
-
-            while (!IsCurrentWaveDead())
-            {
-                yield return new WaitForEndOfFrame();
-            }
-
-            yield return new WaitForSeconds(1f);
-
-            barrier.transform.DOMoveY(barrierInitalPos.y, .5f).SetEase(Ease.Linear);
-
-            while (sethHurtBox.AcumulativeTakenHealth < receivedDamageForPushPlayerBack)
-            {
-                yield return new WaitForEndOfFrame();
-            }
-
-            sethHurtBox.AcumulativeTakenHealth = 0;
-
-            _mainCMove.Trajectory = _gTrajectory;
-            _playerObj.GetComponent<CharacterController>().enabled = false;
-            _mainCMove.SetFollowTrajectory(true);
-
-            if (WaveCount == 2)
-            {
-                //Ataque del ojo 
-                _sethEyeAttack.StarEyeAttacking();
-            }
+            yield return new WaitForEndOfFrame();
         }
 
+        yield return new WaitForSeconds(1f);
+        barrier.transform.DOMoveY(barrierInitalPos.y, .5f).SetEase(Ease.Linear);
+
+        StartCoroutine(CheckSethHealthForPush());
+    }
+
+    private IEnumerator CheckSethHealthForPush()
+    {
+        while (sethHurtBox.AcumulativeTakenHealth < receivedDamageForPushPlayerBack)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        sethHurtBox.AcumulativeTakenHealth = 0;
+
+        _mainCMove.Trajectory = _gTrajectory;
+        _playerObj.GetComponent<CharacterController>().enabled = false;
+        _mainCMove.SetFollowTrajectory(true);
+        _sethEyeAttack.StarEyeAttacking();
+    }
+
+    public IEnumerator CheckForEndEyeAttack()
+    {
+        while(_sethEyeAttack.IsEyeAttacking)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        WaveCount++;
+        
+        StartCoroutine(SpawnEnemies());
     }
 
     private bool IsCurrentWaveDead()

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,8 @@ public class SethEyeAttack : MonoBehaviour
     private Vector3 _currentBeamEndPos;
     private Vector3 _startBeamStartPos;
 
+    [NonSerialized] public bool IsEyeAttacking;
+
     public int _pathIndex;
 
     [SerializeField] private float eyeSize = 10f;
@@ -34,6 +37,7 @@ public class SethEyeAttack : MonoBehaviour
 
     public void StarEyeAttacking()
     {
+        IsEyeAttacking = true;
         _currentEye = Instantiate(eyePrefab);
         _currentEye.transform.position = eyeOriginalPos.position;
         _currentEye.transform.localScale = Vector3.one * eyeSize;
@@ -118,13 +122,15 @@ public class SethEyeAttack : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
+
+        IsEyeAttacking = false;
     }
 
     
 
     private List<Transform> GetPath()
     {
-        var random = Random.Range(0, eyeWaypointsContainer.childCount - 1);
+        var random = UnityEngine.Random.Range(0, eyeWaypointsContainer.childCount - 1);
         var childs = eyeWaypointsContainer.GetChild(random).GetComponentsInChildren<Transform>();
         List<Transform> targets = new();
         foreach (var x in childs)
