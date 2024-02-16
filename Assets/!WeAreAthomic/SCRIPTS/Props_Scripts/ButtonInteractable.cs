@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {
+
     public enum TypeOfHacked
     {
         botonPuerta,
@@ -12,9 +13,12 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         soldier
     }
 
+    [RequireComponent(typeof(C_MaterialChanger))]
+
     public class ButtonInteractable : MonoBehaviour, IInteractable
     {
         private MainCHackingSystem _mainCHacking;
+        private C_MaterialChanger[] _materialChanger;
         private Enemy _enemy;
 
         public TypeOfHacked typeOfHacked;
@@ -45,8 +49,9 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _playerTr = _playerObj.transform;
             _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
             _mainCHacking = _playerObj.GetComponent<MainCHackingSystem>();
+            _materialChanger = GetComponents<C_MaterialChanger>();
 
-            if(typeOfHacked == TypeOfHacked.soldier)
+            if (typeOfHacked == TypeOfHacked.soldier)
             {
                 _enemy = soldier.GetComponent<Enemy>();
             }
@@ -91,6 +96,16 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             if (canHack)
             {
                 seActivanCuandoTerminaElHack.Invoke();
+
+                if (typeOfHacked != TypeOfHacked.soldier)
+                {
+                    for (int i = 0; i < _materialChanger.Length; i++)
+                    {
+
+                        _materialChanger[i].OnPlayerCatched();
+                    }
+                }
+                
                 eButtonObj.SetActive(false);
                 if (typeOfHacked == TypeOfHacked.botonPuerta)
                 {
