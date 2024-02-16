@@ -13,7 +13,8 @@ public class DialogueClass
     [SerializeField] private string nameOfElement;
     public string title;
     public Sprite sprite;
-    [TextArea] public string textArea;
+    [TextArea] public string textAreaES;
+    [TextArea] public string textAreaEN;
     public UnityEvent onStart;
     public UnityEvent onFinish;
 }
@@ -29,9 +30,7 @@ public class GDialogue : MonoBehaviour
 
     [SerializeField] private float textSpeed = 0.3f;
 
-    [SerializeField] private List<DialogueClass> dialoguesES;
-
-    [SerializeField] private List<DialogueClass> dialoguesEN;
+    [SerializeField] private List<DialogueClass> dialogues;
 
     [SerializeField] private UnityEvent onFinishAllDialogues;
 
@@ -58,14 +57,14 @@ public class GDialogue : MonoBehaviour
     {
         if (!_isInDialogue) return;
 
-        if (textComponent.text == m_genereicDialogue[index].textArea)
+        if (textComponent.text == (GameManagerSingleton.Instance.language == Language.es ? m_genereicDialogue[index].textAreaES : m_genereicDialogue[index].textAreaEN))
         {
             NextLine();
         }
         else
         {
             StopAllCoroutines();
-            textComponent.text = m_genereicDialogue[index].textArea;
+            textComponent.text = (GameManagerSingleton.Instance.language == Language.es ? m_genereicDialogue[index].textAreaES : m_genereicDialogue[index].textAreaEN);
             m_genereicDialogue[index].onFinish.Invoke();
         }
     }
@@ -78,13 +77,13 @@ public class GDialogue : MonoBehaviour
         switch (GameManagerSingleton.Instance.language)
         {
             case Language.es:
-                foreach (var x in dialoguesES)
+                foreach (var x in dialogues)
                 {
                     m_genereicDialogue.Add(x);
                 }
                 break;
             case Language.en:
-                foreach (var x in dialoguesEN)
+                foreach (var x in dialogues)
                 {
                     m_genereicDialogue.Add(x);
                 }
@@ -127,7 +126,8 @@ public class GDialogue : MonoBehaviour
         titleComponent.text = m_genereicDialogue[index].title;
 
         textComponent.text = string.Empty;
-        var x = m_genereicDialogue[index].textArea.ToCharArray();
+
+        var x = GameManagerSingleton.Instance.language == Language.es ? m_genereicDialogue[index].textAreaES.ToCharArray() : m_genereicDialogue[index].textAreaEN.ToCharArray();
         
         if(index == 0)
         {
