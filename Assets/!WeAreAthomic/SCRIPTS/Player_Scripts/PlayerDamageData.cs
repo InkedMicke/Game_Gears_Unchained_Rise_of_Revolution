@@ -21,7 +21,10 @@ public class PlayerDamageData : ScriptableObject
         public float redDamage;
 
         [Header("BlueSoldier")]
-        public float blueDamage;
+        public float blueDamage;        
+        
+        [Header("Seth")]
+        public float sethDamage;
     }
 
     [System.Serializable]
@@ -41,6 +44,9 @@ public class PlayerDamageData : ScriptableObject
 
         [Header("BlueSoldier")]
         public float blueDamage;
+
+        [Header("Seth")]
+        public float sethDamage;
     }
     [System.Serializable]
 
@@ -60,6 +66,9 @@ public class PlayerDamageData : ScriptableObject
 
         [Header("BlueSoldier")]
         public float blueDamage;
+
+        [Header("Seth")]
+        public float sethDamage;
     }
 
     public EasyDifficult easyDifficult;

@@ -122,7 +122,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _materialChanger.OnEnemiNeutral();
             while (index < 4)
             {
-                Debug.Log("hola1");
                 _materialChanger.OnEnemiHit();
                 yield return new WaitForSeconds(.1f);
                 _materialChanger.OnEnemiNeutral();

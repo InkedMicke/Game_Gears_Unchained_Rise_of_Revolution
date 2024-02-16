@@ -339,6 +339,11 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
                 if (other.name == "OrangeHurtBox")
                 {
                     return damageData.easyDifficult.orangeDamage;
+                }                
+                
+                if (other.name == "SethHurtBox")
+                {
+                    return damageData.easyDifficult.sethDamage;
                 }
 
                 break;
@@ -363,6 +368,11 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
                 {
                     return damageData.normalDifficult.orangeDamage;
                 }
+
+                if (other.name == "SethHurtBox")
+                {
+                    return damageData.easyDifficult.sethDamage;
+                }
                 break;
 
             case DifficultyLevel.maestro:
@@ -383,6 +393,11 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
                 if (other.name == "OrangeHurtBox")
                 {
                     return damageData.hardDifficult.orangeDamage;
+                }
+
+                if (other.name == "SethHurtBox")
+                {
+                    return damageData.easyDifficult.sethDamage;
                 }
                 break;
         }

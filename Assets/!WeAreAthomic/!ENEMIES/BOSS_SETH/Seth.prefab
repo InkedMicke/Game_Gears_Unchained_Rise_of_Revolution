@@ -111,8 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9885b460bb6bff42b01e904f9d6fd0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sethHurtBox: {fileID: 3642158995554744483}
   barrier: {fileID: 0}
-  timeToHitSeth: 10
+  receivedDamageForPushPlayerBack: 250
 --- !u!114 &1320829272545112325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,6 +146,7 @@ MonoBehaviour:
     type: 3}
   eyeWaypointsContainer: {fileID: 0}
   eyeOriginalPos: {fileID: 4238040104191257764}
+  _pathIndex: 0
   eyeSize: 50
   speed: 8
   rotateSpeed: 2
@@ -1458,7 +1460,7 @@ GameObject:
   - component: {fileID: 3642158995554744483}
   - component: {fileID: 3133097822682405552}
   m_Layer: 9
-  m_Name: HurtBox
+  m_Name: SethHurtBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1543,7 +1545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 8440614638022005261}
   maxHealth: 1000
-  currentHealth: 0
+  CurrentHealth: 0
 --- !u!114 &3133097822682405552
 MonoBehaviour:
   m_ObjectHideFlags: 0

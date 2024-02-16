@@ -10,12 +10,13 @@ public class Seth : MonoBehaviour
     private SethEyeAttack _sethEyeAttack;
     private GTrajectory _gTrajectory;
     private MainCMovement _mainCMove;
+    [SerializeField] private SethHurtBox sethHurtBox;
 
     private GameObject _playerObj;
 
     [SerializeField] private Transform barrier;
 
-    [SerializeField] private float timeToHitSeth;
+    [SerializeField] private float receivedDamageForPushPlayerBack = 250;
 
     private Vector3 barrierInitalPos;
 
@@ -35,18 +36,22 @@ public class Seth : MonoBehaviour
     private void Start()
     {
         barrierInitalPos = barrier.position;
-        _sethEyeAttack.StarEyeAttacking();
     }
 
     public void StartWaves()
     {
-        //StartCoroutine(WaveController());
-        //barrier.transform.DOMoveY(barrierInitalPos.y + 5f, 1f).SetEase(Ease.Linear);
+        StartCoroutine(WaveController());
+        barrier.transform.DOMoveY(barrierInitalPos.y + 5f, .5f).SetEase(Ease.Linear);
     }
+
+/*    private IEnumerator SpawnEnemies()
+    {
+
+    }*/
 
     public IEnumerator WaveController()
     {
-        while(true)
+        while (true)
         {
             WaveCount++;
             if (WaveCount == 1)
@@ -55,16 +60,21 @@ public class Seth : MonoBehaviour
                 _sethWave.StartSpawning();
             }
 
-            while(!IsCurrentWaveDead())
+            while (!IsCurrentWaveDead())
             {
                 yield return new WaitForEndOfFrame();
             }
 
             yield return new WaitForSeconds(1f);
 
-            barrier.transform.DOMoveY(barrierInitalPos.y, 1f).SetEase(Ease.Linear);
+            barrier.transform.DOMoveY(barrierInitalPos.y, .5f).SetEase(Ease.Linear);
 
-            yield return new WaitForSeconds(timeToHitSeth);
+            while (sethHurtBox.AcumulativeTakenHealth < receivedDamageForPushPlayerBack)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            sethHurtBox.AcumulativeTakenHealth = 0;
 
             _mainCMove.Trajectory = _gTrajectory;
             _playerObj.GetComponent<CharacterController>().enabled = false;
@@ -73,10 +83,10 @@ public class Seth : MonoBehaviour
             if (WaveCount == 2)
             {
                 //Ataque del ojo 
+                _sethEyeAttack.StarEyeAttacking();
             }
-
-            yield return new WaitForSeconds(1);
         }
+
     }
 
     private bool IsCurrentWaveDead()
@@ -84,8 +94,9 @@ public class Seth : MonoBehaviour
         for (int i = _sethWave.spawnedSoldiers.Count - 1; i >= 0; i--)
         {
             var soldado = _sethWave.spawnedSoldiers[i];
+            var hurtbox = soldado.transform.GetChild(0).GetComponent<SoldierHurtBox>();
 
-            if (soldado.GetComponentInChildren<SoldierHurtBox>().IsDeath)
+            if (hurtbox.IsDeath)
             {
                 _sethWave.spawnedSoldiers.RemoveAt(i);
             }
@@ -100,5 +111,5 @@ public class Seth : MonoBehaviour
 
     }
 
-    
+
 }
