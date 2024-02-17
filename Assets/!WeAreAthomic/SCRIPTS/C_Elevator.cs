@@ -15,27 +15,17 @@ public class C_Elevator : MonoBehaviour
 
     [SerializeField] private UnityEvent OnStart;
     [SerializeField] private UnityEvent OnFinish;
-    private void Start()
-    {
-       
-    }
+   
 
-    private void OnTriggerEnter(Collider other)
+    public void GoPosition()
     {
-       
-        if (!isActive)
-        {
-            OnStart.Invoke();
-            StartCoroutine(ElevatorGoToPosition());
-        }
-       
-        isActive = false;
-       
+        OnStart.Invoke();
+        StartCoroutine(ElevatorGoToPosition());
     }
 
     IEnumerator ElevatorGoToPosition()
     {
-        while(Mathf.Abs(Vector3.Distance(transform.position, elevatorGoal.position)) <= 0.01f)
+        while(Mathf.Abs(Vector3.Distance(transform.position, elevatorGoal.position)) > 0.1f)
          {
             isActive = true;
             var diference = elevatorGoal.position - transform.position; 
