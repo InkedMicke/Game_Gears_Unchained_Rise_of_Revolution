@@ -4,6 +4,7 @@ using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
 {
@@ -31,6 +32,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
         public bool isDeath;
         
         [SerializeField] private float pushForce = 5f;
+
+        [SerializeField] private UnityEvent DummieDies;
     
         private void Awake()
         {
@@ -78,10 +81,12 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
         {
             if (_gHealthManager.currentHealth <= 0)
             {
+                DummieDies.Invoke();
                 isDeath = true;
                 _anim.SetBool(string.Format("isDeath"), true);
                 _cC.enabled = false;
                 _dummieController.DisableCharacterController();
+
             }
         }
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {
@@ -8,6 +9,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         
         
         [SerializeField] private GameObject movableFloor;
+
+        [SerializeField] private UnityEvent ListClear;
         
         [SerializeField] private List<GameObject> colisionList;
 
@@ -20,7 +23,13 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
             MakeChild();
         }
-
+        public void AllDefeat()
+        {
+            if(colisionList.Count == 0)
+            {
+                ListClear.Invoke();
+            }
+        }
         public void ClearList()
         {
             colisionList.Clear();
