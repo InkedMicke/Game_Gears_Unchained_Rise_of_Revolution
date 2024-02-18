@@ -129,7 +129,7 @@ public class GDialogue : MonoBehaviour
 
         var x = GameManagerSingleton.Instance.language == Language.es ? m_genereicDialogue[index].textAreaES.ToCharArray() : m_genereicDialogue[index].textAreaEN.ToCharArray();
         
-        if(index == 0)
+/*        if(index == 0)
         {
             var newArray = new char[x.Length + 1];
             newArray[0] = x[0];
@@ -139,7 +139,7 @@ public class GDialogue : MonoBehaviour
             }
             x  = newArray;
         }
-
+*/
         foreach (char c in x)
         {
             textComponent.text += c;

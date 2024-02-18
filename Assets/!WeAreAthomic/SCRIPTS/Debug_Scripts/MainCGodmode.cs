@@ -107,7 +107,6 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
             {
                 GameManagerSingleton.Instance.SetSkippedTutorial(true);
                 GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
-                _mainCTutorial.HideAllTutorialImages();
                 _mainCTutorial.StopAllTutorialCoroutine();
                 _cc.enabled = false;
                 transform.position = tpSkippedTutorial.position;
