@@ -15,6 +15,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCHackingSystem _mainCHacking;
         private MainCStopMenu _gStopMenu;
         private MainCAttack _mainCAttack;
+        private MainCFuryAttack _mainCFuryAttack;
 
         private Coroutine _checkHealthCoroutine;
         private Coroutine _checkHackCoroutine;
@@ -51,6 +52,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCHacking = GetComponent<MainCHackingSystem>();
             _gStopMenu = GetComponent<MainCStopMenu>();
             _mainCAttack = GetComponent<MainCAttack>();
+            _mainCFuryAttack = GetComponent<MainCFuryAttack>();
         }
 
         private void Start()
@@ -72,7 +74,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 _mainCAttack.EnableCanAttack();
                 GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
-                _mainCAttack.SetHasUnlockedAbilityAttack(true);
+                _mainCFuryAttack.SetHasUnlockedAbilityAttack(true);
             }
         }
 

@@ -102,6 +102,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
 
     public float currentHealth = 100f;
     public float bastetEnergy = 100f;
+    public float bastetFury = 100f;
     public float brightness;
 
 

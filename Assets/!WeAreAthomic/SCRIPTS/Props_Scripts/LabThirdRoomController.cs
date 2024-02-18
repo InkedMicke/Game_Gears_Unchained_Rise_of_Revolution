@@ -104,7 +104,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             {
                 StartCoroutine(MoveDownToZero());
                 _isWave3 = false;
-                _mainCAttack.SetHasUnlockedAbilityAttack(true);
+               // _mainCAttack.SetHasUnlockedAbilityAttack(true);
                 _mainCAttack.SetIsSheathed(false);
                 _mainCAttack.EnableCanAttack();
                 _mainCTutorial.movedDerImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
@@ -237,7 +237,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 {
                     if (movableFloor.transform.localPosition.y >= 3f)
                     {
-                        _mainCAttack.SetHasUnlockedAbilityAttack(false);
+                       // _mainCAttack.SetHasUnlockedAbilityAttack(false);
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
                         _mainCAttack.SetIsSheathed(false);
