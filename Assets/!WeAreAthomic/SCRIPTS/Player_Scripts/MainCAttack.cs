@@ -172,7 +172,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
-                    GCameraShake.Instance.ShakeCamera(1f, .1f);
+                    
                     MoveToEnemy();
                     if(_mainCDash.IsDashing)
                     {
@@ -188,7 +188,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
                     _mainCLayers.EnableAttackLayer();
                     _mainCSounds.StopAttackSound();
-                    
+                  GCameraShake.Instance.ShakeCamera(1f, .1f);
                     attackCount++;
                     _mainCAnimator.SetAttackCountAnim(attackCount);
                     weaponObj.GetComponent<WrenchHitBox>().ClearList();
@@ -264,7 +264,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (_canNextAttack && IsAttacking)
             {
                 MoveToEnemy();
-                GCameraShake.Instance.ShakeCamera(1f, .1f);
+             GCameraShake.Instance.ShakeCamera(1f, .1f);
                 _mainCSounds.PlayAttackSound();
                 _mainCSounds.PlayEffordSound();
                 if (attackCount == 2)

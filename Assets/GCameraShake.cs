@@ -18,9 +18,10 @@ public class GCameraShake : MonoBehaviour
 
     private void Update()
     {
+
         if (shakeTimer > 0)
         {
-        
+
             shakeTimer -= Time.deltaTime;
             if (shakeTimer <= 0f)
             {
@@ -28,7 +29,7 @@ public class GCameraShake : MonoBehaviour
 
                 cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
             }
-        
+
         }
     }
 
