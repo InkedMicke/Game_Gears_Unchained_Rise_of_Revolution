@@ -29,7 +29,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: ShieldCount
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5047296440117892846}
   m_Solo: 0
@@ -77,7 +80,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: MolinilloCount
+    m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7654096186579120615}
   m_Solo: 0
@@ -151,7 +157,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: ShieldCount
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6410828706818675002}
   m_Solo: 0
@@ -200,7 +209,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: CrossAttackCount
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 373218463722586759}
   m_Solo: 0
@@ -249,7 +261,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: isStuned
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4488161984523963768}
   m_Solo: 0
@@ -271,7 +286,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: JumpAttackCount
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7382795664817352706}
   m_Solo: 0
@@ -410,10 +428,10 @@ AnimatorStateMachine:
     m_Position: {x: 380, y: 110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5977367653955596294}
-    m_Position: {x: 380, y: -20, z: 0}
+    m_Position: {x: 380, y: -180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7999860302946323788}
-    m_Position: {x: -200, y: -240, z: 0}
+    m_Position: {x: -200, y: -210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5146131864714638188}
     m_Position: {x: -440, y: 280, z: 0}
@@ -422,46 +440,46 @@ AnimatorStateMachine:
     m_Position: {x: -440, y: -100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6410828706818675002}
-    m_Position: {x: -110, y: 280, z: 0}
+    m_Position: {x: -180, y: 280, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3156574982598181560}
-    m_Position: {x: 940, y: 470, z: 0}
+    m_Position: {x: 1030, y: 700, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8534649217094991494}
-    m_Position: {x: 940, y: -50, z: 0}
+    m_Position: {x: 1270, y: -70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3649730236794318537}
-    m_Position: {x: 940, y: 30, z: 0}
+    m_Position: {x: 1270, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 373218463722586759}
-    m_Position: {x: 940, y: 110, z: 0}
+    m_Position: {x: 1270, y: 90, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5054671980445428301}
-    m_Position: {x: 150, y: 470, z: 0}
+    m_Position: {x: 130, y: 810, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7382795664817352706}
-    m_Position: {x: 670, y: 470, z: 0}
+    m_Position: {x: 650, y: 810, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2814634914961047036}
-    m_Position: {x: 410, y: 470, z: 0}
+    m_Position: {x: 390, y: 810, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3483404403407598416}
-    m_Position: {x: 630, y: -120, z: 0}
+    m_Position: {x: 630, y: -290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7654096186579120615}
-    m_Position: {x: 380, y: -120, z: 0}
+    m_Position: {x: 380, y: -290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5757874978949141387}
-    m_Position: {x: 130, y: -120, z: 0}
+    m_Position: {x: 130, y: -290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2855037469737974326}
-    m_Position: {x: 940, y: 210, z: 0}
+    m_Position: {x: 1270, y: 320, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6387348253122706495}
-    m_Position: {x: 940, y: 350, z: 0}
+    m_Position: {x: 1270, y: 550, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6805828990802673036}
-    m_Position: {x: 940, y: 280, z: 0}
+    m_Position: {x: 1270, y: 410, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -224950996639875232}
@@ -481,7 +499,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: ThurstCount
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6387348253122706495}
   m_Solo: 0
@@ -530,7 +551,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: JumpAttackCount
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5054671980445428301}
   m_Solo: 0
@@ -584,49 +608,55 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: Stuned
-    m_Type: 9
+    m_Controller: {fileID: 0}
+  - m_Name: isStuned
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Hurt
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: shoot
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: ShieldCount
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: JumpAttackCount
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: ThurstCount
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: New Int
+    m_Controller: {fileID: 0}
+  - m_Name: MolinilloCount
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: CrossAttackCount
+    m_Type: 3
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -757,7 +787,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: ShieldCount
+    m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5146131864714638188}
   m_Solo: 0
@@ -806,7 +839,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: MolinilloCount
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5757874978949141387}
   m_Solo: 0
@@ -855,7 +891,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: CrossAttackCount
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8534649217094991494}
   m_Solo: 0
@@ -877,7 +916,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: MolinilloCount
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3483404403407598416}
   m_Solo: 0
@@ -1054,7 +1096,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: isStuned
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3156574982598181560}
   m_Solo: 0
@@ -1076,7 +1121,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: isStuned
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4488161984523963768}
   m_Solo: 0
@@ -1125,7 +1173,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: ThurstCount
+    m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6805828990802673036}
   m_Solo: 0
@@ -1147,7 +1198,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: JumpAttackCount
+    m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2814634914961047036}
   m_Solo: 0
@@ -1169,7 +1223,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: CrossAttackCount
+    m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3649730236794318537}
   m_Solo: 0
@@ -1213,7 +1270,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: ThurstCount
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2855037469737974326}
   m_Solo: 0
