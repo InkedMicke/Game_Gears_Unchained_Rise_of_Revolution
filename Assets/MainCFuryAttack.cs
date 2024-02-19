@@ -127,10 +127,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void ChangeMaterialScanner()
         {
-            Debug.Log(scannerInst.transform.localScale.x);
             if (scannerInst.transform.localScale.x >= scannerSize - .5f)
             {
-                //Debug.Log("hola1");
                 if (scannerInst.GetComponent<MeshRenderer>().material != maxRangeMaterial)
                 {
                     scannerInst.GetComponent<MeshRenderer>().material = maxRangeMaterial;
@@ -159,7 +157,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 }
                 else
                 {
-                    Debug.Log("hola2");
                     scannerInst.transform.localScale = Vector3.one * scannerSize;
                 }
             }
