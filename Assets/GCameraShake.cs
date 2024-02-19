@@ -41,4 +41,16 @@ public class GCameraShake : MonoBehaviour
         cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;
         shakeTimer = time;
     }
+
+    public void SetCameraPriority()
+    {
+        StartCoroutine(CameraPriority());
+    }
+
+    IEnumerator CameraPriority()
+    {
+        yield return new WaitForSeconds(2f);
+        cinemachineVirtualCamera.Priority = 40;
+
+    }
 }
