@@ -127,8 +127,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void ChangeMaterialScanner()
         {
-            if (scannerInst.transform.localScale.x >= scannerSize)
+            Debug.Log(scannerInst.transform.localScale.x);
+            if (scannerInst.transform.localScale.x >= scannerSize - .5f)
             {
+                //Debug.Log("hola1");
                 if (scannerInst.GetComponent<MeshRenderer>().material != maxRangeMaterial)
                 {
                     scannerInst.GetComponent<MeshRenderer>().material = maxRangeMaterial;
@@ -139,10 +141,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (CanChargeAttack() && _hasUnlockedAbilityAttack && GameManagerSingleton.Instance.bastetFury == 100 && !_mainCAttack.IsAttacking && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
             {
-                if (!IsChargingAttack)
-                {
-                    GetFury(-100);
-                }
+                GetFury(-100);
                 _mainCLayers.EnableAbilityAttackLayer();
                 _mainCAttack.SetAttackCount(4);
                 _mainCMovement.DisableMovement();
@@ -151,12 +150,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 IsChargingAttack = true;
             }
 
-            if (_mouseMagnitude > .2f && _isLeftMousePressed && _hasUnlockedAbilityAttack && !_mainCAttack.IsAttacking && scannerInst.transform.localScale.x < scannerSize)
+            if (_mouseMagnitude > 1.1f && _isLeftMousePressed && _hasUnlockedAbilityAttack && !_mainCAttack.IsAttacking && scannerInst != null)
             {
-                if (scannerInst != null)
+                if (scannerInst.transform.localScale.x < scannerSize)
                 {
                     scannerInst.transform.localScale += Vector3.one * scannerSizeSpeed;
 
+                }
+                else
+                {
+                    Debug.Log("hola2");
+                    scannerInst.transform.localScale = Vector3.one * scannerSize;
                 }
             }
 
@@ -207,6 +211,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCAttack.SetAttackCount(5);
             }
             _isLeftMousePressed = false;
+            _mouseMagnitude = 0;
         }
         private void ControlDown()
         {
@@ -222,7 +227,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
-            if (_mouseMagnitude < .2f)
+            if (_mouseMagnitude < 1f)
             {
                 return false;
             }

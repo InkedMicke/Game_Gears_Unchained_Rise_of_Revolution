@@ -31,9 +31,9 @@ public class ScannerHitBox : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         enemies.Add(other.gameObject);
-        var transform1 = other.transform;
+/*        var transform1 = other.transform;
         var position = transform1.position;
         var locUp = new Vector3(position.x, position.y + 1.5f, position.z);
-        Instantiate(arrow, locUp, Quaternion.identity);
+        Instantiate(arrow, locUp, Quaternion.identity);*/
     }
 }
