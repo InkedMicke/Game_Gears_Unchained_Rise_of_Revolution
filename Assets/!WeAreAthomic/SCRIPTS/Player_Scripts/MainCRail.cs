@@ -16,7 +16,7 @@ public class MainCRail : MonoBehaviour
 
     [SerializeField] private LayerMask railLayer;
 
-    [SerializeField] private GameObject splineFollower;
+    private GameObject splineFollower;
     [SerializeField] private GameObject PP;
 
     [SerializeField] private Transform railCheck;
@@ -27,8 +27,9 @@ public class MainCRail : MonoBehaviour
     [SerializeField] private float jumpCooldown = 1f;
     private float _splineLength;
     private float _distancePercentage;
-    private float _timeGraceJumpPeriod;
     private float _currentRailSpeed;
+    private float m_slidingCooldown = 1f;
+    private float m_totalSlidingCooldown;
 
     [SerializeField] private AudioSource railClip;
 
@@ -47,7 +48,7 @@ public class MainCRail : MonoBehaviour
 
     private void Update()
     {
-        if (IsOnRail() && !IsSliding)
+        if (IsOnRail() && !IsSliding && Time.time > m_totalSlidingCooldown)
         {
 
             StartSlide();
@@ -85,15 +86,14 @@ public class MainCRail : MonoBehaviour
             var difference = posVector - transform.position;
             _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
 
-
-
-            if (_distancePercentage > 1f && IsSliding)
+            if (_distancePercentage > 0.95f && IsSliding)
             {
                 _mainCAnim.SetSliding(false);
                 m_mainClayers.DisableSlideLayer();
                 _mainCDash.StartDash(false);
                 m_mainCVFX.SetActiveSparks(false);
                 m_mainCVFX.SetActiveSpeedlines(false);
+                m_totalSlidingCooldown = Time.time + m_slidingCooldown;
                 IsSliding = false;
             }
 
@@ -108,6 +108,7 @@ public class MainCRail : MonoBehaviour
             var posVector = new Vector3(currentPosition.x, transform.position.y, currentPosition.z);
             //transform.position = Vector3.MoveTowards(transform.position, currentPosition, railSpeed * Time.deltaTime);
             var difference = posVector - transform.position;
+
             _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
             m_mainCSounds.RemoveRailSounds();
         }
@@ -118,6 +119,9 @@ public class MainCRail : MonoBehaviour
         _distancePercentage = 0;
         m_mainClayers.EnableSlideLayer();
         _mainCAnim.SetSliding(true);
+        var ray = new Ray(transform.position, Vector3.down);
+        var cols = Physics.OverlapSphere(transform.position, 0.3f, railLayer);
+        splineFollower = cols[0].transform.GetChild(0).gameObject; ;
         _splineContainer = splineFollower.GetComponent<SplineContainer>();
         _splineLength = _splineContainer.CalculateLength();
         IsSliding = true;

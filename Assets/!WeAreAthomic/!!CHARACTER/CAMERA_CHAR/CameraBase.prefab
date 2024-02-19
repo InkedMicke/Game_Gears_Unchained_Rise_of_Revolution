@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 2301883311347156643}
   - component: {fileID: 4473043398080013698}
   - component: {fileID: 1776335130980259748}
+  - component: {fileID: 896768873206364033}
   m_Layer: 15
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -155,6 +156,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cinemachineVirtualCamera: {fileID: 4473043398080013698}
+--- !u!114 &896768873206364033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5952811570524928035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2ceb33b82f9d94386d1844dc10b29f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDistance: 1
+  maxDistance: 4
+  smooth: 10
+  dollyDirAdjusted: {x: 0, y: 0, z: 0}
+  distance: 0
+  radius: 1
+  cameraDistance: 4
+  colLayers:
+    serializedVersion: 2
+    m_Bits: 14401
 --- !u!1 &8088160950281684090
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +188,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5525342877192133985}
   - component: {fileID: 1512387698975238136}
-  - component: {fileID: 578493318273558036}
   m_Layer: 0
   m_Name: CameraBase
   m_TagString: Untagged
@@ -211,25 +233,3 @@ MonoBehaviour:
   mouseSensitivityX: 4000
   mouseSensitivityY: 4000
   clampAngle: 30
---- !u!114 &578493318273558036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8088160950281684090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad2ceb33b82f9d94386d1844dc10b29f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minDistance: 1
-  maxDistance: 4
-  smooth: 10
-  dollyDirAdjusted: {x: 0, y: 0, z: 0}
-  distance: 0
-  radius: 1
-  cameraDistance: 4
-  colLayers:
-    serializedVersion: 2
-    m_Bits: 14401

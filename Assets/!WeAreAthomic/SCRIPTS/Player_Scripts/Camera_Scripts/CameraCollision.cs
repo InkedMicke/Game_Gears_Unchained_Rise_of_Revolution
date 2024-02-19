@@ -29,7 +29,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
         void Update()
         {
 
-            /*            var desiredCameraPos = transform.parent.TransformPoint(dollyDir * maxDistance);
+                        var desiredCameraPos = transform.parent.TransformPoint(dollyDir * maxDistance);
                         if (Physics.Linecast(transform.parent.position, desiredCameraPos, out var hit, colLayers))
                         {
                             distance = Mathf.Clamp((hit.distance * 0.87f), minDistance, maxDistance);
@@ -39,7 +39,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
                             distance = maxDistance;
                         }
 
-                        transform.localPosition = Vector3.Lerp(transform.localPosition, dollyDir * distance, Time.deltaTime * smooth);*/
+                        transform.localPosition = Vector3.Lerp(transform.localPosition, dollyDir * distance, Time.deltaTime * smooth);
 /*
             var ray = new Ray(transform.position, -transform.forward);
             if(Physics.SphereCast(ray, radius, out var hit, cameraDistance))

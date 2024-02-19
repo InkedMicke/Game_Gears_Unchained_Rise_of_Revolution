@@ -63,7 +63,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void StartDash(bool dashWithEffects)
         {
-            StopCoroutine(Dash(dashWithEffects));
+            StartCoroutine(Dash(dashWithEffects));
         }
 
         public void StopDash()
@@ -129,12 +129,15 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
                 float curveTime = (Time.time - startTime) / _dashTime;
                 float speedMultiplier = _mainCMove.dashSpeedCurve.Evaluate(curveTime);
-
                 _cc.Move(dashSpeed * speedMultiplier * Time.deltaTime * moveDirection.normalized);
                 yield return new WaitForEndOfFrame();
             }
             _mainCHealthManager.SetCanReceiveDamage(true);
             _mainCMove.EnableMovement();
+            if(!dashWithEffects)
+            {
+                IsDashing = false;
+            }
         }
 
         private void EndDash()

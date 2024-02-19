@@ -63,9 +63,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float gravity = -9.8f;
 
         [SerializeField] private float aimSpeed;
-        [SerializeField] private float pushJumpForce = 10f;
-        [SerializeField] private float pushMaxHeight = 5f;
-        [SerializeField] private float pushJumpDuration = 2f;
         [SerializeField] private float maxSlopeAngle = 40f;
         public float turnSmoothTime = 0.1f;
         private float _moveSpeed;
@@ -175,11 +172,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void ApplyGravity()
         {
-            if (m_mainCJump.IsJumping || IsFalling || !IsGrounded() && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsSliding && !IsFollowingTrajectory)
+            if (m_mainCJump.IsJumping || IsFalling || !_cc.isGrounded && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsSliding && !IsFollowingTrajectory)
             {
                 if(canApplyGravity)
                 {
-                    Velocity += transform.up.normalized * (gravity * Time.deltaTime);
+                    Velocity += Vector3.up.normalized * (gravity * Time.deltaTime);
                     _cc.Move(Velocity * Time.deltaTime);
                 }
             
