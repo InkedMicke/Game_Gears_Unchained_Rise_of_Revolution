@@ -33,6 +33,7 @@ public class C_Elevator : MonoBehaviour
 
             yield return new WaitForSeconds(delay);
          }
+        transform.position = elevatorGoal.position;
         OnFinish.Invoke();
     }
 }
