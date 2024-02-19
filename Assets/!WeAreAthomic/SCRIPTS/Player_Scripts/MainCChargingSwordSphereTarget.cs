@@ -81,7 +81,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool _isSphereDetectorSpawned;
         private bool _isSphereDetectorInstNotNull;
 
-        private protected override void Awake()
+        protected override void Awake()
         {
             _cc = GetComponent<CharacterController>();
             _anim = GetComponent<Animator>();

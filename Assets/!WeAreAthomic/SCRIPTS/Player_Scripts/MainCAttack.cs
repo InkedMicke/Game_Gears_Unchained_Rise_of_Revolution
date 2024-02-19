@@ -25,6 +25,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCVFX _mainCVfx;
         private MainCRail _mainCRail;
         private G_MeshTrail _mainG;
+        private MainCFuryAttack _mainCFuryAttack;
 
         private Rigidbody _rb;
 
@@ -65,7 +66,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _currentTimeSheath;
    
 
-        private protected override void Awake()
+        protected override void Awake()
         {
             _mainCMovement = GetComponent<MainCMovement>();
             _mainCLayers = GetComponent<MainCLayers>();
@@ -81,7 +82,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCVfx = GetComponent<MainCVFX>();
             _mainG = GetComponent<G_MeshTrail>();
             _mainCRail = GetComponent<MainCRail>();
-            _rb = GetComponent<Rigidbody>();
+            _mainCFuryAttack = GetComponent<MainCFuryAttack>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -137,25 +138,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _isLeftMousePressed = false;
             Attack();
             _currentTimeSheath = Time.time;
-            
-
-                _mainCMovement.EnableMovement();
-
-
-                var arrows = GameObject.FindGameObjectsWithTag("ArrowDisplayer");
-
-                if (arrows.Length > 0)
-                {
-                    foreach (var arrow in arrows)
-                    {
-                        Destroy(arrow);
-                    }
-                }
-
-                if (!_mainCTutorial.FirstTimeAbility)
-                {
-                    SetAttackCount(5);
-                }
             
         }
 
@@ -295,7 +277,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void EndAttack()
         {
-        
             _mainCAnimator.SetRootMotion(false);
             IsAttacking = false;
             attackCount = 0;
@@ -307,6 +288,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             DisableNextAttack();
             IsFinalAttacking = false;
             _canNextAttack = false;
+            _mainCMovement.EnableMovement();
+            if(_mainCFuryAttack.scannerInst != null)
+            {
+                Destroy(_mainCFuryAttack.scannerInst);
+            }
             
         }
 

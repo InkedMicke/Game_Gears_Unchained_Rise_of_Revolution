@@ -22,7 +22,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         protected float _mouseMagnitude;
         protected float timeToCharged = .2f;
 
-        private protected virtual void Awake()
+        protected virtual void Awake()
         {
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -44,7 +44,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (IsLeftMouseDown)
                 {
                     _mouseMagnitude += Time.deltaTime;
-
                 }
 
                 if (_mouseMagnitude > timeToCharged)
@@ -67,6 +66,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void LeftMousePressedDown(InputAction.CallbackContext context)
         {
+            
             IsLeftMouseDown = true;
         }
 

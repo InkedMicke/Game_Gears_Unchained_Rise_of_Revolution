@@ -9,6 +9,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private PP m_PP;
         [SerializeField] private GameObject m_interface;
 
+        [SerializeField] private Slider furySlider;
+
         public float localEnergy;
         public float maxEnergy = 100;
 
@@ -25,6 +27,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void SetEnergySlider(float value)
         {
             energySlider.value = value;
+        }        
+        
+        public void SetFurySlider(float value)
+        {
+            furySlider.value = value;
         }
         public void ChargeEnergy(float energy)
         {

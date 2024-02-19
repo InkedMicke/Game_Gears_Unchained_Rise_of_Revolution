@@ -104,7 +104,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             {
                 StartCoroutine(MoveDownToZero());
                 _isWave3 = false;
-               // _mainCAttack.SetHasUnlockedAbilityAttack(true);
+               // _mainCAttack.
+               // (true);
                 _mainCAttack.SetIsSheathed(false);
                 _mainCAttack.EnableCanAttack();
                 _mainCTutorial.movedDerImage.GetComponent<Animator>().SetTrigger(string.Format("close"));

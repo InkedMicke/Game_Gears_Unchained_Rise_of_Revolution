@@ -7,6 +7,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
     public class WrenchHitBox : MonoBehaviour
     {
         private MainCAttack _mainCAttack;
+        [SerializeField] private MainCFuryAttack mainCFuryAttack;
 
         [SerializeField] private PlayerDamageData wrenchDamageData;
         [SerializeField] private List<ParticleSystem> _hitParticles;
@@ -23,6 +24,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (other.TryGetComponent(out IDamageable damageable))
             {
+                mainCFuryAttack.GetFury(mainCFuryAttack.furyPerHit);
                 if (wrenchDamageData != null)
                 {
                     foreach (var collider in colliderList)

@@ -1,44 +1,35 @@
-using DG.Tweening;
-using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Cinemachine;
+using System;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
-    public class MainCFuryAttack : MainCMouseController
+    public class MainCFuryAttack : MonoBehaviour
     {
         private MainCAttack _mainCAttack;
         private MainCMovement _mainCMovement;
-        private PlayerInputActions _playerInputActions;
+        private PlayerInputActions _inputActions;
         private MainCLayers _mainCLayers;
-        private MainCRailGrindSystem _railGrindSystem;
         private MainCAnimatorController _mainCAnimator;
         private MainCSounds _mainCSounds;
-        private BoxCollider _weaponBC;
         private CharacterController _cc;
         private MainCTutorialChecker _mainCTutorial;
         private WrenchHitBox _wrenchHitBox;
         private MainCPistol _mainCPistol;
         private MainCPlayerInterface _mainCInterface;
-        private MainCDash _mainCDash;
         private MainCVFX _mainCVfx;
-        private MainCRail _mainCRail;
-        private G_MeshTrail _mainG;
-        private Rigidbody _rb;
 
-        [SerializeField] private Slider furySlider;
         [SerializeField] private float maxFury;
         private float currentFury;
         private float furySpend;
-        
+
         [SerializeField] private PlayerDamageData furyDamageData;
         [SerializeField] private Material lowRangeMaterial;
         [SerializeField] private Material maxRangeMaterial;
         public GameObject weaponObj;
-        private GameObject scannerInst;
+        [NonSerialized] public GameObject scannerInst;
         [SerializeField] private GameObject scannerPrefab;
         [SerializeField] private GameObject explosionEffect;
         [SerializeField] private Transform explosionEffectPosition;
@@ -49,10 +40,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         [SerializeField] private float scannerSizeSpeed = .1f;
         [SerializeField] private float scannerSize = 15f;
+        public float furyPerHit = 20f;
+        private float _mouseMagnitude;
 
-       
-        
-        [System.NonSerialized] public bool IsFinalAttacking;
+        [NonSerialized] public bool IsFinalAttacking;
 
         public bool IsChargingAttack;
         private bool _isLeftMousePressed;
@@ -65,28 +56,75 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCMovement = GetComponent<MainCMovement>();
             _mainCLayers = GetComponent<MainCLayers>();
             _cc = GetComponent<CharacterController>();
-            _railGrindSystem = GetComponent<MainCRailGrindSystem>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _mainCSounds = GetComponent<MainCSounds>();
             _mainCTutorial = GetComponent<MainCTutorialChecker>();
             _mainCPistol = GetComponent<MainCPistol>();
             _wrenchHitBox = weaponObj.GetComponent<WrenchHitBox>();
             _mainCInterface = GetComponent<MainCPlayerInterface>();
-            _mainCDash = GetComponent<MainCDash>();
             _mainCVfx = GetComponent<MainCVFX>();
-            _mainG = GetComponent<G_MeshTrail>();
-            _mainCRail = GetComponent<MainCRail>();
             _mainCAttack = GetComponent<MainCAttack>();
-            _rb = GetComponent<Rigidbody>();
+
+
+            _inputActions = new PlayerInputActions();
+            _inputActions.Enable();
+            _inputActions.PlayerPC.Attack.performed += MouseDown;
+            _inputActions.PlayerPC.Attack.canceled += MouseUp;
+            _inputActions.PlayerGamepad.Attack.performed += GamepadDown;
+            _inputActions.PlayerGamepad.Attack.canceled += GamepadUp;
         }
+
+        private void Start()
+        {
+            GetFury(100f);
+        }
+
         private void Update()
         {
+            if (_isLeftMousePressed)
+            {
+                _mouseMagnitude += Time.deltaTime;
+            }
+
             ChargeAttack();
             if (IsChargingAttack && scannerInst != null)
             {
                 ChangeMaterialScanner();
             }
         }
+
+        private void GamepadDown(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+            {
+                ControlDown();
+            }
+        }
+
+        private void GamepadUp(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+            {
+                ControlUp();
+            }
+        }
+
+        private void MouseDown(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            {
+                ControlDown();
+            }
+        }
+
+        private void MouseUp(InputAction.CallbackContext context)
+        {
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
+            {
+                ControlUp();
+            }
+        }
+
         private void ChangeMaterialScanner()
         {
             if (scannerInst.transform.localScale.x >= scannerSize)
@@ -99,11 +137,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         }
         private void ChargeAttack()
         {
-            if (CanChargeAttack() && _hasUnlockedAbilityAttack && GameManagerSingleton.Instance.bastetEnergy > 20f  && !_mainCAttack.IsAttacking && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            if (CanChargeAttack() && _hasUnlockedAbilityAttack && GameManagerSingleton.Instance.bastetFury == 100 && !_mainCAttack.IsAttacking && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
             {
-                if (_mainCTutorial.FirstTimeAbility)
+                if (!IsChargingAttack)
                 {
-                    //tut_ES.transform.GetChild(0).gameObject.SetActive(true);
+                    GetFury(-100);
                 }
                 _mainCLayers.EnableAbilityAttackLayer();
                 _mainCAttack.SetAttackCount(4);
@@ -111,37 +149,21 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 weaponObj.SetActive(true);
                 scannerInst = Instantiate(scannerPrefab, groundTr.position, Quaternion.identity);
                 IsChargingAttack = true;
-                _mainCPistol.StopRecoveringEnergy();
             }
 
-            if (_mouseMagnitude > timeToCharged && _isLeftMousePressed && _hasUnlockedAbilityAttack  && !_mainCAttack.IsAttacking)
+            if (_mouseMagnitude > .2f && _isLeftMousePressed && _hasUnlockedAbilityAttack && !_mainCAttack.IsAttacking && scannerInst.transform.localScale.x < scannerSize)
             {
-                if (GameManagerSingleton.Instance.bastetEnergy <= 0 && !_runOutFury)
-                {
-                    _mainCAttack.SetAttackCount(5);
-                    _runOutFury = true;
-                    _canAbilityAttack = false;
-                }
-
-
                 if (scannerInst != null)
                 {
-                    if (scannerInst.transform.localScale.x >= scannerSize && _mainCTutorial.FirstTimeAbility)
-                    {
-                        //tut_ES.transform.GetChild(0).gameObject.SetActive(false);
-                        //tut_ES.transform.GetChild(1).gameObject.SetActive(true);
-                    }
+                    scannerInst.transform.localScale += Vector3.one * scannerSizeSpeed;
 
-                    if (scannerInst.transform.localScale.x < scannerSize && GameManagerSingleton.Instance.bastetEnergy > 0)
-                    {
-                        if (!_mainCTutorial.FirstTimeAbility)
-                        {
-                            GameManagerSingleton.Instance.bastetFury -= furySpend;
-                            _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
-                        }
-                        scannerInst.transform.localScale += Vector3.one * scannerSizeSpeed;
-                    }
                 }
+            }
+
+            if(IsChargingAttack && scannerInst.transform.localScale.x >= scannerSize)
+            {
+                _mainCAttack.SetAttackCount(5);
+                IsChargingAttack = false;
             }
         }
         public void ApplyAbilityDamage()
@@ -151,7 +173,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             InstanciateExplosion();
             _mainCSounds.PlayChargedAttackSound();
             GCameraShake.Instance.ShakeCamera(5f, .1f);
-            
+
         }
         public void DestroyScanner()
         {
@@ -171,60 +193,36 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         }
 
+        public void GetFury(float fury)
+        {
+            GameManagerSingleton.Instance.bastetFury += fury;
+            GameManagerSingleton.Instance.bastetFury = Mathf.Clamp(GameManagerSingleton.Instance.bastetFury, 0f, 100f);
+            _mainCInterface.SetFurySlider(GameManagerSingleton.Instance.bastetFury);
+        }
+
         public void ControlUp()
         {
             if (IsChargingAttack && GameManagerSingleton.Instance.bastetEnergy > 0)
             {
-                if (_mainCTutorial.FirstTimeAbility && scannerInst.transform.localScale.x >= scannerSize)
-                {
-                    _mainCAttack.SetAttackCount(5);
-                    //tut_ES.transform.GetChild(1).gameObject.SetActive(false);
-                    //tut_ES.transform.GetChild(0).gameObject.SetActive(false);
-                    _mainCMovement.EnableMovement();
-                    _mainCTutorial.SetFirstAbilityAttack(false);
-                    GameManagerSingleton.Instance.TakeEnergy(75);
-                    _mainCInterface.SetEnergySlider(GameManagerSingleton.Instance.bastetEnergy);
-                    _mainCSounds.RemoveAllTutorialSounds();
-                    _mainCSounds.PlayExpressionSound();
-                }
-
-                if (_mainCTutorial.FirstTimeAbility && scannerInst.transform.localScale.x < scannerSize)
-                {
-                    EndAttack();
-                    //tut_ES.transform.GetChild(1).gameObject.SetActive(false);
-                    //tut_ES.transform.GetChild(0).gameObject.SetActive(true);
-                    if (scannerInst != null)
-                    {
-                        Destroy(scannerInst);
-                    }
-                }
+                _mainCAttack.SetAttackCount(5);
             }
+            _isLeftMousePressed = false;
         }
         private void ControlDown()
         {
             _isLeftMousePressed = true;
-        }
-        public void EndAttack()
-        {
 
-            _mainCAnimator.SetRootMotion(false);
-            _mainCAttack.IsAttacking = false;
-            _mainCAttack.attackCount = 0;
-            _mainCAnimator.SetAttackCountAnim(_mainCAttack.attackCount);
-            _mainCLayers.DisableAttackLayer();
-            _mainCLayers.DisableFinalAttackLayer();
-            _mainCLayers.DisableAbilityAttackLayer();
-            IsFinalAttacking = false;
-            IsChargingAttack = false;
         }
+
         private bool CanChargeAttack()
         {
+
             if (IsChargingAttack)
             {
                 return false;
             }
 
-            if (!(_mouseMagnitude > timeToCharged))
+            if (_mouseMagnitude < .2f)
             {
                 return false;
             }
