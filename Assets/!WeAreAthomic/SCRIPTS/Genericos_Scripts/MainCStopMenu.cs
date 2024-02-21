@@ -88,7 +88,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 }
                 else
                 {
-                    _mainCSounds.PlayOpenMenuSound();
+                    
                     setTriggerAnim.Invoke();
                     stopMenuContainer.SetActive(true);
                     if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
@@ -96,13 +96,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                         EventSystem.current.SetSelectedGameObject(firstButton);
                         firstButton.GetComponent<C_UIMaterial_Changer>().OnPointerEnter();
                     }
-
+                    
                     m_PP.SetActiveToCurrentUIGameObjectList(false);
                     GameManagerSingleton.Instance.ShowCursor(true);
                     GameManagerSingleton.Instance.PauseGame(true);
                     GameManagerSingleton.Instance.FreezeTime(true);
                     GameManagerSingleton.Instance.SetIsStopMenuEnabled(true);
                     _mainCSounds.PauseCurrentSounds();
+                    _mainCSounds.PlayOpenMenuSound();
                 }
 
             }
