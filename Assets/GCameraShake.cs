@@ -42,7 +42,7 @@ public class GCameraShake : MonoBehaviour
         shakeTimer = time;
     }
 
-    public void SetCameraPriority()
+    public void SetCameraPriorityWithSeconds()
     {
         StartCoroutine(CameraPriority());
     }

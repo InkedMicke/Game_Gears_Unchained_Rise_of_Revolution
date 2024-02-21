@@ -95,6 +95,7 @@ public class MainCRail : MonoBehaviour
                 m_mainCVFX.SetActiveSpeedlines(false);
                 m_totalSlidingCooldown = Time.time + m_slidingCooldown;
                 IsSliding = false;
+                m_mainCSounds.RemoveRailSounds();
             }
 
             var nextPosition = _splineContainer.EvaluatePosition(_distancePercentage + .001f);
