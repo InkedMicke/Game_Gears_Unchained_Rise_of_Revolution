@@ -7,6 +7,7 @@ using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie;
 using DG.Tweening;
 using UnityEngine.Events;
+using Cinemachine;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -26,8 +27,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private BastetController _bastetController;
         private MainCPlayerInterface _mainCInterface;
 
-        private Camera _mainCamera;
-
+        private CinemachineVirtualCamera _mainCamera;
+        
         private Coroutine _recoverEnergyCoroutine;
 
 
@@ -88,7 +89,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _playerInputActions.PlayerGamepad.SecondaryAttack.performed += RightGamepadDown;
             _playerInputActions.PlayerGamepad.SecondaryAttack.canceled += RightGamepadUp;
 
-            _mainCamera = cameraObj.GetComponent<Camera>();
+            _mainCamera = cameraObj.GetComponent<CinemachineVirtualCamera>();
 
 
             if (GameManagerSingleton.Instance.bastetEnergy < 100 && !_isRecoveringShoot && !_isWaitingForRecoveringShoot)
@@ -233,8 +234,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _isRecoveringShoot = false;
                 shootSoundClip.Play();
                 OnShoot.Invoke();
+                
                 var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-                _mainCamera.DOShakePosition(.1f, .1f, 5, 60f);
+               //_mainCamera.DOShakePosition(.1f, .1f, 5, 60f);
+                GCameraShake.Instance.ShakeCamera(1f, .1f);
                 if (Physics.Raycast(ray, out RaycastHit hit, shootDistance, rayLayers))
                 {
                     Vector3 direction = bastetObj.transform.position - hit.collider.transform.position;

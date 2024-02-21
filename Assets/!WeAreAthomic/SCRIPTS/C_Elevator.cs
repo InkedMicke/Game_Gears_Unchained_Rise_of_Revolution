@@ -15,6 +15,9 @@ public class C_Elevator : MonoBehaviour
 
     [SerializeField] private UnityEvent OnStart;
     [SerializeField] private UnityEvent OnFinish;
+ 
+
+   
    
 
     public void GoPosition()

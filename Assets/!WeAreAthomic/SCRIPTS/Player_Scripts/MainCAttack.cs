@@ -170,7 +170,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
                     _mainCLayers.EnableAttackLayer();
                     _mainCSounds.StopAttackSound();
-                  //GCameraShake.Instance.ShakeCamera(1f, .1f);
+                  GCameraShake.Instance.ShakeCamera(1f, .1f);
                     attackCount++;
                     _mainCAnimator.SetAttackCountAnim(attackCount);
                     weaponObj.GetComponent<WrenchHitBox>().ClearList();
@@ -246,7 +246,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (_canNextAttack && IsAttacking)
             {
                 MoveToEnemy();
-             //GCameraShake.Instance.ShakeCamera(1f, .1f);
+            GCameraShake.Instance.ShakeCamera(1f, .1f);
                 _mainCSounds.PlayAttackSound();
                 _mainCSounds.PlayEffordSound();
                 if (attackCount == 2)
@@ -269,7 +269,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        public void FinalAttackShake() { /*GCameraShake.Instance.ShakeCamera(2f, .1f);*/ }
+        public void FinalAttackShake() { GCameraShake.Instance.ShakeCamera(2f, .1f); }
 
         public void EnableNextAttack() => _canNextAttack = true;
 
