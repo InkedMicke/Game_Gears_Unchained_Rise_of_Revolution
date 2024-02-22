@@ -9,7 +9,7 @@ public class SceneLoaderStart : MonoBehaviour
 {
     SceneLoaderMultipleAsync _sceneLoaderMultipleAsync;
      [SerializeField] public List<LoadSceneAsyncAsset> loadSceneAsyncAssets = new ();
-    [SerializeField] private GameObject player;
+    [SerializeField] private List <GameObject> player;
     [NonSerialized] public int currentSceneIndex;
     [SerializeField] public float timeToLoad;
     
@@ -23,7 +23,11 @@ public class SceneLoaderStart : MonoBehaviour
     
     public void StartLoadingScenes()
     {
-        player.SetActive(true);
+        foreach (var x in player)
+        {
+            x.SetActive(false);
+        }
+
         StartCoroutine(LoadingScenes());
     }
 
@@ -39,6 +43,12 @@ public class SceneLoaderStart : MonoBehaviour
 
         }
         GameManagerSingleton.Instance.SetIsLoadingStartVideos(false);
+
+        foreach (var x in player)
+        {
+            x.SetActive(true);
+        }
+        
     }
 
     public void StartCheckingLoadedScenes(Action onFinishedAction)
