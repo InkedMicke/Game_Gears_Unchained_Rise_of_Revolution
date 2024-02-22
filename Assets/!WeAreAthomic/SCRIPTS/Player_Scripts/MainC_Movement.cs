@@ -203,6 +203,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 m_mainCVFX.SetActiveSparks(true);
             }
+
+        
         }
 
         private void MoveKeyboard()
@@ -366,7 +368,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     m_mainCCrouch.ToggleCCSize();
                     _mainCAnimator.SetCrouch(m_mainCCrouch.IsCrouch);
 
-
                     IsRunningKeyboard = !IsRunningKeyboard;
 
                     IsRunningGamepad = !IsRunningGamepad;
@@ -376,8 +377,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
 
                 IsRunningKeyboard = !IsRunningKeyboard;
-
                 IsRunningGamepad = !IsRunningGamepad;
+            }
+
+            if(IsRunningGamepad || IsRunningKeyboard)
+            {
+                CurrentWalkSpeed = runSpeed;
+            }
+            else
+            {
+                CurrentWalkSpeed = walkSpeed;
             }
 
         }
