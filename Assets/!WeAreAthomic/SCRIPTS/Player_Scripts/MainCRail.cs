@@ -1,11 +1,12 @@
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Splines;
 
 public class MainCRail : MonoBehaviour
 {
     [SerializeField] private SplineContainer _splineContainer;
-    private Spline spline;
+    private SplineAnimate m_splineAnimate;
     private MainCAnimatorController _mainCAnim;
     private MainCDash _mainCDash;
     private MainCMovement _mainCMove;
@@ -33,11 +34,6 @@ public class MainCRail : MonoBehaviour
     private float m_totalSlidingCooldown;
     public float speed = 5f;
     public float distanceThreshold = 0.1f;
-    private float currentDistance = 0f;
-
-    private int currentSplineIndex = 0;
-    private int currentPointIndex;
-    private BezierKnot[] knotsCount;
 
     [SerializeField] private AudioSource railClip;
 
@@ -127,41 +123,54 @@ public class MainCRail : MonoBehaviour
 
     void MoveAlongSpline()
     {
-
-
-        float step = speed * Time.deltaTime;
-        Vector3 targetPosition = _splineContainer.EvaluatePosition(currentPointIndex);
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
-
-        if (Vector3.Distance(transform.position, targetPosition) < distanceThreshold)
+        if(IsSliding)
         {
-            currentPointIndex++;
-
-            if (currentPointIndex >= knotsCount.Length)
+            transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            if (!m_splineAnimate.IsPlaying)
             {
-                currentPointIndex = 0;
+                _mainCAnim.SetSliding(false);
+                m_mainClayers.DisableSlideLayer();
+                _mainCDash.StartDash(false);
+                m_mainCVFX.SetActiveSparks(false);
+                m_mainCVFX.SetActiveSpeedlines(false);
+                m_totalSlidingCooldown = Time.time + m_slidingCooldown;
+                IsSliding = false;
+                m_mainCSounds.RemoveRailSounds();
             }
         }
     }
 
     private void StartSlide()
     {
-        var col = Physics.OverlapSphere(railCheck.position, 0.2f, railLayer);
-        _splineContainer = col[0].transform.GetChild(0).GetComponent<SplineContainer>();
-        knotsCount = _splineContainer.Spline.ToArray();
-        IsSliding = true;
-        /*        _distancePercentage = 0;
+        var cols = Physics.OverlapSphere(railCheck.position, 0.2f, railLayer);
+        m_splineAnimate = cols[0].transform.GetChild(0).GetComponent<SplineAnimate>();
+        m_splineAnimate.MaxSpeed = railSpeed;
+        StartCoroutine(FixSplineAnimatePos(cols));
+    }
+
+    private IEnumerator FixSplineAnimatePos(Collider[] cols)
+    {
+        while(true)
+        {
+            if(Vector3.Distance(m_splineAnimate.transform.position, transform.position) < 1f)
+            {
+                transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                transform.parent = cols[0].transform.GetChild(0);
                 m_mainClayers.EnableSlideLayer();
                 _mainCAnim.SetSliding(true);
-                var ray = new Ray(transform.position, Vector3.down);
-                var cols = Physics.OverlapSphere(transform.position, 0.3f, railLayer);
-                splineFollower = cols[0].transform.GetChild(0).gameObject; ;
-                _splineContainer = splineFollower.GetComponent<SplineContainer>();
-                _splineLength = _splineContainer.CalculateLength();
+                m_splineAnimate.Play();
                 IsSliding = true;
                 _mainCAnim.SetMoveSpeed(0);
-                m_mainCVFX.SetRailEffects(true);*/
-        //_mainCSounds.PlayRailSound();
+                m_mainCVFX.SetRailEffects(true);
+                //_mainCSounds.PlayRailSound();
+                break;
+            }
+
+            m_splineAnimate.ElapsedTime += Time.deltaTime;
+
+
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     private void OnDrawGizmos()
@@ -195,6 +204,8 @@ public class MainCRail : MonoBehaviour
         }
 
         return true;
+
+
     }
 
 
