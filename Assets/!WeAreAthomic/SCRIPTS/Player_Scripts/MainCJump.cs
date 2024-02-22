@@ -64,7 +64,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 m_mainCAnim.SetGrounded(false);
                 m_mainCLayers.EnableJumpLayer();
                 m_mainCAnim.SetJumping(true);
-                m_mainCMove.Velocity = transform.up.normalized * jumpImpulse;
+                m_mainCMove.Velocity += jumpImpulse;
                 TimeGraceJumpPeriod = Time.time + TimeNextJump;
             }
 
@@ -80,7 +80,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 m_mainCAnim.SetGrounded(false);
                 m_mainCLayers.EnableJumpLayer();
                 m_mainCAnim.SetJumping(true);
-                m_mainCMove.Velocity = transform.up.normalized * (m_mainCRail.HigherJumpDueToInclination() ? jumpImpulseOnRail * 3f : jumpImpulseOnRail);
+                m_mainCMove.Velocity = m_mainCRail.HigherJumpDueToInclination() ? jumpImpulseOnRail * 3f : jumpImpulseOnRail;
                 TimeGraceJumpPeriod = Time.time + TimeNextJump;
 
                 m_mainCVFX.SetActiveSparks(false);
@@ -94,10 +94,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void EndJump()
         {
-            if (IsJumping)
-            {
-                m_mainCLayers.DisableJumpLayer();
-            }
+            m_mainCLayers.DisableJumpLayer();
+
         }
 
         private bool CanJumpGround()
@@ -117,7 +115,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
-            if(GameManagerSingleton.Instance.IsOnDialogue)
+            if (GameManagerSingleton.Instance.IsOnDialogue)
             {
                 return false;
             }

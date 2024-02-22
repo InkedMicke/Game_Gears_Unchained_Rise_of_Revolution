@@ -4,7 +4,7 @@ using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
-    public class WrenchHitBox : MonoBehaviour
+    public class MainCWrenchHitBox : MonoBehaviour
     {
         private MainCAttack _mainCAttack;
         [SerializeField] private MainCFuryAttack mainCFuryAttack;
@@ -15,9 +15,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public bool GotHit;
 
-        private void Awake()
+        private void OnValidate()
         {
             _mainCAttack = GetComponentInParent<MainCAttack>();
+            mainCFuryAttack = GetComponentInParent<MainCFuryAttack>();
         }
 
         private void OnTriggerEnter(Collider other)

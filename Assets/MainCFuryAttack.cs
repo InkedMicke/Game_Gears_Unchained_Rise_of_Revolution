@@ -16,7 +16,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCSounds _mainCSounds;
         private CharacterController _cc;
         private MainCTutorialChecker _mainCTutorial;
-        private WrenchHitBox _wrenchHitBox;
+        private MainCWrenchHitBox _wrenchHitBox;
         private MainCPistol _mainCPistol;
         private MainCPlayerInterface _mainCInterface;
         private MainCVFX _mainCVfx;
@@ -60,7 +60,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCSounds = GetComponent<MainCSounds>();
             _mainCTutorial = GetComponent<MainCTutorialChecker>();
             _mainCPistol = GetComponent<MainCPistol>();
-            _wrenchHitBox = weaponObj.GetComponent<WrenchHitBox>();
+            _wrenchHitBox = weaponObj.GetComponent<MainCWrenchHitBox>();
             _mainCInterface = GetComponent<MainCPlayerInterface>();
             _mainCVfx = GetComponent<MainCVFX>();
             _mainCAttack = GetComponent<MainCAttack>();

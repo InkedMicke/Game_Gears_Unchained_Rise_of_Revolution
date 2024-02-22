@@ -530,7 +530,7 @@ MonoBehaviour:
     m_Bits: 2112
   walkSpeed: 4
   runSpeed: 7
-  gravity: -3
+  gravityMultiplier: -1
   aimSpeed: 8
   maxSlopeAngle: 40
   turnSmoothTime: 0.05
@@ -547,6 +547,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hurtBoxCC: {fileID: 2456772534812874143}
+  canStandLayers:
+    serializedVersion: 2
+    m_Bits: 2113
   crouchSpeed: 2
   timeNextCrouch: 0.5
 --- !u!114 &1375674147020419813
@@ -741,6 +744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fb1de45e1e659b48abe447822968eae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _splineContainer: {fileID: 0}
   railLayer:
     serializedVersion: 2
     m_Bits: 8192
@@ -748,6 +752,8 @@ MonoBehaviour:
   railCheck: {fileID: 2633980742278052695}
   railSpeed: 5
   jumpCooldown: 0.5
+  speed: 5
+  distanceThreshold: 0.1
   railClip: {fileID: 0}
 --- !u!114 &7417020760943733625
 MonoBehaviour:
@@ -2400,7 +2406,8 @@ PrefabInstance:
       propertyPath: _hitParticles.Array.data[4]
       value: 
       objectReference: {fileID: 7346491265349305079}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7646325631139378011, guid: 3f50f72433c502940a09e9ba10f49496, type: 3}
     m_RemovedGameObjects:
     - {fileID: 1660796697018133446, guid: 3f50f72433c502940a09e9ba10f49496, type: 3}
     m_AddedGameObjects:
@@ -2408,7 +2415,11 @@ PrefabInstance:
         type: 3}
       insertIndex: 0
       addedObject: {fileID: 6382615059129552794}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5813778482416866007, guid: 3f50f72433c502940a09e9ba10f49496,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8285842222512456639}
   m_SourcePrefab: {fileID: 100100000, guid: 3f50f72433c502940a09e9ba10f49496, type: 3}
 --- !u!4 &1375809837612035899 stripped
 Transform:
@@ -2458,6 +2469,27 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3686055165737724876}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8285842222512456639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7172491612928227611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eeb84d37ac80844da1dba91e36eea62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCFuryAttack: {fileID: 0}
+  wrenchDamageData: {fileID: 11400000, guid: ad06cde7f1e032d44b83a8cacd9a52ec, type: 2}
+  _hitParticles:
+  - {fileID: 7166412991347247449}
+  - {fileID: 3111380031343857052}
+  - {fileID: 5082290356320589693}
+  - {fileID: 7346491265349305079}
+  colliderList: []
+  GotHit: 0
 --- !u!4 &7548630776095335329 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6621804476971092077, guid: 3f50f72433c502940a09e9ba10f49496,

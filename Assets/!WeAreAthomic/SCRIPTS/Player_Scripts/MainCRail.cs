@@ -4,7 +4,8 @@ using UnityEngine.Splines;
 
 public class MainCRail : MonoBehaviour
 {
-    private SplineContainer _splineContainer;
+    [SerializeField] private SplineContainer _splineContainer;
+    private Spline spline;
     private MainCAnimatorController _mainCAnim;
     private MainCDash _mainCDash;
     private MainCMovement _mainCMove;
@@ -30,6 +31,13 @@ public class MainCRail : MonoBehaviour
     private float _currentRailSpeed;
     private float m_slidingCooldown = 1f;
     private float m_totalSlidingCooldown;
+    public float speed = 5f;
+    public float distanceThreshold = 0.1f;
+    private float currentDistance = 0f;
+
+    private int currentSplineIndex = 0;
+    private int currentPointIndex;
+    private BezierKnot[] knotsCount;
 
     [SerializeField] private AudioSource railClip;
 
@@ -55,79 +63,104 @@ public class MainCRail : MonoBehaviour
 
         }
 
-        if (IsSliding)
-        {
-
-            _currentRailSpeed = railSpeed;
-        }
 
         if (IsSliding)
         {
-            var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
-            Debug.DrawRay(currentPosition, Vector3.up * 20, Color.yellow);
+            MoveAlongSpline();
         }
 
-        if (IsSliding && !m_mainCJump.IsJumping && !_mainCMove.IsFalling)
+        /*        if (IsSliding)
+                {
+
+                    _currentRailSpeed = railSpeed;
+                    var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
+                    Debug.DrawRay(currentPosition, Vector3.up * 20, Color.yellow);
+                }
+
+                if (IsSliding && !m_mainCJump.IsJumping && !_mainCMove.IsFalling)
+                {
+                    m_mainCSounds.PlayRailSound();
+
+                    // Calcular la distancia recorrida en el mundo del juego
+                    float distanceTraveled = _currentRailSpeed * Time.deltaTime;
+
+                    // Calcular el nuevo _distancePercentage basado en la distancia recorrida
+                    float newDistancePercentage = _distancePercentage + distanceTraveled / _splineLength;
+
+                    // Asegurarse de que el nuevo _distancePercentage esté en el rango [0, 1]
+                    _distancePercentage = Mathf.Clamp01(newDistancePercentage);
+
+                    var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
+                    //transform.position = Vector3.MoveTowards(transform.position ,currentPosition, railSpeed * Time.deltaTime);
+                    var posVector = new Vector3(currentPosition.x, currentPosition.y, currentPosition.z);
+                    var difference = posVector - transform.position;
+                    _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
+                    Debug.DrawRay(currentPosition, Vector3.up * 20f, Color.yellow, 10f);
+                    if (_distancePercentage > 0.95f && IsSliding)
+                    {
+                        _mainCAnim.SetSliding(false);
+                        m_mainClayers.DisableSlideLayer();
+                        _mainCDash.StartDash(false);
+                        m_mainCVFX.SetActiveSparks(false);
+                        m_mainCVFX.SetActiveSpeedlines(false);
+                        m_totalSlidingCooldown = Time.time + m_slidingCooldown;
+                        IsSliding = false;
+                        m_mainCSounds.RemoveRailSounds();
+                    }
+
+                    var nextPosition = _splineContainer.EvaluatePosition(_distancePercentage + .001f);
+                    var direction = nextPosition - currentPosition;
+                    transform.rotation = Quaternion.LookRotation(direction, transform.up);
+                }
+                else if (IsSliding && m_mainCJump.IsJumping || IsSliding && _mainCMove.IsFalling)
+                {
+                    _distancePercentage += _currentRailSpeed * Time.deltaTime / _splineLength;
+                    var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
+                    var posVector = new Vector3(currentPosition.x, transform.position.y, currentPosition.z);
+                    //transform.position = Vector3.MoveTowards(transform.position, currentPosition, railSpeed * Time.deltaTime);
+                    var difference = posVector - transform.position;
+
+                    _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
+                    m_mainCSounds.RemoveRailSounds();
+                }*/
+    }
+
+    void MoveAlongSpline()
+    {
+
+
+        float step = speed * Time.deltaTime;
+        Vector3 targetPosition = _splineContainer.EvaluatePosition(currentPointIndex);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+
+        if (Vector3.Distance(transform.position, targetPosition) < distanceThreshold)
         {
-            m_mainCSounds.PlayRailSound();
+            currentPointIndex++;
 
-            // Calcular la distancia recorrida en el mundo del juego
-            float distanceTraveled = _currentRailSpeed * Time.deltaTime;
-
-            // Calcular el nuevo _distancePercentage basado en la distancia recorrida
-            float newDistancePercentage = _distancePercentage + distanceTraveled / _splineLength;
-
-            // Asegurarse de que el nuevo _distancePercentage esté en el rango [0, 1]
-            _distancePercentage = Mathf.Clamp01(newDistancePercentage);
-
-            var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
-            //transform.position = Vector3.MoveTowards(transform.position ,currentPosition, railSpeed * Time.deltaTime);
-            var posVector = new Vector3(currentPosition.x, currentPosition.y, currentPosition.z);
-            var difference = posVector - transform.position;
-            _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
-
-            if (_distancePercentage > 0.95f && IsSliding)
+            if (currentPointIndex >= knotsCount.Length)
             {
-                _mainCAnim.SetSliding(false);
-                m_mainClayers.DisableSlideLayer();
-                _mainCDash.StartDash(false);
-                m_mainCVFX.SetActiveSparks(false);
-                m_mainCVFX.SetActiveSpeedlines(false);
-                m_totalSlidingCooldown = Time.time + m_slidingCooldown;
-                IsSliding = false;
-                m_mainCSounds.RemoveRailSounds();
+                currentPointIndex = 0;
             }
-
-            var nextPosition = _splineContainer.EvaluatePosition(_distancePercentage + .001f);
-            var direction = nextPosition - currentPosition;
-            transform.rotation = Quaternion.LookRotation(direction, transform.up);
-        }
-        else if (IsSliding && m_mainCJump.IsJumping || IsSliding && _mainCMove.IsFalling)
-        {
-            _distancePercentage += _currentRailSpeed * Time.deltaTime / _splineLength;
-            var currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
-            var posVector = new Vector3(currentPosition.x, transform.position.y, currentPosition.z);
-            //transform.position = Vector3.MoveTowards(transform.position, currentPosition, railSpeed * Time.deltaTime);
-            var difference = posVector - transform.position;
-
-            _cc.Move(_currentRailSpeed * Time.deltaTime * difference.normalized);
-            m_mainCSounds.RemoveRailSounds();
         }
     }
 
     private void StartSlide()
     {
-        _distancePercentage = 0;
-        m_mainClayers.EnableSlideLayer();
-        _mainCAnim.SetSliding(true);
-        var ray = new Ray(transform.position, Vector3.down);
-        var cols = Physics.OverlapSphere(transform.position, 0.3f, railLayer);
-        splineFollower = cols[0].transform.GetChild(0).gameObject; ;
-        _splineContainer = splineFollower.GetComponent<SplineContainer>();
-        _splineLength = _splineContainer.CalculateLength();
+        var col = Physics.OverlapSphere(railCheck.position, 0.2f, railLayer);
+        _splineContainer = col[0].transform.GetChild(0).GetComponent<SplineContainer>();
+        knotsCount = _splineContainer.Spline.ToArray();
         IsSliding = true;
-        _mainCAnim.SetMoveSpeed(0);
-        m_mainCVFX.SetRailEffects(true);
+        /*        _distancePercentage = 0;
+                m_mainClayers.EnableSlideLayer();
+                _mainCAnim.SetSliding(true);
+                var ray = new Ray(transform.position, Vector3.down);
+                var cols = Physics.OverlapSphere(transform.position, 0.3f, railLayer);
+                splineFollower = cols[0].transform.GetChild(0).gameObject; ;
+                _splineContainer = splineFollower.GetComponent<SplineContainer>();
+                _splineLength = _splineContainer.CalculateLength();
+                IsSliding = true;
+                _mainCAnim.SetMoveSpeed(0);
+                m_mainCVFX.SetRailEffects(true);*/
         //_mainCSounds.PlayRailSound();
     }
 

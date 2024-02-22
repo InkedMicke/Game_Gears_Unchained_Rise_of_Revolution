@@ -15,6 +15,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         [SerializeField] private CapsuleCollider _hurtBoxCC;
 
+        [SerializeField] private LayerMask canStandLayers;
+
         private Vector2 _moveVectorKeyboard;
         private Vector2 _moveVectorGamepad;
 
@@ -25,13 +27,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float timeNextCrouch = 0.5f;
         private float m_timeGraceCrouchPeriod;
 
+        private void OnValidate()
+        {
+            m_cc = GetComponent<CharacterController>();
+        }
+
         private void Awake()
         {
             m_mainCMove = GetComponent<MainCMovement>();
             m_mainCAnim = GetComponent<MainCAnimatorController>();
             m_mainCLayers = GetComponent<MainCLayers>();
             m_mainCRail = GetComponent<MainCRail>();
-            m_cc = GetComponent<CharacterController>();
 
             m_inputActions = new PlayerInputActions();
             m_inputActions.Enable();
@@ -168,9 +174,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public bool CanStandUp()
         {
-            var ray = new Ray(transform.position + (Vector3.up.normalized * m_cc.height), Vector3.up);
-            if(Physics.Raycast(ray, 2f))
+            if(Physics.CheckSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.3f, canStandLayers))
             {
+                var col = Physics.OverlapSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.3f, canStandLayers);
+                Debug.Log(col[0].name);
                 return false;
             }
 

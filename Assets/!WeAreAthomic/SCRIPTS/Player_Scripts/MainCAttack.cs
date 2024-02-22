@@ -18,7 +18,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private BoxCollider _weaponBC;
         private CharacterController _cc;
         private MainCTutorialChecker _mainCTutorial;
-        private WrenchHitBox _wrenchHitBox;
+        private MainCWrenchHitBox _wrenchHitBox;
         private MainCPistol _mainCPistol;
         private MainCPlayerInterface _mainCInterface;
         private MainCDash _mainCDash;
@@ -76,7 +76,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCSounds = GetComponent<MainCSounds>();
             _mainCTutorial = GetComponent<MainCTutorialChecker>();
             _mainCPistol = GetComponent<MainCPistol>();
-            _wrenchHitBox = weaponObj.GetComponent<WrenchHitBox>();
+            _wrenchHitBox = weaponObj.GetComponent<MainCWrenchHitBox>();
             _mainCInterface = GetComponent<MainCPlayerInterface>();
             _mainCDash = GetComponent<MainCDash>();
             _mainCVfx = GetComponent<MainCVFX>();
@@ -173,7 +173,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                   GCameraShake.Instance.ShakeCamera(1f, .1f);
                     attackCount++;
                     _mainCAnimator.SetAttackCountAnim(attackCount);
-                    weaponObj.GetComponent<WrenchHitBox>().ClearList();
+                    weaponObj.GetComponent<MainCWrenchHitBox>().ClearList();
                     _canNextAttack = false;
                     _mainCSounds.PlayAttackSound();
                     _mainCSounds.PlayEffordSound();

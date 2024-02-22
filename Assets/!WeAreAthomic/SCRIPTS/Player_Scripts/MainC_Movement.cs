@@ -1,6 +1,8 @@
 using _WeAreAthomic.SCRIPTS.Debug_Scripts;
 using System;
+using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
@@ -42,11 +44,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Vector2 _moveVectorKeyboard;
         private Vector2 _moveVectorGamepad;
 
-        private Vector3 _moveDir;
+        private Vector3 m_moveDir;
         private Vector3 _movement;
-        [NonSerialized] public Vector3 Velocity;
         private Vector3[] puntosTrayectoria;
         private Vector3 _localPosGroundCheckOriginal;
+        private Vector3 m_direction;
 
         [NonSerialized] public bool IsFalling;
         [NonSerialized] public bool IsFollowingTrajectory;
@@ -60,13 +62,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [NonSerialized] public float _turnSmoothVelocityKeyboard;
         public float walkSpeed;
         public float runSpeed;
-        [SerializeField] private float gravity = -9.8f;
+        [SerializeField] private float gravityMultiplier = -3f;
 
         [SerializeField] private float aimSpeed;
         [SerializeField] private float maxSlopeAngle = 40f;
         public float turnSmoothTime = 0.1f;
         private float _moveSpeed;
         private float _turnSmoothVelocityGamepad;
+        [NonSerialized] public float Velocity;
         [NonSerialized] public float CurrentWalkSpeed;
         
 
@@ -122,6 +125,16 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void Update()
         {
+            _moveVectorKeyboard = _playerInputActions.PlayerPC.MovementKeyboard.ReadValue<Vector2>();
+
+            m_direction = new Vector3(_moveVectorKeyboard.x, 0f, _moveVectorKeyboard.y).normalized;
+            Vector3 cameraForward = _cameraObj.transform.forward;
+            Vector3 cameraRight = _cameraObj.transform.right;
+            cameraForward.y = 0f;
+            cameraRight.y = 0f;
+            m_moveDir = cameraForward * _moveVectorKeyboard.y + cameraRight * _moveVectorKeyboard.x;
+
+
             AnimatorController();
             ApplyGravity();
             FollowTrajectory();
@@ -146,25 +159,22 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (!GameManagerSingleton.Instance.IsGodModeEnabled)
             {
-                if (!IsGrounded() && Velocity.y < 0 && !_mainCRail.IsOnRail() || !_mainCRail.IsOnRail() && Velocity.y < 0 && !IsGrounded())
+                if (!IsGrounded() && Velocity < 0.0f && !_mainCRail.IsOnRail() || !_mainCRail.IsOnRail() && Velocity < 0.0f && !IsGrounded())
                 {
                     IsFalling = true;
                     m_mainCJump.SetIsJumping(false);
+                    _mainCAnimator.SetGrounded(false);
                     _mainCAnimator.SetFalling(IsFalling);
                     _mainCAnimator.SetJumping(m_mainCJump.IsJumping);
                 }
 
-                if (IsFalling && IsGrounded() || IsFalling && _mainCRail.IsOnRail() || IsFalling && IsOnSlope())
+                if (IsFalling && _cc.isGrounded || IsFalling && _mainCRail.IsOnRail() || IsFalling && IsOnSlope())
                 {
                     IsFalling = false;
                     m_mainCJump.SetIsJumping(false);
                     _mainCAnimator.SetFalling(IsFalling);
                     _mainCAnimator.SetJumping(m_mainCJump.IsJumping);
                     _mainCAnimator.SetGrounded(true);
-                    if (_moveDir.magnitude > 0 || _moveDir.magnitude > 0)
-                    {
-                        _mainCLayers.DisableJumpLayer();
-                    }
                     m_mainCJump.TimeGraceJumpPeriod = Time.time + m_mainCJump.TimeNextJump;
                 }
             }
@@ -172,17 +182,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void ApplyGravity()
         {
-            if (m_mainCJump.IsJumping || IsFalling || !_cc.isGrounded && !GameManagerSingleton.Instance.IsGodModeEnabled && !_mainCRail.IsSliding && !IsFollowingTrajectory)
+            if (_cc.isGrounded && Velocity < 0.0f)
             {
-                if(canApplyGravity)
-                {
-                    Velocity += Vector3.up.normalized * (gravity * Time.deltaTime);
-                    _cc.Move(Velocity * Time.deltaTime);
-                }
-            
+                Velocity = -1.0f;
+            }
+            else
+            {
+                Velocity += -Physics.gravity.y * gravityMultiplier * Time.deltaTime;
             }
 
-            if (m_mainCJump.IsJumping && _cc.isGrounded || IsFalling && _cc.isGrounded || IsFalling && _mainCRail.IsOnRail())
+            m_moveDir.y = Velocity;
+
+            if (m_moveDir.y == 0 && m_mainCJump.IsJumping && IsGrounded())
             {
                 m_mainCJump.SetIsJumping(false);
                 _mainCAnimator.SetGrounded(true);
@@ -196,22 +207,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void MoveKeyboard()
         {
-            _moveVectorKeyboard = _playerInputActions.PlayerPC.MovementKeyboard.ReadValue<Vector2>();
 
-            var direction = new Vector3(_moveVectorKeyboard.x, 0f, _moveVectorKeyboard.y).normalized;
 
-            var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
+            var targetAngle = Mathf.Atan2(m_direction.x, m_direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
             var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityKeyboard, turnSmoothTime);
-
-            _moveDir = orientation.forward * (Time.deltaTime * _moveSpeed * direction.magnitude);
 
             if (IsOnSlope())
             {
-                _cc.Move(GetSlopeMoveDirection() * (Time.deltaTime * _moveSpeed));
+                _cc.Move(GetSlopeMoveDirection() * (Time.deltaTime * _moveSpeed * CurrentWalkSpeed));
             }
             else
             {
-                _cc.Move(_moveDir);
+                _cc.Move(CurrentWalkSpeed * Time.deltaTime * m_moveDir);
             }
             _mainCAnimator.SetMoveSpeed(_moveSpeed);
 
@@ -295,10 +302,20 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityGamepad,
                 turnSmoothTime);
 
+            Vector3 cameraForward = _cameraObj.transform.forward;
+            Vector3 cameraRight = _cameraObj.transform.right;
+            cameraForward.y = 0f;
+            cameraRight.y = 0f;
 
-            _moveDir = orientation.forward * (Time.deltaTime * interpolatedSpeed * direction.magnitude);
 
-            _cc.Move(_moveDir);
+            if (IsOnSlope())
+            {
+                _cc.Move(GetSlopeMoveDirection() * (Time.deltaTime * interpolatedSpeed * CurrentWalkSpeed));
+            }
+            else
+            {
+                _cc.Move(interpolatedSpeed * Time.deltaTime * m_moveDir);
+            }
 
             if (_moveVectorGamepad.magnitude > 0.1)
             {
@@ -379,7 +396,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private Vector3 GetSlopeMoveDirection()
         {
-            return Vector3.ProjectOnPlane(_moveDir, _slopeHit.normal).normalized;
+            return Vector3.ProjectOnPlane(m_moveDir, _slopeHit.normal).normalized;
         }
 
         public void EnableMovement()
