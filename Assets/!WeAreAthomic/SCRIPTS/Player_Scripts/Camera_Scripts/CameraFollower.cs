@@ -1,8 +1,6 @@
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using static UnityEngine.GraphicsBuffer;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 {
@@ -30,6 +28,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
         [SerializeField] protected float mouseSensitivityX = 100;
         [SerializeField] protected float mouseSensitivityY = 100;
         [SerializeField] protected float clampAngle = 80.0f;
+        [SerializeField] private float cameraSpeedFollow = 40f;
         protected float _rotY;
         protected float _rotX;
         protected float _finalInputX;
@@ -46,7 +45,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 
         private void Start()
         {
-            if(!("N2_LAB" == SceneManager.GetActiveScene().name))
+            if (!("N2_LAB" == SceneManager.GetActiveScene().name))
             {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
@@ -75,7 +74,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
         {
             _isFocusingEnemy = !_isFocusingEnemy;
 
-            if(_isFocusingEnemy)
+            if (_isFocusingEnemy)
             {
                 var cols = new Collider[20];
                 var colliders = Physics.OverlapSphereNonAlloc(playerTr.position, focusRadius, cols, _enemyLayer);
@@ -161,8 +160,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
             var target = cameraFollow.transform;
 
             //move towards the game object that is the target
-            var step = 20 * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+            transform.position = Vector3.MoveTowards(transform.position, target.position, cameraSpeedFollow * Time.deltaTime);
         }
     }
 }

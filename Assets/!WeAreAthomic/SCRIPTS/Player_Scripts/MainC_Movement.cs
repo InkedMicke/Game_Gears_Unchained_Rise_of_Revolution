@@ -1,20 +1,17 @@
 using _WeAreAthomic.SCRIPTS.Debug_Scripts;
 using System;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCMovement : MonoBehaviour
     {
-        private PlayerInput _playerInput;
         private PlayerInputActions _playerInputActions;
         private MainCLayers _mainCLayers;
         private MainCAttack _mainCAttack;
         private MainCPistol _mainCPistol;
-        private MainCRails _mainCRail;
+        private MainCRail _mainCRail;
         private MainCHackingSystem _mainCHacking;
         private MainCAnimatorController _mainCAnimator;
         private CharacterController _cc;
@@ -70,8 +67,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private float _moveSpeed;
         private float _turnSmoothVelocityGamepad;
         [NonSerialized] public float Velocity;
-        [NonSerialized] public float CurrentWalkSpeed;
-        
+        [NonSerialized] public float CurrentSpeed;
+
 
         private void Awake()
         {
@@ -80,7 +77,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCPistol = GetComponent<MainCPistol>();
             _cc = GetComponent<CharacterController>();
             _godMode = GetComponent<MainCGodmode>();
-            _mainCRail = GetComponent<MainCRails>();
+            _mainCRail = GetComponent<MainCRail>();
             _mainCHacking = GetComponent<MainCHackingSystem>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _playerInputActions = new PlayerInputActions();
@@ -98,7 +95,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
 
             _canMove = true;
-            CurrentWalkSpeed = walkSpeed;
+            CurrentSpeed = walkSpeed;
             _localPosGroundCheckOriginal = groundCheck.localPosition;
             var desiredPos = _localPosGroundCheckOriginal;
             desiredPos.y -= 0.03f;
@@ -152,6 +149,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     MoveGamepad();
             }
 
+
         }
 
 
@@ -159,7 +157,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (!GameManagerSingleton.Instance.IsGodModeEnabled)
             {
-                if (!IsGrounded() && Velocity < 0.0f && !_mainCRail.IsOnRail() || !_mainCRail.IsOnRail() && Velocity < 0.0f && !IsGrounded())
+                if (!IsGrounded() && Velocity < 0.0f && !_mainCRail.IsOnRail())
                 {
                     IsFalling = true;
                     m_mainCJump.SetIsJumping(false);
@@ -168,7 +166,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCAnimator.SetJumping(m_mainCJump.IsJumping);
                 }
 
-                if (IsFalling && _cc.isGrounded || IsFalling && _mainCRail.IsOnRail() || IsFalling && IsOnSlope())
+                if (IsFalling && _cc.isGrounded || IsFalling && IsOnSlope())
                 {
                     IsFalling = false;
                     m_mainCJump.SetIsJumping(false);
@@ -204,7 +202,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 m_mainCVFX.SetActiveSparks(true);
             }
 
-        
+
         }
 
         private void MoveKeyboard()
@@ -214,19 +212,21 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             var targetAngle = Mathf.Atan2(m_direction.x, m_direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
             var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityKeyboard, turnSmoothTime);
 
+            CurrentSpeed = IsRunningKeyboard ? runSpeed : walkSpeed;
+
             if (IsOnSlope())
             {
-                _cc.Move(GetSlopeMoveDirection() * (Time.deltaTime * _moveSpeed * CurrentWalkSpeed));
+                _cc.Move(GetSlopeMoveDirection() * (Time.deltaTime * _moveSpeed * CurrentSpeed));
             }
             else
             {
-                _cc.Move(CurrentWalkSpeed * Time.deltaTime * m_moveDir);
+                _cc.Move(CurrentSpeed * Time.deltaTime * m_moveDir);
             }
             _mainCAnimator.SetMoveSpeed(_moveSpeed);
 
             ApplyGravity();
 
-            
+
 
             if (_moveVectorKeyboard.magnitude > 0.1f)
             {
@@ -239,17 +239,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             //arreglar cuando mantienes la W se suma y resta a la vez el moveSpeed
             if (_moveVectorKeyboard.magnitude > 0.1f && !IsRunningKeyboard)
             {
-                if (_moveSpeed < CurrentWalkSpeed)
+                if (_moveSpeed < CurrentSpeed)
                 {
                     _moveSpeed += Time.deltaTime * 24;
 
-                    if ((Mathf.Abs(_moveSpeed - CurrentWalkSpeed)) < 0.3f)
+                    if ((Mathf.Abs(_moveSpeed - CurrentSpeed)) < 0.3f)
                     {
-                        _moveSpeed = CurrentWalkSpeed;
+                        _moveSpeed = CurrentSpeed;
                     }
                 }
 
-                if (_moveSpeed > CurrentWalkSpeed)
+                if (_moveSpeed > CurrentSpeed)
                 {
                     _moveSpeed -= Time.deltaTime * 18;
                 }
@@ -260,7 +260,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     if (_moveSpeed > 0)
                     {
-                        _moveSpeed -= Time.deltaTime * 18;
+                        _moveSpeed -= Time.deltaTime * 24;
                     }
                     else
                     {
@@ -288,7 +288,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             _movement = new Vector3(_moveVectorGamepad.x, 0.0f, _moveVectorGamepad.y).normalized;
 
-            var moveSpeed = IsRunningGamepad ? runSpeed : CurrentWalkSpeed;
+            var moveSpeed = IsRunningGamepad ? runSpeed : CurrentSpeed;
 
             var desiredSpeed = _movement.magnitude * moveSpeed / 2 * 2.0f;
 
@@ -312,7 +312,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if (IsOnSlope())
             {
-                _cc.Move(GetSlopeMoveDirection() * (Time.deltaTime * interpolatedSpeed * CurrentWalkSpeed));
+                _cc.Move(GetSlopeMoveDirection() * (Time.deltaTime * interpolatedSpeed * CurrentSpeed));
             }
             else
             {
@@ -380,15 +380,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 IsRunningGamepad = !IsRunningGamepad;
             }
 
-            if(IsRunningGamepad || IsRunningKeyboard)
-            {
-                CurrentWalkSpeed = runSpeed;
-            }
-            else
-            {
-                CurrentWalkSpeed = walkSpeed;
-            }
-
         }
 
         public void InvokeDisableAllLayers()
@@ -434,7 +425,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public bool IsOnSlope()
         {
-            if(Physics.Raycast(transform.position, Vector3.down, out _slopeHit, .08f))
+            if (Physics.Raycast(transform.position, Vector3.down, out _slopeHit, .08f))
             {
                 var angle = Vector3.Angle(Vector3.up, _slopeHit.normal);
                 return angle < maxSlopeAngle && angle != 0;
@@ -470,7 +461,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
-            if(GameManagerSingleton.Instance.IsOnDialogue)
+            if (GameManagerSingleton.Instance.IsOnDialogue)
             {
                 return false;
             }
@@ -524,7 +515,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 var ray = new Ray(transform.position, Vector3.down);
                 var gotHit = Physics.Raycast(ray, 0.05f, groundLayer);
-                if(gotHit)
+                if (gotHit)
                 {
                     return true;
                 }

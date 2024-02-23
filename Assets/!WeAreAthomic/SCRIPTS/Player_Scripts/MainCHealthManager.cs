@@ -15,7 +15,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCMovement _mainCMove;
         private MainCAnimatorController _mainCAnim;
         private MainCLayers _mainCLayers;
-        private MainCRails _mainCRail;
+        private MainCRail _mainCRail;
         private MainCVFX _mainCVFX;
         private MainCHurtedMaterial _mainCHurtMaterial;
 
@@ -44,7 +44,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCAttack = GetComponentInParent<MainCAttack>();
             _mainCAnim = GetComponentInParent<MainCAnimatorController>();
             _mainCLayers = GetComponentInParent<MainCLayers>();
-            _mainCRail = GetComponentInParent<MainCRails>();
+            _mainCRail = GetComponentInParent<MainCRail>();
             _mainCMove = GetComponentInParent<MainCMovement>();
             _mainCVFX = GetComponentInParent<MainCVFX>();
             _mainCHurtMaterial = GetComponentInParent<MainCHurtedMaterial>();

@@ -11,7 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCAnimatorController m_mainCAnim;
         private MainCLayers m_mainCLayers;
         private MainCMovement m_mainCMove;
-        private MainCRails m_mainCRail;
+        private MainCRail m_mainCRail;
         private MainCSounds m_mainCSounds;
         private MainCVFX m_mainCVFX;
         private MainCCrouch m_mainCCrouch;
@@ -28,7 +28,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             m_mainCLayers = GetComponent<MainCLayers>();
             m_mainCAnim = GetComponent<MainCAnimatorController>();
             m_mainCMove = GetComponent<MainCMovement>();
-            m_mainCRail = GetComponent<MainCRails>();
+            m_mainCRail = GetComponent<MainCRail>();
             m_mainCSounds = GetComponent<MainCSounds>();
             m_mainCCrouch = GetComponent<MainCCrouch>();
             m_mainCVFX = GetComponent<MainCVFX>();

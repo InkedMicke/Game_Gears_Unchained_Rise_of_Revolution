@@ -1,20 +1,20 @@
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 using System;
-using System.Collections;
 using UnityEngine;
 
 namespace Broom
 {
     public class BroomHurtBox : Broom, IDamageable
     {
-        private Coroutine m_c_waitForEndShield;
 
         [NonSerialized] public bool CanReceiveDamage;
+
+        private int hurtedTimes;
 
         [SerializeField] float maxHealth;
         [NonSerialized] public float CurrentHealth;
 
-        []
+   
 
         private void Awake()
         {
@@ -32,14 +32,21 @@ namespace Broom
             }
             else
             {
-                broomAnimator.SetShieldCount(1);
+                hurtedTimes++;
+                if (hurtedTimes < 3)
+                {
+                    CancelInvoke(nameof(ResetHurtedTimes));
+                    _broomDefense.Defense();
+                    Invoke(nameof(ResetHurtedTimes), 1f);
+                }
+                else
+                {
+                    _broomDefense.CrossAttack();
+                }
             }
         }
 
-        private IEnumerator WaitForDisableShield()
-        {
-            yield return new WaitForSeconds(1f);
-        }
+        private void ResetHurtedTimes() => hurtedTimes = 0;
 
         private bool CheckForDeath()
         {

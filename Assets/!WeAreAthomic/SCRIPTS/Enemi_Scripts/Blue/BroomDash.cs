@@ -1,18 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BroomDash : MonoBehaviour
+namespace Broom
 {
-    // Start is called before the first frame update
-    void Start()
+    public class BroomDash : Broom
     {
-        
-    }
+        private Coroutine m_c_turnToPlayer;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void StartDecalToAttack()
+        {
+            _isAttacking = true;
+            //m_c_turnToPlayer = StartCoroutine(TurnToPlayer());
+        }
     }
 }

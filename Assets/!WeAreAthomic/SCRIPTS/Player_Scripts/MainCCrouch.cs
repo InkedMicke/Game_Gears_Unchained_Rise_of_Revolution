@@ -11,7 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCLayers m_mainCLayers;
         private MainCAnimatorController m_mainCAnim;
         private MainCMovement m_mainCMove;
-        private MainCRails m_mainCRail;
+        private MainCRail m_mainCRail;
 
         [SerializeField] private CapsuleCollider _hurtBoxCC;
 
@@ -37,7 +37,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             m_mainCMove = GetComponent<MainCMovement>();
             m_mainCAnim = GetComponent<MainCAnimatorController>();
             m_mainCLayers = GetComponent<MainCLayers>();
-            m_mainCRail = GetComponent<MainCRails>();
+            m_mainCRail = GetComponent<MainCRail>();
 
             m_inputActions = new PlayerInputActions();
             m_inputActions.Enable();
@@ -63,7 +63,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (Time.time > m_timeGraceCrouchPeriod)
             {
                 IsCrouch = !IsCrouch;
-                if(!CanStandUp())
+                if (!CanStandUp())
                 {
                     return;
                 }
@@ -72,7 +72,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     m_mainCAnim.SetCrouchWalking(false);
                     _isCrouchWalking = false;
-                    m_mainCMove.CurrentWalkSpeed = m_mainCMove.walkSpeed;
+                    m_mainCMove.CurrentSpeed = m_mainCMove.walkSpeed;
                     Invoke(nameof(InvokeDisableCrouchLayer), 0.1f);
                 }
 
@@ -109,7 +109,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 _isCrouchWalking = true;
                 m_mainCAnim.SetCrouchWalking(_isCrouchWalking);
-                m_mainCMove.CurrentWalkSpeed = crouchSpeed;
+                m_mainCMove.CurrentSpeed = crouchSpeed;
                 if (m_mainCMove.IsRunningKeyboard || m_mainCMove.IsRunningGamepad)
                 {
                     m_mainCMove.IsRunningKeyboard = !m_mainCMove.IsRunningKeyboard;
@@ -123,7 +123,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     _isCrouchWalking = false;
                     m_mainCAnim.SetCrouchWalking(_isCrouchWalking);
-                    m_mainCMove.CurrentWalkSpeed = m_mainCMove.walkSpeed;
+                    m_mainCMove.CurrentSpeed = m_mainCMove.walkSpeed;
                 }
             }
         }
@@ -174,7 +174,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public bool CanStandUp()
         {
-            if(Physics.CheckSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.3f, canStandLayers))
+            if (Physics.CheckSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.3f, canStandLayers))
             {
                 var col = Physics.OverlapSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.3f, canStandLayers);
                 Debug.Log(col[0].name);
