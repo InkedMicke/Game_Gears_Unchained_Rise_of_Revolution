@@ -21,13 +21,14 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         private Coroutine _waitingForHurtedCoroutine;
         private Coroutine _changingMaterialsCoroutine;
 
-        //[SerializeField] private Slider healthSlider;
+        
         
         [SerializeField] private Material matSlider;
+        [SerializeField] private GameObject healthSliderObj;
 
         [SerializeField] private GameObject mesh;
         [SerializeField] private GameObject soldierWithoutBones;
-        [SerializeField] private GameObject healthSliderObj;
+        
         [SerializeField] private GameObject botonSoldier;
         [SerializeField] private GameObject _hurtbox;
 
@@ -54,7 +55,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _materialChanger = GetComponentInParent<C_MaterialChanger>();
             _soldierAnimator = GetComponentInParent<SoldierAnimator>();
 
-          
+            matSlider = new Material(matSlider);
+            healthSliderObj.GetComponent<MeshRenderer>().material = matSlider;
 
             currentHealth = maxHealth;
             SetMaxhealthSlider(maxHealth);
