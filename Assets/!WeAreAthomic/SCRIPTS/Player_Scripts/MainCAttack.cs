@@ -23,7 +23,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCPlayerInterface _mainCInterface;
         private MainCDash _mainCDash;
         private MainCVFX _mainCVfx;
-        private MainCRail _mainCRail;
+        private MainCRails _mainCRail;
         private G_MeshTrail _mainG;
         private MainCFuryAttack _mainCFuryAttack;
 
@@ -81,7 +81,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCDash = GetComponent<MainCDash>();
             _mainCVfx = GetComponent<MainCVFX>();
             _mainG = GetComponent<G_MeshTrail>();
-            _mainCRail = GetComponent<MainCRail>();
+            _mainCRail = GetComponent<MainCRails>();
             _mainCFuryAttack = GetComponent<MainCFuryAttack>();
 
             _playerInputActions = new PlayerInputActions();

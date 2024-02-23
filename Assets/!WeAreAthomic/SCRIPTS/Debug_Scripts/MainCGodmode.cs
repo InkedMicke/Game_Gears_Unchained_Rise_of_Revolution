@@ -10,7 +10,7 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
         private PlayerInputActions _playerInputActions;
         private MainCMovement _mainCMove;
         private MainCTutorialChecker _mainCTutorial;
-        private MainCRail _mainCRail;
+        private MainCRails _mainCRail;
         private MainCVFX _mainVFXCharacter;
         [SerializeField] private LabThirdRoomController _labController;
 
@@ -29,7 +29,7 @@ namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
             _cc = GetComponent<CharacterController>();
             _mainCMove = GetComponent<MainCMovement>();
             _mainCTutorial = GetComponent<MainCTutorialChecker>();
-            _mainCRail = GetComponent<MainCRail>();
+            _mainCRail = GetComponent<MainCRails>();
             _mainVFXCharacter = GetComponent<MainCVFX>();
 
             _playerInputActions = new PlayerInputActions();

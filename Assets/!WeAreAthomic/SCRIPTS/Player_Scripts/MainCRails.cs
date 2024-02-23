@@ -5,7 +5,7 @@ using UnityEngine.Splines;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
-    public class MainCRail : MonoBehaviour
+    public class MainCRails : MonoBehaviour
     {
         [Header("Inputs")]
         [SerializeField] bool jump;         //Inputs aren't used in the tutorial
