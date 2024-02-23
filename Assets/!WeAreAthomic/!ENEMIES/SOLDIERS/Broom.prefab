@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 8658745584052918401}
   - component: {fileID: 3075500443255031256}
   - component: {fileID: 7646687104513708154}
-  - component: {fileID: 366278134922913402}
+  - component: {fileID: 1043264445942234496}
   - component: {fileID: 3125370467694759264}
   m_Layer: 9
   m_Name: BlueHurtBox
@@ -118,7 +118,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &366278134922913402
+--- !u!114 &1043264445942234496
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,23 +127,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1460842556733869258}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5406e8702107ac4187e2b15583ea85b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5eb0b0414de2e0842abefdba822daad5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _disolveEnemi: {fileID: 1792508624662200591}
-  healthSlider: {fileID: 7651520607491289556}
-  mesh: {fileID: 4487316510000380093}
-  soldierWithoutBones: {fileID: 3959112653770882349}
-  healthSliderObj: {fileID: 4191287781082122786}
-  botonSoldier: {fileID: 0}
-  _hurtbox: {fileID: 1460842556733869258}
-  decalAtackDir: {fileID: 5897576062654975429}
-  decalPatrol: {fileID: 0}
-  _particlesHit: {fileID: 6188041103777915889}
-  IsDeath: 0
-  HurtedTimes: 0
-  maxHealth: 100
-  currentHealth: 0
 --- !u!114 &3125370467694759264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20163,8 +20149,6 @@ GameObject:
   - component: {fileID: 1324396818841126415}
   - component: {fileID: 6996634901305684810}
   - component: {fileID: 6239895121709647939}
-  - component: {fileID: 2460124209403713266}
-  - component: {fileID: 1927448688917714355}
   - component: {fileID: 8771210894527549923}
   - component: {fileID: 2929867145544843479}
   m_Layer: 0
@@ -20239,80 +20223,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2460124209403713266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583118322878526860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10538f6474aa563458e819e2ae09fad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _typeOfEnemy: 3
-  typeOfBehaviour: 1
-  _buttonInt: {fileID: 0}
-  waypoints: {fileID: 0}
-  indicator: {fileID: 0}
-  targetFovLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  obstacleFovLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  botonPuerta: {fileID: 0}
-  exclamacion: {fileID: 0}
-  interrogacion: {fileID: 0}
-  decalDetection: {fileID: 0}
-  patrolSpeed: 0
-  chaseSpeed: 0
-  stoppingDistance: 3
-  waitForNextAttack: 2
-  pushForce: 20
-  mass: 0
-  moveToDecalCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  bullet: {fileID: 0}
-  decalAttack: {fileID: 0}
-  bulletAudio: {fileID: 0}
-  bulletVolume: 0
-  soundComponentObj: {fileID: 0}
-  sfxMixer: {fileID: 0}
-  muzzle1: {fileID: 0}
-  endDecalTr: {fileID: 0}
-  chargeParticles: {fileID: 0}
-  checkRadius: 5
-  speedShooting: 1.5
-  spreadAngle: 2
-  shootAngle: 0.6
-  maxTimeToStopShooting: 2.5
-  rotationSpeed: 5
-  totalColdown: 0
---- !u!114 &1927448688917714355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583118322878526860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5adbfd5eaf86f324ab26514050170ad9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkingAnimString: isWalking
-  backWalkingAnimString: isBackWalking
-  shootAnimString: shoot
-  redCount: redCount
-  greenCount: ShootCount
-  orangeCount: orangeCount
-  hurtAnimString: Hurt
 --- !u!114 &8771210894527549923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64514,30 +64424,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efaedc6625acc0b4ea60a335535fe799, type: 3}
---- !u!1 &4191287781082122786 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4470572553644151842, guid: efaedc6625acc0b4ea60a335535fe799,
-    type: 3}
-  m_PrefabInstance: {fileID: 297475116697640448}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5204743292315244100 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5483746589909174340, guid: efaedc6625acc0b4ea60a335535fe799,
     type: 3}
   m_PrefabInstance: {fileID: 297475116697640448}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7651520607491289556 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7930682233820458964, guid: efaedc6625acc0b4ea60a335535fe799,
-    type: 3}
-  m_PrefabInstance: {fileID: 297475116697640448}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4191287781082122786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &355900565222779776
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64715,12 +64607,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1058951536982057539}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &6188041103777915889 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6580445523736101298, guid: c9e37c4dba9893e4f84a28072cff7959,
-    type: 3}
-  m_PrefabInstance: {fileID: 1058951536982057539}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1178995487001421337
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64807,12 +64693,6 @@ PrefabInstance:
 --- !u!4 &3353148880571794084 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4527354585684714685, guid: e573b466d2c757f4cae220697f5f227f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1178995487001421337}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5897576062654975429 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4721113850997877724, guid: e573b466d2c757f4cae220697f5f227f,
     type: 3}
   m_PrefabInstance: {fileID: 1178995487001421337}
   m_PrefabAsset: {fileID: 0}
@@ -65505,12 +65385,6 @@ Transform:
 --- !u!4 &3967770824286773290 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 76ce5392553f1ba429ad2cde5c60f663,
-    type: 3}
-  m_PrefabInstance: {fileID: 3502362312872347585}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4487316510000380093 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -8152424205847511172, guid: 76ce5392553f1ba429ad2cde5c60f663,
     type: 3}
   m_PrefabInstance: {fileID: 3502362312872347585}
   m_PrefabAsset: {fileID: 0}
