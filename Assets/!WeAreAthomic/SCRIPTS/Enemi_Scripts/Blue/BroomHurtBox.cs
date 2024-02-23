@@ -14,7 +14,7 @@ namespace Broom
         [SerializeField] float maxHealth;
         [NonSerialized] public float CurrentHealth;
 
-        []
+        
 
         private void Awake()
         {

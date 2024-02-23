@@ -25,13 +25,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject botonPosaMano;
         [SerializeField] private GameObject goHereBreather;
         [SerializeField] private GameObject goHerePosaManoMove;
-        [SerializeField] private GameObject wasdImage;
-        [SerializeField] private GameObject eImage;
-        [SerializeField] private GameObject respiraderoImage;
-        [SerializeField] private GameObject camarasImage;
-        public GameObject izqImage;
-        public GameObject movedIzqImage;
-        public GameObject movedDerImage;
+
+
 
         private Vector3 _lastPosition;
 
@@ -63,8 +58,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(false);
                 IsOnTutorial = true;
                 FirstTimeAbility = true;
-                wasdImage.SetActive(true);
-                m_PP.AddObjToCurrentUIGameObjectList(wasdImage);
+              
+               
                 _checkHealthCoroutine = StartCoroutine(CheckHealth());
                 _checkHackCoroutine = StartCoroutine(CheckHacking());
                 _mainCAttack.DisableCanAttack();
@@ -95,8 +90,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCSounds.PlayExpressionSound();
                     goHerePosaManoMove.SetActive(true);
                     goHereBreather.SetActive(false);
-                    respiraderoImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
-                    m_PP.RemoveObjToCurrentUIGameObjectList(respiraderoImage);
+                    
+                    
                     break;
                 }
 
@@ -112,8 +107,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (_mainCHacking.IsHacking)
                 {
                     _isCheckingHack = false;
-                    eImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
-                    m_PP.RemoveObjToCurrentUIGameObjectList(eImage);
+                    
+                
                     break;
                 }
 
@@ -134,21 +129,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        public void HideAllTutorialImages()
-        {
-            izqImage.SetActive(false);
-            m_PP.RemoveObjToCurrentUIGameObjectList(izqImage);
-            eImage.SetActive(false);
-            m_PP.RemoveObjToCurrentUIGameObjectList(eImage);
-            wasdImage.SetActive(false);
-            m_PP.RemoveObjToCurrentUIGameObjectList(wasdImage);
-            _mainCSounds.RemoveAllTutorialSounds();
-        }
+  
 
-        public void AttackImage()
-        {
-            izqImage.SetActive(true);
-            m_PP.AddObjToCurrentUIGameObjectList(izqImage);
-        }
+     
     }
 }

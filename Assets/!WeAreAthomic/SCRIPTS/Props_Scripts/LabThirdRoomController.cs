@@ -108,8 +108,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                // (true);
                 _mainCAttack.SetIsSheathed(false);
                 _mainCAttack.EnableCanAttack();
-                _mainCTutorial.movedDerImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
-                _mainCTutorial.movedIzqImage.GetComponent<Animator>().SetTrigger(string.Format("close"));
+                
                 _mainCSounds.PlayTutorialSound(9, "pc");
             }
         }
@@ -203,7 +202,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 {
                     if (movableFloor.transform.localPosition.y >= 0)
                     {
-                        _mainCTutorial.AttackImage();
+                        
                         _mainCAttack.EnableCanAttack();
 
                         _dummiesCollider.UndoChild(wave1);
@@ -223,7 +222,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                         _mainCAttack.DisableCanAttack();
                         _mainCAttack.HideWeapon();
                         _mainCAttack.SetIsSheathed(false);
-                        _mainCTutorial.AttackImage();
+                        
                         _dummiesCollider.UndoChild(wave2);
                         temp.y = 0f;
                         movableFloor.transform.localPosition = temp;
@@ -243,8 +242,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                         _mainCAttack.HideWeapon();
                         _mainCAttack.SetIsSheathed(false);
                         _mainCSounds.PlayTutorialSound(8, "pc");
-                        _mainCTutorial.movedDerImage.SetActive(true);
-                        _mainCTutorial.movedIzqImage.SetActive(true);
+                       
+                    
                         GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(true);
                         _dummiesCollider.UndoChild(wave3);
                         temp.y = 3f;
