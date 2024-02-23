@@ -32,16 +32,19 @@ namespace Broom
             }
             else
             {
-                hurtedTimes++;
-                if (hurtedTimes < 3)
+                if (!_isAttacking)
                 {
-                    CancelInvoke(nameof(ResetHurtedTimes));
-                    _broomDefense.Defense();
-                    Invoke(nameof(ResetHurtedTimes), 1f);
-                }
-                else
-                {
-                    _broomDefense.CrossAttack();
+                    hurtedTimes++;
+                    if (hurtedTimes < 3)
+                    {
+                        CancelInvoke(nameof(ResetHurtedTimes));
+                        _broomDefense.Defense();
+                        Invoke(nameof(ResetHurtedTimes), 1f);
+                    }
+                    else
+                    {
+                        _broomDefense.CrossAttack();
+                    }
                 }
             }
         }

@@ -62,11 +62,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if (Time.time > m_timeGraceCrouchPeriod)
             {
-                IsCrouch = !IsCrouch;
                 if (!CanStandUp())
                 {
                     return;
                 }
+                IsCrouch = !IsCrouch;
                 ToggleCCSize();
                 if (!IsCrouch && _isCrouchWalking)
                 {

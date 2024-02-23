@@ -23,7 +23,7 @@ namespace Broom
 
         private void Start()
         {
-            _broomMove.ChasePlayer(() => ChooseAttack(), 9f);
+            ChooseAttack();
         }
 
         protected bool _isAttacking;
@@ -44,12 +44,17 @@ namespace Broom
 
             if(random == 0)
             {
-                _broomDash.StartDecalToAttack();
+                _broomMove.ChasePlayer(() => _broomDash.StartDecalToAttack(), 7f);
             }
             else
             {
                 _broomMove.ChasePlayer(() => _broomMolinillo.StartAttacking(), 2f);
             }
+        }
+
+        public void WaitForDecideWhatToDo()
+        {
+            Invoke(nameof(ChooseAttack), 3f);
         }
     }
 }

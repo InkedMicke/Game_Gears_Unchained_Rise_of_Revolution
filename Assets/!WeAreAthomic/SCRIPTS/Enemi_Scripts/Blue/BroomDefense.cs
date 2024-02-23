@@ -27,6 +27,7 @@ namespace Broom
 
         public void CrossAttack()
         {
+            _isAttacking = true;
             _broomAnimator.SetCrossAttackCount(1);
         }
 
