@@ -12,7 +12,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         [SerializeField] private List<GameObject> cameraGroup;
 
         //NonSeralized
-        public List<CctvController> allcctvs = new();
+        [NonSerialized] public List<CctvController> allcctvs = new();
 
         private void Awake()
         {
