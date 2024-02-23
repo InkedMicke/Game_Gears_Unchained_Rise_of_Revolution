@@ -359,7 +359,6 @@ GameObject:
   - component: {fileID: 140604387887192313}
   - component: {fileID: 4016571259077727948}
   - component: {fileID: 7714023328541333105}
-  - component: {fileID: 3765694853032444327}
   - component: {fileID: 7417020760943733625}
   - component: {fileID: 1770476364814114069}
   - component: {fileID: 3764668422024457106}
@@ -375,6 +374,7 @@ GameObject:
   - component: {fileID: 2060323058226009461}
   - component: {fileID: 977941721710959647}
   - component: {fileID: 1328809374754952578}
+  - component: {fileID: 5519175972433775796}
   m_Layer: 16
   m_Name: Player
   m_TagString: Player
@@ -732,29 +732,6 @@ MonoBehaviour:
   isHackingAnim: 0
   IsHacking: 0
   GotCached: 0
---- !u!114 &3765694853032444327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5821918579687998185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fb1de45e1e659b48abe447822968eae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _splineContainer: {fileID: 0}
-  railLayer:
-    serializedVersion: 2
-    m_Bits: 8192
-  PP: {fileID: 0}
-  railCheck: {fileID: 2633980742278052695}
-  railSpeed: 5
-  jumpCooldown: 0.5
-  speed: 5
-  distanceThreshold: 0.1
-  railClip: {fileID: 0}
 --- !u!114 &7417020760943733625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1137,6 +1114,27 @@ MonoBehaviour:
   _mattSkinned: {fileID: 2402805393333922494}
   HurtMaterials: {fileID: 2100000, guid: b413db50f15064b4c97f16760486f015, type: 2}
   hurtDuration: 0.5
+--- !u!114 &5519175972433775796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821918579687998185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c4b81db518b24e459c61e88fd406322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jump: 0
+  input: {x: 0, y: 0, z: 0}
+  IsSliding: 0
+  grindSpeed: 10
+  heightOffset: 0
+  lerpSpeed: 10
+  railLayer:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!1 &6386136891931232913
 GameObject:
   m_ObjectHideFlags: 0
