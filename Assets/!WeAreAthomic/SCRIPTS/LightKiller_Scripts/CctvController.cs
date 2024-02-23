@@ -32,6 +32,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         [SerializeField] private GameObject lKillerObj;
         [SerializeField] private GameObject transforms;
+        [SerializeField] private GameObject LightConeMesh;
+
         public GameObject _playerObj;
         private GameObject _volumeCatch;
 
@@ -170,6 +172,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             TurnOffCamera(Mathf.Infinity);
             CancelInvoke(nameof(TurnOnCamera));
             _cameraAudio.Stop();
+            LightConeMesh.SetActive(false);
         }
 
         private void SetLightPosition()
@@ -194,6 +197,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             lKillerObj.SetActive(false);
             Invoke(nameof(TurnOnCamera), value);
             _cameraAudio.Stop();
+            LightConeMesh.SetActive(false);
         }
 
         public void SetHasGroupCamera(bool hasGroup)
@@ -203,6 +207,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         public void TurnOnCamera()
         {
+            LightConeMesh.SetActive(true);
             CancelInvoke(nameof(TurnOnCamera));
             lKillerObj.SetActive(true);
             _lKiller.WhiteLight();
