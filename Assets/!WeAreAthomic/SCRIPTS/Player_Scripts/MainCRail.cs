@@ -70,7 +70,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             SplineUtility.Evaluate(currentRailScript.railSpline.Spline, normalisedTime, out pos, out forward, out up);
             //Calculate the direction the player is going down the rail
             currentRailScript.CalculateDirection(m_cols[0].transform.forward, transform.forward);
-            Debug.DrawRay(transform.position, forward * 10, Color.green, 10f);
+
             //Set player's initial position on the rail before starting the movement code.
             transform.position = splinePoint + (transform.up * heightOffset);
         }
@@ -118,6 +118,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 //instead of being in the middle of it.
                 transform.position = worldPos + (transform.up * heightOffset);
                 Debug.DrawRay(worldPos, Vector3.up.normalized * 20f, Color.magenta);
+                Debug.DrawRay(nextPos, Vector3.up.normalized * 20f, Color.black);
+
                 //Lerping the player's current rotation to the direction of where they are to where they're going.
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(nextPos - worldPos), lerpSpeed * Time.deltaTime);
                 //Lerping the player's up direction to match that of the rail, in relation to the player's current rotation.
