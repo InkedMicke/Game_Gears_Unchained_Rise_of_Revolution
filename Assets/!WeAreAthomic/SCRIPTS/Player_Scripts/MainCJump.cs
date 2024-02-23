@@ -80,7 +80,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 m_mainCAnim.SetGrounded(false);
                 m_mainCLayers.EnableJumpLayer();
                 m_mainCAnim.SetJumping(true);
-                m_mainCMove.Velocity = m_mainCRail.HigherJumpDueToInclination() ? jumpImpulseOnRail * 3f : jumpImpulseOnRail;
+                m_mainCMove.Velocity = jumpImpulseOnRail;
                 TimeGraceJumpPeriod = Time.time + TimeNextJump;
 
                 m_mainCVFX.SetActiveSparks(false);
@@ -167,11 +167,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             if (Time.time < TimeGraceJumpPeriod)
-            {
-                return false;
-            }
-
-            if (m_mainCRail.HigherJumpDueToInclination())
             {
                 return false;
             }
