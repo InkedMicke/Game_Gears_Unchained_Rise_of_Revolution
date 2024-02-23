@@ -11,7 +11,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCLayers m_mainCLayers;
         private MainCAnimatorController m_mainCAnim;
         private MainCMovement m_mainCMove;
-        private MainCRail m_mainCRail;
+        private MainCRails m_mainCRail;
 
         [SerializeField] private CapsuleCollider _hurtBoxCC;
 
@@ -37,7 +37,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             m_mainCMove = GetComponent<MainCMovement>();
             m_mainCAnim = GetComponent<MainCAnimatorController>();
             m_mainCLayers = GetComponent<MainCLayers>();
-            m_mainCRail = GetComponent<MainCRail>();
+            m_mainCRail = GetComponent<MainCRails>();
 
             m_inputActions = new PlayerInputActions();
             m_inputActions.Enable();

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 using UnityEngine.Events;
 using System.Collections;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 {
@@ -20,7 +21,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         private Coroutine _waitingForHurtedCoroutine;
         private Coroutine _changingMaterialsCoroutine;
 
-        [SerializeField] private Slider healthSlider;
+        //[SerializeField] private Slider healthSlider;
+        
+        [SerializeField] private Material matSlider;
 
         [SerializeField] private GameObject mesh;
         [SerializeField] private GameObject soldierWithoutBones;
@@ -50,8 +53,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _enemy = GetComponentInParent<Enemy>();
             _materialChanger = GetComponentInParent<C_MaterialChanger>();
             _soldierAnimator = GetComponentInParent<SoldierAnimator>();
-         
 
+          
 
             currentHealth = maxHealth;
             SetMaxhealthSlider(maxHealth);
@@ -165,12 +168,14 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         public void SetMaxhealthSlider(float maxHealth)
         {
-            healthSlider.maxValue = maxHealth;
+            matSlider.SetFloat("_DisolveAmount", maxHealth / 100);
         }
 
         public void SetHealthSlider(float health)
         {
-            healthSlider.value = health;
+            matSlider.SetFloat("_DisolveAmount",health/100);
         }
     }
+   
+        
 }

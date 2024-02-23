@@ -13,7 +13,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
     {
 
         private MainCPistol _mainCPistol;
-        private MainCRail _mainCRail;
+        private MainCRails _mainCRail;
 
         private Tween _goToPosTween;
 
@@ -38,7 +38,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
         private void Awake()
         {
             _mainCPistol = playerObj.GetComponent<MainCPistol>();
-            _mainCRail = playerObj.GetComponent<MainCRail>();
+            _mainCRail = playerObj.GetComponent<MainCRails>();
         }
 
         private void Update()

@@ -14,7 +14,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCLayers _mainCLayers;
         private MainCAttack _mainCAttack;
         private MainCPistol _mainCPistol;
-        private MainCRail _mainCRail;
+        private MainCRails _mainCRail;
         private MainCHackingSystem _mainCHacking;
         private MainCAnimatorController _mainCAnimator;
         private CharacterController _cc;
@@ -80,7 +80,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCPistol = GetComponent<MainCPistol>();
             _cc = GetComponent<CharacterController>();
             _godMode = GetComponent<MainCGodmode>();
-            _mainCRail = GetComponent<MainCRail>();
+            _mainCRail = GetComponent<MainCRails>();
             _mainCHacking = GetComponent<MainCHackingSystem>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _playerInputActions = new PlayerInputActions();
