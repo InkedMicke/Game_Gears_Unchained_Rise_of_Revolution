@@ -9861,7 +9861,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: cfff9d6d8643a3146bcc378203c0fdfe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cfff9d6d8643a3146bcc378203c0fdfe,
         type: 3}
@@ -10057,7 +10057,7 @@ MonoBehaviour:
   hurtbox: {fileID: 7031738207051682547}
   particleEffects: {fileID: 1909707010660207347}
   volumeToActivate: {fileID: 1262425244623010447}
-  enableBreather: 1
+  enabledBreather: 0
   healthAmount: 0.5
   healthPerTime: 0.01
   energyAmount: 0.5
@@ -10180,6 +10180,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3750581752894178797}
     m_Modifications:
+    - target: {fileID: 678750694462601445, guid: f08e06d63f542804d9d07ab761050671,
+        type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 861d4d21d35fdb24abaa19c0618a0ff7,
+        type: 2}
     - target: {fileID: 1913256487965199117, guid: f08e06d63f542804d9d07ab761050671,
         type: 3}
       propertyPath: m_LocalPosition.x
