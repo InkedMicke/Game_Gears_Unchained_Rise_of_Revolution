@@ -144,12 +144,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
             }
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(playerTr.position, focusRadius);
-        }
-
         public void SetCameraFollow(Transform pos)
         {
             cameraFollow = pos;

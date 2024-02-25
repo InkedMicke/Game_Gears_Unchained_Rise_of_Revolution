@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -5,56 +6,87 @@ namespace Broom
 {
     public class Broom : MonoBehaviour
     {
-        protected NavMeshAgent _agent;
-        protected BroomAnimator _broomAnimator;
-        protected BroomDefense _broomDefense;
-        protected BroomMovement _broomMove;
-        protected BroomDash _broomDash;
-        protected BroomMolinillo _broomMolinillo;
+        [NonSerialized] public NavMeshAgent Agent;
+        [NonSerialized] public Rigidbody Rb;
+        [NonSerialized] public BroomAnimator broomAnimator;
+        [NonSerialized] public BroomDefense broomDefense;
+        [NonSerialized] public BroomMovement broomMove;
+        [NonSerialized] public BroomDash broomDash;
+        [NonSerialized] public BroomMolinillo broomMolinillo;
+        [NonSerialized] public BroomHurtBox broomHurtBox;
+        [NonSerialized] public BroomVFX broomVFX;
 
-        protected Transform _playerTr;
 
-        protected bool _isChasingPlayer;
+        [NonSerialized] public Transform PlayerTr;
+
+        [NonSerialized] public bool IsChasingPlayer;
+        [NonSerialized] public bool IsAttacking;
+
+        [SerializeField] private float distanceToDash = 11f;
 
         private void Awake()
         {
-            _playerTr = GameObject.FindGameObjectWithTag("Player").transform;
+            broomAnimator = GetComponent<BroomAnimator>();
+            broomDefense = GetComponent<BroomDefense>();
+            Agent = GetComponent<NavMeshAgent>();
+            broomMove = GetComponent<BroomMovement>();
+            broomDash = GetComponent<BroomDash>();
+            broomMolinillo = GetComponent<BroomMolinillo>();
+            Rb = GetComponent<Rigidbody>();
+            broomHurtBox = GetComponentInChildren<BroomHurtBox>();
+            broomVFX = GetComponent<BroomVFX>();
+
+            PlayerTr = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
         private void Start()
         {
-            ChooseAttack();
+            //ChooseAttack();
         }
 
         protected bool _isAttacking;
 
-        private void OnValidate()
-        {
-            _broomAnimator = GetComponent<BroomAnimator>();
-            _broomDefense = GetComponent<BroomDefense>();
-            _agent = GetComponent<NavMeshAgent>();
-            _broomMove = GetComponent<BroomMovement>();
-            _broomDash = GetComponent<BroomDash>();
-            _broomMolinillo = GetComponent<BroomMolinillo>();
-        }
-
         public void ChooseAttack()
         {
-            var random = Random.Range(0, 1);
+            var random = UnityEngine.Random.Range(0, 2);
 
-            if(random == 0)
+            if (IsCloseEnough(distanceToDash))
             {
-                _broomMove.ChasePlayer(() => _broomDash.StartDecalToAttack(), 7f);
+                broomDash.StartDecalToAttack();
             }
             else
             {
-                _broomMove.ChasePlayer(() => _broomMolinillo.StartAttacking(), 2f);
+                broomMove.ChasePlayer(() => broomDash.StartDecalToAttack(), distanceToDash);
             }
+
+            /*            if(random == 0)
+                        {
+                            broomMove.ChasePlayer(() => broomDash.StartDecalToAttack(), 14f);
+                        }
+                        else
+                        {
+                            broomMove.ChasePlayer(() => broomMolinillo.StartAttacking(), 5f);
+                        }*/
         }
 
         public void WaitForDecideWhatToDo()
         {
             Invoke(nameof(ChooseAttack), 3f);
+        }
+
+        public void SetIsAttacking(bool isAttacking)
+        {
+            IsAttacking = isAttacking;
+        }    
+        
+        public void SetIsChasingPlayer(bool isChasingPlayer)
+        {
+            IsChasingPlayer = isChasingPlayer;
+        }
+
+        private bool IsCloseEnough(float distance)
+        {
+            return Vector3.Distance(transform.position, PlayerTr.position) < distance;
         }
     }
 }

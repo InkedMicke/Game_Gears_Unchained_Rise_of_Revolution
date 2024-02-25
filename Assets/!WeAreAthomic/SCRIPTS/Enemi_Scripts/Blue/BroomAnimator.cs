@@ -36,6 +36,11 @@ namespace Broom
             m_anim.SetInteger("CrossAttackCount", count);
         }
 
+        public void SetRootMotion(bool isEnabled)
+        {
+            m_anim.applyRootMotion = isEnabled;
+        }
+
         public void SetIsWalking(bool isWalking)
         {
             m_anim.SetBool("isWalking", isWalking);

@@ -155,13 +155,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 
         public void StartDash()
         {
-            //StartCoroutine(DashForward());
             Rb.mass = 10;
             _agent.enabled = false;
             _attackHitBox.ClearList();
-            var desiredEndPos = new Vector3(endTrDecal.position.x, transform.position.y, endTrDecal.position.z);
             _soldierAnim.SetRedCount(2);
-            //_dashTween = transform.DOMove(desiredEndPos, dashDuracion).SetEase(dashEase).OnComplete(() => _soldierAnim.SetRedCount(3));
             StartCoroutine(WaitForEndAnim());
             Rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
             indicator.gameObject.transform.SetParent(transform.parent);

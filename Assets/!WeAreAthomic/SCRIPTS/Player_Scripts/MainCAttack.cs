@@ -154,7 +154,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
-                    
+                    Debug.Log("hola1");
                     MoveToEnemy();
                     if(_mainCDash.IsDashing)
                     {
@@ -386,6 +386,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if (!_canAttack)
             {
+                Debug.Log("hola2");
                 return false;
             }
 

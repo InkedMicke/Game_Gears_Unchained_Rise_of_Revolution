@@ -4,45 +4,55 @@ using UnityEngine;
 
 namespace Broom
 {
-    public class BroomMovement : Broom
+    public class BroomMovement : MonoBehaviour
     {
+        Broom m_broom;
+
         private Coroutine m_c_chasingPlayer;
+
+        private void Awake()
+        {
+            m_broom = GetComponent<Broom>();
+        }
 
         public void ChasePlayer(Action method = null, float distance = 0)
         {
-            if(_isChasingPlayer)
+            if(m_broom.IsChasingPlayer)
             {
                 StopCoroutine(m_c_chasingPlayer);
             }
-            _broomAnimator.SetIsWalking(true);
+            m_broom.broomAnimator.SetIsWalking(true);
+            EnableMovement();
             m_c_chasingPlayer = StartCoroutine(ChasingPlayer(method, distance));
         }
 
         public void StopChasePlayer()
         {
-            _isChasingPlayer = false;
-            _broomAnimator.SetIsWalking(false);
+            m_broom.SetIsChasingPlayer(false);
+            m_broom.broomAnimator.SetIsWalking(false);
             StopCoroutine(m_c_chasingPlayer);
         }
 
         private IEnumerator ChasingPlayer(Action method, float distance)
         {
-            _isChasingPlayer = true;
+            m_broom.SetIsChasingPlayer(true);
             while(true)
             {
-                if(Vector3.Distance(transform.position, _playerTr.position) < distance)
+                if(Vector3.Distance(transform.position, m_broom.PlayerTr.position) < distance)
                 {
+                    DisableMovement();
+                    method();
+                    m_broom.broomAnimator.SetIsWalking(false);
+                    m_broom.SetIsChasingPlayer(false);
                     break;
                 }
 
-                _agent.SetDestination(_playerTr.position);
+                m_broom.Agent.SetDestination(m_broom.PlayerTr.position);
                 yield return new WaitForEndOfFrame();
             }
-
-            method();
         }
 
-        public void EnableMovement() => _agent.isStopped = true;
-        public void DisableMovement() => _agent.isStopped = false;
+        public void EnableMovement() => m_broom.Agent.isStopped = false;
+        public void DisableMovement() => m_broom.Agent.isStopped = true;
     }
 }

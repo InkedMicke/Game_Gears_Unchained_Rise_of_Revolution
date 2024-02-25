@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace Broom
 {
-    public class BroomHurtBox : Broom, IDamageable
+    public class BroomHurtBox : MonoBehaviour, IDamageable
     {
+        Broom m_broom;
 
         [NonSerialized] public bool CanReceiveDamage;
 
@@ -19,6 +20,7 @@ namespace Broom
         private void Awake()
         {
             CurrentHealth = maxHealth;
+            m_broom = GetComponentInParent<Broom>();
         }
 
         public void Damage(float dmg)
@@ -32,18 +34,20 @@ namespace Broom
             }
             else
             {
-                if (!_isAttacking)
+                if (!m_broom.IsAttacking)
                 {
                     hurtedTimes++;
                     if (hurtedTimes < 3)
                     {
                         CancelInvoke(nameof(ResetHurtedTimes));
-                        _broomDefense.Defense();
+                        m_broom.broomDefense.Defense();
+                        m_broom.broomVFX.PlayProtectedEffect();
                         Invoke(nameof(ResetHurtedTimes), 1f);
                     }
                     else
                     {
-                        _broomDefense.CrossAttack();
+                        m_broom.broomDefense.CrossAttack();
+                        ResetHurtedTimes();
                     }
                 }
             }

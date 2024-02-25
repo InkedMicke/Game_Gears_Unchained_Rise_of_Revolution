@@ -4,11 +4,18 @@ using UnityEngine;
 
 namespace Broom
 {
-    public class BroomDefense : Broom
+    public class BroomDefense : MonoBehaviour
     {
+        Broom m_broom;
+
         private Coroutine m_c_waitForEndShield;
 
         [NonSerialized] public bool IsDefending;
+
+        private void Awake()
+        {
+            m_broom = GetComponent<Broom>();
+        }
 
         public void Defense()
         {
@@ -16,24 +23,42 @@ namespace Broom
             {
                 StopCoroutine(m_c_waitForEndShield);
             }
-            _broomAnimator.SetShieldCount(1);
+            m_broom.broomAnimator.SetShieldCount(1);
             m_c_waitForEndShield = StartCoroutine(WaitForDisableShield());
         }
 
         public void EndDefense()
         {
-            _broomAnimator.SetShieldCount(0);
+            m_broom.broomAnimator.SetShieldCount(0);
         }
 
         public void CrossAttack()
         {
-            _isAttacking = true;
-            _broomAnimator.SetCrossAttackCount(1);
+            m_broom.SetIsAttacking(true);
+            m_broom.broomAnimator.SetRootMotion(true);
+            m_broom.broomAnimator.SetCrossAttackCount(1);
+        }
+
+        public void StartRotatingToPlayerPos()
+        {
+            StartCoroutine(RotateToPlayerPos());
+        }
+
+        public IEnumerator RotateToPlayerPos()
+        {
+            var distanceToPlayer = m_broom.PlayerTr.position - transform.position;
+            var targetRotation = Quaternion.LookRotation(distanceToPlayer);
+            while (Quaternion.Angle(transform.rotation, targetRotation) > 1f)
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 20f * Time.deltaTime);
+                yield return new WaitForEndOfFrame();
+            }
         }
 
         public void EndCrossAttack()
         {
-
+            m_broom.SetIsAttacking(false);
+            m_broom.broomAnimator.SetRootMotion(false);
         }
 
         private IEnumerator WaitForDisableShield()
