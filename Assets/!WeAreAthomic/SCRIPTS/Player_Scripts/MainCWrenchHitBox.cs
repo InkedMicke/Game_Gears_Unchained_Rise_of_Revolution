@@ -23,25 +23,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out IDamageable damageable))
-            {
-                mainCFuryAttack.GetFury(mainCFuryAttack.furyPerHit);
-                if (wrenchDamageData != null)
-                {
-                    foreach (var collider in colliderList)
-                    {
-                        if(collider == other)
-                        {
-                           
-                            return;
-                        }
-                    }
-                    HitParticlesInvoke();
-                    damageable.Damage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, other.gameObject));
-                    colliderList.Add(other);
-                    
-                }
-            }
+            colliderList.Add(other);
         }
 
         public void ClearList()
@@ -52,6 +34,21 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         public void SetGotHit(bool gotHit)
         {
             GotHit = gotHit;
+        }
+
+        public void ApplyDamage()
+        {
+            foreach (var col in colliderList)
+            {
+                if (col.TryGetComponent(out IDamageable damageable))
+                {
+                    damageable.Damage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, col.gameObject));
+                    mainCFuryAttack.GetFury(mainCFuryAttack.furyPerHit);
+                    HitParticlesInvoke();
+                }
+
+            }
+            ClearList();
         }
 
         private void SpeedUpTime()

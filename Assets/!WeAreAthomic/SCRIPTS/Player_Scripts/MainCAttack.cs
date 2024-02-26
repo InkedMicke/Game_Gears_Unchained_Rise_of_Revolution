@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -131,6 +130,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
+        private void Update()
+        {
+            Debug.Log(Vector3.SqrMagnitude(GetEnemyToMove().transform.position - transform.position));
+        }
         private void ControlUp()
         {
             _isLeftMousePressed = false;
@@ -152,7 +155,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
-                    MoveToEnemy();
+                    WhatToDoBasedOnIfGotCol();
                     if (_mainCDash.IsDashing)
                     {
                         _mainCDash.StopDash();
@@ -204,9 +207,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (CheckIfEnemyToMoveIsOnAngleView(currentEnemy))
                 {
-                    if (Vector3.SqrMagnitude(currentEnemy.transform.position - transform.position) > 2)
+                    var currentEnemyPos = currentEnemy.transform.position;
+                    currentEnemyPos.y = transform.position.y;
+                    if (Vector3.SqrMagnitude(currentEnemyPos - transform.position) > 1f)
                     {
-                        StartCoroutine(MoveToEnemyCoroutine(currentEnemy));
+                        transform.LookAt(currentEnemyPos);
+                        StartCoroutine(MoveToEnemyCoroutine(currentEnemyPos));
                         _mainG.EnableTrail();
                     }
                     _wrenchHitBox.SetGotHit(true);
@@ -214,22 +220,32 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        private IEnumerator MoveToEnemyCoroutine(Collider other)
+        private IEnumerator MoveToEnemyCoroutine(Vector3 enemyPos)
         {
             IsMovingToEnemy = true;
             while (true)
             {
-                var enemyPos = other.transform.position;
                 var direction = enemyPos - transform.position;
                 direction.y = 0f;
-                if (Vector3.SqrMagnitude(enemyPos - transform.position) < 2)
+                if (Vector3.SqrMagnitude(enemyPos - transform.position) < 1f)
                 {
                     IsMovingToEnemy = false;
                     break;
                 }
-                _cc.Move(10f * Time.deltaTime * direction.normalized);
+
+                _cc.Move(15f * Time.deltaTime * direction.normalized);
 
                 IsMovingToEnemy = false;
+                yield return new WaitForEndOfFrame();
+            }
+        }
+
+        private IEnumerator MoveALittleForward()
+        {
+            var startPos = transform.position;
+            while(Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) > 2)
+            {
+                _cc.Move(10f * Time.deltaTime * transform.forward.normalized);
                 yield return new WaitForEndOfFrame();
             }
         }
@@ -301,6 +317,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _wrenchHitBox.SetGotHit(false);
         }
 
+        public void ApplyDamageHitBox() => _wrenchHitBox.ApplyDamage();
+
         public void ShowWeapon() => weaponObj.SetActive(true);
 
         public void HideWeapon() => weaponObj.SetActive(false);
@@ -363,6 +381,41 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             return false;
+        }
+
+        private Collider[] GetColsOnRadius(Vector3 position, float radius, LayerMask layer) => Physics.OverlapSphere(position, radius, layer);
+
+        private void WhatToDoBasedOnIfGotCol()
+        {
+            var cols = GetColsOnRadius(transform.position, nearEnemieToGoRadius, enemyHurtBox);
+            if (cols.Length == 0)
+            {
+                StartCoroutine(MoveALittleForward());
+            }
+            else
+            {
+                if(cols.Length > 1)
+                {
+                    float averageX = 0f;
+                    float averageZ = 0f;
+
+                    foreach (var enemyTransform in cols)
+                    {
+                        averageX += enemyTransform.transform.position.x;
+                        averageZ += enemyTransform.transform.position.z;
+                    }
+
+                    averageX /= cols.Length;
+                    averageZ /= cols.Length;
+                    var targetPosition = new Vector3(averageX, transform.position.y, averageZ);
+                    StartCoroutine(MoveToEnemyCoroutine(targetPosition));
+
+                }
+                else
+                {
+                    StartCoroutine(MoveToEnemyCoroutine(cols[0].transform.position));
+                }
+            }
         }
 
         private bool CanAttack()

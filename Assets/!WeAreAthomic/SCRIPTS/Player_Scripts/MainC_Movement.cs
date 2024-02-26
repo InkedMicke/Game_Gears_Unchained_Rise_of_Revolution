@@ -504,6 +504,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if(_mainCAttack.IsMovingToEnemy)
             {
                 return false;
+            }            
+            
+            if(_mainCAttack.IsAttacking)
+            {
+                return false;
             }
 
             return true;
