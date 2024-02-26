@@ -35,23 +35,21 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject tut_ES;
 
         [SerializeField] private Transform middlePosTr;
-   
+
         private Transform _closestObject;
 
         public LayerMask enemyHurtBox;
 
         [System.NonSerialized] public bool IsAttacking;
         [System.NonSerialized] public bool IsFinalAttacking;
-       
-      
- 
+        [System.NonSerialized] public bool IsMovingToEnemy;
         private bool _canNextAttack;
         public bool _isSheathed;
         private bool _canAttack;
         private bool _isLeftMousePressed;
         private bool _attackTutorial;
         private bool _sheathTutorial;
-    
+
 
         public int attackCount;
 
@@ -60,11 +58,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float nearEnemieToGoAngle = 60f;
         [SerializeField] private float rotationNearEnemie = 8f;
         [SerializeField] private float hideWeaponTimer = 8f;
-      
- 
+
+
         public float timeGraceAttackPeriod;
         private float _currentTimeSheath;
-   
+
 
         protected override void Awake()
         {
@@ -99,11 +97,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             base.Awake();
         }
 
- 
+
 
         private void GamepadDown(InputAction.CallbackContext context)
         {
-            if(GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
+            if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
             {
                 ControlDown();
             }
@@ -138,7 +136,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _isLeftMousePressed = false;
             Attack();
             _currentTimeSheath = Time.time;
-            
+
         }
 
         private void ControlDown()
@@ -146,7 +144,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _isLeftMousePressed = true;
         }
 
-       
+
 
         private void Attack()
         {
@@ -154,13 +152,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
-                    Debug.Log("hola1");
                     MoveToEnemy();
-                    if(_mainCDash.IsDashing)
+                    if (_mainCDash.IsDashing)
                     {
                         _mainCDash.StopDash();
                     }
-                    
+
                     _mainCMovement.EnableMovement();
                     if (_mainCTutorial.IsOnTutorial && !_attackTutorial)
                     {
@@ -170,7 +167,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
                     _mainCLayers.EnableAttackLayer();
                     _mainCSounds.StopAttackSound();
-                  GCameraShake.Instance.ShakeCamera(1f, .1f);
+                    GCameraShake.Instance.ShakeCamera(1f, .1f);
                     attackCount++;
                     _mainCAnimator.SetAttackCountAnim(attackCount);
                     weaponObj.GetComponent<MainCWrenchHitBox>().ClearList();
@@ -200,8 +197,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        
-
         public void MoveToEnemy()
         {
             var currentEnemy = GetEnemyToMove();
@@ -209,35 +204,33 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (CheckIfEnemyToMoveIsOnAngleView(currentEnemy))
                 {
-                    _mainG.EnableTrail();
+                    if (Vector3.SqrMagnitude(currentEnemy.transform.position - transform.position) > 2)
+                    {
+                        StartCoroutine(MoveToEnemyCoroutine(currentEnemy));
+                        _mainG.EnableTrail();
+                    }
                     _wrenchHitBox.SetGotHit(true);
-                    var direction = currentEnemy.transform.position - transform.position;
-                    direction.y = 0f;
-                    _cc.Move(direction * .7f);
-
-
-
                 }
             }
         }
 
         private IEnumerator MoveToEnemyCoroutine(Collider other)
         {
+            IsMovingToEnemy = true;
             while (true)
             {
-                var enemyPos = other.gameObject.transform.position;
+                var enemyPos = other.transform.position;
                 var direction = enemyPos - transform.position;
                 direction.y = 0f;
-                if (direction.magnitude > 1f)
+                if (Vector3.SqrMagnitude(enemyPos - transform.position) < 2)
                 {
-                    _cc.Move(20f * Time.deltaTime * direction.normalized);
-                }
-                else
-                {
+                    IsMovingToEnemy = false;
                     break;
                 }
+                _cc.Move(10f * Time.deltaTime * direction.normalized);
 
-                yield return new WaitForSeconds(0.01f);
+                IsMovingToEnemy = false;
+                yield return new WaitForEndOfFrame();
             }
         }
 
@@ -246,7 +239,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (_canNextAttack && IsAttacking)
             {
                 MoveToEnemy();
-            GCameraShake.Instance.ShakeCamera(1f, .1f);
+                GCameraShake.Instance.ShakeCamera(1f, .1f);
                 _mainCSounds.PlayAttackSound();
                 _mainCSounds.PlayEffordSound();
                 if (attackCount == 2)
@@ -254,10 +247,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCLayers.DisableAttackLayer();
                     _mainCLayers.EnableFinalAttackLayer();
                     attackCount++;
-                        _mainCAnimator.SetAttackCountAnim(attackCount);
-                        _mainCAnimator.SetRootMotion(true);
-                        _canNextAttack = false;
-                        IsFinalAttacking = true;
+                    _mainCAnimator.SetAttackCountAnim(attackCount);
+                    _mainCAnimator.SetRootMotion(true);
+                    _canNextAttack = false;
+                    IsFinalAttacking = true;
                 }
                 else
                 {
@@ -289,11 +282,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             IsFinalAttacking = false;
             _canNextAttack = false;
             _mainCMovement.EnableMovement();
-            if(_mainCFuryAttack.scannerInst != null)
+            if (_mainCFuryAttack.scannerInst != null)
             {
                 Destroy(_mainCFuryAttack.scannerInst);
             }
-            
+
         }
 
         public void EnableWeaponCollision()
@@ -336,7 +329,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private Collider GetEnemyToMove()
         {
             var colliders = Physics.OverlapSphere(transform.position, nearEnemieToGoRadius, enemyHurtBox);
-            if(colliders.Length == 0)
+            if (colliders.Length == 0)
             {
                 return null;
             }
@@ -344,9 +337,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             var distanciaMasCercana = Mathf.Infinity;
             var posicionActual = transform.position;
 
-            foreach(var x in colliders)
+            foreach (var x in colliders)
             {
-                float distanciaEnemigo = Vector3.Distance(posicionActual, x.transform.position);
+                float distanciaEnemigo = Vector3.SqrMagnitude(posicionActual - x.transform.position);
 
                 if (distanciaEnemigo < distanciaMasCercana)
                 {
@@ -390,17 +383,17 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
-            if(GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
             {
                 return false;
             }
 
-            if(GameManagerSingleton.Instance.IsStopMenuEnabled)
+            if (GameManagerSingleton.Instance.IsStopMenuEnabled)
             {
                 return false;
             }
 
-            if(GameManagerSingleton.Instance.IsSettingsMenuEnabled)
+            if (GameManagerSingleton.Instance.IsSettingsMenuEnabled)
             {
                 return false;
             }
@@ -413,8 +406,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             return true;
         }
 
-       
-        
+
+
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
@@ -439,5 +432,5 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
         }
     }
-    
+
 }

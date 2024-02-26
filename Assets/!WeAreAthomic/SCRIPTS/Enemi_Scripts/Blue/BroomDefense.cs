@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 
 namespace Broom
 {
@@ -19,12 +20,17 @@ namespace Broom
 
         public void Defense()
         {
-            if(IsDefending)
+            if (IsDefending)
             {
                 StopCoroutine(m_c_waitForEndShield);
+                m_c_waitForEndShield = StartCoroutine(WaitForDisableShield());
             }
-            m_broom.broomAnimator.SetShieldCount(1);
-            m_c_waitForEndShield = StartCoroutine(WaitForDisableShield());
+            else
+            {
+                m_broom.broomAnimator.SetShieldCount(1);
+                Utilities.Invoke(this, () => m_broom.broomAnimator.SetShieldCount(2), .1f);
+                m_c_waitForEndShield = StartCoroutine(WaitForDisableShield());
+            }
         }
 
         public void EndDefense()
@@ -64,7 +70,7 @@ namespace Broom
         private IEnumerator WaitForDisableShield()
         {
             IsDefending = true;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
             EndDefense();
             IsDefending = false;
         }

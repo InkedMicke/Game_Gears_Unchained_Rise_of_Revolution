@@ -16,8 +16,6 @@ public class SethHurtBox : HurtBox
     private void Awake()
     {
         CurrentHealth = maxHealth;
-        healthSlider.maxValue = maxHealth;
-        healthSlider.value = CurrentHealth;
     }
 
     public override void Damage(float damage)
