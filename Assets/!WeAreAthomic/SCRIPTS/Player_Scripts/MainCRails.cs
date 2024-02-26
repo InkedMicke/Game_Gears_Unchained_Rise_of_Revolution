@@ -89,7 +89,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
 
 
-                if (_distancePercentage > 1f && IsSliding)
+                if (_distancePercentage > 0.99f && IsSliding)
                 {
                     _mainCAnim.SetSliding(false);
                     m_mainClayers.DisableSlideLayer();
@@ -117,12 +117,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void StartSlide()
         {
-            var ray = new Ray(transform.position,Vector3.down);
 
-            if (Physics.Raycast(ray, out var hit, 1f, railLayer))
-            {
-               _splineContainer =  hit.collider.GetComponent<SplineContainer>();
-            }
+
+            var cols = Physics.OverlapSphere(transform.position, 1f, railLayer);
+            
+            _splineContainer = cols[0].transform.GetChild(0).GetComponent<SplineContainer>();
+            Debug.Log($"HitCollision: {_splineContainer}", this);
+            
             _distancePercentage = 0;
             m_mainClayers.EnableSlideLayer();
             _mainCAnim.SetSliding(true);
