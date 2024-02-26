@@ -36,19 +36,20 @@ namespace Broom
             {
                 if (!m_broom.IsAttacking)
                 {
+                    Debug.Log(hurtedTimes);
                     hurtedTimes++;
-                    if (hurtedTimes < 3)
+                    if (hurtedTimes < 300)
                     {
                         CancelInvoke(nameof(ResetHurtedTimes));
                         m_broom.broomDefense.Defense();
                         m_broom.broomVFX.PlayProtectedEffect();
                         Invoke(nameof(ResetHurtedTimes), 1f);
                     }
-                    else
+/*                    else
                     {
                         m_broom.broomDefense.CrossAttack();
                         ResetHurtedTimes();
-                    }
+                    }*/
                 }
             }
         }
