@@ -177,8 +177,15 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (Physics.CheckSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.3f, canStandLayers))
             {
                 var col = Physics.OverlapSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.3f, canStandLayers);
-                Debug.Log(col[0].name);
-                return false;
+
+                foreach (var x in col)
+                {
+                    if (!x.CompareTag("Volume"))
+                    { 
+                    return false;
+                    }
+                }
+                
             }
 
             return true;
