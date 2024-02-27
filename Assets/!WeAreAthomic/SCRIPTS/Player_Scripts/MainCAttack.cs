@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
 using System.Collections.Generic;
+using DG.Tweening;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -150,11 +151,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
+                    RotateToCameraForward();
                     WhatToDoBasedOnIfGotCol();
-                    Vector3 cameraForward = new Vector3(cameraBase.transform.forward.x, 0f, cameraBase.transform.forward.z).normalized;
-                    Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
-                    transform.rotation = Quaternion.Euler(0f, targetRotation.eulerAngles.y, 0f);
-
                     if (_mainCDash.IsDashing)
                     {
                         _mainCDash.StopDash();
@@ -211,6 +209,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     if (Vector3.SqrMagnitude(currentEnemyPos - transform.position) > 1f)
                     {
                         transform.LookAt(currentEnemyPos);
+                        Debug.DrawRay(currentEnemyPos, Vector3.up * 20f, Color.green, 20f);
                         StartCoroutine(MoveToEnemyCoroutine(currentEnemyPos));
                         _mainG.EnableTrail();
                     }
@@ -224,9 +223,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             IsMovingToEnemy = true;
             while (true)
             {
-                var direction = enemyPos - transform.position;
-                direction.y = 0f;
-                if (Vector3.SqrMagnitude(enemyPos - transform.position) < 1f)
+                var currentEnemyPos = enemyPos;
+                currentEnemyPos.y = transform.position.y;
+                var direction = currentEnemyPos - transform.position;
+                direction.y = transform.position.y;
+                if (Vector3.SqrMagnitude(currentEnemyPos - transform.position) < 1f)
                 {
                     IsMovingToEnemy = false;
                     break;
@@ -239,21 +240,38 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        private IEnumerator MoveALittleForward()
+        private IEnumerator MoveALittleForward(float displacement, float speed)
         {
             var startPos = transform.position;
-            while (Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) < 1.5f)
+            while (Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) < displacement)
             {
-                _cc.Move(15f * Time.deltaTime * transform.forward.normalized);
+                _cc.Move(speed * Time.deltaTime * transform.forward.normalized);
                 yield return new WaitForEndOfFrame();
             }
         }
 
-        public void MoveALittle()
+        public void MoveALittle(int index)
         {
+            EnableWeaponCollision();
+            float dis = 0;
+            float speed = 0;
+            switch (index)
+            {
+                case 0:
+                    dis = 1.5f;
+                    speed = 15;
+                    break;
+                case 1:
+                    dis = 1.7f;
+                    speed = 3f;
+                    break;
+                case 2:
+                    break;
+            }
+
             if (m_canMoveALittle)
             {
-                StartCoroutine(MoveALittleForward());
+                StartCoroutine(MoveALittleForward(dis, speed));
                 m_canMoveALittle = false;
             }
         }
@@ -264,6 +282,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 MoveToEnemy();
                 WhatToDoBasedOnIfGotCol();
+                RotateToCameraForward();
                 //GCameraShake.Instance.ShakeCamera(1f, .1f);
                 _mainCSounds.PlayAttackSound();
                 _mainCSounds.PlayEffordSound();
@@ -336,6 +355,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void DisableCanAttack() => _canAttack = false;
 
+        private void RotateToCameraForward()
+        {
+            Vector3 cameraForward = new Vector3(cameraBase.transform.forward.x, 0f, cameraBase.transform.forward.z).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
+            transform.rotation = Quaternion.Euler(0f, targetRotation.eulerAngles.y, 0f);
+        }
+
         public void SetAttackCount(int value)
         {
             attackCount = value;
@@ -399,7 +425,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             var cols = GetColsOnRadius(transform.position, nearEnemieToGoRadius, enemyHurtBox);
 
             List<Collider> validEnemies = new();
-
+            _wrenchHitBox.ClearList();
             foreach (var col in cols)
             {
                 if (CheckIfEnemyToMoveIsOnAngleView(col))
@@ -410,7 +436,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if (validEnemies.Count == 0)
             {
-                Debug.Log("hola1");
                 m_canMoveALittle = true;
             }
             else
@@ -432,14 +457,22 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                         averageZ /= cols.Length;
                         var targetPosition = new Vector3(averageX, transform.position.y, averageZ);
                         StartCoroutine(MoveToEnemyCoroutine(targetPosition));
+                        LookAtSomething(targetPosition);
 
                     }
                     else
                     {
                         StartCoroutine(MoveToEnemyCoroutine(cols[0].transform.position));
+                        LookAtSomething(cols[0].transform.position);
                     }
                 }
             }
+        }
+
+        private void LookAtSomething(Vector3 pos)
+        {
+            pos.y = transform.position.y;
+            transform.LookAt(pos);
         }
 
         private bool CanAttack()
