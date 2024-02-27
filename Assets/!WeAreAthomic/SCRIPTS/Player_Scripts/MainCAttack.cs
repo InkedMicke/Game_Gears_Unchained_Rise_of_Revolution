@@ -243,7 +243,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private IEnumerator MoveALittleForward()
         {
             var startPos = transform.position;
-            while(Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) > 2)
+            while (Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) > 2)
             {
                 _cc.Move(10f * Time.deltaTime * transform.forward.normalized);
                 yield return new WaitForEndOfFrame();
@@ -394,26 +394,39 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
             else
             {
-                if(cols.Length > 1)
-                {
-                    float averageX = 0f;
-                    float averageZ = 0f;
+                var validEnemies = List<Collider>() = new();
 
-                    foreach (var enemyTransform in cols)
+                foreach (var col in cols)
+                {
+                    if (CheckIfEnemyToMoveIsOnAngleView(col))
                     {
-                        averageX += enemyTransform.transform.position.x;
-                        averageZ += enemyTransform.transform.position.z;
+                        validEnemies.Add(col);
                     }
-
-                    averageX /= cols.Length;
-                    averageZ /= cols.Length;
-                    var targetPosition = new Vector3(averageX, transform.position.y, averageZ);
-                    StartCoroutine(MoveToEnemyCoroutine(targetPosition));
-
                 }
-                else
+
+                if (validEnemies.Count > 0)
                 {
-                    StartCoroutine(MoveToEnemyCoroutine(cols[0].transform.position));
+                    if (validEnemies.Count > 1)
+                    {
+                        float averageX = 0f;
+                        float averageZ = 0f;
+
+                        foreach (var enemyTransform in cols)
+                        {
+                            averageX += enemyTransform.transform.position.x;
+                            averageZ += enemyTransform.transform.position.z;
+                        }
+
+                        averageX /= cols.Length;
+                        averageZ /= cols.Length;
+                        var targetPosition = new Vector3(averageX, transform.position.y, averageZ);
+                        StartCoroutine(MoveToEnemyCoroutine(targetPosition));
+
+                    }
+                    else
+                    {
+                        StartCoroutine(MoveToEnemyCoroutine(cols[0].transform.position));
+                    }
                 }
             }
         }
