@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using System.Collections.Generic;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -48,6 +49,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool _isLeftMousePressed;
         private bool _attackTutorial;
         private bool _sheathTutorial;
+        private bool m_canMoveALittle;
 
 
         public int attackCount;
@@ -129,11 +131,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 ControlUp();
             }
         }
-
-        private void Update()
-        {
-            Debug.Log(Vector3.SqrMagnitude(GetEnemyToMove().transform.position - transform.position));
-        }
         private void ControlUp()
         {
             _isLeftMousePressed = false;
@@ -147,8 +144,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _isLeftMousePressed = true;
         }
 
-
-
         private void Attack()
         {
             if (_typeOfAttack == TypeOfAttack.NormalAttack)
@@ -156,6 +151,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
                     WhatToDoBasedOnIfGotCol();
+                    Vector3 cameraForward = new Vector3(cameraBase.transform.forward.x, 0f, cameraBase.transform.forward.z).normalized;
+                    Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
+                    transform.rotation = Quaternion.Euler(0f, targetRotation.eulerAngles.y, 0f);
+
                     if (_mainCDash.IsDashing)
                     {
                         _mainCDash.StopDash();
@@ -170,7 +169,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     }
                     _mainCLayers.EnableAttackLayer();
                     _mainCSounds.StopAttackSound();
-                    GCameraShake.Instance.ShakeCamera(1f, .1f);
+                    //GCameraShake.Instance.ShakeCamera(1f, .1f);
                     attackCount++;
                     _mainCAnimator.SetAttackCountAnim(attackCount);
                     weaponObj.GetComponent<MainCWrenchHitBox>().ClearList();
@@ -243,10 +242,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private IEnumerator MoveALittleForward()
         {
             var startPos = transform.position;
-            while (Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) > 2)
+            while (Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) < 1.5f)
             {
-                _cc.Move(10f * Time.deltaTime * transform.forward.normalized);
+                _cc.Move(15f * Time.deltaTime * transform.forward.normalized);
                 yield return new WaitForEndOfFrame();
+            }
+        }
+
+        public void MoveALittle()
+        {
+            if (m_canMoveALittle)
+            {
+                StartCoroutine(MoveALittleForward());
+                m_canMoveALittle = false;
             }
         }
 
@@ -255,7 +263,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             if (_canNextAttack && IsAttacking)
             {
                 MoveToEnemy();
-                GCameraShake.Instance.ShakeCamera(1f, .1f);
+                WhatToDoBasedOnIfGotCol();
+                //GCameraShake.Instance.ShakeCamera(1f, .1f);
                 _mainCSounds.PlayAttackSound();
                 _mainCSounds.PlayEffordSound();
                 if (attackCount == 2)
@@ -278,7 +287,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        public void FinalAttackShake() { GCameraShake.Instance.ShakeCamera(2f, .1f); }
+        public void FinalAttackShake() { /*GCameraShake.Instance.ShakeCamera(2f, .1f);*/ }
 
         public void EnableNextAttack() => _canNextAttack = true;
 
@@ -388,22 +397,24 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private void WhatToDoBasedOnIfGotCol()
         {
             var cols = GetColsOnRadius(transform.position, nearEnemieToGoRadius, enemyHurtBox);
-            if (cols.Length == 0)
+
+            List<Collider> validEnemies = new();
+
+            foreach (var col in cols)
             {
-                StartCoroutine(MoveALittleForward());
+                if (CheckIfEnemyToMoveIsOnAngleView(col))
+                {
+                    validEnemies.Add(col);
+                }
+            }
+
+            if (validEnemies.Count == 0)
+            {
+                Debug.Log("hola1");
+                m_canMoveALittle = true;
             }
             else
             {
-                var validEnemies = List<Collider>() = new();
-
-                foreach (var col in cols)
-                {
-                    if (CheckIfEnemyToMoveIsOnAngleView(col))
-                    {
-                        validEnemies.Add(col);
-                    }
-                }
-
                 if (validEnemies.Count > 0)
                 {
                     if (validEnemies.Count > 1)
