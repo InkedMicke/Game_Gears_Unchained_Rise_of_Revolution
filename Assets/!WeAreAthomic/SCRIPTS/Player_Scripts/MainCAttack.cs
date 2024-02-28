@@ -197,7 +197,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
         }
 
-        public void MoveToEnemy()
+/*        public void MoveToEnemy()
         {
             var currentEnemy = GetEnemyToMove();
             if (currentEnemy != null)
@@ -216,7 +216,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _wrenchHitBox.SetGotHit(true);
                 }
             }
-        }
+        }*/
 
         private IEnumerator MoveToEnemyCoroutine(Vector3 enemyPos)
         {
@@ -280,7 +280,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             if (_canNextAttack && IsAttacking)
             {
-                MoveToEnemy();
                 WhatToDoBasedOnIfGotCol();
                 RotateToCameraForward();
                 //GCameraShake.Instance.ShakeCamera(1f, .1f);
@@ -379,37 +378,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCSounds.PlayTutorialSound(5, "pc");
         }
 
-        private Collider GetEnemyToMove()
-        {
-            var colliders = Physics.OverlapSphere(transform.position, nearEnemieToGoRadius, enemyHurtBox);
-            if (colliders.Length == 0)
-            {
-                return null;
-            }
-            Collider enemigoMasCercano = null;
-            var distanciaMasCercana = Mathf.Infinity;
-            var posicionActual = transform.position;
-
-            foreach (var x in colliders)
-            {
-                float distanciaEnemigo = Vector3.SqrMagnitude(posicionActual - x.transform.position);
-
-                if (distanciaEnemigo < distanciaMasCercana)
-                {
-                    distanciaMasCercana = distanciaEnemigo;
-                    enemigoMasCercano = x;
-                }
-            }
-
-            return enemigoMasCercano;
-
-
-        }
-
         private bool CheckIfEnemyToMoveIsOnAngleView(Collider col)
         {
             var directionEnemy = col.transform.position - transform.position;
-            var angle = Vector3.Angle(transform.forward, directionEnemy);
+            var cameraForward = new Vector3(cameraBase.transform.forward.x, transform.position.y, cameraBase.transform.forward.z);
+            var angle = Vector3.Angle(cameraForward, directionEnemy);
             if (angle < nearEnemieToGoAngle)
             {
                 return true;
@@ -440,32 +413,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
             else
             {
-                if (validEnemies.Count > 0)
-                {
-                    if (validEnemies.Count > 1)
-                    {
-                        float averageX = 0f;
-                        float averageZ = 0f;
-
-                        foreach (var enemyTransform in cols)
-                        {
-                            averageX += enemyTransform.transform.position.x;
-                            averageZ += enemyTransform.transform.position.z;
-                        }
-
-                        averageX /= cols.Length;
-                        averageZ /= cols.Length;
-                        var targetPosition = new Vector3(averageX, transform.position.y, averageZ);
-                        StartCoroutine(MoveToEnemyCoroutine(targetPosition));
-                        LookAtSomething(targetPosition);
-
-                    }
-                    else
-                    {
-                        StartCoroutine(MoveToEnemyCoroutine(cols[0].transform.position));
-                        LookAtSomething(cols[0].transform.position);
-                    }
-                }
+                StartCoroutine(MoveToEnemyCoroutine(validEnemies[0].transform.position));
+                LookAtSomething(validEnemies[0].transform.position);
             }
         }
 
@@ -522,12 +471,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-
             Handles.color = Color.white;
             Handles.DrawWireArc(transform.position, Vector3.up, Vector3.forward, 360, nearEnemieToGoRadius);
 
-            Vector3 viewAngle01 = DirectionFromAngle(transform.eulerAngles.y, -nearEnemieToGoAngle / 2);
-            Vector3 viewAngle02 = DirectionFromAngle(transform.eulerAngles.y, nearEnemieToGoAngle / 2);
+            Vector3 viewAngle01 = DirectionFromAngle(cameraBase.transform.eulerAngles.y, -nearEnemieToGoAngle / 2);
+            Vector3 viewAngle02 = DirectionFromAngle(cameraBase.transform.eulerAngles.y, nearEnemieToGoAngle / 2);
 
             Handles.color = Color.yellow;
             Handles.DrawLine(transform.position, transform.position + viewAngle01 * nearEnemieToGoRadius);
