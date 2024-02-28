@@ -207,8 +207,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void MoveKeyboard()
         {
-
-
             var targetAngle = Mathf.Atan2(m_direction.x, m_direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
             var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityKeyboard, turnSmoothTime);
 
@@ -216,7 +214,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if (IsOnSlope())
             {
-                _cc.Move(GetSlopeMoveDirection() * (Time.deltaTime * _moveSpeed * CurrentSpeed));
+                _cc.Move(CurrentSpeed * Time.deltaTime * m_moveDir);
             }
             else
             {
