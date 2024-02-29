@@ -20346,7 +20346,7 @@ GameObject:
   - component: {fileID: 1324396818841126415}
   - component: {fileID: 6996634901305684810}
   - component: {fileID: 1142018444775456781}
-  - component: {fileID: 477489616128295840}
+  - component: {fileID: 1892387388444760249}
   - component: {fileID: 6239895121709647939}
   - component: {fileID: 1827520619481779994}
   - component: {fileID: 7304422656921545480}
@@ -20433,33 +20433,32 @@ CapsuleCollider:
   m_Height: 3.91104
   m_Direction: 1
   m_Center: {x: 0, y: 1.45052, z: 0}
---- !u!54 &477489616128295840
-Rigidbody:
+--- !u!143 &1892387388444760249
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5583118322878526860}
-  serializedVersion: 4
-  m_Mass: 40
-  m_Drag: 10
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 2
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &6239895121709647939
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -20529,7 +20528,9 @@ MonoBehaviour:
   decalPivot: {fileID: 5897576062654975429}
   endTrDecal: {fileID: 3777555756195645481}
   posCheckObstacles: {fileID: 7551618026305584711}
-  dashForce: 1000
+  dashSpeed: 20
+  dashDisplacement: 14
+  timeStunned: 4
 --- !u!114 &3934159844278948234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20569,6 +20570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitBox: {fileID: 775608388771693944}
+  timeChasing: 10
 --- !u!114 &8771210894527549923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20618,6 +20620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   protectedEffect: {fileID: 8478871904669711324}
+  stunningEffect: {fileID: 8368780662729684815}
   protectedPivot: {fileID: 6722051719919432599}
 --- !u!1 &6162094613629266399
 GameObject:
@@ -65183,6 +65186,12 @@ PrefabInstance:
 --- !u!4 &4059219216724325953 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3381093761703110225, guid: 9c4094357701301438bb56fff1ca49f1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1637393275450069008}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8368780662729684815 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7105221359541266271, guid: 9c4094357701301438bb56fff1ca49f1,
     type: 3}
   m_PrefabInstance: {fileID: 1637393275450069008}
   m_PrefabAsset: {fileID: 0}

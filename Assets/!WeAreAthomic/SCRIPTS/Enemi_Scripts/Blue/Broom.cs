@@ -7,7 +7,7 @@ namespace Broom
     public class Broom : MonoBehaviour
     {
         [NonSerialized] public NavMeshAgent Agent;
-        [NonSerialized] public Rigidbody Rb;
+        [NonSerialized] public CharacterController CC;
         [NonSerialized] public BroomAnimator broomAnimator;
         [NonSerialized] public BroomDefense broomDefense;
         [NonSerialized] public BroomMovement broomMove;
@@ -32,11 +32,13 @@ namespace Broom
             broomMove = GetComponent<BroomMovement>();
             broomDash = GetComponent<BroomDash>();
             broomMolinillo = GetComponent<BroomMolinillo>();
-            Rb = GetComponent<Rigidbody>();
             broomHurtBox = GetComponentInChildren<BroomHurtBox>();
             broomVFX = GetComponent<BroomVFX>();
+            CC = GetComponent<CharacterController>();
 
             PlayerTr = GameObject.FindGameObjectWithTag("Player").transform;
+
+            DisableCC();
         }
 
         private void Start()
@@ -48,13 +50,13 @@ namespace Broom
 
         public void ChooseAttack()
         {
-            var random = UnityEngine.Random.Range(0, 9);
+            var random = UnityEngine.Random.Range(0, 8);
 
-            if (random == 0)
+            if (random != 5)
             {
                 broomMove.ChasePlayerAtDistance(14f, () => broomDash.StartDecalToAttack());
             }
-            else if (random == 5)
+            else if (random == 50)
             {
                 broomMove.ChasePlayerAtDistance(5f, () => broomMolinillo.StartAttacking());
             }
@@ -64,6 +66,10 @@ namespace Broom
         {
             Invoke(nameof(ChooseAttack), 3f);
         }
+
+        public void EnableCC() => CC.enabled = true;
+        public void DisableCC() => CC.enabled = false;
+
 
         public void SetIsAttacking(bool isAttacking)
         {
