@@ -42,7 +42,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
         {
             _gHealthManager.currentHealth -= value;
             _gHealthManager.SetSlider(_gHealthManager.currentHealth);
-            _anim.SetTrigger(string.Format("isHurt"));
+            //_anim.SetTrigger(string.Format("isHurt"));
             sparksHit.Play();
             if (!isDeath)
             {
@@ -73,11 +73,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
                 _dummieController.DisableCharacterController();
 
             }
-        }
-
-        private void OnDrawGizmos()
-        {
-            Debug.DrawRay(transform.position, -transform.forward * 1f);
         }
     }
 }

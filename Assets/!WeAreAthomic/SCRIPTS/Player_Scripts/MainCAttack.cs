@@ -27,6 +27,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCRail _mainCRail;
         private G_MeshTrail _mainG;
         private MainCFuryAttack _mainCFuryAttack;
+        [SerializeField] HitBoxAngleView hitBoxAngleView;
 
         private Rigidbody _rb;
 
@@ -51,6 +52,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private bool _attackTutorial;
         private bool _sheathTutorial;
         private bool m_canMoveALittle;
+        private bool m_canMoveToEnemy;
 
 
         public int attackCount;
@@ -227,7 +229,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 currentEnemyPos.y = transform.position.y;
                 var direction = currentEnemyPos - transform.position;
                 direction.y = transform.position.y;
-                if (Vector3.SqrMagnitude(currentEnemyPos - transform.position) < 1f)
+                if (Vector3.SqrMagnitude(currentEnemyPos - transform.position) < 2f)
                 {
                     IsMovingToEnemy = false;
                     break;
@@ -274,6 +276,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 StartCoroutine(MoveALittleForward(dis, speed));
                 m_canMoveALittle = false;
             }
+            else if(m_canMoveToEnemy)
+            {
+                StartCoroutine(MoveToEnemyCoroutine(hitBoxAngleView.colliderList[0].transform.position));
+            }
+                
         }
 
         private void NextCombo(InputAction.CallbackContext context)
@@ -395,26 +402,24 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void WhatToDoBasedOnIfGotCol()
         {
-            var cols = GetColsOnRadius(transform.position, nearEnemieToGoRadius, enemyHurtBox);
 
-            List<Collider> validEnemies = new();
-            _wrenchHitBox.ClearList();
-            foreach (var col in cols)
-            {
-                if (CheckIfEnemyToMoveIsOnAngleView(col))
-                {
-                    validEnemies.Add(col);
-                }
-            }
-
-            if (validEnemies.Count == 0)
+            if (hitBoxAngleView.colliderList.Count == 0)
             {
                 m_canMoveALittle = true;
             }
             else
             {
-                StartCoroutine(MoveToEnemyCoroutine(validEnemies[0].transform.position));
-                LookAtSomething(validEnemies[0].transform.position);
+                var enemyPos = hitBoxAngleView.colliderList[0].transform.position;
+                enemyPos.y = transform.position.y;
+                if (Vector3.SqrMagnitude(enemyPos - transform.position) > 2f)
+                {
+                    StartCoroutine(MoveToEnemyCoroutine(hitBoxAngleView.colliderList[0].transform.position));
+                    LookAtSomething(hitBoxAngleView.colliderList[0].transform.position);
+                }
+                else
+                {
+                    m_canMoveToEnemy = true;
+                }
             }
         }
 
@@ -438,7 +443,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
             if (!_canAttack)
             {
-                Debug.Log("hola2");
                 return false;
             }
 
@@ -471,15 +475,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            Handles.color = Color.white;
-            Handles.DrawWireArc(transform.position, Vector3.up, Vector3.forward, 360, nearEnemieToGoRadius);
+            if (cameraBase != null)
+            {
+                Handles.color = Color.white;
+                Handles.DrawWireArc(transform.position, Vector3.up, Vector3.forward, 360, nearEnemieToGoRadius);
 
-            Vector3 viewAngle01 = DirectionFromAngle(cameraBase.transform.eulerAngles.y, -nearEnemieToGoAngle / 2);
-            Vector3 viewAngle02 = DirectionFromAngle(cameraBase.transform.eulerAngles.y, nearEnemieToGoAngle / 2);
+                Vector3 viewAngle01 = DirectionFromAngle(cameraBase.transform.eulerAngles.y, -nearEnemieToGoAngle / 2);
+                Vector3 viewAngle02 = DirectionFromAngle(cameraBase.transform.eulerAngles.y, nearEnemieToGoAngle / 2);
 
-            Handles.color = Color.yellow;
-            Handles.DrawLine(transform.position, transform.position + viewAngle01 * nearEnemieToGoRadius);
-            Handles.DrawLine(transform.position, transform.position + viewAngle02 * nearEnemieToGoRadius);
+                Handles.color = Color.yellow;
+                Handles.DrawLine(transform.position + transform.right, transform.position + viewAngle01 * nearEnemieToGoRadius);
+                Handles.DrawLine(transform.position - transform.right, transform.position + viewAngle02 * nearEnemieToGoRadius);
+            }
         }
 #endif
 

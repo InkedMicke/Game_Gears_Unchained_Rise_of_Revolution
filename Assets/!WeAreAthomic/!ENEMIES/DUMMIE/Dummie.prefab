@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3527498842540889131}
   - component: {fileID: 3471330214283725220}
-  - component: {fileID: 2034747909571958795}
   - component: {fileID: 7829285129649768606}
+  - component: {fileID: 2034747909571958795}
   - component: {fileID: 2820041945708720828}
   - component: {fileID: 4411195972584571468}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Dummie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,20 +62,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2034747909571958795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1279075552220226197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f01f450adca69047a699af2f4c649e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hurtBoxObj: {fileID: 6142278380004551508}
-  removeCollisionOnDeath: 1
 --- !u!143 &7829285129649768606
 CharacterController:
   m_ObjectHideFlags: 0
@@ -101,7 +87,21 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.95, z: 0}
+  m_Center: {x: 0, y: 1.01, z: 0}
+--- !u!114 &2034747909571958795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1279075552220226197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f01f450adca69047a699af2f4c649e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtBoxObj: {fileID: 6142278380004551508}
+  removeCollisionOnDeath: 1
 --- !u!114 &2820041945708720828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,7 +282,11 @@ MonoBehaviour:
   soundComponentObj: {fileID: 2963962393434010473}
   sparksHit: {fileID: 6768638902788567473}
   useKnockback: 1
+  isDeath: 0
   pushForce: 10
+  DummieDies:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6850346869885078858
 MonoBehaviour:
   m_ObjectHideFlags: 0

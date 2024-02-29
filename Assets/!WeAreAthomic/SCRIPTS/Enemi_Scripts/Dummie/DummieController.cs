@@ -11,8 +11,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
         private CharacterController m_cc;
         private MainCAttack m_mainCAttack;
 
-        [SerializeField] private GameObject hurtBoxObj;
-
         private Transform m_playerTr;
 
         public bool removeCollisionOnDeath;
@@ -66,11 +64,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
         private IEnumerator PushBack(Vector3 dir, float distance, float speed)
         {
             var startPos = transform.position;
-            dir.y = transform.position.y;
+            dir.y = 0;
 
             while (Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) < distance)
             {
-                m_cc.Move(speed * Time.deltaTime * dir.normalized);
+                m_cc.Move(speed * Time.deltaTime * dir);
 
                 yield return new WaitForEndOfFrame();
             }
