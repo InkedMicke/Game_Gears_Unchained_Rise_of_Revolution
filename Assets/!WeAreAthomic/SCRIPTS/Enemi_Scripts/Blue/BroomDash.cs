@@ -9,6 +9,10 @@ namespace Broom
     {
         Broom m_broom;
 
+        [SerializeField] BroomDashHitBox hitbox;
+
+        [SerializeField] EnemyDamageData dashDamageData;
+
         [SerializeField] DecalProjector indicator;
 
         [SerializeField] BoxCollider boxColliderDash;
@@ -47,7 +51,7 @@ namespace Broom
                     m_broom.broomAnimator.SetIsStunned(true);
                     m_broom.SetIsAttacking(false);
                     m_broom.broomHurtBox.SetCanReceiveDamage(true);
-
+                    m_broom.broomVFX.PlayStunning();
                     indicator.uvBias = new(0, 1);
                     indicator.gameObject.transform.SetParent(decalPivot.transform);
                     indicator.transform.localPosition = m_indicatorStartPos;
@@ -109,6 +113,7 @@ namespace Broom
         public void StartDash()
         {
             m_broom.Rb.mass = 10;
+            hitbox.EnemyDamageDataDash = dashDamageData;
             //_attackHitBox.ClearList();
             StartCoroutine(WaitForEndAnim());
             m_broom.Rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);

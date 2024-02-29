@@ -41,32 +41,23 @@ namespace Broom
 
         private void Start()
         {
-            //ChooseAttack();
+            ChooseAttack();
         }
 
         protected bool _isAttacking;
 
         public void ChooseAttack()
         {
-            var random = UnityEngine.Random.Range(0, 2);
+            var random = UnityEngine.Random.Range(0, 9);
 
-            if (IsCloseEnough(distanceToDash))
+            if (random == 0)
             {
-                broomDash.StartDecalToAttack();
+                broomMove.ChasePlayerAtDistance(14f, () => broomDash.StartDecalToAttack());
             }
-            else
+            else if (random == 5)
             {
-                broomMove.ChasePlayer(() => broomDash.StartDecalToAttack(), distanceToDash);
+                broomMove.ChasePlayerAtDistance(5f, () => broomMolinillo.StartAttacking());
             }
-
-            /*            if(random == 0)
-                        {
-                            broomMove.ChasePlayer(() => broomDash.StartDecalToAttack(), 14f);
-                        }
-                        else
-                        {
-                            broomMove.ChasePlayer(() => broomMolinillo.StartAttacking(), 5f);
-                        }*/
         }
 
         public void WaitForDecideWhatToDo()

@@ -15,7 +15,7 @@ namespace Broom
             m_broom = GetComponent<Broom>();
         }
 
-        public void ChasePlayer(Action method = null, float distance = 0)
+        public void ChasePlayerAtDistance(float distance = 0, Action method = null)
         {
             if(m_broom.IsChasingPlayer)
             {
@@ -23,7 +23,14 @@ namespace Broom
             }
             m_broom.broomAnimator.SetIsWalking(true);
             EnableMovement();
-            m_c_chasingPlayer = StartCoroutine(ChasingPlayer(method, distance));
+            m_c_chasingPlayer = StartCoroutine(ChasingPlayerDistance(method, distance));
+        }
+
+        public void ChasePlayerWithTime(float time = 0, Action method = null)
+        {
+            m_broom.broomAnimator.SetIsWalking(true);
+            EnableMovement();
+            StartCoroutine(ChasingPlayerTime(method, time));
         }
 
         public void StopChasePlayer()
@@ -33,23 +40,35 @@ namespace Broom
             StopCoroutine(m_c_chasingPlayer);
         }
 
-        private IEnumerator ChasingPlayer(Action method, float distance)
+        private IEnumerator ChasingPlayerDistance(Action method, float distance)
         {
             m_broom.SetIsChasingPlayer(true);
-            while(true)
+            while(Vector3.Distance(transform.position, m_broom.PlayerTr.position) > distance)
             {
-                if(Vector3.Distance(transform.position, m_broom.PlayerTr.position) < distance)
-                {
-                    DisableMovement();
-                    method();
-                    m_broom.broomAnimator.SetIsWalking(false);
-                    m_broom.SetIsChasingPlayer(false);
-                    break;
-                }
-
                 m_broom.Agent.SetDestination(m_broom.PlayerTr.position);
                 yield return new WaitForEndOfFrame();
             }
+
+            DisableMovement();
+            method();
+            m_broom.broomAnimator.SetIsWalking(false);
+            m_broom.SetIsChasingPlayer(false);
+        }        
+        
+        private IEnumerator ChasingPlayerTime(Action method, float time)
+        {
+            var golTime = Time.time + time;
+            m_broom.SetIsChasingPlayer(true);
+            while(Time.time < golTime)
+            {
+                m_broom.Agent.SetDestination(m_broom.PlayerTr.position);
+                yield return new WaitForEndOfFrame();
+            }
+
+            DisableMovement();
+            method();
+            m_broom.broomAnimator.SetIsWalking(false);
+            m_broom.SetIsChasingPlayer(false);
         }
 
         public void EnableMovement() => m_broom.Agent.isStopped = false;

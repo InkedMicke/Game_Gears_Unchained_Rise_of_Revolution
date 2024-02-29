@@ -15282,6 +15282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9163844964447257003}
   - component: {fileID: 2341711458453472801}
+  - component: {fileID: 3142235032032991748}
   m_Layer: 10
   m_Name: DashHitBox
   m_TagString: Untagged
@@ -15325,6 +15326,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3142235032032991748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5285576931343349009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a83d25824dbbd440940a405904bc613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5346500003434549549
 GameObject:
   m_ObjectHideFlags: 0
@@ -20332,6 +20345,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1324396818841126415}
   - component: {fileID: 6996634901305684810}
+  - component: {fileID: 1142018444775456781}
   - component: {fileID: 477489616128295840}
   - component: {fileID: 6239895121709647939}
   - component: {fileID: 1827520619481779994}
@@ -20373,7 +20387,7 @@ Transform:
   - {fileID: 7551618026305584711}
   - {fileID: 9163844964447257003}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6996634901305684810
 Animator:
@@ -20396,6 +20410,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!136 &1142018444775456781
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583118322878526860}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.71
+  m_Height: 3.91104
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.45052, z: 0}
 --- !u!54 &477489616128295840
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -20419,7 +20456,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
@@ -20482,6 +20519,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b903520bea7f69f4cb9a6228935a6aee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitbox: {fileID: 3142235032032991748}
+  dashDamageData: {fileID: 11400000, guid: d6668623ec9544a44bf9f3d06094688a, type: 2}
   indicator: {fileID: 7908192857380283202}
   boxColliderDash: {fileID: 2341711458453472801}
   obstaclesLayer:
@@ -20503,6 +20542,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e93ca5fd2bbe441909d24c06f8062d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitbox: {fileID: 3142235032032991748}
+  crossDamageData: {fileID: 11400000, guid: c8ee3fa2e1962864483f6790bd723d8e, type: 2}
 --- !u!114 &8237051545367789050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64485,7 +64526,7 @@ PrefabInstance:
     - target: {fileID: 8460667080445658517, guid: a3e2c3406e02f2c4ba86cfb1604277bd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.0546409
+      value: 0.836
       objectReference: {fileID: 0}
     - target: {fileID: 8460667080445658517, guid: a3e2c3406e02f2c4ba86cfb1604277bd,
         type: 3}

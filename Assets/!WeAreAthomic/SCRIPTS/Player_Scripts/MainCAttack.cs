@@ -402,7 +402,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void WhatToDoBasedOnIfGotCol()
         {
-
+/*
             if (hitBoxAngleView.colliderList.Count == 0)
             {
                 m_canMoveALittle = true;
@@ -420,7 +420,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     m_canMoveToEnemy = true;
                 }
-            }
+            }*/
         }
 
         private void LookAtSomething(Vector3 pos)
