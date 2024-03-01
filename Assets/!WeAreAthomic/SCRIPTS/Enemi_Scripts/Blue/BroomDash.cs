@@ -9,6 +9,10 @@ namespace Broom
     {
         Broom m_broom;
 
+        [SerializeField] BroomDashHitBox hitbox;
+
+        [SerializeField] EnemyDamageData dashDamageData;
+
         [SerializeField] DecalProjector indicator;
 
         [SerializeField] BoxCollider boxColliderDash;
@@ -26,7 +30,9 @@ namespace Broom
 
         bool m_isDasing;
 
-        [SerializeField] float dashForce = 40;
+        [SerializeField] float dashSpeed = 40;
+        [SerializeField] float dashDisplacement = 10;
+        [SerializeField] float timeStunned = 4;
 
         private void Awake()
         {
@@ -42,16 +48,15 @@ namespace Broom
                 if(Physics.CheckSphere(posCheckObstacles.position, .5f, obstaclesLayer))
                 {
                     m_isDasing = false;
-                    m_broom.Rb.mass = 40;
-                    m_broom.Rb.velocity = Vector3.zero;
                     m_broom.broomAnimator.SetIsStunned(true);
                     m_broom.SetIsAttacking(false);
                     m_broom.broomHurtBox.SetCanReceiveDamage(true);
-
+                    m_broom.broomVFX.PlayStunning();
                     indicator.uvBias = new(0, 1);
                     indicator.gameObject.transform.SetParent(decalPivot.transform);
                     indicator.transform.localPosition = m_indicatorStartPos;
                     decalPivot.SetActive(false);
+                    StartCoroutine(WaitForEndStunn());
                 }
             }
         }
@@ -108,10 +113,8 @@ namespace Broom
 
         public void StartDash()
         {
-            m_broom.Rb.mass = 10;
-            //_attackHitBox.ClearList();
-            StartCoroutine(WaitForEndAnim());
-            m_broom.Rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
+            hitbox.EnemyDamageDataDash = dashDamageData;
+            StartCoroutine(Dash());
             indicator.gameObject.transform.SetParent(transform.parent);
             //_trail.EnableTrail();
             //PlayDashSound();
@@ -124,20 +127,35 @@ namespace Broom
             indicator.gameObject.transform.SetParent(decalPivot.transform);
             indicator.transform.localPosition = m_indicatorStartPos;
             m_broom.broomAnimator.SetThurstCount(0);
-            m_broom.Rb.mass = 40;
             m_broom.WaitForDecideWhatToDo();
             m_broom.SetIsAttacking(false);
             decalPivot.SetActive(false);
         }
 
+        private IEnumerator Dash()
+        {
+            var startPos = transform.position;
+            while(Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) < dashDisplacement)
+            {
+                m_broom.Rb.MovePosition(transform.forward);
+                yield return new WaitForEndOfFrame();
+            }
+
+            m_broom.Rb.velocity = Vector3.zero;
+            m_broom.broomAnimator.SetThurstCount(2);
+            m_isDasing = false;
+        }
+
         public void DisableHitBoxCollision() => boxColliderDash.enabled = false;
         public void EnableHitBoxCollision() => boxColliderDash.enabled = true;
 
-        private IEnumerator WaitForEndAnim()
+        private IEnumerator WaitForEndStunn()
         {
-            yield return new WaitForSeconds(.8f);
-            m_broom.broomAnimator.SetThurstCount(2);
-            m_isDasing = false;
+            yield return new WaitForSeconds(timeStunned);
+            m_broom.broomVFX.StopStunning();
+            m_broom.broomAnimator.SetIsStunned(false);
+            m_broom.broomHurtBox.SetCanReceiveDamage(false);
+            m_broom.WaitForDecideWhatToDo();
         }
 
         private void OnDrawGizmos()

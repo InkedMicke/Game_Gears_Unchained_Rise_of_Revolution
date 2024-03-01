@@ -32,41 +32,37 @@ namespace Broom
             broomMove = GetComponent<BroomMovement>();
             broomDash = GetComponent<BroomDash>();
             broomMolinillo = GetComponent<BroomMolinillo>();
-            Rb = GetComponent<Rigidbody>();
             broomHurtBox = GetComponentInChildren<BroomHurtBox>();
             broomVFX = GetComponent<BroomVFX>();
+            Rb = GetComponent<Rigidbody>();
 
             PlayerTr = GameObject.FindGameObjectWithTag("Player").transform;
+
         }
 
         private void Start()
         {
-            //ChooseAttack();
+            ChooseAttack();
         }
 
-        protected bool _isAttacking;
+        private void Update()
+        {
+            Rb.MovePosition(Rb.position + (Time.deltaTime * 10f * transform.forward.normalized));
+
+        }
 
         public void ChooseAttack()
         {
-            var random = UnityEngine.Random.Range(0, 2);
+            var random = UnityEngine.Random.Range(0, 8);
 
-            if (IsCloseEnough(distanceToDash))
+            if (random != 5)
             {
-                broomDash.StartDecalToAttack();
+                broomMove.ChasePlayerAtDistance(10f, () => broomDash.StartDecalToAttack());
             }
-            else
+            else if (random == 50)
             {
-                broomMove.ChasePlayer(() => broomDash.StartDecalToAttack(), distanceToDash);
+                broomMove.ChasePlayerAtDistance(5f, () => broomMolinillo.StartAttacking());
             }
-
-            /*            if(random == 0)
-                        {
-                            broomMove.ChasePlayer(() => broomDash.StartDecalToAttack(), 14f);
-                        }
-                        else
-                        {
-                            broomMove.ChasePlayer(() => broomMolinillo.StartAttacking(), 5f);
-                        }*/
         }
 
         public void WaitForDecideWhatToDo()

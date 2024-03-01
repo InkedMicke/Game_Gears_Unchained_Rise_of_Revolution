@@ -9,6 +9,10 @@ namespace Broom
     {
         Broom m_broom;
 
+        [SerializeField] BroomDashHitBox hitbox;
+
+        [SerializeField] EnemyDamageData crossDamageData;
+
         private Coroutine m_c_waitForEndShield;
 
         [NonSerialized] public bool IsDefending;
@@ -42,6 +46,7 @@ namespace Broom
         {
             m_broom.SetIsAttacking(true);
             m_broom.broomAnimator.SetRootMotion(true);
+            hitbox.EnemyDamageDataDash = crossDamageData;
             m_broom.broomAnimator.SetCrossAttackCount(1);
         }
 
