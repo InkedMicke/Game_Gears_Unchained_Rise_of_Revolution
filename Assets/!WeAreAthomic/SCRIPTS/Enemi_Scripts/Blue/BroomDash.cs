@@ -113,9 +113,7 @@ namespace Broom
 
         public void StartDash()
         {
-            m_broom.EnableCC();
             hitbox.EnemyDamageDataDash = dashDamageData;
-            //_attackHitBox.ClearList();
             StartCoroutine(Dash());
             indicator.gameObject.transform.SetParent(transform.parent);
             //_trail.EnableTrail();
@@ -139,12 +137,12 @@ namespace Broom
             var startPos = transform.position;
             while(Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) < dashDisplacement)
             {
-                m_broom.CC.Move(Time.deltaTime * dashSpeed * transform.forward.normalized);
+                m_broom.Rb.MovePosition(transform.forward);
                 yield return new WaitForEndOfFrame();
             }
 
+            m_broom.Rb.velocity = Vector3.zero;
             m_broom.broomAnimator.SetThurstCount(2);
-            m_broom.DisableCC();
             m_isDasing = false;
         }
 

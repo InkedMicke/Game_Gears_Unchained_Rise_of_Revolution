@@ -20346,7 +20346,7 @@ GameObject:
   - component: {fileID: 1324396818841126415}
   - component: {fileID: 6996634901305684810}
   - component: {fileID: 1142018444775456781}
-  - component: {fileID: 1892387388444760249}
+  - component: {fileID: 5939613072834722407}
   - component: {fileID: 6239895121709647939}
   - component: {fileID: 1827520619481779994}
   - component: {fileID: 7304422656921545480}
@@ -20433,32 +20433,33 @@ CapsuleCollider:
   m_Height: 3.91104
   m_Direction: 1
   m_Center: {x: 0, y: 1.45052, z: 0}
---- !u!143 &1892387388444760249
-CharacterController:
+--- !u!54 &5939613072834722407
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5583118322878526860}
-  m_Material: {fileID: 0}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 2
 --- !u!195 &6239895121709647939
 NavMeshAgent:
   m_ObjectHideFlags: 0
