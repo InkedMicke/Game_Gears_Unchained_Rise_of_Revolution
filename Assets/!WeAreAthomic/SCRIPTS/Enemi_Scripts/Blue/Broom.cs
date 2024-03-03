@@ -7,7 +7,7 @@ namespace Broom
     public class Broom : MonoBehaviour
     {
         [NonSerialized] public NavMeshAgent Agent;
-        [NonSerialized] public Rigidbody Rb;
+        [NonSerialized] public CharacterController CC;
         [NonSerialized] public BroomAnimator broomAnimator;
         [NonSerialized] public BroomDefense broomDefense;
         [NonSerialized] public BroomMovement broomMove;
@@ -34,7 +34,7 @@ namespace Broom
             broomMolinillo = GetComponent<BroomMolinillo>();
             broomHurtBox = GetComponentInChildren<BroomHurtBox>();
             broomVFX = GetComponent<BroomVFX>();
-            Rb = GetComponent<Rigidbody>();
+            CC = GetComponent<CharacterController>();
 
             PlayerTr = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -45,17 +45,11 @@ namespace Broom
             ChooseAttack();
         }
 
-        private void Update()
-        {
-            Rb.MovePosition(Rb.position + (Time.deltaTime * 10f * transform.forward.normalized));
-
-        }
-
         public void ChooseAttack()
         {
             var random = UnityEngine.Random.Range(0, 8);
-
-            if (random != 5)
+            broomMove.EnableMovement();
+            if (random != 10)
             {
                 broomMove.ChasePlayerAtDistance(10f, () => broomDash.StartDecalToAttack());
             }

@@ -9,6 +9,13 @@ namespace Broom
         private void Awake()
         {
             m_anim = GetComponent<Animator>();
+
+            SetLayerWeight(2, 1f);
+        }
+
+        public void SetLayerWeight(int layerInt, float layerWeight)
+        {
+            m_anim.SetLayerWeight(layerInt, layerWeight);
         }
 
         public void SetShieldCount(int count)

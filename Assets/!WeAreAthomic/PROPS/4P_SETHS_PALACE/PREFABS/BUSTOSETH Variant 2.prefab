@@ -1,200 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &179002435893957369
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8007596325446700374}
-  - component: {fileID: 5459695832515241726}
-  - component: {fileID: 8440986483154720312}
-  m_Layer: 10
-  m_Name: HurtBox_Busto
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8007596325446700374
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 179002435893957369}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 63258236452149479}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5459695832515241726
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 179002435893957369}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.4149499, y: 5.601886, z: 1.4088354}
-  m_Center: {x: 0.047124624, y: -0.019959927, z: -0.08318949}
---- !u!114 &8440986483154720312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 179002435893957369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77e05e52d61013e429a9355ceac26907, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionDetection:
-  - enabled: 1
-    detectionLayer:
-      serializedVersion: 2
-      m_Bits: 1024
-    detectionType: 0
-    eventsToActivate:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 8648716161554673549}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-    additionalInfo: 
-  - enabled: 1
-    detectionLayer:
-      serializedVersion: 2
-      m_Bits: 256
-    detectionType: 0
-    eventsToActivate:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 8648716161554673549}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-        - m_Target: {fileID: 881135472092264155}
-          m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_MethodName: Play
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-        - m_Target: {fileID: 6487809740046961536}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 8992785423610627978}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 8669654404270556533}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 3207630196743804143}
-          m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 2679930961489461112}
-          m_TargetAssemblyTypeName: G_DitheringDisolve, Assembly-CSharp
-          m_MethodName: StartDisolveDithering
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 5459695832515241726}
-          m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    additionalInfo: 
-  useTargetScript: 0
-  targetScript: {fileID: 0}
 --- !u!1 &190134251160350270
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,7 +316,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -6467,7 +6272,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -11353,7 +11158,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -18377,7 +18182,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -23930,7 +23735,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -30285,7 +30090,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -35146,9 +34951,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5058023808476659453}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.12, z: 0}
-  m_LocalScale: {x: 39.738842, y: 39.738842, z: 39.738842}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.045070335, y: 0.20042367, z: -0.1532074}
+  m_LocalScale: {x: 13.17021, y: 13.170211, z: 13.17021}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4460818637206100938}
@@ -35157,8 +34962,8 @@ Transform:
   - {fileID: 8400375844231766631}
   - {fileID: 2678878924920162551}
   - {fileID: 6166370565402076480}
-  m_Father: {fileID: 63258236452149479}
-  m_RootOrder: 0
+  m_Father: {fileID: 6970000758603708079}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &881135472092264155
 ParticleSystem:
@@ -35177,7 +34982,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -43120,6 +42925,7 @@ Transform:
   - {fileID: 8330949538078536549}
   - {fileID: 636414308523106905}
   - {fileID: 4277400174744183251}
+  - {fileID: 2125561735172111787}
   m_Father: {fileID: 63258236452149479}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -43548,7 +43354,7 @@ PrefabInstance:
     - target: {fileID: 3067915673409511633, guid: b40f6025be29c42418e3b39a98ba07ce,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3067915673409511633, guid: b40f6025be29c42418e3b39a98ba07ce,
         type: 3}
@@ -43631,15 +43437,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3067915673409511633, guid: b40f6025be29c42418e3b39a98ba07ce,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8007596325446700374}
-    - targetCorrespondingSourceObject: {fileID: 3067915673409511633, guid: b40f6025be29c42418e3b39a98ba07ce,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6970000758603708079}
-    - targetCorrespondingSourceObject: {fileID: 3067915673409511633, guid: b40f6025be29c42418e3b39a98ba07ce,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2125561735172111787}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4535707665889146439, guid: b40f6025be29c42418e3b39a98ba07ce,
         type: 3}
@@ -43649,6 +43447,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8206525556597378517}
+    - targetCorrespondingSourceObject: {fileID: 4535707665889146439, guid: b40f6025be29c42418e3b39a98ba07ce,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5480766193603869831}
   m_SourcePrefab: {fileID: 100100000, guid: b40f6025be29c42418e3b39a98ba07ce, type: 3}
 --- !u!4 &63258236452149479 stripped
 Transform:
@@ -43690,27 +43492,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a9c9c17e4fa4446b7e5275b50c8eab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &3207630196743804143 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 499928834428071129, guid: b40f6025be29c42418e3b39a98ba07ce,
-    type: 3}
-  m_PrefabInstance: {fileID: 3059017317623298102}
+--- !u!114 &5480766193603869831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6487809740046961536 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8104936296489022390, guid: b40f6025be29c42418e3b39a98ba07ce,
-    type: 3}
-  m_PrefabInstance: {fileID: 3059017317623298102}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8669654404270556533 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5918605895541390659, guid: b40f6025be29c42418e3b39a98ba07ce,
-    type: 3}
-  m_PrefabInstance: {fileID: 3059017317623298102}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8992785423610627978 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6250744191449251772, guid: b40f6025be29c42418e3b39a98ba07ce,
-    type: 3}
-  m_PrefabInstance: {fileID: 3059017317623298102}
-  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477675579424820849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ac0e88ea1c9954f8f30ef7e67472a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokenBust: {fileID: 8648716161554673549}

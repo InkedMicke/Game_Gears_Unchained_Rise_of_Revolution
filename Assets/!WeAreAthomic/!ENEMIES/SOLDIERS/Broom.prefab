@@ -20345,8 +20345,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1324396818841126415}
   - component: {fileID: 6996634901305684810}
-  - component: {fileID: 1142018444775456781}
-  - component: {fileID: 5939613072834722407}
+  - component: {fileID: 8966146059426795738}
   - component: {fileID: 6239895121709647939}
   - component: {fileID: 1827520619481779994}
   - component: {fileID: 7304422656921545480}
@@ -20410,8 +20409,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &1142018444775456781
-CapsuleCollider:
+--- !u!143 &8966146059426795738
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -20428,38 +20427,14 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.71
-  m_Height: 3.91104
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.45052, z: 0}
---- !u!54 &5939613072834722407
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5583118322878526860}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 2
+  serializedVersion: 3
+  m_Height: 3.33
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1.67, z: 0}
 --- !u!195 &6239895121709647939
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -20470,7 +20445,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3
+  m_Speed: 5
   m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 540
@@ -20529,8 +20504,8 @@ MonoBehaviour:
   decalPivot: {fileID: 5897576062654975429}
   endTrDecal: {fileID: 3777555756195645481}
   posCheckObstacles: {fileID: 7551618026305584711}
-  dashSpeed: 20
-  dashDisplacement: 14
+  dashSpeed: 60
+  dashDisplacement: 35
   timeStunned: 4
 --- !u!114 &3934159844278948234
 MonoBehaviour:
@@ -65164,6 +65139,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4558748349992914744, guid: 9c4094357701301438bb56fff1ca49f1,
+        type: 3}
+      propertyPath: m_PreviewTimeScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6329472837910341108, guid: 9c4094357701301438bb56fff1ca49f1,
         type: 3}
       propertyPath: m_Enabled
@@ -65177,7 +65157,7 @@ PrefabInstance:
     - target: {fileID: 7105221359541266271, guid: 9c4094357701301438bb56fff1ca49f1,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
