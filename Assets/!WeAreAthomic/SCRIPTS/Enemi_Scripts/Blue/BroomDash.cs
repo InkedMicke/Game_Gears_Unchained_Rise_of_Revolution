@@ -41,30 +41,12 @@ namespace Broom
             m_indicatorStartPos = indicator.transform.localPosition;
         }
 
-        private void Update()
-        {
-            if(m_isDasing)
-            {
-                if(Physics.CheckSphere(posCheckObstacles.position, .5f, obstaclesLayer))
-                {
-                    m_isDasing = false;
-                    m_broom.broomAnimator.SetIsStunned(true);
-                    m_broom.SetIsAttacking(false);
-                    m_broom.broomHurtBox.SetCanReceiveDamage(true);
-                    m_broom.broomVFX.PlayStunning();
-                    indicator.uvBias = new(0, 1);
-                    indicator.gameObject.transform.SetParent(decalPivot.transform);
-                    indicator.transform.localPosition = m_indicatorStartPos;
-                    decalPivot.SetActive(false);
-                    StartCoroutine(WaitForEndStunn());
-                }
-            }
-        }
-
         public void StartDecalToAttack()
         {
             m_broom.SetIsAttacking(true);
             decalPivot.SetActive(true);
+            m_broom.broomMove.DisableMovement();
+            m_broom.broomMove.SetAgentSpeed(0);
             m_c_turnToPlayer = StartCoroutine(TurnToPlayer());
         }
 
@@ -113,12 +95,13 @@ namespace Broom
 
         public void StartDash()
         {
+            m_isDasing = true;
             hitbox.EnemyDamageDataDash = dashDamageData;
+            StartCoroutine(CheckForObstacles());
             StartCoroutine(Dash());
             indicator.gameObject.transform.SetParent(transform.parent);
             //_trail.EnableTrail();
             //PlayDashSound();
-            m_isDasing = true;
         }
 
         public void EndDash()
@@ -132,16 +115,55 @@ namespace Broom
             decalPivot.SetActive(false);
         }
 
+        private IEnumerator CheckForObstacles()
+        {
+            while (m_isDasing)
+            {
+                Debug.Log("hola1");
+                if (Physics.CheckSphere(posCheckObstacles.position, .5f, obstaclesLayer))
+                {
+                    Debug.Log("hola2");
+                    var cols = Physics.OverlapSphere(posCheckObstacles.position, .5f, obstaclesLayer);
+
+                    foreach (var col in cols)
+                    {
+                        if (col.TryGetComponent(out SethBustHurtBox hurtbox))
+                        {
+                            hurtbox.StartBustDestroyEffect();
+                        }
+                    }
+
+                    m_broom.broomAnimator.SetIsStunned(true);
+                    m_broom.SetIsAttacking(false);
+                    m_broom.broomHurtBox.SetCanReceiveDamage(true);
+                    m_broom.broomVFX.PlayStunning();
+                    indicator.uvBias = new(0, 1);
+                    indicator.gameObject.transform.SetParent(decalPivot.transform);
+                    indicator.transform.localPosition = m_indicatorStartPos;
+                    decalPivot.SetActive(false);
+                    StartCoroutine(WaitForEndStunn());
+                    m_isDasing = false;
+
+                    break;
+                }
+
+                yield return new WaitForEndOfFrame();
+            }
+
+
+
+
+        }
+
         private IEnumerator Dash()
         {
             var startPos = transform.position;
             while(Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) < dashDisplacement)
             {
-                m_broom.Rb.MovePosition(transform.forward);
+                m_broom.CC.Move(Time.deltaTime * dashSpeed * transform.forward.normalized);
                 yield return new WaitForEndOfFrame();
             }
 
-            m_broom.Rb.velocity = Vector3.zero;
             m_broom.broomAnimator.SetThurstCount(2);
             m_isDasing = false;
         }
