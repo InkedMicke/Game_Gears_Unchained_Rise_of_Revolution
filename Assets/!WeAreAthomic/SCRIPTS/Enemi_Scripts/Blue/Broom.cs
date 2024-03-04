@@ -47,13 +47,13 @@ namespace Broom
 
         public void ChooseAttack()
         {
-            var random = UnityEngine.Random.Range(0, 8);
+            var random = UnityEngine.Random.Range(0, 7);
             broomMove.EnableMovement();
-            if (random != 10)
+            if (random != 5)
             {
                 broomMove.ChasePlayerAtDistance(10f, () => broomDash.StartDecalToAttack());
             }
-            else if (random == 50)
+            else if (random == 5)
             {
                 broomMove.ChasePlayerAtDistance(5f, () => broomMolinillo.StartAttacking());
             }
