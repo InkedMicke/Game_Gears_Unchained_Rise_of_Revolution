@@ -28,17 +28,19 @@ public class GCameraShake : MonoBehaviour
                 CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
                 cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
+                cinemachineBasicMultiChannelPerlin.m_FrequencyGain = 0f;
             }
 
         }
     }
 
     // Update is called once per frame
-    public void ShakeCamera (float intensity, float time)
+    public void ShakeCamera (float amplitudeGain, float frequencyGain, float time)
     {
         CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-        cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;
+        cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = amplitudeGain;
+        cinemachineBasicMultiChannelPerlin.m_FrequencyGain = frequencyGain;
         shakeTimer = time;
     }
 

@@ -160,26 +160,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                         _mainCDash.StopDash();
                     }
 
-                    _mainCMovement.EnableMovement();
-                    if (_mainCTutorial.IsOnTutorial && !_attackTutorial)
-                    {
-                        _mainCSounds.RemoveAllSounds();
-                        _mainCSounds.PlayExpressionSound();
-                        _attackTutorial = true;
-                    }
+                    _mainCMovement.DisableMovement();
+
                     _mainCLayers.EnableAttackLayer();
                     _mainCSounds.StopAttackSound();
-                    //GCameraShake.Instance.ShakeCamera(1f, .1f);
                     attackCount++;
                     _mainCAnimator.SetAttackCountAnim(attackCount);
-                    weaponObj.GetComponent<MainCWrenchHitBox>().ClearList();
-                    _canNextAttack = false;
+                    _wrenchHitBox.ClearList();
                     _mainCSounds.PlayAttackSound();
                     _mainCSounds.PlayEffordSound();
-
+                    _canNextAttack = false;
                     IsAttacking = true;
 
-                    _canNextAttack = false;
                 }
 
                 if (CanAttack() && !_isSheathed && !_mainCPistol.IsAiming)
@@ -402,8 +394,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void WhatToDoBasedOnIfGotCol()
         {
-/*
-            if (hitBoxAngleView.colliderList.Count == 0)
+
+/*            if (hitBoxAngleView.colliderList.Count == 0)
             {
                 m_canMoveALittle = true;
             }

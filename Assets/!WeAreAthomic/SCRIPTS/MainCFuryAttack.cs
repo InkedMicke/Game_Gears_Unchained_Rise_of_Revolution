@@ -173,7 +173,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCVfx.ActivateSlash4();
             InstanciateExplosion();
             _mainCSounds.PlayChargedAttackSound();
-            GCameraShake.Instance.ShakeCamera(5f, .1f);
+            GCameraShake.Instance.ShakeCamera(5f, 1f,.1f);
 
         }
         public void DestroyScanner()

@@ -124,7 +124,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (dashWithEffects)
                 {
-                    _gTrail.StartTrail();
+                    _gTrail.ActivateTrail();
                 }
 
                 float curveTime = (Time.time - startTime) / _dashTime;

@@ -8,7 +8,7 @@ namespace Broom
     {
         Broom m_broom;
 
-        [NonSerialized] public bool CanReceiveDamage;
+        [NonSerialized] public bool LocalCanReceiveDamage;
 
         private int hurtedTimes;
 
@@ -25,7 +25,7 @@ namespace Broom
 
         public void Damage(float dmg)
         {
-            if (CanReceiveDamage)
+            if (LocalCanReceiveDamage)
             {
                 if (!CheckForDeath())
                 {
@@ -37,7 +37,6 @@ namespace Broom
                 if (!m_broom.IsAttacking)
                 {
                     hurtedTimes++;
-                    Debug.Log(hurtedTimes);
                     if (hurtedTimes < 4)
                     {
                         CancelInvoke(nameof(ResetHurtedTimes));
@@ -54,11 +53,7 @@ namespace Broom
             }
         }
 
-        private void ResetHurtedTimes()
-        {
-            Debug.Log("hola1");
-            hurtedTimes = 0;
-        }
+        private void ResetHurtedTimes() => hurtedTimes = 0;
 
         private bool CheckForDeath()
         {
@@ -72,7 +67,14 @@ namespace Broom
 
         public void SetCanReceiveDamage(bool canReceiveDamage)
         {
-            CanReceiveDamage = canReceiveDamage;
+            LocalCanReceiveDamage = canReceiveDamage;
         }
+
+        public bool CanReceiveDamage()
+        {
+            return LocalCanReceiveDamage;
+        }
+
+   
     }
 }

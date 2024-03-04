@@ -70,6 +70,7 @@ namespace Broom
         {
             m_broom.SetIsAttacking(false);
             m_broom.broomAnimator.SetRootMotion(false);
+            m_broom.broomAnimator.SetCrossAttackCount(0);
         }
 
         private IEnumerator WaitForDisableShield()

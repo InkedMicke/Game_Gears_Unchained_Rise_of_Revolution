@@ -15,6 +15,7 @@ namespace Broom
         [NonSerialized] public BroomMolinillo broomMolinillo;
         [NonSerialized] public BroomHurtBox broomHurtBox;
         [NonSerialized] public BroomVFX broomVFX;
+        [NonSerialized] public G_MeshTrail MeshTrail;
 
 
         [NonSerialized] public Transform PlayerTr;
@@ -35,6 +36,7 @@ namespace Broom
             broomHurtBox = GetComponentInChildren<BroomHurtBox>();
             broomVFX = GetComponent<BroomVFX>();
             CC = GetComponent<CharacterController>();
+            MeshTrail = GetComponent<G_MeshTrail>();
 
             PlayerTr = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -47,14 +49,17 @@ namespace Broom
 
         public void ChooseAttack()
         {
-            var random = UnityEngine.Random.Range(0, 7);
+            var random = UnityEngine.Random.Range(0, 8);
             broomMove.EnableMovement();
-            if (random != 5)
+            broomAnimator.SetLayerWeight(2, 1f);
+            if (random != 50)
             {
-                broomMove.ChasePlayerAtDistance(10f, () => broomDash.StartDecalToAttack());
+                broomMove.SetAgentSpeed(broomMove.StartSpeed);
+                broomMove.ChasePlayerAtDistance(9f, () => broomDash.StartDecalToAttack());
             }
-            else if (random == 5)
+            else if (random == 50)
             {
+                broomMove.SetAgentSpeed(6);
                 broomMove.ChasePlayerAtDistance(5f, () => broomMolinillo.StartAttacking());
             }
         }

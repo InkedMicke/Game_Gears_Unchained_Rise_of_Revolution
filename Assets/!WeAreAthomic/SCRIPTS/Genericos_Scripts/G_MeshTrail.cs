@@ -19,15 +19,6 @@ public class G_MeshTrail : MonoBehaviour
     private bool isTrailActive;
     public SkinnedMeshRenderer[] skinnedMeshRenderers;
 
-    public void StartTrail()
-    {
-        if(!isTrailActive)
-        {
-            isTrailActive = true;
-            ActivateTrail(activeTime);
-        }
-    }
-
     public void EnableTrail()
     {
         StartCoroutine(StartTrail(activeTime));
@@ -76,49 +67,47 @@ public class G_MeshTrail : MonoBehaviour
         }
         // Marca que el rastro ya no está activo
         isTrailActive = false;
-    }    
-    
-    private void ActivateTrail(float timeActive)
+    }
+
+    public void ActivateTrail()
     {
-        while (timeActive > 0)
+
+
+        if (skinnedMeshRenderers == null)
+            skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        for (int i = 0; i < skinnedMeshRenderers.Length; i++)
         {
-            timeActive -= meshRefreshRate;
+            GameObject gObj = new GameObject();
+            gObj.transform.SetPositionAndRotation(positionToSpawn.position, positionToSpawn.rotation);
 
-            if (skinnedMeshRenderers == null)
-                skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+            MeshRenderer mr = gObj.AddComponent<MeshRenderer>();
+            MeshFilter mf = gObj.AddComponent<MeshFilter>();
 
-            for (int i = 0; i < skinnedMeshRenderers.Length; i++)
+            Mesh mesh = new Mesh();
+            skinnedMeshRenderers[i].BakeMesh(mesh);
+
+            // Asigna la malla al componente MeshFilter
+            mf.mesh = mesh;
+
+            // Asigna el nuevo material a todos los elementos de la matriz de materiales
+            Material[] newMaterials = new Material[skinnedMeshRenderers[i].materials.Length];
+            for (int j = 0; j < newMaterials.Length; j++)
             {
-                GameObject gObj = new GameObject();
-                gObj.transform.SetPositionAndRotation(positionToSpawn.position, positionToSpawn.rotation);
-
-                MeshRenderer mr = gObj.AddComponent<MeshRenderer>();
-                MeshFilter mf = gObj.AddComponent<MeshFilter>();
-
-                Mesh mesh = new Mesh();
-                skinnedMeshRenderers[i].BakeMesh(mesh);
-
-                // Asigna la malla al componente MeshFilter
-                mf.mesh = mesh;
-
-                // Asigna el nuevo material a todos los elementos de la matriz de materiales
-                Material[] newMaterials = new Material[skinnedMeshRenderers[i].materials.Length];
-                for (int j = 0; j < newMaterials.Length; j++)
-                {
-                    newMaterials[j] = mat;
-                }
-                mr.materials = newMaterials;
-
-                // Inicia la corrutina para animar la variable del shader en el material
-                StartCoroutine(AnimateMaterialFloat(mr.materials, 0, shaderVarRate, shaderVarRefreshRate));
-
-                // Destruye el objeto creado después de un cierto tiempo
-                Destroy(gObj, meshDestroyDelay);
+                newMaterials[j] = mat;
             }
+            mr.materials = newMaterials;
 
-            // Espera un cierto tiempo antes de la próxima iteración
-            //yield return new WaitForSeconds(meshRefreshRate);
+            // Inicia la corrutina para animar la variable del shader en el material
+            StartCoroutine(AnimateMaterialFloat(mr.materials, 0, shaderVarRate, shaderVarRefreshRate));
+
+            // Destruye el objeto creado después de un cierto tiempo
+            Destroy(gObj, meshDestroyDelay);
         }
+
+        // Espera un cierto tiempo antes de la próxima iteración
+        //yield return new WaitForSeconds(meshRefreshRate);
+
         // Marca que el rastro ya no está activo
         isTrailActive = false;
     }

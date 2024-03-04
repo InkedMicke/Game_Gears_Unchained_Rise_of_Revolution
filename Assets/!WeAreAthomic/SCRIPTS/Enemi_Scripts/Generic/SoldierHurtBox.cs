@@ -1,9 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
-using UnityEngine.Events;
 using System.Collections;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 {
@@ -176,6 +173,11 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         public void SetHealthSlider(float health)
         {
             matSlider.SetFloat("_DisolveAmount",health/100);
+        }
+
+        public bool CanReceiveDamage()
+        {
+            return true;
         }
     }
    
