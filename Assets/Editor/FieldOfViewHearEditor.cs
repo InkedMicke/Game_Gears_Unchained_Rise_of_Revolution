@@ -1,6 +1,6 @@
 using UnityEditor;
 using UnityEngine;
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
+using Generics;
 
 [CustomEditor(typeof(FieldOfViewHear))]
 public class FieldOfViewHearEditor : Editor

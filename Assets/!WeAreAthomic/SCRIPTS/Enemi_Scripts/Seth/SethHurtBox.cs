@@ -1,4 +1,4 @@
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
+using Generics.Collision;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,32 +7,17 @@ public class SethHurtBox : HurtBox
 {
     [SerializeField] private Slider healthSlider;
 
-    private bool IsDeath;
-
-    [SerializeField] private float maxHealth;
-    public float CurrentHealth;
     [NonSerialized] public float AcumulativeTakenHealth;
 
-    private void Awake()
+    public override void GetDamage(float damage)
     {
-        CurrentHealth = maxHealth;
-    }
-
-    public override void Damage(float damage)
-    {
-        CurrentHealth -= damage;
+        base.GetDamage(damage);
         AcumulativeTakenHealth += damage;
         healthSlider.value = CurrentHealth;
-        CheckForDeath();
-
-        base.Damage(damage);
     }
-
-    private void CheckForDeath()
+    
+    public bool GetIsDeath()
     {
-        if (CurrentHealth <= 0)
-        {
-            IsDeath = true;
-        }
+        return IsDeath();
     }
 }

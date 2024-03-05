@@ -408,7 +408,7 @@ public class GameManagerSingleton : SingletonScriptableObject<GameManagerSinglet
 
     public float GetEnemyDamage(EnemyDamageData enemyData)
     {
-        switch (GameManagerSingleton.Instance._currentDifficulty)
+        switch (_currentDifficulty)
         {
             case DifficultyLevel.historia:
                 return enemyData.easyDifficult.playerDamage;

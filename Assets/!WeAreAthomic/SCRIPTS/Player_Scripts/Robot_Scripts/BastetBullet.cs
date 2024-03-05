@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 
-public class BastetBullet : Bullet
+public class BastetBullet : MonoBehaviour
 {
     public PlayerDamageData damageData;
     [SerializeField] private GameObject hitChispas;
@@ -23,17 +23,7 @@ public class BastetBullet : Bullet
             {
                 if (damageData != null)
                 {
-                    damageable.Damage(GameManagerSingleton.Instance.GetPlayerDamage(damageData, other.gameObject));
-                }
-            }
-            else
-            {
-                if (other.TryGetComponent(out IInteractAttack interactAttack))
-                {
-                    if (damageData != null)
-                    {
-                        interactAttack.InteractAttack();
-                    }
+                    damageable.GetDamage(GameManagerSingleton.Instance.GetPlayerDamage(damageData, other.gameObject));
                 }
             }
 

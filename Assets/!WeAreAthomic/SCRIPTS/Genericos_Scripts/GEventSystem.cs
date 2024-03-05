@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
+namespace Generics
 {
     public class GEventSystem : MonoBehaviour
     {

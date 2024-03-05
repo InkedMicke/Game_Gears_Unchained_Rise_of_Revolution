@@ -1,10 +1,18 @@
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
+namespace Generics.Collision
 {
     public class HurtBox : MonoBehaviour, IDamageable
     {
+        [SerializeField] float maxHealth;
+        protected float _currentHealth;
+
+        private void Awake()
+        {
+            _currentHealth = maxHealth;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             GotEnterCollision(other);
@@ -35,14 +43,19 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 
         }
 
-        public virtual void Damage(float damage)
+        public virtual void GetDamage(float damage)
         {
-
+            _currentHealth -= damage;
         }
 
         public virtual bool CanReceiveDamage()
         {
             return true;
+        }
+
+        protected bool IsDeath()
+        {
+            return _currentHealth <= 0;
         }
 
     }

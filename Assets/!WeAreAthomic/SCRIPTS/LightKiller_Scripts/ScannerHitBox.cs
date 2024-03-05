@@ -23,7 +23,7 @@ public class ScannerHitBox : MonoBehaviour
         {
             if(enemy.TryGetComponent(out IDamageable damageable))
             {
-                damageable.Damage(GameManagerSingleton.Instance.GetPlayerDamage(dmgData, enemy));
+                damageable.GetDamage(GameManagerSingleton.Instance.GetPlayerDamage(dmgData, enemy));
             }
         }
     }

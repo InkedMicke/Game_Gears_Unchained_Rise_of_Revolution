@@ -1,34 +1,79 @@
 using System.Collections;
 using UnityEngine;
 
-public class G_MeshTrail : MonoBehaviour
+namespace Generics
 {
-    [SerializeField] private float activeTime = 2f;
-
-    [Header("Mesh Related")]
-    [SerializeField] private float meshRefreshRate = 0.1f;
-    public float meshDestroyDelay = 3f;
-    [SerializeField] private Transform positionToSpawn;
-
-    [Header("Shader Related")]
-    public Material mat;
-    public string shaderVarRef;
-    public float shaderVarRate = 0.1f;
-    public float shaderVarRefreshRate = 0.05f;
-
-    private bool isTrailActive;
-    public SkinnedMeshRenderer[] skinnedMeshRenderers;
-
-    public void EnableTrail()
+    public class G_MeshTrail : MonoBehaviour
     {
-        StartCoroutine(StartTrail(activeTime));
-    }
+        [SerializeField] private float activeTime = 2f;
 
-    private IEnumerator StartTrail(float timeActive)
-    {
-        while (timeActive > 0)
+        [Header("Mesh Related")]
+        [SerializeField] private float meshRefreshRate = 0.1f;
+        public float meshDestroyDelay = 3f;
+        [SerializeField] private Transform positionToSpawn;
+
+        [Header("Shader Related")]
+        public Material mat;
+        public string shaderVarRef;
+        public float shaderVarRate = 0.1f;
+        public float shaderVarRefreshRate = 0.05f;
+
+        private bool isTrailActive;
+        public SkinnedMeshRenderer[] skinnedMeshRenderers;
+
+        public void EnableTrail()
         {
-            timeActive -= meshRefreshRate;
+            StartCoroutine(StartTrail(activeTime));
+        }
+
+        private IEnumerator StartTrail(float timeActive)
+        {
+            while (timeActive > 0)
+            {
+                timeActive -= meshRefreshRate;
+
+                if (skinnedMeshRenderers == null)
+                    skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+
+                for (int i = 0; i < skinnedMeshRenderers.Length; i++)
+                {
+                    GameObject gObj = new GameObject();
+                    gObj.transform.SetPositionAndRotation(positionToSpawn.position, positionToSpawn.rotation);
+
+                    MeshRenderer mr = gObj.AddComponent<MeshRenderer>();
+                    MeshFilter mf = gObj.AddComponent<MeshFilter>();
+
+                    Mesh mesh = new Mesh();
+                    skinnedMeshRenderers[i].BakeMesh(mesh);
+
+                    // Asigna la malla al componente MeshFilter
+                    mf.mesh = mesh;
+
+                    // Asigna el nuevo material a todos los elementos de la matriz de materiales
+                    Material[] newMaterials = new Material[skinnedMeshRenderers[i].materials.Length];
+                    for (int j = 0; j < newMaterials.Length; j++)
+                    {
+                        newMaterials[j] = mat;
+                    }
+                    mr.materials = newMaterials;
+
+                    // Inicia la corrutina para animar la variable del shader en el material
+                    StartCoroutine(AnimateMaterialFloat(mr.materials, 0, shaderVarRate, shaderVarRefreshRate));
+
+                    // Destruye el objeto creado después de un cierto tiempo
+                    Destroy(gObj, meshDestroyDelay);
+                }
+
+                // Espera un cierto tiempo antes de la próxima iteración
+                yield return new WaitForSeconds(meshRefreshRate);
+            }
+            // Marca que el rastro ya no está activo
+            isTrailActive = false;
+        }
+
+        public void ActivateTrail()
+        {
+
 
             if (skinnedMeshRenderers == null)
                 skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
@@ -63,72 +108,30 @@ public class G_MeshTrail : MonoBehaviour
             }
 
             // Espera un cierto tiempo antes de la próxima iteración
-            yield return new WaitForSeconds(meshRefreshRate);
-        }
-        // Marca que el rastro ya no está activo
-        isTrailActive = false;
-    }
+            //yield return new WaitForSeconds(meshRefreshRate);
 
-    public void ActivateTrail()
-    {
-
-
-        if (skinnedMeshRenderers == null)
-            skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
-
-        for (int i = 0; i < skinnedMeshRenderers.Length; i++)
-        {
-            GameObject gObj = new GameObject();
-            gObj.transform.SetPositionAndRotation(positionToSpawn.position, positionToSpawn.rotation);
-
-            MeshRenderer mr = gObj.AddComponent<MeshRenderer>();
-            MeshFilter mf = gObj.AddComponent<MeshFilter>();
-
-            Mesh mesh = new Mesh();
-            skinnedMeshRenderers[i].BakeMesh(mesh);
-
-            // Asigna la malla al componente MeshFilter
-            mf.mesh = mesh;
-
-            // Asigna el nuevo material a todos los elementos de la matriz de materiales
-            Material[] newMaterials = new Material[skinnedMeshRenderers[i].materials.Length];
-            for (int j = 0; j < newMaterials.Length; j++)
-            {
-                newMaterials[j] = mat;
-            }
-            mr.materials = newMaterials;
-
-            // Inicia la corrutina para animar la variable del shader en el material
-            StartCoroutine(AnimateMaterialFloat(mr.materials, 0, shaderVarRate, shaderVarRefreshRate));
-
-            // Destruye el objeto creado después de un cierto tiempo
-            Destroy(gObj, meshDestroyDelay);
+            // Marca que el rastro ya no está activo
+            isTrailActive = false;
         }
 
-        // Espera un cierto tiempo antes de la próxima iteración
-        //yield return new WaitForSeconds(meshRefreshRate);
-
-        // Marca que el rastro ya no está activo
-        isTrailActive = false;
-    }
-
-    IEnumerator AnimateMaterialFloat(Material[] materials, float goal, float rate, float refreshRate)
-    {
-        foreach (Material mat in materials)
+        IEnumerator AnimateMaterialFloat(Material[] materials, float goal, float rate, float refreshRate)
         {
-            // Obtiene el valor actual de la variable del shader en el material
-            float valueToAnimate = mat.GetFloat(shaderVarRef);
-
-            // Mientras el valor a animar sea mayor que el objetivo
-            while (valueToAnimate > goal)
+            foreach (Material mat in materials)
             {
-                // Reduce el valor a animar por la tasa de animación
-                valueToAnimate -= rate;
-                // Actualiza el valor de la variable del shader en el material
-                mat.SetFloat(shaderVarRef, valueToAnimate);
+                // Obtiene el valor actual de la variable del shader en el material
+                float valueToAnimate = mat.GetFloat(shaderVarRef);
 
-                // Espera un cierto tiempo antes de la próxima iteración
-                yield return new WaitForSeconds(refreshRate);
+                // Mientras el valor a animar sea mayor que el objetivo
+                while (valueToAnimate > goal)
+                {
+                    // Reduce el valor a animar por la tasa de animación
+                    valueToAnimate -= rate;
+                    // Actualiza el valor de la variable del shader en el material
+                    mat.SetFloat(shaderVarRef, valueToAnimate);
+
+                    // Espera un cierto tiempo antes de la próxima iteración
+                    yield return new WaitForSeconds(refreshRate);
+                }
             }
         }
     }

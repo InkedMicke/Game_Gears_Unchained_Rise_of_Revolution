@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
-using NaughtyAttributes;
+using Generics.Collision;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
@@ -29,11 +28,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private Image sliderHealthImage;
 
         [SerializeField] private float timeToGameover = 1.5f;
-        public float maxHealth = 100;
-        public float currentHealth;
 
-        public bool IsDeath;
-        public bool CanReceiveDamage = true;
         private bool gotHit;
 
         private void Awake()
@@ -56,23 +51,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             SetHealthSlider();
         }
 
-        private void Update()
-        {
-            if (currentHealth > maxHealth)
-            {
-                currentHealth = maxHealth;
-            }
-        }
 
-        public override void Damage(float damage)
+        public override void GetDamage(float damage)
         {
-            if (!IsDeath && CanReceiveDamage)
+            if (!IsDeath() && CanReceiveDamage())
             {
                 hitFrame.SetActive(true);
                 sliderHealthImage.color = Color.red;
-                currentHealth -= damage;
                 _mainCHurtMaterial.HurtEffects();
-                GameManagerSingleton.Instance.currentHealth = currentHealth;
                 _mainSounds.RemoveAllSounds();
                 _mainSounds.PlayHurtSound();
                 _mainCAnim.TriggerHit();

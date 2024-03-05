@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Generics;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {

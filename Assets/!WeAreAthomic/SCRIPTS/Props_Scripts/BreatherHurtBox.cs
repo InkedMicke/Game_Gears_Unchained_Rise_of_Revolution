@@ -1,4 +1,4 @@
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
+using Generics.Collision;
 using UnityEngine;
 
 namespace _WeAreAthomic.SCRIPTS.Props_Scripts

@@ -1,12 +1,11 @@
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.VFX;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
+namespace Enemy.Green
 {
-    public class GreenSoldier : Enemy
+    public class GreenSoldier : EnemyP
     {
         private GreenDecalHurtBox _decalHurtBox;
         
@@ -91,7 +90,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
                     bulletObj.transform.LookAt(desiredPos);
                     var dir = desiredPos - bulletObj.transform.position;
 
-                    bulletObj.GetComponent<Rigidbody>().AddForce(dir.normalized * bulletObj.GetComponent<GBullet>().bulletForce, ForceMode.Impulse);
+                    bulletObj.GetComponent<Rigidbody>().AddForce(dir.normalized * 50f, ForceMode.Impulse);
                 }
             }
 

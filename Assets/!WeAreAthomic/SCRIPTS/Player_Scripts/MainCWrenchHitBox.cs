@@ -42,7 +42,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     if (damageable.CanReceiveDamage())
                     {
-                        damageable.Damage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, col.gameObject));
+                        damageable.GetDamage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, col.gameObject));
                         mainCFuryAttack.GetFury(mainCFuryAttack.furyPerHit);
                         HitParticlesInvoke();
                         GCameraShake.Instance.ShakeCamera(1f, 5f,.2f);
@@ -50,7 +50,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     else
                     {
                         GCameraShake.Instance.ShakeCamera(.5f, 10f, .1f);
-                        damageable.Damage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, col.gameObject));
+                        damageable.GetDamage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, col.gameObject));
                     }
                 }
 

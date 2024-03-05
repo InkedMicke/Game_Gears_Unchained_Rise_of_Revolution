@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GCallEvent : MonoBehaviour
+namespace Generics
 {
-    [SerializeField] private UnityEvent events;
-
-    public void CallEvents()
+    public class GCallEvent : MonoBehaviour
     {
-        events.Invoke();
+        [SerializeField] private UnityEvent events;
+
+        public void CallEvents()
+        {
+            events.Invoke();
+        }
     }
 }

@@ -3,8 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
-using System.Collections.Generic;
-using DG.Tweening;
+using Generics;
 
 namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {

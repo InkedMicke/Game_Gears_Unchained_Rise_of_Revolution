@@ -1,44 +1,53 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using System.Linq;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
+namespace Generics.Collision
 {
     public class HitBox : MonoBehaviour
     {
-        [SerializeField] protected int damage;
-
-        [SerializeField] private bool useDamageData = true;
-
-        [SerializeField] protected EnemyDamageData damageData;
-
         [NonSerialized] protected List<Collider> colList = new();
 
-        private void OnTriggerEnter(Collider collision)
+        private void OnTriggerEnter(Collider other)
         {
-            GotEnterCollision(collision);
+            GotEnterCollision(other);
         }
 
-        public virtual void GotEnterCollision(Collider collision)
+        private void OnTriggerStay(Collider other)
         {
-            if (collision.TryGetComponent(out HurtBox hurtbox))
+            GotStayCollision(other);
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            GotExitCollision(other);
+        }
+
+        public virtual void GotEnterCollision(Collider col)
+        {
+
+        }
+
+        public virtual void GotStayCollision(Collider col)
+        {
+
+        }
+
+        public virtual void GotExitCollision(Collider col)
+        {
+
+        }
+
+        public virtual void DoDamage(float damage, Collider col)
+        {
+            if (col.TryGetComponent(out HurtBox hurtbox))
             {
-                foreach (var collider in colList)
+                if (!colList.Any(x => x == col))
                 {
-                    if (collider == collision)
-                    {
-                        return;
-                    }
+                    hurtbox.GetDamage(damage);
+                    colList.Add(col);
                 }
-                if (useDamageData)
-                {
-                    hurtbox.Damage(GameManagerSingleton.Instance.GetEnemyDamage(damageData));
-                }
-                else
-                {
-                    hurtbox.Damage(damage);
-                }
-                colList.Add(collision);
             }
         }
 

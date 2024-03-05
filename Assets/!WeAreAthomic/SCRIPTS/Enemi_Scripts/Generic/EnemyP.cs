@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering.Universal;
+using Generics;
 
 public enum TypeOfBehaviour
 {
@@ -14,9 +15,9 @@ public enum TypeOfBehaviour
     Fighter
 }
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
+namespace Enemy
 {
-    public class Enemy : MonoBehaviour
+    public class EnemyP : MonoBehaviour
     {
         protected NavMeshAgent _agent;
         private FieldOfView _fov;

@@ -14,7 +14,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
             Instantiate(hitChispas,transform.position,Quaternion.identity);
             if (other.TryGetComponent(out IDamageable damageable))
             {
-                damageable.Damage(GameManagerSingleton.Instance.GetEnemyDamage(damageData));
+                damageable.GetDamage(GameManagerSingleton.Instance.GetEnemyDamage(damageData));
                 
             }
             Destroy(gameObject);

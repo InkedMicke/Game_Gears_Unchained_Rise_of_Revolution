@@ -1,32 +1,34 @@
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class GEscapeClose : MonoBehaviour
+namespace Generics
 {
-    private PlayerInputActions _playerInputActions;
-
-    [SerializeField] private UnityEvent actionsWhenEscape;
-    [SerializeField] private UnityEvent actionsWhenEscapeWithDelay;
-
-    private void Awake()
+    public class GEscapeClose : MonoBehaviour
     {
-        _playerInputActions = new PlayerInputActions();
-        _playerInputActions.Enable();
+        private PlayerInputActions _playerInputActions;
 
-        _playerInputActions.UI.LeaveUI.performed += EscapeAction;
-    }
+        [SerializeField] private UnityEvent actionsWhenEscape;
+        [SerializeField] private UnityEvent actionsWhenEscapeWithDelay;
 
-    private void EscapeAction(InputAction.CallbackContext context)
-    {
+        private void Awake()
+        {
+            _playerInputActions = new PlayerInputActions();
+            _playerInputActions.Enable();
 
-        actionsWhenEscape.Invoke();
-        Invoke(nameof(EventWithDelay), .1f);
-    }
+            _playerInputActions.UI.LeaveUI.performed += EscapeAction;
+        }
 
-    public void EventWithDelay()
-    {
-        actionsWhenEscapeWithDelay.Invoke();
+        private void EscapeAction(InputAction.CallbackContext context)
+        {
+
+            actionsWhenEscape.Invoke();
+            Invoke(nameof(EventWithDelay), .1f);
+        }
+
+        public void EventWithDelay()
+        {
+            actionsWhenEscapeWithDelay.Invoke();
+        }
     }
 }

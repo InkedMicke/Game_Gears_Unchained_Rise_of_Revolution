@@ -1,4 +1,4 @@
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
+using Enemy;
 using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,7 +19,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
     {
         private MainCHackingSystem _mainCHacking;
         private C_MaterialChanger[] _materialChanger;
-        private Enemy _enemy;
+        private EnemyP _enemy;
 
         public TypeOfHacked typeOfHacked;
 
@@ -53,7 +53,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
             if (typeOfHacked == TypeOfHacked.soldier)
             {
-                _enemy = soldier.GetComponent<Enemy>();
+                _enemy = soldier.GetComponent<EnemyP>();
             }
         }
 

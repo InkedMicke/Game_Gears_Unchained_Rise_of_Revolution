@@ -2,14 +2,14 @@ using UnityEngine;
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 using System.Collections;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
+namespace Enemy
 {
     public class SoldierHurtBox : MonoBehaviour, IDamageable
     {
         private C_EnemiSounds _cEnemiSounds;
         private SoldierHurtBox _soldierHurtbox;
         private GDestroyObject _destroyObject;
-        private Enemy _enemy;
+        private EnemyP _enemy;
         private C_MaterialChanger _materialChanger;
         private SoldierAnimator _soldierAnimator;
 
@@ -48,7 +48,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _cEnemiSounds = GetComponent<C_EnemiSounds>();
             _soldierHurtbox = GetComponent<SoldierHurtBox>();
             _destroyObject = GetComponentInParent<GDestroyObject>();
-            _enemy = GetComponentInParent<Enemy>();
+            _enemy = GetComponentInParent<EnemyP>();
             _materialChanger = GetComponentInParent<C_MaterialChanger>();
             _soldierAnimator = GetComponentInParent<SoldierAnimator>();
 
@@ -60,7 +60,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             SetHealthSlider(currentHealth);
         }
 
-        public void Damage(float damage)
+        public void GetDamage(float damage)
         {
             _enemy.Knockback();
             StartWaitForResetHutedTimes();

@@ -57,7 +57,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
             CheckForDeath();
         }
 
-        public void Damage(float value)
+        public void GetDamage(float value)
         {
             TakeDamage(value);
         }

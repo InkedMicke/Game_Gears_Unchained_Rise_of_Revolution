@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Enemy;
 
 [System.Serializable]
 public class Wave
@@ -35,11 +36,7 @@ public class C_SpawnerEnemies : MonoBehaviour
     [SerializeField] private UnityEvent onFinish;
    
 
-    private Enemy _enemy;
-
-
-
-    
+    private EnemyP _enemy;
 
     public void StartSpawning()
     {
@@ -59,7 +56,7 @@ public class C_SpawnerEnemies : MonoBehaviour
             {
                 var randomPos = Random.Range(0, pointToSpawn.Length);
                 var soldado = Instantiate(GameManagerSingleton.Instance.TypeOfEnemyToPrefab(obj), pointToSpawn[randomPos].position, Quaternion.identity);
-                soldado.GetComponent<Enemy>().typeOfBehaviour = TypeOfBehaviour.Fighter;
+                soldado.GetComponent<EnemyP>().typeOfBehaviour = TypeOfBehaviour.Fighter;
                _currentEnemiesObj.Add(soldado);
             }
 

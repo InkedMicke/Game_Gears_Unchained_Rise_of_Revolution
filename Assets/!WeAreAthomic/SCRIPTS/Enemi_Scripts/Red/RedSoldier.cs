@@ -1,12 +1,12 @@
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using Generics;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
+namespace Enemy.Red
 {
-    public class RedSoldier : Enemy
+    public class RedSoldier : EnemyP
     {
         G_MeshTrail _trail;
 

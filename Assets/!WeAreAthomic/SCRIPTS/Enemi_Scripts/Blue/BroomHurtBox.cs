@@ -23,7 +23,7 @@ namespace Broom
             m_broom = GetComponentInParent<Broom>();
         }
 
-        public void Damage(float dmg)
+        public void GetDamage(float dmg)
         {
             if (LocalCanReceiveDamage)
             {

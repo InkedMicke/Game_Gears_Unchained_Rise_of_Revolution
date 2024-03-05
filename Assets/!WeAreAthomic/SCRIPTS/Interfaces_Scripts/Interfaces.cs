@@ -6,7 +6,7 @@ namespace _WeAreAthomic.SCRIPTS.Interfaces_Scripts
 {
     public interface IDamageable
     {
-        public void Damage(float value);
+        public void GetDamage(float value);
         public bool CanReceiveDamage();
     }
 }

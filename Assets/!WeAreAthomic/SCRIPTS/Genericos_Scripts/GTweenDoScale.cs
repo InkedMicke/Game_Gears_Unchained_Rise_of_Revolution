@@ -2,22 +2,23 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GTweenDoScale : MonoBehaviour
+namespace Generics.Tween
 {
-    [SerializeField] Vector3 target = Vector3.one;
-    [SerializeField] float time = 1f;
-    [SerializeField] Ease easing;
-    [SerializeField] bool timeScaleIndependent = true ;
-
-    [SerializeField] UnityEvent OnFinish;
-   
-    public void SetObjScale()
+    public class GTweenDoScale : MonoBehaviour
     {
-        
-        transform.DOKill();
-        transform.DOScale(target, time).SetEase(easing).SetUpdate(timeScaleIndependent).OnComplete(()=>OnFinish.Invoke());
-      
-    }
-  
+        [SerializeField] Vector3 target = Vector3.one;
+        [SerializeField] float time = 1f;
+        [SerializeField] Ease easing;
+        [SerializeField] bool timeScaleIndependent = true;
 
+        [SerializeField] UnityEvent OnFinish;
+
+        public void SetObjScale()
+        {
+
+            transform.DOKill();
+            transform.DOScale(target, time).SetEase(easing).SetUpdate(timeScaleIndependent).OnComplete(() => OnFinish.Invoke());
+
+        }
+    }
 }

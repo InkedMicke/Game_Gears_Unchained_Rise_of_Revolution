@@ -1,10 +1,14 @@
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using UnityEngine;
+using Generics.Collision;
 
-public class OrangeAreaAttackHitBox : HitBox
+namespace Enemy.Orange
 {
-    public override void GotEnterCollision(Collider collision)
+    public class OrangeAreaAttackHitBox : HitBox
     {
-        base.GotEnterCollision(collision);
+        [SerializeField] PlayerDamageData damageData;
+        public override void GotEnterCollision(Collider collision)
+        {
+            DoDamage(GameManagerSingleton.Instance.GetPlayerDamage(damageData, collision.gameObject), collision);
+        }
     }
 }

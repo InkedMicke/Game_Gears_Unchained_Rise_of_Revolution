@@ -2,7 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
+namespace Generics.Tween
 {
     [RequireComponent(typeof(CanvasGroup))]
     public class GTweenDoFade : MonoBehaviour

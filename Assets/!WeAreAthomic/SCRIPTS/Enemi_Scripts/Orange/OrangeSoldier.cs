@@ -1,11 +1,11 @@
 using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
+using Enemy;
 using UnityEngine;
 using UnityEngine.Audio;
 
 namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
 {
-    public class OrangeSoldier : Enemy
+    public class OrangeSoldier : EnemyP
     {
         private C_MaterialChangeOnDetection _materialChange;
 

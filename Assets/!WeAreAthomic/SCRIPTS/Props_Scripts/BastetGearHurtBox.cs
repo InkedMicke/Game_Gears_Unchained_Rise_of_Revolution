@@ -1,7 +1,7 @@
 using UnityEngine;
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using UnityEngine.Events;
 using _WeAreAthomic.SCRIPTS.PP_Scripts;
+using Generics.Collision;
 
 namespace _WeAreAthomic.SCRIPTS.Props
 {
