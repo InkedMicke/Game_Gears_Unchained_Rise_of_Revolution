@@ -48,13 +48,15 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
             {
                 case 0:
                     distance = 1.5f;
-                    speed = 15;
+                    speed = 25;
                     break;
                 case 1:
-                    distance = 1.7f;
-                    speed = 3f;
+                    distance = 1.5f;
+                    speed = 25f;
                     break;
                 case 2:
+                    distance = 2f;
+                    speed = 25f;
                     break;
             }
 
