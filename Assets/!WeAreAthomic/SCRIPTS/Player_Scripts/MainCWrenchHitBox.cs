@@ -6,7 +6,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 {
     public class MainCWrenchHitBox : MonoBehaviour
     {
-        private MainCAttack _mainCAttack;
         [SerializeField] private MainCFuryAttack mainCFuryAttack;
 
         [SerializeField] private PlayerDamageData wrenchDamageData;
@@ -17,7 +16,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void OnValidate()
         {
-            _mainCAttack = GetComponentInParent<MainCAttack>();
             mainCFuryAttack = GetComponentInParent<MainCFuryAttack>();
         }
 
@@ -42,9 +40,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (col.TryGetComponent(out IDamageable damageable))
                 {
-                    damageable.Damage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, col.gameObject));
-                    mainCFuryAttack.GetFury(mainCFuryAttack.furyPerHit);
-                    HitParticlesInvoke();
+                    if (damageable.CanReceiveDamage())
+                    {
+                        damageable.Damage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, col.gameObject));
+                        mainCFuryAttack.GetFury(mainCFuryAttack.furyPerHit);
+                        HitParticlesInvoke();
+                        GCameraShake.Instance.ShakeCamera(1f, 5f,.2f);
+                    }
+                    else
+                    {
+                        GCameraShake.Instance.ShakeCamera(.5f, 10f, .1f);
+                        damageable.Damage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, col.gameObject));
+                    }
                 }
 
             }

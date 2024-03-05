@@ -22,7 +22,7 @@ public class G_DitheringDisolve : MonoBehaviour
         {
             renderer.sharedMaterial = newMat;
         }
-        newMat.DOFloat(0f, "_DitherThreshold", ditherTime).SetEase(Ease.InQuint).OnComplete(() => { Destroy(transform.parent.gameObject); });
+        newMat.DOFloat(0f, "_DitherThreshold", ditherTime).SetEase(Ease.InQuint).OnComplete(() => { Destroy(gameObject); });
     }
 
    

@@ -236,8 +236,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 OnShoot.Invoke();
                 
                 var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-               //_mainCamera.DOShakePosition(.1f, .1f, 5, 60f);
-                GCameraShake.Instance.ShakeCamera(1f, .1f);
+                GCameraShake.Instance.ShakeCamera(1f, 1f, .1f);
                 if (Physics.Raycast(ray, out RaycastHit hit, shootDistance, rayLayers))
                 {
                     Vector3 direction = bastetObj.transform.position - hit.collider.transform.position;

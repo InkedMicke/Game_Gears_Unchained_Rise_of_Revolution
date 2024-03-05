@@ -74,5 +74,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
 
             }
         }
+
+        public bool CanReceiveDamage()
+        {
+            return true;
+        }
     }
 }

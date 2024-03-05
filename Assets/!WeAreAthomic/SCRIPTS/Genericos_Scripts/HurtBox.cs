@@ -40,5 +40,10 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 
         }
 
+        public virtual bool CanReceiveDamage()
+        {
+            return true;
+        }
+
     }
 }

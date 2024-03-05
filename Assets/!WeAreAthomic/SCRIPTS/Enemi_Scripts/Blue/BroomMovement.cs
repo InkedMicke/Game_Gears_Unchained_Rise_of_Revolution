@@ -10,7 +10,7 @@ namespace Broom
 
         private Coroutine m_c_chasingPlayer;
 
-        float m_startSpeed;
+        [NonSerialized] public float StartSpeed;
 
         private void Awake()
         {
@@ -19,12 +19,11 @@ namespace Broom
 
         private void Start()
         {
-            m_startSpeed = m_broom.Agent.speed;
+            StartSpeed = m_broom.Agent.speed;
         }
 
         public void ChasePlayerAtDistance(float distance = 0, Action method = null)
         {
-            SetAgentSpeed(m_startSpeed);
             if (m_broom.IsChasingPlayer)
             {
                 StopCoroutine(m_c_chasingPlayer);
@@ -36,7 +35,6 @@ namespace Broom
 
         public void ChasePlayerWithTime(float time = 0, Action method = null)
         {
-            SetAgentSpeed(m_startSpeed);
             m_broom.broomAnimator.SetIsWalking(true);
             EnableMovement();
             StartCoroutine(ChasingPlayerTime(method, time));
@@ -59,6 +57,7 @@ namespace Broom
             }
 
             DisableMovement();
+            SetAgentSpeed(0);
             m_broom.broomAnimator.SetIsWalking(false);
             m_broom.SetIsChasingPlayer(false);
             if (method == null)
@@ -77,6 +76,7 @@ namespace Broom
             }
 
             DisableMovement();
+            SetAgentSpeed(0);
             m_broom.broomAnimator.SetIsWalking(false);
             m_broom.SetIsChasingPlayer(false);
             if (method == null)

@@ -39,9 +39,10 @@ namespace Broom
         {
             m_broom.broomAnimator.SetMolinilloCount(0);
             m_broom.SetIsAttacking(false);
-            m_broom.WaitForDecideWhatToDo();
             m_broom.broomAnimator.SetLayerWeight(1, 0f);
             m_broom.broomAnimator.SetLayerWeight(3, 0f);
+            m_broom.broomMove.SetAgentSpeed(0);
+            m_broom.WaitForDecideWhatToDo();
         }
     }
 }
