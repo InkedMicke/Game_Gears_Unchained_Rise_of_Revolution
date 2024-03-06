@@ -1,4 +1,5 @@
 using UnityEngine;
+using Generics.Props;
 
 public class SethBustHurtBox : MonoBehaviour
 {
