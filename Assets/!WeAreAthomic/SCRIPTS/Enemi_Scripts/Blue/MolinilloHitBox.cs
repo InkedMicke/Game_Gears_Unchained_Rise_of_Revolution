@@ -1,28 +1,20 @@
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using Player;
 using System;
 using UnityEngine;
+using Generics.Collision;
 
 namespace Broom
 {
-    public class MolinilloHitBox : MonoBehaviour
+    public class MolinilloHitBox : HitBox
     {
         [SerializeField] EnemyDamageData damageData;
 
         [NonSerialized] public bool GotCollision;
 
-        private void OnTriggerStay(Collider other)
+        protected override void GotStayCollision(Collider col)
         {
-            if(TryGetComponent(out MainCHealthManager _hurtbox))
-            {
-                _hurtbox.Damage(GameManagerSingleton.Instance.GetEnemyDamage(damageData));
-            }
-            GotCollision = true;
+            DoDamage(GameManagerSingleton.Instance.GetEnemyDamage(damageData), col);
         }
 
-        private void OnTriggerExit(Collider other)
-        {
-            GotCollision = false;
-        }
     }
 }

@@ -1,5 +1,5 @@
 using Enemy;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using Player;
 using UnityEngine;
 using UnityEngine.Events;
 

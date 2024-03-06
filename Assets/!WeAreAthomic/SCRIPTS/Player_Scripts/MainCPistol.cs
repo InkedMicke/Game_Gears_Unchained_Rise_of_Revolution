@@ -2,14 +2,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts;
 using System.Collections;
-using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts;
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie;
-using DG.Tweening;
+using Player.Bastet;
 using UnityEngine.Events;
 using Cinemachine;
+using Enemy;
+using Enemy.Dummie;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCPistol : MonoBehaviour
     {

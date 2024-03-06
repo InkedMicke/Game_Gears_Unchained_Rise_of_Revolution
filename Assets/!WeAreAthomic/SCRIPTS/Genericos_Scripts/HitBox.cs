@@ -24,17 +24,17 @@ namespace Generics.Collision
             GotExitCollision(other);
         }
 
-        public virtual void GotEnterCollision(Collider col)
+        protected virtual void GotEnterCollision(Collider col)
         {
 
         }
 
-        public virtual void GotStayCollision(Collider col)
+        protected virtual void GotStayCollision(Collider col)
         {
 
         }
 
-        public virtual void GotExitCollision(Collider col)
+        protected virtual void GotExitCollision(Collider col)
         {
 
         }

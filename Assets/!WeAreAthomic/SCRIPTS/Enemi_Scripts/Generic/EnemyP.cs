@@ -1,5 +1,5 @@
 using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using Player;
 using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using System;
 using System.Collections;

@@ -6,11 +6,11 @@ namespace Generics.Collision
     public class HurtBox : MonoBehaviour, IDamageable
     {
         [SerializeField] float maxHealth;
-        protected float _currentHealth;
+        public float CurrentHealth;
 
         private void Awake()
         {
-            _currentHealth = maxHealth;
+            CurrentHealth = maxHealth;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -45,7 +45,7 @@ namespace Generics.Collision
 
         public virtual void GetDamage(float damage)
         {
-            _currentHealth -= damage;
+            CurrentHealth -= damage;
         }
 
         public virtual bool CanReceiveDamage()
@@ -53,9 +53,9 @@ namespace Generics.Collision
             return true;
         }
 
-        protected bool IsDeath()
+        public bool IsDeath()
         {
-            return _currentHealth <= 0;
+            return CurrentHealth <= 0;
         }
 
     }

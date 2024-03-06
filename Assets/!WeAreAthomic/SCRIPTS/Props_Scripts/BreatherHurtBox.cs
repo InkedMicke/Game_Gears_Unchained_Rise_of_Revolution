@@ -1,7 +1,7 @@
 using Generics.Collision;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Props_Scripts
+namespace Props
 {
     public class BreatherHurtBox : HurtBox
     {

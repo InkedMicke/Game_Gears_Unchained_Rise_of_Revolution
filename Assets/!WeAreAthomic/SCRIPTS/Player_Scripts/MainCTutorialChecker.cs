@@ -4,7 +4,7 @@ using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCTutorialChecker : MonoBehaviour
     {
@@ -83,7 +83,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             while (true)
             {
                 _isCheckingHealth = true;
-                if (_mainCHealth.currentHealth >= 100)
+                if (_mainCHealth.CurrentHealth >= 100)
                 {
                     _isCheckingHealth = false;
                     _mainCSounds.RemoveAllSounds();

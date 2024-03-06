@@ -1,9 +1,8 @@
-using _WeAreAthomic.SCRIPTS.Debug_Scripts;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCMovement : MonoBehaviour
     {
@@ -474,7 +473,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
-            if (_mainCHealth.IsDeath)
+            if (_mainCHealth.IsDeath())
             {
                 return false;
             }

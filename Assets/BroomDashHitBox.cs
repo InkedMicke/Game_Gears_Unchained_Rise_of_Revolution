@@ -1,7 +1,7 @@
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
+using Generics.Collision;
 using UnityEngine;
 
-public class BroomDashHitBox : MonoBehaviour
+public class BroomDashHitBox : HitBox
 {
     [System.NonSerialized] public EnemyDamageData EnemyDamageDataDash;
 
@@ -13,12 +13,9 @@ public class BroomDashHitBox : MonoBehaviour
         m_cc.enabled = false;
     }
 
-    private void OnTriggerEnter(Collider collision)
+    protected override void GotEnterCollision(Collider col)
     {
-        if (collision.TryGetComponent(out HurtBox hurtbox))
-        {
-            hurtbox.Damage(GameManagerSingleton.Instance.GetEnemyDamage(EnemyDamageDataDash));
-        }
+        DoDamage(GameManagerSingleton.Instance.GetEnemyDamage(EnemyDamageDataDash), col);
         m_cc.enabled = false;
     }
 }

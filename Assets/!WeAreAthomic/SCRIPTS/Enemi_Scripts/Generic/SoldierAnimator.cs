@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
+namespace Enemy
 {
     public class SoldierAnimator : MonoBehaviour
     {

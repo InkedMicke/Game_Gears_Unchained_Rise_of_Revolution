@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using Generics;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCAttack : MainCMouseController
     {

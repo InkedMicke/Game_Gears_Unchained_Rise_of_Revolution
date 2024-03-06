@@ -1,9 +1,8 @@
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using Player;
 using System.Collections;
-using System.Net;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
+namespace Enemy.Dummie
 {
     public class DummieController : MonoBehaviour
     {

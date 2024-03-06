@@ -1,5 +1,5 @@
 using UnityEngine;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using Player;
 using DG.Tweening;
 
 namespace _WeAreAthomic.SCRIPTS.Props_Scripts

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
+namespace Enemy.Dummie
 {
     public class DummieSounds : MonoBehaviour
     {

@@ -1,12 +1,11 @@
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie;
-using System.Linq;
+using Enemy;
+using Enemy.Dummie;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
+namespace Player.Bastet
 {
     public class MainCBastetRapidFire : MonoBehaviour
     {

@@ -1,9 +1,8 @@
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using Enemy.Dummie;
 
 public class ElevatorLabChecker : MonoBehaviour
 {

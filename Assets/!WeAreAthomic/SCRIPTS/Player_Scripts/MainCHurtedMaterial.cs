@@ -2,39 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainCHurtedMaterial : MonoBehaviour
+namespace Player
 {
-    [SerializeField] private SkinnedMeshRenderer _mattSkinned;
-    private Material[] originalMaterials;
-    [SerializeField] private Material HurtMaterials;
-    [SerializeField] private float hurtDuration;
-
-    private bool _isHurtEnabled;
-    private void Awake()
+    public class MainCHurtedMaterial : MonoBehaviour
     {
-        originalMaterials = _mattSkinned.materials;
-    }
+        [SerializeField] private SkinnedMeshRenderer _mattSkinned;
+        private Material[] originalMaterials;
+        [SerializeField] private Material HurtMaterials;
+        [SerializeField] private float hurtDuration;
 
-    public void HurtEffects()
-    {
-        
-        var newMat = new Material[_mattSkinned.materials.Length];
-
-        for (int i = 0; i < newMat.Length; i++)
+        private bool _isHurtEnabled;
+        private void Awake()
         {
-            newMat[i] = HurtMaterials;
+            originalMaterials = _mattSkinned.materials;
         }
 
-        _mattSkinned.materials = newMat;
+        public void HurtEffects()
+        {
 
-       StartCoroutine (HurtDuration());
+            var newMat = new Material[_mattSkinned.materials.Length];
+
+            for (int i = 0; i < newMat.Length; i++)
+            {
+                newMat[i] = HurtMaterials;
+            }
+
+            _mattSkinned.materials = newMat;
+
+            StartCoroutine(HurtDuration());
 
 
-    }
+        }
 
-    private IEnumerator HurtDuration()
-    {
-        yield return new WaitForSeconds(hurtDuration);
-        _mattSkinned.materials = originalMaterials;
+        private IEnumerator HurtDuration()
+        {
+            yield return new WaitForSeconds(hurtDuration);
+            _mattSkinned.materials = originalMaterials;
+        }
     }
 }

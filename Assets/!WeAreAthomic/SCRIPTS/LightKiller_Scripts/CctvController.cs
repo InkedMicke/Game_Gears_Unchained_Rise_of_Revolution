@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using Player;
 using System;
 using _WeAreAthomic.SCRIPTS.PP_Scripts;
 

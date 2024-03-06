@@ -1,8 +1,8 @@
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using Player;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
+using Enemy;
 
 public class Seth : MonoBehaviour
 {

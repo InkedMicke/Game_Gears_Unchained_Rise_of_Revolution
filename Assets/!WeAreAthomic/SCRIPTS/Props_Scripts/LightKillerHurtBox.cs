@@ -1,10 +1,9 @@
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using Player;
 using Generics.Tween;
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Generics.Collision;
 
 namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {

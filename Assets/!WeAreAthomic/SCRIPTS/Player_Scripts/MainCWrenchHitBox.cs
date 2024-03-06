@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCWrenchHitBox : MonoBehaviour
     {

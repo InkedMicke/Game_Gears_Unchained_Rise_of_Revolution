@@ -1,8 +1,8 @@
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
-namespace _WeAreAthomic.SCRIPTS.Debug_Scripts
+
+namespace Player
 {
     public class MainCGodmode : MonoBehaviour
     {

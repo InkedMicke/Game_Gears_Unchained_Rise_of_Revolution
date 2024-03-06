@@ -1,9 +1,8 @@
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie;
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Enemy;
+using Enemy.Dummie;
 
 public class HitBoxAngleView : MonoBehaviour
 {

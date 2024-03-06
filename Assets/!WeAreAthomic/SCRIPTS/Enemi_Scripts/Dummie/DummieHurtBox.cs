@@ -1,12 +1,9 @@
-using System.Collections;
 using _WeAreAthomic.SCRIPTS.Genericos;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
+namespace Enemy.Dummie
 {
     public class DummieHurtBox : MonoBehaviour, IDamageable
     {

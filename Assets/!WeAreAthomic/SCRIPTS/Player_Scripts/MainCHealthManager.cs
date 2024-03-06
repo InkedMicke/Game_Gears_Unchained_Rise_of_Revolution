@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using Generics.Collision;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCHealthManager : HurtBox
     {
@@ -30,6 +30,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float timeToGameover = 1.5f;
 
         private bool gotHit;
+        bool _isDeath;
+        bool m_canReceiveDamage;
 
         private void Awake()
         {
@@ -76,26 +78,26 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void GetHealth(float health)
         {
-            currentHealth += health;
-            if(currentHealth >= maxHealth) 
+            CurrentHealth += health;
+            if(CurrentHealth >= 100) 
             {
-                currentHealth = maxHealth;
+                CurrentHealth = 100;
             }
-            GameManagerSingleton.Instance.currentHealth = currentHealth;
+            GameManagerSingleton.Instance.currentHealth = CurrentHealth;
             SetHealthSlider();
         }
 
         private void CheckDeath()
         {
-            if (currentHealth <= 0)
+            if (CurrentHealth <= 0)
             {
-                if (!IsDeath)
+                if (!IsDeath() && !_isDeath)
                 {
-                    IsDeath = true;
                     Death();
+                    _isDeath = true;
                 }
-                currentHealth = 0;
-                GameManagerSingleton.Instance.currentHealth = currentHealth;
+                CurrentHealth = 0;
+                GameManagerSingleton.Instance.currentHealth = CurrentHealth;
             }
         }
 
@@ -118,11 +120,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCLayers.DisableSlideLayer();
             }
             _mainCRagdoll.SetEnabled(false);
-            CanReceiveDamage = false;
-            currentHealth = 100;
-            GameManagerSingleton.Instance.currentHealth = currentHealth;
+            m_canReceiveDamage = false;
+            CurrentHealth = 100;
+            GameManagerSingleton.Instance.currentHealth = CurrentHealth;
             SetHealthSlider();
-            IsDeath = false;
+            _isDeath = false;
             _mainCAttack.SetIsSheathed(false);
             _mainCRagdoll.ResetBody();
             StartCoroutine(InvencibilityTime());
@@ -131,8 +133,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void Die()
         {
-            currentHealth = 0;
-            GameManagerSingleton.Instance.currentHealth = currentHealth;
+            CurrentHealth = 0;
+            GameManagerSingleton.Instance.currentHealth = CurrentHealth;
             SetHealthSlider();
             Death();
         }
@@ -178,22 +180,22 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             yield return new WaitForSeconds(1f);
 
-            CanReceiveDamage = true;
+            m_canReceiveDamage = true;
         }
 
         public void SetCanReceiveDamage(bool canReceiveDamage)
         {
-            CanReceiveDamage = canReceiveDamage;
+            m_canReceiveDamage = canReceiveDamage;
         }
 
         public void SetHealthSlider()
         {
-            healthSlider.value = currentHealth;
+            healthSlider.value = CurrentHealth;
         }
 
         private void SetMaxHealthSlider()
         {
-            healthSlider.maxValue = maxHealth;
+            healthSlider.maxValue = 100;
         }
     }
 }

@@ -1,8 +1,8 @@
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Enemy;
 
 public class SethSoldierWave : MonoBehaviour
 {
@@ -62,6 +62,6 @@ public class SethSoldierWave : MonoBehaviour
 
     private void SoldierToFight(GameObject obj)
     {
-        obj.GetComponent<Enemy>().typeOfBehaviour = TypeOfBehaviour.Fighter;
+        obj.GetComponent<EnemyP>().typeOfBehaviour = TypeOfBehaviour.Fighter;
     }
 }
