@@ -1,22 +1,25 @@
 using UnityEngine;
 using Generics.Props;
 
-public class SethBustHurtBox : MonoBehaviour
+namespace Seth
 {
-    G_DitheringDisolve m_disolve;
-
-    [SerializeField] GameObject brokenBust;
-
-    private void Awake()
+    public class SethBustHurtBox : MonoBehaviour
     {
-        m_disolve = brokenBust.GetComponent<G_DitheringDisolve>();
-    }
+        G_DitheringDisolve m_disolve;
 
-    public void StartBustDestroyEffect()
-    {
-        brokenBust.SetActive(true);
-        brokenBust.transform.SetParent(null);
-        m_disolve.StartDisolveDithering();
-        Destroy(gameObject);
+        [SerializeField] GameObject brokenBust;
+
+        private void Awake()
+        {
+            m_disolve = brokenBust.GetComponent<G_DitheringDisolve>();
+        }
+
+        public void StartBustDestroyEffect()
+        {
+            brokenBust.SetActive(true);
+            brokenBust.transform.SetParent(null);
+            m_disolve.StartDisolveDithering();
+            Destroy(gameObject);
+        }
     }
 }

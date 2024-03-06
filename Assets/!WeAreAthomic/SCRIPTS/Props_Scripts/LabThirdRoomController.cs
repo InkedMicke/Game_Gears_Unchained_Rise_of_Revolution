@@ -2,6 +2,7 @@ using System.Collections;
 using Player;
 using UnityEngine;
 using UnityEngine.Events;
+using Generics;
 
 namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {

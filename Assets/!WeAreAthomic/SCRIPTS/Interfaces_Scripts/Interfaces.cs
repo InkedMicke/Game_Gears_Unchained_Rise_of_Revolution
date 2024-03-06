@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace _WeAreAthomic.SCRIPTS.Interfaces_Scripts
+namespace Interfaces
 {
     public interface IDamageable
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
-using _WeAreAthomic.SCRIPTS.PP_Scripts;
+using PPS;
 using Generics.Collision;
 
 namespace _WeAreAthomic.SCRIPTS.Props

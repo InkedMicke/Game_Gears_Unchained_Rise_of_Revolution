@@ -2,75 +2,78 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GSound : MonoBehaviour
+namespace Generics.Sound
 {
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioSource audioSourceTwo;
-    [SerializeField] private AudioClip inClip;
-    [SerializeField] private AudioClip bucleClip;
-
-    private double musicDuration;
-    private double goalTime;
-
-    private bool _isInClipPlayed;
-    private bool _isBucleClipPlayed;
-    
-
-    protected void Start()
+    public class GSound : MonoBehaviour
     {
-        OnPlayMusic();
-    }
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioSource audioSourceTwo;
+        [SerializeField] private AudioClip inClip;
+        [SerializeField] private AudioClip bucleClip;
 
-    private void OnPlayMusic()
-    {
-        goalTime = AudioSettings.dspTime + .5f;
+        private double musicDuration;
+        private double goalTime;
 
-        audioSource.clip = inClip;
-        _isInClipPlayed = true;
-        audioSource.PlayScheduled(goalTime);
+        private bool _isInClipPlayed;
+        private bool _isBucleClipPlayed;
 
-        musicDuration = (double)inClip.samples / inClip.frequency;
-        goalTime += musicDuration;
 
-    }
-
-    private void Update()
-    {
-        if(GameManagerSingleton.Instance.IsGamePaused)
+        protected void Start()
         {
-            if(_isInClipPlayed && audioSource.isPlaying)
-            {
-                audioSource.Pause();
-            }         
-            
-            if(_isBucleClipPlayed && audioSourceTwo.isPlaying)
-            {
-                audioSourceTwo.Pause();
-            }
+            OnPlayMusic();
         }
 
-        if (!GameManagerSingleton.Instance.IsGamePaused)
+        private void OnPlayMusic()
         {
-            if (_isInClipPlayed && !audioSource.isPlaying)
-            {
-                audioSource.UnPause();
-            }
+            goalTime = AudioSettings.dspTime + .5f;
 
-            if (_isBucleClipPlayed && !audioSourceTwo.isPlaying)
-            {
-                audioSourceTwo.UnPause();
-            }
+            audioSource.clip = inClip;
+            _isInClipPlayed = true;
+            audioSource.PlayScheduled(goalTime);
+
+            musicDuration = (double)inClip.samples / inClip.frequency;
+            goalTime += musicDuration;
+
         }
 
-        if (AudioSettings.dspTime > goalTime - 1)
+        private void Update()
         {
-            audioSourceTwo.clip = bucleClip;
-            audioSourceTwo.PlayScheduled(goalTime);
-            _isBucleClipPlayed = true;
-            _isInClipPlayed = false;
+            if (GameManagerSingleton.Instance.IsGamePaused)
+            {
+                if (_isInClipPlayed && audioSource.isPlaying)
+                {
+                    audioSource.Pause();
+                }
 
-            musicDuration = (double)bucleClip.samples / bucleClip.frequency;
-            goalTime = AudioSettings.dspTime + musicDuration;
+                if (_isBucleClipPlayed && audioSourceTwo.isPlaying)
+                {
+                    audioSourceTwo.Pause();
+                }
+            }
+
+            if (!GameManagerSingleton.Instance.IsGamePaused)
+            {
+                if (_isInClipPlayed && !audioSource.isPlaying)
+                {
+                    audioSource.UnPause();
+                }
+
+                if (_isBucleClipPlayed && !audioSourceTwo.isPlaying)
+                {
+                    audioSourceTwo.UnPause();
+                }
+            }
+
+            if (AudioSettings.dspTime > goalTime - 1)
+            {
+                audioSourceTwo.clip = bucleClip;
+                audioSourceTwo.PlayScheduled(goalTime);
+                _isBucleClipPlayed = true;
+                _isInClipPlayed = false;
+
+                musicDuration = (double)bucleClip.samples / bucleClip.frequency;
+                goalTime = AudioSettings.dspTime + musicDuration;
+            }
         }
     }
 }

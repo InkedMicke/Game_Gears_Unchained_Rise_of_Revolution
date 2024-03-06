@@ -1,4 +1,4 @@
-using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
+using Interfaces;
 using UnityEngine;
 
 namespace Generics.Collision

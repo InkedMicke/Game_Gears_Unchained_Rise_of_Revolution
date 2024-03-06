@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
+using Generics;
 
 namespace Broom
 {

@@ -1,7 +1,7 @@
-using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
+using Interfaces;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
+namespace Enemy.Green
 {
 
     public class GreenSoldierBulletHitBox : MonoBehaviour

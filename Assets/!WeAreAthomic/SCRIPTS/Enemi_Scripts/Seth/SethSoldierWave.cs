@@ -4,64 +4,67 @@ using System.Collections.Generic;
 using UnityEngine;
 using Enemy;
 
-public class SethSoldierWave : MonoBehaviour
+namespace Seth
 {
-    [NonSerialized] public List<GameObject> spawnedSoldiers = new List<GameObject>();
-
-    [SerializeField] private List<GameObject> soldiersWave1 = new List<GameObject>();
-    [SerializeField] private List<GameObject> soldiersWave2 = new List<GameObject>();
-    [SerializeField] private List<GameObject> soldiersWave3 = new List<GameObject>();
-
-    [SerializeField] private Transform spawnPos;
-
-    [NonSerialized] public int CurrentSoldiersWavesCount;
-
-    public void StartSpawning()
+    public class SethSoldierWave : MonoBehaviour
     {
+        [NonSerialized] public List<GameObject> spawnedSoldiers = new List<GameObject>();
 
-        StartCoroutine(SpawnSoldiers());
+        [SerializeField] private List<GameObject> soldiersWave1 = new List<GameObject>();
+        [SerializeField] private List<GameObject> soldiersWave2 = new List<GameObject>();
+        [SerializeField] private List<GameObject> soldiersWave3 = new List<GameObject>();
 
-    }
-    private IEnumerator SpawnSoldiers()
-    {
-        CurrentSoldiersWavesCount++;
-        if (CurrentSoldiersWavesCount == 1)
+        [SerializeField] private Transform spawnPos;
+
+        [NonSerialized] public int CurrentSoldiersWavesCount;
+
+        public void StartSpawning()
         {
-            foreach (var x in soldiersWave1)
+
+            StartCoroutine(SpawnSoldiers());
+
+        }
+        private IEnumerator SpawnSoldiers()
+        {
+            CurrentSoldiersWavesCount++;
+            if (CurrentSoldiersWavesCount == 1)
             {
-                var soldier = Instantiate(x, spawnPos.position, Quaternion.identity);
-                SoldierToFight(soldier);
-                spawnedSoldiers.Add(soldier);
-                yield return new WaitForSeconds(0.5f);
+                foreach (var x in soldiersWave1)
+                {
+                    var soldier = Instantiate(x, spawnPos.position, Quaternion.identity);
+                    SoldierToFight(soldier);
+                    spawnedSoldiers.Add(soldier);
+                    yield return new WaitForSeconds(0.5f);
+                }
             }
+
+            else if (CurrentSoldiersWavesCount == 2)
+            {
+                foreach (var x in soldiersWave2)
+                {
+                    var soldier = Instantiate(x, spawnPos.position, Quaternion.identity);
+                    SoldierToFight(soldier);
+                    spawnedSoldiers.Add(soldier);
+                    yield return new WaitForSeconds(0.5f);
+                }
+            }
+
+            else if (CurrentSoldiersWavesCount == 3)
+            {
+                foreach (var x in soldiersWave3)
+                {
+                    var soldier = Instantiate(x, spawnPos.position, Quaternion.identity);
+                    SoldierToFight(soldier);
+                    spawnedSoldiers.Add(soldier);
+                    yield return new WaitForSeconds(0.5f);
+                }
+            }
+
         }
 
-        else if (CurrentSoldiersWavesCount == 2)
+        private void SoldierToFight(GameObject obj)
         {
-            foreach (var x in soldiersWave2)
-            {
-                var soldier = Instantiate(x, spawnPos.position, Quaternion.identity);
-                SoldierToFight(soldier);
-                spawnedSoldiers.Add(soldier);
-                yield return new WaitForSeconds(0.5f);
-            }
+            obj.GetComponent<EnemyP>().typeOfBehaviour = TypeOfBehaviour.Fighter;
         }
-
-        else if (CurrentSoldiersWavesCount == 3)
-        {
-            foreach (var x in soldiersWave3)
-            {
-                var soldier = Instantiate(x, spawnPos.position, Quaternion.identity);
-                SoldierToFight(soldier);
-                spawnedSoldiers.Add(soldier);
-                yield return new WaitForSeconds(0.5f);
-            }
-        }
-        
-    }
-
-    private void SoldierToFight(GameObject obj)
-    {
-        obj.GetComponent<EnemyP>().typeOfBehaviour = TypeOfBehaviour.Fighter;
     }
 }

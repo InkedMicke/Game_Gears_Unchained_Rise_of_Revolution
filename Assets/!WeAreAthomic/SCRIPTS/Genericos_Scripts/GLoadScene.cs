@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
+namespace Generics.Scene
 {
 
     public enum Scenes

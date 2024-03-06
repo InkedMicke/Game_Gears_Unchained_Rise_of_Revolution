@@ -1,10 +1,9 @@
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
-using Hedenrag.SceneLoader;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Video;
+using Generics.Scene;
 
 public class VideoManagerStart : MonoBehaviour
 {

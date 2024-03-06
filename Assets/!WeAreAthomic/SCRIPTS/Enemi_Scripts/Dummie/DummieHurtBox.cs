@@ -1,5 +1,5 @@
-using _WeAreAthomic.SCRIPTS.Genericos;
-using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
+using Generics;
+using Interfaces;
 using UnityEngine;
 using UnityEngine.Events;
 

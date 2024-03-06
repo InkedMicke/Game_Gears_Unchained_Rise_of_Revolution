@@ -1,6 +1,5 @@
 using System.Collections;
 using _WeAreAthomic.SCRIPTS.PP_Scripts;
-using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

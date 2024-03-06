@@ -3,109 +3,113 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using Enemy;
+using Generics;
 
-public class Seth : MonoBehaviour
+namespace Seth
 {
-    private SethSoldierWave _sethWave;
-    private SethEyeAttack _sethEyeAttack;
-    private GTrajectory _gTrajectory;
-    private MainCMovement _mainCMove;
-    [SerializeField] private SethHurtBox sethHurtBox;
-
-    private GameObject _playerObj;
-
-    [SerializeField] private Transform barrier;
-
-    [SerializeField] private float receivedDamageForPushPlayerBack = 250;
-
-    private Vector3 barrierInitalPos;
-
-    private int WaveCount;
-
-    private void Awake()
+    public class Seth : MonoBehaviour
     {
-        _sethWave = GetComponent<SethSoldierWave>();
-        _gTrajectory = GetComponent<GTrajectory>();
-        _sethEyeAttack = GetComponent<SethEyeAttack>();
+        private SethSoldierWave _sethWave;
+        private SethEyeAttack _sethEyeAttack;
+        private GTrajectory _gTrajectory;
+        private MainCMovement _mainCMove;
+        [SerializeField] private SethHurtBox sethHurtBox;
 
-        _playerObj = GameObject.FindGameObjectWithTag("Player");
-        _gTrajectory.origin = _playerObj.transform;
-        _mainCMove = _playerObj.GetComponent<MainCMovement>();
-    }
+        private GameObject _playerObj;
 
-    private void Start()
-    {
-        barrierInitalPos = barrier.position;
-    }
+        [SerializeField] private Transform barrier;
 
-    public void StartWaves()
-    {
-        StartCoroutine(SpawnEnemies());
-        barrier.transform.DOMoveY(barrierInitalPos.y + 5f, .5f).SetEase(Ease.Linear);
-    }
+        [SerializeField] private float receivedDamageForPushPlayerBack = 250;
 
-    private IEnumerator SpawnEnemies()
-    {
-        _sethWave.StartSpawning();
+        private Vector3 barrierInitalPos;
 
-        while (!IsCurrentWaveDead())
+        private int WaveCount;
+
+        private void Awake()
         {
-            yield return new WaitForEndOfFrame();
+            _sethWave = GetComponent<SethSoldierWave>();
+            _gTrajectory = GetComponent<GTrajectory>();
+            _sethEyeAttack = GetComponent<SethEyeAttack>();
+
+            _playerObj = GameObject.FindGameObjectWithTag("Player");
+            _gTrajectory.origin = _playerObj.transform;
+            _mainCMove = _playerObj.GetComponent<MainCMovement>();
         }
 
-        yield return new WaitForSeconds(1f);
-        barrier.transform.DOMoveY(barrierInitalPos.y, .5f).SetEase(Ease.Linear);
-
-        StartCoroutine(CheckSethHealthForPush());
-    }
-
-    private IEnumerator CheckSethHealthForPush()
-    {
-        while (sethHurtBox.AcumulativeTakenHealth < receivedDamageForPushPlayerBack)
+        private void Start()
         {
-            yield return new WaitForEndOfFrame();
+            barrierInitalPos = barrier.position;
         }
 
-        sethHurtBox.AcumulativeTakenHealth = 0;
-
-        _mainCMove.Trajectory = _gTrajectory;
-        _playerObj.GetComponent<CharacterController>().enabled = false;
-        _mainCMove.SetFollowTrajectory(true);
-        _sethEyeAttack.StarEyeAttacking();
-    }
-
-    public IEnumerator CheckForEndEyeAttack()
-    {
-        while(_sethEyeAttack.IsEyeAttacking)
+        public void StartWaves()
         {
-            yield return new WaitForEndOfFrame();
+            StartCoroutine(SpawnEnemies());
+            barrier.transform.DOMoveY(barrierInitalPos.y + 5f, .5f).SetEase(Ease.Linear);
         }
-        WaveCount++;
-        
-        StartCoroutine(SpawnEnemies());
-    }
 
-    private bool IsCurrentWaveDead()
-    {
-        for (int i = _sethWave.spawnedSoldiers.Count - 1; i >= 0; i--)
+        private IEnumerator SpawnEnemies()
         {
-            var soldado = _sethWave.spawnedSoldiers[i];
-            var hurtbox = soldado.transform.GetChild(0).GetComponent<SoldierHurtBox>();
+            _sethWave.StartSpawning();
 
-            if (hurtbox.IsDeath)
+            while (!IsCurrentWaveDead())
             {
-                _sethWave.spawnedSoldiers.RemoveAt(i);
+                yield return new WaitForEndOfFrame();
             }
-        }
-        if (_sethWave.spawnedSoldiers.Count == 0)
-        {
-            return true;
+
+            yield return new WaitForSeconds(1f);
+            barrier.transform.DOMoveY(barrierInitalPos.y, .5f).SetEase(Ease.Linear);
+
+            StartCoroutine(CheckSethHealthForPush());
         }
 
-        return false;
+        private IEnumerator CheckSethHealthForPush()
+        {
+            while (sethHurtBox.AcumulativeTakenHealth < receivedDamageForPushPlayerBack)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            sethHurtBox.AcumulativeTakenHealth = 0;
+
+            _mainCMove.Trajectory = _gTrajectory;
+            _playerObj.GetComponent<CharacterController>().enabled = false;
+            _mainCMove.SetFollowTrajectory(true);
+            _sethEyeAttack.StarEyeAttacking();
+        }
+
+        public IEnumerator CheckForEndEyeAttack()
+        {
+            while (_sethEyeAttack.IsEyeAttacking)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            WaveCount++;
+
+            StartCoroutine(SpawnEnemies());
+        }
+
+        private bool IsCurrentWaveDead()
+        {
+            for (int i = _sethWave.spawnedSoldiers.Count - 1; i >= 0; i--)
+            {
+                var soldado = _sethWave.spawnedSoldiers[i];
+                var hurtbox = soldado.transform.GetChild(0).GetComponent<SoldierHurtBox>();
+
+                if (hurtbox.IsDeath)
+                {
+                    _sethWave.spawnedSoldiers.RemoveAt(i);
+                }
+            }
+            if (_sethWave.spawnedSoldiers.Count == 0)
+            {
+                return true;
+            }
+
+            return false;
+
+
+        }
 
 
     }
-
-
 }

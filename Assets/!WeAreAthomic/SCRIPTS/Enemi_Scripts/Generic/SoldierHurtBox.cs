@@ -1,6 +1,7 @@
 using UnityEngine;
-using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
+using Interfaces;
 using System.Collections;
+using Generics;
 
 namespace Enemy
 {

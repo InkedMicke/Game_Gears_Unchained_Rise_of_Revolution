@@ -1,13 +1,14 @@
 using Generics.Collision;
 using UnityEngine;
 
-public class RedAttackHitBox : HitBox
+namespace Enemy.Red
 {
-    [SerializeField] EnemyDamageData damageData;
-    protected override void GotEnterCollision(Collider collision)
+    public class RedAttackHitBox : HitBox
     {
-        DoDamage(GameManagerSingleton.Instance.GetEnemyDamage(damageData), collision);
+        [SerializeField] EnemyDamageData damageData;
+        protected override void GotEnterCollision(Collider collision)
+        {
+            DoDamage(GameManagerSingleton.Instance.GetEnemyDamage(damageData), collision);
+        }
     }
-
-
 }

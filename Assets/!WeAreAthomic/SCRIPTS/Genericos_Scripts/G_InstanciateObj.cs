@@ -1,15 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class G_InstanciateObj : MonoBehaviour
+namespace Generics
 {
-    [SerializeField] private List<GameObject>  latas;
-
-    [SerializeField] private Transform objPosition;
-    public void InstanciateObj()
+    public class G_InstanciateObj : MonoBehaviour
     {
-        var random = Random.Range(0, latas.Count);
+        [SerializeField] private List<GameObject> latas;
 
-        Instantiate(latas[random], objPosition.position, Quaternion.identity);
+        [SerializeField] private Transform objPosition;
+        public void InstanciateObj()
+        {
+            var random = Random.Range(0, latas.Count);
+
+            Instantiate(latas[random], objPosition.position, Quaternion.identity);
+        }
     }
 }
