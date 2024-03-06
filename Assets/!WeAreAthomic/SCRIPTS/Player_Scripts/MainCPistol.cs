@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts;
+using Player.CameraS;
 using System.Collections;
 using Player.Bastet;
 using UnityEngine.Events;
@@ -234,7 +234,6 @@ namespace Player
                 _isRecoveringShoot = false;
                 shootSoundClip.Play();
                 OnShoot.Invoke();
-                
                 var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
                 GCameraShake.Instance.ShakeCamera(1f, 1f, .1f);
                 if (Physics.Raycast(ray, out RaycastHit hit, shootDistance, rayLayers))

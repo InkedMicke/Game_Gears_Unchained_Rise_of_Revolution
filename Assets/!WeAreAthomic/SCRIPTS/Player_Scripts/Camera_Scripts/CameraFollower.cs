@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
+namespace Player.CameraS
 {
     public class CameraFollower : MonoBehaviour
     {
@@ -40,16 +39,19 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
-            _playerInputActions.PlayerPC.FocusEnemy.performed += ToggleFocus;
+            //_playerInputActions.PlayerPC.FocusEnemy.performed += ToggleFocus;
         }
 
         private void Start()
         {
-            if (!("N2_LAB" == SceneManager.GetActiveScene().name))
+/*            if (!("N2_LAB" == SceneManager.GetActiveScene().name))
             {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-            }
+            }*/
+
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
 
             cameraFollow = GameObject.FindGameObjectWithTag("Camera_Follow").transform;
         }

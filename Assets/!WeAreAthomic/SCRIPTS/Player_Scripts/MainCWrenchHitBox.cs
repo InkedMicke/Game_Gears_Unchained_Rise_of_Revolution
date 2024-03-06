@@ -46,7 +46,7 @@ namespace Player
                         damageable.GetDamage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, col.gameObject));
                         mainCFuryAttack.GetFury(mainCFuryAttack.furyPerHit);
                         HitParticlesInvoke();
-                        GCameraShake.Instance.ShakeCamera(1f, 5f,.2f);
+                        GCameraShake.Instance.ShakeCamera(1f, 1f,.2f);
                     }
                     else
                     {

@@ -212,6 +212,12 @@ namespace Player
 
             CurrentSpeed = IsRunningKeyboard ? runSpeed : walkSpeed;
 
+            if (_mainCRail.IsSliding)
+            {
+                m_moveDir.x = 0;
+                m_moveDir.z = 0;
+            }
+
             if (IsOnSlope())
             {
                 _cc.Move(CurrentSpeed * Time.deltaTime * m_moveDir);
@@ -476,12 +482,6 @@ namespace Player
 
             if (_mainCHealth.IsDeath())
             {
-                Debug.Log("hola1");
-                return false;
-            }
-
-            if (_mainCRail.IsSliding)
-            {
                 return false;
             }
 
@@ -491,11 +491,6 @@ namespace Player
             }
 
             if (m_mainCDash.IsDashing)
-            {
-                return false;
-            }
-
-            if (_mainCRail.IsOnRail())
             {
                 return false;
             }

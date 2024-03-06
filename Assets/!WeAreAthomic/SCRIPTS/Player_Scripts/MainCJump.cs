@@ -80,7 +80,7 @@ namespace Player
                 m_mainCAnim.SetGrounded(false);
                 m_mainCLayers.EnableJumpLayer();
                 m_mainCAnim.SetJumping(true);
-                m_mainCMove.Velocity = jumpImpulseOnRail;
+                m_mainCMove.Velocity += jumpImpulseOnRail;
                 TimeGraceJumpPeriod = Time.time + TimeNextJump;
 
                 m_mainCVFX.SetActiveSparks(false);

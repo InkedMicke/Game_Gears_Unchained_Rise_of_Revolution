@@ -28,8 +28,9 @@ namespace Player
         [SerializeField] private float jumpCooldown = 1f;
         private float _splineLength;
         private float _distancePercentage;
-        private float _timeGraceJumpPeriod;
         private float _currentRailSpeed;
+        private float m_railTotalCooldown;
+        private float m_railCooldown = 1f;
 
         [SerializeField] private AudioSource railClip;
 
@@ -48,7 +49,7 @@ namespace Player
 
         private void Update()
         {
-            if (IsOnRail() && !IsSliding)
+            if (IsOnRail() && !IsSliding && Time.time > m_railTotalCooldown)
             {
 
                 StartSlide();
@@ -95,6 +96,7 @@ namespace Player
                     _mainCDash.StartDash(false);
                     m_mainCVFX.SetActiveSparks(false);
                     m_mainCVFX.SetActiveSpeedlines(false);
+                    m_railTotalCooldown = Time.time + m_railCooldown;
                     IsSliding = false;
                 }
 
@@ -116,12 +118,9 @@ namespace Player
 
         private void StartSlide()
         {
-
-
             var cols = Physics.OverlapSphere(transform.position, 1f, railLayer);
             
             _splineContainer = cols[0].transform.GetChild(0).GetComponent<SplineContainer>();
-            Debug.Log($"HitCollision: {_splineContainer}", this);
             
             _distancePercentage = 0;
             m_mainClayers.EnableSlideLayer();

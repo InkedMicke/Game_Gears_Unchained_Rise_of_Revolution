@@ -21,16 +21,10 @@ namespace Player
 
         private Scene _currentScene;
 
-        [SerializeField] private GameObject botonPosaMano;
-        [SerializeField] private GameObject goHereBreather;
         [SerializeField] private GameObject goHerePosaManoMove;
-
-
-
-        private Vector3 _lastPosition;
+        [SerializeField] private GameObject goHereBreather;
 
         [System.NonSerialized] public bool IsOnTutorial;
-        [System.NonSerialized] public bool S;
         public bool FirstTimeAbility;
         private bool _isRoom1;
         private bool _isRoom2;
@@ -60,7 +54,6 @@ namespace Player
               
                
                 _checkHealthCoroutine = StartCoroutine(CheckHealth());
-                _checkHackCoroutine = StartCoroutine(CheckHacking());
                 _mainCAttack.DisableCanAttack();
                 GameManagerSingleton.Instance.SetThereIsCanvasBelow(true);
             }
@@ -89,25 +82,6 @@ namespace Player
                     _mainCSounds.PlayExpressionSound();
                     goHerePosaManoMove.SetActive(true);
                     goHereBreather.SetActive(false);
-                    
-                    
-                    break;
-                }
-
-                yield return new WaitForSeconds(0.01f);
-            }
-        }
-
-        private IEnumerator CheckHacking()
-        {
-            while (true)
-            {
-                _isCheckingHack = true;
-                if (_mainCHacking.IsHacking)
-                {
-                    _isCheckingHack = false;
-                    
-                
                     break;
                 }
 

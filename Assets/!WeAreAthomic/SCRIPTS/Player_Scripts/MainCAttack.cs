@@ -218,7 +218,7 @@ namespace Player
                 var currentEnemyPos = enemyPos;
                 currentEnemyPos.y = transform.position.y;
                 var direction = currentEnemyPos - transform.position;
-                direction.y = transform.position.y;
+
                 if (Vector3.SqrMagnitude(currentEnemyPos - transform.position) < 2f)
                 {
                     IsMovingToEnemy = false;
