@@ -33,8 +33,9 @@ namespace Player
         bool _isDeath;
         bool m_canReceiveDamage;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _cc = GetComponentInParent<CharacterController>();
             _mainCRagdoll = GetComponentInParent<MainCRagdoll>();
             _mainSounds = GetComponentInParent<MainCSounds>();

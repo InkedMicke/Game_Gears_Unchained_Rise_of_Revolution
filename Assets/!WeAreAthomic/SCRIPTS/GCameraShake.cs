@@ -3,56 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class GCameraShake : MonoBehaviour
+namespace Generics.Camera
 {
-    public static GCameraShake Instance { get; private set; }
-
-   [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
-
-    private float shakeTimer;
-    private void Awake()
+    public class GCameraShake : MonoBehaviour
     {
-        Instance = this;
-        cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
-    }
+        public static GCameraShake Instance { get; private set; }
 
-    private void Update()
-    {
+        [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
 
-        if (shakeTimer > 0)
+        private float shakeTimer;
+        private void Awake()
+        {
+            Instance = this;
+            cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
+        }
+
+        private void Update()
         {
 
-            shakeTimer -= Time.deltaTime;
-            if (shakeTimer <= 0f)
+            if (shakeTimer > 0)
             {
-                CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-                cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
-                cinemachineBasicMultiChannelPerlin.m_FrequencyGain = 0f;
+                shakeTimer -= Time.deltaTime;
+                if (shakeTimer <= 0f)
+                {
+                    CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+                    cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
+                    cinemachineBasicMultiChannelPerlin.m_FrequencyGain = 0f;
+                }
+
             }
+        }
+
+        // Update is called once per frame
+        public void ShakeCamera(float amplitudeGain, float frequencyGain, float time)
+        {
+            CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+            cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = amplitudeGain;
+            cinemachineBasicMultiChannelPerlin.m_FrequencyGain = frequencyGain;
+            shakeTimer = time;
+        }
+
+        public void SetCameraPriorityWithSeconds()
+        {
+            StartCoroutine(CameraPriority());
+        }
+
+        IEnumerator CameraPriority()
+        {
+            yield return new WaitForSeconds(2f);
+            cinemachineVirtualCamera.Priority = 40;
 
         }
-    }
-
-    // Update is called once per frame
-    public void ShakeCamera (float amplitudeGain, float frequencyGain, float time)
-    {
-        CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-
-        cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = amplitudeGain;
-        cinemachineBasicMultiChannelPerlin.m_FrequencyGain = frequencyGain;
-        shakeTimer = time;
-    }
-
-    public void SetCameraPriorityWithSeconds()
-    {
-        StartCoroutine(CameraPriority());
-    }
-
-    IEnumerator CameraPriority()
-    {
-        yield return new WaitForSeconds(2f);
-        cinemachineVirtualCamera.Priority = 40;
-
     }
 }

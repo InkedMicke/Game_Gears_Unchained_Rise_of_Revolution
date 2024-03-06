@@ -4,7 +4,7 @@ using UnityEngine;
 using Enemy;
 using Enemy.Dummie;
 
-public class HitBoxAngleView : MonoBehaviour
+public class MainCHitBoxAngleView : MonoBehaviour
 {
     public List<Collider> colliderList = new();
 

@@ -8,7 +8,7 @@ namespace Generics.Collision
         [SerializeField] float maxHealth;
         public float CurrentHealth;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             CurrentHealth = maxHealth;
         }

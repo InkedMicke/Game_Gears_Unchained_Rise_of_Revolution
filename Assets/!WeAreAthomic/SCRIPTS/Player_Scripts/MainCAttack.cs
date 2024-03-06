@@ -26,7 +26,7 @@ namespace Player
         private MainCRail _mainCRail;
         private G_MeshTrail _mainG;
         private MainCFuryAttack _mainCFuryAttack;
-        [SerializeField] HitBoxAngleView hitBoxAngleView;
+        [SerializeField] MainCHitBoxAngleView hitBoxAngleView;
 
         private Rigidbody _rb;
 

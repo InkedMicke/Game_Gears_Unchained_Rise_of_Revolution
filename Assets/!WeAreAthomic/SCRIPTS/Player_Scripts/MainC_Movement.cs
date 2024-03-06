@@ -475,6 +475,7 @@ namespace Player
 
             if (_mainCHealth.IsDeath())
             {
+                Debug.Log("hola1");
                 return false;
             }
 

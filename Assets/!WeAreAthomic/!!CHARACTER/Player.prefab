@@ -304,7 +304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4717838406036719009}
   - component: {fileID: 7129967697353825368}
-  - component: {fileID: 2204799178661528788}
+  - component: {fileID: 91913317438804973}
   m_Layer: 7
   m_Name: HitBoxAngleView
   m_TagString: Untagged
@@ -348,7 +348,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2204799178661528788
+--- !u!114 &91913317438804973
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -357,7 +357,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2937722620657842993}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2a6ac3181a79bd448ba62b206c7fc45, type: 3}
+  m_Script: {fileID: 11500000, guid: 4017b7dcd7f0ce9488b6bb40453cd8ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   colliderList: []
@@ -679,7 +679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d629afbac5f73a4d85c268cbcef1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitBoxAngleView: {fileID: 2204799178661528788}
+  hitBoxAngleView: {fileID: 91913317438804973}
   cameraBase: {fileID: 0}
   weaponObj: {fileID: 7172491612928227611}
   tut_ES: {fileID: 0}
@@ -1448,16 +1448,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b998cc002cb7845bca45063b62e8ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  CurrentHealth: 0
   healthSlider: {fileID: 0}
   gameOverCanvas: {fileID: 0}
   cameraBase: {fileID: 0}
   hitFrame: {fileID: 0}
   sliderHealthImage: {fileID: 0}
   timeToGameover: 2
-  maxHealth: 100
-  currentHealth: 50
-  IsDeath: 0
-  CanReceiveDamage: 1
 --- !u!1 &8828226641775649965
 GameObject:
   m_ObjectHideFlags: 0

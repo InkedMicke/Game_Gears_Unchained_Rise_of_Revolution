@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
+using Generics.Camera;
 
 namespace Player
 {

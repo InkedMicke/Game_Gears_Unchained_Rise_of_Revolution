@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using Cinemachine;
 using Enemy;
 using Enemy.Dummie;
+using Generics.Camera;
 
 namespace Player
 {

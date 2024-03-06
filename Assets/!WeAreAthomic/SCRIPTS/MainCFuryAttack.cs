@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
 using System;
+using Generics.Camera;
 
 namespace Player
 {
