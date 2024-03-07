@@ -146,7 +146,10 @@ namespace Enemy
             {
                 StopCoroutine(_waitingForHurtedCoroutine);
             }
-            _waitingForHurtedCoroutine = StartCoroutine(WaitForResetHutedTimes());
+            if (gameObject != null)
+            {
+                _waitingForHurtedCoroutine = StartCoroutine(WaitForResetHutedTimes());
+            }
         }
 
         private IEnumerator WaitForResetHutedTimes()

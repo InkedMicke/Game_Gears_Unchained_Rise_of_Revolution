@@ -13,8 +13,10 @@ namespace Seth
         private SethEyeAttack _sethEyeAttack;
         private GTrajectory _gTrajectory;
         private MainCMovement _mainCMove;
+        SethEye m_sethEye;
         [SerializeField] private SethHurtBox sethHurtBox;
 
+        [SerializeField] GameObject eye;
         private GameObject _playerObj;
 
         [SerializeField] private Transform barrier;
@@ -30,6 +32,7 @@ namespace Seth
             _sethWave = GetComponent<SethSoldierWave>();
             _gTrajectory = GetComponent<GTrajectory>();
             _sethEyeAttack = GetComponent<SethEyeAttack>();
+            m_sethEye = eye.GetComponent<SethEye>();
 
             _playerObj = GameObject.FindGameObjectWithTag("Player");
             _gTrajectory.origin = _playerObj.transform;
@@ -39,12 +42,15 @@ namespace Seth
         private void Start()
         {
             barrierInitalPos = barrier.position;
+            StartWaves();
         }
 
         public void StartWaves()
         {
-            StartCoroutine(SpawnEnemies());
+            //StartCoroutine(SpawnEnemies());
             barrier.transform.DOMoveY(barrierInitalPos.y + 5f, .5f).SetEase(Ease.Linear);
+            eye.SetActive(true);
+            m_sethEye.StartAttack();
         }
 
         private IEnumerator SpawnEnemies()
@@ -74,12 +80,13 @@ namespace Seth
             _mainCMove.Trajectory = _gTrajectory;
             _playerObj.GetComponent<CharacterController>().enabled = false;
             _mainCMove.SetFollowTrajectory(true);
-            _sethEyeAttack.StarEyeAttacking();
+            eye.SetActive(true);
+            m_sethEye.StartAttack();
         }
 
         public IEnumerator CheckForEndEyeAttack()
         {
-            while (_sethEyeAttack.IsEyeAttacking)
+            while (m_sethEye.IsEyeAttacking)
             {
                 yield return new WaitForEndOfFrame();
             }

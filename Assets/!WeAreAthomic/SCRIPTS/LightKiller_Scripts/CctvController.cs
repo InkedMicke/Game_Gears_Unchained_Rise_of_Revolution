@@ -34,7 +34,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         [SerializeField] private GameObject transforms;
         [SerializeField] private GameObject LightConeMesh;
 
-        public GameObject _playerObj;
+        private GameObject _playerObj;
         private GameObject _volumeCatch;
 
         private Transform _lightKillerTr;
@@ -136,6 +136,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         {
             if (_lKiller.IsFocusingPlayer)
             {
+                Debug.Log("hola1");
                 if (MainCMove.IsGrounded())
                 {
                     transform.LookAt(_playerObj.transform.position);

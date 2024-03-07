@@ -32,8 +32,9 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         public UnityEvent seEjecutaCuandoDetectaAlPlayer;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             m_playerObj = GameObject.FindGameObjectWithTag("Player");
             _mainCHack = m_playerObj.GetComponent<MainCHackingSystem>();
             ctvController = transform.parent.parent.GetChild(0).GetComponent<CctvController>();
