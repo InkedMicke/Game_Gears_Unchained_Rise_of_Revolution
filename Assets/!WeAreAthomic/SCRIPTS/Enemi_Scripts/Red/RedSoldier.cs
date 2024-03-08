@@ -155,12 +155,10 @@ namespace Enemy.Red
 
         public void StartDash()
         {
-            Rb.mass = 10;
             _agent.enabled = false;
             _attackHitBox.ClearList();
             _soldierAnim.SetRedCount(2);
             StartCoroutine(WaitForEndAnim());
-            Rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
             indicator.gameObject.transform.SetParent(transform.parent);
             _trail.EnableTrail();
             PlayDashSound();

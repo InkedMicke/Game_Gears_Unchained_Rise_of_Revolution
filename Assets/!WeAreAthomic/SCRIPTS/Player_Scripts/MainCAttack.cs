@@ -237,7 +237,7 @@ namespace Player
             var startPos = transform.position;
             while (Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) < displacement)
             {
-                _cc.Move(speed * Time.deltaTime * transform.forward.normalized);
+                _cc.Move(speed * Time.deltaTime * transform.forward);
                 yield return new WaitForEndOfFrame();
             }
         }

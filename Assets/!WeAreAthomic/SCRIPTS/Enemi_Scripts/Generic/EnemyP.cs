@@ -31,12 +31,14 @@ namespace Enemy
         private MainCCrouch _mainCCrouch;
         private Animator _exclamationAnim;
         protected EnemyBrain _enemyBrain;
-        [NonSerialized] public Rigidbody Rb;
+        protected CharacterController _cc;
 
         public TypeOfEnemy _typeOfEnemy;
         public TypeOfBehaviour typeOfBehaviour;
 
         [SerializeField] protected ButtonInteractable _buttonInt;
+
+        [SerializeField] EnemyValues values;
 
         [SerializeField] private GWaypoints waypoints;
 
@@ -67,25 +69,23 @@ namespace Enemy
         private bool _isWaitingForPatrol;
         private bool _playerHeared;
 
-
-
         private int _searchingPlayerTimes;
 
-        [SerializeField] private float patrolSpeed;
-        [SerializeField] private float chaseSpeed;
-        [SerializeField] private float stoppingDistance = 3;
-        private float timeToGetCached = .4f;
-        private float _totalTimeCached;
+        private float m_patrolSpeed;
+        private float m_chaseSpeed;
+        private float m_stoppingDistance;
         [SerializeField] private float waitForNextAttack;
-        [SerializeField] private float pushForce = 20f;
-        public float mass;
+        private float m_knockbackForce;
+        private float m_knockbackDisplacement;
+        private float m_timeToGetCached;
+        private float _totalTimeCached;
 
         protected virtual void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
             _soldierAnim = GetComponent<SoldierAnimator>();
+            _cc = GetComponent<CharacterController>();
             _soldierHurtBox = GetComponentInChildren<SoldierHurtBox>();
-            Rb = GetComponent<Rigidbody>();
             _materialChangeOnDetection = decalDetection.GetComponent<C_MaterialChangeOnDetection>();
             _exclamationAnim = exclamacion.GetComponent<Animator>();
         }
@@ -103,7 +103,10 @@ namespace Enemy
 
             if (typeOfBehaviour == TypeOfBehaviour.Patrol)
             {
-                StartPatrol();
+                if (currentWaypoint != null)
+                {
+                    StartPatrol();
+                }
             }
 
             if (typeOfBehaviour == TypeOfBehaviour.Fighter)
@@ -113,26 +116,7 @@ namespace Enemy
                 botonPuerta.SetActive(false);
             }
 
-            // Configuracion de Fields Of Views
-
-            _fov = transform.AddComponent<FieldOfView>();
-            _fov.radius = 6.96f;
-            _fov.angle = 90;
-            _fov.targetMask = targetFovLayer;
-            _fov.obstructionMask = obstacleFovLayer;
-            _fov.radiusColor = Color.white;
-
-            _fovHearNear = transform.AddComponent<FieldOfView>();
-            _fovHearNear.radius = 6.96f;
-            _fovHearNear.angle = 360;
-            _fovHearNear.targetMask = targetFovLayer;
-            _fovHearNear.radiusColor = Color.white;
-
-            _fovHearFar = transform.AddComponent<FieldOfView>();
-            _fovHearFar.radius = 10f;
-            _fovHearFar.angle = 360;
-            _fovHearFar.targetMask = targetFovLayer;
-            _fovHearFar.radiusColor = Color.green;
+            UpdateValues();
         }
 
         protected virtual void Update()
@@ -154,6 +138,33 @@ namespace Enemy
             }
         }
 
+        private void UpdateValues()
+        {
+            _agent.speed = values.MoveSpeed;
+            m_patrolSpeed = values.PatrolSpeed;
+            m_chaseSpeed = values.ChaseSpeed;
+            m_stoppingDistance = values.StoppingDistance;
+            m_knockbackDisplacement = values.KnockbackDisplacement;
+            m_knockbackForce = values.KnockbackForce;
+            m_timeToGetCached = values.TimeToGetCached;
+
+            _fov.radius = values.fovRadius;
+            _fov.angle = values.fovAngle;
+            _fov.targetMask = targetFovLayer;
+            _fov.obstructionMask = obstacleFovLayer;
+            _fov.radiusColor = values.fovRadiusColor;
+
+            _fovHearNear.radius = values.fovHearFarRadius;
+            _fovHearNear.angle = values.fovHearNearAngle;
+            _fovHearNear.targetMask = targetFovLayer;
+            _fovHearNear.radiusColor = values.fovHearNearRadiusColor;
+
+            _fovHearFar.radius = values.fovHearFarRadius;
+            _fovHearFar.angle = values.fovHearFarAngle;
+            _fovHearFar.targetMask = targetFovLayer;
+            _fovHearFar.radiusColor = values.fovHearFarRadiusColor;
+        }
+
         private void StartPatrol()
         {
             isPatrolling = true;
@@ -163,7 +174,7 @@ namespace Enemy
             _soldierAnim.SetWalking(true);
             _agent.stoppingDistance = 0f;
             _agent.autoBraking = false;
-            _agent.speed = patrolSpeed;
+            _agent.speed = m_patrolSpeed;
         }
 
         private void FollowPath()
@@ -222,7 +233,7 @@ namespace Enemy
         {
             _totalTimeCached += Time.deltaTime;
 
-            if (_totalTimeCached > timeToGetCached)
+            if (_totalTimeCached > m_timeToGetCached)
             {
                 ChangingValuesToChase();
             }
@@ -339,8 +350,8 @@ namespace Enemy
 
         private void AgentValuesToChase()
         {
-            _agent.speed = chaseSpeed;
-            _agent.stoppingDistance = stoppingDistance;
+            _agent.speed = m_chaseSpeed;
+            _agent.stoppingDistance = m_stoppingDistance;
         }
 
         public virtual void StopAttackDueToHurt()
@@ -372,7 +383,19 @@ namespace Enemy
 
         public virtual void Knockback()
         {
-            Rb.AddForce(PlayerTr.transform.forward * pushForce, ForceMode.Impulse);
+            StartCoroutine(PushBack());
+        }
+
+        private IEnumerator PushBack()
+        {
+            var startPos = transform.position;
+
+            while (Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) < m_knockbackDisplacement)
+            {
+                _cc.Move(m_knockbackForce * Time.deltaTime * _playerObj.transform.forward);
+
+                yield return new WaitForEndOfFrame();
+            }
         }
 
         protected IEnumerator WaitUntilNextAttack()

@@ -12,5 +12,6 @@ public static class Extensions
     public static T GetObject<T>(List<T> list, T obj)
     {
         return list.FirstOrDefault(x => x.Equals(obj));
-    }
+    }  
+   
 }

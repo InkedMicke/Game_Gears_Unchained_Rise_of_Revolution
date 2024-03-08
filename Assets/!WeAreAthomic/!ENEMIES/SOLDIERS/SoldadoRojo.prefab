@@ -581,8 +581,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ead582ea5080284fac8630b2e691169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 50
-  useDamageData: 1
   damageData: {fileID: 11400000, guid: 9a81b68b9ec0f974db00b1480bace575, type: 2}
 --- !u!1 &7152724352651507618
 GameObject:
@@ -734,7 +732,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4790905211562971815}
   - component: {fileID: 3703994341950143804}
-  - component: {fileID: 5494485887246785694}
+  - component: {fileID: 829169971704694955}
   - component: {fileID: 6751121438588578715}
   - component: {fileID: 8925294537591485253}
   - component: {fileID: 2243072282387716024}
@@ -791,33 +789,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!54 &5494485887246785694
-Rigidbody:
+--- !u!143 &829169971704694955
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8414676083931559048}
-  serializedVersion: 4
-  m_Mass: 40
-  m_Drag: 10
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 1
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.44
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!195 &6751121438588578715
 NavMeshAgent:
   m_ObjectHideFlags: 0

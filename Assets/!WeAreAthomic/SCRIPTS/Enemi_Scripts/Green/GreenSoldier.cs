@@ -34,7 +34,6 @@ namespace Enemy.Green
 
         private int _currentShoots;
 
-        [SerializeField] private float checkRadius = 5f;
         [SerializeField] private float speedShooting = 1.5f;
         [SerializeField] private float spreadAngle = 2f;
         [SerializeField] private float shootAngle = .6f;

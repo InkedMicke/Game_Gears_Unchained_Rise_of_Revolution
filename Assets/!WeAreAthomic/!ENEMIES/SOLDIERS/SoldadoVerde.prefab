@@ -507,12 +507,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6335478140936921992}
   - component: {fileID: 7864609738589064973}
-  - component: {fileID: 5636862531508802203}
   - component: {fileID: 719572451470864634}
   - component: {fileID: 1939534113983746735}
   - component: {fileID: 5738154880865817068}
   - component: {fileID: 5632661560983212616}
   - component: {fileID: 6107402776707540375}
+  - component: {fileID: 3092480287847995651}
   m_Layer: 0
   m_Name: SoldadoVerde
   m_TagString: Enemy
@@ -563,33 +563,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!54 &5636862531508802203
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7970255392764161239}
-  serializedVersion: 4
-  m_Mass: 50
-  m_Drag: 10
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!195 &719572451470864634
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -742,6 +715,32 @@ MonoBehaviour:
   - {fileID: 6277380317434433854}
   - {fileID: 3836868506162967354}
   - {fileID: 7802918217006455786}
+--- !u!143 &3092480287847995651
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7970255392764161239}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.4
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &8202827297792976926
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,9 +841,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _disolveEnemi: {fileID: 6200131782915641625}
   matSlider: {fileID: 2100000, guid: 2526b345ece7e624ab018dc6048f1352, type: 2}
+  healthSliderObj: {fileID: 2602167645715745735}
   mesh: {fileID: 6920469982936534251}
   soldierWithoutBones: {fileID: 7314150229483209217}
-  healthSliderObj: {fileID: 2602167645715745735}
   botonSoldier: {fileID: 5492920286782665025}
   _hurtbox: {fileID: 8202827297792976926}
   decalAtackDir: {fileID: 2891871576593612105}

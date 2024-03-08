@@ -2,12 +2,12 @@ using UnityEngine;
 using Interfaces;
 using System.Collections;
 using Generics;
+using System;
 
 namespace Enemy
 {
     public class SoldierHurtBox : MonoBehaviour, IDamageable
     {
-        private C_EnemiSounds _cEnemiSounds;
         private SoldierHurtBox _soldierHurtbox;
         private GDestroyObject _destroyObject;
         private EnemyP _enemy;
@@ -19,7 +19,7 @@ namespace Enemy
         private Coroutine _waitingForHurtedCoroutine;
         private Coroutine _changingMaterialsCoroutine;
 
-        
+        [System.NonSerialized] public Action OnHurt;
         
         [SerializeField] private Material matSlider;
         [SerializeField] private GameObject healthSliderObj;
@@ -46,7 +46,6 @@ namespace Enemy
 
         private void Awake()
         {
-            _cEnemiSounds = GetComponent<C_EnemiSounds>();
             _soldierHurtbox = GetComponent<SoldierHurtBox>();
             _destroyObject = GetComponentInParent<GDestroyObject>();
             _enemy = GetComponentInParent<EnemyP>();
@@ -63,12 +62,11 @@ namespace Enemy
 
         public void GetDamage(float damage)
         {
+            OnHurt?.Invoke();
             _enemy.Knockback();
             StartWaitForResetHutedTimes();
             HurtedTimes++;
-            _cEnemiSounds.PlayHitEnemiSound();
             _particlesHit.Play();
-            _enemy.Rb.mass = _enemy.mass;
             if(m_changingMaterials)
             {
                 StopCoroutine(_changingMaterialsCoroutine);
