@@ -5,6 +5,7 @@ namespace Enemy
     public class SoldierAnimator : MonoBehaviour
     {
         private Animator _anim;
+        SoldierHurtBox hurtbox;
 
         [SerializeField] private string walkingAnimString = "isWalking";
         [SerializeField] private string backWalkingAnimString = "isBackWalking";
@@ -17,6 +18,17 @@ namespace Enemy
         private void Awake()
         {
             _anim = GetComponent<Animator>();
+            hurtbox = GetComponentInChildren<SoldierHurtBox>();
+        }
+
+        private void OnEnable()
+        {
+            hurtbox.OnHurtedSmallerTwo += HurtTrigger;
+        }
+
+        private void OnDisable()
+        {
+            hurtbox.OnHurtedSmallerTwo -= HurtTrigger;
         }
 
         public void SetWalking(bool condition)

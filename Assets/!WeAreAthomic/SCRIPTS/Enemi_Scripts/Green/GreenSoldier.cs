@@ -30,9 +30,6 @@ namespace Enemy.Green
         [SerializeField] private VisualEffect chargeParticles;
 
         [System.NonSerialized] public bool IsShooting;
-        private bool _hasEndedShootAnim;
-
-        private int _currentShoots;
 
         [SerializeField] private float speedShooting = 1.5f;
         [SerializeField] private float spreadAngle = 2f;
@@ -197,7 +194,6 @@ namespace Enemy.Green
         public void EndShootAnim()
         {
             _soldierAnim.SetGreenCount(0);
-            _hasEndedShootAnim = true;
             chargeParticles.Stop();
 
             if (CheckForDisableShoot())

@@ -1,5 +1,6 @@
 using Generics;
 using Interfaces;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,6 +13,8 @@ namespace Enemy.Dummie
         private Animator _anim;
         private DummieSounds _dummieSounds;
         private CapsuleCollider _cC;
+
+        [System.NonSerialized] public Action OnDeath;
 
         [SerializeField] private LayerMask obstacles;
 
@@ -63,12 +66,10 @@ namespace Enemy.Dummie
         {
             if (_gHealthManager.currentHealth <= 0)
             {
+                OnDeath?.Invoke();
                 DummieDies.Invoke();
                 isDeath = true;
                 _anim.SetBool(string.Format("isDeath"), true);
-                _cC.enabled = false;
-                _dummieController.DisableCharacterController();
-
             }
         }
 

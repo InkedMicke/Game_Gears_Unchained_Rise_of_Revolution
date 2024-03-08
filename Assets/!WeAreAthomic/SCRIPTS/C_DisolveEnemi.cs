@@ -1,61 +1,73 @@
+using Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class C_DisolveEnemi : MonoBehaviour
+namespace Generics
 {
-    public SkinnedMeshRenderer[] skinnedMesh;
-    public float dissolveRate = 0.001f;
-    public float refreshRate = 0.001f;
-
-    private Material[] skinnedMaterials;
-
-    void OnEnable()
+    public class C_DisolveEnemi : MonoBehaviour
     {
-        CollectAllMaterials();
-    }
+        [SerializeField] SoldierHurtBox hurtbox;
 
-    void CollectAllMaterials()
-    {
-        List<Material> materialsList = new List<Material>();
+        public SkinnedMeshRenderer[] skinnedMesh;
+        public float dissolveRate = 0.001f;
+        public float refreshRate = 0.001f;
 
-        foreach (SkinnedMeshRenderer renderer in skinnedMesh)
+        private Material[] skinnedMaterials;
+
+        void OnEnable()
         {
-            if (renderer != null)
-            {
-                materialsList.AddRange(renderer.materials);
-            }
+            CollectAllMaterials();
+            hurtbox.OnDeath += StartDisolving;
         }
 
-        skinnedMaterials = materialsList.ToArray();
-
-        // Inicia la disolución después de recoger los materiales si el objeto ya está activo
-        if (gameObject.activeSelf)
+        private void OnDisable()
         {
-            StartDisolving();
+            hurtbox.OnDeath -= StartDisolving;
         }
-    }
 
-    public void StartDisolving()
-    {
-        StartCoroutine(DisolveCo());
-    }
-
-    IEnumerator DisolveCo()
-    {
-        if (skinnedMaterials != null && skinnedMaterials.Length > 0)
+        void CollectAllMaterials()
         {
-            float counter = 0;
+            List<Material> materialsList = new List<Material>();
 
-            while (skinnedMaterials[0].GetFloat("_DisolveAmount") < 1)
+            foreach (SkinnedMeshRenderer renderer in skinnedMesh)
             {
-                counter += dissolveRate;
-                for (int i = 0; i < skinnedMaterials.Length; i++)
+                if (renderer != null)
                 {
-                    skinnedMaterials[i].SetFloat("_DisolveAmount", counter);
+                    materialsList.AddRange(renderer.materials);
                 }
-                yield return null;  // Utiliza Time.deltaTime para un control más preciso
+            }
+
+            skinnedMaterials = materialsList.ToArray();
+
+            // Inicia la disolución después de recoger los materiales si el objeto ya está activo
+            if (gameObject.activeSelf)
+            {
+                StartDisolving();
             }
         }
-    }
+
+        public void StartDisolving()
+        {
+            StartCoroutine(DisolveCo());
+        }
+
+        IEnumerator DisolveCo()
+        {
+            if (skinnedMaterials != null && skinnedMaterials.Length > 0)
+            {
+                float counter = 0;
+
+                while (skinnedMaterials[0].GetFloat("_DisolveAmount") < 1)
+                {
+                    counter += dissolveRate;
+                    for (int i = 0; i < skinnedMaterials.Length; i++)
+                    {
+                        skinnedMaterials[i].SetFloat("_DisolveAmount", counter);
+                    }
+                    yield return null;  // Utiliza Time.deltaTime para un control más preciso
+                }
+            }
+        }
+    } 
 }

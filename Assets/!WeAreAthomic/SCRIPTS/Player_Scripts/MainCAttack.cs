@@ -30,6 +30,7 @@ namespace Player
 
         private Rigidbody _rb;
 
+        Coroutine m_moveToEnemyCoroutine;
 
         [SerializeField] private CinemachineVirtualCamera cameraBase;
         public GameObject weaponObj;
@@ -152,7 +153,6 @@ namespace Player
                 if (CanAttack() && _isSheathed && !_mainCPistol.IsAiming)
                 {
                     WhatToDoBasedOnIfGotCol();
-                    RotateToCameraForward();
                     if (_mainCDash.IsDashing)
                     {
                         _mainCDash.StopDash();
@@ -256,6 +256,10 @@ namespace Player
                 case 1:
                     dis = 1.5f;
                     speed = 25f;
+                    break;                
+                case 3:
+                    dis = 1.5f;
+                    speed = 25f;
                     break;
             }
             if (m_canMoveALittle)
@@ -264,9 +268,15 @@ namespace Player
                 
                 m_canMoveALittle = false;
             }
-            else if(m_canMoveToEnemy)
+
+            if (IsMovingToEnemy)
             {
-                StartCoroutine(MoveToEnemyCoroutine(hitBoxAngleView.colliderList[0].transform.position));
+                StopCoroutine(m_moveToEnemyCoroutine);
+            }
+
+            else if(m_canMoveToEnemy && hitBoxAngleView.colliderList.Count > 0)
+            {
+                m_moveToEnemyCoroutine = StartCoroutine(MoveToEnemyCoroutine(hitBoxAngleView.colliderList[0].transform.position));
             }
                 
         }
@@ -276,7 +286,6 @@ namespace Player
             if (m_doNextcombo && IsAttacking)
             {
                 WhatToDoBasedOnIfGotCol();
-                RotateToCameraForward();
                 //GCameraShake.Instance.ShakeCamera(1f, .1f);
                 _mainCSounds.PlayAttackSound();
                 _mainCSounds.PlayEffordSound();

@@ -24,8 +24,6 @@ namespace Broom
         [NonSerialized] public bool IsChasingPlayer;
         [NonSerialized] public bool IsAttacking;
 
-        [SerializeField] private float distanceToDash = 11f;
-
         private void Awake()
         {
             broomAnimator = GetComponent<BroomAnimator>();

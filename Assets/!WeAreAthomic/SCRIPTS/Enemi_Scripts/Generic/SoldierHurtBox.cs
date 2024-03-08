@@ -19,7 +19,9 @@ namespace Enemy
         private Coroutine _waitingForHurtedCoroutine;
         private Coroutine _changingMaterialsCoroutine;
 
-        [System.NonSerialized] public Action OnHurt;
+        [NonSerialized] public Action OnHurt;
+        [NonSerialized] public Action OnDeath;
+        [NonSerialized] public Action OnHurtedSmallerTwo;
         
         [SerializeField] private Material matSlider;
         [SerializeField] private GameObject healthSliderObj;
@@ -63,7 +65,6 @@ namespace Enemy
         public void GetDamage(float damage)
         {
             OnHurt?.Invoke();
-            _enemy.Knockback();
             StartWaitForResetHutedTimes();
             HurtedTimes++;
             _particlesHit.Play();
@@ -74,8 +75,7 @@ namespace Enemy
             _changingMaterialsCoroutine = StartCoroutine(HurtMaterialChange());
             if(HurtedTimes <= 2)
             {
-                _soldierAnimator.HurtTrigger();
-                _enemy.StopAttackDueToHurt();
+                OnHurtedSmallerTwo?.Invoke();
             }
             currentHealth -= damage;
             SetHealthSlider(currentHealth);
@@ -101,17 +101,15 @@ namespace Enemy
 
         private void Death()
         {
-            
             decalAtackDir.SetActive(false);
             decalPatrol.SetActive(false);
             mesh.SetActive(false);
-            _enemy.DisableMovement();
             healthSliderObj.SetActive(false);
             soldierWithoutBones.SetActive(true);
             botonSoldier.SetActive(false);
-            _disolveEnemi.StartDisolving();
             _destroyObject.DestroyThisObject(3f);
             _hurtbox.SetActive(false);
+            OnDeath?.Invoke();
         }
 
         private IEnumerator HurtMaterialChange()

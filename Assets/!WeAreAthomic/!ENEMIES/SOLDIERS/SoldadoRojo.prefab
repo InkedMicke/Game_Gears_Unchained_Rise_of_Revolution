@@ -739,6 +739,10 @@ GameObject:
   - component: {fileID: 4936388048348477953}
   - component: {fileID: 7014005959330117288}
   - component: {fileID: 2069372867695632126}
+  - component: {fileID: 8078483724942909848}
+  - component: {fileID: 3039753086019045833}
+  - component: {fileID: 1694775970872948372}
+  - component: {fileID: 5390179628664072912}
   m_Layer: 0
   m_Name: SoldadoRojo
   m_TagString: Enemy
@@ -852,6 +856,7 @@ MonoBehaviour:
   _typeOfEnemy: 2
   typeOfBehaviour: 0
   _buttonInt: {fileID: 9211608501201563659}
+  values: {fileID: 11400000, guid: fc474b3e3addd0e4cb5eb401fbf4ba34, type: 2}
   waypoints: {fileID: 0}
   indicator: {fileID: 423817526674574709}
   targetFovLayer:
@@ -861,15 +866,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2049
   botonPuerta: {fileID: 6800344618894520321}
-  exclamacion: {fileID: 703065073694245331}
-  interrogacion: {fileID: 6315292661646290209}
   decalDetection: {fileID: 6267485460590106063}
-  patrolSpeed: 2.5
-  chaseSpeed: 3.5
-  stoppingDistance: 3
   waitForNextAttack: 1
-  pushForce: 20
-  mass: 40
   _attackHitBox: {fileID: 6336317294953810179}
   _hitboxCol: {fileID: 725828690990342888}
   _particlesTornadoDash: {fileID: 2586615513335207575}
@@ -1011,6 +1009,89 @@ MonoBehaviour:
   - {fileID: 434993022260489351}
   - {fileID: 7218021610460237443}
   - {fileID: 4421781927505258067}
+--- !u!114 &8078483724942909848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8414676083931559048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1536e2992d223b14e862ee53d4d415f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 0
+  angle: 0
+  playerRef: {fileID: 0}
+  radiusColor: {r: 0, g: 0, b: 0, a: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  canSeePlayer: 0
+--- !u!114 &3039753086019045833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8414676083931559048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1536e2992d223b14e862ee53d4d415f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 0
+  angle: 0
+  playerRef: {fileID: 0}
+  radiusColor: {r: 0, g: 0, b: 0, a: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  canSeePlayer: 0
+--- !u!114 &1694775970872948372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8414676083931559048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1536e2992d223b14e862ee53d4d415f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 0
+  angle: 0
+  playerRef: {fileID: 0}
+  radiusColor: {r: 0, g: 0, b: 0, a: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  canSeePlayer: 0
+--- !u!114 &5390179628664072912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8414676083931559048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779d1bbe361d8f24bac7d42273383449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exclamationObj: {fileID: 703065073694245331}
+  interrogacionObj: {fileID: 6315292661646290209}
 --- !u!1001 &639037097829703
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2361,7 +2442,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8657829888209157185, guid: efaedc6625acc0b4ea60a335535fe799, type: 3}
+    - {fileID: 6537417550073759458, guid: efaedc6625acc0b4ea60a335535fe799, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4470572553644151842, guid: efaedc6625acc0b4ea60a335535fe799, type: 3}
     m_AddedGameObjects: []
@@ -5935,6 +6018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2503f64f06f4b1f4e82fa76c605c29d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hurtbox: {fileID: 8679091505065630149}
   skinnedMesh:
   - {fileID: 1390333941774069393}
   - {fileID: 6190344424465303057}

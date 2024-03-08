@@ -10257,6 +10257,10 @@ GameObject:
   - component: {fileID: 6428628457112412791}
   - component: {fileID: 479220191827475279}
   - component: {fileID: 3216170944990199114}
+  - component: {fileID: 2230900690209653549}
+  - component: {fileID: 7073525328981089663}
+  - component: {fileID: 7642173460205408981}
+  - component: {fileID: 6011056345535749229}
   m_Layer: 0
   m_Name: SoldadoNaranja
   m_TagString: Enemy
@@ -10285,7 +10289,7 @@ Transform:
   - {fileID: 2263510721093623249}
   - {fileID: 6832374702158676903}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8782966382090269764
 Animator:
@@ -10345,6 +10349,7 @@ MonoBehaviour:
   _typeOfEnemy: 1
   typeOfBehaviour: 0
   _buttonInt: {fileID: 938926268918543520}
+  values: {fileID: 11400000, guid: 678cf08bfe3cbaf4697a9bb867b5257a, type: 2}
   waypoints: {fileID: 0}
   indicator: {fileID: 7041975937589469480}
   targetFovLayer:
@@ -10354,15 +10359,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2049
   botonPuerta: {fileID: 3210543378479985834}
-  exclamacion: {fileID: 8867658732008228216}
-  interrogacion: {fileID: 2699314655384611210}
   decalDetection: {fileID: 5116446470641881253}
-  patrolSpeed: 1
-  chaseSpeed: 2
-  stoppingDistance: 3
   waitForNextAttack: 2
-  pushForce: 20
-  mass: 80
   _hitbox: {fileID: 6557447602506952251}
   groundSplashEffect: {fileID: 5823954174377461218}
   groundSplashAudio: {fileID: 8300000, guid: eb095ef90217d714ebfc09d90d2a3170, type: 3}
@@ -10489,6 +10487,89 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &2230900690209653549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3241077336018984013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1536e2992d223b14e862ee53d4d415f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 0
+  angle: 0
+  playerRef: {fileID: 0}
+  radiusColor: {r: 0, g: 0, b: 0, a: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  canSeePlayer: 0
+--- !u!114 &7073525328981089663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3241077336018984013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1536e2992d223b14e862ee53d4d415f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 0
+  angle: 0
+  playerRef: {fileID: 0}
+  radiusColor: {r: 0, g: 0, b: 0, a: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  canSeePlayer: 0
+--- !u!114 &7642173460205408981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3241077336018984013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1536e2992d223b14e862ee53d4d415f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 0
+  angle: 0
+  playerRef: {fileID: 0}
+  radiusColor: {r: 0, g: 0, b: 0, a: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  canSeePlayer: 0
+--- !u!114 &6011056345535749229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3241077336018984013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779d1bbe361d8f24bac7d42273383449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exclamationObj: {fileID: 8867658732008228216}
+  interrogacionObj: {fileID: 2699314655384611210}
 --- !u!1 &3360790255463482348
 GameObject:
   m_ObjectHideFlags: 0
@@ -41370,7 +41451,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6537417550073759458, guid: efaedc6625acc0b4ea60a335535fe799, type: 3}
+    - {fileID: 8657829888209157185, guid: efaedc6625acc0b4ea60a335535fe799, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4470572553644151842, guid: efaedc6625acc0b4ea60a335535fe799, type: 3}
     m_AddedGameObjects: []
@@ -42851,6 +42934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2503f64f06f4b1f4e82fa76c605c29d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hurtbox: {fileID: 6241946655334881996}
   skinnedMesh:
   - {fileID: 5835971778061081033}
   - {fileID: 1611859063191548233}

@@ -1,9 +1,7 @@
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
 using Player;
 using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering.Universal;
@@ -29,9 +27,9 @@ namespace Enemy
         private MainCHackingSystem _mainCHack;
         private MainCJump _mainCJump;
         private MainCCrouch _mainCCrouch;
-        private Animator _exclamationAnim;
         protected EnemyBrain _enemyBrain;
         protected CharacterController _cc;
+        protected SoldierWarnings _soldierWarnings;
 
         public TypeOfEnemy _typeOfEnemy;
         public TypeOfBehaviour typeOfBehaviour;
@@ -42,14 +40,16 @@ namespace Enemy
 
         [SerializeField] private GWaypoints waypoints;
 
+        [NonSerialized] public Action OnPatrol;
+        [NonSerialized] public Action OnWarning;
+        [NonSerialized] public Action OnCached;
+
         [SerializeField] protected DecalProjector indicator;
 
         [SerializeField] private LayerMask targetFovLayer;
         [SerializeField] private LayerMask obstacleFovLayer;
 
         [SerializeField] private GameObject botonPuerta;
-        [SerializeField] private GameObject exclamacion;
-        [SerializeField] private GameObject interrogacion;
 
         [SerializeField] private GameObject decalDetection;
 
@@ -68,6 +68,7 @@ namespace Enemy
 
         private bool _isWaitingForPatrol;
         private bool _playerHeared;
+        bool m_firstTime = true;
 
         private int _searchingPlayerTimes;
 
@@ -87,7 +88,27 @@ namespace Enemy
             _cc = GetComponent<CharacterController>();
             _soldierHurtBox = GetComponentInChildren<SoldierHurtBox>();
             _materialChangeOnDetection = decalDetection.GetComponent<C_MaterialChangeOnDetection>();
-            _exclamationAnim = exclamacion.GetComponent<Animator>();
+
+            var fovs = GetComponents<FieldOfView>();
+            _fov = fovs[0];
+            _fovHearNear = fovs[1];
+            _fovHearFar = fovs[2];
+        }
+
+        private void OnEnable()
+        {
+            _soldierHurtBox.OnDeath += DisableCC;
+            _soldierHurtBox.OnDeath += DisableMovement;
+            _soldierHurtBox.OnHurt += Knockback;
+            _soldierHurtBox.OnHurtedSmallerTwo += StopAttackDueToHurt;
+        }
+
+        private void OnDisable()
+        {
+            _soldierHurtBox.OnDeath -= DisableCC;
+            _soldierHurtBox.OnDeath -= DisableMovement;
+            _soldierHurtBox.OnHurt -= Knockback;
+            _soldierHurtBox.OnHurtedSmallerTwo -= StopAttackDueToHurt;
         }
 
         protected virtual void Start()
@@ -210,6 +231,7 @@ namespace Enemy
                     if (!IsOnWarning)
                     {
                         _materialChangeOnDetection.WarningDecal();
+                        OnWarning?.Invoke();
                         IsOnWarning = true;
                     }
                     CheckWarning();
@@ -248,7 +270,6 @@ namespace Enemy
                     ChangingValuesToChase();
                 }
             }
-
         }
 
         private void CheckIfPlayerHeardFar()
@@ -336,6 +357,7 @@ namespace Enemy
         {
             if (IsChasingPlayer && !IsAttacking)
             {
+                OnCached?.Invoke();
                 _materialChangeOnDetection.CatchDecal();
                 _agent.SetDestination(PlayerTr.position);
                 _soldierAnim.SetWalking(true);
@@ -372,14 +394,14 @@ namespace Enemy
             AgentValuesToChase();
             isPatrolling = false;
             _mainCHack.StopHack();
-            exclamacion.SetActive(true);
-            _exclamationAnim.SetTrigger("IsCatch");
         }
 
         public void DisableMovement()
         {
             _agent.isStopped = true;
         }
+
+        public void DisableCC() => _cc.enabled = false;
 
         public virtual void Knockback()
         {

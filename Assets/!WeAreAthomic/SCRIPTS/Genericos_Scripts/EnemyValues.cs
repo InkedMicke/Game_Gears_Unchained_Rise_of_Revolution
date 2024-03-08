@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu (fileName = "new EnemyValues", menuName = "Enemy/Enemy Values")]
-public class EnemyValues : MonoBehaviour
+public class EnemyValues : ScriptableObject
 {
     [Header("Motion")]
     public float MoveSpeed;

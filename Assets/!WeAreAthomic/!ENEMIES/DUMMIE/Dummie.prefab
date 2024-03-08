@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7829285129649768606}
   - component: {fileID: 2034747909571958795}
   - component: {fileID: 2820041945708720828}
-  - component: {fileID: 4411195972584571468}
+  - component: {fileID: 115224160842374959}
   m_Layer: 0
   m_Name: Dummie
   m_TagString: Untagged
@@ -33,8 +33,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9103632785333612111}
   - {fileID: 626877159642984629}
+  - {fileID: 9103632785333612111}
   - {fileID: 888437796900300777}
   - {fileID: 5373883179997884409}
   - {fileID: 5232743436092846868}
@@ -100,8 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f01f450adca69047a699af2f4c649e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hurtBoxObj: {fileID: 6142278380004551508}
-  removeCollisionOnDeath: 1
 --- !u!114 &2820041945708720828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,21 +112,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a9c9c17e4fa4446b7e5275b50c8eab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4411195972584571468
+--- !u!114 &115224160842374959
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1279075552220226197}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2503f64f06f4b1f4e82fa76c605c29d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 249a68e1e64abb943a3a0a3e868d92bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hurtbox: {fileID: 6708588474655486696}
   skinnedMesh:
   - {fileID: 1985672315503661670}
-  dissolveRate: 0.001
+  dissolveRate: 0.01
   refreshRate: 0.001
 --- !u!1 &2963962393434010473
 GameObject:

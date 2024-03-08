@@ -6,6 +6,8 @@ namespace Seth
 {
     public class SethEye : MonoBehaviour
     {
+        [SerializeField] SethEyeWeights weights;
+
         [SerializeField] LineRenderer laserBeam;
         [SerializeField] Transform startPos;
         Transform m_playerTr;
@@ -47,6 +49,7 @@ namespace Seth
                 yield return new WaitForEndOfFrame();
             }
 
+            weights.starteye();
             StartCoroutine(Laser());
         }
 

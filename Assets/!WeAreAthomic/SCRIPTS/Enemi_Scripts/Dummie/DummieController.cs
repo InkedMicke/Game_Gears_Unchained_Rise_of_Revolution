@@ -9,15 +9,25 @@ namespace Enemy.Dummie
         private Animator m_anim;
         private CharacterController m_cc;
         private MainCAttack m_mainCAttack;
+        private DummieHurtBox hurtbox;
 
         private Transform m_playerTr;
-
-        public bool removeCollisionOnDeath;
 
         private void Awake()
         {
             m_anim = GetComponent<Animator>();
             m_cc = GetComponent<CharacterController>();
+            hurtbox = GetComponentInChildren<DummieHurtBox>();
+        }
+
+        private void OnEnable()
+        {
+            hurtbox.OnDeath += DisableCC;
+        }
+
+        private void OnDisable()
+        {
+            
         }
 
         private void Start()
@@ -26,14 +36,8 @@ namespace Enemy.Dummie
             m_mainCAttack = m_playerTr.GetComponent<MainCAttack>();
         }
 
-        public void DisableCharacterController()
-        {
-            if (removeCollisionOnDeath)
-            {
-                m_cc.enabled = false;
-            }
-        }
-        
+        public void DisableCC() => m_cc.enabled = false;
+
         public void HurtAnim()
         {
             m_anim.SetTrigger(string.Format("isHurt"));

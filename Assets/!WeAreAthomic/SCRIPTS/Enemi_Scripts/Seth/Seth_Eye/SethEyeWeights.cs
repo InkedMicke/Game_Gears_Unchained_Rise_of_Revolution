@@ -11,22 +11,45 @@ public class SethEyeWeights : MonoBehaviour
 
     [SerializeField] float velocity;
 
-    Vector3 targetDirection = Vector3.forward;
+    public Vector3 targetDirection = Vector3.forward;
 
-    
+    Vector3 currentDir = Vector3.forward;
+
+    public void starteye()
+    {
+        StartCoroutine(MoveSethEye());
+        StartCoroutine(UpdateDir());
+    }
 
     IEnumerator MoveSethEye()
     {
+        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         while (true)
         {
-            yield return null;
+            yield return new WaitForEndOfFrame();
 
             Vector2 size = new Vector2(transform.localScale.x, transform.localScale.z);
-            float currentWheight = Mathf.Lerp((sethEye.transform.position.x - transform.position.x) / size.x, (sethEye.transform.position.z - transform.position.z) / size.y, 0.5f);
+            float currentWheight = Mathf.Max((sethEye.transform.position.x - transform.position.x) / size.x, (sethEye.transform.position.z - transform.position.z) / size.y);
 
-            //sethEye.transform.position =+ Time.deltaTime * velocity * sethEye.transform.forward;
+            Vector3 returnedDir = Vector3.Lerp(targetDirection, (sethEye.transform.position - transform.position).normalized, currentWheight);
+
+            currentDir = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(returnedDir), rotationSpeed * Time.deltaTime) * currentDir;
+
+
+            sethEye.transform.position += Time.deltaTime * velocity * currentDir;
+
             Debug.Log(currentWheight);
             //Vector3.Lerp();
+
+        }
+    }
+
+    IEnumerator UpdateDir()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(3f);
+            //currentDir = Random.Range(0f,360f)
 
         }
     }
