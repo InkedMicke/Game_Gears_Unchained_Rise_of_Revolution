@@ -29675,6 +29675,7 @@ GameObject:
   - component: {fileID: 4872793991659219456}
   - component: {fileID: 8767034418616779938}
   - component: {fileID: 2756549048676937776}
+  - component: {fileID: 4863977653757687373}
   m_Layer: 0
   m_Name: Ojo
   m_TagString: Untagged
@@ -29762,9 +29763,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c047a5707151471499aec1f1064ab440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weights: {fileID: 0}
   laserBeam: {fileID: 3298309975092659073}
+  laserLayer:
+    serializedVersion: 2
+    m_Bits: 2368
   startPos: {fileID: 0}
   damageData: {fileID: 11400000, guid: be65077a4dd9c4d4e8867e2c35f82166, type: 2}
   IsEyeAttacking: 0
   speed: 5
   rotSpeed: 10
+--- !u!135 &4863977653757687373
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9179761617465459789}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.0048437687
+  m_Center: {x: 4.656625e-10, y: 0.00000023841858, z: -0.00000004051253}
