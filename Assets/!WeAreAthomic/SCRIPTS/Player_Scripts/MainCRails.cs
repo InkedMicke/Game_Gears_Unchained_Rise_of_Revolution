@@ -32,7 +32,7 @@ namespace Player
         private float m_railTotalCooldown;
         private float m_railCooldown = 1f;
 
-        [SerializeField] private AudioSource railClip;
+  
 
         private void Awake()
         {
@@ -98,6 +98,7 @@ namespace Player
                     m_mainCVFX.SetActiveSpeedlines(false);
                     m_railTotalCooldown = Time.time + m_railCooldown;
                     IsSliding = false;
+                    m_mainCSounds.RemoveRailSounds();
                 }
 
                 var nextPosition = _splineContainer.EvaluatePosition(_distancePercentage + .001f);
