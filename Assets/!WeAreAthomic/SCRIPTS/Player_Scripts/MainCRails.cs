@@ -14,6 +14,7 @@ namespace Player
         private MainCLayers m_mainClayers;
         private MainCSounds m_mainCSounds;
         private MainCJump m_mainCJump;
+        private MainCCrouch m_mainCCrouch;
 
         [SerializeField] private LayerMask railLayer;
 
@@ -44,6 +45,7 @@ namespace Player
             _mainCDash = GetComponent<MainCDash>();
             m_mainCSounds = GetComponent<MainCSounds>();
             m_mainCJump = GetComponent<MainCJump>();
+            m_mainCCrouch = GetComponent<MainCCrouch>();
         }
 
 
@@ -99,6 +101,9 @@ namespace Player
                     m_railTotalCooldown = Time.time + m_railCooldown;
                     IsSliding = false;
                     m_mainCSounds.RemoveRailSounds();
+                    m_mainCCrouch.SetIsCrouch(false);
+                    _mainCAnim.SetCrouch(false);
+                    m_mainClayers.DisableCrouchLayer();
                 }
 
                 var nextPosition = _splineContainer.EvaluatePosition(_distancePercentage + .001f);

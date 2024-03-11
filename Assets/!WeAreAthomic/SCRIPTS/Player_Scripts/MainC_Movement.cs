@@ -57,6 +57,7 @@ namespace Player
         private int indexPoint = 2;
 
         [NonSerialized] public float _turnSmoothVelocityKeyboard;
+
         public float walkSpeed;
         public float runSpeed;
         [SerializeField] private float gravityMultiplier = -3f;

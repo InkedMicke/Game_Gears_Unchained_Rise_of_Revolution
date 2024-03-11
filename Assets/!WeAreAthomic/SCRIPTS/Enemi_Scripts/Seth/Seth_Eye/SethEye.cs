@@ -44,7 +44,7 @@ namespace Seth
         public void StartAttack()
         {
             IsEyeAttacking = true;
-            transform.SetParent(weights.transform);
+            transform.SetParent(null);
             StartCoroutine(MoveToStartPos());
         }
 
@@ -63,6 +63,7 @@ namespace Seth
 
             weights.starteye();
             StartCoroutine(Laser());
+            StartCoroutine(RotateTowardsPlayer());
         }
 
         IEnumerator GoToStartPos()
@@ -84,9 +85,19 @@ namespace Seth
             weights.starteye();
         }
 
+        IEnumerator RotateTowardsPlayer()
+        {
+            while(true)
+            {
+                yield return new WaitForEndOfFrame();
+                var diff = m_playerTr.position - transform.position;
+                var lookRot = Quaternion.LookRotation(diff);
+                transform.rotation = Quaternion.Lerp(transform.rotation, lookRot, rotSpeed * Time.deltaTime);
+            }
+        }
+
         IEnumerator Laser()
         {
-            var hurtboxLayer = LayerMask.NameToLayer("HurtBox");
             while (true)
             {
                 yield return new WaitForEndOfFrame();

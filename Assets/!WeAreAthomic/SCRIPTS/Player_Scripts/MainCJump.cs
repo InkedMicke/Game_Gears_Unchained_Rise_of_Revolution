@@ -15,6 +15,7 @@ namespace Player
         private MainCSounds m_mainCSounds;
         private MainCVFX m_mainCVFX;
         private MainCCrouch m_mainCCrouch;
+        private MainCHackingSystem m_mainCHack;
 
         [NonSerialized] public bool IsJumping;
 
@@ -32,6 +33,7 @@ namespace Player
             m_mainCSounds = GetComponent<MainCSounds>();
             m_mainCCrouch = GetComponent<MainCCrouch>();
             m_mainCVFX = GetComponent<MainCVFX>();
+            m_mainCHack = GetComponent<MainCHackingSystem>();
 
             m_playerInputActions = new PlayerInputActions();
             m_playerInputActions.Enable();
@@ -131,6 +133,11 @@ namespace Player
             }
 
             if (m_mainCRail.IsSliding)
+            {
+                return false;
+            }
+
+            if(m_mainCHack.isHackingAnim)
             {
                 return false;
             }

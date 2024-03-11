@@ -33,6 +33,7 @@ namespace Player
         Coroutine m_moveToEnemyCoroutine;
 
         [SerializeField] private CinemachineVirtualCamera cameraBase;
+
         public GameObject weaponObj;
         [SerializeField] private GameObject tut_ES;
 

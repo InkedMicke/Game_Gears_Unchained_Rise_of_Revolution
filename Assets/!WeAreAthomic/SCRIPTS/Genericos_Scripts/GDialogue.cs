@@ -76,21 +76,12 @@ namespace Generics
             this.index = index;
             _isInDialogue = true;
             GameManagerSingleton.Instance.SetIsOnDialogue(true);
-            switch (GameManagerSingleton.Instance.language)
+
+            foreach (var x in dialogues)
             {
-                case Language.es:
-                    foreach (var x in dialogues)
-                    {
-                        m_genereicDialogue.Add(x);
-                    }
-                    break;
-                case Language.en:
-                    foreach (var x in dialogues)
-                    {
-                        m_genereicDialogue.Add(x);
-                    }
-                    break;
+                m_genereicDialogue.Add(x);
             }
+
             StartCoroutine(TypeLine());
         }
 
@@ -129,22 +120,12 @@ namespace Generics
 
             textComponent.text = string.Empty;
 
-            var x = GameManagerSingleton.Instance.language == Language.es ? m_genereicDialogue[index].textAreaES.ToCharArray() : m_genereicDialogue[index].textAreaEN.ToCharArray();
+            var x = GameManagerSingleton.Instance.language == Language.es ? m_genereicDialogue[index].textAreaES : m_genereicDialogue[index].textAreaEN;
 
-            /*        if(index == 0)
-                    {
-                        var newArray = new char[x.Length + 1];
-                        newArray[0] = x[0];
-                        for (int i = 0; i < x.Length; i++)
-                        {
-                            newArray[i + 1] = x[i];
-                        }
-                        x  = newArray;
-                    }
-            */
-            foreach (char c in x)
+            for (int i = 0; i < x.Length; i++)
             {
-                textComponent.text += c;
+
+                textComponent.text = x.Substring(0, i);
                 yield return new WaitForSecondsRealtime(textSpeed);
             }
 
