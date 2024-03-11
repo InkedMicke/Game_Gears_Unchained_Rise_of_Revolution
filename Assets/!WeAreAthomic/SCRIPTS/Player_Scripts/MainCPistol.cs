@@ -8,6 +8,7 @@ using Cinemachine;
 using Enemy;
 using Enemy.Dummie;
 using Generics.Camera;
+using Interfaces;
 
 namespace Player
 {
@@ -244,13 +245,9 @@ namespace Player
                     _bastetController.Shoot(bulletPrefab, bulletSpeed, hit.point, Vector3.one * bulletSize, true, timeToDestroy, _pistolAttackData);
                     Instantiate(hitChispasPrefab, hit.point, Quaternion.identity);
 
-                    if (hit.collider.TryGetComponent(out SoldierHurtBox hurtbox))
+                    if (hit.collider.TryGetComponent(out IDamageable hurtbox))
                     {
                         hurtbox.GetDamage(GameManagerSingleton.Instance.GetPlayerDamage(_pistolAttackData, hit.collider.gameObject));
-                    }
-                    else if (hit.collider.TryGetComponent(out DummieHurtBox dummieHurtbox))
-                    {
-                        dummieHurtbox.GetDamage(GameManagerSingleton.Instance.GetPlayerDamage(_pistolAttackData, hit.collider.gameObject));
                     }
 
                 }

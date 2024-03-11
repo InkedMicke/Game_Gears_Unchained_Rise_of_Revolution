@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Generics.Collision;
 using System.Collections;
 using UnityEngine;
@@ -6,18 +7,20 @@ namespace Seth
 {
     public class SethEye : MonoBehaviour
     {
+        [SerializeField] Seth seth;
         [SerializeField] SethEyeWeights weights;
 
         [SerializeField] LineRenderer laserBeam;
 
         [SerializeField] LayerMask laserLayer;
 
-        [SerializeField] Transform startPos;
         Transform m_playerTr;
 
         [SerializeField] EnemyDamageData damageData;
 
         Transform m_startParent;
+
+        Vector3 m_startPos;
 
         public bool IsEyeAttacking;
 
@@ -29,6 +32,7 @@ namespace Seth
         {
             m_playerTr = GameObject.FindGameObjectWithTag("Player").transform;
             m_startParent = transform.parent;
+            m_startPos = transform.position;
         }
 
         private void OnValidate()
@@ -45,49 +49,29 @@ namespace Seth
         {
             IsEyeAttacking = true;
             transform.SetParent(null);
-            StartCoroutine(MoveToStartPos());
-        }
-
-        public void StartGoToStartPos()
-        {
-            StartCoroutine(GoToStartPos());
-        }
-
-        IEnumerator MoveToStartPos()
-        {
-            while (Mathf.Abs(Vector3.SqrMagnitude(startPos.position - transform.position)) > 1)
+            transform.DOMove(weights.transform.position, 3f).SetEase(Ease.Linear).OnComplete(() =>
             {
-                transform.position = Vector3.MoveTowards(transform.position, startPos.position, speed * Time.deltaTime);
-                yield return new WaitForEndOfFrame();
-            }
-
-            weights.starteye();
-            StartCoroutine(Laser());
-            StartCoroutine(RotateTowardsPlayer());
+                weights.starteye();
+                StartCoroutine(Laser());
+                StartCoroutine(RotateTowardsPlayer());
+            });
         }
 
-        IEnumerator GoToStartPos()
-        {;
 
-            while (Vector3.SqrMagnitude(weights.transform.position - transform.position) > 10)
+
+        public void GoToStartPos()
+        {
+            laserBeam.SetPosition(1, Vector3.zero);
+            transform.DOMove(weights.transform.position, 3f).SetEase(Ease.Linear).OnComplete(() =>
             {
-                yield return new WaitForEndOfFrame();
-                var dir = weights.transform.position - transform.position;
-                var rotLook = Quaternion.LookRotation(dir);
-
-                Quaternion nuevaRotacion = Quaternion.Lerp(transform.rotation, rotLook, 10f * Time.deltaTime);
-
-                transform.rotation = nuevaRotacion;
-
-                transform.position += Time.deltaTime * 3f * transform.forward;
-            }
-
-            weights.starteye();
-        }
+                transform.SetParent(m_startParent);
+                gameObject.SetActive(false);
+            });
+        } 
 
         IEnumerator RotateTowardsPlayer()
         {
-            while(true)
+            while(IsEyeAttacking)
             {
                 yield return new WaitForEndOfFrame();
                 var diff = m_playerTr.position - transform.position;
@@ -98,7 +82,7 @@ namespace Seth
 
         IEnumerator Laser()
         {
-            while (true)
+            while (IsEyeAttacking)
             {
                 yield return new WaitForEndOfFrame();
 
@@ -114,6 +98,11 @@ namespace Seth
                 }
 
             }
+        }
+
+        public void SetIsEyeAttacking(bool isEyeAttacking)
+        {
+            IsEyeAttacking = isEyeAttacking;
         }
     }
 }

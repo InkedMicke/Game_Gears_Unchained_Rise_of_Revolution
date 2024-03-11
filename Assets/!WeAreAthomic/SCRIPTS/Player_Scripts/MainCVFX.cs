@@ -40,11 +40,6 @@ namespace Player
             _mainCMove = GetComponent<MainCMovement>();
         }
 
-        public void Testing()
-        {
-
-        }
-
         public void ActivateRightStep()
         {
             if (_mainCMove.IsGrounded())

@@ -23,6 +23,8 @@ namespace Player
         private void OnTriggerEnter(Collider other)
         {
             colliderList.Add(other);
+            SpeedDownTime();
+            Invoke(nameof(SpeedUpTime), .005f);
         }
 
         public void ClearList()

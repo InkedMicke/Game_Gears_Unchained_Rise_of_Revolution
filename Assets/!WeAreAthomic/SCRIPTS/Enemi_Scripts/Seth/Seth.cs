@@ -47,10 +47,8 @@ namespace Seth
 
         public void StartWaves()
         {
-            //StartCoroutine(SpawnEnemies());
+            StartCoroutine(SpawnEnemies());
             barrier.transform.DOMoveY(barrierInitalPos.y + 5f, .5f).SetEase(Ease.Linear);
-            eye.SetActive(true);
-            m_sethEye.StartAttack();
         }
 
         private IEnumerator SpawnEnemies()
@@ -64,7 +62,7 @@ namespace Seth
 
             yield return new WaitForSeconds(1f);
             barrier.transform.DOMoveY(barrierInitalPos.y, .5f).SetEase(Ease.Linear);
-
+            sethHurtBox.SetCanReceiveDamage(true);
             StartCoroutine(CheckSethHealthForPush());
         }
 
@@ -75,13 +73,17 @@ namespace Seth
                 yield return new WaitForEndOfFrame();
             }
 
+            sethHurtBox.SetCanReceiveDamage(false);
             sethHurtBox.AcumulativeTakenHealth = 0;
 
             _mainCMove.Trajectory = _gTrajectory;
             _playerObj.GetComponent<CharacterController>().enabled = false;
             _mainCMove.SetFollowTrajectory(true);
-            eye.SetActive(true);
-            m_sethEye.StartAttack();
+            Utilities.Invoke(this, () =>
+            {
+                eye.SetActive(true);
+                m_sethEye.StartAttack();
+            }, 2f);
         }
 
         public IEnumerator CheckForEndEyeAttack()
