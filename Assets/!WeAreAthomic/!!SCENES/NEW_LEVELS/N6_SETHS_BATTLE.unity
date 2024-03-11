@@ -10966,8 +10966,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sethEye: {fileID: 322757094}
-  rotationSpeed: 10
-  velocity: 1
+  rotationSpeed: 1
+  rotSpeed: 0.25
+  velocity: 5
+  targetDirection: {x: 0, y: 0, z: 1}
 --- !u!1001 &648590213
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11619,7 +11621,7 @@ PrefabInstance:
     - target: {fileID: 1063008375969948065, guid: a951a8f76d9c68f459880933acf93b3e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1083158219581830208, guid: a951a8f76d9c68f459880933acf93b3e,
         type: 3}
@@ -18012,7 +18014,7 @@ PrefabInstance:
     - target: {fileID: 6333391695025739228, guid: a951a8f76d9c68f459880933acf93b3e,
         type: 3}
       propertyPath: speed
-      value: 10
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6333391695025739228, guid: a951a8f76d9c68f459880933acf93b3e,
         type: 3}
@@ -18024,6 +18026,11 @@ PrefabInstance:
       propertyPath: startPos
       value: 
       objectReference: {fileID: 639510358}
+    - target: {fileID: 6333391695025739228, guid: a951a8f76d9c68f459880933acf93b3e,
+        type: 3}
+      propertyPath: laserSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6410703336740370144, guid: a951a8f76d9c68f459880933acf93b3e,
         type: 3}
       propertyPath: m_LocalRotation.y
@@ -18532,7 +18539,7 @@ PrefabInstance:
     - target: {fileID: 8527829788339746491, guid: a951a8f76d9c68f459880933acf93b3e,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8706538348090331345, guid: a951a8f76d9c68f459880933acf93b3e,
         type: 3}
@@ -19781,6 +19788,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP
       objectReference: {fileID: 0}
+    - target: {fileID: 4277791799129827319, guid: 9d2ebbd4a4922de43ae8c77510eda865,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4519477911112306920, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_AmplitudeGain
@@ -19886,11 +19898,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -25.081787
       objectReference: {fileID: 0}
-    - target: {fileID: 7415201461233897574, guid: 9d2ebbd4a4922de43ae8c77510eda865,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8131230870108231681, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -19904,7 +19911,7 @@ PrefabInstance:
     - target: {fileID: 8641209783538919257, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -180.29
+      value: -191.99
       objectReference: {fileID: 0}
     - target: {fileID: 8641209783538919257, guid: 9d2ebbd4a4922de43ae8c77510eda865,
         type: 3}

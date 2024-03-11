@@ -1,6 +1,5 @@
 using Seth;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SethEyeWeights : MonoBehaviour
@@ -8,6 +7,10 @@ public class SethEyeWeights : MonoBehaviour
     [SerializeField] SethEye sethEye;
 
     [SerializeField] float rotationSpeed;
+    [SerializeField] float rotSpeed = .1f;
+    float m_desiredRot;
+
+    bool m_isReturningToStart;
 
     [SerializeField] float velocity;
 
@@ -17,18 +20,63 @@ public class SethEyeWeights : MonoBehaviour
 
     public void starteye()
     {
+        m_isReturningToStart = false;
+        //StartCoroutine(UpdateDir());
+        sethEye.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        StartCoroutine(RotateEye());
         StartCoroutine(MoveSethEye());
-        StartCoroutine(UpdateDir());
+    }
+
+    IEnumerator RotateEye()
+    {
+        while(true)
+        {
+            yield return null;
+            Debug.Log(Vector3.Distance(sethEye.transform.position, transform.position));
+            transform.Rotate(0f, rotSpeed, 0f);
+        }
     }
 
     IEnumerator MoveSethEye()
     {
-        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        while (true)
+        sethEye.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        while (!m_isReturningToStart)
         {
-            yield return new WaitForEndOfFrame();
+            var random1 = Random.Range(200.0f, 300.0f);
+            while (!m_isReturningToStart)
+            {
+                yield return null;
 
-            Vector2 size = new Vector2(transform.localScale.x, transform.localScale.z);
+                if(Vector3.SqrMagnitude(sethEye.transform.position - transform.position) > 300f)
+                {
+                    break;
+                }
+
+                sethEye.transform.position += Time.deltaTime * velocity * transform.forward;
+
+            }
+
+            var random2 = Random.Range(30.0f, -300.0f);
+            while (!m_isReturningToStart)
+            {
+                yield return null;
+
+                if(Vector3.SqrMagnitude(sethEye.transform.position - transform.position) < -300f)
+                {
+                    break;
+                }
+
+                sethEye.transform.position -= Time.deltaTime * velocity * transform.forward;
+
+            }
+
+            yield return null;
+        }
+    }
+
+    /*            yield return null;
+
+            Vector2 size = new (transform.localScale.x, transform.localScale.z);
             float currentWheight = Mathf.Max((sethEye.transform.position.x - transform.position.x) / size.x, (sethEye.transform.position.z - transform.position.z) / size.y);
 
             Vector3 returnedDir = Vector3.Lerp(targetDirection, (sethEye.transform.position - transform.position).normalized, currentWheight);
@@ -38,26 +86,15 @@ public class SethEyeWeights : MonoBehaviour
 
             sethEye.transform.position += Time.deltaTime * velocity * currentDir;
 
-            Debug.Log(currentWheight);
-            //Vector3.Lerp();
+            Debug.Log(currentWheight);*/
 
-        }
-    }
 
-    IEnumerator UpdateDir()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(3f);
-            //currentDir = Random.Range(0f,360f)
-
-        }
-    }
 
     private void OnDrawGizmos()
     {
         Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.color = new Color32(255, 255, 255, 120);
         Gizmos.DrawCube(Vector3.zero, Vector3.one);
+        Vector2 size = new(transform.localScale.x, transform.localScale.z);
     }
 }
