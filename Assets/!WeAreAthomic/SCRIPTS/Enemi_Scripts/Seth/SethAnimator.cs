@@ -5,6 +5,7 @@ namespace Seth
     public class SethAnimator : MonoBehaviour
     {
         private Animator _anim;
+        Seth m_seth;
 
         [SerializeField] private string pushBack = "pushBack";
         [SerializeField] private string hit = "hit";
@@ -14,9 +15,12 @@ namespace Seth
         private void Awake()
         {
             _anim = GetComponent<Animator>();
+            m_seth = GetComponent<Seth>();
+
+            m_seth.OnPushBack += TriggerPush;
         }
 
-        public void TriggerPush()
+        void TriggerPush()
         {
             _anim.SetTrigger(pushBack);
         }

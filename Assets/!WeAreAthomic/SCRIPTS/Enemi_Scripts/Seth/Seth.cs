@@ -13,8 +13,14 @@ namespace Seth
         private SethEyeAttack _sethEyeAttack;
         private GTrajectory _gTrajectory;
         private MainCMovement _mainCMove;
+        SethAnimator m_sethAnim;
         SethEye m_sethEye;
         [SerializeField] private SethHurtBox sethHurtBox;
+
+        public System.Action OnPushBack;
+        public System.Action OnEnemiesDead;
+
+        [SerializeField] HealthManagerSO healthManagerSO;
 
         [SerializeField] GameObject eye;
         private GameObject _playerObj;
@@ -24,6 +30,8 @@ namespace Seth
         [SerializeField] private float receivedDamageForPushPlayerBack = 250;
 
         private Vector3 barrierInitalPos;
+
+        bool m_canPushBack;
 
         private int WaveCount;
 
@@ -37,6 +45,8 @@ namespace Seth
             _playerObj = GameObject.FindGameObjectWithTag("Player");
             _gTrajectory.origin = _playerObj.transform;
             _mainCMove = _playerObj.GetComponent<MainCMovement>();
+
+            healthManagerSO.OnAcumulativeEvent += () => m_canPushBack = true;
         }
 
         private void Start()
@@ -60,22 +70,21 @@ namespace Seth
                 yield return new WaitForEndOfFrame();
             }
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
             barrier.transform.DOMoveY(barrierInitalPos.y, .5f).SetEase(Ease.Linear);
-            sethHurtBox.SetCanReceiveDamage(true);
+            OnEnemiesDead?.Invoke();
             StartCoroutine(CheckSethHealthForPush());
         }
 
         private IEnumerator CheckSethHealthForPush()
         {
-            while (sethHurtBox.AcumulativeTakenHealth < receivedDamageForPushPlayerBack)
+            while (!m_canPushBack)
             {
                 yield return new WaitForEndOfFrame();
             }
-
-            sethHurtBox.SetCanReceiveDamage(false);
-            sethHurtBox.AcumulativeTakenHealth = 0;
-
+            m_canPushBack = false;
+            OnPushBack?.Invoke();
+            barrier.transform.DOMoveY(barrierInitalPos.y + 5f, .5f).SetEase(Ease.Linear);
             _mainCMove.Trajectory = _gTrajectory;
             _playerObj.GetComponent<CharacterController>().enabled = false;
             _mainCMove.SetFollowTrajectory(true);
@@ -83,6 +92,7 @@ namespace Seth
             {
                 eye.SetActive(true);
                 m_sethEye.StartAttack();
+                StartCoroutine(CheckForEndEyeAttack());
             }, 2f);
         }
 
@@ -93,7 +103,7 @@ namespace Seth
                 yield return new WaitForEndOfFrame();
             }
             WaveCount++;
-
+            
             StartCoroutine(SpawnEnemies());
         }
 

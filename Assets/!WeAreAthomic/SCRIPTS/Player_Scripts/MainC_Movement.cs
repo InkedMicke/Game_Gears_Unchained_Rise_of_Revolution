@@ -481,10 +481,10 @@ namespace Player
                 return false;
             }
 
-            if (_mainCHealth.IsDeath())
+/*            if (_mainCHealth.IsDeath())
             {
                 return false;
-            }
+            }*/
 
             if (!_canMove)
             {

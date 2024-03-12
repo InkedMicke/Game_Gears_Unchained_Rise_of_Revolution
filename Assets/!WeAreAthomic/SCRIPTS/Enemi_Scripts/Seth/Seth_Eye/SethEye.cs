@@ -18,8 +18,6 @@ namespace Seth
 
         [SerializeField] EnemyDamageData damageData;
 
-        Transform m_startParent;
-
         Vector3 m_startPos;
 
         public bool IsEyeAttacking;
@@ -31,7 +29,6 @@ namespace Seth
         private void Awake()
         {
             m_playerTr = GameObject.FindGameObjectWithTag("Player").transform;
-            m_startParent = transform.parent;
             m_startPos = transform.position;
         }
 
@@ -48,7 +45,6 @@ namespace Seth
         public void StartAttack()
         {
             IsEyeAttacking = true;
-            transform.SetParent(null);
             transform.DOMove(weights.transform.position, 3f).SetEase(Ease.Linear).OnComplete(() =>
             {
                 weights.starteye();
@@ -62,9 +58,9 @@ namespace Seth
         public void GoToStartPos()
         {
             laserBeam.SetPosition(1, Vector3.zero);
-            transform.DOMove(weights.transform.position, 3f).SetEase(Ease.Linear).OnComplete(() =>
+            laserBeam.gameObject.SetActive(false);
+            transform.DOMove(m_startPos, 3f).SetEase(Ease.Linear).OnComplete(() =>
             {
-                transform.SetParent(m_startParent);
                 gameObject.SetActive(false);
             });
         } 
@@ -82,6 +78,7 @@ namespace Seth
 
         IEnumerator Laser()
         {
+            laserBeam.gameObject.SetActive(true);
             while (IsEyeAttacking)
             {
                 yield return new WaitForEndOfFrame();

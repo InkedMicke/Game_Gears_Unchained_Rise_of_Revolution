@@ -16,6 +16,8 @@ namespace Player
         private MainCPistol _mainCPistol;
         [SerializeField] private MainCHealthManager _mainCHealth;
 
+        [SerializeField] HealthManagerSO healthManagerSO;
+
         [SerializeField] private SkinnedMeshRenderer _mattSkinned;
 
         private Material[] originalMaterials;
@@ -129,7 +131,7 @@ namespace Player
         {
             _mainCVFX.ActivateHealGlow();
             _mainCPlayerInterface.TakeEnergy(50);
-            _mainCHealth.GetHealth(100 - _mainCHealth.CurrentHealth);
+            _mainCHealth.GetHealth(100 - healthManagerSO.CurrentHealth);
         }
 
         public void EndAnimHeal()

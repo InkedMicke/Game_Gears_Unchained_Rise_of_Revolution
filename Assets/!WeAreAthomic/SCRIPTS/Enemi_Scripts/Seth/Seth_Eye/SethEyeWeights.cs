@@ -26,7 +26,7 @@ public class SethEyeWeights : MonoBehaviour
     IEnumerator MoveSethEye()
     {
         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        while (true)
+        while (sethEye.IsEyeAttacking)
         {
             yield return new WaitForEndOfFrame();
 
@@ -47,7 +47,7 @@ public class SethEyeWeights : MonoBehaviour
 
     IEnumerator UpdateDir()
     {
-        while (true)
+        while (sethEye.IsEyeAttacking)
         {
             yield return new WaitForSeconds(1f);
             targetDirection = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f) * Vector3.forward;

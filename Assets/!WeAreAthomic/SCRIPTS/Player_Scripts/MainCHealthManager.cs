@@ -20,6 +20,8 @@ namespace Player
 
         private Coroutine _hitCoroutine;
 
+        [SerializeField] HealthManagerSO healthManagerSO;
+
         [SerializeField] private Slider healthSlider;
 
         [SerializeField] private GameObject gameOverCanvas;
@@ -28,14 +30,14 @@ namespace Player
         [SerializeField] private Image sliderHealthImage;
 
         [SerializeField] private float timeToGameover = 1.5f;
+        private float CurrentHealth;
 
         private bool gotHit;
         bool _isDeath;
         bool m_canReceiveDamage;
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             _cc = GetComponentInParent<CharacterController>();
             _mainCRagdoll = GetComponentInParent<MainCRagdoll>();
             _mainSounds = GetComponentInParent<MainCSounds>();
@@ -46,6 +48,8 @@ namespace Player
             _mainCMove = GetComponentInParent<MainCMovement>();
             _mainCVFX = GetComponentInParent<MainCVFX>();
             _mainCHurtMaterial = GetComponentInParent<MainCHurtedMaterial>();
+
+            healthManagerSO.OnDeath += Death;
         }
 
         private void Start()
@@ -57,49 +61,34 @@ namespace Player
 
         public override void GetDamage(float damage)
         {
-            if (!IsDeath() && CanReceiveDamage())
+
+            hitFrame.SetActive(true);
+            sliderHealthImage.color = Color.red;
+            _mainCHurtMaterial.HurtEffects();
+            _mainSounds.RemoveAllSounds();
+            _mainSounds.PlayHurtSound();
+            _mainCAnim.TriggerHit();
+            SetHealthSlider();
+            //CheckDeath();
+            StartCoroutine(HitDesactivate());
+            if (gotHit)
             {
-                hitFrame.SetActive(true);
-                sliderHealthImage.color = Color.red;
-                _mainCHurtMaterial.HurtEffects();
-                _mainSounds.RemoveAllSounds();
-                _mainSounds.PlayHurtSound();
-                _mainCAnim.TriggerHit();
-                SetHealthSlider();
-                CheckDeath();
-                StartCoroutine(HitDesactivate());
-                if (gotHit)
-                {
-                    StopCoroutine(_hitCoroutine);
-                }
-                _hitCoroutine = StartCoroutine(WaitForDisableHit());
+                StopCoroutine(_hitCoroutine);
             }
+            _hitCoroutine = StartCoroutine(WaitForDisableHit());
+
 
         }
 
         public void GetHealth(float health)
         {
             CurrentHealth += health;
-            if(CurrentHealth >= 100) 
+            if (CurrentHealth >= 100)
             {
                 CurrentHealth = 100;
             }
             GameManagerSingleton.Instance.currentHealth = CurrentHealth;
             SetHealthSlider();
-        }
-
-        private void CheckDeath()
-        {
-            if (CurrentHealth <= 0)
-            {
-                if (!IsDeath() && !_isDeath)
-                {
-                    Death();
-                    _isDeath = true;
-                }
-                CurrentHealth = 0;
-                GameManagerSingleton.Instance.currentHealth = CurrentHealth;
-            }
         }
 
         private void Death()
@@ -153,7 +142,7 @@ namespace Player
             yield return new WaitForSeconds(.5f);
             hitFrame.SetActive(false);
             sliderHealthImage.color = Color.white;
-            
+
         }
 
         private IEnumerator WaitForGameOver()

@@ -1,29 +1,34 @@
 using Generics.Collision;
 using Interfaces;
 using System;
+using UnityEngine;
 
 namespace Seth
 {
     public class SethHurtBox : HurtBox
     {
-        [NonSerialized] public float AcumulativeTakenHealth;
+        Seth seth;
+
+        [SerializeField] HealthManagerSO healthManagerSO;
 
         bool m_canReceiveDamage;
+
+        private void Awake()
+        {
+            seth = GetComponentInParent<Seth>();
+
+            seth.OnPushBack += DisableReceiveDamage;
+            seth.OnEnemiesDead += EnableReceiveDamage;
+        }
 
         public override void GetDamage(float damage)
         {
             base.GetDamage(damage);
-            AcumulativeTakenHealth += damage;
+            healthManagerSO.healthChangeEvent(damage);
         }
 
-        public void SetCanReceiveDamage(bool canReceiveDamage)
-        {
-            m_canReceiveDamage = canReceiveDamage;
-        }
 
-        public override bool CanReceiveDamage()
-        {
-            return m_canReceiveDamage;
-        }
+        void EnableReceiveDamage() => healthManagerSO.CanReceiveDamage = true;
+        void DisableReceiveDamage() => healthManagerSO.CanReceiveDamage = false;
     }
 }

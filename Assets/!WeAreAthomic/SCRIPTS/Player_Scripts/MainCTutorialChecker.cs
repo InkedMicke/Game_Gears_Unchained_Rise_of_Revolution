@@ -21,6 +21,8 @@ namespace Player
 
         private Scene _currentScene;
 
+        [SerializeField] HealthManagerSO healthManagerSO;
+
         [SerializeField] private GameObject goHerePosaManoMove;
         [SerializeField] private GameObject goHereBreather;
 
@@ -75,7 +77,7 @@ namespace Player
             while (true)
             {
                 _isCheckingHealth = true;
-                if (_mainCHealth.CurrentHealth >= 100)
+                if (healthManagerSO.CurrentHealth >= 100)
                 {
                     _isCheckingHealth = false;
                     _mainCSounds.RemoveAllSounds();

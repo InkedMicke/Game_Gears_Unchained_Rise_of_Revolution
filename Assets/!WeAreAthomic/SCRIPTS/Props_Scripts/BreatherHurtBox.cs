@@ -9,9 +9,8 @@ namespace Props
 
         [SerializeField] private ParticleSystem _healRay;
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             _breather = GetComponentInParent<Breather>();
         }
 

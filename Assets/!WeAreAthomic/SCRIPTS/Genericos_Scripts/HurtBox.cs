@@ -1,17 +1,12 @@
 using Interfaces;
+using System;
 using UnityEngine;
 
 namespace Generics.Collision
 {
     public class HurtBox : MonoBehaviour, IDamageable
     {
-        [SerializeField] float maxHealth;
-        public float CurrentHealth;
-
-        protected virtual void Awake()
-        {
-            CurrentHealth = maxHealth;
-        }
+        public Action<float> OnGetDamage;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -45,17 +40,7 @@ namespace Generics.Collision
 
         public virtual void GetDamage(float damage)
         {
-            CurrentHealth -= damage;
-        }
-
-        public virtual bool CanReceiveDamage()
-        {
-            return true;
-        }
-
-        public bool IsDeath()
-        {
-            return CurrentHealth <= 0;
+            
         }
 
     }
