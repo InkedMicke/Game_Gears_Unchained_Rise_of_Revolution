@@ -24,6 +24,7 @@ namespace Enemy.Dummie
 
         [SerializeField] private bool useKnockback = true;
         public bool isDeath;
+        bool m_canReceiveDamage = true;
         
         [SerializeField] private float pushForce = 5f;
 
@@ -40,9 +41,11 @@ namespace Enemy.Dummie
 
         public void TakeDamage(float value)
         {
+            if (!m_canReceiveDamage)
+                return;
             _gHealthManager.currentHealth -= value;
             _gHealthManager.SetSlider(_gHealthManager.currentHealth);
-            //_anim.SetTrigger(string.Format("isHurt"));
+            _anim.SetTrigger(string.Format("isHurt"));
             sparksHit.Play();
             if (!isDeath)
             {
@@ -70,12 +73,13 @@ namespace Enemy.Dummie
                 DummieDies.Invoke();
                 isDeath = true;
                 _anim.SetBool(string.Format("isDeath"), true);
+                m_canReceiveDamage = false;
             }
         }
 
         public bool CanReceiveDamage()
         {
-            return true;
+            return m_canReceiveDamage;
         }
     }
 }

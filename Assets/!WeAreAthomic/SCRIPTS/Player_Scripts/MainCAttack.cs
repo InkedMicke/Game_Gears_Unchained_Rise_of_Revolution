@@ -313,7 +313,7 @@ namespace Player
 
         private void NextCombo(InputAction.CallbackContext context)
         {
-            if(_canNextAttack)
+            if (_canNextAttack)
             {
                 m_doNextcombo = true;
             }
@@ -338,6 +338,7 @@ namespace Player
             DisableNextAttack();
             IsFinalAttacking = false;
             _canNextAttack = false;
+            m_doNextcombo = false;
             _mainCMovement.EnableMovement();
             if (_mainCFuryAttack.scannerInst != null)
             {

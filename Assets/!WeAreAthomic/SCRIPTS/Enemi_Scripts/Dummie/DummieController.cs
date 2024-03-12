@@ -73,9 +73,8 @@ namespace Enemy.Dummie
 
             while (Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) < distance)
             {
-                m_cc.Move(speed * Time.deltaTime * dir);
-
                 yield return new WaitForEndOfFrame();
+                m_cc.Move(speed * Time.deltaTime * dir);
             }
         }
     }
