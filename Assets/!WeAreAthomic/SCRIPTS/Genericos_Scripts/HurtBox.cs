@@ -43,5 +43,9 @@ namespace Generics.Collision
             
         }
 
+        public virtual bool CanReceiveDamage()
+        {
+            return true;
+        }
     }
 }
