@@ -86,6 +86,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                             yield return new WaitForSeconds(.5f);
 
                             ctvController.MainCHealth.Revive();
+                            _mainCHack.SetGotCached(false);
                             ctvController.GroupCCtvController.SendColToHurtBox();
                             break;
                         }

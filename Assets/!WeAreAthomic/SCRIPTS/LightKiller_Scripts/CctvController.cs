@@ -136,7 +136,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         {
             if (_lKiller.IsFocusingPlayer)
             {
-                Debug.Log("hola1");
                 if (MainCMove.IsGrounded())
                 {
                     transform.LookAt(_playerObj.transform.position);

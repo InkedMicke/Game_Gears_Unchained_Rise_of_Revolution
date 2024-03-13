@@ -57,7 +57,6 @@ namespace Player
                
                 _checkHealthCoroutine = StartCoroutine(CheckHealth());
                 _mainCAttack.DisableCanAttack();
-                GameManagerSingleton.Instance.SetThereIsCanvasBelow(true);
             }
             else
             {
