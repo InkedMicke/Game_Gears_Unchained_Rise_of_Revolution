@@ -20,6 +20,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         private bool isMoving = false;
         private void Start()
         {
+            playerTr = GameObject.FindGameObjectWithTag("Player").transform;
             _mainCMovement = playerTr.GetComponent<MainCMovement>();
 
         }

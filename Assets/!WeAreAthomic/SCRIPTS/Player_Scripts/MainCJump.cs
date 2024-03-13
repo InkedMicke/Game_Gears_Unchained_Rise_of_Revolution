@@ -122,6 +122,11 @@ namespace Player
                 return false;
             }
 
+            if(GameManagerSingleton.Instance.IsLoadingStartVideos)
+            {
+                return false;
+            }
+
             if (IsJumping)
             {
                 return false;

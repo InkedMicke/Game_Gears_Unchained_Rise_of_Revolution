@@ -8,7 +8,12 @@ namespace _WeAreAthomic.SCRIPTS.Genericos
     {
         [SerializeField] private float rotateAmount;
 
-        private CinemachineVirtualCamera m_virtualCamera => GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineVirtualCamera>();
+        private CinemachineVirtualCamera m_virtualCamera;
+
+        private void Awake()
+        {
+            m_virtualCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineVirtualCamera>();
+        }
 
         private void Update()
         {

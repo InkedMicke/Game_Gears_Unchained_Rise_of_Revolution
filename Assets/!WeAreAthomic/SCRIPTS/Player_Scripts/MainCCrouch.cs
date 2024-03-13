@@ -174,9 +174,9 @@ namespace Player
 
         public bool CanStandUp()
         {
-            if (Physics.CheckSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.3f, canStandLayers))
+            if (Physics.CheckSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.2f, canStandLayers))
             {
-                var col = Physics.OverlapSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.3f, canStandLayers);
+                var col = Physics.OverlapSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.2f, canStandLayers);
 
                 foreach (var x in col)
                 {
