@@ -4,7 +4,6 @@ public class HealthManagerSO : ScriptableObject
 {
 
     public System.Action<float> healthChangeEvent;
-    public System.Action OnAcumulativeEvent;
     public System.Action OnDeath;
 
     public bool CanReceiveDamage;
@@ -12,9 +11,6 @@ public class HealthManagerSO : ScriptableObject
     public float CurrentHealth;
     [SerializeField]
     private float maxHealth = 100;
-    [SerializeField]
-    float acumulativeHealth = 250;
-    float m_currentAcumulativeHealth;
 
     private void OnEnable()
     {
@@ -24,13 +20,6 @@ public class HealthManagerSO : ScriptableObject
     public void DecreaseHealth(int amount)
     {
         CurrentHealth -= amount;
-        m_currentAcumulativeHealth += amount;
-        if(m_currentAcumulativeHealth >= acumulativeHealth)
-        {
-            OnAcumulativeEvent?.Invoke();
-            m_currentAcumulativeHealth = 0;
-        }
-
         healthChangeEvent?.Invoke(CurrentHealth);
 
         if(IsDeath())

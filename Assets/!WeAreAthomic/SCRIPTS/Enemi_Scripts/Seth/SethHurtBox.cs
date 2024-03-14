@@ -9,13 +9,19 @@ namespace Seth
     {
         Seth seth;
 
-        [SerializeField] HealthManagerSO healthManagerSO;
+        public Action OnAcumulativeEvent;
 
         bool m_canReceiveDamage;
+
+        float maxHealth = 100;
+        float m_currentHealth;
+        float m_currentAcumulativeHealth;
 
         private void Awake()
         {
             seth = GetComponentInParent<Seth>();
+
+            m_currentHealth = maxHealth;
 
             seth.OnPushBack += DisableReceiveDamage;
             seth.OnEnemiesDead += EnableReceiveDamage;
@@ -24,11 +30,24 @@ namespace Seth
         public override void GetDamage(float damage)
         {
             base.GetDamage(damage);
-            healthManagerSO.healthChangeEvent(damage);
+            DecreaseHealth(damage);
         }
 
+        public void DecreaseHealth(float health)
+        {
+            if(m_canReceiveDamage)
+            {
+                m_currentHealth -= health;
+                m_currentAcumulativeHealth += health;
+                if(m_currentAcumulativeHealth >= 250)
+                {
+                    m_currentAcumulativeHealth = 0;
+                    OnAcumulativeEvent?.Invoke();
+                }
+            }
+        }
 
-        void EnableReceiveDamage() => healthManagerSO.CanReceiveDamage = true;
-        void DisableReceiveDamage() => healthManagerSO.CanReceiveDamage = false;
+        void EnableReceiveDamage() => m_canReceiveDamage = true;
+        void DisableReceiveDamage() => m_canReceiveDamage = false;
     }
 }

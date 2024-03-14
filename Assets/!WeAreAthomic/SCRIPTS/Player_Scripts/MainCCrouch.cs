@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -27,47 +28,72 @@ namespace Player
         [SerializeField] private float timeNextCrouch = 0.5f;
         private float m_timeGraceCrouchPeriod;
 
-        private void OnValidate()
-        {
-            m_cc = GetComponent<CharacterController>();
-        }
+        [SerializeField] TextMeshProUGUI debugBuildText1;
+        [SerializeField] TextMeshProUGUI debugBuildText2;
+        [SerializeField] TextMeshProUGUI debugBuildText3;
+        [SerializeField] TextMeshProUGUI debugBuildText4;
 
         private void Awake()
         {
+            m_cc = GetComponent<CharacterController>();
             m_mainCMove = GetComponent<MainCMovement>();
             m_mainCAnim = GetComponent<MainCAnimatorController>();
             m_mainCLayers = GetComponent<MainCLayers>();
             m_mainCRail = GetComponent<MainCRail>();
 
             m_inputActions = new PlayerInputActions();
+        }
+
+        private void OnEnable()
+        {
             m_inputActions.Enable();
-            m_inputActions.PlayerPC.Crouch.performed += StartEndCrouch;
-            m_inputActions.PlayerGamepad.Crouch.performed += StartEndCrouch;
+            m_inputActions.PlayerPC.Crouch.performed += ToggleCrouch;
+            m_inputActions.PlayerGamepad.Crouch.performed += ToggleCrouch;
+        }
+
+        private void OnDisable()
+        {
+            m_inputActions.Disable();
+            m_inputActions.PlayerPC.Crouch.performed -= ToggleCrouch;
+            m_inputActions.PlayerGamepad.Crouch.performed -= ToggleCrouch;
         }
 
         private void Update()
         {
             _moveVectorKeyboard = m_inputActions.PlayerPC.MovementKeyboard.ReadValue<Vector2>();
             _moveVectorGamepad = m_inputActions.PlayerGamepad.MovementGamepad.ReadValue<Vector2>();
-
             CrouchWalking();
         }
 
-        private void StartEndCrouch(InputAction.CallbackContext context)
+        void ToggleCrouch(InputAction.CallbackContext context)
         {
-            if (GameManagerSingleton.Instance.IsOnDialogue)
+            IsCrouch = !IsCrouch;
+
+            if (IsCrouch)
             {
-                return;
+                if (_moveVectorKeyboard.magnitude > 0.1f || _moveVectorGamepad.magnitude > 0.1f)
+                {
+                    _isCrouchWalking = true;
+                    m_mainCAnim.SetCrouchWalking(_isCrouchWalking);
+                }
             }
+
+            m_mainCAnim.SetCrouch(IsCrouch);
+
+        }
+
+        private void StartEndCrouch()
+        {
 
             if (Time.time > m_timeGraceCrouchPeriod)
             {
-                if (!CanStandUp())
-                {
-                    return;
-                }
-                IsCrouch = !IsCrouch;
-                ToggleCCSize();
+                /*                if (!CanStandUp())
+                                {
+                                    return;
+                                }*/
+
+
+
                 if (!IsCrouch && _isCrouchWalking)
                 {
                     m_mainCAnim.SetCrouchWalking(false);
@@ -76,19 +102,10 @@ namespace Player
                     Invoke(nameof(InvokeDisableCrouchLayer), 0.1f);
                 }
 
-                if (m_mainCRail.IsSliding)
-                {
-                    m_mainCAnim.SetSlidingCrouch(IsCrouch);
-                }
-                else
-                {
-                    m_mainCAnim.SetCrouch(IsCrouch);
-                }
-
-                m_timeGraceCrouchPeriod = Time.time + timeNextCrouch;
-
+                debugBuildText4.text = IsCrouch.ToString();
                 if (IsCrouch)
                 {
+                    debugBuildText3.text = "funciona3";
                     m_mainCLayers.EnableCrouchLayer();
                     if (_moveVectorKeyboard.magnitude > 0.1f || _moveVectorGamepad.magnitude > 0.1f)
                     {
@@ -100,6 +117,18 @@ namespace Player
                 {
                     Invoke(nameof(InvokeDisableCrouchLayer), 0.5f);
                 }
+
+                if (m_mainCRail.IsSliding)
+                {
+                    m_mainCAnim.SetSlidingCrouch(IsCrouch);
+                }
+                else
+                {
+                    debugBuildText3.text = "funciona4";
+
+                }
+
+                m_timeGraceCrouchPeriod = Time.time + timeNextCrouch;
             }
         }
 
@@ -181,11 +210,11 @@ namespace Player
                 foreach (var x in col)
                 {
                     if (!x.CompareTag("Volume"))
-                    { 
-                    return false;
+                    {
+                        return false;
                     }
                 }
-                
+
             }
 
             return true;

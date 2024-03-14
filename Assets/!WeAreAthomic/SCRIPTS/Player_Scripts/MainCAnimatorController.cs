@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Player
@@ -20,11 +21,37 @@ namespace Player
         [SerializeField] private string dash = "dash";
         [SerializeField] private string hit = "hit";    
         [SerializeField] private string shield = "shield";    
-        [SerializeField] private string heal = "heal";    
+        [SerializeField] private string heal = "heal";
+        string m_currentAnimation;
+        public const string CROUCH_IDLE = "CrouchingIdle";
+        public const string CROUCH_TO_IDLE = "CrouchedToIdle";
+        public const string IDLE_TO_CROUCH = "IdleToCrouched";
+        public const string CROUCH_WALKING = "CrouchedWalking";
 
         protected void Awake()
         {
             m_anim = GetComponent<Animator>();
+        }
+
+        public void ChangeAnimation(string animation, float crossfade = 0.2f, float time = 0f)
+        {
+            if (time > 0) StartCoroutine(Wait());
+            else Validate();
+
+            IEnumerator Wait()
+            {
+                yield return new WaitForSeconds(time);
+                Validate();
+            }
+
+            void Validate()
+            {
+                if (m_currentAnimation == animation) return;
+
+                m_currentAnimation = animation;
+                m_anim.CrossFade(animation, crossfade);
+            }
+
         }
 
         public void SetMoveSpeed(float value)

@@ -46,7 +46,7 @@ namespace Seth
             _gTrajectory.origin = _playerObj.transform;
             _mainCMove = _playerObj.GetComponent<MainCMovement>();
 
-            healthManagerSO.OnAcumulativeEvent += () => m_canPushBack = true;
+            sethHurtBox.OnAcumulativeEvent += () => m_canPushBack = true;
         }
 
         private void Start()
