@@ -8,23 +8,21 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_Hojas
-  m_Shader: {fileID: 4800000, guid: e88aeddd2ef1f934d805981244872e27, type: 3}
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _HALFTONESHAPE_DOT
-  m_InvalidKeywords:
-  - _ALPHAMODULATE_ON
-  - _SURFACE_TYPE_TRANSPARENT
+  - _ALPHATEST_ON
+  - _ENVIRONMENTREFLECTIONS_OFF
+  - _SPECULARHIGHLIGHTS_OFF
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 3054
+  m_CustomRenderQueue: 2446
   stringTagMap:
-    RenderType: Transparent
-  disabledShaderPasses:
-  - DepthOnly
-  - SHADOWCASTER
+    RenderType: TransparentCutout
+  disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -119,8 +117,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaClip: 0
-    - _AlphaToMask: 0
+    - _AlphaClip: 1
+    - _AlphaToMask: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BlendOp: 0
@@ -136,10 +134,10 @@ Material:
     - _DiffuseStep: -1
     - _DitherTexelSize: 1.54
     - _DitherThreshold: 1
-    - _DstBlend: 10
-    - _DstBlendAlpha: 10
+    - _DstBlend: 0
+    - _DstBlendAlpha: 0
     - _EnabledHairSpec: 0
-    - _EnvironmentReflections: 1
+    - _EnvironmentReflections: 0
     - _FaceShadowMapEnabled: 0
     - _FaceShadowMapPow: 0.2
     - _FaceShadowSmoothness: 0
@@ -194,22 +192,22 @@ Material:
     - _SpecSource: 0
     - _SpecularClipStrength: 0
     - _SpecularFalloff: 0.5
-    - _SpecularHighlights: 1
+    - _SpecularHighlights: 0
     - _SpecularSize: 0.25
     - _SpherizeNormalEnabled: 0
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _StencilComp: 0
     - _StencilRef: 0
     - _StepViaRampTexture: 0
-    - _Surface: 1
+    - _Surface: 0
     - _UVSec: 0
     - _UseRampColor: 0
     - _WorkflowMode: 1
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
-    - _Color: {r: 0.7353569, g: 0.7353569, b: 0.7353569, a: 1}
+    - _Color: {r: 0.37735847, g: 0.37735847, b: 0.37735847, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FaceFrontDirection: {r: 0, g: 0, b: 1, a: 0}
     - _FaceRightDirection: {r: 1, g: 0, b: 0, a: 0}
