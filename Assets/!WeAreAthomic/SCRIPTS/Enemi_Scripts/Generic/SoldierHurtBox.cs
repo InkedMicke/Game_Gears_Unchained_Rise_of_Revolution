@@ -3,6 +3,7 @@ using Interfaces;
 using System.Collections;
 using Generics;
 using System;
+using System.Collections.Generic;
 
 namespace Enemy
 {
@@ -36,6 +37,7 @@ namespace Enemy
         [SerializeField] private GameObject decalPatrol;
 
         [SerializeField] private ParticleSystem _particlesHit;
+        [SerializeField] private List<ParticleSystem> _hitParticles;
 
         public bool IsDeath;
         private bool _isWatingForHurtedtimes;
@@ -178,6 +180,23 @@ namespace Enemy
         public bool CanReceiveDamage()
         {
             return true;
+        }
+        public void HitParticlesInvoke()
+        {
+            if (_hitParticles == null || _hitParticles.Count == 0)
+            {
+                return;
+            }
+            var random = UnityEngine.Random.Range(0, _hitParticles.Count);
+
+            var randomParticleSystem = _hitParticles[random];
+
+            if (randomParticleSystem != null)
+            {
+                randomParticleSystem.Play();
+            }
+
+
         }
     }
    
