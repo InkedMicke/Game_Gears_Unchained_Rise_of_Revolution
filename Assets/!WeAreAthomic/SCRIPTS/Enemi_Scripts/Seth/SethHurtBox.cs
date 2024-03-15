@@ -11,6 +11,7 @@ namespace Seth
 
         public Action OnAcumulativeEvent;
 
+        public bool WillDieOnNextAttack;
         bool m_canReceiveDamage;
 
         public float TakenHealthToPush = 250;
@@ -44,6 +45,11 @@ namespace Seth
                 {
                     m_currentAcumulativeHealth = 0;
                     OnAcumulativeEvent?.Invoke();
+                }
+
+                if((m_currentHealth - TakenHealthToPush) <= 0)
+                {
+                    WillDieOnNextAttack = true;
                 }
             }
         }

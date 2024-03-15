@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1320829272545112325}
   - component: {fileID: 3060721424813255066}
   - component: {fileID: 2629982199394613704}
+  - component: {fileID: 8433977158590292391}
   m_Layer: 0
   m_Name: Seth
   m_TagString: Untagged
@@ -90,6 +91,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sethHurtBox: {fileID: 3642158995554744483}
+  healthManagerSO: {fileID: 0}
+  HealthPilars: []
   eye: {fileID: 1063008375969948065}
   barrier: {fileID: 0}
   receivedDamageForPushPlayerBack: 250
@@ -105,10 +108,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b25f6768a0e39a439d16cbef883aeee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soldiersWave1: []
-  soldiersWave2: []
-  soldiersWave3: []
+  sethHurtBox: {fileID: 3642158995554744483}
+  enemiesPrefab:
+  - {fileID: 7970255392764161239, guid: 3c4de88fec0308c43b469db9dbf6dd8f, type: 3}
+  - {fileID: 8414676083931559048, guid: 6c3ea717ef63d9841ad7d8b2918a9ccc, type: 3}
+  - {fileID: 3241077336018984013, guid: 2083b07eda6e61b4bab056db0ff39a56, type: 3}
+  broom: {fileID: 0}
   spawnPos: {fileID: 0}
+  enemiesToSpawn: 4
 --- !u!114 &3060721424813255066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +146,18 @@ MonoBehaviour:
   alturaMaximaFactor: 0.5
   velocidad: 5.82
   intervaloTiempo: 0.1
+--- !u!114 &8433977158590292391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18686324409127931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23de26034d6d31545b9d560a886e646b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2516642657116048464
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,8 +563,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9c70d7cc3b101045beb1f972658c4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
-  CurrentHealth: 0
+  WillDieOnNextAttack: 0
+  TakenHealthToPush: 250
+  MaxHealth: 100
 --- !u!114 &3133097822682405552
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,6 +8,8 @@ namespace Broom
     {
         Broom m_broom;
 
+        public Action OnHurt;
+
         [NonSerialized] public bool LocalCanReceiveDamage;
 
         private int hurtedTimes;

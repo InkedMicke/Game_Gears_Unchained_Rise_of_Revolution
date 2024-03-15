@@ -8,15 +8,16 @@ namespace Seth
 {
     public class SethSoldierWave : MonoBehaviour
     {
+        [SerializeField] SethHurtBox sethHurtBox;
+
         [NonSerialized] public List<GameObject> spawnedSoldiers = new List<GameObject>();
 
-        [SerializeField] private List<GameObject> soldiersWave1 = new List<GameObject>();
-        [SerializeField] private List<GameObject> soldiersWave2 = new List<GameObject>();
-        [SerializeField] private List<GameObject> soldiersWave3 = new List<GameObject>();
+        [SerializeField] List<GameObject> enemiesPrefab;
+        [SerializeField] GameObject broom;
 
         [SerializeField] private Transform spawnPos;
 
-        [NonSerialized] public int CurrentSoldiersWavesCount;
+        [SerializeField] public int enemiesToSpawn = 4;
 
         public void StartSpawning()
         {
@@ -26,38 +27,17 @@ namespace Seth
         }
         private IEnumerator SpawnSoldiers()
         {
-            CurrentSoldiersWavesCount++;
-            if (CurrentSoldiersWavesCount == 1)
-            {
-                foreach (var x in soldiersWave1)
+                for (int i = 0; i < enemiesToSpawn; i++)
                 {
-                    var soldier = Instantiate(x, spawnPos.position, Quaternion.identity);
+                    var soldier = Instantiate(enemiesPrefab[UnityEngine.Random.Range(0, enemiesPrefab.Count - 1)], spawnPos.position, Quaternion.identity);
                     SoldierToFight(soldier);
                     spawnedSoldiers.Add(soldier);
                     yield return new WaitForSeconds(0.5f);
                 }
-            }
 
-            else if (CurrentSoldiersWavesCount == 2)
+            if (sethHurtBox.WillDieOnNextAttack)
             {
-                foreach (var x in soldiersWave2)
-                {
-                    var soldier = Instantiate(x, spawnPos.position, Quaternion.identity);
-                    SoldierToFight(soldier);
-                    spawnedSoldiers.Add(soldier);
-                    yield return new WaitForSeconds(0.5f);
-                }
-            }
-
-            else if (CurrentSoldiersWavesCount == 3)
-            {
-                foreach (var x in soldiersWave3)
-                {
-                    var soldier = Instantiate(x, spawnPos.position, Quaternion.identity);
-                    SoldierToFight(soldier);
-                    spawnedSoldiers.Add(soldier);
-                    yield return new WaitForSeconds(0.5f);
-                }
+                broom.SetActive(true);
             }
 
         }
