@@ -13,7 +13,8 @@ namespace Seth
 
         bool m_canReceiveDamage;
 
-        float maxHealth = 100;
+        public float TakenHealthToPush = 250;
+        public float MaxHealth = 100;
         float m_currentHealth;
         float m_currentAcumulativeHealth;
 
@@ -21,7 +22,7 @@ namespace Seth
         {
             seth = GetComponentInParent<Seth>();
 
-            m_currentHealth = maxHealth;
+            m_currentHealth = MaxHealth;
 
             seth.OnPushBack += DisableReceiveDamage;
             seth.OnEnemiesDead += EnableReceiveDamage;

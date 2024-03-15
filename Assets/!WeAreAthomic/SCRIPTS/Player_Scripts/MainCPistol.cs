@@ -45,9 +45,6 @@ namespace Player
         [SerializeField] private GameObject destroyBulletChispasPrefab;
 
         [SerializeField] private Transform camAimPosTr;
-        [SerializeField] private Transform middlePos;
-        [SerializeField] private Transform orientation;
-        [SerializeField] private Transform lookAtAim;
         [SerializeField] private Transform cameraFollow;
 
         [SerializeField] private LayerMask rayLayers;

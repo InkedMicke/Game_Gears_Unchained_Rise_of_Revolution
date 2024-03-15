@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine;
 using Enemy;
 using Generics;
+using System.Collections.Generic;
 
 namespace Seth
 {
@@ -22,6 +23,7 @@ namespace Seth
 
         [SerializeField] HealthManagerSO healthManagerSO;
 
+        public List<GameObject> HealthPilars;
         [SerializeField] GameObject eye;
         private GameObject _playerObj;
 
@@ -34,6 +36,7 @@ namespace Seth
         bool m_canPushBack;
 
         private int WaveCount;
+        int pilarsToHide;
 
         private void Awake()
         {
@@ -52,7 +55,8 @@ namespace Seth
         private void Start()
         {
             barrierInitalPos = barrier.position;
-            StartWaves();
+
+            pilarsToHide = Mathf.CeilToInt(HealthPilars.Count / (sethHurtBox.MaxHealth / sethHurtBox.TakenHealthToPush));
         }
 
         public void StartWaves()
@@ -64,7 +68,6 @@ namespace Seth
         private IEnumerator SpawnEnemies()
         {
             _sethWave.StartSpawning();
-
             while (!IsCurrentWaveDead())
             {
                 yield return new WaitForEndOfFrame();
@@ -88,12 +91,23 @@ namespace Seth
             _mainCMove.Trajectory = _gTrajectory;
             _playerObj.GetComponent<CharacterController>().enabled = false;
             _mainCMove.SetFollowTrajectory(true);
+            yield return new WaitForSeconds(.4f);
+            HidePilars();
             Utilities.Invoke(this, () =>
             {
                 eye.SetActive(true);
                 m_sethEye.StartAttack();
                 StartCoroutine(CheckForEndEyeAttack());
             }, 2f);
+        }
+
+        void HidePilars()
+        {
+            for(int i = 0; i < pilarsToHide; i++)
+            {
+                HealthPilars[i].GetComponent<Pilar>().DisablePilar();
+                HealthPilars.Remove(HealthPilars[i]);
+            }
         }
 
         public IEnumerator CheckForEndEyeAttack()
