@@ -66,6 +66,7 @@ namespace Enemy
 
         public void GetDamage(float damage)
         {
+            HitParticlesInvoke();
             OnHurt?.Invoke();
             StartWaitForResetHutedTimes();
             HurtedTimes++;
