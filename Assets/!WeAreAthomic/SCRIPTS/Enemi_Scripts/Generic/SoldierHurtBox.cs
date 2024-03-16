@@ -104,6 +104,7 @@ namespace Enemy
 
         private void Death()
         {
+            
             decalAtackDir.SetActive(false);
             decalPatrol.SetActive(false);
             mesh.SetActive(false);

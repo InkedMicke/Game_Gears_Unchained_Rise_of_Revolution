@@ -81,6 +81,8 @@ namespace Enemy
         private float m_timeToGetCached;
         private float _totalTimeCached;
 
+        [SerializeField] private GameObject espurnaFuryPrefab;
+
         protected virtual void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -351,6 +353,11 @@ namespace Enemy
                 IsOnWarning = false;
             }
 
+        }
+
+        public void InstantiateEspurna()
+        {
+            Instantiate(espurnaFuryPrefab, transform.position, Quaternion.identity);
         }
 
         private void ChasePlayer()
