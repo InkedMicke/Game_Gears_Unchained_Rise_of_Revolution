@@ -1,6 +1,7 @@
 using Generics;
 using Interfaces;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -21,6 +22,7 @@ namespace Enemy.Dummie
         [SerializeField] private GameObject soundComponentObj;
 
         [SerializeField] private ParticleSystem sparksHit;
+        [SerializeField] private List<ParticleSystem> _hitParticles;
 
         [SerializeField] private bool useKnockback = true;
         public bool isDeath;
@@ -43,6 +45,7 @@ namespace Enemy.Dummie
         {
             if (!m_canReceiveDamage)
                 return;
+            HitParticlesInvoke();
             _gHealthManager.currentHealth -= value;
             _gHealthManager.SetSlider(_gHealthManager.currentHealth);
             _anim.SetTrigger(string.Format("isHurt"));
@@ -80,6 +83,23 @@ namespace Enemy.Dummie
         public bool CanReceiveDamage()
         {
             return m_canReceiveDamage;
+        }
+        public void HitParticlesInvoke()
+        {
+            if (_hitParticles == null || _hitParticles.Count == 0)
+            {
+                return;
+            }
+            var random = UnityEngine.Random.Range(0, _hitParticles.Count);
+
+            var randomParticleSystem = _hitParticles[random];
+
+            if (randomParticleSystem != null)
+            {
+                randomParticleSystem.Play();
+            }
+
+
         }
     }
 }
