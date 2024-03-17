@@ -7,6 +7,7 @@ namespace Player
 {
     public class MainCJump : MonoBehaviour
     {
+        #region Variables
         private PlayerInputActions m_playerInputActions;
         private MainCAnimatorController m_mainCAnim;
         private MainCLayers m_mainCLayers;
@@ -23,7 +24,9 @@ namespace Player
         [SerializeField] private float jumpImpulseOnRail = 5f;
         public float TimeNextJump = 0.5f;
         [NonSerialized] public float TimeGraceJumpPeriod;
+        #endregion
 
+        #region Awake
         private void Awake()
         {
             m_mainCLayers = GetComponent<MainCLayers>();
@@ -40,7 +43,7 @@ namespace Player
             m_playerInputActions.PlayerPC.Jump.performed += StartJumpPC;
             m_playerInputActions.PlayerGamepad.Jump.performed += StartJumpGamepad;
         }
-
+        #endregion
         private void StartJumpPC(InputAction.CallbackContext context)
         {
             if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
@@ -66,7 +69,9 @@ namespace Player
                 m_mainCAnim.SetGrounded(false);
                 m_mainCLayers.EnableJumpLayer();
                 m_mainCAnim.SetJumping(true);
-                m_mainCMove.Velocity += jumpImpulse;
+                var velocity = m_mainCMove.GetMoveDir() * (m_mainCMove.CurrentSpeed / 2);
+                velocity.y = jumpImpulse;
+                m_mainCMove.SetVelocity(velocity);
                 TimeGraceJumpPeriod = Time.time + TimeNextJump;
             }
 
@@ -82,7 +87,9 @@ namespace Player
                 m_mainCAnim.SetGrounded(false);
                 m_mainCLayers.EnableJumpLayer();
                 m_mainCAnim.SetJumping(true);
-                m_mainCMove.Velocity += jumpImpulseOnRail;
+                Vector3 velocity = Vector3.zero;
+                velocity.y = jumpImpulseOnRail;
+                m_mainCMove.SetVelocity(velocity);
                 TimeGraceJumpPeriod = Time.time + TimeNextJump;
 
                 m_mainCVFX.SetActiveSparks(false);

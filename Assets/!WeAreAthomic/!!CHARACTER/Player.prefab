@@ -467,13 +467,13 @@ GameObject:
   - component: {fileID: 6156758546523602922}
   - component: {fileID: 1264889315038609929}
   - component: {fileID: 7621926829757928742}
-  - component: {fileID: 8560368454650083858}
   - component: {fileID: 8265303273977001949}
   - component: {fileID: 2060323058226009461}
   - component: {fileID: 977941721710959647}
   - component: {fileID: 1328809374754952578}
   - component: {fileID: 5519175972433775796}
   - component: {fileID: 7994076223030713229}
+  - component: {fileID: 3659897460984450912}
   m_Layer: 16
   m_Name: Player
   m_TagString: Player
@@ -623,16 +623,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 131072
   cameraBaseObj: {fileID: 0}
+  _cameraObj: {fileID: 0}
   orientation: {fileID: 7832683807876494435}
   groundCheck: {fileID: 8876326123089069106}
   groundLayer:
     serializedVersion: 2
     m_Bits: 2112
+  CurrentSpeed: 0
   walkSpeed: 4
   runSpeed: 7
-  gravityMultiplier: -1
+  gravityMultiplier: -3
   aimSpeed: 8
   maxSlopeAngle: 40
+  rotSpeed: 15
   turnSmoothTime: 0.05
 --- !u!114 &2363888649015029027
 MonoBehaviour:
@@ -652,6 +655,10 @@ MonoBehaviour:
     m_Bits: 2099265
   crouchSpeed: 2
   timeNextCrouch: 0.5
+  debugBuildText1: {fileID: 0}
+  debugBuildText2: {fileID: 0}
+  debugBuildText3: {fileID: 0}
+  debugBuildText4: {fileID: 0}
 --- !u!114 &1375674147020419813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,9 +757,6 @@ MonoBehaviour:
   destroyBulletChispasPrefab: {fileID: 1916586554266901641, guid: 5b934306e4125104ebc703f949e29fab,
     type: 3}
   camAimPosTr: {fileID: 2753448327355556005}
-  middlePos: {fileID: 6624492165851561840}
-  orientation: {fileID: 7832683807876494435}
-  lookAtAim: {fileID: 0}
   cameraFollow: {fileID: 374111497678485027}
   rayLayers:
     serializedVersion: 2
@@ -902,6 +906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCHealth: {fileID: 5869859861386743886}
+  healthManagerSO: {fileID: 0}
   _mattSkinned: {fileID: 2402805393333922494}
   forcefieldMaterials: {fileID: 0}
   protectionDuration: 5
@@ -1055,6 +1060,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _labController: {fileID: 0}
   godModeContainer: {fileID: 0}
+  cameraBaseObj: {fileID: 0}
   tpSkippedTutorial: {fileID: 0}
 --- !u!114 &1264889315038609929
 MonoBehaviour:
@@ -1096,20 +1102,6 @@ MonoBehaviour:
   bonesPos: []
   bonesRot: []
   ragDoll: 0
---- !u!114 &8560368454650083858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5821918579687998185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed1b850271795b44c8ad4e9b27a7cb7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isUsingMouse: 0
-  isUsingGamepad: 0
 --- !u!114 &8265303273977001949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1223,9 +1215,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PP: {fileID: 0}
+  healthManagerSO: {fileID: 0}
   goHerePosaManoMove: {fileID: 0}
   goHereBreather: {fileID: 0}
   FirstTimeAbility: 0
+--- !u!114 &3659897460984450912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5821918579687998185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b64d944e137644045ba706cf2931363d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6386136891931232913
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,8 +1451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b998cc002cb7845bca45063b62e8ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  CurrentHealth: 0
+  healthManagerSO: {fileID: 0}
   healthSlider: {fileID: 0}
   gameOverCanvas: {fileID: 0}
   cameraBase: {fileID: 0}
@@ -2585,11 +2589,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCFuryAttack: {fileID: 0}
   wrenchDamageData: {fileID: 11400000, guid: ad06cde7f1e032d44b83a8cacd9a52ec, type: 2}
-  _hitParticles:
-  - {fileID: 7166412991347247449}
-  - {fileID: 3111380031343857052}
-  - {fileID: 5082290356320589693}
-  - {fileID: 7346491265349305079}
   colliderList: []
   GotHit: 0
 --- !u!4 &7548630776095335329 stripped

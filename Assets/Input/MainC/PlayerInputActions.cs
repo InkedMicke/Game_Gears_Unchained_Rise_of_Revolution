@@ -982,6 +982,133 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PlayerGlobal"",
+            ""id"": ""a4431ccf-f9a8-49c8-aa95-2f26eaf58923"",
+            ""actions"": [
+                {
+                    ""name"": ""Movement"",
+                    ""type"": ""Value"",
+                    ""id"": ""feaeb91e-082b-40f6-9ab0-486fbcc6121e"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""94a87068-d5b8-4d47-b074-e471182d707f"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""fcf961f8-92cc-44d5-9087-9454eaa857ef"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""f831d8ae-9499-44fa-96c3-26c145e31411"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""5acbe595-5fa8-401d-a573-e70f6693cd9e"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""9428f1bb-039f-41bb-8311-1f5b4979092b"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""8a817e1d-ac36-461b-93b6-ce28a97c3e8e"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""01a87122-c985-4d27-bb6c-da3a7a712bfd"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""38931c5d-b76b-40a5-a496-716cf60b349d"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""b26b9f49-521d-48c3-9228-183893ea02b9"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""284a4b1e-5d08-4bf1-9461-a8786c4dea03"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1070,6 +1197,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UI_LeaveUI = m_UI.FindAction("LeaveUI", throwIfNotFound: true);
         m_UI_ReTab = m_UI.FindAction("ReTab", throwIfNotFound: true);
         m_UI_AvTab = m_UI.FindAction("AvTab", throwIfNotFound: true);
+        // PlayerGlobal
+        m_PlayerGlobal = asset.FindActionMap("PlayerGlobal", throwIfNotFound: true);
+        m_PlayerGlobal_Movement = m_PlayerGlobal.FindAction("Movement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1615,6 +1745,52 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // PlayerGlobal
+    private readonly InputActionMap m_PlayerGlobal;
+    private List<IPlayerGlobalActions> m_PlayerGlobalActionsCallbackInterfaces = new List<IPlayerGlobalActions>();
+    private readonly InputAction m_PlayerGlobal_Movement;
+    public struct PlayerGlobalActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public PlayerGlobalActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_PlayerGlobal_Movement;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerGlobal; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerGlobalActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerGlobalActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerGlobalActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerGlobalActionsCallbackInterfaces.Add(instance);
+            @Movement.started += instance.OnMovement;
+            @Movement.performed += instance.OnMovement;
+            @Movement.canceled += instance.OnMovement;
+        }
+
+        private void UnregisterCallbacks(IPlayerGlobalActions instance)
+        {
+            @Movement.started -= instance.OnMovement;
+            @Movement.performed -= instance.OnMovement;
+            @Movement.canceled -= instance.OnMovement;
+        }
+
+        public void RemoveCallbacks(IPlayerGlobalActions instance)
+        {
+            if (m_Wrapper.m_PlayerGlobalActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerGlobalActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerGlobalActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerGlobalActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerGlobalActions @PlayerGlobal => new PlayerGlobalActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -1695,5 +1871,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnLeaveUI(InputAction.CallbackContext context);
         void OnReTab(InputAction.CallbackContext context);
         void OnAvTab(InputAction.CallbackContext context);
+    }
+    public interface IPlayerGlobalActions
+    {
+        void OnMovement(InputAction.CallbackContext context);
     }
 }
