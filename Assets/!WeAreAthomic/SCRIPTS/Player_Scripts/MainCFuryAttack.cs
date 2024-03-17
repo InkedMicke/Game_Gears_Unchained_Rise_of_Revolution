@@ -80,10 +80,6 @@ namespace Player
             }
 
             ChargeAttack();
-            if (IsChargingAttack && scannerInst != null)
-            {
-                ChangeMaterialScanner();
-            }
         }
 
         private void GamepadDown(InputAction.CallbackContext context)
@@ -118,46 +114,17 @@ namespace Player
             }
         }
 
-        private void ChangeMaterialScanner()
-        {
-            if (scannerInst.transform.localScale.x >= scannerSize - .5f)
-            {
-                if (scannerInst.GetComponent<MeshRenderer>().material != maxRangeMaterial)
-                {
-                    scannerInst.GetComponent<MeshRenderer>().material = maxRangeMaterial;
-                }
-            }
-        }
         private void ChargeAttack()
         {
-            if (CanChargeAttack() && _hasUnlockedAbilityAttack && furyManager.CurrentHealth == 100 && !_mainCAttack.IsAttacking && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            if (CanChargeAttack())
             {
-                furyManager.DecreaseHealth(-100f);
+                furyManager.DecreaseHealth(100f);
                 _mainCLayers.EnableAbilityAttackLayer();
-                _mainCAttack.SetAttackCount(4);
-                _mainCMovement.DisableMovement();
-                weaponObj.SetActive(true);
-                scannerInst = Instantiate(scannerPrefab, groundTr.position, Quaternion.identity);
-                IsChargingAttack = true;
-            }
-
-            if (_mouseMagnitude > 1.1f && _isLeftMousePressed && _hasUnlockedAbilityAttack && !_mainCAttack.IsAttacking && scannerInst != null)
-            {
-                if (scannerInst.transform.localScale.x < scannerSize)
-                {
-                    scannerInst.transform.localScale += Vector3.one * scannerSizeSpeed;
-
-                }
-                else
-                {
-                    scannerInst.transform.localScale = Vector3.one * scannerSize;
-                }
-            }
-
-            if(IsChargingAttack && scannerInst.transform.localScale.x >= scannerSize)
-            {
                 _mainCAttack.SetAttackCount(5);
-                IsChargingAttack = false;
+                _mainCMovement.DisableMovement();
+                scannerInst = Instantiate(scannerPrefab, groundTr.position, Quaternion.identity);
+                scannerInst.transform.localScale = Vector3.one * scannerSize;
+                IsChargingAttack = true;
             }
         }
         public void ApplyAbilityDamage()
@@ -188,10 +155,6 @@ namespace Player
 
         public void ControlUp()
         {
-            if (IsChargingAttack && GameManagerSingleton.Instance.bastetEnergy > 0)
-            {
-                _mainCAttack.SetAttackCount(5);
-            }
             _isLeftMousePressed = false;
             _mouseMagnitude = 0;
         }
@@ -223,6 +186,10 @@ namespace Player
             {
                 return false;
             }
+
+            if (_mainCAttack.IsAttacking) { return false; }
+            if(furyManager.CurrentHealth < 100) { return false; }
+            if(!_hasUnlockedAbilityAttack) { return false; }
 
             if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
             {

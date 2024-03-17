@@ -14,16 +14,23 @@ public class HealthManagerSO : ScriptableObject
 
     private void OnEnable()
     {
-        CurrentHealth = maxHealth;
+        healthChangeEvent?.Invoke(CurrentHealth);
     }
 
     public void DecreaseHealth(float amount)
     {
         CurrentHealth -= amount;
+        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
         healthChangeEvent?.Invoke(CurrentHealth);
-
-        if(IsDeath())
+        if (IsDeath())
             OnDeath?.Invoke();
+    }
+
+    public void GetHealth(float amount)
+    {
+        CurrentHealth += amount;
+        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
+        healthChangeEvent?.Invoke(CurrentHealth);
     }
 
     public bool IsDeath()

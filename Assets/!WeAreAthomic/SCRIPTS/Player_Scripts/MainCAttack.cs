@@ -190,27 +190,6 @@ namespace Player
             }
         }
 
-/*        public void MoveToEnemy()
-        {
-            var currentEnemy = GetEnemyToMove();
-            if (currentEnemy != null)
-            {
-                if (CheckIfEnemyToMoveIsOnAngleView(currentEnemy))
-                {
-                    var currentEnemyPos = currentEnemy.transform.position;
-                    currentEnemyPos.y = transform.position.y;
-                    if (Vector3.SqrMagnitude(currentEnemyPos - transform.position) > 1f)
-                    {
-                        transform.LookAt(currentEnemyPos);
-                        Debug.DrawRay(currentEnemyPos, Vector3.up * 20f, Color.green, 20f);
-                        StartCoroutine(MoveToEnemyCoroutine(currentEnemyPos));
-                        _mainG.EnableTrail();
-                    }
-                    _wrenchHitBox.SetGotHit(true);
-                }
-            }
-        }*/
-
         private IEnumerator MoveToEnemyCoroutine(Vector3 enemyPos)
         {
             IsMovingToEnemy = true;

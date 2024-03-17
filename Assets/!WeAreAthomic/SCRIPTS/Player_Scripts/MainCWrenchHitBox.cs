@@ -10,6 +10,7 @@ namespace Player
        
         [SerializeField] private HealthManagerSO furyManager;
         [SerializeField] private float furyPerHit = 0.2f;
+        [SerializeField] private float furyPerHitDummie = 15f;
 
         [SerializeField] private PlayerDamageData wrenchDamageData;
         
@@ -46,7 +47,12 @@ namespace Player
                     {
                         damageable.GetDamage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, col.gameObject));
 
-                        furyManager.DecreaseHealth(furyPerHit);
+                        if(col.name == "DummieHurtBox")
+                            furyManager.GetHealth(furyPerHitDummie);
+                        else
+                            furyManager.GetHealth(furyPerHit);
+
+
                         GCameraShake.Instance.ShakeCamera(1f, 1f,.2f);
                     }
                     else
