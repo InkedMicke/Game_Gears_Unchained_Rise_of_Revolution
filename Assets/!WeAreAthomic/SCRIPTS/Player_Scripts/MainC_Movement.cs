@@ -7,6 +7,8 @@ namespace Player
 {
     public class MainCMovement : MonoBehaviour
     {
+
+        #region Variables
         private PlayerInputActions _playerInputActions;
         private MainCLayers _mainCLayers;
         private MainCAttack _mainCAttack;
@@ -14,7 +16,7 @@ namespace Player
         private MainCRail _mainCRail;
         private MainCHackingSystem _mainCHacking;
         private MainCAnimatorController _mainCAnimator;
-        private CharacterController _cc;
+        private CharacterController m_cc;
         private MainCGodmode _godMode;
         private MainCHealthManager _mainCHealth;
         [NonSerialized] public GTrajectory Trajectory;
@@ -23,6 +25,7 @@ namespace Player
         private MainCVFX m_mainCVFX;
         private MainCJump m_mainCJump;
         private MainCCrouch m_mainCCrouch;
+        private MainCInput m_input;
 
         public AnimationCurve dashSpeedCurve;
 
@@ -31,58 +34,52 @@ namespace Player
         [SerializeField] private LayerMask playerBulletLayer;
 
         [SerializeField] private GameObject cameraBaseObj;
-        private GameObject _cameraObj;
+        [SerializeField] private GameObject _cameraObj;
 
         public Transform orientation;
         [SerializeField] private Transform groundCheck;
 
         public LayerMask groundLayer;
-
-        private Vector2 _moveVectorKeyboard;
-        private Vector2 _moveVectorGamepad;
-
+        public Vector3 Velocity => m_velocity;
+        Vector3 m_velocity;
         private Vector3 m_moveDir;
-        private Vector3 _movement;
         private Vector3[] puntosTrayectoria;
         private Vector3 _localPosGroundCheckOriginal;
-        private Vector3 m_direction;
 
         [NonSerialized] public bool IsFalling;
         [NonSerialized] public bool IsFollowingTrajectory;
-        [NonSerialized] public bool IsRunningKeyboard;
-        [NonSerialized] public bool IsRunningGamepad;
-        private bool canApplyGravity = true;
+        [NonSerialized] public bool IsRunning;
+        private bool m_canApplyGravity = true;
         private bool _canMove;
 
         private int indexPoint = 2;
 
-        [NonSerialized] public float _turnSmoothVelocityKeyboard;
-
+        public float CurrentSpeed;
         public float walkSpeed;
         public float runSpeed;
         [SerializeField] private float gravityMultiplier = -3f;
-
         [SerializeField] private float aimSpeed;
         [SerializeField] private float maxSlopeAngle = 40f;
+        [SerializeField] private float rotSpeed = 10f;
         public float turnSmoothTime = 0.1f;
-        private float _moveSpeed;
-        private float _turnSmoothVelocityGamepad;
-        [NonSerialized] public float Velocity;
-        [NonSerialized] public float CurrentSpeed;
+        float m_currentSpeedLerp;
 
+        #endregion
 
+        #region Awake
         private void Awake()
         {
             _mainCLayers = GetComponent<MainCLayers>();
             _mainCAttack = GetComponent<MainCAttack>();
             _mainCPistol = GetComponent<MainCPistol>();
-            _cc = GetComponent<CharacterController>();
+            m_cc = GetComponent<CharacterController>();
             _godMode = GetComponent<MainCGodmode>();
             _mainCRail = GetComponent<MainCRail>();
             _mainCHacking = GetComponent<MainCHackingSystem>();
             _mainCAnimator = GetComponent<MainCAnimatorController>();
             _playerInputActions = new PlayerInputActions();
             _mainCHealth = GetComponentInChildren<MainCHealthManager>();
+            m_input = GetComponent<MainCInput>();
             _mainCSounds = GetComponent<MainCSounds>();
             m_mainCDash = GetComponent<MainCDash>();
             m_mainCVFX = GetComponent<MainCVFX>();
@@ -90,22 +87,9 @@ namespace Player
             m_mainCJump = GetComponent<MainCJump>();
             m_mainCCrouch = GetComponent<MainCCrouch>();
         }
+        #endregion
 
-        private void Start()
-        {
-            _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
-
-            _canMove = true;
-            CurrentSpeed = walkSpeed;
-            _localPosGroundCheckOriginal = groundCheck.localPosition;
-            var desiredPos = _localPosGroundCheckOriginal;
-            desiredPos.y -= 0.03f;
-            GameManagerSingleton.Instance.PauseGame(false);
-            GameManagerSingleton.Instance.SetIsSettingsMenuEnabled(false);
-            GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
-            GameManagerSingleton.Instance.SetIsOnDialogue(false);
-        }
-
+        #region EnableAndDisable
         private void OnEnable()
         {
             _playerInputActions.Enable();
@@ -120,45 +104,51 @@ namespace Player
             _playerInputActions.PlayerPC.Running.performed -= RunToggle;
             _playerInputActions.PlayerGamepad.Running.performed -= RunToggle;
         }
+        #endregion
 
+        #region Start
+        private void Start()
+        {
+            _canMove = true;
+            CurrentSpeed = walkSpeed;
+            _localPosGroundCheckOriginal = groundCheck.localPosition;
+            var desiredPos = _localPosGroundCheckOriginal;
+            desiredPos.y -= 0.03f;
+            GameManagerSingleton.Instance.PauseGame(false);
+            GameManagerSingleton.Instance.SetIsSettingsMenuEnabled(false);
+            GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
+            GameManagerSingleton.Instance.SetIsOnDialogue(false);
+        }
+        #endregion
+
+        #region Update
         private void Update()
         {
-            _moveVectorKeyboard = _playerInputActions.PlayerPC.MovementKeyboard.ReadValue<Vector2>();
-
-            m_direction = new Vector3(_moveVectorKeyboard.x, 0f, _moveVectorKeyboard.y).normalized;
-            Vector3 cameraForward = _cameraObj.transform.forward;
-            Vector3 cameraRight = _cameraObj.transform.right;
-            cameraForward.y = 0f;
-            cameraRight.y = 0f;
-            m_moveDir = cameraForward * _moveVectorKeyboard.y + cameraRight * _moveVectorKeyboard.x;
-
-
             AnimatorController();
             ApplyGravity();
-            FollowTrajectory();
+            //FollowTrajectory();
         }
+        #endregion
 
+        #region FixedUpdate
         private void FixedUpdate()
         {
             if (CanMove())
             {
-                if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
-                {
-                    MoveKeyboard();
-                }
-                else
-                    MoveGamepad();
+                Move();
+                RotateInputDir();
             }
 
 
         }
+        #endregion
 
-
+        #region Animation
         private void AnimatorController()
         {
             if (!GameManagerSingleton.Instance.IsGodModeEnabled)
             {
-                if (!IsGrounded() && Velocity < 0.0f && !_mainCRail.IsOnRail())
+                if (!IsGrounded() && m_velocity.y < 0.0f && !_mainCRail.IsOnRail())
                 {
                     IsFalling = true;
                     m_mainCJump.SetIsJumping(false);
@@ -167,7 +157,7 @@ namespace Player
                     _mainCAnimator.SetJumping(m_mainCJump.IsJumping);
                 }
 
-                if (IsFalling && _cc.isGrounded || IsFalling && IsOnSlope())
+                if (IsFalling && IsGrounded() || IsFalling && IsOnSlope())
                 {
                     IsFalling = false;
                     m_mainCJump.SetIsJumping(false);
@@ -176,26 +166,81 @@ namespace Player
                     _mainCAnimator.SetGrounded(true);
                     m_mainCJump.TimeGraceJumpPeriod = Time.time + m_mainCJump.TimeNextJump;
                 }
+                
+                if(m_input.GetInput().magnitude > .1f)
+                {
+                    if(IsRunning)
+                    {
+                        if (m_currentSpeedLerp >= runSpeed) return;
+                        m_currentSpeedLerp += 15f * Time.deltaTime;
+                    }
+                    else
+                    {
+                        if(m_currentSpeedLerp > walkSpeed)
+                        {
+                            if (m_currentSpeedLerp <= walkSpeed) return;
+                            m_currentSpeedLerp -= 15f * Time.deltaTime;
+                        }
+
+                        if(m_currentSpeedLerp <= walkSpeed)
+                        {
+                            m_currentSpeedLerp += 15f * Time.deltaTime;
+                        }
+                    }
+                }
+                else
+                {
+                    m_currentSpeedLerp -= 10f * Time.deltaTime;
+                    m_currentSpeedLerp = Mathf.Clamp(m_currentSpeedLerp, 0, runSpeed);
+                }
+
+                _mainCAnimator.SetMoveSpeed(m_currentSpeedLerp);
             }
         }
+        #endregion
 
+        #region Movement
+
+        void Move()
+        {
+            CurrentSpeed = IsRunning ? runSpeed : walkSpeed;
+            m_moveDir = GetMoveDir();
+            if (_mainCRail.IsSliding)
+            {
+                m_moveDir.x = 0;
+                m_moveDir.z = 0;
+            }
+
+            m_cc.Move(CurrentSpeed * Time.deltaTime * m_moveDir);
+        }
+        #endregion
+
+        #region Rotation
+        void RotateInputDir()
+        {
+            var mouseVector = m_input.GetInput();
+            if (mouseVector.magnitude > 0)
+            {
+                var desiredRot = Quaternion.LookRotation(m_moveDir);
+                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRot, rotSpeed * Time.deltaTime);
+            }
+        }
+        #endregion
+
+        #region Gravity
         private void ApplyGravity()
         {
-            if (_cc.isGrounded && Velocity < 0.0f)
+            if (!m_canApplyGravity) return;
+            if (!IsGrounded() || m_mainCJump.IsJumping)
             {
-                Velocity = -1.0f;
+                m_velocity.y -= Physics.gravity.y * Time.deltaTime * gravityMultiplier;
+                m_cc.Move(m_velocity * Time.deltaTime);
+                Debug.Log(m_cc.isGrounded);
+                Debug.Log(m_mainCJump.IsJumping);
             }
             else
             {
-                Velocity += -Physics.gravity.y * gravityMultiplier * Time.deltaTime;
-            }
-
-            m_moveDir.y = Velocity;
-
-            if (m_moveDir.y == 0 && m_mainCJump.IsJumping && IsGrounded())
-            {
-                m_mainCJump.SetIsJumping(false);
-                _mainCAnimator.SetGrounded(true);
+                m_velocity.y = 0;
             }
 
             if (IsFalling && _mainCRail.IsOnRail())
@@ -205,131 +250,35 @@ namespace Player
 
 
         }
+        #endregion
 
-        private void MoveKeyboard()
+        #region Run
+        private void RunToggle(InputAction.CallbackContext context)
         {
-            var targetAngle = Mathf.Atan2(m_direction.x, m_direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
-            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityKeyboard, turnSmoothTime);
+            if (m_mainCJump.IsJumping || IsFalling) return;
 
-            CurrentSpeed = IsRunningKeyboard ? runSpeed : walkSpeed;
-
-            if (_mainCRail.IsSliding)
+            if (m_mainCCrouch.IsCrouch)
             {
-                m_moveDir.x = 0;
-                m_moveDir.z = 0;
-            }
-
-            if (IsOnSlope())
-            {
-                _cc.Move(CurrentSpeed * Time.deltaTime * m_moveDir);
-            }
-            else
-            {
-                _cc.Move(CurrentSpeed * Time.deltaTime * m_moveDir);
-            }
-            _mainCAnimator.SetMoveSpeed(_moveSpeed);
-
-            ApplyGravity();
-
-
-
-            if (_moveVectorKeyboard.magnitude > 0.1f)
-            {
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            }
-
-
-
-
-            //arreglar cuando mantienes la W se suma y resta a la vez el moveSpeed
-            if (_moveVectorKeyboard.magnitude > 0.1f && !IsRunningKeyboard)
-            {
-                if (_moveSpeed < CurrentSpeed)
+                if (m_mainCCrouch.CanStandUp())
                 {
-                    _moveSpeed += Time.deltaTime * 24;
+                    _mainCLayers.DisableCrouchLayer();
+                    m_mainCCrouch.SetIsCrouch(false);
+                    m_mainCCrouch.ToggleCCSize();
+                    _mainCAnimator.SetCrouch(m_mainCCrouch.IsCrouch);
 
-                    if ((Mathf.Abs(_moveSpeed - CurrentSpeed)) < 0.3f)
-                    {
-                        _moveSpeed = CurrentSpeed;
-                    }
-                }
-
-                if (_moveSpeed > CurrentSpeed)
-                {
-                    _moveSpeed -= Time.deltaTime * 18;
+                    IsRunning = !IsRunning;
                 }
             }
             else
             {
-                if (!IsRunningKeyboard || IsRunningKeyboard && _moveVectorKeyboard.magnitude < 0.1f)
-                {
-                    if (_moveSpeed > 0)
-                    {
-                        _moveSpeed -= Time.deltaTime * 24;
-                    }
-                    else
-                    {
-                        if (_moveSpeed.Equals(0)) return;
-                        _moveSpeed = 0;
-                    }
-                }
+
+                IsRunning = !IsRunning;
             }
 
-            if (!(_moveVectorKeyboard.magnitude > 0.1 && IsRunningKeyboard)) return;
-            if (_moveSpeed < runSpeed)
-            {
-                _moveSpeed += Time.deltaTime * 24;
-            }
-            else
-            {
-                if (_moveSpeed.Equals(runSpeed)) return;
-                _moveSpeed = runSpeed;
-            }
         }
+        #endregion
 
-        private void MoveGamepad()
-        {
-            _moveVectorGamepad = _playerInputActions.PlayerGamepad.MovementGamepad.ReadValue<Vector2>();
-
-            _movement = new Vector3(_moveVectorGamepad.x, 0.0f, _moveVectorGamepad.y).normalized;
-
-            var moveSpeed = IsRunningGamepad ? runSpeed : CurrentSpeed;
-
-            var desiredSpeed = _movement.magnitude * moveSpeed / 2 * 2.0f;
-
-
-            //_cc.Move(_movement * Time.deltaTime);
-
-            var actualSpeed = _mainCAnimator.GetMoveSpeed();
-            var interpolatedSpeed = Mathf.Lerp(actualSpeed, desiredSpeed, Time.deltaTime * 8.0f);
-            _mainCAnimator.SetMoveSpeed(interpolatedSpeed);
-
-            var direction = new Vector3(_moveVectorGamepad.x, 0f, _moveVectorGamepad.y).normalized;
-            var targetAngle = Mathf.Atan2(_movement.x, _movement.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
-            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocityGamepad,
-                turnSmoothTime);
-
-            Vector3 cameraForward = _cameraObj.transform.forward;
-            Vector3 cameraRight = _cameraObj.transform.right;
-            cameraForward.y = 0f;
-            cameraRight.y = 0f;
-
-
-            if (IsOnSlope())
-            {
-                _cc.Move(GetSlopeMoveDirection() * (Time.deltaTime * interpolatedSpeed * CurrentSpeed));
-            }
-            else
-            {
-                _cc.Move(interpolatedSpeed * Time.deltaTime * m_moveDir);
-            }
-
-            if (_moveVectorGamepad.magnitude > 0.1)
-            {
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            }
-        }
-
+        #region Trajectory
         public void SetFollowTrajectory(bool condition)
         {
             IsFollowingTrajectory = condition;
@@ -354,43 +303,48 @@ namespace Player
                 if (IsGrounded())
                 {
                     EnableMovement();
-                    _cc.enabled = true;
+                    m_cc.enabled = true;
                     IsFollowingTrajectory = false;
                 }
             }
         }
+        #endregion
 
-
-        private void RunToggle(InputAction.CallbackContext context)
+        #region EnableAndDisableVariables
+        public void EnableMovement()
         {
-
-            if (m_mainCCrouch.IsCrouch)
-            {
-                if (m_mainCCrouch.CanStandUp())
-                {
-                    _mainCLayers.DisableCrouchLayer();
-                    m_mainCCrouch.SetIsCrouch(false);
-                    m_mainCCrouch.ToggleCCSize();
-                    _mainCAnimator.SetCrouch(m_mainCCrouch.IsCrouch);
-
-                    IsRunningKeyboard = !IsRunningKeyboard;
-
-                    IsRunningGamepad = !IsRunningGamepad;
-                }
-            }
-            else
-            {
-
-                IsRunningKeyboard = !IsRunningKeyboard;
-                IsRunningGamepad = !IsRunningGamepad;
-            }
-
+            _canMove = true;
         }
 
-        public void InvokeDisableAllLayers()
+        public void DisableMovement()
         {
-            _mainCLayers.DisableCrouchLayer();
-            _mainCLayers.DisableAttackLayer();
+            _canMove = false;
+        }
+        #endregion
+
+        #region Set Values
+
+        public void SetVelocity(Vector3 velocity)
+        {
+            m_velocity = velocity;
+        }
+
+        public void SetCanApplyGravity(bool condition)
+        {
+            m_canApplyGravity = condition;
+        }
+        #endregion
+
+        #region Return Values
+        public Vector3 GetMoveDir()
+        {
+            var mouseVector = m_input.GetInput();
+            var moveDir = new Vector3(mouseVector.x, 0f, mouseVector.y).normalized;
+            Vector3 cameraForward = cameraBaseObj.transform.forward;
+            Vector3 cameraRight = cameraBaseObj.transform.right;
+            cameraForward.y = 0f;
+            cameraRight.y = 0f;
+            return moveDir = cameraForward * mouseVector.y + cameraRight * mouseVector.x;
         }
 
         public Vector3 PositionOnFloorNotGrounded()
@@ -404,46 +358,9 @@ namespace Player
             return Vector3.ProjectOnPlane(m_moveDir, _slopeHit.normal).normalized;
         }
 
-        public void EnableMovement()
-        {
-            _canMove = true;
-        }
+        #endregion
 
-        public void DisableMovement()
-        {
-            _canMove = false;
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (IsFollowingTrajectory)
-            {
-                foreach (var t in puntosTrayectoria)
-                {
-                    Gizmos.DrawWireSphere(t, 0.1f);
-                }
-            }
-
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(groundCheck.position, .1f);
-        }
-
-        public bool IsOnSlope()
-        {
-            if (Physics.Raycast(transform.position, Vector3.down, out _slopeHit, .08f))
-            {
-                var angle = Vector3.Angle(Vector3.up, _slopeHit.normal);
-                return angle < maxSlopeAngle && angle != 0;
-            }
-
-            return false;
-        }
-
-        public void SetCanApplyGravity(bool condition)
-        {
-            canApplyGravity = condition;
-        }
-
+        #region Bools
         private bool CanMove()
         {
             if (GameManagerSingleton.Instance.IsAbilityMenuEnabled)
@@ -481,10 +398,10 @@ namespace Player
                 return false;
             }
 
-/*            if (_mainCHealth.IsDeath())
-            {
-                return false;
-            }*/
+            /*            if (_mainCHealth.IsDeath())
+                        {
+                            return false;
+                        }*/
 
             if (!_canMove)
             {
@@ -496,12 +413,12 @@ namespace Player
                 return false;
             }
 
-            if(_mainCAttack.IsMovingToEnemy)
+            if (_mainCAttack.IsMovingToEnemy)
             {
                 return false;
-            }            
-            
-            if(_mainCAttack.IsAttacking)
+            }
+
+            if (_mainCAttack.IsAttacking)
             {
                 return false;
             }
@@ -530,5 +447,37 @@ namespace Player
                 }
             }
         }
+
+        public bool IsOnSlope()
+        {
+            if (Physics.Raycast(transform.position, Vector3.down, out _slopeHit, .08f))
+            {
+                var angle = Vector3.Angle(Vector3.up, _slopeHit.normal);
+                return angle < maxSlopeAngle && angle != 0;
+            }
+
+            return false;
+        }
+
+        #endregion
+
+        #region Only Editor
+#if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            if (IsFollowingTrajectory)
+            {
+                foreach (var t in puntosTrayectoria)
+                {
+                    Gizmos.DrawWireSphere(t, 0.1f);
+                }
+            }
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(groundCheck.position, .1f);
+        }
+#endif
+        #endregion
+
     }
 }

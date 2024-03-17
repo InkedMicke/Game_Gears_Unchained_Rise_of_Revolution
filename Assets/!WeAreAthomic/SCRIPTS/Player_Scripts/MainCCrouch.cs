@@ -139,10 +139,9 @@ namespace Player
                 _isCrouchWalking = true;
                 m_mainCAnim.SetCrouchWalking(_isCrouchWalking);
                 m_mainCMove.CurrentSpeed = crouchSpeed;
-                if (m_mainCMove.IsRunningKeyboard || m_mainCMove.IsRunningGamepad)
+                if (m_mainCMove.IsRunning)
                 {
-                    m_mainCMove.IsRunningKeyboard = !m_mainCMove.IsRunningKeyboard;
-                    m_mainCMove.IsRunningGamepad = !m_mainCMove.IsRunningGamepad;
+                    m_mainCMove.IsRunning = !m_mainCMove.IsRunning;
                 }
 
             }

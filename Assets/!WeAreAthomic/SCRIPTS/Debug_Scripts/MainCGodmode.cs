@@ -1,6 +1,7 @@
 using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 namespace Player
 {
@@ -13,9 +14,10 @@ namespace Player
         private MainCRail _mainCRail;
         private MainCVFX _mainVFXCharacter;
         [SerializeField] private LabThirdRoomController _labController;
+        MainCInput m_input;
 
         [SerializeField] private GameObject godModeContainer;
-        private GameObject _cameraObj;
+        [SerializeField] private Transform cameraBaseObj;
 
         [SerializeField] private Transform tpSkippedTutorial;
 
@@ -41,11 +43,6 @@ namespace Player
             _playerInputActions.PlayerPC.Slow.canceled += CtrlUp;
         }
 
-        private void Start()
-        {
-            _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
-        }
-
         private void Update()
         {
             GodMode();
@@ -68,17 +65,8 @@ namespace Player
         {
             if(GameManagerSingleton.Instance.IsGodModeEnabled)
             {
-                var moveVectorKeyboard = _playerInputActions.PlayerPC.MovementKeyboard.ReadValue<Vector2>();
+                var moveDir = GetMoveDir();
 
-                var direction = new Vector3(moveVectorKeyboard.x, 0f, moveVectorKeyboard.y).normalized;
-                var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraObj.transform.eulerAngles.y;
-                var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _mainCMove._turnSmoothVelocityKeyboard,
-                    _mainCMove.turnSmoothTime);
-
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-
-                var moveDir = _cameraObj.transform.forward * (Time.deltaTime * 5f * direction.magnitude * _moveSpeed);
                 _mainVFXCharacter.SetRailEffects(false);
                 _cc.enabled = true;
                 _cc.Move(moveDir);
@@ -145,6 +133,17 @@ namespace Player
                 _isSpeedingDown = true;
             }
         }
-    
+
+        public Vector3 GetMoveDir()
+        {
+            var mouseVector = m_input.GetInput();
+            var moveDir = new Vector3(mouseVector.x, 0f, mouseVector.y).normalized;
+            Vector3 cameraForward = cameraBaseObj.forward;
+            Vector3 cameraRight = cameraBaseObj.right;
+            cameraForward.y = 0f;
+            cameraRight.y = 0f;
+            return moveDir = cameraForward * mouseVector.y + cameraRight * mouseVector.x;
+        }
+
     }
 }
