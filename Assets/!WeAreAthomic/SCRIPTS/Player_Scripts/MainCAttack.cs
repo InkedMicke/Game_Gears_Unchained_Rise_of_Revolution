@@ -175,14 +175,14 @@ namespace Player
 
                 if (CanAttack() && !_isSheathed && !_mainCPistol.IsAiming)
                 {
-                    if (_mainCTutorial.IsOnTutorial && !_sheathTutorial)
+                    /*if (_mainCTutorial.IsOnTutorial && !_sheathTutorial)
                     {
-                        _mainCSounds.RemoveAllSounds();
-                        _mainCSounds.PlayExpressionSound();
+                        //_mainCSounds.RemoveAllSounds();
+                        //_mainCSounds.PlayExpressionSound();
                         var lengthOfClip = _mainCSounds.GetAudioClipLength(_mainCSounds.CurrentExpressionClip.name);
                         Invoke(nameof(PlayTutorialFifth), lengthOfClip);
                         _sheathTutorial = true;
-                    }
+                    }*/
 
                     ShowWeapon();
                     _isSheathed = true;

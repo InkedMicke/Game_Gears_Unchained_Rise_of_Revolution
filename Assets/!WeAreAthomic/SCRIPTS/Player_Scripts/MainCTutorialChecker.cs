@@ -28,9 +28,7 @@ namespace Player
 
         [System.NonSerialized] public bool IsOnTutorial;
         public bool FirstTimeAbility;
-        private bool _isRoom1;
-        private bool _isRoom2;
-        private bool _isRoom3;
+
         private bool _isCheckingHealth;
         private bool _isCheckingHack;
 
@@ -79,8 +77,8 @@ namespace Player
                 if (healthManagerSO.CurrentHealth >= 100)
                 {
                     _isCheckingHealth = false;
-                    _mainCSounds.RemoveAllSounds();
-                    _mainCSounds.PlayExpressionSound();
+                
+                    
                     goHerePosaManoMove.SetActive(true);
                     goHereBreather.SetActive(false);
                     break;
