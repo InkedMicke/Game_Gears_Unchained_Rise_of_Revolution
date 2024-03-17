@@ -235,8 +235,6 @@ namespace Player
             {
                 m_velocity.y -= Physics.gravity.y * Time.deltaTime * gravityMultiplier;
                 m_cc.Move(m_velocity * Time.deltaTime);
-                Debug.Log(m_cc.isGrounded);
-                Debug.Log(m_mainCJump.IsJumping);
             }
             else
             {

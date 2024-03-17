@@ -134,6 +134,7 @@ namespace Player
             _splineLength = _splineContainer.CalculateLength();
             IsSliding = true;
             _mainCAnim.SetMoveSpeed(0);
+            m_mainCCrouch.SetIsCrouch(false);
             m_mainCVFX.SetRailEffects(true);
             m_mainCSounds.PlayRailSound();
         }

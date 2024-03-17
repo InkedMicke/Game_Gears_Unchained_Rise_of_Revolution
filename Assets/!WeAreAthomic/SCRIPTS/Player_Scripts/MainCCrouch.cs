@@ -67,8 +67,24 @@ namespace Player
 
         void ToggleCrouch(InputAction.CallbackContext context)
         {
-            IsCrouch = !IsCrouch;
 
+            if (m_mainCMove.IsGrounded() && !m_mainCRail.IsSliding)
+            {
+                CrouchGround();
+            }
+
+            if (!m_mainCMove.IsGrounded() && m_mainCRail.IsSliding)
+            {
+                CrouchRail();
+            }
+        }
+
+        void CrouchGround()
+        {
+            if (Time.time < m_timeGraceCrouchPeriod) return;
+
+            IsCrouch = !IsCrouch;
+            ToggleCCSize();
             if (IsCrouch)
             {
                 if (_moveVectorKeyboard.magnitude > 0.1f || _moveVectorGamepad.magnitude > 0.1f)
@@ -79,7 +95,14 @@ namespace Player
             }
 
             m_mainCAnim.SetCrouch(IsCrouch);
+            m_timeGraceCrouchPeriod = Time.time + timeNextCrouch;
+        }
 
+        void CrouchRail()
+        {
+            IsCrouch = !IsCrouch;
+            ToggleCCSize();
+            m_mainCAnim.SetSlidingCrouch(IsCrouch);
         }
 
         private void StartEndCrouch()
@@ -128,7 +151,7 @@ namespace Player
 
                 }
 
-                m_timeGraceCrouchPeriod = Time.time + timeNextCrouch;
+
             }
         }
 
