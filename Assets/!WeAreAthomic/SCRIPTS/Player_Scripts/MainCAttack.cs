@@ -28,18 +28,18 @@ namespace Player
         private MainCFuryAttack _mainCFuryAttack;
         [SerializeField] MainCHitBoxAngleView hitBoxAngleView;
 
-        private Rigidbody _rb;
+
 
         Coroutine m_moveToEnemyCoroutine;
 
         [SerializeField] private CinemachineVirtualCamera cameraBase;
 
         public GameObject weaponObj;
-        [SerializeField] private GameObject tut_ES;
+        
 
         [SerializeField] private Transform middlePosTr;
 
-        private Transform _closestObject;
+     
 
         public LayerMask enemyHurtBox;
 

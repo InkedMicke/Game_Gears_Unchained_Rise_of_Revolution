@@ -95,6 +95,8 @@ namespace Enemy
             _fov = fovs[0];
             _fovHearNear = fovs[1];
             _fovHearFar = fovs[2];
+
+            _soldierHurtBox.OnDeath += InstantiateEspurna;
         }
 
         private void OnEnable()

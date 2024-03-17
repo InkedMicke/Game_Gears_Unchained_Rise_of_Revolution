@@ -714,7 +714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f95d1e782115dd42b0c210ad4c8dc70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxFury: 100
+  furyManager: {fileID: 11400000, guid: 4b76bc8ad8a23574d96aefce29a0f88b, type: 2}
   furyDamageData: {fileID: 11400000, guid: 428922bc477c45e498ba9050568c0df4, type: 2}
   lowRangeMaterial: {fileID: 2100000, guid: 4ec66d75a6209ac49b66bb608ec54340, type: 2}
   maxRangeMaterial: {fileID: 2100000, guid: 512108664ab3af04a8a9467b3da89b57, type: 2}
@@ -729,7 +729,6 @@ MonoBehaviour:
   IsFullFury: 0
   scannerSizeSpeed: 0.3
   scannerSize: 12
-  furyPerHit: 5
   IsChargingAttack: 0
 --- !u!114 &4792467031579069366
 MonoBehaviour:
@@ -2587,7 +2586,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eeb84d37ac80844da1dba91e36eea62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCFuryAttack: {fileID: 0}
+  furyManager: {fileID: 11400000, guid: 4b76bc8ad8a23574d96aefce29a0f88b, type: 2}
+  furyPerHit: 0.2
   wrenchDamageData: {fileID: 11400000, guid: ad06cde7f1e032d44b83a8cacd9a52ec, type: 2}
   colliderList: []
   GotHit: 0

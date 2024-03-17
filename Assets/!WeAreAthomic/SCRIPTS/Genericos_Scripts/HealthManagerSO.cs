@@ -17,7 +17,7 @@ public class HealthManagerSO : ScriptableObject
         CurrentHealth = maxHealth;
     }
 
-    public void DecreaseHealth(int amount)
+    public void DecreaseHealth(float amount)
     {
         CurrentHealth -= amount;
         healthChangeEvent?.Invoke(CurrentHealth);

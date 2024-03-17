@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Player;
+using UnityEngine.Events;
 
-namespace Generics
+namespace Player
 {
-
+    
     public class EspurnaCharge : MonoBehaviour
     {
+        [SerializeField] private HealthManagerSO furyManager;
+
+        [SerializeField] private UnityEvent OnTake;
         private void OnTriggerEnter(Collider other)
         {
             // Recargar Furia
+            furyManager.DecreaseHealth(+2);
             //Efecto visual y de sonido
-            //Destruir el game Object con .5 tiempo
+            OnTake?.Invoke();
+            
         }
 
     }

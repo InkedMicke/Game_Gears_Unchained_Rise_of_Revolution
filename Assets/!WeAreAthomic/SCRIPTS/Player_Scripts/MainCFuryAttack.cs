@@ -21,9 +21,7 @@ namespace Player
         private MainCPlayerInterface _mainCInterface;
         private MainCVFX _mainCVfx;
 
-        [SerializeField] private float maxFury;
-        private float currentFury;
-        private float furySpend;
+        [SerializeField] private HealthManagerSO furyManager;
 
         [SerializeField] private PlayerDamageData furyDamageData;
         [SerializeField] private Material lowRangeMaterial;
@@ -40,7 +38,6 @@ namespace Player
 
         [SerializeField] private float scannerSizeSpeed = .1f;
         [SerializeField] private float scannerSize = 15f;
-        public float furyPerHit = 20f;
         private float _mouseMagnitude;
 
         [NonSerialized] public bool IsFinalAttacking;
@@ -48,8 +45,7 @@ namespace Player
         public bool IsChargingAttack;
         private bool _isLeftMousePressed;
         private bool _hasUnlockedAbilityAttack;
-        private bool _runOutFury;
-        private bool _canAbilityAttack = true;
+
 
         private void Awake()
         {
@@ -74,10 +70,7 @@ namespace Player
             _inputActions.PlayerGamepad.Attack.canceled += GamepadUp;
         }
 
-        private void Start()
-        {
-            GetFury(100f);
-        }
+   
 
         private void Update()
         {
@@ -137,9 +130,9 @@ namespace Player
         }
         private void ChargeAttack()
         {
-            if (CanChargeAttack() && _hasUnlockedAbilityAttack && GameManagerSingleton.Instance.bastetFury == 100 && !_mainCAttack.IsAttacking && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
+            if (CanChargeAttack() && _hasUnlockedAbilityAttack && furyManager.CurrentHealth == 100 && !_mainCAttack.IsAttacking && !GameManagerSingleton.Instance.IsAbilityMenuEnabled)
             {
-                GetFury(-100);
+                furyManager.DecreaseHealth(-100f);
                 _mainCLayers.EnableAbilityAttackLayer();
                 _mainCAttack.SetAttackCount(4);
                 _mainCMovement.DisableMovement();
@@ -184,22 +177,14 @@ namespace Player
         {
             _hasUnlockedAbilityAttack = condition;
         }
-        public void SetRunOutEnergy(bool condition)
-        {
-            _runOutFury = condition;
-        }
+    
         public void InstanciateExplosion()
         {
             Instantiate(explosionEffect, explosionEffectPosition.position, Quaternion.identity);
 
         }
 
-        public void GetFury(float fury)
-        {
-            GameManagerSingleton.Instance.bastetFury += fury;
-            GameManagerSingleton.Instance.bastetFury = Mathf.Clamp(GameManagerSingleton.Instance.bastetFury, 0f, 100f);
-            _mainCInterface.SetFurySlider(GameManagerSingleton.Instance.bastetFury);
-        }
+    
 
         public void ControlUp()
         {

@@ -7,7 +7,9 @@ namespace Player
 {
     public class MainCWrenchHitBox : MonoBehaviour
     {
-        [SerializeField] private MainCFuryAttack mainCFuryAttack;
+       
+        [SerializeField] private HealthManagerSO furyManager;
+        [SerializeField] private float furyPerHit = 0.2f;
 
         [SerializeField] private PlayerDamageData wrenchDamageData;
         
@@ -15,10 +17,7 @@ namespace Player
 
         public bool GotHit;
 
-        private void OnValidate()
-        {
-            mainCFuryAttack = GetComponentInParent<MainCFuryAttack>();
-        }
+   
 
         private void OnTriggerEnter(Collider other)
         {
@@ -46,7 +45,8 @@ namespace Player
                     if (damageable.CanReceiveDamage())
                     {
                         damageable.GetDamage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, col.gameObject));
-                        mainCFuryAttack.GetFury(mainCFuryAttack.furyPerHit);
+
+                        furyManager.DecreaseHealth(furyPerHit);
                         GCameraShake.Instance.ShakeCamera(1f, 1f,.2f);
                     }
                     else
