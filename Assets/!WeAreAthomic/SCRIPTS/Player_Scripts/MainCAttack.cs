@@ -460,7 +460,7 @@ namespace Player
         }
 
 
-
+/*
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
@@ -478,7 +478,7 @@ namespace Player
                 Handles.DrawLine(transform.position - transform.right, transform.position + viewAngle02 * nearEnemieToGoRadius);
             }
         }
-#endif
+#endif*/
 
         private Vector3 DirectionFromAngle(float eulerY, float angleInDegrees)
         {
