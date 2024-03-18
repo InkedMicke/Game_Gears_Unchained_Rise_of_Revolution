@@ -41636,7 +41636,15 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 4470572553644151842, guid: efaedc6625acc0b4ea60a335535fe799, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5815691148248879000, guid: efaedc6625acc0b4ea60a335535fe799,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6659773443784693090}
+    - targetCorrespondingSourceObject: {fileID: 1067591206206923626, guid: efaedc6625acc0b4ea60a335535fe799,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3838187274823924164}
   m_SourcePrefab: {fileID: 100100000, guid: efaedc6625acc0b4ea60a335535fe799, type: 3}
 --- !u!114 &938926268918543520 stripped
 MonoBehaviour:
@@ -41656,6 +41664,34 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3144986895079951072}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3838187274823924164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2699314655384611210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708903eed8ddfe8468948e9abaab0bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6011056345535749229}
+        m_TargetAssemblyTypeName: Enemy.SoldierWarnings, Assembly-CSharp
+        m_MethodName: EndAnim
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onStart: 0
 --- !u!1 &3210543378479985834 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 516533908359609930, guid: efaedc6625acc0b4ea60a335535fe799,
@@ -41674,6 +41710,34 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3144986895079951072}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6659773443784693090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8867658732008228216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708903eed8ddfe8468948e9abaab0bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6011056345535749229}
+        m_TargetAssemblyTypeName: Enemy.SoldierWarnings, Assembly-CSharp
+        m_MethodName: EndAnim
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onStart: 0
 --- !u!1001 &3201887876551419455
 PrefabInstance:
   m_ObjectHideFlags: 0

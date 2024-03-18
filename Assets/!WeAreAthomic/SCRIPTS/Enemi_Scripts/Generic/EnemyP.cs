@@ -103,7 +103,7 @@ namespace Enemy
         {
             _soldierHurtBox.OnDeath += DisableCC;
             _soldierHurtBox.OnDeath += DisableMovement;
-            _soldierHurtBox.OnHurt += Knockback;
+            _soldierHurtBox.OnHurtedSmallerTwo += Knockback;
             _soldierHurtBox.OnHurtedSmallerTwo += StopAttackDueToHurt;
         }
 

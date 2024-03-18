@@ -12,8 +12,11 @@ namespace Seth
 
         [SerializeField] LineRenderer laserBeam;
 
+        [SerializeField] ParticleSystem hitSparks;
+
         [SerializeField] LayerMask laserLayer;
 
+        [SerializeField] Transform hitPointSparks;
         Transform m_playerTr;
 
         [SerializeField] EnemyDamageData damageData;
@@ -86,9 +89,11 @@ namespace Seth
                 var ray = new Ray(transform.position, transform.forward);
                 if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, laserLayer)) continue;
 
-                laserBeam.SetPosition(1, laserBeam.transform.worldToLocalMatrix.MultiplyPoint(hit.point));
+                var hitPos = laserBeam.transform.worldToLocalMatrix.MultiplyPoint(hit.point);
+                laserBeam.SetPosition(1, hitPos);
                 Debug.DrawRay(transform.position, transform.forward, Color.blue, 0.05f);
-
+                hitPointSparks.position = hitPos;
+                hitSparks.Play();
                 if (hit.collider.gameObject == m_playerTr.gameObject && hit.collider.TryGetComponent(out HurtBox hurtbox))
                 {
                     hurtbox.GetDamage(GameManagerSingleton.Instance.GetEnemyDamage(damageData));

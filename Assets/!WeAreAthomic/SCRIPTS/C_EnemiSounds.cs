@@ -28,10 +28,13 @@ namespace Enemy
 
         private void Awake()
         {
-            if (m_soldierHurtbox.GetComponent<SoldierHurtBox>() != null)
+            if (m_soldierHurtbox == null)
             {
                 m_soldierHurtbox = GetComponent<SoldierHurtBox>();
-                m_usingSoldierHurtBox = true;
+                if (m_soldierHurtbox != null)
+                {
+                    m_usingSoldierHurtBox = true;
+                }
             }
             else
                 m_broomHurtbox = GetComponent<BroomHurtBox>();

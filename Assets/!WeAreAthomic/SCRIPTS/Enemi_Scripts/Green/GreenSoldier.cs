@@ -52,6 +52,7 @@ namespace Enemy.Green
             {
                 if(!IsAttacking)
                 {
+                    Debug.Log("hola1");
                     _agent.isStopped = true;
                     _soldierAnim.SetWalking(false);
                     StartDecalToAttack();

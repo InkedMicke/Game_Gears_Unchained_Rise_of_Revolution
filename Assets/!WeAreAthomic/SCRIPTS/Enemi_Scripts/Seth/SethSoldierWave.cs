@@ -29,7 +29,7 @@ namespace Seth
         {
                 for (int i = 0; i < enemiesToSpawn; i++)
                 {
-                    var soldier = Instantiate(enemiesPrefab[UnityEngine.Random.Range(0, enemiesPrefab.Count - 1)], spawnPos.position, Quaternion.identity);
+                    var soldier = Instantiate(enemiesPrefab[UnityEngine.Random.Range(0, enemiesPrefab.Count)], spawnPos.position, Quaternion.identity);
                     SoldierToFight(soldier);
                     spawnedSoldiers.Add(soldier);
                     yield return new WaitForSeconds(0.5f);
