@@ -420,6 +420,11 @@ namespace Player
             {
                 return false;
             }
+                        
+            if (_mainCRail.IsSliding)
+            {
+                return false;
+            }
 
             return true;
         }

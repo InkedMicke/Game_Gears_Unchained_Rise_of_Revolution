@@ -108,7 +108,8 @@ namespace Player
 
                 var nextPosition = _splineContainer.EvaluatePosition(_distancePercentage + .001f);
                 var direction = nextPosition - currentPosition;
-                transform.rotation = Quaternion.LookRotation(direction, transform.up);
+                var lookRot = Quaternion.LookRotation(direction, transform.up);
+                transform.rotation = Quaternion.Lerp(transform.rotation, lookRot, 10f * Time.deltaTime);
             }
             else if (IsSliding && m_mainCJump.IsJumping || IsSliding && _mainCMove.IsFalling)
             {
@@ -127,7 +128,7 @@ namespace Player
             var cols = Physics.OverlapSphere(transform.position, 1f, railLayer);
             
             _splineContainer = cols[0].transform.GetChild(0).GetComponent<SplineContainer>();
-            
+            FixPosOnRail();
             _distancePercentage = 0;
             m_mainClayers.EnableSlideLayer();
             _mainCAnim.SetSliding(true);
@@ -137,6 +138,13 @@ namespace Player
             m_mainCCrouch.SetIsCrouch(false);
             m_mainCVFX.SetRailEffects(true);
             m_mainCSounds.PlayRailSound();
+        }
+
+        void FixPosOnRail()
+        {
+            var nextPosition = _splineContainer.EvaluatePosition(_distancePercentage + .001f);
+            nextPosition.y = transform.position.y;
+            transform.LookAt(nextPosition);
         }
 
         private void OnDrawGizmos()

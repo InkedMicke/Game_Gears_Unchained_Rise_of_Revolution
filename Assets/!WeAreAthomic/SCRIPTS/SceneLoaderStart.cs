@@ -34,7 +34,7 @@ public class SceneLoaderStart : MonoBehaviour
     IEnumerator LoadingScenes()
     {
         yield return new WaitForSeconds(timeToLoad);
-        while (currentSceneIndex < loadSceneAsyncAssets.Count )
+        while (currentSceneIndex < loadSceneAsyncAssets.Count)
         {
             _sceneLoaderMultipleAsync.loadSceneAsyncAsset = loadSceneAsyncAssets[currentSceneIndex];
             _sceneLoaderMultipleAsync.LoadSceneAsync();

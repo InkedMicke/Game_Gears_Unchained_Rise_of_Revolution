@@ -68,10 +68,6 @@ namespace Player
         public float timeGraceAttackPeriod;
         private float _currentTimeSheath;
 
-        [SerializeField] TextMeshProUGUI text1;
-        [SerializeField] TextMeshProUGUI text2;
-        [SerializeField] TextMeshProUGUI text3;
-
 
         protected override void Awake()
         {
@@ -93,17 +89,31 @@ namespace Player
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
+
+            _weaponBC = weaponObj.GetComponent<BoxCollider>();
+            _canAttack = false;
+
+            base.Awake();
+        }
+
+        private void OnEnable()
+        {
             _playerInputActions.PlayerPC.Attack.performed += NextCombo;
             _playerInputActions.PlayerPC.Attack.performed += MouseDown;
             _playerInputActions.PlayerPC.Attack.canceled += MouseUp;
             _playerInputActions.PlayerGamepad.Attack.performed += NextCombo;
             _playerInputActions.PlayerGamepad.Attack.performed += GamepadDown;
             _playerInputActions.PlayerGamepad.Attack.canceled += GamepadUp;
+        }
 
-            _weaponBC = weaponObj.GetComponent<BoxCollider>();
-            _canAttack = false;
-
-            base.Awake();
+        private void OnDisable()
+        {
+            _playerInputActions.PlayerPC.Attack.performed -= NextCombo;
+            _playerInputActions.PlayerPC.Attack.performed -= MouseDown;
+            _playerInputActions.PlayerPC.Attack.canceled -= MouseUp;
+            _playerInputActions.PlayerGamepad.Attack.performed -= NextCombo;
+            _playerInputActions.PlayerGamepad.Attack.performed -= GamepadDown;
+            _playerInputActions.PlayerGamepad.Attack.canceled -= GamepadUp;
         }
 
 
@@ -270,7 +280,6 @@ namespace Player
         {
             if (m_doNextcombo && IsAttacking)
             {
-                text1.text = "funcionaNextAttackCombo";
                 WhatToDoBasedOnIfGotCol();
                 //GCameraShake.Instance.ShakeCamera(1f, .1f);
                 _mainCSounds.PlayAttackSound();
@@ -300,7 +309,6 @@ namespace Player
         {
             if (_canNextAttack)
             {
-                text2.text = "funcionaNextCombo";
                 m_doNextcombo = true;
             }
         }

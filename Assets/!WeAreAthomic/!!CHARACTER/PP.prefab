@@ -1256,8 +1256,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5891414682418371168}
-  m_LocalRotation: {x: -0.013530813, y: -0.9994625, z: -0.009050755, w: -0.028457701}
-  m_LocalPosition: {x: 47.354862, y: 2.3485496, z: 43.714012}
+  m_LocalRotation: {x: 0.3914243, y: -0, z: -0, w: 0.92021036}
+  m_LocalPosition: {x: -503.20193, y: 121.795784, z: -1362.5521}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1297,7 +1297,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 60
+  field of view: 51.8
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -3180,6 +3180,11 @@ PrefabInstance:
       propertyPath: furySlider
       value: 
       objectReference: {fileID: 2902510724400990094}
+    - target: {fileID: 2893019647779772376, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
+      propertyPath: cameraShake
+      value: 
+      objectReference: {fileID: 5931935607214585326}
     - target: {fileID: 3041984638410706847, guid: fefbaa6b55d08b34ba68dddc4393a15b,
         type: 3}
       propertyPath: bastetObj
@@ -3407,6 +3412,11 @@ PrefabInstance:
       propertyPath: crosshair
       value: 
       objectReference: {fileID: 5632430438496822660}
+    - target: {fileID: 4792467031579069366, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
+      propertyPath: cameraShake
+      value: 
+      objectReference: {fileID: 5931935607214585326}
     - target: {fileID: 4792467031579069366, guid: fefbaa6b55d08b34ba68dddc4393a15b,
         type: 3}
       propertyPath: cameraBaseObj
@@ -3866,6 +3876,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8285842222512456639, guid: fefbaa6b55d08b34ba68dddc4393a15b,
         type: 3}
+      propertyPath: cameraShake
+      value: 
+      objectReference: {fileID: 5931935607214585326}
+    - target: {fileID: 8285842222512456639, guid: fefbaa6b55d08b34ba68dddc4393a15b,
+        type: 3}
       propertyPath: mainCFuryAttack
       value: 
       objectReference: {fileID: 0}
@@ -4162,6 +4177,18 @@ MonoBehaviour:
   m_AmplitudeGain: 0
   m_FrequencyGain: 1
   mNoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!114 &5931935607214585326 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1776335130980259748, guid: 59360427c16aaa544836552839041412,
+    type: 3}
+  m_PrefabInstance: {fileID: 5401143486514995786}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758679809071585897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d52f0b85f0bb443b5222b259321cd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8423919499259086792 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4473043398080013698, guid: 59360427c16aaa544836552839041412,

@@ -7,7 +7,8 @@ namespace Player
 {
     public class MainCWrenchHitBox : MonoBehaviour
     {
-       
+        [SerializeField] GCameraShake cameraShake;
+
         [SerializeField] private HealthManagerSO furyManager;
         [SerializeField] private float furyPerHit = 0.2f;
         [SerializeField] private float furyPerHitDummie = 15f;
@@ -53,11 +54,11 @@ namespace Player
                             furyManager.GetHealth(furyPerHit);
 
 
-                        GCameraShake.Instance.ShakeCamera(1f, 1f,.2f);
+                        cameraShake.ShakeCamera(1f, 1f,.2f);
                     }
                     else
                     {
-                        GCameraShake.Instance.ShakeCamera(.5f, 10f, .1f);
+                        cameraShake.ShakeCamera(.5f, 10f, .1f);
                         damageable.GetDamage(GameManagerSingleton.Instance.GetPlayerDamage(wrenchDamageData, col.gameObject));
                     }
                 }

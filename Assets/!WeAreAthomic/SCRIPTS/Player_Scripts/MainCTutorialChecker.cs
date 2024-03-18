@@ -46,7 +46,7 @@ namespace Player
         private void Start()
         {
             _currentScene = SceneManager.GetActiveScene();
-            if (_currentScene.name == "S2_LABTUTORIAL" || _currentScene.name == "N2_LAB")
+            if (_currentScene.name == "N2_LABB")
             {
                 GameManagerSingleton.Instance.SetHasUnlockedBastetAttack(false);
                 IsOnTutorial = true;
