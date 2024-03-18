@@ -1,38 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SethAnimator : MonoBehaviour
+namespace Seth
 {
-    private Animator _anim;
+    public class SethAnimator : MonoBehaviour
+    {
+        private Animator _anim;
+        Seth m_seth;
 
-    [SerializeField] private string pushBack = "pushBack";
-    [SerializeField] private string hit = "hit";
-    [SerializeField] private string pointOut = "pointOut";
-    [SerializeField] private string laserCount = "laserCount";
+        [SerializeField] private string pushBack = "pushBack";
+        [SerializeField] private string hit = "hit";
+        [SerializeField] private string pointOut = "pointOut";
+        [SerializeField] private string laserCount = "laserCount";
 
-    private void Awake()
-    {
-        _anim = GetComponent<Animator>();
-    }
+        private void Awake()
+        {
+            _anim = GetComponent<Animator>();
+            m_seth = GetComponent<Seth>();
 
-    public void TriggerPush()
-    {
-        _anim.SetTrigger(pushBack);
-    }    
-    
-    public void TriggerHit()
-    {
-        _anim.SetTrigger(pushBack);
-    }    
-    
-    public void TriggerPointOut()
-    {
-        _anim.SetTrigger(pushBack);
-    }
+            m_seth.OnPushBack += TriggerPush;
+        }
 
-    public void SetLaserCount(int value)
-    {
-        _anim.SetInteger(laserCount, value);
+        void TriggerPush()
+        {
+            _anim.SetTrigger(pushBack);
+        }
+
+        public void TriggerHit()
+        {
+            _anim.SetTrigger(pushBack);
+        }
+
+        public void TriggerPointOut()
+        {
+            _anim.SetTrigger(pushBack);
+        }
+
+        public void SetLaserCount(int value)
+        {
+            _anim.SetInteger(laserCount, value);
+        }
     }
 }

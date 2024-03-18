@@ -1,8 +1,9 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCCrouch : MonoBehaviour
     {
@@ -27,47 +28,95 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float timeNextCrouch = 0.5f;
         private float m_timeGraceCrouchPeriod;
 
-        private void OnValidate()
-        {
-            m_cc = GetComponent<CharacterController>();
-        }
+        [SerializeField] TextMeshProUGUI debugBuildText1;
+        [SerializeField] TextMeshProUGUI debugBuildText2;
+        [SerializeField] TextMeshProUGUI debugBuildText3;
+        [SerializeField] TextMeshProUGUI debugBuildText4;
 
         private void Awake()
         {
+            m_cc = GetComponent<CharacterController>();
             m_mainCMove = GetComponent<MainCMovement>();
             m_mainCAnim = GetComponent<MainCAnimatorController>();
             m_mainCLayers = GetComponent<MainCLayers>();
             m_mainCRail = GetComponent<MainCRail>();
 
             m_inputActions = new PlayerInputActions();
+        }
+
+        private void OnEnable()
+        {
             m_inputActions.Enable();
-            m_inputActions.PlayerPC.Crouch.performed += StartEndCrouch;
-            m_inputActions.PlayerGamepad.Crouch.performed += StartEndCrouch;
+            m_inputActions.PlayerPC.Crouch.performed += ToggleCrouch;
+            m_inputActions.PlayerGamepad.Crouch.performed += ToggleCrouch;
+        }
+
+        private void OnDisable()
+        {
+            m_inputActions.Disable();
+            m_inputActions.PlayerPC.Crouch.performed -= ToggleCrouch;
+            m_inputActions.PlayerGamepad.Crouch.performed -= ToggleCrouch;
         }
 
         private void Update()
         {
             _moveVectorKeyboard = m_inputActions.PlayerPC.MovementKeyboard.ReadValue<Vector2>();
             _moveVectorGamepad = m_inputActions.PlayerGamepad.MovementGamepad.ReadValue<Vector2>();
-
             CrouchWalking();
         }
 
-        private void StartEndCrouch(InputAction.CallbackContext context)
+        void ToggleCrouch(InputAction.CallbackContext context)
         {
-            if (GameManagerSingleton.Instance.IsOnDialogue)
+
+            if (m_mainCMove.IsGrounded() && !m_mainCRail.IsSliding)
             {
-                return;
+                CrouchGround();
             }
+
+            if (!m_mainCMove.IsGrounded() && m_mainCRail.IsSliding)
+            {
+                CrouchRail();
+            }
+        }
+
+        void CrouchGround()
+        {
+            if (Time.time < m_timeGraceCrouchPeriod) return;
+
+            IsCrouch = !IsCrouch;
+            ToggleCCSize();
+            if (IsCrouch)
+            {
+                if (_moveVectorKeyboard.magnitude > 0.1f || _moveVectorGamepad.magnitude > 0.1f)
+                {
+                    _isCrouchWalking = true;
+                    m_mainCAnim.SetCrouchWalking(_isCrouchWalking);
+                }
+            }
+
+            m_mainCAnim.SetCrouch(IsCrouch);
+            m_timeGraceCrouchPeriod = Time.time + timeNextCrouch;
+        }
+
+        void CrouchRail()
+        {
+            IsCrouch = !IsCrouch;
+            ToggleCCSize();
+            m_mainCAnim.SetSlidingCrouch(IsCrouch);
+        }
+
+        private void StartEndCrouch()
+        {
 
             if (Time.time > m_timeGraceCrouchPeriod)
             {
-                if (!CanStandUp())
-                {
-                    return;
-                }
-                IsCrouch = !IsCrouch;
-                ToggleCCSize();
+                /*                if (!CanStandUp())
+                                {
+                                    return;
+                                }*/
+
+
+
                 if (!IsCrouch && _isCrouchWalking)
                 {
                     m_mainCAnim.SetCrouchWalking(false);
@@ -76,19 +125,10 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     Invoke(nameof(InvokeDisableCrouchLayer), 0.1f);
                 }
 
-                if (m_mainCRail.IsSliding)
-                {
-                    m_mainCAnim.SetSlidingCrouch(IsCrouch);
-                }
-                else
-                {
-                    m_mainCAnim.SetCrouch(IsCrouch);
-                }
-
-                m_timeGraceCrouchPeriod = Time.time + timeNextCrouch;
-
+                debugBuildText4.text = IsCrouch.ToString();
                 if (IsCrouch)
                 {
+                    debugBuildText3.text = "funciona3";
                     m_mainCLayers.EnableCrouchLayer();
                     if (_moveVectorKeyboard.magnitude > 0.1f || _moveVectorGamepad.magnitude > 0.1f)
                     {
@@ -100,6 +140,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 {
                     Invoke(nameof(InvokeDisableCrouchLayer), 0.5f);
                 }
+
+                if (m_mainCRail.IsSliding)
+                {
+                    m_mainCAnim.SetSlidingCrouch(IsCrouch);
+                }
+                else
+                {
+                    debugBuildText3.text = "funciona4";
+
+                }
+
+
             }
         }
 
@@ -110,10 +162,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _isCrouchWalking = true;
                 m_mainCAnim.SetCrouchWalking(_isCrouchWalking);
                 m_mainCMove.CurrentSpeed = crouchSpeed;
-                if (m_mainCMove.IsRunningKeyboard || m_mainCMove.IsRunningGamepad)
+                if (m_mainCMove.IsRunning)
                 {
-                    m_mainCMove.IsRunningKeyboard = !m_mainCMove.IsRunningKeyboard;
-                    m_mainCMove.IsRunningGamepad = !m_mainCMove.IsRunningGamepad;
+                    m_mainCMove.IsRunning = !m_mainCMove.IsRunning;
                 }
 
             }
@@ -174,18 +225,18 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public bool CanStandUp()
         {
-            if (Physics.CheckSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.3f, canStandLayers))
+            if (Physics.CheckSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.2f, canStandLayers))
             {
-                var col = Physics.OverlapSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.3f, canStandLayers);
+                var col = Physics.OverlapSphere(transform.position + Vector3.up.normalized * m_cc.height, 0.2f, canStandLayers);
 
                 foreach (var x in col)
                 {
                     if (!x.CompareTag("Volume"))
-                    { 
-                    return false;
+                    {
+                        return false;
                     }
                 }
-                
+
             }
 
             return true;

@@ -1,10 +1,9 @@
 using System.Collections;
 using _WeAreAthomic.SCRIPTS.PP_Scripts;
-using _WeAreAthomic.SCRIPTS.Props_Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCTutorialChecker : MonoBehaviour
     {
@@ -22,20 +21,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private Scene _currentScene;
 
-        [SerializeField] private GameObject botonPosaMano;
-        [SerializeField] private GameObject goHereBreather;
+        [SerializeField] HealthManagerSO healthManagerSO;
+
         [SerializeField] private GameObject goHerePosaManoMove;
-
-
-
-        private Vector3 _lastPosition;
+        [SerializeField] private GameObject goHereBreather;
 
         [System.NonSerialized] public bool IsOnTutorial;
-        [System.NonSerialized] public bool S;
         public bool FirstTimeAbility;
-        private bool _isRoom1;
-        private bool _isRoom2;
-        private bool _isRoom3;
+
         private bool _isCheckingHealth;
         private bool _isCheckingHack;
 
@@ -61,9 +54,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
               
                
                 _checkHealthCoroutine = StartCoroutine(CheckHealth());
-                _checkHackCoroutine = StartCoroutine(CheckHacking());
                 _mainCAttack.DisableCanAttack();
-                GameManagerSingleton.Instance.SetThereIsCanvasBelow(true);
             }
             else
             {
@@ -83,32 +74,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             while (true)
             {
                 _isCheckingHealth = true;
-                if (_mainCHealth.currentHealth >= 100)
+                if (healthManagerSO.CurrentHealth >= 100)
                 {
                     _isCheckingHealth = false;
-                    _mainCSounds.RemoveAllSounds();
-                    _mainCSounds.PlayExpressionSound();
+                
+                    
                     goHerePosaManoMove.SetActive(true);
                     goHereBreather.SetActive(false);
-                    
-                    
-                    break;
-                }
-
-                yield return new WaitForSeconds(0.01f);
-            }
-        }
-
-        private IEnumerator CheckHacking()
-        {
-            while (true)
-            {
-                _isCheckingHack = true;
-                if (_mainCHacking.IsHacking)
-                {
-                    _isCheckingHack = false;
-                    
-                
                     break;
                 }
 

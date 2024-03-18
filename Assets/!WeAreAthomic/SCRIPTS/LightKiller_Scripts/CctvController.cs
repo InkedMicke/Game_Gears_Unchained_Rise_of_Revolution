@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using Player;
 using System;
 using _WeAreAthomic.SCRIPTS.PP_Scripts;
 
@@ -34,7 +34,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         [SerializeField] private GameObject transforms;
         [SerializeField] private GameObject LightConeMesh;
 
-        public GameObject _playerObj;
+        private GameObject _playerObj;
         private GameObject _volumeCatch;
 
         private Transform _lightKillerTr;

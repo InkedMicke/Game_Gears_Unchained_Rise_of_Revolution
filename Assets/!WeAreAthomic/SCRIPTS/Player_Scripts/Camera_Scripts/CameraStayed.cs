@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
+namespace Player.CameraS
 {
     public class CameraStayed : CameraFollower
     {

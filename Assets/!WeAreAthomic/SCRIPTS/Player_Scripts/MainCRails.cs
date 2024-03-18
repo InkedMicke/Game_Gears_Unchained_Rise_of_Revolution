@@ -1,8 +1,7 @@
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCRail : MonoBehaviour
     {
@@ -15,6 +14,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCLayers m_mainClayers;
         private MainCSounds m_mainCSounds;
         private MainCJump m_mainCJump;
+        private MainCCrouch m_mainCCrouch;
 
         [SerializeField] private LayerMask railLayer;
 
@@ -29,10 +29,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float jumpCooldown = 1f;
         private float _splineLength;
         private float _distancePercentage;
-        private float _timeGraceJumpPeriod;
         private float _currentRailSpeed;
+        private float m_railTotalCooldown;
+        private float m_railCooldown = 1f;
 
-        [SerializeField] private AudioSource railClip;
+  
 
         private void Awake()
         {
@@ -44,12 +45,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCDash = GetComponent<MainCDash>();
             m_mainCSounds = GetComponent<MainCSounds>();
             m_mainCJump = GetComponent<MainCJump>();
+            m_mainCCrouch = GetComponent<MainCCrouch>();
         }
 
 
         private void Update()
         {
-            if (IsOnRail() && !IsSliding)
+            if (IsOnRail() && !IsSliding && Time.time > m_railTotalCooldown)
             {
 
                 StartSlide();
@@ -96,7 +98,12 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _mainCDash.StartDash(false);
                     m_mainCVFX.SetActiveSparks(false);
                     m_mainCVFX.SetActiveSpeedlines(false);
+                    m_railTotalCooldown = Time.time + m_railCooldown;
                     IsSliding = false;
+                    m_mainCSounds.RemoveRailSounds();
+                    m_mainCCrouch.SetIsCrouch(false);
+                    _mainCAnim.SetCrouch(false);
+                    m_mainClayers.DisableCrouchLayer();
                 }
 
                 var nextPosition = _splineContainer.EvaluatePosition(_distancePercentage + .001f);
@@ -117,12 +124,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private void StartSlide()
         {
-
-
             var cols = Physics.OverlapSphere(transform.position, 1f, railLayer);
             
             _splineContainer = cols[0].transform.GetChild(0).GetComponent<SplineContainer>();
-            Debug.Log($"HitCollision: {_splineContainer}", this);
             
             _distancePercentage = 0;
             m_mainClayers.EnableSlideLayer();
@@ -130,6 +134,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _splineLength = _splineContainer.CalculateLength();
             IsSliding = true;
             _mainCAnim.SetMoveSpeed(0);
+            m_mainCCrouch.SetIsCrouch(false);
             m_mainCVFX.SetRailEffects(true);
             m_mainCSounds.PlayRailSound();
         }

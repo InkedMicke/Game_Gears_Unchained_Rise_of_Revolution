@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.PP_Scripts
+namespace PPS
 {
     public class CheckIfEnoughMejoras : MonoBehaviour
     {

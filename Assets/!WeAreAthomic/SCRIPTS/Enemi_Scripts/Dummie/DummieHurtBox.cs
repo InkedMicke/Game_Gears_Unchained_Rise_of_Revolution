@@ -1,12 +1,11 @@
-using System.Collections;
-using _WeAreAthomic.SCRIPTS.Genericos;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
-using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
+using Generics;
+using Interfaces;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
+namespace Enemy.Dummie
 {
     public class DummieHurtBox : MonoBehaviour, IDamageable
     {
@@ -16,14 +15,18 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
         private DummieSounds _dummieSounds;
         private CapsuleCollider _cC;
 
+        [System.NonSerialized] public Action OnDeath;
+
         [SerializeField] private LayerMask obstacles;
 
         [SerializeField] private GameObject soundComponentObj;
 
         [SerializeField] private ParticleSystem sparksHit;
+        [SerializeField] private List<ParticleSystem> _hitParticles;
 
         [SerializeField] private bool useKnockback = true;
         public bool isDeath;
+        bool m_canReceiveDamage = true;
         
         [SerializeField] private float pushForce = 5f;
 
@@ -40,9 +43,12 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
 
         public void TakeDamage(float value)
         {
+            if (!m_canReceiveDamage)
+                return;
+            HitParticlesInvoke();
             _gHealthManager.currentHealth -= value;
             _gHealthManager.SetSlider(_gHealthManager.currentHealth);
-            //_anim.SetTrigger(string.Format("isHurt"));
+            _anim.SetTrigger(string.Format("isHurt"));
             sparksHit.Play();
             if (!isDeath)
             {
@@ -57,7 +63,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
             CheckForDeath();
         }
 
-        public void Damage(float value)
+        public void GetDamage(float value)
         {
             TakeDamage(value);
         }
@@ -66,13 +72,34 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
         {
             if (_gHealthManager.currentHealth <= 0)
             {
+                OnDeath?.Invoke();
                 DummieDies.Invoke();
                 isDeath = true;
                 _anim.SetBool(string.Format("isDeath"), true);
-                _cC.enabled = false;
-                _dummieController.DisableCharacterController();
-
+                m_canReceiveDamage = false;
             }
+        }
+
+        public bool CanReceiveDamage()
+        {
+            return m_canReceiveDamage;
+        }
+        public void HitParticlesInvoke()
+        {
+            if (_hitParticles == null || _hitParticles.Count == 0)
+            {
+                return;
+            }
+            var random = UnityEngine.Random.Range(0, _hitParticles.Count);
+
+            var randomParticleSystem = _hitParticles[random];
+
+            if (randomParticleSystem != null)
+            {
+                randomParticleSystem.Play();
+            }
+
+
         }
     }
 }

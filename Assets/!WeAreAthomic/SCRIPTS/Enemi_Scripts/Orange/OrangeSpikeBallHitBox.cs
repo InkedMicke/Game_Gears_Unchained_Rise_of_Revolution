@@ -1,7 +1,7 @@
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
+using Generics.Collision;
 
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Orange
+namespace Enemy.Orange
 {
     public class OrangeSpikeBallHitBox : HitBox
     {

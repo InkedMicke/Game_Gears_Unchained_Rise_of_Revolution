@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
+namespace Generics
 {
     public class FieldOfView : MonoBehaviour
     {

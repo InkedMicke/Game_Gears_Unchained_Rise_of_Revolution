@@ -1,23 +1,42 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GTweenDoRotate : MonoBehaviour
+namespace Generics.Tween
 {
-    [SerializeField] private Vector3 target;
-    [SerializeField] private bool loop;
-    [SerializeField]private bool WantToRotateStart;
-    [SerializeField] private LoopType loopType;
-    [SerializeField] private float duration;
-    [SerializeField] private RotateMode rotateMode;
-    [SerializeField] private Ease ease;
-
-    
-
-    private void Start()
+    public class GTweenDoRotate : MonoBehaviour
     {
-        if(WantToRotateStart)
+        [SerializeField] private Vector3 target;
+        [SerializeField] private bool loop;
+        [SerializeField] private bool WantToRotateStart;
+        [SerializeField] private LoopType loopType;
+        [SerializeField] private float duration;
+        [SerializeField] private RotateMode rotateMode;
+        [SerializeField] private Ease ease;
+
+
+
+        private void Start()
+        {
+            if (WantToRotateStart)
+            {
+                if (loop)
+                {
+                    transform.DORotate(target, duration, rotateMode)
+                        .SetLoops(-1, loopType)
+                        .SetRelative()
+                        .SetEase(ease);
+                }
+                else
+                {
+                    transform.DORotate(target, duration, rotateMode)
+                        .SetRelative()
+                        .SetEase(ease);
+                }
+            }
+
+
+        }
+        public void StartRotate()
         {
             if (loop)
             {
@@ -33,28 +52,10 @@ public class GTweenDoRotate : MonoBehaviour
                     .SetEase(ease);
             }
         }
-        
 
-    }
-    public void StartRotate()
-    {
-        if (loop)
+        public void StopRotate()
         {
-            transform.DORotate(target, duration, rotateMode)
-                .SetLoops(-1, loopType)
-                .SetRelative()
-                .SetEase(ease);
+            transform.DOKill();
         }
-        else
-        {
-            transform.DORotate(target, duration, rotateMode)
-                .SetRelative()
-                .SetEase(ease);
-        }
-    }
-
-    public void StopRotate()
-    {
-        transform.DOKill();
     }
 }

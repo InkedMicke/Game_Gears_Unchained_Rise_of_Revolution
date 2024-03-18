@@ -1,9 +1,9 @@
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
-using System;
+using Player;
+using Generics.Tween;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Generics.Collision;
 
 namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {
@@ -32,7 +32,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         public UnityEvent seEjecutaCuandoDetectaAlPlayer;
 
-        private void Awake()
+        protected void Awake()
         {
             m_playerObj = GameObject.FindGameObjectWithTag("Player");
             _mainCHack = m_playerObj.GetComponent<MainCHackingSystem>();
@@ -86,6 +86,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                             yield return new WaitForSeconds(.5f);
 
                             ctvController.MainCHealth.Revive();
+                            _mainCHack.SetGotCached(false);
                             ctvController.GroupCCtvController.SendColToHurtBox();
                             break;
                         }

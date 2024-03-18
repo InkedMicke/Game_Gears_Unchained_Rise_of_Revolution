@@ -1,6 +1,4 @@
-using System;
-using _WeAreAthomic.SCRIPTS.Genericos;
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
+using Generics.Scene;
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;

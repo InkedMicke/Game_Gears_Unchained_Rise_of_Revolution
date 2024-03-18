@@ -1,18 +1,17 @@
 using UnityEngine;
-using UnityEngine.UI;
-using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
-using UnityEngine.Events;
+using Interfaces;
 using System.Collections;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
+using Generics;
+using System;
+using System.Collections.Generic;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
+namespace Enemy
 {
     public class SoldierHurtBox : MonoBehaviour, IDamageable
     {
-        private C_EnemiSounds _cEnemiSounds;
         private SoldierHurtBox _soldierHurtbox;
         private GDestroyObject _destroyObject;
-        private Enemy _enemy;
+        private EnemyP _enemy;
         private C_MaterialChanger _materialChanger;
         private SoldierAnimator _soldierAnimator;
 
@@ -21,7 +20,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         private Coroutine _waitingForHurtedCoroutine;
         private Coroutine _changingMaterialsCoroutine;
 
-        
+        [NonSerialized] public Action OnHurt;
+        [NonSerialized] public Action OnDeath;
+        [NonSerialized] public Action OnHurtedSmallerTwo;
         
         [SerializeField] private Material matSlider;
         [SerializeField] private GameObject healthSliderObj;
@@ -36,6 +37,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         [SerializeField] private GameObject decalPatrol;
 
         [SerializeField] private ParticleSystem _particlesHit;
+        [SerializeField] private List<ParticleSystem> _hitParticles;
 
         public bool IsDeath;
         private bool _isWatingForHurtedtimes;
@@ -48,10 +50,9 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
 
         private void Awake()
         {
-            _cEnemiSounds = GetComponent<C_EnemiSounds>();
             _soldierHurtbox = GetComponent<SoldierHurtBox>();
             _destroyObject = GetComponentInParent<GDestroyObject>();
-            _enemy = GetComponentInParent<Enemy>();
+            _enemy = GetComponentInParent<EnemyP>();
             _materialChanger = GetComponentInParent<C_MaterialChanger>();
             _soldierAnimator = GetComponentInParent<SoldierAnimator>();
 
@@ -63,14 +64,13 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             SetHealthSlider(currentHealth);
         }
 
-        public void Damage(float damage)
+        public void GetDamage(float damage)
         {
-            _enemy.Knockback();
+            HitParticlesInvoke();
+            OnHurt?.Invoke();
             StartWaitForResetHutedTimes();
             HurtedTimes++;
-            _cEnemiSounds.PlayHitEnemiSound();
             _particlesHit.Play();
-            _enemy.Rb.mass = _enemy.mass;
             if(m_changingMaterials)
             {
                 StopCoroutine(_changingMaterialsCoroutine);
@@ -78,8 +78,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             _changingMaterialsCoroutine = StartCoroutine(HurtMaterialChange());
             if(HurtedTimes <= 2)
             {
-                _soldierAnimator.HurtTrigger();
-                _enemy.StopAttackDueToHurt();
+                OnHurtedSmallerTwo?.Invoke();
             }
             currentHealth -= damage;
             SetHealthSlider(currentHealth);
@@ -109,13 +108,12 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             decalAtackDir.SetActive(false);
             decalPatrol.SetActive(false);
             mesh.SetActive(false);
-            _enemy.DisableMovement();
             healthSliderObj.SetActive(false);
             soldierWithoutBones.SetActive(true);
             botonSoldier.SetActive(false);
-            _disolveEnemi.StartDisolving();
             _destroyObject.DestroyThisObject(3f);
             _hurtbox.SetActive(false);
+            OnDeath?.Invoke();
         }
 
         private IEnumerator HurtMaterialChange()
@@ -148,7 +146,10 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
             {
                 StopCoroutine(_waitingForHurtedCoroutine);
             }
-            _waitingForHurtedCoroutine = StartCoroutine(WaitForResetHutedTimes());
+            if (gameObject != null)
+            {
+                _waitingForHurtedCoroutine = StartCoroutine(WaitForResetHutedTimes());
+            }
         }
 
         private IEnumerator WaitForResetHutedTimes()
@@ -176,6 +177,28 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic
         public void SetHealthSlider(float health)
         {
             matSlider.SetFloat("_DisolveAmount",health/100);
+        }
+
+        public bool CanReceiveDamage()
+        {
+            return true;
+        }
+        public void HitParticlesInvoke()
+        {
+            if (_hitParticles == null || _hitParticles.Count == 0)
+            {
+                return;
+            }
+            var random = UnityEngine.Random.Range(0, _hitParticles.Count);
+
+            var randomParticleSystem = _hitParticles[random];
+
+            if (randomParticleSystem != null)
+            {
+                randomParticleSystem.Play();
+            }
+
+
         }
     }
    

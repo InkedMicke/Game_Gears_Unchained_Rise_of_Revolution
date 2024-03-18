@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos
+namespace Generics
 {
     public class GHealthManager : MonoBehaviour
     {

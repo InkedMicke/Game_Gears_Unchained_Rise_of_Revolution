@@ -3,10 +3,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCJump : MonoBehaviour
     {
+        #region Variables
         private PlayerInputActions m_playerInputActions;
         private MainCAnimatorController m_mainCAnim;
         private MainCLayers m_mainCLayers;
@@ -15,6 +16,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         private MainCSounds m_mainCSounds;
         private MainCVFX m_mainCVFX;
         private MainCCrouch m_mainCCrouch;
+        private MainCHackingSystem m_mainCHack;
 
         [NonSerialized] public bool IsJumping;
 
@@ -22,7 +24,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private float jumpImpulseOnRail = 5f;
         public float TimeNextJump = 0.5f;
         [NonSerialized] public float TimeGraceJumpPeriod;
+        #endregion
 
+        #region Awake
         private void Awake()
         {
             m_mainCLayers = GetComponent<MainCLayers>();
@@ -32,13 +36,14 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             m_mainCSounds = GetComponent<MainCSounds>();
             m_mainCCrouch = GetComponent<MainCCrouch>();
             m_mainCVFX = GetComponent<MainCVFX>();
+            m_mainCHack = GetComponent<MainCHackingSystem>();
 
             m_playerInputActions = new PlayerInputActions();
             m_playerInputActions.Enable();
             m_playerInputActions.PlayerPC.Jump.performed += StartJumpPC;
             m_playerInputActions.PlayerGamepad.Jump.performed += StartJumpGamepad;
         }
-
+        #endregion
         private void StartJumpPC(InputAction.CallbackContext context)
         {
             if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
@@ -64,7 +69,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 m_mainCAnim.SetGrounded(false);
                 m_mainCLayers.EnableJumpLayer();
                 m_mainCAnim.SetJumping(true);
-                m_mainCMove.Velocity += jumpImpulse;
+                var velocity = m_mainCMove.GetMoveDir() * (m_mainCMove.CurrentSpeed / 2);
+                velocity.y = jumpImpulse;
+                m_mainCMove.SetVelocity(velocity);
                 TimeGraceJumpPeriod = Time.time + TimeNextJump;
             }
 
@@ -80,7 +87,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 m_mainCAnim.SetGrounded(false);
                 m_mainCLayers.EnableJumpLayer();
                 m_mainCAnim.SetJumping(true);
-                m_mainCMove.Velocity = jumpImpulseOnRail;
+                Vector3 velocity = Vector3.zero;
+                velocity.y = jumpImpulseOnRail;
+                m_mainCMove.SetVelocity(velocity);
                 TimeGraceJumpPeriod = Time.time + TimeNextJump;
 
                 m_mainCVFX.SetActiveSparks(false);
@@ -120,6 +129,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 return false;
             }
 
+            if(GameManagerSingleton.Instance.IsLoadingStartVideos)
+            {
+                return false;
+            }
+
             if (IsJumping)
             {
                 return false;
@@ -131,6 +145,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             }
 
             if (m_mainCRail.IsSliding)
+            {
+                return false;
+            }
+
+            if(m_mainCHack.isHackingAnim)
             {
                 return false;
             }

@@ -2,12 +2,12 @@ using _WeAreAthomic.SCRIPTS.PP_Scripts;
 using NaughtyAttributes;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using PPS;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCStopMenu : MonoBehaviour
     {

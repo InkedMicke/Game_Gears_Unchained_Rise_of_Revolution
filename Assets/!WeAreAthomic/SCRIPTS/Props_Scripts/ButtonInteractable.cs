@@ -1,5 +1,5 @@
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using Enemy;
+using Player;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,7 +19,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
     {
         private MainCHackingSystem _mainCHacking;
         private C_MaterialChanger[] _materialChanger;
-        private Enemy _enemy;
 
         public TypeOfHacked typeOfHacked;
 
@@ -50,11 +49,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
             _mainCHacking = _playerObj.GetComponent<MainCHackingSystem>();
             _materialChanger = GetComponents<C_MaterialChanger>();
-
-            if (typeOfHacked == TypeOfHacked.soldier)
-            {
-                _enemy = soldier.GetComponent<Enemy>();
-            }
         }
 
         // Update is called once per frame
@@ -65,7 +59,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         private void ShowCircle()
         {
-            if (Vector3.Distance(transform.position, _playerTr.position) < 10 && !_isShowingButton && !_mainCHacking.IsHacking && canHack && !_mainCHacking.GotCached)
+            if (Vector3.Distance(transform.position, _playerTr.position) < 10 && CanShowButton())
             {
                 circleObj.SetActive(true);
             }
@@ -155,6 +149,31 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                 isActive = false;
             }
             HideButton();
+        }
+
+        bool CanShowButton()
+        {
+            if(_isShowingButton)
+            {
+                return false;
+            }
+
+            if(_mainCHacking.IsHacking)
+            {
+                return false;
+            }
+
+            if(!canHack)
+            {
+                return false;
+            }
+
+            if(_mainCHacking.GotCached)
+            {
+                return false;
+            }
+
+            return true;
         }
 
     }

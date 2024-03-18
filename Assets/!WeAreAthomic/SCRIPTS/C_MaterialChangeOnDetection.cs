@@ -1,9 +1,7 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Rendering.Universal;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
+namespace Generics
 {
     public class C_MaterialChangeOnDetection : MonoBehaviour
     {

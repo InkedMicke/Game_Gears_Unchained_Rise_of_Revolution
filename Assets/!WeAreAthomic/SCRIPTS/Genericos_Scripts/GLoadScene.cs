@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.UI.CanvasScaler;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
+namespace Generics.Scene
 {
 
     public enum Scenes
@@ -11,7 +12,8 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
         POOR,
         SEWERS,
         SETHS,
-        SURVIVE
+        BATTLE,
+        CREDITS
     }
 
     public class GLoadScene : MonoBehaviour
@@ -25,22 +27,25 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
             switch (scene)
             {
                 case Scenes.MENU:
-                    SceneManager.LoadScene("S1_MAINMENU", sceneMode);
+                    SceneManager.LoadScene("N1_MAINMENU", sceneMode);
                     break;                
                 case Scenes.LAB:
-                    SceneManager.LoadScene("S2_LABTUTORIAL", sceneMode);
+                    SceneManager.LoadScene("N2_LAB", sceneMode);
                     break;                
                 case Scenes.POOR:
-                    SceneManager.LoadScene("S3_POORCITY", sceneMode);
+                    SceneManager.LoadScene("N3_DISTRITO_III", sceneMode);
                     break;                
                 case Scenes.SEWERS:
-                    SceneManager.LoadScene("S4_SEWERS_UNDERTHECITY", sceneMode);
+                    SceneManager.LoadScene("N4_SEWERS", sceneMode);
                     break;              
                 case Scenes.SETHS:
-                    SceneManager.LoadScene("S5_SETHS_PALACE", sceneMode);
+                    SceneManager.LoadScene("N5_SETHS_PALACE", sceneMode);
                     break;
-                case Scenes.SURVIVE:
-                    SceneManager.LoadScene("S6_SURVIVALMODE", sceneMode);
+                case Scenes.BATTLE:
+                    SceneManager.LoadScene("N6_SETHS_BATTLE", sceneMode);
+                    break;
+                case Scenes.CREDITS:
+                    SceneManager.LoadScene("N7_Creditos", sceneMode);
                     break;
             }
         }
@@ -50,22 +55,25 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
             switch (sceneToLoad)
             {
                 case Scenes.MENU:
-                    SceneManager.LoadScene("S1_MAINMENU");
+                    SceneManager.LoadScene("N1_MAINMENU");
                     break;
                 case Scenes.LAB:
-                    SceneManager.LoadScene("S2_LABTUTORIAL");
+                    SceneManager.LoadScene("N2_LAB");
                     break;
                 case Scenes.POOR:
-                    SceneManager.LoadScene("S3_POORCITY");
+                    SceneManager.LoadScene("N3_DISTRITO_III");
                     break;
                 case Scenes.SEWERS:
-                    SceneManager.LoadScene("S4_SEWERS_UNDERTHECITY");
+                    SceneManager.LoadScene("N4_SEWERS");
                     break;
                 case Scenes.SETHS:
-                    SceneManager.LoadScene("S5_SETHS_PALACE");
+                    SceneManager.LoadScene("N5_SETHS_PALACE");
                     break;
-                case Scenes.SURVIVE:
-                    SceneManager.LoadScene("S6_SURVIVALMODE");
+                case Scenes.BATTLE:
+                    SceneManager.LoadScene("N6_SETHS_BATTLE");
+                    break;
+                case Scenes.CREDITS:
+                    SceneManager.LoadScene("N7_Creditos");
                     break;
             }
         }

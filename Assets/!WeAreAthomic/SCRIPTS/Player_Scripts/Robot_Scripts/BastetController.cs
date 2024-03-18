@@ -5,9 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
-using Vector3 = UnityEngine.Vector3;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts
+namespace Player.Bastet
 {
     public class BastetController : MonoBehaviour
     {

@@ -1,10 +1,10 @@
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
+using Enemy;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
 {
-    [SerializeField] private List<Enemy> enemies = new();
+    [SerializeField] private List<EnemyP> enemies = new();
 
     public void RefreshEnemiesList()
     {
@@ -12,7 +12,7 @@ public class EnemyBrain : MonoBehaviour
 
         foreach (var x in enemyObjects)
         {
-            var currentEnemie = x.GetComponent<Enemy>();
+            var currentEnemie = x.GetComponent<EnemyP>();
             enemies.Add(currentEnemie);
         }
     }

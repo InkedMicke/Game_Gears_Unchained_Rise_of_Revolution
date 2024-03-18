@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie;
+using Enemy.Dummie;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCChargingSwordSphereTarget : MainCMouseController
     {

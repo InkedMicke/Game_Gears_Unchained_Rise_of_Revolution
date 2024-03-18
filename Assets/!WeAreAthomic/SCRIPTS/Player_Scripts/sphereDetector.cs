@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class SphereDetector : MonoBehaviour
     {

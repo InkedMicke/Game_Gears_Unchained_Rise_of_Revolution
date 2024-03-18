@@ -1,15 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts;
+using Player.CameraS;
 using System.Collections;
-using _WeAreAthomic.SCRIPTS.Player_Scripts.Robot_Scripts;
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie;
-using DG.Tweening;
+using Player.Bastet;
 using UnityEngine.Events;
 using Cinemachine;
+using Enemy;
+using Enemy.Dummie;
+using Generics.Camera;
+using Interfaces;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCPistol : MonoBehaviour
     {
@@ -44,9 +45,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private GameObject destroyBulletChispasPrefab;
 
         [SerializeField] private Transform camAimPosTr;
-        [SerializeField] private Transform middlePos;
-        [SerializeField] private Transform orientation;
-        [SerializeField] private Transform lookAtAim;
         [SerializeField] private Transform cameraFollow;
 
         [SerializeField] private LayerMask rayLayers;
@@ -234,10 +232,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _isRecoveringShoot = false;
                 shootSoundClip.Play();
                 OnShoot.Invoke();
-                
                 var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-               //_mainCamera.DOShakePosition(.1f, .1f, 5, 60f);
-                GCameraShake.Instance.ShakeCamera(1f, .1f);
+                GCameraShake.Instance.ShakeCamera(1f, 1f, .1f);
                 if (Physics.Raycast(ray, out RaycastHit hit, shootDistance, rayLayers))
                 {
                     Vector3 direction = bastetObj.transform.position - hit.collider.transform.position;
@@ -246,17 +242,9 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                     _bastetController.Shoot(bulletPrefab, bulletSpeed, hit.point, Vector3.one * bulletSize, true, timeToDestroy, _pistolAttackData);
                     Instantiate(hitChispasPrefab, hit.point, Quaternion.identity);
 
-                    if (hit.collider.TryGetComponent(out SoldierHurtBox hurtbox))
+                    if (hit.collider.TryGetComponent(out IDamageable hurtbox))
                     {
-                        hurtbox.Damage(GameManagerSingleton.Instance.GetPlayerDamage(_pistolAttackData, hit.collider.gameObject));
-                    }
-                    else if (hit.collider.TryGetComponent(out DummieHurtBox dummieHurtbox))
-                    {
-                        dummieHurtbox.Damage(GameManagerSingleton.Instance.GetPlayerDamage(_pistolAttackData, hit.collider.gameObject));
-                    }
-                    else if (hit.collider.TryGetComponent(out IInteractAttack wallSewers))
-                    {
-                        wallSewers.InteractAttack();
+                        hurtbox.GetDamage(GameManagerSingleton.Instance.GetPlayerDamage(_pistolAttackData, hit.collider.gameObject));
                     }
 
                 }

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class GamePadController : MonoBehaviour
 {
-    private MainCInputSwitcher _mainCInputSwitcher;
+    /*private MainCInputSwitcher _mainCInputSwitcher;
 
     private Scene _currentScene;
 
@@ -43,7 +43,7 @@ public class GamePadController : MonoBehaviour
     private void Update()
     {
         if (GameManagerSingleton.Instance.IsStopMenuEnabled || GameManagerSingleton.Instance.IsSettingsMenuEnabled)
-        {
+        {*/
 /*            vectorGamepad = _playerInputActions.Player.MovementGamepad.ReadValue<Vector2>();
             if (_mainCInputSwitcher.isUsingGamepad)
             {
@@ -82,11 +82,11 @@ public class GamePadController : MonoBehaviour
 
 
             }*/
-        }
-    }
+/*        }
+    }*/
 
 
-
+/*
     private void HideCursorIfVisible(InputAction.CallbackContext context)
     {
         if (Cursor.visible)
@@ -98,7 +98,7 @@ public class GamePadController : MonoBehaviour
     private void SetImageColorOfCurrentTab(int value, Color color)
     {
         tabsSettings[value].transform.GetChild(0).GetComponent<Image>().color = color;
-    }
+    }*/
 
 
 }

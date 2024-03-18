@@ -2,7 +2,7 @@ using _WeAreAthomic.SCRIPTS.PP_Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCPlayerInterface : MonoBehaviour
     {

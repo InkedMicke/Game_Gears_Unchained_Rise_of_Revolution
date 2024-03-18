@@ -1,10 +1,13 @@
-using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
+using Interfaces;
+using System;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
+namespace Generics.Collision
 {
     public class HurtBox : MonoBehaviour, IDamageable
     {
+        public Action<float> OnGetDamage;
+
         private void OnTriggerEnter(Collider other)
         {
             GotEnterCollision(other);
@@ -35,10 +38,14 @@ namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
 
         }
 
-        public virtual void Damage(float damage)
+        public virtual void GetDamage(float damage)
         {
-
+            
         }
 
+        public virtual bool CanReceiveDamage()
+        {
+            return true;
+        }
     }
 }

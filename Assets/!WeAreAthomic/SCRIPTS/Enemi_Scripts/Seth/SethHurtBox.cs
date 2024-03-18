@@ -1,38 +1,60 @@
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
+using Generics.Collision;
+using Interfaces;
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class SethHurtBox : HurtBox
+namespace Seth
 {
-    [SerializeField] private Slider healthSlider;
-
-    private bool IsDeath;
-
-    [SerializeField] private float maxHealth;
-    public float CurrentHealth;
-    [NonSerialized] public float AcumulativeTakenHealth;
-
-    private void Awake()
+    public class SethHurtBox : HurtBox
     {
-        CurrentHealth = maxHealth;
-    }
+        Seth seth;
 
-    public override void Damage(float damage)
-    {
-        CurrentHealth -= damage;
-        AcumulativeTakenHealth += damage;
-        healthSlider.value = CurrentHealth;
-        CheckForDeath();
+        public Action OnAcumulativeEvent;
 
-        base.Damage(damage);
-    }
+        public bool WillDieOnNextAttack;
+        bool m_canReceiveDamage;
 
-    private void CheckForDeath()
-    {
-        if (CurrentHealth <= 0)
+        public float TakenHealthToPush = 250;
+        public float MaxHealth = 100;
+        float m_currentHealth;
+        float m_currentAcumulativeHealth;
+
+        private void Awake()
         {
-            IsDeath = true;
+            seth = GetComponentInParent<Seth>();
+
+            m_currentHealth = MaxHealth;
+
+            seth.OnPushBack += DisableReceiveDamage;
+            seth.OnEnemiesDead += EnableReceiveDamage;
         }
+
+        public override void GetDamage(float damage)
+        {
+            base.GetDamage(damage);
+            DecreaseHealth(damage);
+        }
+
+        public void DecreaseHealth(float health)
+        {
+            if(m_canReceiveDamage)
+            {
+                m_currentHealth -= health;
+                m_currentAcumulativeHealth += health;
+                if(m_currentAcumulativeHealth >= 250)
+                {
+                    m_currentAcumulativeHealth = 0;
+                    OnAcumulativeEvent?.Invoke();
+                }
+
+                if((m_currentHealth - TakenHealthToPush) <= 0)
+                {
+                    WillDieOnNextAttack = true;
+                }
+            }
+        }
+
+        void EnableReceiveDamage() => m_canReceiveDamage = true;
+        void DisableReceiveDamage() => m_canReceiveDamage = false;
     }
 }

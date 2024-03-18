@@ -1,6 +1,7 @@
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts {
+namespace Generics 
+{
     public class GWaypoints : MonoBehaviour {
         [Range(0f, 2f)][SerializeField] private float waypointsSize = 1f;
         [SerializeField] private bool closed;

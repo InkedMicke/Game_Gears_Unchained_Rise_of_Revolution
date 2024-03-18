@@ -1,12 +1,13 @@
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
-using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using Generics;
+using Broom;
+using Seth;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
+namespace Enemy.Red
 {
-    public class RedSoldier : Enemy
+    public class RedSoldier : EnemyP
     {
         G_MeshTrail _trail;
 
@@ -22,29 +23,29 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
         [SerializeField] private GameObject soundComponentObj;
         [SerializeField] private AudioMixerGroup sfxMixer;
 
-        private Tween _dashTween;
-
-        [SerializeField] private Ease dashEase;
-
-        [SerializeField] private LayerMask layersToStopDashing;
+        [SerializeField] private LayerMask obstaclesLayer;
 
         [SerializeField] private Transform indiciatorPivot;
         [SerializeField] private Transform endTrDecal;
+        [SerializeField] private Transform posCheckObstacles;
 
         private Vector3 indicatorStartPos;
 
         private bool _isDashing;
         private bool _stoppedAttack;
+        bool m_gotObstacle;
 
         [SerializeField] private float rotationSpeed = 5f;
         [SerializeField] private float dashDuracion = 5f;
         [SerializeField] private float dashForce = 10f;
+        [SerializeField] float obstacleDetectionRadius;
 
         protected override void Awake()
         {
+            base.Awake();
             _trail = GetComponent<G_MeshTrail>();
             indicatorStartPos = indicator.transform.localPosition;
-            base.Awake();
+            _soldierHurtBox.OnHurtedSmallerTwo += EndDash;
         }
 
         protected override void Start()
@@ -66,16 +67,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
                 isPatrolling = false;
                 IsOnWarning = false;
 
-            }
-
-            if (_isDashing)
-            {
-
-                if (Physics.Raycast(transform.position + Vector3.up * 1.1f, transform.forward, 1f, layersToStopDashing))
-                {
-                    _dashTween.Kill();
-                    EndDash();
-                }
             }
 
             base.Update();
@@ -155,22 +146,51 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
 
         public void StartDash()
         {
-            Rb.mass = 10;
             _agent.enabled = false;
             _attackHitBox.ClearList();
             _soldierAnim.SetRedCount(2);
-            StartCoroutine(WaitForEndAnim());
-            Rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
-            indicator.gameObject.transform.SetParent(transform.parent);
-            _trail.EnableTrail();
+            indicator.gameObject.transform.SetParent(null);
+            StartCoroutine(Dash());
+            StartCoroutine(CheckForObstacles());
             PlayDashSound();
             _isDashing = true;
         }
 
-        private IEnumerator WaitForEndAnim()
+        private IEnumerator Dash()
         {
-            yield return new WaitForSeconds(.8f);
+            var startPos = transform.position;
+            _trail.EnableTrail();
+            while (Vector3.SqrMagnitude(startPos - transform.position) < 60f && !m_gotObstacle)
+            {
+                _cc.Move(Time.deltaTime * dashForce * transform.forward.normalized);
+                yield return new WaitForEndOfFrame();
+            }
             _soldierAnim.SetRedCount(3);
+            IsAttacking = false;
+        }
+
+        private IEnumerator CheckForObstacles()
+        {
+            while (_isDashing)
+            {
+                if (Physics.CheckSphere(posCheckObstacles.position, obstacleDetectionRadius, obstaclesLayer))
+                {
+                    var cols = Physics.OverlapSphere(posCheckObstacles.position, obstacleDetectionRadius, obstaclesLayer);
+                    m_gotObstacle = true;
+                    foreach (var col in cols)
+                    {
+                        if (col.TryGetComponent(out SethBustHurtBox hurtbox))
+                        {
+                            hurtbox.StartBustDestroyEffect();
+                        }
+                    }
+                    _soldierAnim.SetRedCount(3);
+                    IsAttacking = false;
+                    break;
+                }
+
+                yield return new WaitForEndOfFrame();
+            }
         }
 
         public void EndDash()
@@ -182,6 +202,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Red
             _soldierAnim.SetRedCount(0);
             _agent.enabled = true;
             _soldierAnim.SetAnimRootMotion(false);
+            StopCoroutine(WaitUntilNextAttack());
             StartCoroutine(WaitUntilNextAttack());
         }
 

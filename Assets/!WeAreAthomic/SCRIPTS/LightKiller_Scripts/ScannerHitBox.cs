@@ -1,4 +1,4 @@
-using _WeAreAthomic.SCRIPTS.Interfaces_Scripts;
+using Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +23,7 @@ public class ScannerHitBox : MonoBehaviour
         {
             if(enemy.TryGetComponent(out IDamageable damageable))
             {
-                damageable.Damage(GameManagerSingleton.Instance.GetPlayerDamage(dmgData, enemy));
+                damageable.GetDamage(GameManagerSingleton.Instance.GetPlayerDamage(dmgData, enemy));
             }
         }
     }

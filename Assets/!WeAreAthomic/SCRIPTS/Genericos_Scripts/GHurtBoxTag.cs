@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
+namespace Generics
 {
     [System.Serializable]
     public struct DetectionInfoTag

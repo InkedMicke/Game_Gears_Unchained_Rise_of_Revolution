@@ -1,10 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
-using NaughtyAttributes;
+using Generics.Collision;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCHealthManager : HurtBox
     {
@@ -21,6 +20,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         private Coroutine _hitCoroutine;
 
+        [SerializeField] HealthManagerSO healthManagerSO;
+
         [SerializeField] private Slider healthSlider;
 
         [SerializeField] private GameObject gameOverCanvas;
@@ -29,14 +30,13 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private Image sliderHealthImage;
 
         [SerializeField] private float timeToGameover = 1.5f;
-        public float maxHealth = 100;
-        public float currentHealth;
+        private float CurrentHealth;
 
-        public bool IsDeath;
-        public bool CanReceiveDamage = true;
         private bool gotHit;
+        bool _isDeath;
+        bool m_canReceiveDamage;
 
-        private void Awake()
+        protected void Awake()
         {
             _cc = GetComponentInParent<CharacterController>();
             _mainCRagdoll = GetComponentInParent<MainCRagdoll>();
@@ -48,6 +48,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             _mainCMove = GetComponentInParent<MainCMovement>();
             _mainCVFX = GetComponentInParent<MainCVFX>();
             _mainCHurtMaterial = GetComponentInParent<MainCHurtedMaterial>();
+
+            healthManagerSO.OnDeath += Death;
         }
 
         private void Start()
@@ -56,61 +58,37 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             SetHealthSlider();
         }
 
-        private void Update()
-        {
-            if (currentHealth > maxHealth)
-            {
-                currentHealth = maxHealth;
-            }
-        }
 
-        public override void Damage(float damage)
+        public override void GetDamage(float damage)
         {
-            if (!IsDeath && CanReceiveDamage)
+
+            hitFrame.SetActive(true);
+            sliderHealthImage.color = Color.red;
+            _mainCHurtMaterial.HurtEffects();
+            _mainSounds.RemoveAllSounds();
+            _mainSounds.PlayHurtSound();
+            _mainCAnim.TriggerHit();
+            SetHealthSlider();
+            //CheckDeath();
+            StartCoroutine(HitDesactivate());
+            if (gotHit)
             {
-                hitFrame.SetActive(true);
-                sliderHealthImage.color = Color.red;
-                currentHealth -= damage;
-                _mainCHurtMaterial.HurtEffects();
-                GameManagerSingleton.Instance.currentHealth = currentHealth;
-                _mainSounds.RemoveAllSounds();
-                _mainSounds.PlayHurtSound();
-                _mainCAnim.TriggerHit();
-                SetHealthSlider();
-                CheckDeath();
-                StartCoroutine(HitDesactivate());
-                if (gotHit)
-                {
-                    StopCoroutine(_hitCoroutine);
-                }
-                _hitCoroutine = StartCoroutine(WaitForDisableHit());
+                StopCoroutine(_hitCoroutine);
             }
+            _hitCoroutine = StartCoroutine(WaitForDisableHit());
+
 
         }
 
         public void GetHealth(float health)
         {
-            currentHealth += health;
-            if(currentHealth >= maxHealth) 
+            CurrentHealth += health;
+            if (CurrentHealth >= 100)
             {
-                currentHealth = maxHealth;
+                CurrentHealth = 100;
             }
-            GameManagerSingleton.Instance.currentHealth = currentHealth;
+            GameManagerSingleton.Instance.currentHealth = CurrentHealth;
             SetHealthSlider();
-        }
-
-        private void CheckDeath()
-        {
-            if (currentHealth <= 0)
-            {
-                if (!IsDeath)
-                {
-                    IsDeath = true;
-                    Death();
-                }
-                currentHealth = 0;
-                GameManagerSingleton.Instance.currentHealth = currentHealth;
-            }
         }
 
         private void Death()
@@ -132,11 +110,11 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
                 _mainCLayers.DisableSlideLayer();
             }
             _mainCRagdoll.SetEnabled(false);
-            CanReceiveDamage = false;
-            currentHealth = 100;
-            GameManagerSingleton.Instance.currentHealth = currentHealth;
+            m_canReceiveDamage = false;
+            CurrentHealth = 100;
+            GameManagerSingleton.Instance.currentHealth = CurrentHealth;
             SetHealthSlider();
-            IsDeath = false;
+            _isDeath = false;
             _mainCAttack.SetIsSheathed(false);
             _mainCRagdoll.ResetBody();
             StartCoroutine(InvencibilityTime());
@@ -145,8 +123,8 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
 
         public void Die()
         {
-            currentHealth = 0;
-            GameManagerSingleton.Instance.currentHealth = currentHealth;
+            CurrentHealth = 0;
+            GameManagerSingleton.Instance.currentHealth = CurrentHealth;
             SetHealthSlider();
             Death();
         }
@@ -164,7 +142,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             yield return new WaitForSeconds(.5f);
             hitFrame.SetActive(false);
             sliderHealthImage.color = Color.white;
-            
+
         }
 
         private IEnumerator WaitForGameOver()
@@ -192,22 +170,22 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         {
             yield return new WaitForSeconds(1f);
 
-            CanReceiveDamage = true;
+            m_canReceiveDamage = true;
         }
 
         public void SetCanReceiveDamage(bool canReceiveDamage)
         {
-            CanReceiveDamage = canReceiveDamage;
+            m_canReceiveDamage = canReceiveDamage;
         }
 
         public void SetHealthSlider()
         {
-            healthSlider.value = currentHealth;
+            healthSlider.value = CurrentHealth;
         }
 
         private void SetMaxHealthSlider()
         {
-            healthSlider.maxValue = maxHealth;
+            healthSlider.maxValue = 100;
         }
     }
 }

@@ -1,10 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCAnimatorController : MonoBehaviour
     {
-        private Animator _anim;
+        private Animator m_anim;
 
         [SerializeField] private string attackCount = "attackCount";
         [SerializeField] private string moveSpeed = "moveSpeed";
@@ -20,98 +21,124 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
         [SerializeField] private string dash = "dash";
         [SerializeField] private string hit = "hit";    
         [SerializeField] private string shield = "shield";    
-        [SerializeField] private string heal = "heal";    
+        [SerializeField] private string heal = "heal";
+        string m_currentAnimation;
+        public const string CROUCH_IDLE = "CrouchingIdle";
+        public const string CROUCH_TO_IDLE = "CrouchedToIdle";
+        public const string IDLE_TO_CROUCH = "IdleToCrouched";
+        public const string CROUCH_WALKING = "CrouchedWalking";
 
         protected void Awake()
         {
-            _anim = GetComponent<Animator>();
+            m_anim = GetComponent<Animator>();
+        }
+
+        public void ChangeAnimation(string animation, float crossfade = 0.2f, float time = 0f)
+        {
+            if (time > 0) StartCoroutine(Wait());
+            else Validate();
+
+            IEnumerator Wait()
+            {
+                yield return new WaitForSeconds(time);
+                Validate();
+            }
+
+            void Validate()
+            {
+                if (m_currentAnimation == animation) return;
+
+                m_currentAnimation = animation;
+                m_anim.CrossFade(animation, crossfade);
+            }
+
         }
 
         public void SetMoveSpeed(float value)
         {
-            _anim.SetFloat(moveSpeed, value);
+            m_anim.SetFloat(moveSpeed, value);
         }
 
         public float GetMoveSpeed()
         {
-            return _anim.GetFloat(moveSpeed);
+            return m_anim.GetFloat(moveSpeed);
         }
 
         public void SetAttackCountAnim(int value)
         {
-            _anim.SetInteger(attackCount, value);
+            m_anim.SetInteger(attackCount, value);
         }
 
         public void SetCrouch(bool condition)
         {
-            _anim.SetBool(isCrouch, condition);
+            m_anim.SetBool(isCrouch, condition);
         }
 
         public void SetCrouchWalking(bool condition)
         {
-            _anim.SetBool(isCrouchWalking, condition);
+            m_anim.SetBool(isCrouchWalking, condition);
         }
 
         public void SetFalling(bool condition)
         {
-            _anim.SetBool(isFalling, condition);
+            m_anim.SetBool(isFalling, condition);
         }
 
         public void SetJumping(bool condition)
         {
-            _anim.SetBool(isJumping, condition);
+            m_anim.SetBool(isJumping, condition);
         }
 
         public void SetGrounded(bool condition)
         {
-            _anim.SetBool(isGrounded, condition);
+            m_anim.SetBool(isGrounded, condition);
         }
 
         public void SetSliding(bool condition)
         {
-            _anim.SetBool(isSliding, condition);
+            m_anim.SetBool(isSliding, condition);
         }
         public void SetSlidingCrouch(bool condition)
         {
-            _anim.SetBool(isCrouchSliding, condition);
+            m_anim.SetBool(isCrouchSliding, condition);
         }
         public void SetAimOnRail(bool condition)
         {
-            _anim.SetBool(aimOnRail, condition);
+            m_anim.SetBool(aimOnRail, condition);
         }
 
         public void TriggerHack()
         {
-            _anim.SetTrigger(hack);
+            m_anim.SetTrigger(hack);
         }        
         
         public void TriggerDash()
         {
-            _anim.SetTrigger(dash);
+            m_anim.SetTrigger(dash);
         }        
         
         public void TriggerHit()
         {
-            _anim.SetTrigger(hit);
+            m_anim.SetTrigger(hit);
         }
 
         public void TriggerShield() 
         {
-            _anim.SetTrigger(shield);
+            m_anim.SetTrigger(shield);
         }
         public void TriggerHeal()
         {
-            _anim.SetTrigger(heal);
+            m_anim.SetTrigger(heal);
         }
 
         public void SetRootMotion(bool condition)
         {
-            _anim.applyRootMotion = condition;
+            m_anim.applyRootMotion = condition;
         }
 
         public void AnimEnabled(bool condition)
         {
-            _anim.enabled = condition;
+            m_anim.enabled = condition;
         }
     }
 }

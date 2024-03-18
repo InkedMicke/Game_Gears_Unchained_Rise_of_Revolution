@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-namespace _WeAreAthomic.SCRIPTS.Interfaces_Scripts
+namespace Interfaces
 {
     public interface IDamageable
     {
-        public void Damage(float value);
+        public bool CanReceiveDamage();
+        public void GetDamage(float value);
     }
 }

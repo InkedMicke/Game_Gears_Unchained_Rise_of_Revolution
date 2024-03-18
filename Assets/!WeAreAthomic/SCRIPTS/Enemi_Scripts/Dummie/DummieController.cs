@@ -1,24 +1,33 @@
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using Player;
 using System.Collections;
-using System.Net;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
+namespace Enemy.Dummie
 {
     public class DummieController : MonoBehaviour
     {
         private Animator m_anim;
         private CharacterController m_cc;
         private MainCAttack m_mainCAttack;
+        private DummieHurtBox hurtbox;
 
         private Transform m_playerTr;
-
-        public bool removeCollisionOnDeath;
 
         private void Awake()
         {
             m_anim = GetComponent<Animator>();
             m_cc = GetComponent<CharacterController>();
+            hurtbox = GetComponentInChildren<DummieHurtBox>();
+        }
+
+        private void OnEnable()
+        {
+            hurtbox.OnDeath += DisableCC;
+        }
+
+        private void OnDisable()
+        {
+            
         }
 
         private void Start()
@@ -27,14 +36,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
             m_mainCAttack = m_playerTr.GetComponent<MainCAttack>();
         }
 
-        public void DisableCharacterController()
-        {
-            if (removeCollisionOnDeath)
-            {
-                m_cc.enabled = false;
-            }
-        }
-        
+        public void DisableCC() => m_cc.enabled = false;
+
         public void HurtAnim()
         {
             m_anim.SetTrigger(string.Format("isHurt"));
@@ -48,13 +51,15 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
             {
                 case 0:
                     distance = 1.5f;
-                    speed = 15;
+                    speed = 25;
                     break;
                 case 1:
-                    distance = 1.7f;
-                    speed = 3f;
+                    distance = 1.5f;
+                    speed = 25f;
                     break;
                 case 2:
+                    distance = 2f;
+                    speed = 25f;
                     break;
             }
 
@@ -68,9 +73,8 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Dummie
 
             while (Mathf.Abs(Vector3.SqrMagnitude(startPos - transform.position)) < distance)
             {
-                m_cc.Move(speed * Time.deltaTime * dir);
-
                 yield return new WaitForEndOfFrame();
+                m_cc.Move(speed * Time.deltaTime * dir);
             }
         }
     }

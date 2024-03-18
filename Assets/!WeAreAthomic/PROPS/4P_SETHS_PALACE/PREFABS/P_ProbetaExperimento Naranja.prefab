@@ -11900,8 +11900,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6811248259801878825}
-  - component: {fileID: 1288086219385143603}
-  - component: {fileID: 1712193858256024326}
   m_Layer: 11
   m_Name: SoldadoNaranja
   m_TagString: Untagged
@@ -11925,43 +11923,6 @@ Transform:
   m_Father: {fileID: 8613944809662513422}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!95 &1288086219385143603
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4970267950881450298}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 76ce5392553f1ba429ad2cde5c60f663, type: 3}
-  m_Controller: {fileID: 9100000, guid: fa1aa762e135e6744a7307ef1d9ea183, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1712193858256024326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4970267950881450298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5adbfd5eaf86f324ab26514050170ad9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkingAnimString: isWalking
-  backWalkingAnimString: isBackWalking
-  shootAnimString: shoot
-  redCount: redCount
 --- !u!1 &5125818795361987427
 GameObject:
   m_ObjectHideFlags: 0
@@ -13053,9 +13014,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011c4335fc369f64fae70c56827b832f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
-  useDamageData: 1
-  damageData: {fileID: 11400000, guid: 0a089c0fa9e32c945b6a1b6317291923, type: 2}
 --- !u!1 &8467534678560464894
 GameObject:
   m_ObjectHideFlags: 0

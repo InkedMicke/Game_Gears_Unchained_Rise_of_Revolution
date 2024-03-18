@@ -1,7 +1,7 @@
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
+using Generics.Collision;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Props_Scripts
+namespace Props
 {
     public class BreatherHurtBox : HurtBox
     {
@@ -9,7 +9,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         [SerializeField] private ParticleSystem _healRay;
 
-        private void Awake()
+        protected void Awake()
         {
             _breather = GetComponentInParent<Breather>();
         }

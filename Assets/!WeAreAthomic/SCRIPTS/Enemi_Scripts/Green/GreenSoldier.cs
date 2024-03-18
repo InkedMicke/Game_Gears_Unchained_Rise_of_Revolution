@@ -1,12 +1,11 @@
-using _WeAreAthomic.SCRIPTS.Enemi_Scripts.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.VFX;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
+namespace Enemy.Green
 {
-    public class GreenSoldier : Enemy
+    public class GreenSoldier : EnemyP
     {
         private GreenDecalHurtBox _decalHurtBox;
         
@@ -31,11 +30,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
         [SerializeField] private VisualEffect chargeParticles;
 
         [System.NonSerialized] public bool IsShooting;
-        private bool _hasEndedShootAnim;
 
-        private int _currentShoots;
-
-        [SerializeField] private float checkRadius = 5f;
         [SerializeField] private float speedShooting = 1.5f;
         [SerializeField] private float spreadAngle = 2f;
         [SerializeField] private float shootAngle = .6f;
@@ -57,6 +52,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
             {
                 if(!IsAttacking)
                 {
+                    Debug.Log("hola1");
                     _agent.isStopped = true;
                     _soldierAnim.SetWalking(false);
                     StartDecalToAttack();
@@ -91,7 +87,7 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
                     bulletObj.transform.LookAt(desiredPos);
                     var dir = desiredPos - bulletObj.transform.position;
 
-                    bulletObj.GetComponent<Rigidbody>().AddForce(dir.normalized * bulletObj.GetComponent<GBullet>().bulletForce, ForceMode.Impulse);
+                    bulletObj.GetComponent<Rigidbody>().AddForce(dir.normalized * 50f, ForceMode.Impulse);
                 }
             }
 
@@ -199,7 +195,6 @@ namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
         public void EndShootAnim()
         {
             _soldierAnim.SetGreenCount(0);
-            _hasEndedShootAnim = true;
             chargeParticles.Stop();
 
             if (CheckForDisableShoot())

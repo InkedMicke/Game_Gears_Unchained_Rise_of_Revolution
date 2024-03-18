@@ -1,16 +1,14 @@
-
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
-using System;
-using System.Collections.Generic;
+using Generics.Collision;
 using UnityEngine;
 
-public class RedAttackHitBox : HitBox
+namespace Enemy.Red
 {
-
-    public override void GotEnterCollision(Collider collision)
+    public class RedAttackHitBox : HitBox
     {
-        base.GotEnterCollision(collision);
+        [SerializeField] EnemyDamageData damageData;
+        protected override void GotEnterCollision(Collider collision)
+        {
+            DoDamage(GameManagerSingleton.Instance.GetEnemyDamage(damageData), collision);
+        }
     }
-
-
 }

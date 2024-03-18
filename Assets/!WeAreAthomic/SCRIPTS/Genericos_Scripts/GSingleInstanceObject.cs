@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
+namespace Generics
 {
     public class GSingleInstanceObject : MonoBehaviour
     {

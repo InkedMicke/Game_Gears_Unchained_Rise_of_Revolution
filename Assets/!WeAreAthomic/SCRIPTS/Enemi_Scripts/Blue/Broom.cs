@@ -1,13 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Generics;
 
 namespace Broom
 {
     public class Broom : MonoBehaviour
     {
         [NonSerialized] public NavMeshAgent Agent;
-        [NonSerialized] public Rigidbody Rb;
+        [NonSerialized] public CharacterController CC;
         [NonSerialized] public BroomAnimator broomAnimator;
         [NonSerialized] public BroomDefense broomDefense;
         [NonSerialized] public BroomMovement broomMove;
@@ -15,14 +16,13 @@ namespace Broom
         [NonSerialized] public BroomMolinillo broomMolinillo;
         [NonSerialized] public BroomHurtBox broomHurtBox;
         [NonSerialized] public BroomVFX broomVFX;
+        [NonSerialized] public G_MeshTrail MeshTrail;
 
 
         [NonSerialized] public Transform PlayerTr;
 
         [NonSerialized] public bool IsChasingPlayer;
         [NonSerialized] public bool IsAttacking;
-
-        [SerializeField] private float distanceToDash = 11f;
 
         private void Awake()
         {
@@ -34,7 +34,8 @@ namespace Broom
             broomMolinillo = GetComponent<BroomMolinillo>();
             broomHurtBox = GetComponentInChildren<BroomHurtBox>();
             broomVFX = GetComponent<BroomVFX>();
-            Rb = GetComponent<Rigidbody>();
+            CC = GetComponent<CharacterController>();
+            MeshTrail = GetComponent<G_MeshTrail>();
 
             PlayerTr = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -45,22 +46,19 @@ namespace Broom
             ChooseAttack();
         }
 
-        private void Update()
-        {
-            Rb.MovePosition(Rb.position + (Time.deltaTime * 10f * transform.forward.normalized));
-
-        }
-
         public void ChooseAttack()
         {
             var random = UnityEngine.Random.Range(0, 8);
-
-            if (random != 5)
+            broomMove.EnableMovement();
+            broomAnimator.SetLayerWeight(2, 1f);
+            if (random != 50)
             {
-                broomMove.ChasePlayerAtDistance(10f, () => broomDash.StartDecalToAttack());
+                broomMove.SetAgentSpeed(broomMove.StartSpeed);
+                broomMove.ChasePlayerAtDistance(9f, () => broomDash.StartDecalToAttack());
             }
             else if (random == 50)
             {
+                broomMove.SetAgentSpeed(6);
                 broomMove.ChasePlayerAtDistance(5f, () => broomMolinillo.StartAttacking());
             }
         }

@@ -1,8 +1,8 @@
 using System.Collections;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using Player;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Props_Scripts
+namespace Props
 {
     public class Breather : MonoBehaviour
     {

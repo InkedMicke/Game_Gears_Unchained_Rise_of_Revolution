@@ -1,5 +1,5 @@
 using UnityEngine;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
+using Player;
 using DG.Tweening;
 
 namespace _WeAreAthomic.SCRIPTS.Props_Scripts
@@ -20,6 +20,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         private bool isMoving = false;
         private void Start()
         {
+            playerTr = GameObject.FindGameObjectWithTag("Player").transform;
             _mainCMovement = playerTr.GetComponent<MainCMovement>();
 
         }

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Enemi_Scripts.Green
+namespace Enemy.Green
 {
     public class GreenDecalHurtBox : MonoBehaviour
     {

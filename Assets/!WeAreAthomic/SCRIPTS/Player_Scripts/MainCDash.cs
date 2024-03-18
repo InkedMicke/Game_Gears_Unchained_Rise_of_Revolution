@@ -1,8 +1,9 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Generics;
 
-namespace _WeAreAthomic.SCRIPTS.Player_Scripts
+namespace Player
 {
     public class MainCDash : MonoBehaviour
     {
@@ -124,7 +125,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts
             {
                 if (dashWithEffects)
                 {
-                    _gTrail.StartTrail();
+                    _gTrail.ActivateTrail();
                 }
 
                 float curveTime = (Time.time - startTime) / _dashTime;

@@ -1,9 +1,8 @@
 using System.Collections;
-using _WeAreAthomic.SCRIPTS.Genericos_Scripts;
-using _WeAreAthomic.SCRIPTS.Player_Scripts;
-using _WeAreAthomic.SCRIPTS.Props;
+using Player;
 using UnityEngine;
 using UnityEngine.Events;
+using Generics;
 
 namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 {

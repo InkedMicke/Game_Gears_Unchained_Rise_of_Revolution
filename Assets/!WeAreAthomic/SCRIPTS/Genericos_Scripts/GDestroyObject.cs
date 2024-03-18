@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GDestroyObject : MonoBehaviour
+namespace Generics
 {
-    public void DestroyThisObject(float value)
+    public class GDestroyObject : MonoBehaviour
     {
-        Invoke(nameof(DestroyThis), value);
-    }
+        public void DestroyThisObject(float value)
+        {
+            Invoke(nameof(DestroyThis), value);
+        }
 
-    private void DestroyThis()
-    {
-        Destroy(gameObject);
+        private void DestroyThis()
+        {
+            Destroy(gameObject);
+        }
     }
 }

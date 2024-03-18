@@ -6,56 +6,60 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MaterialChangeOnDetected : MonoBehaviour
+
+namespace Player
 {
-    private MainCHackingSystem _mainCHacking;
-
-    private MeshRenderer m_MeshRenderer;
-
-    [SerializeField] private Material neutralMat;
-    [SerializeField] private Material catchMat;
-
-    [SerializeField] private GameObject buttonObj;
-    private GameObject _playerObj;
-
-    [SerializeField] private bool ifCached;
-    [SerializeField] private bool ifCannotHack;
-
-    private void Awake()
+    public class MaterialChangeOnDetected : MonoBehaviour
     {
-        m_MeshRenderer = GetComponent<MeshRenderer>();
-        _playerObj = GameObject.FindGameObjectWithTag("Player");
-        _mainCHacking = _playerObj.GetComponent<MainCHackingSystem>();
-    }
+        private MainCHackingSystem _mainCHacking;
 
-    private void Update()
-    {
-        if(ifCached && !ifCannotHack)
+        private MeshRenderer m_MeshRenderer;
+
+        [SerializeField] private Material neutralMat;
+        [SerializeField] private Material catchMat;
+
+        [SerializeField] private GameObject buttonObj;
+        private GameObject _playerObj;
+
+        [SerializeField] private bool ifCached;
+        [SerializeField] private bool ifCannotHack;
+
+        private void Awake()
         {
-            if(_mainCHacking.GotCached)
+            m_MeshRenderer = GetComponent<MeshRenderer>();
+            _playerObj = GameObject.FindGameObjectWithTag("Player");
+            _mainCHacking = _playerObj.GetComponent<MainCHackingSystem>();
+        }
+
+        private void Update()
+        {
+            if (ifCached && !ifCannotHack)
             {
-                m_MeshRenderer.material = catchMat;
+                if (_mainCHacking.GotCached)
+                {
+                    m_MeshRenderer.material = catchMat;
+                }
+                else
+                {
+                    m_MeshRenderer.material = neutralMat;
+                }
             }
-            else
+
+            if (ifCannotHack)
             {
-                m_MeshRenderer.material = neutralMat;
+
+                if (_mainCHacking.GotCached)
+                {
+                    m_MeshRenderer.material = catchMat;
+                }
+                else
+                {
+                    m_MeshRenderer.material = buttonObj.GetComponent<ButtonInteractable>().canHack ? neutralMat : catchMat;
+                }
             }
         }
 
-        if (ifCannotHack)
-        {
-            
-            if(_mainCHacking.GotCached)
-            {
-                m_MeshRenderer.material = catchMat;
-            }
-            else
-            {
-                m_MeshRenderer.material = buttonObj.GetComponent<ButtonInteractable>().canHack ? neutralMat : catchMat;
-            }
-        }
+
+
     }
-
-    
-
 }

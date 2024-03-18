@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace _WeAreAthomic.SCRIPTS.Genericos_Scripts
+namespace Generics
 {
     public static class Utilities
     {
