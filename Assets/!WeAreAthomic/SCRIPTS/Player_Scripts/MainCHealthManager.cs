@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using Generics.Collision;
+using Cinemachine;
 
 namespace Player
 {
@@ -21,6 +22,8 @@ namespace Player
         private Coroutine _hitCoroutine;
 
         [SerializeField] HealthManagerSO healthManagerSO;
+        [SerializeField] private CinemachineVirtualCamera deathCamera; 
+
 
         [SerializeField] private Slider healthSlider;
 
@@ -93,6 +96,7 @@ namespace Player
 
         private void Death()
         {
+            deathCamera.Priority = 100;
             _mainCAnim.AnimEnabled(false);
             _cc.enabled = false;
             _mainCRagdoll.SetEnabled(true);
@@ -119,6 +123,7 @@ namespace Player
             _mainCRagdoll.ResetBody();
             StartCoroutine(InvencibilityTime());
             PosToCheckpoint();
+            deathCamera.Priority = 0;
         }
 
         public void Die()

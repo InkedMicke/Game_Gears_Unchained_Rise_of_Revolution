@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using PPS;
+using Cinemachine;
 
 namespace Player
 {
@@ -15,7 +16,7 @@ namespace Player
         [SerializeField] private CheckIfEnoughMejoras m_CheckIfEnoughMejoras;
         private PlayerInputActions _playerInputActions;
         private MainCSounds _mainCSounds;
-
+        [SerializeField] private CinemachineVirtualCamera cameraUI;
         [SerializeField] private GameObject stopMenuContainer;
         [SerializeField] private GameObject firstButton;
 
@@ -76,6 +77,8 @@ namespace Player
                 {
                     m_CheckIfEnoughMejoras.CheckIfYouHaveEnoughToBuy();
                     stopMenuContainer.SetActive(false);
+                    cameraUI.Priority = 0;
+
                     if (!GameManagerSingleton.Instance.thereIsCanvasBelow)
                     {
                         GameManagerSingleton.Instance.ShowCursor(false);
@@ -91,6 +94,8 @@ namespace Player
                     
                     setTriggerAnim.Invoke();
                     stopMenuContainer.SetActive(true);
+                    cameraUI.Priority = 100;
+
                     if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
                     {
                         EventSystem.current.SetSelectedGameObject(firstButton);
@@ -127,7 +132,7 @@ namespace Player
         {
             if (_isActive)
             {
-
+               
                 stopMenuContainer.SetActive(true);
                 GameManagerSingleton.Instance.ShowCursor(false);
                 GameManagerSingleton.Instance.PauseGame(false);
@@ -136,6 +141,7 @@ namespace Player
             }
             else
             {
+                
                 stopMenuContainer.SetActive(false);
                 GameManagerSingleton.Instance.ShowCursor(true);
                 GameManagerSingleton.Instance.PauseGame(true);
