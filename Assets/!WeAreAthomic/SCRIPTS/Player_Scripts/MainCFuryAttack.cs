@@ -20,6 +20,7 @@ namespace Player
         private MainCPistol _mainCPistol;
         private MainCPlayerInterface _mainCInterface;
         private MainCVFX _mainCVfx;
+        [SerializeField] GCameraShake cameraShake;
 
         [SerializeField] private HealthManagerSO furyManager;
 
@@ -133,7 +134,7 @@ namespace Player
             _mainCVfx.ActivateSlash4();
             InstanciateExplosion();
             _mainCSounds.PlayChargedAttackSound();
-            GCameraShake.Instance.ShakeCamera(5f, 1f,.1f);
+            cameraShake.ShakeCamera(5f, 1f,.1f);
 
         }
         public void DestroyScanner()

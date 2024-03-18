@@ -28,11 +28,6 @@ namespace Player
         [SerializeField] private float timeNextCrouch = 0.5f;
         private float m_timeGraceCrouchPeriod;
 
-        [SerializeField] TextMeshProUGUI debugBuildText1;
-        [SerializeField] TextMeshProUGUI debugBuildText2;
-        [SerializeField] TextMeshProUGUI debugBuildText3;
-        [SerializeField] TextMeshProUGUI debugBuildText4;
-
         private void Awake()
         {
             m_cc = GetComponent<CharacterController>();
@@ -125,10 +120,8 @@ namespace Player
                     Invoke(nameof(InvokeDisableCrouchLayer), 0.1f);
                 }
 
-                debugBuildText4.text = IsCrouch.ToString();
                 if (IsCrouch)
                 {
-                    debugBuildText3.text = "funciona3";
                     m_mainCLayers.EnableCrouchLayer();
                     if (_moveVectorKeyboard.magnitude > 0.1f || _moveVectorGamepad.magnitude > 0.1f)
                     {
@@ -144,11 +137,6 @@ namespace Player
                 if (m_mainCRail.IsSliding)
                 {
                     m_mainCAnim.SetSlidingCrouch(IsCrouch);
-                }
-                else
-                {
-                    debugBuildText3.text = "funciona4";
-
                 }
 
 

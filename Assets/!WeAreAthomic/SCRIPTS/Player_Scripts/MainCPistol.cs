@@ -27,6 +27,7 @@ namespace Player
         private PlayerInputActions _playerInputActions;
         private BastetController _bastetController;
         private MainCPlayerInterface _mainCInterface;
+        [SerializeField] GCameraShake cameraShake;
 
         private CinemachineVirtualCamera _mainCamera;
         
@@ -80,12 +81,6 @@ namespace Player
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
-            _playerInputActions.PlayerPC.BastetAimAttack.performed += LeftMouseDown;
-            _playerInputActions.PlayerPC.SecondaryAttack.performed += RightMouseDown;
-            _playerInputActions.PlayerPC.SecondaryAttack.canceled += RightMouseUp;
-            _playerInputActions.PlayerGamepad.BastetAimAttack.performed += LeftGamepadDown;
-            _playerInputActions.PlayerGamepad.SecondaryAttack.performed += RightGamepadDown;
-            _playerInputActions.PlayerGamepad.SecondaryAttack.canceled += RightGamepadUp;
 
             _mainCamera = cameraObj.GetComponent<CinemachineVirtualCamera>();
 
@@ -94,6 +89,26 @@ namespace Player
             {
                 StartRecoveringEnergy(5f);
             }
+        }
+
+        private void OnEnable()
+        {
+            _playerInputActions.PlayerPC.BastetAimAttack.performed += LeftMouseDown;
+            _playerInputActions.PlayerPC.SecondaryAttack.performed += RightMouseDown;
+            _playerInputActions.PlayerPC.SecondaryAttack.canceled += RightMouseUp;
+            _playerInputActions.PlayerGamepad.BastetAimAttack.performed += LeftGamepadDown;
+            _playerInputActions.PlayerGamepad.SecondaryAttack.performed += RightGamepadDown;
+            _playerInputActions.PlayerGamepad.SecondaryAttack.canceled += RightGamepadUp;
+        }
+
+        private void OnDisable()
+        {
+            _playerInputActions.PlayerPC.BastetAimAttack.performed -= LeftMouseDown;
+            _playerInputActions.PlayerPC.SecondaryAttack.performed -= RightMouseDown;
+            _playerInputActions.PlayerPC.SecondaryAttack.canceled -= RightMouseUp;
+            _playerInputActions.PlayerGamepad.BastetAimAttack.performed -= LeftGamepadDown;
+            _playerInputActions.PlayerGamepad.SecondaryAttack.performed -= RightGamepadDown;
+            _playerInputActions.PlayerGamepad.SecondaryAttack.canceled -= RightGamepadUp;
         }
 
         private void Update()
@@ -233,7 +248,7 @@ namespace Player
                 shootSoundClip.Play();
                 OnShoot.Invoke();
                 var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-                GCameraShake.Instance.ShakeCamera(1f, 1f, .1f);
+                cameraShake.ShakeCamera(1f, 1f, .1f);
                 if (Physics.Raycast(ray, out RaycastHit hit, shootDistance, rayLayers))
                 {
                     Vector3 direction = bastetObj.transform.position - hit.collider.transform.position;

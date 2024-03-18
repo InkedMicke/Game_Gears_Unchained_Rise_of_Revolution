@@ -40,10 +40,21 @@ namespace Player
 
             m_playerInputActions = new PlayerInputActions();
             m_playerInputActions.Enable();
+        }
+        #endregion
+
+        private void OnEnable()
+        {
             m_playerInputActions.PlayerPC.Jump.performed += StartJumpPC;
             m_playerInputActions.PlayerGamepad.Jump.performed += StartJumpGamepad;
         }
-        #endregion
+
+        private void OnDisable()
+        {
+            m_playerInputActions.PlayerPC.Jump.performed -= StartJumpPC;
+            m_playerInputActions.PlayerGamepad.Jump.performed -= StartJumpGamepad;
+        }
+
         private void StartJumpPC(InputAction.CallbackContext context)
         {
             if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)

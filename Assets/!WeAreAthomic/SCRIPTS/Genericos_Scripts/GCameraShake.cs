@@ -7,14 +7,11 @@ namespace Generics.Camera
 {
     public class GCameraShake : MonoBehaviour
     {
-        public static GCameraShake Instance { get; private set; }
-
         [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
 
         private float shakeTimer;
         private void Awake()
         {
-            Instance = this;
             cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
         }
 
