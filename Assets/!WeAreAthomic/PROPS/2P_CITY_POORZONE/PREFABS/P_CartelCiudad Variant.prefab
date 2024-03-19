@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 5
   m_IsActive: 1
 --- !u!4 &3166797026178300772
 Transform:
@@ -52,7 +52,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
+  m_StaticShadowCaster: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -99,7 +99,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 5
   m_IsActive: 1
 --- !u!4 &9019598651921438335
 Transform:
@@ -135,7 +135,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
+  m_StaticShadowCaster: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -231,9 +231,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -871262171774199730, guid: a3d9da0db99d587409354fc611a659d0,
         type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -871262171774199730, guid: a3d9da0db99d587409354fc611a659d0,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: ac97fb9908881404c8332d31bee0cdd7, type: 2}
+    - target: {fileID: 584425060794420580, guid: a3d9da0db99d587409354fc611a659d0,
+        type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 584425060794420580, guid: a3d9da0db99d587409354fc611a659d0,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -243,6 +253,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P_CartelCiudad_LOD1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a3d9da0db99d587409354fc611a659d0,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902236401156706468, guid: a3d9da0db99d587409354fc611a659d0,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4179068995096757228, guid: a3d9da0db99d587409354fc611a659d0,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -336,13 +361,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -871262171774199730, guid: 96d758a69d8a1674e918bb659ab1727e,
         type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -871262171774199730, guid: 96d758a69d8a1674e918bb659ab1727e,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: ac97fb9908881404c8332d31bee0cdd7, type: 2}
+    - target: {fileID: 584425060794420580, guid: 96d758a69d8a1674e918bb659ab1727e,
+        type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 96d758a69d8a1674e918bb659ab1727e,
         type: 3}
       propertyPath: m_Name
       value: P_CartelCiudad
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 96d758a69d8a1674e918bb659ab1727e,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902236401156706468, guid: 96d758a69d8a1674e918bb659ab1727e,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4179068995096757228, guid: 96d758a69d8a1674e918bb659ab1727e,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -472,7 +522,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 96d758a69d8a1674e918bb659ab1727e,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 2042023225869285003, guid: 96d758a69d8a1674e918bb659ab1727e,
         type: 3}
