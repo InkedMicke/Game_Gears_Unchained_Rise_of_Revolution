@@ -37,7 +37,7 @@ namespace Player
 
         private bool gotHit;
         bool _isDeath;
-        bool m_canReceiveDamage;
+        bool m_canReceiveDamage = true;
 
         protected void Awake()
         {
@@ -62,21 +62,23 @@ namespace Player
 
         public override void GetDamage(float damage)
         {
-            hitFrame.SetActive(true);
-            sliderHealthImage.color = Color.red;
-            _mainCHurtMaterial.HurtEffects();
-            _mainSounds.RemoveAllSounds();
-            _mainSounds.PlayHurtSound();
-            _mainCAnim.TriggerHit();
-            healthManagerSO.DecreaseHealth(damage);
-            StartCoroutine(HitDesactivate());
-            if (gotHit)
+            if (m_canReceiveDamage)
             {
-                StopCoroutine(_hitCoroutine);
+                hitFrame.SetActive(true);
+                sliderHealthImage.color = Color.red;
+                _mainCHurtMaterial.HurtEffects();
+                _mainSounds.RemoveAllSounds();
+                _mainSounds.PlayHurtSound();
+                _mainCAnim.TriggerHit();
+                healthManagerSO.DecreaseHealth(damage);
+                StartCoroutine(HitDesactivate());
+                if (gotHit)
+                {
+                    StopCoroutine(_hitCoroutine);
+                }
+                _hitCoroutine = StartCoroutine(WaitForDisableHit());
+
             }
-            _hitCoroutine = StartCoroutine(WaitForDisableHit());
-
-
         }
 
         private void Death()

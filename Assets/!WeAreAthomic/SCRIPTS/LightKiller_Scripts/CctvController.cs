@@ -19,6 +19,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         [NonSerialized] public MainCMovement MainCMove;
         [NonSerialized] public MainCAnimatorController MainCAnim;
         [NonSerialized] public MainCHealthManager MainCHealth;
+        [SerializeField] LightKillerHurtBox lightHurtBox;
+        C_MaterialChanger lightConeMaterialChanger;
 
         private MainCHackingSystem _mainCHacking;
         private MainCCrouch m_mainCCrouch;
@@ -69,8 +71,12 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
             _cameraAudio = GetComponent<AudioSource>();
             GroupCCtvController = GetComponentInParent<GroupCctvController>();
             PP = _playerObj.transform.parent.GetComponent<PP>();
+            lightConeMaterialChanger = LightConeMesh.GetComponent<C_MaterialChanger>();
 
             _volumeCatch = _playerObj.transform.GetChild(_playerObj.transform.childCount - 2).gameObject;
+
+            lightHurtBox.OnCachedPlayer += lightConeMaterialChanger.OnPlayerCatched;
+            _lKiller.OnWhiteLight += lightConeMaterialChanger.OnPlayerNeutral;
         }
         public void ActivateVolume()
         {

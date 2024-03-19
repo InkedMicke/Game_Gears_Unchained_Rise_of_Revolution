@@ -1,6 +1,7 @@
 using Player;
 using Generics.Tween;
 using System.Collections;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using Generics.Collision;
@@ -12,6 +13,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         private MainCHackingSystem _mainCHack;
         private LightKiller _lightK;
         private CctvController ctvController;
+
+        public Action OnCachedPlayer;
 
         private TypeOfLightKillerHurtBox TypeOfLightHurtBox => ctvController.TypeOfLightHurtBox;
 
@@ -45,6 +48,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         {
             if (Time.time > m_totalTimeCooldown)
             {
+                OnCachedPlayer?.Invoke();
                 m_totalTimeCooldown = Time.time + m_hitCooldown;
                 StartCoroutine(CollisionThings());
 
@@ -97,7 +101,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                     {
                         _mainCHack.StopHack();
                     }
-
                     _lightK.RedLight();
                     yield return new WaitForSeconds(0.1f);
                     ctvController.MainCMove.DisableMovement();
@@ -107,7 +110,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
                     yield return new WaitForSeconds(1f);
                     _lightK.WhiteLight();
                     yield return new WaitForSeconds(.5f);
-
+                    _mainCHack.SetGotCached(false);
                     seEjecutaCuandoDetectaAlPlayer.Invoke();
 
                     break;

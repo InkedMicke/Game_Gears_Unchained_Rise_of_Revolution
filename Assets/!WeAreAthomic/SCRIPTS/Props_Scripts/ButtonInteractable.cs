@@ -111,7 +111,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         public void ShowButton()
         {
-            if (!_mainCHacking.IsHacking && canHack && !_mainCHacking.GotCached) 
+            if (CanShowButton()) 
             {
                 _isShowingButton = true;
                 switch (GameManagerSingleton.Instance.typeOfInput)
@@ -155,21 +155,25 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         {
             if(_isShowingButton)
             {
+                Debug.Log("hola1");
                 return false;
             }
 
             if(_mainCHacking.IsHacking)
             {
+                Debug.Log("hola2");
                 return false;
             }
 
             if(!canHack)
             {
+                Debug.Log("hola3");
                 return false;
             }
 
             if(_mainCHacking.GotCached)
             {
+                Debug.Log("hola4");
                 return false;
             }
 

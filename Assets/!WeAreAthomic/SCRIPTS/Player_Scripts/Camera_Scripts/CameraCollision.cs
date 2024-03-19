@@ -29,27 +29,28 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
         void Update()
         {
 
-                        var desiredCameraPos = transform.parent.TransformPoint(dollyDir * maxDistance);
-                        if (Physics.Linecast(transform.parent.position, desiredCameraPos, out var hit, colLayers))
-                        {
-                            distance = Mathf.Clamp((hit.distance * 0.87f), minDistance, maxDistance);
-                        }
-                        else
-                        {
-                            distance = maxDistance;
-                        }
-
-                        transform.localPosition = Vector3.Lerp(transform.localPosition, dollyDir * distance, Time.deltaTime * smooth);
-/*
-            var ray = new Ray(transform.position, -transform.forward);
-            if(Physics.SphereCast(ray, radius, out var hit, cameraDistance))
+            var desiredCameraPos = transform.parent.TransformPoint(dollyDir * maxDistance);
+            if (Physics.Linecast(transform.parent.position, desiredCameraPos, out var hit, colLayers))
             {
-                transform.localPosition = Vector3.back * hit.distance;
+                Debug.Log(hit.collider.name);
+                distance = Mathf.Clamp((hit.distance * 0.87f), minDistance, maxDistance);
             }
             else
             {
-                transform.localPosition = Vector3.back * cameraDistance;
-            }*/
+                distance = maxDistance;
+            }
+
+            transform.localPosition = Vector3.Lerp(transform.localPosition, dollyDir * distance, Time.deltaTime * smooth);
+            /*
+                        var ray = new Ray(transform.position, -transform.forward);
+                        if(Physics.SphereCast(ray, radius, out var hit, cameraDistance))
+                        {
+                            transform.localPosition = Vector3.back * hit.distance;
+                        }
+                        else
+                        {
+                            transform.localPosition = Vector3.back * cameraDistance;
+                        }*/
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace _WeAreAthomic.SCRIPTS.Props_Scripts
@@ -5,6 +6,8 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
     public class LightKiller : MonoBehaviour
     {
         private CctvController _controller;
+
+        public Action OnWhiteLight;
 
         public GameObject luzObj;
         public GameObject cctv;
@@ -24,6 +27,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         {
 
             _luz.color = Color.white;
+            OnWhiteLight?.Invoke();
             IsFocusingPlayer = false;
             if (redLightSound.isPlaying)
             {
