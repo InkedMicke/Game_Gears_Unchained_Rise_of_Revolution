@@ -9,7 +9,7 @@ public class SliderHealthManager : MonoBehaviour
     private void Awake()
     {
         managerSO.healthChangeEvent += UpdateSliderValue;
-
+        slider.maxValue = managerSO.MaxHealth;
     }
 
     public void UpdateSliderValue(float value)

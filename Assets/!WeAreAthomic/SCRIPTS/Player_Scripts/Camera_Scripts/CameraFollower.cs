@@ -58,7 +58,7 @@ namespace Player.CameraS
 
         private protected virtual void Update()
         {
-            if (!GameManagerSingleton.Instance.IsGamePaused && !GameManagerSingleton.Instance.IsOnDialogue)
+            if (CanLookCamera())
             {
                 LookCamera();
             }
@@ -157,6 +157,15 @@ namespace Player.CameraS
 
             //move towards the game object that is the target
             transform.position = Vector3.MoveTowards(transform.position, target.position, cameraSpeedFollow * Time.deltaTime);
+        }
+
+        bool CanLookCamera()
+        {
+            if(GameManagerSingleton.Instance.IsOnDialogue) { return false; }
+            if(GameManagerSingleton.Instance.IsGamePaused) { return false; }
+            if(GameManagerSingleton.Instance.IsStopMenuEnabled) { return false; }
+
+            return true;
         }
     }
 }

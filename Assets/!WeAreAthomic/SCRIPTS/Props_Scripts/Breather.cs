@@ -21,8 +21,8 @@ namespace Props
         [SerializeField] private GameObject particleEffects;
         [SerializeField] private GameObject volumeToActivate;
 
+        [SerializeField] HealthManagerSO managerSO;
 
-    
         private GameObject _playerObj;
 
         [SerializeField] private bool enabledBreather;
@@ -112,7 +112,7 @@ namespace Props
 
             while (_isHealing)
             {
-                _mainHealth.GetHealth(healthAmount);
+                managerSO.GetHealth(healthAmount);
                 
 
                 yield return new WaitForSeconds(healthPerTime);

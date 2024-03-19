@@ -131,7 +131,7 @@ namespace Player
         {
             _mainCVFX.ActivateHealGlow();
             _mainCPlayerInterface.TakeEnergy(50);
-            _mainCHealth.GetHealth(100 - healthManagerSO.CurrentHealth);
+            healthManagerSO.GetHealth(100 - healthManagerSO.CurrentHealth);
         }
 
         public void EndAnimHeal()

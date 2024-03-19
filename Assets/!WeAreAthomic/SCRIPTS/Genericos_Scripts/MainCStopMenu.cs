@@ -16,6 +16,7 @@ namespace Player
         [SerializeField] private CheckIfEnoughMejoras m_CheckIfEnoughMejoras;
         private PlayerInputActions _playerInputActions;
         private MainCSounds _mainCSounds;
+        MainCAnimatorController m_anim;
         [SerializeField] private CinemachineVirtualCamera cameraUI;
         [SerializeField] private GameObject stopMenuContainer;
         [SerializeField] private GameObject firstButton;
@@ -26,6 +27,7 @@ namespace Player
 
         private void Awake()
         {
+            m_anim = GetComponent<MainCAnimatorController>();
             _mainCSounds = GetComponent<MainCSounds>();
 
             _playerInputActions = new PlayerInputActions();
@@ -38,7 +40,6 @@ namespace Player
         {
             if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.pc)
             {
-
                 ToggleMenu();
                 ToggleCursorOnVideoStart();
             }
@@ -48,7 +49,6 @@ namespace Player
         {
             if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
             {
-
                 ToggleMenu();
             }
         }
@@ -69,7 +69,7 @@ namespace Player
         }
 
         [Button]
-        private void ToggleMenu()
+        public void ToggleMenu()
         {
             if (CanToggleMenu())
             {
@@ -78,7 +78,7 @@ namespace Player
                     m_CheckIfEnoughMejoras.CheckIfYouHaveEnoughToBuy();
                     stopMenuContainer.SetActive(false);
                     cameraUI.Priority = 0;
-
+                    m_anim.SetIsOnMenu(false);
                     if (!GameManagerSingleton.Instance.thereIsCanvasBelow)
                     {
                         GameManagerSingleton.Instance.ShowCursor(false);
@@ -95,7 +95,7 @@ namespace Player
                     setTriggerAnim.Invoke();
                     stopMenuContainer.SetActive(true);
                     cameraUI.Priority = 100;
-
+                    m_anim.SetIsOnMenu(true);
                     if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
                     {
                         EventSystem.current.SetSelectedGameObject(firstButton);
@@ -174,6 +174,11 @@ namespace Player
             }         
             
             if(GameManagerSingleton.Instance.thereIsCanvasBelow)
+            {
+                return false;
+            }            
+            
+            if(GameManagerSingleton.Instance.IsOnDialogue)
             {
                 return false;
             }

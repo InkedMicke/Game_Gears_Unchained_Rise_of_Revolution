@@ -57,22 +57,18 @@ namespace Player
 
         private void Start()
         {
-            SetMaxHealthSlider();
-            SetHealthSlider();
+            healthManagerSO.CurrentHealth = 50;
         }
-
 
         public override void GetDamage(float damage)
         {
-
             hitFrame.SetActive(true);
             sliderHealthImage.color = Color.red;
             _mainCHurtMaterial.HurtEffects();
             _mainSounds.RemoveAllSounds();
             _mainSounds.PlayHurtSound();
             _mainCAnim.TriggerHit();
-            SetHealthSlider();
-            //CheckDeath();
+            healthManagerSO.DecreaseHealth(damage);
             StartCoroutine(HitDesactivate());
             if (gotHit)
             {
@@ -81,17 +77,6 @@ namespace Player
             _hitCoroutine = StartCoroutine(WaitForDisableHit());
 
 
-        }
-
-        public void GetHealth(float health)
-        {
-            CurrentHealth += health;
-            if (CurrentHealth >= 100)
-            {
-                CurrentHealth = 100;
-            }
-            GameManagerSingleton.Instance.currentHealth = CurrentHealth;
-            SetHealthSlider();
         }
 
         private void Death()
@@ -117,7 +102,6 @@ namespace Player
             m_canReceiveDamage = false;
             CurrentHealth = 100;
             GameManagerSingleton.Instance.currentHealth = CurrentHealth;
-            SetHealthSlider();
             _isDeath = false;
             _mainCAttack.SetIsSheathed(false);
             _mainCRagdoll.ResetBody();
@@ -130,7 +114,6 @@ namespace Player
         {
             CurrentHealth = 0;
             GameManagerSingleton.Instance.currentHealth = CurrentHealth;
-            SetHealthSlider();
             Death();
         }
 
@@ -181,16 +164,6 @@ namespace Player
         public void SetCanReceiveDamage(bool canReceiveDamage)
         {
             m_canReceiveDamage = canReceiveDamage;
-        }
-
-        public void SetHealthSlider()
-        {
-            healthSlider.value = CurrentHealth;
-        }
-
-        private void SetMaxHealthSlider()
-        {
-            healthSlider.maxValue = 100;
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Player
         [SerializeField] private string isGrounded = "isGrounded";
         [SerializeField] private string isSliding = "isSliding";
         [SerializeField] private string isCrouchSliding = "isCrouchSliding";
+        [SerializeField] private string isOnMenu = "isOnMenu";
         [SerializeField] private string hack = "hack";
         [SerializeField] private string aimOnRail = "railAiming";
         [SerializeField] private string dash = "dash";
@@ -23,11 +24,6 @@ namespace Player
         [SerializeField] private string shield = "shield";    
         [SerializeField] private string heal = "heal";
         string m_currentAnimation;
-        public const string CROUCH_IDLE = "CrouchingIdle";
-        public const string CROUCH_TO_IDLE = "CrouchedToIdle";
-        public const string IDLE_TO_CROUCH = "IdleToCrouched";
-        public const string CROUCH_WALKING = "CrouchedWalking";
-
         protected void Awake()
         {
             m_anim = GetComponent<Animator>();
@@ -105,6 +101,11 @@ namespace Player
         public void SetAimOnRail(bool condition)
         {
             m_anim.SetBool(aimOnRail, condition);
+        }        
+        
+        public void SetIsOnMenu(bool isOnMenu)
+        {
+            m_anim.SetBool(this.isOnMenu, isOnMenu);
         }
 
         public void TriggerHack()

@@ -9,8 +9,7 @@ public class HealthManagerSO : ScriptableObject
     public bool CanReceiveDamage;
 
     public float CurrentHealth;
-    [SerializeField]
-    private float maxHealth = 100;
+    public float MaxHealth = 100;
 
     private void OnEnable()
     {
@@ -20,7 +19,7 @@ public class HealthManagerSO : ScriptableObject
     public void DecreaseHealth(float amount)
     {
         CurrentHealth -= amount;
-        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
+        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
         healthChangeEvent?.Invoke(CurrentHealth);
         if (IsDeath())
             OnDeath?.Invoke();
@@ -29,7 +28,7 @@ public class HealthManagerSO : ScriptableObject
     public void GetHealth(float amount)
     {
         CurrentHealth += amount;
-        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
+        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
         healthChangeEvent?.Invoke(CurrentHealth);
     }
 
