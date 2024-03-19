@@ -210,7 +210,10 @@ namespace Player
                 m_moveDir.x = 0;
                 m_moveDir.z = 0;
             }
-
+            if(IsOnSlope())
+            {
+                m_moveDir = GetSlopeMoveDirection();
+            }
             m_cc.Move(CurrentSpeed * Time.deltaTime * m_moveDir);
         }
         #endregion
