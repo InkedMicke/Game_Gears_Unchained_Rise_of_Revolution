@@ -23,6 +23,7 @@ namespace Enemy.Dummie
 
         [SerializeField] private ParticleSystem sparksHit;
         [SerializeField] private List<ParticleSystem> _hitParticles;
+        [SerializeField] private GameObject espurnaFuryPrefab;
 
         [SerializeField] private bool useKnockback = true;
         public bool isDeath;
@@ -66,6 +67,10 @@ namespace Enemy.Dummie
         public void GetDamage(float value)
         {
             TakeDamage(value);
+        }
+        public void InstantiateEspurna()
+        {
+            Instantiate(espurnaFuryPrefab, transform.position, Quaternion.identity);
         }
 
         private void CheckForDeath()
