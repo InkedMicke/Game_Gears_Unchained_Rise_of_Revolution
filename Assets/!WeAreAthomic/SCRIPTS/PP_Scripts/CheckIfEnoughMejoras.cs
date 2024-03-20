@@ -5,6 +5,7 @@ namespace PPS
     public class CheckIfEnoughMejoras : MonoBehaviour
     {
         [SerializeField] private GameObject auraToActivate;
+
         public void CheckIfYouHaveEnoughToBuy()
         {
             foreach (var ability in GameManagerSingleton.Instance.abiltiesList)
