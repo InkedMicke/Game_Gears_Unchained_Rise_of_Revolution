@@ -23,6 +23,8 @@ public class VideoManagerStart : MonoBehaviour
 
     [SerializeField] private Scenes sceneToLoad;
 
+    [SerializeField] UnityEvent WhileScenes;
+
     [SerializeField] UnityEvent OnFinish;
 
     private int _currentVideo;
@@ -37,6 +39,7 @@ public class VideoManagerStart : MonoBehaviour
 
     private void Start()
     {
+        WhileScenes.Invoke();
         sceneLoaderStart.StartLoadingScenes();
         GameManagerSingleton.Instance.SetIsLoadingStartVideos(true);
         videoPlayer.clip = videos[_currentVideo];
@@ -65,6 +68,7 @@ public class VideoManagerStart : MonoBehaviour
     {
         if (_currentVideo < videos.Count)
         {
+            
             videoPlayer.clip = videos[_currentVideo];
             videoPlayer.Play();
             _currentVideo++;

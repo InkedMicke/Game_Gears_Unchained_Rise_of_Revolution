@@ -72,8 +72,8 @@ namespace Generics.Enemy
 
                     yield return new WaitForEndOfFrame();
 
-                    //StartCoroutine(MoveBarrierDown());
-                    //onFinish.Invoke();
+                    StartCoroutine(MoveBarrierDown());
+                    onFinish.Invoke();
                 }
 
                 yield return new WaitForEndOfFrame();
