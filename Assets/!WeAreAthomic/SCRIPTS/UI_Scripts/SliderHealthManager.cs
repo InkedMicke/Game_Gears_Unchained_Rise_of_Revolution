@@ -6,6 +6,8 @@ public class SliderHealthManager : MonoBehaviour
     [SerializeField] HealthManagerSO managerSO;
     [SerializeField] Slider slider;
 
+    [SerializeField] private GameObject fullValue;
+
     private void Awake()
     {
         managerSO.healthChangeEvent += UpdateSliderValue;
@@ -15,5 +17,13 @@ public class SliderHealthManager : MonoBehaviour
     public void UpdateSliderValue(float value)
     {
         slider.value = value;
+        if (slider.value == managerSO.MaxHealth)
+        {
+            fullValue.SetActive(true);
+        }
+        else 
+        {
+            fullValue.SetActive(false);
+        }
     }
 }
