@@ -8,21 +8,22 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_CameraHorus
-  m_Shader: {fileID: 4800000, guid: e88aeddd2ef1f934d805981244872e27, type: 3}
+  m_Shader: {fileID: 4800000, guid: 7786f04e9ab4a3348ae1fc6553b3f6da, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - _EMISSION
   - _HALFTONESHAPE_DOT
   - _NORMALMAP
   - _RIMLIGHTING_ON
-  m_InvalidKeywords: []
+  - _USEEMISSION_ON
+  - _USEOCCLUSION_ON
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2050
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -112,6 +113,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 2c3e901b8c8c0404db951bd2f907c676, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _OutlineZOffsetMaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 2800000, guid: 4b287670510c35c43baf65ff8197a8ed, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -150,6 +155,7 @@ Material:
     - Vector1_3C3B6420: -1
     - Vector1_8606F96E: 0.75
     - Vector1_9605CCA4: 10
+    - _AdditionalLightIgnoreCelShade: 0.9
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _AmbientStrength: -6.12
@@ -158,6 +164,8 @@ Material:
     - _BrushLowerCut: 0
     - _BrushSize: 0.8
     - _BumpScale: 1
+    - _CelShadeMidPoint: 0.14
+    - _CelShadeSoftness: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -165,10 +173,12 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DiffuseStep: 0
+    - _DirectLightMultiplier: 1
     - _DitherTexelSize: 1
     - _DitherThreshold: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _EmissionMulByBaseColor: 0
     - _EmissiveStrength: 1
     - _EnabledHairSpec: 0
     - _EnvironmentReflections: 1
@@ -201,18 +211,28 @@ Material:
     - _HatchingEnabled: 0
     - _HatchingRotation: 0
     - _HatchingSmoothness: 0.1
+    - _IndirectLightMultiplier: 1
+    - _IsFace: 0
     - _LightingCutoff: 0
+    - _MainLightIgnoreCelShade: 0
     - _Metallic: 0
     - _NoiseScale: 1
     - _NoiseStrength: 0.1
+    - _OcclusionRemapEnd: 1
+    - _OcclusionRemapStart: 0
     - _OcclusionStrength: 1
     - _OutlineEnabled: 0
     - _OutlineMode: 0
     - _OutlineWidth: 5.92
+    - _OutlineZOffset: 0.0001
+    - _OutlineZOffsetMaskRemapEnd: 1
+    - _OutlineZOffsetMaskRemapStart: 0
     - _OverrideShadowColor: 0
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadowMappingAmount: 0.65
+    - _ReceiveShadowMappingPosOffset: 0
     - _ReceiveShadows: 1
     - _RimEnabled: 1
     - _RimLightAlign: 0
@@ -243,6 +263,9 @@ Material:
     - _StencilRef: 0
     - _StepViaRampTexture: 0
     - _Surface: 0
+    - _UseAlphaClipping: 0
+    - _UseEmission: 1
+    - _UseOcclusion: 1
     - _UseRampColor: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
@@ -256,13 +279,15 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Emision_Color: {r: 0, g: 0, b: 0, a: 0}
-    - _EmissionColor: {r: 1.8660663, g: 1.8660663, b: 1.8660663, a: 1}
+    - _EmissionColor: {r: 2, g: 0.057567324, b: 0, a: 1}
+    - _EmissionMapChannelMask: {r: 1, g: 1, b: 1, a: 0}
     - _FaceFrontDirection: {r: 0, g: 0, b: 1, a: 0}
     - _FaceRightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecColor: {r: 0, g: 0, b: 0, a: 1}
     - _HalfToneColor: {r: 0, g: 0, b: 0, a: 1}
     - _HatchingColor: {r: 0, g: 0, b: 0, a: 1}
+    - _IndirectLightMinColor: {r: 0.09999997, g: 0.09999997, b: 0.09999997, a: 1}
     - _L1_color: {r: 1, g: 1, b: 1, a: 1}
     - _L1_dir: {r: 0, g: 1, b: 0, a: 0}
     - _L2_color: {r: 0, g: 0, b: 0, a: 0}
@@ -276,11 +301,13 @@ Material:
     - _L6_color: {r: 0, g: 0, b: 0, a: 0}
     - _L6_dir: {r: 0, g: 0, b: 0, a: 0}
     - _MainColor: {r: 1, g: 1, b: 1, a: 0}
+    - _OcclusionMapChannelMask: {r: 1, g: 0, b: 0, a: 0}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
     - _OutlineColor: {r: 0.9528302, g: 0.112362035, b: 0.112362035, a: 1}
     - _OutlineDistancFade: {r: -200, g: 200, b: 0, a: 0}
     - _RimColor: {r: 5.278032, g: 0, b: 0, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ShadowMapColor: {r: 0.4056604, g: 0.07968329, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpherizeNormalOrigin: {r: 0, g: 0, b: 0, a: 0}
