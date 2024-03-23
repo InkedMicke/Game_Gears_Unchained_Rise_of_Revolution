@@ -6,7 +6,6 @@ using Player.Bastet;
 using UnityEngine.Events;
 using Cinemachine;
 using Enemy;
-using Enemy.Dummie;
 using Generics.Camera;
 using Interfaces;
 
@@ -20,10 +19,7 @@ namespace Player
             RailAim
         }
 
-        private MainCAttack _mainCAttack;
-        private MainCMovement _mainCMovement;
         private CameraFollower _camFollower;
-        private MainCAnimatorController _mainCAnim;
         private PlayerInputActions _playerInputActions;
         private BastetController _bastetController;
         private MainCPlayerInterface _mainCInterface;
@@ -47,6 +43,7 @@ namespace Player
 
         [SerializeField] private Transform camAimPosTr;
         [SerializeField] private Transform cameraFollow;
+        [SerializeField] private Transform bastetPos;
 
         [SerializeField] private LayerMask rayLayers;
 
@@ -68,13 +65,9 @@ namespace Player
         private float _closestDistance = Mathf.Infinity;
         private float _totalCooldown;
 
-        [SerializeField] private AudioSource shootSoundClip;
         [SerializeField] private UnityEvent OnShoot;
         private void Awake()
         {
-            _mainCAttack = GetComponent<MainCAttack>();
-            _mainCMovement = GetComponent<MainCMovement>();
-            _mainCAnim = GetComponent<MainCAnimatorController>();
             _camFollower = cameraBaseObj.GetComponent<CameraFollower>();
             _bastetController = bastetObj.GetComponent<BastetController>();
             _mainCInterface = GetComponent<MainCPlayerInterface>();
@@ -116,7 +109,7 @@ namespace Player
             if (IsAiming)
             {
                 var leftPos = transform.position + Vector3.left;
-                var correctPos = new Vector3(leftPos.x, leftPos.y + 1.5f, leftPos.z);
+                var correctPos = leftPos + Vector3.up * 1.5f;
                 _bastetController.GoToDesiredPosMoveTowardsWithoutUpdate(correctPos, bastetToAimPosSpeed);
             }
         }
@@ -172,7 +165,8 @@ namespace Player
                 IsAiming = false;
                 crosshair.SetActive(false);
                 _camFollower.cameraFollow = cameraFollow;
-                _bastetController.GoToRightHandPosUntilReachedPos(true, () => bastetObj.SetActive(false), .5f, .1f);
+                _bastetController.KillGoToDesiredPos();
+                _bastetController.GoToRightHandPosUntilReachedPos(1f, .1f);
             }
 
         }
@@ -181,13 +175,12 @@ namespace Player
         {
             if (CanAim())
             {
-                IsAiming = true;
                 _bastetController.KillGoToDesiredPos();
                 crosshair.SetActive(true);
                 _camFollower.cameraFollow = camAimPosTr;
-                _bastetController.HideScanner();
-                bastetObj.SetActive(true);
-                _bastetController.PosRightHand();
+                bastetObj.transform.SetParent(null);
+                _bastetController.ToggleDisc();
+                IsAiming = true;
             }
 
         }
@@ -245,7 +238,7 @@ namespace Player
                 _isShooting = true;
                 _isWaitingForRecoveringShoot = false;
                 _isRecoveringShoot = false;
-                shootSoundClip.Play();
+                //shootSoundClip.Play();
                 OnShoot.Invoke();
                 var ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
                 cameraShake.ShakeCamera(1f, 1f, .1f);

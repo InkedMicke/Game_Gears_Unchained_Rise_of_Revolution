@@ -58,10 +58,8 @@ namespace Player
         private void StartAttacking()
         {
             _mainCSounds.PlayBastetCall();
-            bastetObj.SetActive(true);
             _bastet.HideScanner();
             var desiredPos = transform.position + transform.forward * 2 + transform.up * 1.5f;
-            _bastet.transform.position = _bastet.playerRightArm.transform.position;
             _bastet.GoToDesiredPos(StartShooting, desiredPos, 1f, Ease.Linear);
         }
 
@@ -102,14 +100,9 @@ namespace Player
             }
             _currentRafaga = 0;
             _rotateTween.Kill();
-            _bastet.GoToDesiredPos(EndAttack, _bastet.playerRightArm.transform.position, 1f, Ease.Linear);
+            _bastet.GoToRightHandPosUntilReachedPos(.5f, .1f);
             _mainCPistol.StartRecoveringEnergy(.1f);
 
-        }
-
-        private void EndAttack()
-        {
-            bastetObj.SetActive(false);
         }
     }
 }

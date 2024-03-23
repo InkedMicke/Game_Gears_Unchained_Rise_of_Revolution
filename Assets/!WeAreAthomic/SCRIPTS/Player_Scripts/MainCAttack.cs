@@ -291,7 +291,6 @@ namespace Player
                     _mainCLayers.EnableFinalAttackLayer();
                     attackCount++;
                     _mainCAnimator.SetAttackCountAnim(attackCount);
-                    _mainCAnimator.SetRootMotion(true);
                     _canNextAttack = false;
                     IsFinalAttacking = true;
                 }
@@ -321,7 +320,6 @@ namespace Player
 
         public void EndAttack()
         {
-            _mainCAnimator.SetRootMotion(false);
             IsAttacking = false;
             attackCount = 0;
             _mainCAnimator.SetAttackCountAnim(attackCount);

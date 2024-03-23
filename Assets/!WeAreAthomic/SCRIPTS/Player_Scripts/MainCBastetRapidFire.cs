@@ -73,9 +73,7 @@ namespace Player.Bastet
             if (!_isBastetAttacking && Time.time > _totalCooldown && colliderCount > 0)
             {
                 _mainCSounds.PlayBastetCall();
-                bastetObj.SetActive(true);
                 _bastetController.HideScanner();
-                _bastetController.PosRightHand();
                 StartCoroutine(Attack());
             }
         }

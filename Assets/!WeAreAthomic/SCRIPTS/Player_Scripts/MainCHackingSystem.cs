@@ -113,7 +113,7 @@ namespace Player
                 }
             }
             _bastetController.HideScanner();
-            _bastetController.GoToRightHandPosUntilReachedPos(true, () => robotObj.SetActive(false), .6f, .1f);
+            _bastetController.GoToRightHandPosUntilReachedPos(.6f, .1f);
             _mainCSounds.StopHackInProcessSound();
             IsHacking = false;
         }
@@ -201,7 +201,7 @@ namespace Player
                 _cc.enabled = true;
                 _mainCLayers.DisableHackLayer();
                 _bastetController.HideScanner();
-                _bastetController.GoToRightHandPosUntilReachedPos(true, () => robotObj.SetActive(false), .6f, .1f);
+                _bastetController.GoToRightHandPosUntilReachedPos(.6f, .1f);
                 _mainCSounds.PlayCannotHackSound();
 
                 var interactables = FindObjectsOfType<ButtonInteractable>();

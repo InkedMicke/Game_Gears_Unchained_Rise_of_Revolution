@@ -12,18 +12,22 @@ namespace Player.Bastet
     {
 
         private MainCPistol _mainCPistol;
-        private MainCRail _mainCRail;
 
         private Tween _goToPosTween;
 
         [SerializeField] private LayerMask enemyHurtBoxLayer;
 
         [SerializeField] private GameObject playerObj;
-        public GameObject playerRightArm;
         [SerializeField] private GameObject scannerObj;
+        [SerializeField] private GameObject disc;
         [SerializeField] private GameObject bullet;
         [SerializeField] private GameObject cameraObj;
-        private GameObject _savedClosestEnemy;
+
+        Transform m_parent;
+
+        Quaternion m_startRot;
+
+        Vector3 m_startPos;
 
         [SerializeField] private float moveSpeed;
         [SerializeField] private float rotateSpeed = 0.1f;
@@ -37,10 +41,13 @@ namespace Player.Bastet
         private void Awake()
         {
             _mainCPistol = playerObj.GetComponent<MainCPistol>();
-            _mainCRail = playerObj.GetComponent<MainCRail>();
+
+            m_startPos = transform.position;
+            m_startRot = transform.rotation;
+            m_parent = transform.parent;
         }
 
-        private void Update()
+        private void Update()   
         {
             if (_mainCPistol.IsAiming)
             {
@@ -64,26 +71,27 @@ namespace Player.Bastet
         /// <param name="ease"></param>
         public void GoToDesiredPos(Action onFinishedAction, Vector3 posToGo, float duration, Ease ease)
         {
+            disc.SetActive(true);
+            transform.SetParent(null);
             _goToPosTween = transform.DOMove(posToGo, duration).SetEase(ease).OnComplete(() => onFinishedAction());
         }
 
-        public void GoToRightHandPosUntilReachedPos(bool callFunctionOnComplete, Action onFinishedAction, float speed, float distanceMagnitude)
+        public void GoToRightHandPosUntilReachedPos(float speed, float distanceMagnitude)
         {
-            StartCoroutine(RightHandUntilReachedPos(callFunctionOnComplete, onFinishedAction, speed, distanceMagnitude));
+            StartCoroutine(RightHandUntilReachedPos(speed, distanceMagnitude));
         }
 
-        private IEnumerator RightHandUntilReachedPos(bool callFunctionOnComplete, Action onFinishedAction,float speed, float distanceMagnitude)
+        private IEnumerator RightHandUntilReachedPos(float speed, float distanceMagnitude)
         {
-            while(Vector3.Distance(transform.position, playerRightArm.transform.position) > distanceMagnitude)
+            while(Vector3.SqrMagnitude(transform.position - m_parent.position) > distanceMagnitude)
             {
-                transform.position = Vector3.MoveTowards(transform.position, playerRightArm.transform.position, speed);
-
+                transform.position = Vector3.MoveTowards(transform.position, m_parent.position, speed);
                 yield return new WaitForEndOfFrame();
             }
-            if (callFunctionOnComplete)
-            {
-                onFinishedAction();
-            }
+            disc.SetActive(false);
+            transform.SetParent(m_parent);
+            transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.Euler(0f,0f,0f));
+            
         }
 
         public void GoToDesiredPosMoveTowardsWithoutUpdate(Vector3 posToGo, float speed)
@@ -110,11 +118,6 @@ namespace Player.Bastet
             }
         }
 
-        public void PosRightHand()
-        {
-            transform.position = playerRightArm.transform.position;
-        }
-
         public void HideScanner()
         {
             scannerObj.SetActive(false);
@@ -123,6 +126,11 @@ namespace Player.Bastet
         public void ShowScanner()
         {
             scannerObj.SetActive(true);
+        }
+
+        public void ToggleDisc()
+        {
+            disc.SetActive(!disc.activeSelf);
         }
     }
 }

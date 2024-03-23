@@ -160,7 +160,7 @@ Transform:
   - {fileID: 5234531217450931768}
   - {fileID: 1146889825019539078}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8080749313461404527
 MonoBehaviour:
@@ -178,8 +178,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   playerObj: {fileID: 0}
-  playerRightArm: {fileID: 0}
   scannerObj: {fileID: 5152699964794832002}
+  disc: {fileID: 650398882132921295}
   bullet: {fileID: 3870155545384615628, guid: 6668df61b445054438534e36b8999fea, type: 3}
   cameraObj: {fileID: 0}
   moveSpeed: 50
@@ -259,11 +259,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bastet
       objectReference: {fileID: 0}
+    - target: {fileID: 5704578408561117907, guid: 9accb3d641eba8040873aee8f502f18e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9accb3d641eba8040873aee8f502f18e, type: 3}
+--- !u!1 &650398882132921295 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5704578408561117907, guid: 9accb3d641eba8040873aee8f502f18e,
+    type: 3}
+  m_PrefabInstance: {fileID: 5056440125299228956}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4730658663486940919 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9accb3d641eba8040873aee8f502f18e,
@@ -307,6 +318,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Hacking_Particles
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279285406612142772, guid: 5b0a412d5919c5940a9a56a2676f82c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3476771760424117955, guid: 5b0a412d5919c5940a9a56a2676f82c9,
         type: 3}

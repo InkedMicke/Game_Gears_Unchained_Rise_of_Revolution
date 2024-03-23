@@ -32,7 +32,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
             var desiredCameraPos = transform.parent.TransformPoint(dollyDir * maxDistance);
             if (Physics.Linecast(transform.parent.position, desiredCameraPos, out var hit, colLayers))
             {
-                Debug.Log(hit.collider.name);
                 distance = Mathf.Clamp((hit.distance * 0.87f), minDistance, maxDistance);
             }
             else
