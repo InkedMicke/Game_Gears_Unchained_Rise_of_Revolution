@@ -50,7 +50,7 @@ namespace Generics.Camera
 
         IEnumerator CameraPriority()
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(3f);
             cinemachineVirtualCamera.Priority = 40;
 
         }
