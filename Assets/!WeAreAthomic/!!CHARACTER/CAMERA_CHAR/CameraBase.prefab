@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 2301883311347156643}
   - component: {fileID: 4473043398080013698}
   - component: {fileID: 1776335130980259748}
-  - component: {fileID: 896768873206364033}
+  - component: {fileID: 4275994617981564091}
   m_Layer: 15
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -146,13 +146,6 @@ MonoBehaviour:
     GateFit: 2
     FocusDistance: 10
     m_SensorSize: {x: 1, y: 1}
-    Iso: 200
-    ShutterSpeed: 0.005
-    Aperture: 16
-    BladeCount: 5
-    Curvature: {x: 2, y: 11}
-    BarrelClipping: 0.25
-    Anamorphism: 0
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -174,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cinemachineVirtualCamera: {fileID: 4473043398080013698}
---- !u!114 &896768873206364033
+--- !u!114 &4275994617981564091
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -191,8 +184,8 @@ MonoBehaviour:
   smooth: 10
   dollyDirAdjusted: {x: 0, y: 0, z: 0}
   distance: 0
-  radius: 1
-  cameraDistance: 4
+  radius: 0.1
+  cameraDistance: 0
   colLayers:
     serializedVersion: 2
     m_Bits: 14401
