@@ -224,7 +224,8 @@ namespace Player
             var mouseVector = m_input.GetInput();
             if (mouseVector.magnitude > 0)
             {
-                var desiredRot = Quaternion.LookRotation(m_moveDir);
+                
+                var desiredRot = Quaternion.LookRotation(new Vector3(m_moveDir.x, 0f, m_moveDir.z));
                 transform.rotation = Quaternion.Lerp(transform.rotation, desiredRot, rotSpeed * Time.deltaTime);
             }
         }
