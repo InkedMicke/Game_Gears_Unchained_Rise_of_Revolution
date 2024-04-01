@@ -40,7 +40,6 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
             var ray = new Ray(transform.position, -transform.forward);
             if (Physics.SphereCast(ray, radius, out var hit, maxDistance, colLayers))
             {
-                Debug.Log(hit.ToString());
                 m_distance = hit.distance;
             }
             else

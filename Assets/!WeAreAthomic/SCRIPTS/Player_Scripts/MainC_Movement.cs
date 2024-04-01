@@ -157,7 +157,7 @@ namespace Player
                     _mainCAnimator.SetJumping(m_mainCJump.IsJumping);
                 }
 
-                if (IsFalling && IsGrounded() || IsFalling && IsOnSlope())
+                if (IsFalling && IsGrounded() || IsFalling && _mainCRail.IsOnRail())
                 {
                     IsFalling = false;
                     m_mainCJump.SetIsJumping(false);
