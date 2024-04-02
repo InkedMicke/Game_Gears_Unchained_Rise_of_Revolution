@@ -94,6 +94,8 @@ namespace Player
                 if (_distancePercentage > 0.99f && IsSliding)
                 {
                     _mainCAnim.SetSliding(false);
+                    _mainCAnim.SetCrouch(false);
+                    _mainCAnim.SetSlidingCrouch(false);
                     m_mainClayers.DisableSlideLayer();
                     _mainCDash.StartDash(false);
                     m_mainCVFX.SetActiveSparks(false);
@@ -102,7 +104,6 @@ namespace Player
                     IsSliding = false;
                     m_mainCSounds.RemoveRailSounds();
                     m_mainCCrouch.SetIsCrouch(false);
-                    _mainCAnim.SetCrouch(false);
                     m_mainClayers.DisableCrouchLayer();
                 }
 
