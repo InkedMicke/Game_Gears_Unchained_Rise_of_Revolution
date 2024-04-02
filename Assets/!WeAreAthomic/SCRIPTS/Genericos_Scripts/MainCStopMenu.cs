@@ -12,6 +12,8 @@ namespace Player
 {
     public class MainCStopMenu : MonoBehaviour
     {
+        CharacterController m_cc;
+
         [SerializeField] private PP m_PP;
         [SerializeField] private CheckIfEnoughMejoras m_CheckIfEnoughMejoras;
         private PlayerInputActions _playerInputActions;
@@ -21,6 +23,8 @@ namespace Player
         [SerializeField] private GameObject stopMenuContainer;
         [SerializeField] private GameObject firstButton;
 
+        [SerializeField] LayerMask wallLayer;
+
         private bool _isActive;
 
         [SerializeField] private UnityEvent setTriggerAnim;
@@ -29,6 +33,7 @@ namespace Player
         {
             m_anim = GetComponent<MainCAnimatorController>();
             _mainCSounds = GetComponent<MainCSounds>();
+            m_cc = GetComponent<CharacterController>();
 
             _playerInputActions = new PlayerInputActions();
             _playerInputActions.Enable();
@@ -91,7 +96,7 @@ namespace Player
                 }
                 else
                 {
-                    
+                    CheckWall();
                     setTriggerAnim.Invoke();
                     stopMenuContainer.SetActive(true);
                     cameraUI.Priority = 100;
@@ -132,7 +137,6 @@ namespace Player
         {
             if (_isActive)
             {
-               
                 stopMenuContainer.SetActive(true);
                 GameManagerSingleton.Instance.ShowCursor(false);
                 GameManagerSingleton.Instance.PauseGame(false);
@@ -141,7 +145,6 @@ namespace Player
             }
             else
             {
-                
                 stopMenuContainer.SetActive(false);
                 GameManagerSingleton.Instance.ShowCursor(true);
                 GameManagerSingleton.Instance.PauseGame(true);
@@ -150,6 +153,21 @@ namespace Player
 
         }
 
+        void CheckWall()
+        {
+            const float distance = 1f;
+            var ray = new Ray(transform.position + transform.up, transform.forward);
+            if(Physics.Raycast(ray, out var hit, distance, wallLayer))
+            {
+                var posToMove = Vector3.Distance(transform.position, ray.GetPoint(distance)) - hit.distance;
+                m_cc.Move(-transform.forward * posToMove);
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Debug.DrawRay(transform.position + transform.up * 2f, transform.forward * 1f, Color.white);
+        }
 
         private bool CanToggleMenu()
         {
