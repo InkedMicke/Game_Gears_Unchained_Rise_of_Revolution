@@ -6,7 +6,7 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 {
     public class CameraCollision : MonoBehaviour
     {
-        [SerializeField] Transform playerTr;
+        [SerializeField] Transform cameraTr;
 
         [SerializeField] private float minDistance = 1.0f;
         [SerializeField] private float maxDistance = 4.0f;
@@ -29,38 +29,22 @@ namespace _WeAreAthomic.SCRIPTS.Player_Scripts.Camera_Scripts
 
         void Update()
         {
-            {
-                if (Physics.Linecast(transform.parent.position, transform.position, out var hit, colLayers))
-                {
-                    currentHitDistance = hit.point;
-                }
-                else
-                {
-                    currentHitDistance = dollyDir * maxDistance;
-                }
-            }
-            {
-                if (Physics.SphereCast(new Ray(currentHitDistance, -transform.forward), radius, out var hit, maxDistance, colLayers))
-                {
-                    currentHitDistance = hit.point;
-                }
-                else
-                {
-                    currentHitDistance = dollyDir * maxDistance;
-                }
-            }
-
-            transform.localPosition = Vector3.Lerp(transform.localPosition, currentHitDistance, Time.deltaTime * smooth);
-            /*
-                        var ray = new Ray(transform.position, -transform.forward);
-                        if(Physics.SphereCast(ray, radius, out var hit, cameraDistance))
-                        {
-                            transform.localPosition = Vector3.back * hit.distance;
+            /*            {
+                            if (Physics.Raycast(new Ray(transform.parent.position, -transform.forward), out var hit, maxDistance, colLayers))
+                                m_distance = hit.distance;
                         }
-                        else
                         {
-                            transform.localPosition = Vector3.back * cameraDistance;
-                        }*/
+                            if (Physics.SphereCast(new Ray(-transform.parent.forward * m_distance, -transform.forward), radius, out var hit, maxDistance, colLayers))
+                                m_distance = hit.distance;
+                            else
+                                m_distance = maxDistance;
+                        }
+                        transform.localPosition = dollyDir * m_distance;*/
+
+            if (Physics.SphereCast(new Ray(transform.position, -transform.forward), radius, out var hit, maxDistance, colLayers))
+                cameraTr.localPosition = Vector3.back * hit.distance;
+            else
+                cameraTr.localPosition = Vector3.back * maxDistance;
         }
 
         private void OnDrawGizmosSelected()
