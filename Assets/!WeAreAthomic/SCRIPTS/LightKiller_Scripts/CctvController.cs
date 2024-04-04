@@ -100,7 +100,6 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
 
         private void Update()
         {
-
             if (objectsToLookAt.Count > 0)
             {
                 Vector3 lookDirection = objectsToLookAt[_currentRotation].position - transform.position;
@@ -209,7 +208,7 @@ namespace _WeAreAthomic.SCRIPTS.Props_Scripts
         public void SetHasGroupCamera(bool hasGroup)
         {
             HasGroupCamera = hasGroup;
-        }
+        }   
 
         public void TurnOnCamera()
         {

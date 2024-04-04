@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using PPS;
 using Cinemachine;
+using Generics;
 
 namespace Player
 {
@@ -26,6 +27,9 @@ namespace Player
         [SerializeField] LayerMask wallLayer;
 
         private bool _isActive;
+
+        float m_stopMenuCooldown = 1f;
+        float m_stopMenuTotalCooldown;
 
         [SerializeField] private UnityEvent setTriggerAnim;
 
@@ -89,17 +93,15 @@ namespace Player
                         GameManagerSingleton.Instance.ShowCursor(false);
                     }
                     m_PP.SetActiveToCurrentUIGameObjectList(true);
-                    GameManagerSingleton.Instance.PauseGame(false);
-                    GameManagerSingleton.Instance.FreezeTime(false);
                     GameManagerSingleton.Instance.SetIsStopMenuEnabled(false);
                     _mainCSounds.UnPauseCurrentSounds();
+                    m_stopMenuTotalCooldown = Time.time + m_stopMenuCooldown;
                 }
                 else
                 {
                     CheckWall();
                     setTriggerAnim.Invoke();
                     stopMenuContainer.SetActive(true);
-                    cameraUI.Priority = 100;
                     m_anim.SetIsOnMenu(true);
                     if (GameManagerSingleton.Instance.typeOfInput == TypeOfInput.gamepad)
                     {
@@ -109,11 +111,11 @@ namespace Player
                     
                     m_PP.SetActiveToCurrentUIGameObjectList(false);
                     GameManagerSingleton.Instance.ShowCursor(true);
-                    GameManagerSingleton.Instance.PauseGame(true);
-                    GameManagerSingleton.Instance.FreezeTime(true);
                     GameManagerSingleton.Instance.SetIsStopMenuEnabled(true);
                     _mainCSounds.PauseCurrentSounds();
                     _mainCSounds.PlayOpenMenuSound();
+                    cameraUI.Priority = 100;
+                    m_stopMenuTotalCooldown = Time.time + m_stopMenuCooldown;
                 }
 
             }
@@ -197,6 +199,11 @@ namespace Player
             }            
             
             if(GameManagerSingleton.Instance.IsOnDialogue)
+            {
+                return false;
+            }
+
+            if(Time.time < m_stopMenuTotalCooldown)
             {
                 return false;
             }

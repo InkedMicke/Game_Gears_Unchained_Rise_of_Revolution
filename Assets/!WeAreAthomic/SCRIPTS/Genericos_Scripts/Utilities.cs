@@ -13,7 +13,7 @@ namespace Generics
 
         private static IEnumerator InvokeRoutine(Action f, float delay)
         {
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSecondsRealtime(delay);
             f();
         }
     }
